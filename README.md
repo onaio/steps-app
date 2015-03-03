@@ -1,3 +1,3 @@
-# WHO Steps App
+# WHO STEPS App
 
 WHO STEPS Android App
