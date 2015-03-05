@@ -1,0 +1,72 @@
+package com.onaio.steps;
+
+import android.app.ListActivity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+
+import java.util.List;
+
+import static java.util.Arrays.asList;
+
+public class StepsActivity extends ListActivity {
+
+    public static final String PHONE_ID = "phoneId";
+    private static final int IDENTIFIER = 1;
+    private static final List<String> HOUSEHOLDS = asList("Household-1", "Household-2");
+    private String phoneId;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.main);
+        phoneId = fetchPhoneId();
+        getListView().setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, HOUSEHOLDS));
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_activity_actions, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                openSettings();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            phoneId = savePhoneId(data.getStringExtra(PHONE_ID));
+        } else {
+            savePhoneIdErrorHandler();
+        }
+    }
+
+    private void openSettings() {
+        Intent intent = new Intent(getBaseContext(), SettingsActivity.class);
+        startActivityForResult(intent, IDENTIFIER);
+    }
+
+    private String fetchPhoneId() {
+        return null;
+    }
+
+    private String savePhoneId(String phoneId) {
+        return null;
+    }
+
+    private void savePhoneIdErrorHandler() {
+    }
+}
