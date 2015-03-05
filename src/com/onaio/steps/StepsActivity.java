@@ -1,5 +1,6 @@
 package com.onaio.steps;
 
+import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -61,8 +62,12 @@ public class StepsActivity extends ListActivity {
     }
 
     private void addHousehold() {
-        ArrayAdapter<String> adapter = (ArrayAdapter<String>) getListView().getAdapter();
-        adapter.add(String.format("%s-%d", phoneId, adapter.getCount() + 1));
+        if (phoneId == null) {
+            alertUserToSetPhoneId();
+        } else {
+            ArrayAdapter<String> adapter = (ArrayAdapter<String>) getListView().getAdapter();
+            adapter.add(String.format("%s-%d", phoneId, adapter.getCount() + 1));
+        }
     }
 
     private String fetchPhoneId() {
@@ -83,14 +88,21 @@ public class StepsActivity extends ListActivity {
         return null;
     }
 
-    private SharedPreferences.Editor dataStoreEditor() {
-        return dataStore().edit();
-    }
-
     private SharedPreferences dataStore() {
         return getPreferences(MODE_PRIVATE);
     }
 
+    private SharedPreferences.Editor dataStoreEditor() {
+        return dataStore().edit();
+    }
+
+    private void alertUserToSetPhoneId() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.phone_id_message_title).setMessage(R.string.phone_id_message);
+        builder.create().show();
+    }
+
     private void savePhoneIdErrorHandler() {
+        //TODO: toast message for save phone id failure
     }
 }

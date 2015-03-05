@@ -5,4 +5,6 @@
     <string name="action_add">Add</string>
     <string name="save_button">Save</string>
     <string name="phone_id_label">Phone ID</string>
+    <string name="phone_id_message">Set the Phone ID first !</string>
+    <string name="phone_id_message_title">Alert</string>
 </resources>
