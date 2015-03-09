@@ -1,0 +1,9 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Settings, should always be in the overflow -->
+    <item android:id="@+id/action_settings"
+          android:title="@string/action_settings"/>
+    <item android:id="@+id/action_add"
+          android:title="@string/action_add"
+          android:icon="@drawable/add_image"
+          android:showAsAction="always"/>
+</menu>
