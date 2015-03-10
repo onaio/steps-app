@@ -4,3 +4,7 @@
 *.DS_STORE
 gen
 build
+out/*
+local.properties
+gradle/*
+gradle*
