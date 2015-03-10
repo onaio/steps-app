@@ -26,15 +26,6 @@
         android:layout_width="fill_parent"
         android:background="@android:color/darker_gray"
         />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Household"
-        android:id="@+id/extractEditText"
-        android:layout_gravity="center_horizontal"
-        android:layout_margin="15dp"
-        android:autoText="false"
-        android:textStyle="bold" />
 
     <EditText
         android:layout_width="match_parent"

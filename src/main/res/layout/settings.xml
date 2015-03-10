@@ -19,6 +19,15 @@
             android:textColor="@android:color/white"
             android:onClick="savePhoneId"/>
 
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:text="@string/action_settings"
+            android:textSize="20sp"
+            android:autoText="false"
+            android:gravity="center|center_vertical"
+            android:layout_marginLeft="-35dp" />
+
     </LinearLayout>
     <View android:layout_height="1dp"
         android:layout_width="fill_parent"
@@ -31,6 +40,7 @@
             android:inputType="text"
             android:hint="@string/phone_id_label"
             android:ems="10"
-            android:id="@+id/phoneId"/>
+            android:id="@+id/phoneId"
+        android:layout_marginTop="30dp" />
 
 </LinearLayout>
