@@ -12,7 +12,12 @@
             </intent-filter>
         </activity>
         <activity android:name="SettingsActivity"
-                  android:label="@string/action_settings">
+                  android:label="@string/action_settings"
+            android:theme="@android:style/Theme.NoTitleBar">
+        </activity>
+        <activity android:name="NewHouseholdActivity"
+            android:label="New Household"
+            android:theme="@android:style/Theme.NoTitleBar">
         </activity>
     </application>
     <uses-sdk android:minSdkVersion="11"/>

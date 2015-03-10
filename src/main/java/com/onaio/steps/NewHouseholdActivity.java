@@ -1,8 +1,10 @@
-package main.java.com.onaio.steps;
+package com.onaio.steps;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.TextView;
 import com.onaio.steps.R;
@@ -15,6 +17,8 @@ public class NewHouseholdActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_household);
     }
+
+
 
     public void saveHousehold(View view) {
         Intent intent = this.getIntent();

@@ -3,10 +3,12 @@
     <string name="app_name">Steps</string>
     <string name="action_settings">Settings</string>
     <string name="action_add">Add</string>
+    <string name="action_done">Done</string>
+    <string name="action_new_household">New Household</string>
     <string name="save_button">Save</string>
     <string name="phone_id_label">Phone ID</string>
     <string name="phone_id_message">Set the Phone ID first !</string>
     <string name="phone_id_message_title">Alert</string>
-    <string name="household_id">Household ID</string>
+    <string name="household_id_label">Household ID</string>
     <string name="phoneNumber">Household ID</string>
 </resources>

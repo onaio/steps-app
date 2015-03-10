@@ -3,19 +3,34 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="35dp">
+        <Button
+            android:layout_width="70dp"
+            android:layout_height="fill_parent"
+            android:clickable="true"
+            android:scaleType="fitStart"
+            android:longClickable="true"
+            android:text = "Done"
+            android:drawableLeft="@drawable/ic_done"
+            android:background="@android:color/transparent"
+            android:textColor="@android:color/white"
+            android:onClick="savePhoneId"/>
+
+    </LinearLayout>
+    <View android:layout_height="1dp"
+        android:layout_width="fill_parent"
+        android:background="@android:color/darker_gray"
+        />
 
     <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="number"
+            android:inputType="text"
             android:hint="@string/phone_id_label"
             android:ems="10"
             android:id="@+id/phoneId"/>
-    <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/save_button"
-            android:id="@+id/button"
-            android:layout_gravity="center_horizontal"
-            android:onClick="savePhoneId"/>
+
 </LinearLayout>

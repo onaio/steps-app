@@ -57,7 +57,7 @@ public class StepsActivity extends ListActivity {
     }
 
     private void openSettings() {
-        Intent intent = new Intent(getBaseContext(), com.onaio.steps.SettingsActivity.class);
+        Intent intent = new Intent(getBaseContext(), SettingsActivity.class);
         startActivityForResult(intent, IDENTIFIER);
     }
 
@@ -65,13 +65,11 @@ public class StepsActivity extends ListActivity {
         if (phoneId == null) {
             alertUserToSetPhoneId();
         } else {
-            ArrayAdapter<String> adapter = (ArrayAdapter<String>) getListView().getAdapter();
-            adapter.add(String.format("%s-%d", phoneId, adapter.getCount() + 1));
+            Intent intent = new Intent(getBaseContext(), NewHouseholdActivity.class);
+            startActivityForResult(intent, IDENTIFIER);
+//            ArrayAdapter<String> adapter = (ArrayAdapter<String>) getListView().getAdapter();
+//            adapter.add(String.format("%s-%d", phoneId, adapter.getCount() + 1));
         }
-    }
-    private void openNewHousehold() {
-        Intent intent = new Intent(getBaseContext(), com.onaio.steps.SettingsActivity.class);
-        startActivityForResult(intent, IDENTIFIER);
     }
 
     private String fetchPhoneId() {
