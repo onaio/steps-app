@@ -3,12 +3,13 @@ package com.onaio.steps.model;
 public class Household {
     String id;
     String name;
-    int phoneNumber;
+    long phoneNumber;
 
-    public Household(String name, int phoneNumber) {
+    public Household(String name, long phoneNumber) {
         this.name= name;
         this.phoneNumber = phoneNumber;
     }
+
 
     public String getName() {
         return name;
@@ -26,11 +27,11 @@ public class Household {
         this.id = id;
     }
 
-    public int getPhoneNumber() {
+    public long getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(int phoneNumber) {
+    public void setPhoneNumber(long phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 }

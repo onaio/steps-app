@@ -1,6 +1,8 @@
 package com.onaio.steps.activityHandler;
 
+import android.app.Activity;
 import android.app.ListActivity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import com.onaio.steps.R;
@@ -22,6 +24,7 @@ public class SettingActivityHandler implements IActivityHandler {
     @Override
     public boolean open(ListActivity activity) {
         Intent intent = new Intent(activity.getBaseContext(), SettingsActivity.class);
+        intent.putExtra(PHONE_ID,getPhoneId(activity));
         activity.startActivityForResult(intent, IDENTIFIER);
         return true;
     }
@@ -49,6 +52,10 @@ public class SettingActivityHandler implements IActivityHandler {
 
     private void savePhoneIdErrorHandler() {
         //TODO: toast message for save phone id failure
+    }
+
+    private String getPhoneId(ListActivity activity) {
+        return dataStore(activity).getString(PHONE_ID, null) ;
     }
 
     private SharedPreferences dataStore(ListActivity activity) {

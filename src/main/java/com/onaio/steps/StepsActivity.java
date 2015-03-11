@@ -8,7 +8,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
-
 import com.onaio.steps.activityHandler.ActivityHandlerFactory;
 import com.onaio.steps.activityHandler.IActivityHandler;
 import com.onaio.steps.helper.DatabaseHelper;
@@ -64,5 +63,4 @@ public class StepsActivity extends ListActivity {
             householdNames.add(household.getName());
         return householdNames;
     }
-
 }

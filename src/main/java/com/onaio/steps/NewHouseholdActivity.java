@@ -25,7 +25,7 @@ public class NewHouseholdActivity extends Activity {
         Intent intent = this.getIntent();
         TextView name = (TextView) findViewById(R.id.household_name);
         TextView number = (TextView) findViewById(R.id.household_number);
-        int phoneNumber = Integer.parseInt(number.getText().toString());
+        long phoneNumber = Long.parseLong(number.getText().toString());
         Household household = new Household(intent.getStringExtra(PHONE_ID)+"-"+name.getText().toString(), phoneNumber);
         DatabaseHelper db = new DatabaseHelper(this.getApplicationContext());
         db.createHousehold(household);
