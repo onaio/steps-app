@@ -10,20 +10,27 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 
-import java.util.ArrayList;
+import com.onaio.steps.helper.DatabaseHelper;
+
+import java.util.List;
 
 public class StepsActivity extends ListActivity {
 
     public static final String PHONE_ID = "phoneId";
-    private static final int IDENTIFIER = 1;
+    public static final String HOUSEHOLD_NAME = "household_name";
+    private static final int SETTINGS_IDENTIFIER = 1;
+    private static final int HOUSEHOLD_IDENTIFIER = 2;
     private String phoneId;
+    private DatabaseHelper db;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         phoneId = fetchPhoneId();
+        db = new DatabaseHelper(getApplicationContext());
         getListView().setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, fetchHouseholds()));
+
     }
 
     @Override
@@ -50,7 +57,14 @@ public class StepsActivity extends ListActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
-            phoneId = savePhoneId(data.getStringExtra(PHONE_ID));
+            switch (requestCode){
+                case SETTINGS_IDENTIFIER:
+                    phoneId = savePhoneId(data.getStringExtra(PHONE_ID));
+                    break;
+                case HOUSEHOLD_IDENTIFIER:
+                    ArrayAdapter<String> listAdapter = (ArrayAdapter<String>) getListView().getAdapter();
+                    listAdapter.add(data.getStringExtra(HOUSEHOLD_NAME));
+            }
         } else {
             savePhoneIdErrorHandler();
         }
@@ -58,7 +72,7 @@ public class StepsActivity extends ListActivity {
 
     private void openSettings() {
         Intent intent = new Intent(getBaseContext(), SettingsActivity.class);
-        startActivityForResult(intent, IDENTIFIER);
+        startActivityForResult(intent, SETTINGS_IDENTIFIER);
     }
 
     private void addHousehold() {
@@ -66,9 +80,7 @@ public class StepsActivity extends ListActivity {
             alertUserToSetPhoneId();
         } else {
             Intent intent = new Intent(getBaseContext(), NewHouseholdActivity.class);
-            startActivityForResult(intent, IDENTIFIER);
-//            ArrayAdapter<String> adapter = (ArrayAdapter<String>) getListView().getAdapter();
-//            adapter.add(String.format("%s-%d", phoneId, adapter.getCount() + 1));
+            startActivityForResult(intent, HOUSEHOLD_IDENTIFIER);
         }
     }
 
@@ -76,8 +88,8 @@ public class StepsActivity extends ListActivity {
         return dataStore().getString(PHONE_ID, null);
     }
 
-    private ArrayList<String> fetchHouseholds() {
-        return new ArrayList<String>();
+    private List<String> fetchHouseholds() {
+        return db.getHouseholdNames();
     }
 
     private String savePhoneId(String phoneId) {

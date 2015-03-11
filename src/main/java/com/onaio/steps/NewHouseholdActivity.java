@@ -8,7 +8,10 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.widget.TextView;
 import com.onaio.steps.R;
+import com.onaio.steps.helper.DatabaseHelper;
+import com.onaio.steps.model.Household;
 
+import static com.onaio.steps.StepsActivity.HOUSEHOLD_NAME;
 import static com.onaio.steps.StepsActivity.PHONE_ID;
 
 public class NewHouseholdActivity extends Activity {
@@ -22,8 +25,13 @@ public class NewHouseholdActivity extends Activity {
 
     public void saveHousehold(View view) {
         Intent intent = this.getIntent();
-        TextView phoneIdView = (TextView) findViewById(R.id.phoneId);
-        intent.putExtra(PHONE_ID, phoneIdView.getText().toString());
+        TextView name = (TextView) findViewById(R.id.household_name);
+        TextView number = (TextView) findViewById(R.id.household_number);
+        int phoneNumber = Integer.parseInt(number.getText().toString());
+        Household household = new Household(name.getText().toString(), phoneNumber);
+        DatabaseHelper db = new DatabaseHelper(this.getApplicationContext());
+        db.createHousehold(household);
+        intent.putExtra(HOUSEHOLD_NAME,household.getName());
         setResult(RESULT_OK, intent);
         finish();
     }
