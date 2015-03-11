@@ -2,12 +2,10 @@ package com.onaio.steps.activityHandler;
 
 import android.app.ListActivity;
 import android.content.Intent;
-import android.content.SharedPreferences;
+
 import com.onaio.steps.R;
-import com.onaio.steps.SettingsActivity;
 
 import static android.app.Activity.RESULT_OK;
-import static android.content.Context.MODE_PRIVATE;
 
 public class ExportActivityHandler implements IActivityHandler {
 

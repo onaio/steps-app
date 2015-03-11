@@ -2,20 +2,17 @@ package com.onaio.steps.activityHandler;
 
 import android.app.AlertDialog;
 import android.app.ListActivity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.widget.ArrayAdapter;
-import com.onaio.steps.NewHouseholdActivity;
+
+import com.onaio.steps.activity.NewHouseholdActivity;
 import com.onaio.steps.R;
-import com.onaio.steps.StepsActivity;
 
 import static android.app.Activity.RESULT_OK;
 import static android.content.Context.MODE_PRIVATE;
-import static com.onaio.steps.NewHouseholdActivity.HOUSEHOLD_NAME;
-import static com.onaio.steps.StepsActivity.PHONE_ID;
-
-import static android.app.Activity.RESULT_OK;
+import static com.onaio.steps.activity.NewHouseholdActivity.HOUSEHOLD_NAME;
+import static com.onaio.steps.activity.StepsActivity.PHONE_ID;
 
 public class NewHouseholdActivityHandler implements IActivityHandler {
 

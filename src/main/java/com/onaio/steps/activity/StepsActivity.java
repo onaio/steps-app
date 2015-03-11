@@ -1,4 +1,4 @@
-package com.onaio.steps;
+package com.onaio.steps.activity;
 
 import android.app.ListActivity;
 import android.content.Intent;
@@ -8,6 +8,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
+
+import com.onaio.steps.R;
 import com.onaio.steps.activityHandler.ActivityHandlerFactory;
 import com.onaio.steps.activityHandler.IActivityHandler;
 import com.onaio.steps.helper.DatabaseHelper;

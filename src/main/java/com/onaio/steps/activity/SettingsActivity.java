@@ -1,4 +1,4 @@
-package com.onaio.steps;
+package com.onaio.steps.activity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import static com.onaio.steps.StepsActivity.PHONE_ID;
+import com.onaio.steps.R;
 
 public class SettingsActivity extends Activity {
     @Override
@@ -14,7 +14,7 @@ public class SettingsActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings);
         Intent intent = getIntent();
-        String phoneId = intent.getStringExtra(PHONE_ID);
+        String phoneId = intent.getStringExtra(StepsActivity.PHONE_ID);
         TextView phoneIdView = (TextView) findViewById(R.id.phoneId);
         phoneIdView.setText(phoneId);
 
@@ -23,7 +23,7 @@ public class SettingsActivity extends Activity {
     public void savePhoneId(View view) {
         Intent intent = this.getIntent();
         TextView phoneIdView = (TextView) findViewById(R.id.phoneId);
-        intent.putExtra(PHONE_ID, phoneIdView.getText().toString());
+        intent.putExtra(StepsActivity.PHONE_ID, phoneIdView.getText().toString());
         setResult(RESULT_OK, intent);
         finish();
     }
