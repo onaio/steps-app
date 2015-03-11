@@ -47,15 +47,17 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         long household_id = db.insert(TABLE_HOUSEHOLD, null, values);
     }
 
-    public List<String> getHouseholdNames() {
+    public List<Household> getHouseholds() {
         SQLiteDatabase db = getReadableDatabase();
         String houseHOldQuery = "SELECT * FROM HOUSEHOLD";
 
         Cursor cursor = db.rawQuery(houseHOldQuery, null);
-        List<String> householdNames = new ArrayList<String>();
+        List<Household> householdNames = new ArrayList<Household>();
         if(cursor.moveToFirst()){
             do{
-                householdNames.add(cursor.getString(cursor.getColumnIndex(HOUSEHOLD_NAME)));
+                String household_name = cursor.getString(cursor.getColumnIndex(HOUSEHOLD_NAME));
+                String household_number = cursor.getString(cursor.getColumnIndex(HOUSEHOLD_PHONE_NUMBER));
+                householdNames.add(new Household(household_name,Integer.parseInt(household_number)));
             }while (cursor.moveToNext());
         }
         return householdNames;
