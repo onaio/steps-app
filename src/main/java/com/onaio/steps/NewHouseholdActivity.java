@@ -18,7 +18,10 @@ public class NewHouseholdActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_household);
-
+        Intent intent = getIntent();
+        String phoneId = intent.getStringExtra(PHONE_ID);
+        TextView phoneIdView = (TextView) findViewById(R.id.generated_household_id);
+        phoneIdView.setText(phoneId+"-");
     }
 
     public void saveHousehold(View view) {

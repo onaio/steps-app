@@ -15,7 +15,7 @@
             android:clickable="true"
             android:scaleType="fitStart"
             android:longClickable="true"
-            android:text = "Done"
+            android:text = "@string/action_done"
             android:drawableLeft="@drawable/ic_done"
             android:background="@android:color/transparent"
             android:textColor="@android:color/white"
@@ -27,22 +27,42 @@
         android:background="@android:color/darker_gray"
         />
 
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="@string/generated_household_id"
+        android:layout_marginLeft="10dp"
+        android:id="@+id/generated_household_id_label"/>
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="45dp"
+        android:text="sample"
+        android:layout_marginLeft="10dp"
+        android:id="@+id/generated_household_id"
+        android:textColor="#ff888888"/>
+
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="text"
-        android:hint="Household ID"
+        android:hint="@string/household_id_hint"
         android:ems="10"
         android:id="@+id/household_name"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="10dp" />
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp" />
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="number"
-        android:hint="Contact Phone Number"
+        android:hint="@string/phone_number_hint"
         android:ems="10"
         android:id="@+id/household_number"
-        android:layout_marginTop="10dp" />
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp" />
 
 </LinearLayout>

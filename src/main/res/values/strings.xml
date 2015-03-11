@@ -12,4 +12,7 @@
     <string name="phone_id_message_title">Alert</string>
     <string name="household_id_label">Household ID</string>
     <string name="phoneNumber">Household ID</string>
+    <string name="generated_household_id">Generated Household ID:</string>
+    <string name="phone_number_hint">Contact Phone Number</string>
+    <string name="household_id_hint">Household ID</string>
 </resources>

@@ -41,6 +41,8 @@
             android:hint="@string/phone_id_label"
             android:ems="10"
             android:id="@+id/phoneId"
-        android:layout_marginTop="30dp" />
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp" />
 
 </LinearLayout>
