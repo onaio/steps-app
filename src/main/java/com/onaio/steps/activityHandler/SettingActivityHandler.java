@@ -3,13 +3,16 @@ package com.onaio.steps.activityHandler;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
-
 import com.onaio.steps.R;
 import com.onaio.steps.SettingsActivity;
 
+import static android.app.Activity.RESULT_OK;
+import static android.content.Context.MODE_PRIVATE;
+import static com.onaio.steps.StepsActivity.PHONE_ID;
+
 public class SettingActivityHandler implements IActivityHandler {
+
     private static final int IDENTIFIER = 1;
-    public static final String PHONE_ID = "phoneId";
 
     @Override
     public boolean shouldOpen(int menu_id) {
@@ -30,7 +33,7 @@ public class SettingActivityHandler implements IActivityHandler {
 
     @Override
     public void handleResult(ListActivity activity, Intent data, int resultCode) {
-        if (resultCode == activity.RESULT_OK)
+        if (resultCode == RESULT_OK)
             handleSuccess(activity, data);
         else
             savePhoneIdErrorHandler();
@@ -49,10 +52,11 @@ public class SettingActivityHandler implements IActivityHandler {
     }
 
     private SharedPreferences dataStore(ListActivity activity) {
-        return activity.getPreferences(activity.MODE_PRIVATE);
+        return activity.getPreferences(MODE_PRIVATE);
     }
 
     private SharedPreferences.Editor dataStoreEditor(ListActivity activity) {
         return dataStore(activity).edit();
     }
+
 }

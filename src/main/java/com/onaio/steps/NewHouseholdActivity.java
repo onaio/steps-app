@@ -3,18 +3,17 @@ package com.onaio.steps;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.widget.TextView;
-import com.onaio.steps.R;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.model.Household;
 
-import static com.onaio.steps.StepsActivity.HOUSEHOLD_NAME;
 import static com.onaio.steps.StepsActivity.PHONE_ID;
 
 public class NewHouseholdActivity extends Activity {
+
+    public static final String HOUSEHOLD_NAME = "household_name";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,4 +33,5 @@ public class NewHouseholdActivity extends Activity {
         setResult(RESULT_OK, intent);
         finish();
     }
+
 }

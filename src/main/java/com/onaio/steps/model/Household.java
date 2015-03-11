@@ -2,6 +2,13 @@ package com.onaio.steps.model;
 
 public class Household {
     String id;
+    String name;
+    int phoneNumber;
+
+    public Household(String name, int phoneNumber) {
+        this.name= name;
+        this.phoneNumber = phoneNumber;
+    }
 
     public String getName() {
         return name;
@@ -9,14 +16,6 @@ public class Household {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    String name;
-    int phoneNumber;
-
-    public Household(String name, int phoneNumber) {
-        this.name= name;
-        this.phoneNumber = phoneNumber;
     }
 
     public String getId() {

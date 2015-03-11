@@ -5,14 +5,18 @@ import android.app.ListActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.widget.ArrayAdapter;
-
 import com.onaio.steps.NewHouseholdActivity;
 import com.onaio.steps.R;
+import com.onaio.steps.StepsActivity;
+
+import static android.app.Activity.RESULT_OK;
+import static android.content.Context.MODE_PRIVATE;
+import static com.onaio.steps.NewHouseholdActivity.HOUSEHOLD_NAME;
+import static com.onaio.steps.StepsActivity.PHONE_ID;
 
 public class NewHouseholdActivityHandler implements IActivityHandler {
+
     private static final int IDENTIFIER = 2;
-    public static final String HOUSEHOLD_NAME = "household_name";
-    private static final String PHONE_ID = "phoneId";
 
     @Override
     public boolean shouldOpen(int menu_id) {
@@ -33,7 +37,7 @@ public class NewHouseholdActivityHandler implements IActivityHandler {
 
     @Override
     public void handleResult(ListActivity activity, Intent data, int resultCode) {
-        if (resultCode == activity.RESULT_OK) {
+        if (resultCode == RESULT_OK) {
             ArrayAdapter<String> listAdapter = (ArrayAdapter<String>) activity.getListView().getAdapter();
             listAdapter.add(data.getStringExtra(HOUSEHOLD_NAME));
         }
@@ -55,7 +59,7 @@ public class NewHouseholdActivityHandler implements IActivityHandler {
     }
 
     private SharedPreferences dataStore(ListActivity activity) {
-        return activity.getPreferences(activity.MODE_PRIVATE);
+        return activity.getPreferences(MODE_PRIVATE);
     }
 
 }

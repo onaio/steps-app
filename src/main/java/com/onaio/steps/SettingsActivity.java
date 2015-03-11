@@ -25,5 +25,4 @@ public class SettingsActivity extends Activity {
         setResult(RESULT_OK, intent);
         finish();
     }
-
 }

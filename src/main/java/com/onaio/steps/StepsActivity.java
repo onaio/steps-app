@@ -19,16 +19,13 @@ import java.util.List;
 
 public class StepsActivity extends ListActivity {
 
-    public static final String PHONE_ID = "phoneId";
-    public static final String HOUSEHOLD_NAME = "household_name";
     private DatabaseHelper db;
-    private String phoneId;
+    public static final String PHONE_ID = "phoneId";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-        phoneId = phoneId();
         db = new DatabaseHelper(getApplicationContext());
         getListView().setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, fetchHouseholds()));
 
@@ -66,14 +63,6 @@ public class StepsActivity extends ListActivity {
         for(Household household: households)
             householdNames.add(household.getName());
         return householdNames;
-    }
-
-    private String phoneId() {
-        return dataStore().getString(PHONE_ID, null) ;
-    }
-
-    private SharedPreferences dataStore() {
-        return getPreferences(MODE_PRIVATE);
     }
 
 }
