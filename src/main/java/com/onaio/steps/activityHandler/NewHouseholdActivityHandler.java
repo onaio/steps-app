@@ -41,7 +41,7 @@ public class NewHouseholdActivityHandler implements IActivityHandler {
             ArrayAdapter<String> listAdapter = (ArrayAdapter<String>) activity.getListView().getAdapter();
             if (listAdapter == null)
                 return;
-            listAdapter.add(data.getStringExtra(HOUSEHOLD_NAME));
+            listAdapter.insert(data.getStringExtra(HOUSEHOLD_NAME),0);
         }
     }
 
