@@ -1,15 +1,12 @@
 package com.onaio.steps.activity;
 
-import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.onaio.steps.R;
@@ -17,12 +14,15 @@ import com.onaio.steps.activityHandler.ActivityHandlerFactory;
 import com.onaio.steps.activityHandler.IActivityHandler;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.model.Household;
+import com.onaio.steps.model.Member;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class HouseholdActivity extends ListActivity {
 
     private Household household;
+    private DatabaseHelper db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +32,12 @@ public class HouseholdActivity extends ListActivity {
         household = (Household)intent.getSerializableExtra("HOUSEHOLD");
         TextView phoneNumber = (TextView) findViewById(R.id.household_number);
         phoneNumber.setText(String.valueOf(household.getPhoneNumber()));
+        populateListView();
+    }
+
+    private void populateListView() {
+        db = new DatabaseHelper(getApplicationContext());
+        getListView().setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, fetchMembers()));
     }
 
     @Override
@@ -48,5 +54,13 @@ public class HouseholdActivity extends ListActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_activity_actions, menu);
         return super.onCreateOptionsMenu(menu);
+    }
+
+    private List<String> fetchMembers() {
+        List<Member> members = Member.getAll(db,household);
+        List<String> memberNames = new ArrayList<String>();
+        for(Member member: members)
+            memberNames.add(member.getName());
+        return memberNames;
     }
 }
