@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="35dp">
+        <Button
+            android:layout_width="70dp"
+            android:layout_height="fill_parent"
+            android:clickable="true"
+            android:scaleType="fitStart"
+            android:longClickable="true"
+            android:text = "@string/action_done"
+            android:drawableLeft="@drawable/ic_done"
+            android:background="@android:color/transparent"
+            android:textColor="@android:color/white"
+            android:onClick="saveHousehold"/>
+
+    </LinearLayout>
+    <View android:layout_height="1dp"
+        android:layout_width="fill_parent"
+        android:background="@android:color/darker_gray"
+        />
+
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:hint="@string/member_name_hint"
+        android:ems="10"
+        android:id="@+id/member_name"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp" />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:hint="@string/member_gender_hint"
+        android:ems="10"
+        android:id="@+id/member_gender"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp" />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:hint="@string/member_age_hint"
+        android:ems="10"
+        android:id="@+id/household_number"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp" />
+
+
+</LinearLayout>

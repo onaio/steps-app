@@ -16,4 +16,7 @@
     <string name="generated_household_id">Generated Household ID:</string>
     <string name="phone_number_hint">Contact Phone Number</string>
     <string name="household_id_hint">Household ID</string>
+    <string name="member_name_hint">Member Name</string>
+    <string name="member_gender_hint">Gender</string>
+    <string name="member_age_hint">Age</string>
 </resources>

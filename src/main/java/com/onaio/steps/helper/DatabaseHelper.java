@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.onaio.steps.model.Household;
+import com.onaio.steps.model.Member;
 
 public class DatabaseHelper extends SQLiteOpenHelper{
 
@@ -21,11 +22,13 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(Household.TABLE_CREATE_QUERY);
+        db.execSQL(Member.TABLE_CREATE_QUERY);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i2) {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS "+Household.TABLE_NAME);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS "+Member.TABLE_NAME);
         onCreate(sqLiteDatabase);
     }
 

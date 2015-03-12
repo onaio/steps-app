@@ -12,7 +12,7 @@ public class Household {
     private static String FIND_BY_NAME_QUERY = "SELECT * FROM HOUSEHOLD WHERE name = '%s' LIMIT 1";
     private static String FIND_ALL_QUERY = "SELECT * FROM HOUSEHOLD ORDER BY Id desc";
     public static final String TABLE_NAME = "household";
-    private static final String ID = "Id";
+    public static final String ID = "Id";
     private static final String NAME = "Name";
     private static final String PHONE_NUMBER = "Phone_Number";
     public static final String TABLE_CREATE_QUERY = String.format("CREATE TABLE %s(%s INTEGER PRIMARY KEY, %s TEXT, %s INTEGER)", TABLE_NAME, ID, NAME, PHONE_NUMBER);
