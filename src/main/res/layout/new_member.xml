@@ -19,7 +19,7 @@
             android:drawableLeft="@drawable/ic_done"
             android:background="@android:color/transparent"
             android:textColor="@android:color/white"
-            android:onClick="saveHousehold"/>
+            android:onClick="saveMember"/>
 
     </LinearLayout>
     <View android:layout_height="1dp"
@@ -31,7 +31,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="text"
+        android:inputType="textPersonName"
         android:hint="@string/member_name_hint"
         android:ems="10"
         android:id="@+id/member_name"
@@ -41,7 +41,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="number"
+        android:inputType="textPersonName"
         android:hint="@string/member_gender_hint"
         android:ems="10"
         android:id="@+id/member_gender"
@@ -54,7 +54,7 @@
         android:inputType="number"
         android:hint="@string/member_age_hint"
         android:ems="10"
-        android:id="@+id/household_number"
+        android:id="@+id/member_age"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp" />

@@ -1,5 +1,9 @@
 package com.onaio.steps.model;
 
+import android.content.ContentValues;
+
+import com.onaio.steps.helper.DatabaseHelper;
+
 public class Member {
     public static final String TABLE_NAME = "member";
     private static final String ID = "Id";
@@ -35,5 +39,13 @@ public class Member {
 
     public Household getHousehold() {
         return household;
+    }
+
+    public long save(DatabaseHelper db) {
+        ContentValues values = new ContentValues();
+        values.put(NAME, getName());
+        values.put(GENDER,getGender());
+        values.put(AGE,getAge());
+        return db.save(values, TABLE_NAME);
     }
 }

@@ -22,14 +22,16 @@ import java.util.List;
 
 public class HouseholdActivity extends ListActivity {
 
+    private Household household;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.household);
         Intent intent = getIntent();
-        String household_number = intent.getStringExtra("HOUSEHOLD_NUMBER");
+        household = (Household)intent.getSerializableExtra("HOUSEHOLD");
         TextView phoneNumber = (TextView) findViewById(R.id.household_number);
-        phoneNumber.setText(household_number);
+        phoneNumber.setText(String.valueOf(household.getPhoneNumber()));
     }
 
     @Override
@@ -37,7 +39,7 @@ public class HouseholdActivity extends ListActivity {
         List<IActivityHandler> menuHandlers = ActivityHandlerFactory.getHouseholdMenuHandlers();
         for(IActivityHandler menuHandler:menuHandlers)
             if(menuHandler.shouldOpen(item.getItemId()))
-                menuHandler.open(this);
+                menuHandler.with(household).open(this);
         return super.onOptionsItemSelected(item);
     }
 

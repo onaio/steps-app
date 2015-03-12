@@ -25,8 +25,7 @@ public class HouseholdActivityHandler implements IActivityHandler {
     public boolean open(ListActivity activity) {
         if (listViewItem == null) return true;
         Intent intent = new Intent(activity.getBaseContext(), HouseholdActivity.class);
-        intent.putExtra("HOUSEHOLD_ID",listViewItem.getId());
-        intent.putExtra("HOUSEHOLD_NUMBER",String.valueOf(listViewItem.getPhoneNumber()));
+        intent.putExtra("HOUSEHOLD",listViewItem);
         activity.startActivityForResult(intent, IDENTIFIER);
         return true;
     }

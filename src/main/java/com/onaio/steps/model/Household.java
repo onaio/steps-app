@@ -5,10 +5,11 @@ import android.database.Cursor;
 
 import com.onaio.steps.helper.DatabaseHelper;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Household {
+public class Household implements Serializable {
     private static String FIND_BY_NAME_QUERY = "SELECT * FROM HOUSEHOLD WHERE name = '%s' LIMIT 1";
     private static String FIND_ALL_QUERY = "SELECT * FROM HOUSEHOLD ORDER BY Id desc";
     public static final String TABLE_NAME = "household";
@@ -21,7 +22,11 @@ public class Household {
     String name;
     long phoneNumber;
 
-
+    public Household(String id, String name, long phoneNumber) {
+        this.id = id;
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+    }
 
     public Household(String name, long phoneNumber) {
         this.name= name;
@@ -75,7 +80,8 @@ public class Household {
             do{
                 String household_name = cursor.getString(cursor.getColumnIndex(NAME));
                 String household_number = cursor.getString(cursor.getColumnIndex(PHONE_NUMBER));
-                householdNames.add(new Household(household_name,Integer.parseInt(household_number)));
+                String id = cursor.getString(cursor.getColumnIndex(ID));
+                householdNames.add(new Household(id,household_name, Integer.parseInt(household_number)));
             }while (cursor.moveToNext());
         }
         return householdNames;
