@@ -19,6 +19,9 @@
             android:label="New Household"
             android:theme="@android:style/Theme.NoTitleBar">
         </activity>
+        <activity android:name=".activity.HouseholdActivity"
+            android:label="@string/action_household">
+        </activity>
     </application>
     <uses-sdk android:minSdkVersion="11"/>
 </manifest>

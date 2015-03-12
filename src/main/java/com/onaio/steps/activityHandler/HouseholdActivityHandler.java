@@ -4,20 +4,30 @@ import android.app.ListActivity;
 import android.content.Intent;
 
 import com.onaio.steps.R;
+import com.onaio.steps.activity.HouseholdActivity;
+import com.onaio.steps.activity.NewHouseholdActivity;
+import com.onaio.steps.model.Household;
 
 import static android.app.Activity.RESULT_OK;
+import static com.onaio.steps.activity.StepsActivity.PHONE_ID;
 
-public class ExportActivityHandler implements IActivityHandler {
+public class HouseholdActivityHandler implements IActivityHandler {
 
     private static final int IDENTIFIER = 3;
+    private Household listViewItem;
 
     @Override
     public boolean shouldOpen(int menu_id) {
-        return menu_id == R.id.action_export;
+        return true;
     }
 
     @Override
     public boolean open(ListActivity activity) {
+        if (listViewItem == null) return true;
+        Intent intent = new Intent(activity.getBaseContext(), HouseholdActivity.class);
+        intent.putExtra("HOUSEHOLD_ID",listViewItem.getId());
+        intent.putExtra("HOUSEHOLD_NUMBER",String.valueOf(listViewItem.getPhoneNumber()));
+        activity.startActivityForResult(intent, IDENTIFIER);
         return true;
     }
 
@@ -28,6 +38,7 @@ public class ExportActivityHandler implements IActivityHandler {
 
     @Override
     public IActivityHandler with(Object data) {
+        listViewItem = ((Household) data);
         return this;
     }
 

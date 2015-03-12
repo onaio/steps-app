@@ -50,6 +50,11 @@ public class NewHouseholdActivityHandler implements IActivityHandler {
         return requestCode == IDENTIFIER;
     }
 
+    @Override
+    public IActivityHandler with(Object data) {
+        return this;
+    }
+
     private void alertUserToSetPhoneId(ListActivity activity) {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setTitle(R.string.phone_id_message_title).setMessage(R.string.phone_id_message);

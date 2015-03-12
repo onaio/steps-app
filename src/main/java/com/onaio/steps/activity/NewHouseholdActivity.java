@@ -22,21 +22,16 @@ public class NewHouseholdActivity extends Activity {
         setContentView(R.layout.new_household);
         populatePhoneIdInGeneratedId();
         bindGeneratedIdToTextInput();
-
     }
 
     private void bindGeneratedIdToTextInput() {
         TextView householdName = (TextView) findViewById(R.id.household_name);
         householdName.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
-
-            }
+            public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {}
 
             @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
-
-            }
+            public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {}
 
             @Override
             public void afterTextChanged(Editable editable) {
@@ -60,7 +55,7 @@ public class NewHouseholdActivity extends Activity {
         long phoneNumber = Long.parseLong(number.getText().toString());
         Household household = new Household(intent.getStringExtra(StepsActivity.PHONE_ID)+"-"+name.getText().toString(), phoneNumber);
         DatabaseHelper db = new DatabaseHelper(this.getApplicationContext());
-        db.createHousehold(household);
+        household.save(db);
         intent.putExtra(HOUSEHOLD_NAME,household.getName());
         setResult(RESULT_OK, intent);
         finish();

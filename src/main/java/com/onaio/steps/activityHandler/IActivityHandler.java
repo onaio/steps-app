@@ -8,4 +8,5 @@ public interface IActivityHandler {
     public boolean open(ListActivity activity);
     public void handleResult(ListActivity activity, Intent data, int resultCode);
     public boolean canHandleResult(int requestCode);
+    public IActivityHandler with(Object data);
 }

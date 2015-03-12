@@ -34,6 +34,11 @@ public class SettingActivityHandler implements IActivityHandler {
     }
 
     @Override
+    public IActivityHandler with(Object data) {
+        return this;
+    }
+
+    @Override
     public void handleResult(ListActivity activity, Intent data, int resultCode) {
         if (resultCode == RESULT_OK)
             handleSuccess(activity, data);
