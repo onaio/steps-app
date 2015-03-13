@@ -23,4 +23,6 @@
     <string name="female_label">Female</string>
     <string name="action_select_participant">Select Participant</string>
     <string name="action_member">Member</string>
+    <string name="action_edit">Edit</string>
+    <string name="action_delete">Delete</string>
 </resources>
