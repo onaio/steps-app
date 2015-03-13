@@ -20,14 +20,19 @@ public class SettingsActivity extends Activity {
     private void populatePhoneId() {
         Intent intent = getIntent();
         String phoneId = intent.getStringExtra(Constants.PHONE_ID);
+        String endpointUrl = intent.getStringExtra(Constants.ENDPOINT_URL);
         TextView phoneIdView = (TextView) findViewById(R.id.phoneId);
+        TextView endpointUrlView = (TextView) findViewById(R.id.endpointUrl);
         phoneIdView.setText(phoneId);
+        endpointUrlView.setText(endpointUrl);
     }
 
-    public void savePhoneId(View view) {
+    public void saveSettings(View view) {
         Intent intent = this.getIntent();
         TextView phoneIdView = (TextView) findViewById(R.id.phoneId);
+        TextView endpointUrlView = (TextView) findViewById(R.id.endpointUrl);
         intent.putExtra(Constants.PHONE_ID, phoneIdView.getText().toString());
+        intent.putExtra(Constants.ENDPOINT_URL, endpointUrlView.getText().toString());
         setResult(RESULT_OK, intent);
         finish();
     }

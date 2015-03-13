@@ -2,14 +2,22 @@ package com.onaio.steps.activityHandler;
 
 import android.app.ListActivity;
 import android.content.Intent;
-
+import android.database.Cursor;
 import com.onaio.steps.R;
+import com.onaio.steps.helper.DatabaseHelper;
+import com.onaio.steps.helper.UploadFileTask;
+import com.onaio.steps.model.Household;
+import com.opencsv.CSVWriter;
 
-import static android.app.Activity.RESULT_OK;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ExportActivityHandler implements IActivityHandler {
 
-    private static final int IDENTIFIER = 3;
+    public static final String EXPORT_FILE_NAME = "/households.csv";
 
     @Override
     public boolean shouldOpen(int menu_id) {
@@ -18,12 +26,32 @@ public class ExportActivityHandler implements IActivityHandler {
 
     @Override
     public boolean open(ListActivity activity) {
-        return true;
+        try {
+            File file = new File(activity.getFilesDir() + EXPORT_FILE_NAME);
+            Cursor cursor = new DatabaseHelper(activity.getApplicationContext()).exec(Household.FIND_ALL_QUERY);
+            CSVWriter writer = new CSVWriter(new FileWriter(file), '\t');
+            writer.writeNext(cursor.getColumnNames());
+            while (cursor.moveToNext()) {
+                List<String> columns = new ArrayList<String>();
+                for (int count = 0; count < cursor.getColumnCount(); count++) {
+                    columns.add(cursor.getString(count));
+                }
+                writer.writeNext(columns.toArray(new String[columns.size()]));
+            }
+            writer.close();
+
+            new UploadFileTask(activity).execute(file);
+
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     @Override
     public boolean canHandleResult(int requestCode) {
-        return requestCode == IDENTIFIER;
+        return false;
     }
 
     @Override
@@ -33,16 +61,6 @@ public class ExportActivityHandler implements IActivityHandler {
 
     @Override
     public void handleResult(ListActivity activity, Intent data, int resultCode) {
-        if (resultCode == RESULT_OK)
-            handleSuccess(activity, data);
-        else
-            exportErrorHandler();
-    }
-
-    private void handleSuccess(ListActivity activity, Intent data) {
-    }
-
-    private void exportErrorHandler() {
     }
 
 }

@@ -8,6 +8,7 @@ public class ActivityHandlerFactory {
         ArrayList<IActivityHandler> handlers = new ArrayList<IActivityHandler>();
         handlers.add(new NewHouseholdActivityHandler());
         handlers.add(new SettingActivityHandler());
+        handlers.add(new ExportActivityHandler());
         return handlers;
     }
 

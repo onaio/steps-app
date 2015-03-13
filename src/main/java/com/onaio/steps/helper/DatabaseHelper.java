@@ -5,11 +5,10 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.Member;
 
-public class DatabaseHelper extends SQLiteOpenHelper{
+public class DatabaseHelper extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "householdManager";
     public static final int DATABASE_VERSION = 1;
@@ -41,4 +40,5 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         SQLiteDatabase db = getReadableDatabase();
         return db.rawQuery(query,null);
     }
+
 }

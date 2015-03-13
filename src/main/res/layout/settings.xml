@@ -17,7 +17,7 @@
             android:drawableLeft="@drawable/ic_done"
             android:background="@android:color/transparent"
             android:textColor="@android:color/white"
-            android:onClick="savePhoneId"/>
+            android:onClick="saveSettings"/>
 
         <TextView
             android:layout_width="fill_parent"
@@ -41,6 +41,15 @@
             android:hint="@string/phone_id_label"
             android:ems="10"
             android:id="@+id/phoneId"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp" />
+    <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:ems="10"
+            android:id="@+id/endpointUrl"
         android:layout_marginTop="30dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp" />

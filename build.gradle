@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 
 buildscript {
     repositories {
+        mavenLocal()
         mavenCentral()
     }
 
@@ -13,4 +14,22 @@ buildscript {
 android {
     compileSdkVersion 16
     buildToolsVersion "21.1.2"
+    android {
+        packagingOptions {
+            exclude 'META-INF/LICENSE.txt'
+            exclude 'META-INF/NOTICE.txt'
+        }
+    }
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    compile 'com.opencsv:opencsv:3.3'
+    compile 'org.apache.httpcomponents:httpcore:4.2.4'
+    compile 'org.apache.httpcomponents:httpclient:4.2.5'
+    compile 'org.apache.httpcomponents:httpmime:4.2.5'
 }

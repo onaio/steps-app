@@ -17,4 +17,5 @@ public class Constants {
     public static final int NEW_HOUSEHOLD_IDENTIFIER = 2;
     public static final int HOUSEHOLD_IDENTIFIER = 3;
     public static final int NEW_MEMBER_IDENTIFIER = 4;
+    public static final String ENDPOINT_URL = "endpointUrl";
 }

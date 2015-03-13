@@ -2,14 +2,16 @@ package com.onaio.steps.activityHandler;
 
 import android.app.ListActivity;
 import android.content.Intent;
-import android.content.SharedPreferences;
-
 import com.onaio.steps.R;
 import com.onaio.steps.activity.SettingsActivity;
 import com.onaio.steps.helper.Constants;
+import com.onaio.steps.helper.KeyValueStore;
+import com.onaio.steps.helper.KeyValueStoreFactory;
 
 import static android.app.Activity.RESULT_OK;
-import static android.content.Context.MODE_PRIVATE;
+import static com.onaio.steps.helper.Constants.ENDPOINT_URL;
+import static com.onaio.steps.helper.Constants.PHONE_ID;
+
 
 public class SettingActivityHandler implements IActivityHandler {
 
@@ -21,7 +23,8 @@ public class SettingActivityHandler implements IActivityHandler {
     @Override
     public boolean open(ListActivity activity) {
         Intent intent = new Intent(activity.getBaseContext(), SettingsActivity.class);
-        intent.putExtra(Constants.PHONE_ID,getPhoneId(activity));
+        intent.putExtra(PHONE_ID,getPhoneId(activity));
+        intent.putExtra(ENDPOINT_URL,getEndpointUrl(activity));
         activity.startActivityForResult(intent, Constants.SETTING_IDENTIFIER);
         return true;
     }
@@ -40,32 +43,28 @@ public class SettingActivityHandler implements IActivityHandler {
     public void handleResult(ListActivity activity, Intent data, int resultCode) {
         if (resultCode == RESULT_OK)
             handleSuccess(activity, data);
-        else
-            savePhoneIdErrorHandler();
     }
 
     private void handleSuccess(ListActivity activity, Intent data) {
-        SharedPreferences.Editor editor = dataStoreEditor(activity);
-        String phoneId = data.getStringExtra(Constants.PHONE_ID);
-        editor.putString(Constants.PHONE_ID, phoneId);
-        if (!editor.commit())
-            savePhoneIdErrorHandler();
+        String phoneId = data.getStringExtra(PHONE_ID);
+        String endpointUrl = data.getStringExtra(ENDPOINT_URL);
+        KeyValueStore keyValueStore = KeyValueStoreFactory.instance(activity);
+        if (!keyValueStore.putString(PHONE_ID, phoneId))
+            saveSettingsErrorHandler(PHONE_ID);
+        if (!keyValueStore.putString(ENDPOINT_URL, endpointUrl))
+            saveSettingsErrorHandler(ENDPOINT_URL);
     }
 
-    private void savePhoneIdErrorHandler() {
+    private void saveSettingsErrorHandler(String field) {
         //TODO: toast message for save phone id failure
     }
 
     private String getPhoneId(ListActivity activity) {
-        return dataStore(activity).getString(Constants.PHONE_ID, null) ;
+        return KeyValueStoreFactory.instance(activity).getString(PHONE_ID) ;
     }
 
-    private SharedPreferences dataStore(ListActivity activity) {
-        return activity.getPreferences(MODE_PRIVATE);
-    }
-
-    private SharedPreferences.Editor dataStoreEditor(ListActivity activity) {
-        return dataStore(activity).edit();
+    private String getEndpointUrl(ListActivity activity) {
+        return KeyValueStoreFactory.instance(activity).getString(ENDPOINT_URL) ;
     }
 
 }
