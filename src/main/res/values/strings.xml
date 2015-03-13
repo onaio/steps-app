@@ -19,4 +19,7 @@
     <string name="member_name_hint">Member Name</string>
     <string name="member_gender_hint">Gender</string>
     <string name="member_age_hint">Age</string>
+    <string name="male_label">Male</string>
+    <string name="female_label">Female</string>
+    <string name="action_select_participant">Select Participant</string>
 </resources>

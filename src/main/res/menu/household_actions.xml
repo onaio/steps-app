@@ -7,4 +7,6 @@
           android:title="@string/action_settings"/>
     <item android:id="@+id/action_export"
           android:title="@string/action_export"/>
+    <item android:id="@+id/action_select_participant"
+        android:title="@string/action_select_participant"/>
 </menu>

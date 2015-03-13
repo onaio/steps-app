@@ -8,12 +8,12 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.TextView;
 import com.onaio.steps.R;
+import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.model.Household;
 
 public class NewHouseholdActivity extends Activity {
 
-    public static final String HOUSEHOLD_NAME = "household_name";
     private String phoneId;
 
     @Override
@@ -43,22 +43,26 @@ public class NewHouseholdActivity extends Activity {
 
     private void populatePhoneIdInGeneratedId() {
         Intent intent = getIntent();
-        phoneId = intent.getStringExtra(StepsActivity.PHONE_ID);
+        phoneId = intent.getStringExtra(Constants.PHONE_ID);
         TextView phoneIdView = (TextView) findViewById(R.id.generated_household_id);
         phoneIdView.setText(phoneId +"-");
     }
 
     public void saveHousehold(View view) {
         Intent intent = this.getIntent();
+        Household household = getHouseholdFromView(intent);
+        DatabaseHelper db = new DatabaseHelper(this.getApplicationContext());
+        household.save(db);
+        intent.putExtra(Constants.HOUSEHOLD_NAME,household.getName());
+        setResult(RESULT_OK, intent);
+        finish();
+    }
+
+    private Household getHouseholdFromView(Intent intent) {
         TextView name = (TextView) findViewById(R.id.household_name);
         TextView number = (TextView) findViewById(R.id.household_number);
         long phoneNumber = Long.parseLong(number.getText().toString());
-        Household household = new Household(intent.getStringExtra(StepsActivity.PHONE_ID)+"-"+name.getText().toString(), phoneNumber);
-        DatabaseHelper db = new DatabaseHelper(this.getApplicationContext());
-        household.save(db);
-        intent.putExtra(HOUSEHOLD_NAME,household.getName());
-        setResult(RESULT_OK, intent);
-        finish();
+        return new Household(intent.getStringExtra(Constants.PHONE_ID)+"-"+name.getText().toString(), phoneNumber);
     }
 
 }

@@ -23,7 +23,6 @@ import java.util.List;
 public class StepsActivity extends ListActivity {
 
     private DatabaseHelper db;
-    public static final String PHONE_ID = "phoneId";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

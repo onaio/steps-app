@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.onaio.steps.R;
 import com.onaio.steps.activityHandler.ActivityHandlerFactory;
 import com.onaio.steps.activityHandler.IActivityHandler;
+import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.Member;
@@ -28,14 +29,18 @@ public class HouseholdActivity extends ListActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.household);
-        Intent intent = getIntent();
-        household = (Household)intent.getSerializableExtra("HOUSEHOLD");
-        TextView phoneNumber = (TextView) findViewById(R.id.household_number);
-        phoneNumber.setText(String.valueOf(household.getPhoneNumber()));
-        populateListView();
+        populatePhoneNumber();
+        populateMembers();
     }
 
-    private void populateListView() {
+    private void populatePhoneNumber() {
+        Intent intent = getIntent();
+        household = (Household)intent.getSerializableExtra(Constants.HOUSEHOLD);
+        TextView phoneNumber = (TextView) findViewById(R.id.household_number);
+        phoneNumber.setText(String.valueOf(household.getPhoneNumber()));
+    }
+
+    private void populateMembers() {
         db = new DatabaseHelper(getApplicationContext());
         getListView().setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, fetchMembers()));
     }
@@ -52,8 +57,16 @@ public class HouseholdActivity extends ListActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main_activity_actions, menu);
+        inflater.inflate(R.menu.household_actions, menu);
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        List<IActivityHandler> menuHandlers = ActivityHandlerFactory.getHouseholdMenuHandlers();
+        for(IActivityHandler menuHandler:menuHandlers)
+            if(menuHandler.canHandleResult(requestCode))
+                menuHandler.handleResult(this, data, resultCode);
     }
 
     private List<String> fetchMembers() {

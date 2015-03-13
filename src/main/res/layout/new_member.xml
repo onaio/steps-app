@@ -38,16 +38,34 @@
         android:layout_marginTop="30dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp" />
-    <EditText
-        android:layout_width="match_parent"
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="40dp"
+        android:text="@string/member_gender_hint"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="15dp" />
+    <RadioGroup
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:hint="@string/member_gender_hint"
-        android:ems="10"
+        android:orientation="horizontal"
         android:id="@+id/member_gender"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp" />
+        android:layout_marginTop="-55dp"
+        android:layout_marginLeft="70dp">
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/male_label"
+            android:id="@+id/male_selection"/>
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/female_label"
+            android:id="@+id/female_selection"
+            android:layout_marginLeft="20dp"/>
+    </RadioGroup>
+
+
+
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

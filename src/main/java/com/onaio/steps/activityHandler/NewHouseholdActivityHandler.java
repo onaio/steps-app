@@ -5,18 +5,13 @@ import android.app.ListActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.widget.ArrayAdapter;
-
 import com.onaio.steps.activity.NewHouseholdActivity;
 import com.onaio.steps.R;
-
+import com.onaio.steps.helper.Constants;
 import static android.app.Activity.RESULT_OK;
 import static android.content.Context.MODE_PRIVATE;
-import static com.onaio.steps.activity.NewHouseholdActivity.HOUSEHOLD_NAME;
-import static com.onaio.steps.activity.StepsActivity.PHONE_ID;
 
 public class NewHouseholdActivityHandler implements IActivityHandler {
-
-    private static final int IDENTIFIER = 2;
 
     @Override
     public boolean shouldOpen(int menu_id) {
@@ -29,8 +24,8 @@ public class NewHouseholdActivityHandler implements IActivityHandler {
             alertUserToSetPhoneId(activity);
         } else {
             Intent intent = new Intent(activity.getBaseContext(), NewHouseholdActivity.class);
-            intent.putExtra(PHONE_ID,getPhoneId(activity));
-            activity.startActivityForResult(intent, IDENTIFIER);
+            intent.putExtra(Constants.PHONE_ID,getPhoneId(activity));
+            activity.startActivityForResult(intent, Constants.NEW_HOUSEHOLD_IDENTIFIER);
         }
         return true;
     }
@@ -41,13 +36,13 @@ public class NewHouseholdActivityHandler implements IActivityHandler {
             ArrayAdapter<String> listAdapter = (ArrayAdapter<String>) activity.getListView().getAdapter();
             if (listAdapter == null)
                 return;
-            listAdapter.insert(data.getStringExtra(HOUSEHOLD_NAME),0);
+            listAdapter.insert(data.getStringExtra(Constants.HOUSEHOLD_NAME),0);
         }
     }
 
     @Override
     public boolean canHandleResult(int requestCode) {
-        return requestCode == IDENTIFIER;
+        return requestCode == Constants.NEW_HOUSEHOLD_IDENTIFIER;
     }
 
     @Override
@@ -62,7 +57,7 @@ public class NewHouseholdActivityHandler implements IActivityHandler {
     }
 
     private String getPhoneId(ListActivity activity) {
-        return dataStore(activity).getString(PHONE_ID, null) ;
+        return dataStore(activity).getString(Constants.PHONE_ID, null) ;
     }
 
     private SharedPreferences dataStore(ListActivity activity) {

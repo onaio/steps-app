@@ -6,14 +6,12 @@ import android.content.SharedPreferences;
 
 import com.onaio.steps.R;
 import com.onaio.steps.activity.SettingsActivity;
+import com.onaio.steps.helper.Constants;
 
 import static android.app.Activity.RESULT_OK;
 import static android.content.Context.MODE_PRIVATE;
-import static com.onaio.steps.activity.StepsActivity.PHONE_ID;
 
 public class SettingActivityHandler implements IActivityHandler {
-
-    private static final int IDENTIFIER = 1;
 
     @Override
     public boolean shouldOpen(int menu_id) {
@@ -23,14 +21,14 @@ public class SettingActivityHandler implements IActivityHandler {
     @Override
     public boolean open(ListActivity activity) {
         Intent intent = new Intent(activity.getBaseContext(), SettingsActivity.class);
-        intent.putExtra(PHONE_ID,getPhoneId(activity));
-        activity.startActivityForResult(intent, IDENTIFIER);
+        intent.putExtra(Constants.PHONE_ID,getPhoneId(activity));
+        activity.startActivityForResult(intent, Constants.SETTING_IDENTIFIER);
         return true;
     }
 
     @Override
     public boolean canHandleResult(int requestCode) {
-        return requestCode == IDENTIFIER;
+        return requestCode == Constants.SETTING_IDENTIFIER;
     }
 
     @Override
@@ -48,8 +46,8 @@ public class SettingActivityHandler implements IActivityHandler {
 
     private void handleSuccess(ListActivity activity, Intent data) {
         SharedPreferences.Editor editor = dataStoreEditor(activity);
-        String phoneId = data.getStringExtra(PHONE_ID);
-        editor.putString(PHONE_ID, phoneId);
+        String phoneId = data.getStringExtra(Constants.PHONE_ID);
+        editor.putString(Constants.PHONE_ID, phoneId);
         if (!editor.commit())
             savePhoneIdErrorHandler();
     }
@@ -59,7 +57,7 @@ public class SettingActivityHandler implements IActivityHandler {
     }
 
     private String getPhoneId(ListActivity activity) {
-        return dataStore(activity).getString(PHONE_ID, null) ;
+        return dataStore(activity).getString(Constants.PHONE_ID, null) ;
     }
 
     private SharedPreferences dataStore(ListActivity activity) {

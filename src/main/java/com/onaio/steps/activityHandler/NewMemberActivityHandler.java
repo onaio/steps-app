@@ -1,24 +1,17 @@
 package com.onaio.steps.activityHandler;
 
-import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.widget.ArrayAdapter;
 
 import com.onaio.steps.R;
-import com.onaio.steps.activity.NewHouseholdActivity;
 import com.onaio.steps.activity.NewMemberActivity;
+import com.onaio.steps.helper.Constants;
 import com.onaio.steps.model.Household;
-
 import static android.app.Activity.RESULT_OK;
-import static android.content.Context.MODE_PRIVATE;
-import static com.onaio.steps.activity.NewHouseholdActivity.HOUSEHOLD_NAME;
-import static com.onaio.steps.activity.StepsActivity.PHONE_ID;
 
 public class NewMemberActivityHandler implements IActivityHandler {
 
-    private static final int IDENTIFIER = 4;
     private Household household;
 
     @Override
@@ -30,8 +23,8 @@ public class NewMemberActivityHandler implements IActivityHandler {
     public boolean open(ListActivity activity) {
         if (household== null) return true;
         Intent intent = new Intent(activity.getBaseContext(), NewMemberActivity.class);
-        intent.putExtra("HOUSEHOLD",household);
-        activity.startActivityForResult(intent, IDENTIFIER);
+        intent.putExtra(Constants.HOUSEHOLD,household);
+        activity.startActivityForResult(intent, Constants.NEW_MEMBER_IDENTIFIER);
         return true;
     }
 
@@ -41,13 +34,13 @@ public class NewMemberActivityHandler implements IActivityHandler {
             ArrayAdapter<String> listAdapter = (ArrayAdapter<String>) activity.getListView().getAdapter();
             if (listAdapter == null)
                 return;
-            listAdapter.insert(data.getStringExtra(HOUSEHOLD_NAME), 0);
+            listAdapter.insert(data.getStringExtra(Constants.MEMBER_NAME), 0);
         }
     }
 
     @Override
     public boolean canHandleResult(int requestCode) {
-        return requestCode == IDENTIFIER;
+        return requestCode == Constants.NEW_MEMBER_IDENTIFIER;
     }
 
     @Override
