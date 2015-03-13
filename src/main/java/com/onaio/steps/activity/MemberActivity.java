@@ -24,6 +24,7 @@ public class MemberActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.member);
         populateMember();
+        setTitle(member.getName());
     }
 
     @Override
@@ -36,10 +37,8 @@ public class MemberActivity extends Activity {
     private void populateMember() {
         Intent intent = getIntent();
         member = (Member) intent.getSerializableExtra(Constants.MEMBER);
-        TextView nameView = (TextView) findViewById(R.id.member_name);
         TextView ageView = (TextView) findViewById(R.id.member_age);
         TextView genderView = (TextView) findViewById(R.id.member_gender);
-        nameView.setText(String.valueOf(member.getName()));
         ageView.setText(String.valueOf(member.getAge()));
         genderView.setText(String.valueOf(member.getGender()));
     }

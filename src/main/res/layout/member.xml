@@ -4,22 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="@string/member_name_hint"
-        android:layout_marginTop="30dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="5dp"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:id="@+id/member_name"
-        android:layout_marginTop="-17dp"
-        android:layout_marginLeft="120dp"
-        android:layout_marginRight="5dp" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

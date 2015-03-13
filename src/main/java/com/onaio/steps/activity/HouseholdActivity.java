@@ -35,6 +35,7 @@ public class HouseholdActivity extends ListActivity {
         populatePhoneNumber();
         populateMembers();
         bindMemberItems();
+        setTitle(household.getName());
     }
 
     private void bindMemberItems() {
@@ -54,6 +55,8 @@ public class HouseholdActivity extends ListActivity {
         TextView phoneNumber = (TextView) findViewById(R.id.household_number);
         phoneNumber.setText(String.valueOf(household.getPhoneNumber()));
     }
+
+
 
     private void populateMembers() {
         db = new DatabaseHelper(getApplicationContext());
