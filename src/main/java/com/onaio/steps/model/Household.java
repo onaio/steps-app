@@ -81,7 +81,7 @@ public class Household implements Serializable {
                 String household_name = cursor.getString(cursor.getColumnIndex(NAME));
                 String household_number = cursor.getString(cursor.getColumnIndex(PHONE_NUMBER));
                 String id = cursor.getString(cursor.getColumnIndex(ID));
-                householdNames.add(new Household(id,household_name, Integer.parseInt(household_number)));
+                householdNames.add(new Household(id,household_name, Long.parseLong(household_number)));
             }while (cursor.moveToNext());
         }
         return householdNames;
