@@ -6,7 +6,10 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.onaio.steps.R;
@@ -31,6 +34,18 @@ public class HouseholdActivity extends ListActivity {
         setContentView(R.layout.household);
         populatePhoneNumber();
         populateMembers();
+        bindMemberItems();
+    }
+
+    private void bindMemberItems() {
+        ListView members = getListView();
+        members.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                String member = ((TextView) view).getText().toString();
+                ActivityHandlerFactory.getMemberItemHandler().with(Member.find_by(db, member, household)).open(HouseholdActivity.this);
+            }
+        });
     }
 
     private void populatePhoneNumber() {

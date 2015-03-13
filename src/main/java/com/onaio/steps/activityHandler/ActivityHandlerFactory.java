@@ -19,7 +19,11 @@ public class ActivityHandlerFactory {
         return handlers;
     }
 
-    public static IActivityHandler getHouseholdListItemHandler(){
+    public static IActivityHandler getHouseholdItemHandler(){
         return new HouseholdActivityHandler();
+    }
+
+    public static IActivityHandler getMemberItemHandler(){
+        return new MemberActivityHandler();
     }
 }

@@ -22,4 +22,5 @@
     <string name="male_label">Male</string>
     <string name="female_label">Female</string>
     <string name="action_select_participant">Select Participant</string>
+    <string name="action_member">Member</string>
 </resources>

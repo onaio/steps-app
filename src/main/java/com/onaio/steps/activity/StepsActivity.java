@@ -28,22 +28,22 @@ public class StepsActivity extends ListActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-        populateListView();
-        bindListViewItems();
+        populateHouseholds();
+        bindHouseholdItems();
     }
 
-    private void bindListViewItems() {
+    private void bindHouseholdItems() {
         ListView households = getListView();
         households.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 String householdName = ((TextView) view).getText().toString();
-                ActivityHandlerFactory.getHouseholdListItemHandler().with(Household.find_by(db, householdName)).open(StepsActivity.this);
+                ActivityHandlerFactory.getHouseholdItemHandler().with(Household.find_by(db, householdName)).open(StepsActivity.this);
             }
         });
     }
 
-    private void populateListView() {
+    private void populateHouseholds() {
         db = new DatabaseHelper(getApplicationContext());
         getListView().setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, fetchHouseholds()));
     }

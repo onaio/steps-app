@@ -5,10 +5,11 @@ import android.database.Cursor;
 
 import com.onaio.steps.helper.DatabaseHelper;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Member {
+public class Member implements Serializable {
     public static final String TABLE_NAME = "member";
     private static final String ID = "Id";
     private static final String NAME = "Name";
@@ -17,6 +18,7 @@ public class Member {
     private static final String HOUSEHOLD_ID = "household_id";
     public static final String TABLE_CREATE_QUERY = String.format("CREATE TABLE %s(%s INTEGER PRIMARY KEY, %s TEXT, %s INTEGER, %s TEXT, %s INTEGER, FOREIGN KEY (%s) REFERENCES %s(%s))", TABLE_NAME, ID, NAME, AGE, GENDER, HOUSEHOLD_ID, HOUSEHOLD_ID, Household.TABLE_NAME, Household.ID);
     private static String FIND_ALL_QUERY = "SELECT * FROM MEMBER WHERE %s=%s ORDER BY Id desc";
+    private static String FIND_BY_NAME_QUERY = "SELECT * FROM MEMBER WHERE name = '%s' LIMIT 1";
 
     private String name;
     private String gender;
@@ -77,9 +79,15 @@ public class Member {
                 String gender = cursor.getString(cursor.getColumnIndex(GENDER));
                 String age = cursor.getString(cursor.getColumnIndex(AGE));
                 String id = cursor.getString(cursor.getColumnIndex(ID));
-                members.add(new Member(Integer.parseInt(id), name, gender, Integer.parseInt(age), household));
+                if(household.getId().equals(cursor.getString(cursor.getColumnIndex(HOUSEHOLD_ID))))
+                    members.add(new Member(Integer.parseInt(id), name, gender, Integer.parseInt(age), household));
             }while (cursor.moveToNext());
         }
         return members;
+    }
+
+    public static Member find_by(DatabaseHelper db, String name, Household household) {
+        Cursor cursor = db.exec(String.format(FIND_BY_NAME_QUERY,name));
+        return read(cursor,household).get(0);
     }
 }

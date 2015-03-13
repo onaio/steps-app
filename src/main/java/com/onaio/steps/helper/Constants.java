@@ -7,6 +7,7 @@ public class Constants {
     public static final String HOUSEHOLD_NAME = "household_name";
     public static final String PHONE_ID = "phoneId";
     public static final String HOUSEHOLD = "HOUSEHOLD";
+    public static final String MEMBER = "MEMBER";
 
     //Gender
     public static final String MALE = "Male";
@@ -17,5 +18,7 @@ public class Constants {
     public static final int NEW_HOUSEHOLD_IDENTIFIER = 2;
     public static final int HOUSEHOLD_IDENTIFIER = 3;
     public static final int NEW_MEMBER_IDENTIFIER = 4;
+    public static final int MEMBER_IDENTIFIER = 5;
+
     public static final String ENDPOINT_URL = "endpointUrl";
 }
