@@ -16,29 +16,25 @@ public class Household implements Serializable {
     public static final String ID = "Id";
     private static final String NAME = "Name";
     private static final String PHONE_NUMBER = "Phone_Number";
-    public static final String TABLE_CREATE_QUERY = String.format("CREATE TABLE %s(%s INTEGER PRIMARY KEY, %s TEXT, %s INTEGER)", TABLE_NAME, ID, NAME, PHONE_NUMBER);
+    public static final String TABLE_CREATE_QUERY = String.format("CREATE TABLE %s(%s INTEGER PRIMARY KEY, %s TEXT, %s TEXT)", TABLE_NAME, ID, NAME, PHONE_NUMBER);
 
     String id;
     String name;
-    long phoneNumber;
+    String phoneNumber;
 
-    public Household(String id, String name, long phoneNumber) {
+    public Household(String id, String name, String phoneNumber) {
         this.id = id;
         this.name = name;
         this.phoneNumber = phoneNumber;
     }
 
-    public Household(String name, long phoneNumber) {
+    public Household(String name, String phoneNumber) {
         this.name= name;
         this.phoneNumber = phoneNumber;
     }
 
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getId() {
@@ -49,12 +45,8 @@ public class Household implements Serializable {
         this.id = id;
     }
 
-    public long getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
-    }
-
-    public void setPhoneNumber(long phoneNumber) {
-        this.phoneNumber = phoneNumber;
     }
 
     public long save(DatabaseHelper db){
@@ -69,7 +61,7 @@ public class Household implements Serializable {
         return read(cursor).get(0);
     }
 
-    public static List<Household> all(DatabaseHelper db){
+    public static List<Household> getAll(DatabaseHelper db){
         Cursor cursor = db.exec(FIND_ALL_QUERY);
         return read(cursor);
     }
@@ -81,7 +73,7 @@ public class Household implements Serializable {
                 String household_name = cursor.getString(cursor.getColumnIndex(NAME));
                 String household_number = cursor.getString(cursor.getColumnIndex(PHONE_NUMBER));
                 String id = cursor.getString(cursor.getColumnIndex(ID));
-                householdNames.add(new Household(id,household_name, Long.parseLong(household_number)));
+                householdNames.add(new Household(id,household_name, household_number));
             }while (cursor.moveToNext());
         }
         return householdNames;

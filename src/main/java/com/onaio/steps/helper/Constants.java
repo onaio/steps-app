@@ -20,5 +20,10 @@ public class Constants {
     public static final int NEW_MEMBER_IDENTIFIER = 4;
     public static final int MEMBER_IDENTIFIER = 5;
 
+    //Export related
     public static final String ENDPOINT_URL = "endpointUrl";
+    public static final String EXPORT_FIELDS = "Household Id, Phone Number, Member Id, Name, Age, Gender";
+    public static final String EXPORT_FILE_NAME = "/households.csv";
+
+
 }

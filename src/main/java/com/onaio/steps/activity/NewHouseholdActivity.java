@@ -61,7 +61,7 @@ public class NewHouseholdActivity extends Activity {
     private Household getHouseholdFromView(Intent intent) {
         TextView name = (TextView) findViewById(R.id.household_name);
         TextView number = (TextView) findViewById(R.id.household_number);
-        long phoneNumber = Long.parseLong(number.getText().toString());
+        String phoneNumber = number.getText().toString();
         return new Household(intent.getStringExtra(Constants.PHONE_ID)+"-"+name.getText().toString(), phoneNumber);
     }
 

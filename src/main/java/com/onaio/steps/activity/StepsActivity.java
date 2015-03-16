@@ -75,7 +75,7 @@ public class StepsActivity extends ListActivity {
     }
 
     private List<String> fetchHouseholds() {
-        List<Household> households = Household.all(db);
+        List<Household> households = Household.getAll(db);
         List<String> householdNames = new ArrayList<String>();
         for(Household household: households)
             householdNames.add(household.getName());

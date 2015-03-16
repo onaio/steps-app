@@ -102,4 +102,8 @@ public class Member implements Serializable {
         Cursor cursor = db.exec(String.format(FIND_BY_NAME_AND_HOUSEHOLD_QUERY,name,household.id));
         return read(cursor,household).get(0);
     }
+
+    public String getMemberHouseholdId() {
+        return memberHouseholdId;
+    }
 }
