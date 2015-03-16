@@ -16,13 +16,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ExportActivityHandler implements IActivityHandler {
+public class ExportHandler implements IHandler {
 
     private List<Household> households;
     private ListActivity activity;
     private DatabaseHelper databaseHelper;
 
-    public ExportActivityHandler(ListActivity activity) {
+    public ExportHandler(ListActivity activity) {
 
         this.activity = activity;
         databaseHelper = new DatabaseHelper(activity.getApplicationContext());
@@ -65,12 +65,12 @@ public class ExportActivityHandler implements IActivityHandler {
         return false;
     }
 
-    public ExportActivityHandler withAllHouseholds(){
+    public ExportHandler withAllHouseholds(){
         households = Household.getAll(databaseHelper);
         return this;
     }
 
-    public ExportActivityHandler withHousehold(Household household){
+    public ExportHandler withHousehold(Household household){
         households = new ArrayList<Household>();
         households.add(household);
         return this;

@@ -11,7 +11,7 @@ import com.onaio.steps.helper.Constants;
 import static android.app.Activity.RESULT_OK;
 import static android.content.Context.MODE_PRIVATE;
 
-public class NewHouseholdActivityHandler implements IActivityHandler {
+public class NewHouseholdActivityHandler implements IHandler {
 
     private ListActivity activity;
 

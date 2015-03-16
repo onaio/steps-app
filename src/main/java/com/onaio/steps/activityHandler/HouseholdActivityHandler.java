@@ -7,7 +7,7 @@ import com.onaio.steps.activity.HouseholdActivity;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.model.Household;
 
-public class HouseholdActivityHandler implements IActivityHandler {
+public class HouseholdActivityHandler implements IHandler {
 
     private ListActivity activity;
     private Household household;

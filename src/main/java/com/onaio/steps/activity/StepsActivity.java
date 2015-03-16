@@ -13,7 +13,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import com.onaio.steps.R;
 import com.onaio.steps.activityHandler.ActivityHandlerFactory;
-import com.onaio.steps.activityHandler.IActivityHandler;
+import com.onaio.steps.activityHandler.IHandler;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.model.Household;
 
@@ -58,8 +58,8 @@ public class StepsActivity extends ListActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        List<IActivityHandler> activityHandlers = ActivityHandlerFactory.getMainMenuHandlers(this);
-        for(IActivityHandler handler : activityHandlers){
+        List<IHandler> activityHandlers = ActivityHandlerFactory.getMainMenuHandlers(this);
+        for(IHandler handler : activityHandlers){
             if(handler.shouldOpen(item.getItemId()))
                 return handler.open();
         }
@@ -68,8 +68,8 @@ public class StepsActivity extends ListActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        List<IActivityHandler> activityHandlers = ActivityHandlerFactory.getMainMenuHandlers(this);
-        for(IActivityHandler activityHandler: activityHandlers){
+        List<IHandler> activityHandlers = ActivityHandlerFactory.getMainMenuHandlers(this);
+        for(IHandler activityHandler: activityHandlers){
             if(activityHandler.canHandleResult(requestCode))
                 activityHandler.handleResult(data,resultCode);
         }

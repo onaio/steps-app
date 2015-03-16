@@ -10,13 +10,12 @@ import com.onaio.steps.helper.Constants;
 import com.onaio.steps.model.Household;
 import static android.app.Activity.RESULT_OK;
 
-public class NewMemberActivityHandler implements IActivityHandler {
+public class NewMemberActivityHandler implements IHandler {
 
     private Household household;
     private ListActivity activity;
 
     public NewMemberActivityHandler(ListActivity activity, Household household) {
-
         this.activity = activity;
         this.household = household;
     }

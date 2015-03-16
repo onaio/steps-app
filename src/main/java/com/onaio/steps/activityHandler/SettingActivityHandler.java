@@ -13,7 +13,7 @@ import static com.onaio.steps.helper.Constants.ENDPOINT_URL;
 import static com.onaio.steps.helper.Constants.PHONE_ID;
 
 
-public class SettingActivityHandler implements IActivityHandler {
+public class SettingActivityHandler implements IHandler {
 
     private ListActivity activity;
 

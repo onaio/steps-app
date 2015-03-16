@@ -9,27 +9,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ActivityHandlerFactory {
-    public static List<IActivityHandler> getMainMenuHandlers(ListActivity activity){
-        ArrayList<IActivityHandler> handlers = new ArrayList<IActivityHandler>();
+    public static List<IHandler> getMainMenuHandlers(ListActivity activity){
+        ArrayList<IHandler> handlers = new ArrayList<IHandler>();
         handlers.add(new NewHouseholdActivityHandler(activity));
         handlers.add(new SettingActivityHandler(activity));
-        handlers.add(new ExportActivityHandler(activity).withAllHouseholds());
+        handlers.add(new ExportHandler(activity).withAllHouseholds());
         return handlers;
     }
 
-    public static List<IActivityHandler> getHouseholdMenuHandlers(ListActivity activity, Household household){
-        ArrayList<IActivityHandler> handlers = new ArrayList<IActivityHandler>();
+    public static List<IHandler> getHouseholdMenuHandlers(ListActivity activity, Household household){
+        ArrayList<IHandler> handlers = new ArrayList<IHandler>();
         handlers.add(new NewMemberActivityHandler(activity, household));
         handlers.add(new SettingActivityHandler(activity));
-        handlers.add(new ExportActivityHandler(activity).withHousehold(household));
+        handlers.add(new ExportHandler(activity).withHousehold(household));
+        handlers.add(new SelectParticipantHandler(activity,household));
         return handlers;
     }
 
-    public static IActivityHandler getHouseholdItemHandler(ListActivity activity, Household household){
+    public static IHandler getHouseholdItemHandler(ListActivity activity, Household household){
         return new HouseholdActivityHandler(activity, household);
     }
 
-    public static IActivityHandler getMemberItemHandler(ListActivity activity, Member member){
+    public static IHandler getMemberItemHandler(ListActivity activity, Member member){
         return new MemberActivityHandler(activity, member);
     }
 }

@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.onaio.steps.R;
 import com.onaio.steps.activityHandler.ActivityHandlerFactory;
-import com.onaio.steps.activityHandler.IActivityHandler;
+import com.onaio.steps.activityHandler.IHandler;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.model.Household;
@@ -40,15 +40,17 @@ public class HouseholdActivity extends ListActivity {
 
     private void bindMemberItems() {
         ListView members = getListView();
-        members.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                String memberName = ((TextView) view).getText().toString();
-                Member member = Member.find_by(db, memberName, household);
-                ActivityHandlerFactory.getMemberItemHandler(HouseholdActivity.this, member).open();
-            }
-        });
+        members.setOnItemClickListener(memberItemListener);
     }
+
+    private AdapterView.OnItemClickListener memberItemListener = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+            String memberName = ((TextView) view).getText().toString();
+            Member member = Member.find_by(db, memberName, household);
+            ActivityHandlerFactory.getMemberItemHandler(HouseholdActivity.this, member).open();
+        }
+    };
 
     private void populatePhoneNumber() {
         Intent intent = getIntent();
@@ -66,8 +68,8 @@ public class HouseholdActivity extends ListActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        List<IActivityHandler> menuHandlers = ActivityHandlerFactory.getHouseholdMenuHandlers(this,household);
-        for(IActivityHandler menuHandler:menuHandlers)
+        List<IHandler> menuHandlers = ActivityHandlerFactory.getHouseholdMenuHandlers(this,household);
+        for(IHandler menuHandler:menuHandlers)
             if(menuHandler.shouldOpen(item.getItemId()))
                 menuHandler.open();
         return super.onOptionsItemSelected(item);
@@ -82,8 +84,8 @@ public class HouseholdActivity extends ListActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        List<IActivityHandler> menuHandlers = ActivityHandlerFactory.getHouseholdMenuHandlers(this,household);
-        for(IActivityHandler menuHandler:menuHandlers)
+        List<IHandler> menuHandlers = ActivityHandlerFactory.getHouseholdMenuHandlers(this,household);
+        for(IHandler menuHandler:menuHandlers)
             if(menuHandler.canHandleResult(requestCode))
                 menuHandler.handleResult(data, resultCode);
     }
