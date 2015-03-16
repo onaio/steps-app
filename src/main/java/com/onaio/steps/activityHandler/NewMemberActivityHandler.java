@@ -34,7 +34,7 @@ public class NewMemberActivityHandler implements IActivityHandler {
             ArrayAdapter<String> listAdapter = (ArrayAdapter<String>) activity.getListView().getAdapter();
             if (listAdapter == null)
                 return;
-            listAdapter.insert(data.getStringExtra(Constants.MEMBER_NAME), 0);
+            listAdapter.add(data.getStringExtra(Constants.MEMBER_NAME));
         }
     }
 
