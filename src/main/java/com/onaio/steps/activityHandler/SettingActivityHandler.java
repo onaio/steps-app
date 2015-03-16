@@ -15,13 +15,20 @@ import static com.onaio.steps.helper.Constants.PHONE_ID;
 
 public class SettingActivityHandler implements IActivityHandler {
 
+    private ListActivity activity;
+
+    public SettingActivityHandler(ListActivity activity) {
+
+        this.activity = activity;
+    }
+
     @Override
     public boolean shouldOpen(int menu_id) {
         return menu_id == R.id.action_settings;
     }
 
     @Override
-    public boolean open(ListActivity activity) {
+    public boolean open() {
         Intent intent = new Intent(activity.getBaseContext(), SettingsActivity.class);
         intent.putExtra(PHONE_ID,getPhoneId(activity));
         intent.putExtra(ENDPOINT_URL,getEndpointUrl(activity));
@@ -35,12 +42,7 @@ public class SettingActivityHandler implements IActivityHandler {
     }
 
     @Override
-    public IActivityHandler with(Object data) {
-        return this;
-    }
-
-    @Override
-    public void handleResult(ListActivity activity, Intent data, int resultCode) {
+    public void handleResult(Intent data, int resultCode) {
         if (resultCode == RESULT_OK)
             handleSuccess(activity, data);
     }

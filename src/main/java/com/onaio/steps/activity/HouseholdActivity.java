@@ -43,8 +43,9 @@ public class HouseholdActivity extends ListActivity {
         members.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                String member = ((TextView) view).getText().toString();
-                ActivityHandlerFactory.getMemberItemHandler().with(Member.find_by(db, member, household)).open(HouseholdActivity.this);
+                String memberName = ((TextView) view).getText().toString();
+                Member member = Member.find_by(db, memberName, household);
+                ActivityHandlerFactory.getMemberItemHandler(HouseholdActivity.this, member).open();
             }
         });
     }
@@ -65,10 +66,10 @@ public class HouseholdActivity extends ListActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        List<IActivityHandler> menuHandlers = ActivityHandlerFactory.getHouseholdMenuHandlers();
+        List<IActivityHandler> menuHandlers = ActivityHandlerFactory.getHouseholdMenuHandlers(this,household);
         for(IActivityHandler menuHandler:menuHandlers)
             if(menuHandler.shouldOpen(item.getItemId()))
-                menuHandler.with(household).open(this);
+                menuHandler.open();
         return super.onOptionsItemSelected(item);
     }
 
@@ -81,10 +82,10 @@ public class HouseholdActivity extends ListActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        List<IActivityHandler> menuHandlers = ActivityHandlerFactory.getHouseholdMenuHandlers();
+        List<IActivityHandler> menuHandlers = ActivityHandlerFactory.getHouseholdMenuHandlers(this,household);
         for(IActivityHandler menuHandler:menuHandlers)
             if(menuHandler.canHandleResult(requestCode))
-                menuHandler.handleResult(this, data, resultCode);
+                menuHandler.handleResult(data, resultCode);
     }
 
     private List<String> fetchMembers() {

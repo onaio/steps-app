@@ -13,6 +13,13 @@ import static android.app.Activity.RESULT_OK;
 public class NewMemberActivityHandler implements IActivityHandler {
 
     private Household household;
+    private ListActivity activity;
+
+    public NewMemberActivityHandler(ListActivity activity, Household household) {
+
+        this.activity = activity;
+        this.household = household;
+    }
 
     @Override
     public boolean shouldOpen(int menu_id) {
@@ -20,7 +27,7 @@ public class NewMemberActivityHandler implements IActivityHandler {
     }
 
     @Override
-    public boolean open(ListActivity activity) {
+    public boolean open() {
         if (household== null) return true;
         Intent intent = new Intent(activity.getBaseContext(), NewMemberActivity.class);
         intent.putExtra(Constants.HOUSEHOLD,household);
@@ -29,7 +36,7 @@ public class NewMemberActivityHandler implements IActivityHandler {
     }
 
     @Override
-    public void handleResult(ListActivity activity, Intent data, int resultCode) {
+    public void handleResult(Intent data, int resultCode) {
         if (resultCode == RESULT_OK) {
             ArrayAdapter<String> listAdapter = (ArrayAdapter<String>) activity.getListView().getAdapter();
             if (listAdapter == null)
@@ -41,12 +48,6 @@ public class NewMemberActivityHandler implements IActivityHandler {
     @Override
     public boolean canHandleResult(int requestCode) {
         return requestCode == Constants.NEW_MEMBER_IDENTIFIER;
-    }
-
-    @Override
-    public IActivityHandler with(Object data) {
-        household = ((Household) data);
-        return this;
     }
 
 }

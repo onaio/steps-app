@@ -38,7 +38,8 @@ public class StepsActivity extends ListActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 String householdName = ((TextView) view).getText().toString();
-                ActivityHandlerFactory.getHouseholdItemHandler().with(Household.find_by(db, householdName)).open(StepsActivity.this);
+                Household household = Household.find_by(db, householdName);
+                ActivityHandlerFactory.getHouseholdItemHandler(StepsActivity.this, household).open();
             }
         });
     }
@@ -57,20 +58,20 @@ public class StepsActivity extends ListActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        List<IActivityHandler> activityHandlers = ActivityHandlerFactory.getMainMenuHandlers();
+        List<IActivityHandler> activityHandlers = ActivityHandlerFactory.getMainMenuHandlers(this);
         for(IActivityHandler handler : activityHandlers){
             if(handler.shouldOpen(item.getItemId()))
-                return handler.open(this);
+                return handler.open();
         }
         return super.onOptionsItemSelected(item);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        List<IActivityHandler> activityHandlers = ActivityHandlerFactory.getMainMenuHandlers();
+        List<IActivityHandler> activityHandlers = ActivityHandlerFactory.getMainMenuHandlers(this);
         for(IActivityHandler activityHandler: activityHandlers){
             if(activityHandler.canHandleResult(requestCode))
-                activityHandler.handleResult(this,data,resultCode);
+                activityHandler.handleResult(data,resultCode);
         }
     }
 

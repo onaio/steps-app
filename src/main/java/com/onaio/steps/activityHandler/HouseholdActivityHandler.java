@@ -9,7 +9,13 @@ import com.onaio.steps.model.Household;
 
 public class HouseholdActivityHandler implements IActivityHandler {
 
-    private Household listViewItem;
+    private ListActivity activity;
+    private Household household;
+
+    public HouseholdActivityHandler(ListActivity activity, Household household) {
+        this.activity = activity;
+        this.household = household;
+    }
 
     @Override
     public boolean shouldOpen(int menu_id) {
@@ -17,10 +23,10 @@ public class HouseholdActivityHandler implements IActivityHandler {
     }
 
     @Override
-    public boolean open(ListActivity activity) {
-        if (listViewItem == null) return true;
+    public boolean open() {
+        if (household == null) return true;
         Intent intent = new Intent(activity.getBaseContext(), HouseholdActivity.class);
-        intent.putExtra(Constants.HOUSEHOLD,listViewItem);
+        intent.putExtra(Constants.HOUSEHOLD, household);
         activity.startActivityForResult(intent, Constants.HOUSEHOLD_IDENTIFIER);
         return true;
     }
@@ -31,12 +37,6 @@ public class HouseholdActivityHandler implements IActivityHandler {
     }
 
     @Override
-    public IActivityHandler with(Object data) {
-        listViewItem = ((Household) data);
-        return this;
-    }
-
-    @Override
-    public void handleResult(ListActivity activity, Intent data, int resultCode) {
+    public void handleResult(Intent data, int resultCode) {
     }
 }

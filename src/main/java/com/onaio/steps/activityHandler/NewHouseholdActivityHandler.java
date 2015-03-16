@@ -13,13 +13,20 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class NewHouseholdActivityHandler implements IActivityHandler {
 
+    private ListActivity activity;
+
+    public NewHouseholdActivityHandler(ListActivity activity) {
+
+        this.activity = activity;
+    }
+
     @Override
     public boolean shouldOpen(int menu_id) {
         return menu_id == R.id.action_add;
     }
 
     @Override
-    public boolean open(ListActivity activity) {
+    public boolean open() {
         if (getPhoneId(activity)== null) {
             alertUserToSetPhoneId(activity);
         } else {
@@ -31,7 +38,7 @@ public class NewHouseholdActivityHandler implements IActivityHandler {
     }
 
     @Override
-    public void handleResult(ListActivity activity, Intent data, int resultCode) {
+    public void handleResult(Intent data, int resultCode) {
         if (resultCode == RESULT_OK) {
             ArrayAdapter<String> listAdapter = (ArrayAdapter<String>) activity.getListView().getAdapter();
             if (listAdapter == null)
@@ -43,11 +50,6 @@ public class NewHouseholdActivityHandler implements IActivityHandler {
     @Override
     public boolean canHandleResult(int requestCode) {
         return requestCode == Constants.NEW_HOUSEHOLD_IDENTIFIER;
-    }
-
-    @Override
-    public IActivityHandler with(Object data) {
-        return this;
     }
 
     private void alertUserToSetPhoneId(ListActivity activity) {

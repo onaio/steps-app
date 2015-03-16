@@ -12,6 +12,13 @@ import com.onaio.steps.model.Member;
 public class MemberActivityHandler implements IActivityHandler {
 
     private Member member;
+    private ListActivity activity;
+
+    public MemberActivityHandler(ListActivity activity, Member member) {
+
+        this.activity = activity;
+        this.member = member;
+    }
 
     @Override
     public boolean shouldOpen(int menu_id) {
@@ -19,7 +26,7 @@ public class MemberActivityHandler implements IActivityHandler {
     }
 
     @Override
-    public boolean open(ListActivity activity) {
+    public boolean open() {
         if (member == null) return true;
         Intent intent = new Intent(activity.getBaseContext(), MemberActivity.class);
         intent.putExtra(Constants.MEMBER, member);
@@ -32,13 +39,8 @@ public class MemberActivityHandler implements IActivityHandler {
         return requestCode == Constants.MEMBER_IDENTIFIER;
     }
 
-    @Override
-    public IActivityHandler with(Object data) {
-        member = ((Member) data);
-        return this;
-    }
 
     @Override
-    public void handleResult(ListActivity activity, Intent data, int resultCode) {
+    public void handleResult(Intent data, int resultCode) {
     }
 }

@@ -2,7 +2,6 @@ package com.onaio.steps.activityHandler;
 
 import android.app.ListActivity;
 import android.content.Intent;
-import android.database.Cursor;
 import com.onaio.steps.R;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;
@@ -19,6 +18,16 @@ import java.util.List;
 
 public class ExportActivityHandler implements IActivityHandler {
 
+    private List<Household> households;
+    private ListActivity activity;
+    private DatabaseHelper databaseHelper;
+
+    public ExportActivityHandler(ListActivity activity) {
+
+        this.activity = activity;
+        databaseHelper = new DatabaseHelper(activity.getApplicationContext());
+        households = new ArrayList<Household>();
+    }
 
     @Override
     public boolean shouldOpen(int menu_id) {
@@ -26,11 +35,9 @@ public class ExportActivityHandler implements IActivityHandler {
     }
 
     @Override
-    public boolean open(ListActivity activity) {
+    public boolean open() {
         try {
             File file = new File(activity.getFilesDir() + Constants.EXPORT_FILE_NAME);
-            DatabaseHelper databaseHelper = new DatabaseHelper(activity.getApplicationContext());
-            List<Household> households = Household.getAll(databaseHelper);
             CSVWriter writer = new CSVWriter(new FileWriter(file), '\t');
             String[] exportFields = Constants.EXPORT_FIELDS.split(",");
             writer.writeNext(exportFields);
@@ -58,18 +65,24 @@ public class ExportActivityHandler implements IActivityHandler {
         return false;
     }
 
+    public ExportActivityHandler withAllHouseholds(){
+        households = Household.getAll(databaseHelper);
+        return this;
+    }
+
+    public ExportActivityHandler withHousehold(Household household){
+        households = new ArrayList<Household>();
+        households.add(household);
+        return this;
+    }
+
     @Override
     public boolean canHandleResult(int requestCode) {
         return false;
     }
 
     @Override
-    public IActivityHandler with(Object data) {
-        return this;
-    }
-
-    @Override
-    public void handleResult(ListActivity activity, Intent data, int resultCode) {
+    public void handleResult(Intent data, int resultCode) {
     }
 
 }
