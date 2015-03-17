@@ -32,7 +32,6 @@ public class NewMemberActivity extends Activity {
     public void saveMember(View view) {
         Member member = getMemberFromView();
         member.save(db);
-        intent.putExtra(Constants.MEMBER, member);
         setResult(RESULT_OK, intent);
         finish();
     }

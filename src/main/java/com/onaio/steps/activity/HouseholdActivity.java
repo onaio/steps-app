@@ -7,9 +7,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -18,11 +16,10 @@ import com.onaio.steps.activityHandler.ActivityHandlerFactory;
 import com.onaio.steps.activityHandler.IHandler;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;
-import com.onaio.steps.helper.MemberAdapter;
+import com.onaio.steps.adapter.MemberAdapter;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.Member;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class HouseholdActivity extends ListActivity {

@@ -1,4 +1,4 @@
-package com.onaio.steps.helper;
+package com.onaio.steps.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter;
 
 import com.onaio.steps.model.Member;
 
+import java.util.Collection;
 import java.util.List;
 
 public class MemberAdapter extends ArrayAdapter{

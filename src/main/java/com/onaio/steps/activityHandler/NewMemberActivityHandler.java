@@ -2,13 +2,16 @@ package com.onaio.steps.activityHandler;
 
 import android.app.ListActivity;
 import android.content.Intent;
-import android.widget.ArrayAdapter;
 
 import com.onaio.steps.R;
 import com.onaio.steps.activity.NewMemberActivity;
 import com.onaio.steps.helper.Constants;
+import com.onaio.steps.helper.DatabaseHelper;
+import com.onaio.steps.adapter.MemberAdapter;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.Member;
+
+import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -39,10 +42,13 @@ public class NewMemberActivityHandler implements IHandler {
     @Override
     public void handleResult(Intent data, int resultCode) {
         if (resultCode == RESULT_OK) {
-            ArrayAdapter<Member> members = (ArrayAdapter<Member>) activity.getListView().getAdapter();
-            if (members == null)
+            MemberAdapter memberAdapter = (MemberAdapter) activity.getListView().getAdapter();
+            if (memberAdapter == null)
                 return;
-            members.add((Member)data.getSerializableExtra(Constants.MEMBER));
+            List<Member> members = Member.getAll(new DatabaseHelper(activity.getApplicationContext()), household);
+            memberAdapter.clear();
+            memberAdapter.addAll(members);
+            memberAdapter.notifyDataSetChanged();
         }
     }
 

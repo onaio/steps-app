@@ -6,7 +6,7 @@ import android.widget.ListView;
 
 import com.onaio.steps.R;
 import com.onaio.steps.helper.DatabaseHelper;
-import com.onaio.steps.helper.MemberAdapter;
+import com.onaio.steps.adapter.MemberAdapter;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.Member;
 
