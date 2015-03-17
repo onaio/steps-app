@@ -2,9 +2,15 @@ package com.onaio.steps.activityHandler;
 
 import android.app.ListActivity;
 import android.content.Intent;
+import android.widget.ListView;
 
 import com.onaio.steps.R;
+import com.onaio.steps.helper.DatabaseHelper;
+import com.onaio.steps.helper.MemberAdapter;
 import com.onaio.steps.model.Household;
+import com.onaio.steps.model.Member;
+
+import java.util.Random;
 
 public class SelectParticipantHandler implements IHandler{
 
@@ -23,8 +29,29 @@ public class SelectParticipantHandler implements IHandler{
 
     @Override
     public boolean open() {
+        ListView listView = activity.getListView();
+        Member selectedMember = getSelectedMember(listView);
+        updateHousehold(selectedMember);
+        updateView(listView);
+        return true;
+    }
 
-        return false;
+    private void updateView(ListView listView) {
+        MemberAdapter membersAdapter = (MemberAdapter) listView.getAdapter();
+        membersAdapter.setSelectedMemberId(household.getSelectedMember());
+        membersAdapter.notifyDataSetChanged();
+    }
+
+    private void updateHousehold(Member selectedMember) {
+        household.setSelectedMember(String.valueOf(selectedMember.getId()));
+        household.update(new DatabaseHelper(activity.getApplicationContext()));
+    }
+
+    private Member getSelectedMember(ListView listView) {
+        int totalMembers = Member.numberOfMembers(new DatabaseHelper(activity.getApplicationContext()), household);
+        Random random = new Random();
+        int selectedParticipant = random.nextInt(totalMembers);
+        return (Member) listView.getItemAtPosition(selectedParticipant);
     }
 
     @Override

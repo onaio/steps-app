@@ -12,6 +12,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "householdManager";
     public static final int DATABASE_VERSION = 1;
+    private SQLiteDatabase readableDb;
 
     public DatabaseHelper(Context context){
         super(context, DATABASE_NAME,null, DATABASE_VERSION);
@@ -33,12 +34,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public long save(ContentValues values, String tableName){
         SQLiteDatabase db = getWritableDatabase();
-        return db.insert(tableName, null, values);
+        long insert = db.insert(tableName, null, values);
+        db.close();
+        return insert;
+    }
+
+    public long update(ContentValues values, String tableName,String whereCondition, String[] args){
+        SQLiteDatabase db = getWritableDatabase();
+        int update = db.update(tableName, values, whereCondition, args);
+        db.close();
+        return update;
     }
 
     public Cursor exec(String query){
-        SQLiteDatabase db = getReadableDatabase();
-        return db.rawQuery(query,null);
+        readableDb = getReadableDatabase();
+        Cursor cursor = readableDb.rawQuery(query, null);
+        return cursor;
     }
 
+    public void close(){
+        if(readableDb!=null && readableDb.isOpen())
+            readableDb.close();
+    }
 }

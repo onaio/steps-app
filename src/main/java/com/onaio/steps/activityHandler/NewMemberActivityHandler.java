@@ -8,6 +8,8 @@ import com.onaio.steps.R;
 import com.onaio.steps.activity.NewMemberActivity;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.model.Household;
+import com.onaio.steps.model.Member;
+
 import static android.app.Activity.RESULT_OK;
 
 public class NewMemberActivityHandler implements IHandler {
@@ -37,10 +39,10 @@ public class NewMemberActivityHandler implements IHandler {
     @Override
     public void handleResult(Intent data, int resultCode) {
         if (resultCode == RESULT_OK) {
-            ArrayAdapter<String> listAdapter = (ArrayAdapter<String>) activity.getListView().getAdapter();
-            if (listAdapter == null)
+            ArrayAdapter<Member> members = (ArrayAdapter<Member>) activity.getListView().getAdapter();
+            if (members == null)
                 return;
-            listAdapter.add(data.getStringExtra(Constants.MEMBER_NAME));
+            members.add((Member)data.getSerializableExtra(Constants.MEMBER));
         }
     }
 

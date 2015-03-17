@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -17,6 +18,7 @@ import com.onaio.steps.activityHandler.ActivityHandlerFactory;
 import com.onaio.steps.activityHandler.IHandler;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;
+import com.onaio.steps.helper.MemberAdapter;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.Member;
 
@@ -46,8 +48,7 @@ public class HouseholdActivity extends ListActivity {
     private AdapterView.OnItemClickListener memberItemListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-            String memberName = ((TextView) view).getText().toString();
-            Member member = Member.find_by(db, memberName, household);
+            Member member = Member.find_by(db, id, household);
             ActivityHandlerFactory.getMemberItemHandler(HouseholdActivity.this, member).open();
         }
     };
@@ -63,7 +64,8 @@ public class HouseholdActivity extends ListActivity {
 
     private void populateMembers() {
         db = new DatabaseHelper(getApplicationContext());
-        getListView().setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, fetchMembers()));
+        MemberAdapter memberAdapter = new MemberAdapter(this, android.R.layout.simple_list_item_1, Member.getAll(db, household), household.getSelectedMember());
+        getListView().setAdapter(memberAdapter);
     }
 
     @Override
@@ -88,13 +90,5 @@ public class HouseholdActivity extends ListActivity {
         for(IHandler menuHandler:menuHandlers)
             if(menuHandler.canHandleResult(requestCode))
                 menuHandler.handleResult(data, resultCode);
-    }
-
-    private List<String> fetchMembers() {
-        List<Member> members = Member.getAll(db,household);
-        List<String> memberNames = new ArrayList<String>();
-        for(Member member: members)
-            memberNames.add(member.getName());
-        return memberNames;
     }
 }

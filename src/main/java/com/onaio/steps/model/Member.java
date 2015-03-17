@@ -19,7 +19,7 @@ public class Member implements Serializable {
     private static final String HOUSEHOLD_ID = "household_id";
     public static final String TABLE_CREATE_QUERY = String.format("CREATE TABLE %s(%s INTEGER PRIMARY KEY, %s TEXT, %s TEXT, %s INTEGER, %s TEXT, %s INTEGER, FOREIGN KEY (%s) REFERENCES %s(%s))", TABLE_NAME, ID, MEMBER_HOUSEHOLD_ID,NAME, AGE, GENDER, HOUSEHOLD_ID, HOUSEHOLD_ID, Household.TABLE_NAME, Household.ID);
     private static String FIND_ALL_QUERY = "SELECT * FROM MEMBER WHERE %s=%s ORDER BY Id asc";
-    private static String FIND_BY_NAME_AND_HOUSEHOLD_QUERY = "SELECT * FROM MEMBER WHERE "+NAME+" = '%s' and "+HOUSEHOLD_ID+" = %s";
+    private static String FIND_BY_NAME_AND_HOUSEHOLD_QUERY = "SELECT * FROM MEMBER WHERE "+ID+" = '%d'";
 
     private String name;
     private String gender;
@@ -74,12 +74,17 @@ public class Member implements Serializable {
     public static int numberOfMembers(DatabaseHelper db, Household household){
         Cursor cursor = db.exec(String.format(FIND_ALL_QUERY,HOUSEHOLD_ID,household.getId()));
         cursor.moveToFirst();
-        return cursor.getCount();
+        int count = cursor.getCount();
+        cursor.close();
+        db.close();
+        return count;
     }
 
     public static List<Member> getAll(DatabaseHelper db, Household household){
         Cursor cursor = db.exec(String.format(FIND_ALL_QUERY,HOUSEHOLD_ID,household.getId()));
-        return read(cursor,household);
+        List<Member> members = read(cursor, household);
+        db.close();
+        return members;
     }
 
     private static List<Member> read(Cursor cursor, Household household) {
@@ -95,15 +100,27 @@ public class Member implements Serializable {
                     members.add(new Member(Integer.parseInt(id), name, gender, Integer.parseInt(age), household,generatedId));
             }while (cursor.moveToNext());
         }
+        cursor.close();
         return members;
     }
 
-    public static Member find_by(DatabaseHelper db, String name, Household household) {
-        Cursor cursor = db.exec(String.format(FIND_BY_NAME_AND_HOUSEHOLD_QUERY,name,household.id));
-        return read(cursor,household).get(0);
+    public static Member find_by(DatabaseHelper db, Long id, Household household) {
+        Cursor cursor = db.exec(String.format(FIND_BY_NAME_AND_HOUSEHOLD_QUERY, id));
+        Member member = read(cursor, household).get(0);
+        db.close();
+        return member;
     }
 
     public String getMemberHouseholdId() {
         return memberHouseholdId;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }

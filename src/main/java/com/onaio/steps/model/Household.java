@@ -16,16 +16,28 @@ public class Household implements Serializable {
     public static final String ID = "Id";
     private static final String NAME = "Name";
     private static final String PHONE_NUMBER = "Phone_Number";
-    public static final String TABLE_CREATE_QUERY = String.format("CREATE TABLE %s(%s INTEGER PRIMARY KEY, %s TEXT, %s TEXT)", TABLE_NAME, ID, NAME, PHONE_NUMBER);
+    private static final String SELECTED_MEMBER = "selected_member";
+    public static final String TABLE_CREATE_QUERY = String.format("CREATE TABLE %s(%s INTEGER PRIMARY KEY, %s TEXT, %s TEXT, %s INTEGER)", TABLE_NAME, ID, NAME, PHONE_NUMBER,SELECTED_MEMBER);
 
     String id;
     String name;
     String phoneNumber;
 
-    public Household(String id, String name, String phoneNumber) {
+    public void setSelectedMember(String selectedMember) {
+        this.selectedMember = selectedMember;
+    }
+
+    String selectedMember;
+
+    public String getSelectedMember() {
+        return selectedMember;
+    }
+
+    public Household(String id, String name, String phoneNumber, String selectedMember) {
         this.id = id;
         this.name = name;
         this.phoneNumber = phoneNumber;
+        this.selectedMember = selectedMember;
     }
 
     public Household(String name, String phoneNumber) {
@@ -56,14 +68,26 @@ public class Household implements Serializable {
         return db.save(values, TABLE_NAME);
     }
 
+    public long update(DatabaseHelper db){
+        ContentValues values = new ContentValues();
+        values.put(NAME, getName());
+        values.put(PHONE_NUMBER,getPhoneNumber());
+        values.put(SELECTED_MEMBER,getSelectedMember());
+        return db.update(values, TABLE_NAME,ID +" = "+getId(),null);
+    }
+
     public static Household find_by(DatabaseHelper db, String name) {
         Cursor cursor = db.exec(String.format(FIND_BY_NAME_QUERY,name));
-        return read(cursor).get(0);
+        Household household = read(cursor).get(0);
+        db.close();
+        return household;
     }
 
     public static List<Household> getAll(DatabaseHelper db){
         Cursor cursor = db.exec(FIND_ALL_QUERY);
-        return read(cursor);
+        List<Household> households = read(cursor);
+        db.close();
+        return households;
     }
 
     private static List<Household> read(Cursor cursor) {
@@ -73,9 +97,11 @@ public class Household implements Serializable {
                 String household_name = cursor.getString(cursor.getColumnIndex(NAME));
                 String household_number = cursor.getString(cursor.getColumnIndex(PHONE_NUMBER));
                 String id = cursor.getString(cursor.getColumnIndex(ID));
-                householdNames.add(new Household(id,household_name, household_number));
+                String selectedMember = cursor.getString(cursor.getColumnIndex(SELECTED_MEMBER));
+                householdNames.add(new Household(id,household_name, household_number,selectedMember));
             }while (cursor.moveToNext());
         }
+        cursor.close();
         return householdNames;
     }
 }
