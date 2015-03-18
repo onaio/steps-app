@@ -7,7 +7,11 @@ import android.content.SharedPreferences;
 import android.widget.ArrayAdapter;
 import com.onaio.steps.activity.NewHouseholdActivity;
 import com.onaio.steps.R;
+import com.onaio.steps.adapter.HouseholdAdapter;
 import com.onaio.steps.helper.Constants;
+import com.onaio.steps.helper.DatabaseHelper;
+import com.onaio.steps.model.Household;
+
 import static android.app.Activity.RESULT_OK;
 import static android.content.Context.MODE_PRIVATE;
 
@@ -40,10 +44,11 @@ public class NewHouseholdActivityHandler implements IHandler {
     @Override
     public void handleResult(Intent data, int resultCode) {
         if (resultCode == RESULT_OK) {
-            ArrayAdapter<String> listAdapter = (ArrayAdapter<String>) activity.getListView().getAdapter();
-            if (listAdapter == null)
+            HouseholdAdapter householdAdapter = (HouseholdAdapter) activity.getListView().getAdapter();
+            if (householdAdapter == null)
                 return;
-            listAdapter.insert(data.getStringExtra(Constants.HOUSEHOLD_NAME),0);
+            householdAdapter.reinitialize(Household.getAll(new DatabaseHelper(activity.getApplicationContext())));
+            householdAdapter.notifyDataSetChanged();
         }
     }
 

@@ -53,7 +53,6 @@ public class NewHouseholdActivity extends Activity {
         Household household = getHouseholdFromView(intent);
         DatabaseHelper db = new DatabaseHelper(this.getApplicationContext());
         household.save(db);
-        intent.putExtra(Constants.HOUSEHOLD_NAME,household.getName());
         setResult(RESULT_OK, intent);
         finish();
     }

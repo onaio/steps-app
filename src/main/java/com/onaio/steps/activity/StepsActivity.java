@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.onaio.steps.R;
 import com.onaio.steps.activityHandler.ActivityHandlerFactory;
 import com.onaio.steps.activityHandler.IHandler;
+import com.onaio.steps.adapter.HouseholdAdapter;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.model.Household;
 
@@ -37,8 +38,7 @@ public class StepsActivity extends ListActivity {
         households.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                String householdName = ((TextView) view).getText().toString();
-                Household household = Household.find_by(db, householdName);
+                Household household = Household.find_by(db, id);
                 ActivityHandlerFactory.getHouseholdItemHandler(StepsActivity.this, household).open();
             }
         });
@@ -46,7 +46,7 @@ public class StepsActivity extends ListActivity {
 
     private void populateHouseholds() {
         db = new DatabaseHelper(getApplicationContext());
-        getListView().setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, fetchHouseholds()));
+        getListView().setAdapter(new HouseholdAdapter(this, Household.getAll(db)));
     }
 
     @Override
@@ -75,11 +75,4 @@ public class StepsActivity extends ListActivity {
         }
     }
 
-    private List<String> fetchHouseholds() {
-        List<Household> households = Household.getAll(db);
-        List<String> householdNames = new ArrayList<String>();
-        for(Household household: households)
-            householdNames.add(household.getName());
-        return householdNames;
-    }
 }

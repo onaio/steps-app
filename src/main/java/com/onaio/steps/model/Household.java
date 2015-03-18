@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Household implements Serializable {
-    private static String FIND_BY_NAME_QUERY = "SELECT * FROM HOUSEHOLD WHERE name = '%s' LIMIT 1";
+    private static String FIND_BY_ID_QUERY = "SELECT * FROM HOUSEHOLD WHERE id = %d";
     public static String FIND_ALL_QUERY = "SELECT * FROM HOUSEHOLD ORDER BY Id desc";
     public static final String TABLE_NAME = "household";
     public static final String ID = "Id";
@@ -76,8 +76,8 @@ public class Household implements Serializable {
         return db.update(values, TABLE_NAME,ID +" = "+getId(),null);
     }
 
-    public static Household find_by(DatabaseHelper db, String name) {
-        Cursor cursor = db.exec(String.format(FIND_BY_NAME_QUERY,name));
+    public static Household find_by(DatabaseHelper db, Long id) {
+        Cursor cursor = db.exec(String.format(FIND_BY_ID_QUERY,id));
         Household household = read(cursor).get(0);
         db.close();
         return household;
