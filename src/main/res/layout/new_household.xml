@@ -46,7 +46,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="text"
+        android:inputType="number"
         android:hint="@string/household_id_hint"
         android:ems="10"
         android:id="@+id/household_name"
