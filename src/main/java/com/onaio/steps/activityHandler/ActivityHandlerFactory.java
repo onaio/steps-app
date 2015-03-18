@@ -24,6 +24,7 @@ public class ActivityHandlerFactory {
         handlers.add(new ExportHandler(activity).withHousehold(household));
         handlers.add(new SelectParticipantHandler(activity,household));
         handlers.add(new TakeSurveyHandler(activity));
+        handlers.add(new StepsActivityHandler(activity));
         return handlers;
     }
 

@@ -31,6 +31,7 @@ public class HouseholdActivity extends ListActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.household);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
         populatePhoneNumber();
         populateMembers();
         bindMemberItems();
