@@ -41,15 +41,14 @@ public class NewMemberActivityHandler implements IHandler {
 
     @Override
     public void handleResult(Intent data, int resultCode) {
-        if (resultCode == RESULT_OK) {
-            MemberAdapter memberAdapter = (MemberAdapter) activity.getListView().getAdapter();
-            if (memberAdapter == null)
-                return;
-            List<Member> members = Member.getAll(new DatabaseHelper(activity.getApplicationContext()), household);
-            memberAdapter.clear();
-            memberAdapter.addAll(members);
-            memberAdapter.notifyDataSetChanged();
-        }
+        if (resultCode != RESULT_OK)
+            return ;
+        MemberAdapter memberAdapter = (MemberAdapter) activity.getListView().getAdapter();
+        if (memberAdapter == null)
+            return;
+        List<Member> members = Member.getAll(new DatabaseHelper(activity.getApplicationContext()), household);
+        memberAdapter.reinitialize(members);
+        memberAdapter.notifyDataSetChanged();
     }
 
     @Override

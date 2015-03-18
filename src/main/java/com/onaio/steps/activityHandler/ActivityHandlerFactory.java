@@ -23,6 +23,7 @@ public class ActivityHandlerFactory {
         handlers.add(new SettingActivityHandler(activity));
         handlers.add(new ExportHandler(activity).withHousehold(household));
         handlers.add(new SelectParticipantHandler(activity,household));
+        handlers.add(new TakeSurveyHandler(activity));
         return handlers;
     }
 

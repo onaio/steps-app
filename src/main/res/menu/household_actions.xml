@@ -9,4 +9,6 @@
         android:title="@string/action_select_participant"/>
     <item android:id="@+id/action_export"
         android:title="@string/action_export"/>
+    <item android:id="@+id/action_take_survey"
+        android:title="@string/action_take_survey"/>
 </menu>
