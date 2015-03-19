@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.onaio.steps.R;
 import com.onaio.steps.helper.DatabaseHelper;
@@ -14,6 +15,7 @@ import com.onaio.steps.adapter.MemberAdapter;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.HouseholdStatus;
 import com.onaio.steps.model.Member;
+import com.onaio.steps.model.ReElectReason;
 
 import java.util.Random;
 
@@ -68,6 +70,7 @@ public class SelectParticipantHandler implements IHandler{
 
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        saveReason();
                         selectParticipant();
                     }
                 })
@@ -78,6 +81,12 @@ public class SelectParticipantHandler implements IHandler{
 
                     }
                 }).create().show();
+    }
+
+    private void saveReason() {
+        TextView reasonView = (TextView) activity.findViewById(R.id.reason);
+        ReElectReason reason = new ReElectReason(reasonView.getText().toString(), household);
+        reason.save(new DatabaseHelper(activity));
     }
 
     private void selectParticipant() {
