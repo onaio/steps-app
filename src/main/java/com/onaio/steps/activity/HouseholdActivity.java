@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.onaio.steps.R;
 import com.onaio.steps.activityHandler.ActivityHandlerFactory;
 import com.onaio.steps.activityHandler.IHandler;
+import com.onaio.steps.activityHandler.IPrepare;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.adapter.MemberAdapter;
@@ -73,6 +74,16 @@ public class HouseholdActivity extends ListActivity {
             if(menuHandler.shouldOpen(item.getItemId()))
                 menuHandler.open();
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        List<IPrepare> menuItemsToPrepare = ActivityHandlerFactory.getHouseholdMenuItemToPrepare(this);
+        for(IPrepare menuItemToPrepare: menuItemsToPrepare)
+            if(menuItemToPrepare.shouldDisable(household))
+                menuItemToPrepare.disable(menu);
+        super.onPrepareOptionsMenu(menu);
+        return true;
     }
 
     @Override

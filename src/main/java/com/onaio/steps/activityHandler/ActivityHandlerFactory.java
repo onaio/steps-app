@@ -35,4 +35,10 @@ public class ActivityHandlerFactory {
     public static IHandler getMemberItemHandler(ListActivity activity, Member member){
         return new MemberActivityHandler(activity, member);
     }
+
+    public static List<IPrepare> getHouseholdMenuItemToPrepare(ListActivity activity){
+        ArrayList<IPrepare> menuItems = new ArrayList<IPrepare>();
+        menuItems.add(new TakeSurveyHandler(activity));
+        return menuItems;
+    }
 }

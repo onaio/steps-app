@@ -3,19 +3,19 @@ package com.onaio.steps.activityHandler;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
-import android.net.Uri;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.onaio.steps.R;
+import com.onaio.steps.model.Household;
 
-import java.util.List;
-
-public class TakeSurveyHandler implements IHandler{
+public class TakeSurveyHandler implements IHandler, IPrepare{
     private ListActivity activity;
+    private static final int MENU_ID= R.id.action_take_survey;
 
     @Override
     public boolean shouldOpen(int menu_id) {
-        return menu_id == R.id.action_take_survey;
+        return menu_id == MENU_ID;
     }
 
     public TakeSurveyHandler(ListActivity activity) {
@@ -47,5 +47,16 @@ public class TakeSurveyHandler implements IHandler{
     @Override
     public boolean canHandleResult(int requestCode) {
         return false;
+    }
+
+    @Override
+    public boolean shouldDisable(Household household) {
+        return household.getSelectedMember() == null;
+    }
+
+    @Override
+    public void disable(Menu menu) {
+        MenuItem menuItem = menu.findItem(MENU_ID);
+        menuItem.setEnabled(false);
     }
 }

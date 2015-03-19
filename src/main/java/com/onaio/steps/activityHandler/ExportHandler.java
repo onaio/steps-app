@@ -39,8 +39,7 @@ public class ExportHandler implements IHandler {
         try {
             File file = new File(activity.getFilesDir() + Constants.EXPORT_FILE_NAME);
             CSVWriter writer = new CSVWriter(new FileWriter(file), '\t');
-            String[] exportFields = Constants.EXPORT_FIELDS.split(",");
-            writer.writeNext(exportFields);
+            writer.writeNext(Constants.EXPORT_FIELDS.split(","));
             for(Household household: households) {
                 List<Member> membersPerHousehold = Member.getAll(databaseHelper, household);
                 for(Member member: membersPerHousehold){
@@ -51,7 +50,7 @@ public class ExportHandler implements IHandler {
                     row.add(member.getName());
                     row.add(String.valueOf(member.getAge()));
                     row.add(member.getGender());
-                    writer.writeNext(row.toArray(new String[exportFields.length]));
+                    writer.writeNext(row.toArray(new String[row.size()]));
                 }
             }
             writer.close();
