@@ -59,7 +59,8 @@ public class HouseholdAdapter extends BaseAdapter{
         TextView text1 = twoLineListItem.getText1();
         TextView text2 = twoLineListItem.getText2();
         text1.setText(householdAtPosition.getName());
-        text2.setText(Member.numberOfMembers(new DatabaseHelper(context),householdAtPosition) +" members");
+        int numberOfMembers = Member.numberOfMembers(new DatabaseHelper(context), householdAtPosition);
+        text2.setText(String.format("%s, %d members", householdAtPosition.getCreatedAt(),numberOfMembers));
     }
 
     private TwoLineListItem getViewItem(View convertView) {

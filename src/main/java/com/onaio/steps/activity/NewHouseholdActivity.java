@@ -13,6 +13,10 @@ import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.HouseholdStatus;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class NewHouseholdActivity extends Activity {
 
     private String phoneId;
@@ -62,7 +66,8 @@ public class NewHouseholdActivity extends Activity {
         TextView name = (TextView) findViewById(R.id.household_name);
         TextView number = (TextView) findViewById(R.id.household_number);
         String phoneNumber = number.getText().toString();
-        return new Household(intent.getStringExtra(Constants.PHONE_ID)+"-"+name.getText().toString(), phoneNumber, HouseholdStatus.OPEN);
+        String currentDate = new SimpleDateFormat("yyyy/MM/dd").format(new Date());
+        return new Household(intent.getStringExtra(Constants.PHONE_ID)+"-"+name.getText().toString(), phoneNumber, HouseholdStatus.OPEN, currentDate);
     }
 
 }

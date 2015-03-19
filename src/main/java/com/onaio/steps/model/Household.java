@@ -18,26 +18,34 @@ public class Household implements Serializable {
     private static final String STATUS = "Status";
     private static final String PHONE_NUMBER = "Phone_Number";
     private static final String SELECTED_MEMBER = "selected_member";
-    public static final String TABLE_CREATE_QUERY = String.format("CREATE TABLE %s(%s INTEGER PRIMARY KEY, %s TEXT, %s TEXT, %s INTEGER, %s TEXT)", TABLE_NAME, ID, NAME, PHONE_NUMBER,SELECTED_MEMBER,STATUS);
+    private static final String CREATED_AT = "Created_At";
+    public static final String TABLE_CREATE_QUERY = String.format("CREATE TABLE %s(%s INTEGER PRIMARY KEY, %s TEXT, %s TEXT, %s INTEGER, %s TEXT, %s TEXT)", TABLE_NAME, ID, NAME, PHONE_NUMBER,SELECTED_MEMBER,STATUS, CREATED_AT);
 
     String id;
     String name;
     String phoneNumber;
     HouseholdStatus status;
     String selectedMember;
-
-    public Household(String id, String name, String phoneNumber, String selectedMember, HouseholdStatus status) {
+    String createdAt;
+    
+    public Household(String id, String name, String phoneNumber, String selectedMember, HouseholdStatus status, String createdAt) {
         this.id = id;
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.selectedMember = selectedMember;
         this.status = status;
+        this.createdAt=createdAt;
     }
 
-    public Household(String name, String phoneNumber, HouseholdStatus status) {
+    public Household(String name, String phoneNumber, HouseholdStatus status, String createdAt) {
         this.name= name;
         this.phoneNumber = phoneNumber;
         this.status = status;
+        this.createdAt=createdAt;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
     }
 
     public HouseholdStatus getStatus() {
@@ -77,6 +85,7 @@ public class Household implements Serializable {
         values.put(NAME, name);
         values.put(PHONE_NUMBER,phoneNumber);
         values.put(STATUS,status.toString());
+        values.put(CREATED_AT,createdAt);
         return db.save(values, TABLE_NAME);
     }
 
@@ -112,7 +121,8 @@ public class Household implements Serializable {
                 String id = cursor.getString(cursor.getColumnIndex(ID));
                 String selectedMember = cursor.getString(cursor.getColumnIndex(SELECTED_MEMBER));
                 String status = cursor.getString(cursor.getColumnIndex(STATUS));
-                householdNames.add(new Household(id,household_name, household_number,selectedMember,HouseholdStatus.valueOf(status)));
+                String createdAt = cursor.getString(cursor.getColumnIndex(CREATED_AT));
+                householdNames.add(new Household(id,household_name, household_number,selectedMember,HouseholdStatus.valueOf(status),createdAt ));
             }while (cursor.moveToNext());
         }
         cursor.close();
