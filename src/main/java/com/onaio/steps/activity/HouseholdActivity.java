@@ -78,7 +78,7 @@ public class HouseholdActivity extends ListActivity {
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        List<IPrepare> menuItemsToPrepare = ActivityHandlerFactory.getHouseholdMenuItemToPrepare(this);
+        List<IPrepare> menuItemsToPrepare = ActivityHandlerFactory.getHouseholdMenuItemToPrepare(this,household);
         for(IPrepare menuItemToPrepare: menuItemsToPrepare)
             if(menuItemToPrepare.shouldDisable(household))
                 menuItemToPrepare.disable(menu);

@@ -13,4 +13,7 @@
         android:title="@string/action_take_survey"/>
     <item android:id="@+id/action_deferred"
         android:title="@string/action_deferred"/>
+    <item android:id="@+id/action_refused"
+        android:title="@string/action_refused"/>
+
 </menu>

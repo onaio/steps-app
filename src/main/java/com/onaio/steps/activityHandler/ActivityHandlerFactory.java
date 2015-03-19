@@ -25,7 +25,8 @@ public class ActivityHandlerFactory {
         handlers.add(new SelectParticipantHandler(activity,household));
         handlers.add(new TakeSurveyHandler(activity));
         handlers.add(new StepsActivityHandler(activity));
-        handlers.add(new DeferredHandler(activity).withHousehold(household));
+        handlers.add(new DeferredHandler(activity,household));
+        handlers.add(new RefusedHandler(activity,household));
         return handlers;
     }
 
@@ -37,10 +38,11 @@ public class ActivityHandlerFactory {
         return new MemberActivityHandler(activity, member);
     }
 
-    public static List<IPrepare> getHouseholdMenuItemToPrepare(ListActivity activity){
+    public static List<IPrepare> getHouseholdMenuItemToPrepare(ListActivity activity,Household household){
         ArrayList<IPrepare> menuItems = new ArrayList<IPrepare>();
         menuItems.add(new TakeSurveyHandler(activity));
-        menuItems.add(new DeferredHandler(activity));
+        menuItems.add(new DeferredHandler(activity, household));
+        menuItems.add(new RefusedHandler(activity,household));
         return menuItems;
     }
 }

@@ -27,4 +27,5 @@
     <string name="action_delete">Delete</string>
     <string name="action_take_survey">Take Survey</string>
     <string name="action_deferred">Deferred</string>
+    <string name="action_refused">Refused</string>
 </resources>
