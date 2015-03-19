@@ -49,6 +49,7 @@ public class NewMemberActivityHandler implements IHandler {
         List<Member> members = Member.getAll(new DatabaseHelper(activity.getApplicationContext()), household);
         memberAdapter.reinitialize(members);
         memberAdapter.notifyDataSetChanged();
+        activity.invalidateOptionsMenu();
     }
 
     @Override

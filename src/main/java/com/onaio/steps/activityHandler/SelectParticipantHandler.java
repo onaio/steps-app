@@ -5,13 +5,14 @@ import android.app.ListActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
-
 import com.onaio.steps.R;
-import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.adapter.MemberAdapter;
+import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.HouseholdStatus;
 import com.onaio.steps.model.Member;
@@ -19,10 +20,11 @@ import com.onaio.steps.model.ReElectReason;
 
 import java.util.Random;
 
-import static com.onaio.steps.model.HouseholdStatus.*;
+import static com.onaio.steps.model.HouseholdStatus.SELECTED;
 
-public class SelectParticipantHandler implements IHandler{
+public class SelectParticipantHandler implements IHandler, IPrepare{
 
+    private final int MENU_ID = R.id.action_select_participant;
     private ListActivity activity;
     private Household household;
 
@@ -33,7 +35,7 @@ public class SelectParticipantHandler implements IHandler{
 
     @Override
     public boolean shouldOpen(int menu_id) {
-        return menu_id == R.id.action_select_participant;
+        return menu_id == MENU_ID;
     }
 
     @Override
@@ -124,5 +126,18 @@ public class SelectParticipantHandler implements IHandler{
     @Override
     public boolean canHandleResult(int requestCode) {
         return false;
+    }
+
+    @Override
+    public boolean shouldDisable(Household household) {
+        boolean noMember = Member.numberOfMembers(new DatabaseHelper(activity), household) == 0;
+        boolean canSelectParticipant = household.getStatus() == HouseholdStatus.OPEN || household.getStatus() == HouseholdStatus.SELECTED;
+        return noMember || !canSelectParticipant;
+    }
+
+    @Override
+    public void disable(Menu menu) {
+        MenuItem menuItem = menu.findItem(MENU_ID);
+        menuItem.setEnabled(false);
     }
 }

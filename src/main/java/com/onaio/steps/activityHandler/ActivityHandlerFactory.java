@@ -43,6 +43,7 @@ public class ActivityHandlerFactory {
         menuItems.add(new TakeSurveyHandler(activity));
         menuItems.add(new DeferredHandler(activity, household));
         menuItems.add(new RefusedHandler(activity,household));
+        menuItems.add(new SelectParticipantHandler(activity,household));
         return menuItems;
     }
 }
