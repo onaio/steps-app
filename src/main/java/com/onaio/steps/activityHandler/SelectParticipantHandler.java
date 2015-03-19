@@ -1,7 +1,11 @@
 package com.onaio.steps.activityHandler;
 
+import android.app.AlertDialog;
 import android.app.ListActivity;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.ListView;
 
 import com.onaio.steps.R;
@@ -12,6 +16,8 @@ import com.onaio.steps.model.HouseholdStatus;
 import com.onaio.steps.model.Member;
 
 import java.util.Random;
+
+import static com.onaio.steps.model.HouseholdStatus.*;
 
 public class SelectParticipantHandler implements IHandler{
 
@@ -30,12 +36,56 @@ public class SelectParticipantHandler implements IHandler{
 
     @Override
     public boolean open() {
+        switch(household.getStatus()){
+            case OPEN: selectParticipant();
+                break;
+            case SELECTED: confirm();
+                break;
+            default: canNotReElect();
+        }
+        return true;
+    }
+
+    private void canNotReElect() {
+        new AlertDialog.Builder(activity)
+                .setTitle("Can not re elect")
+                .setMessage("You can not re elect the participant with the current status.")
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                    }
+                })
+                .create().show();
+    }
+
+    private void confirm() {
+        LayoutInflater factory = LayoutInflater.from(activity);
+        View confirmation = factory.inflate(R.layout.selection_confirm, null);
+        new AlertDialog.Builder(activity)
+                .setTitle("Confirm re-election of the participant")
+                .setView(confirmation)
+                .setPositiveButton(R.string.confirm_ok,new DialogInterface.OnClickListener(){
+
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        selectParticipant();
+                    }
+                })
+                .setNegativeButton(R.string.cancel,new DialogInterface.OnClickListener(){
+
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                }).create().show();
+    }
+
+    private void selectParticipant() {
         ListView listView = activity.getListView();
         Member selectedMember = getSelectedMember(listView);
         updateHousehold(selectedMember);
         updateView(listView);
         activity.invalidateOptionsMenu();
-        return true;
     }
 
     private void updateView(ListView listView) {
@@ -46,7 +96,7 @@ public class SelectParticipantHandler implements IHandler{
 
     private void updateHousehold(Member selectedMember) {
         household.setSelectedMember(String.valueOf(selectedMember.getId()));
-        household.setStatus(HouseholdStatus.SELECTED);
+        household.setStatus(SELECTED);
         household.update(new DatabaseHelper(activity.getApplicationContext()));
     }
 

@@ -28,4 +28,8 @@
     <string name="action_take_survey">Take Survey</string>
     <string name="action_deferred">Deferred</string>
     <string name="action_refused">Refused</string>
+    <string name="reason">Reason</string>
+    <string name="confirm_ok">Confirm</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
 </resources>
