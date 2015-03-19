@@ -32,7 +32,7 @@ public class RefusedHandler implements IHandler,IPrepare{
         household.update(new DatabaseHelper(activity.getApplicationContext()));
         StepsActivityHandler handler = new StepsActivityHandler(activity);
         handler.open();
-        return false;
+        return true;
     }
 
     @Override

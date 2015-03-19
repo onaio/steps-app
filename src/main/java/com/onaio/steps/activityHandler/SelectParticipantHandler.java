@@ -8,6 +8,7 @@ import com.onaio.steps.R;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.adapter.MemberAdapter;
 import com.onaio.steps.model.Household;
+import com.onaio.steps.model.HouseholdStatus;
 import com.onaio.steps.model.Member;
 
 import java.util.Random;
@@ -45,6 +46,7 @@ public class SelectParticipantHandler implements IHandler{
 
     private void updateHousehold(Member selectedMember) {
         household.setSelectedMember(String.valueOf(selectedMember.getId()));
+        household.setStatus(HouseholdStatus.SELECTED);
         household.update(new DatabaseHelper(activity.getApplicationContext()));
     }
 
