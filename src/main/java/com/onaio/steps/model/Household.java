@@ -15,34 +15,45 @@ public class Household implements Serializable {
     public static final String TABLE_NAME = "household";
     public static final String ID = "Id";
     private static final String NAME = "Name";
+    private static final String STATUS = "Status";
     private static final String PHONE_NUMBER = "Phone_Number";
     private static final String SELECTED_MEMBER = "selected_member";
-    public static final String TABLE_CREATE_QUERY = String.format("CREATE TABLE %s(%s INTEGER PRIMARY KEY, %s TEXT, %s TEXT, %s INTEGER)", TABLE_NAME, ID, NAME, PHONE_NUMBER,SELECTED_MEMBER);
+    public static final String TABLE_CREATE_QUERY = String.format("CREATE TABLE %s(%s INTEGER PRIMARY KEY, %s TEXT, %s TEXT, %s INTEGER, %s TEXT)", TABLE_NAME, ID, NAME, PHONE_NUMBER,SELECTED_MEMBER,STATUS);
 
     String id;
     String name;
     String phoneNumber;
+    HouseholdStatus status;
+    String selectedMember;
+
+    public Household(String id, String name, String phoneNumber, String selectedMember, HouseholdStatus status) {
+        this.id = id;
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+        this.selectedMember = selectedMember;
+        this.status = status;
+    }
+
+    public Household(String name, String phoneNumber, HouseholdStatus status) {
+        this.name= name;
+        this.phoneNumber = phoneNumber;
+        this.status = status;
+    }
+
+    public HouseholdStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(HouseholdStatus status) {
+        this.status = status;
+    }
 
     public void setSelectedMember(String selectedMember) {
         this.selectedMember = selectedMember;
     }
 
-    String selectedMember;
-
     public String getSelectedMember() {
         return selectedMember;
-    }
-
-    public Household(String id, String name, String phoneNumber, String selectedMember) {
-        this.id = id;
-        this.name = name;
-        this.phoneNumber = phoneNumber;
-        this.selectedMember = selectedMember;
-    }
-
-    public Household(String name, String phoneNumber) {
-        this.name= name;
-        this.phoneNumber = phoneNumber;
     }
 
     public String getName() {
@@ -63,16 +74,18 @@ public class Household implements Serializable {
 
     public long save(DatabaseHelper db){
         ContentValues values = new ContentValues();
-        values.put(NAME, getName());
-        values.put(PHONE_NUMBER,getPhoneNumber());
+        values.put(NAME, name);
+        values.put(PHONE_NUMBER,phoneNumber);
+        values.put(STATUS,status.toString());
         return db.save(values, TABLE_NAME);
     }
 
     public long update(DatabaseHelper db){
         ContentValues values = new ContentValues();
-        values.put(NAME, getName());
-        values.put(PHONE_NUMBER,getPhoneNumber());
-        values.put(SELECTED_MEMBER,getSelectedMember());
+        values.put(NAME, name);
+        values.put(PHONE_NUMBER,phoneNumber);
+        values.put(SELECTED_MEMBER,selectedMember);
+        values.put(STATUS,status.toString());
         return db.update(values, TABLE_NAME,ID +" = "+getId(),null);
     }
 
@@ -98,7 +111,8 @@ public class Household implements Serializable {
                 String household_number = cursor.getString(cursor.getColumnIndex(PHONE_NUMBER));
                 String id = cursor.getString(cursor.getColumnIndex(ID));
                 String selectedMember = cursor.getString(cursor.getColumnIndex(SELECTED_MEMBER));
-                householdNames.add(new Household(id,household_name, household_number,selectedMember));
+                String status = cursor.getString(cursor.getColumnIndex(STATUS));
+                householdNames.add(new Household(id,household_name, household_number,selectedMember,HouseholdStatus.valueOf(status)));
             }while (cursor.moveToNext());
         }
         cursor.close();

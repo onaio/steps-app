@@ -11,6 +11,7 @@ import com.onaio.steps.R;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.model.Household;
+import com.onaio.steps.model.HouseholdStatus;
 
 public class NewHouseholdActivity extends Activity {
 
@@ -61,7 +62,7 @@ public class NewHouseholdActivity extends Activity {
         TextView name = (TextView) findViewById(R.id.household_name);
         TextView number = (TextView) findViewById(R.id.household_number);
         String phoneNumber = number.getText().toString();
-        return new Household(intent.getStringExtra(Constants.PHONE_ID)+"-"+name.getText().toString(), phoneNumber);
+        return new Household(intent.getStringExtra(Constants.PHONE_ID)+"-"+name.getText().toString(), phoneNumber, HouseholdStatus.OPEN);
     }
 
 }

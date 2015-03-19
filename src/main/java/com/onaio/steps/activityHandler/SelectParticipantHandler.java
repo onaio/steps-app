@@ -33,6 +33,7 @@ public class SelectParticipantHandler implements IHandler{
         Member selectedMember = getSelectedMember(listView);
         updateHousehold(selectedMember);
         updateView(listView);
+        activity.invalidateOptionsMenu();
         return true;
     }
 

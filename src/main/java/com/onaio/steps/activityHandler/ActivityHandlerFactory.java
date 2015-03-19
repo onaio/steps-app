@@ -25,6 +25,7 @@ public class ActivityHandlerFactory {
         handlers.add(new SelectParticipantHandler(activity,household));
         handlers.add(new TakeSurveyHandler(activity));
         handlers.add(new StepsActivityHandler(activity));
+        handlers.add(new DeferredHandler(activity).withHousehold(household));
         return handlers;
     }
 
@@ -39,6 +40,7 @@ public class ActivityHandlerFactory {
     public static List<IPrepare> getHouseholdMenuItemToPrepare(ListActivity activity){
         ArrayList<IPrepare> menuItems = new ArrayList<IPrepare>();
         menuItems.add(new TakeSurveyHandler(activity));
+        menuItems.add(new DeferredHandler(activity));
         return menuItems;
     }
 }
