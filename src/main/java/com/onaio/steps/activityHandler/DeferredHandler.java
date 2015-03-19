@@ -46,7 +46,8 @@ public class DeferredHandler implements IHandler,IPrepare {
 
     @Override
     public boolean shouldDisable(Household household) {
-        return household.getSelectedMember() == null;
+        boolean memberSelected = household.getStatus() == HouseholdStatus.SELECTED;
+        return !(memberSelected);
     }
 
     @Override

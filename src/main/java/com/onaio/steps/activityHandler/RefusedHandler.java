@@ -47,7 +47,9 @@ public class RefusedHandler implements IHandler,IPrepare{
 
     @Override
     public boolean shouldDisable(Household household) {
-        return household.getSelectedMember()==null;
+        boolean memberSelected = household.getStatus() == HouseholdStatus.SELECTED;
+        boolean memberDeferred = household.getStatus() == HouseholdStatus.DEFERRED;
+        return !(memberSelected || memberDeferred);
     }
 
     @Override
