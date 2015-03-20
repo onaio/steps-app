@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 import com.onaio.steps.R;
+import com.onaio.steps.activityHandler.Factory.HouseholdActivityFactory;
 import com.onaio.steps.activityHandler.Interface.IHandler;
 import com.onaio.steps.activityHandler.Interface.IPrepare;
 import com.onaio.steps.adapter.MemberAdapter;
@@ -20,6 +21,7 @@ import com.onaio.steps.model.HouseholdStatus;
 import com.onaio.steps.model.Member;
 import com.onaio.steps.model.ReElectReason;
 
+import java.util.List;
 import java.util.Random;
 
 import static com.onaio.steps.model.HouseholdStatus.SELECTED;
@@ -106,7 +108,18 @@ public class SelectParticipantHandler implements IHandler, IPrepare {
         membersAdapter.setSelectedMemberId(household.getSelectedMember());
         membersAdapter.notifyDataSetChanged();
         activity.invalidateOptionsMenu();
+        prepareBottomMenuItems();
     }
+
+    private void prepareBottomMenuItems() {
+        List<IPrepare> bottomMenus = HouseholdActivityFactory.getHouseholdBottomMenuItemPreparer(activity, household);
+        for(IPrepare menu:bottomMenus)
+            if(menu.shouldInactivate())
+                menu.inactivate();
+            else
+                menu.activate();
+    }
+
 
     private void updateHousehold(Member selectedMember) {
         household.setSelectedMember(String.valueOf(selectedMember.getId()));
@@ -145,6 +158,12 @@ public class SelectParticipantHandler implements IHandler, IPrepare {
     public void inactivate() {
         MenuItem menuItem = menu.findItem(MENU_ID);
         menuItem.setEnabled(false);
+    }
+
+    @Override
+    public void activate() {
+        MenuItem menuItem = menu.findItem(MENU_ID);
+        menuItem.setEnabled(true);
     }
 
     public SelectParticipantHandler withMenu(Menu menu){

@@ -30,4 +30,10 @@ public class FooterHandler implements IPrepare {
         View item = activity.findViewById(MENU_ID);
         item.setVisibility(View.INVISIBLE);
     }
+
+    @Override
+    public void activate() {
+        View item = activity.findViewById(MENU_ID);
+        item.setVisibility(View.VISIBLE);
+    }
 }
