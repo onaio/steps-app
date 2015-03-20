@@ -1,6 +1,7 @@
 package com.onaio.steps.activityHandler;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ListActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -69,7 +70,7 @@ public class SelectParticipantHandler implements IHandler, IPrepare {
 
     private void confirm() {
         LayoutInflater factory = LayoutInflater.from(activity);
-        View confirmation = factory.inflate(R.layout.selection_confirm, null);
+        final View confirmation = factory.inflate(R.layout.selection_confirm, null);
         new AlertDialog.Builder(activity)
                 .setTitle("Confirm re-election of the participant")
                 .setView(confirmation)
@@ -77,7 +78,7 @@ public class SelectParticipantHandler implements IHandler, IPrepare {
 
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        saveReason();
+                        saveReason(confirmation);
                         selectParticipant();
                     }
                 })
@@ -90,10 +91,11 @@ public class SelectParticipantHandler implements IHandler, IPrepare {
                 }).create().show();
     }
 
-    private void saveReason() {
-        TextView reasonView = (TextView) activity.findViewById(R.id.reason);
+    private void saveReason(View confirmation) {
+        TextView reasonView = (TextView) confirmation.findViewById(R.id.reason);
         ReElectReason reason = new ReElectReason(reasonView.getText().toString(), household);
-        reason.save(new DatabaseHelper(activity));
+        DatabaseHelper db = new DatabaseHelper(activity);
+        reason.save(db);
     }
 
     private void selectParticipant() {

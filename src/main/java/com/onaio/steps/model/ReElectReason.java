@@ -50,7 +50,7 @@ public class ReElectReason {
     }
 
     public static List<ReElectReason> getAll(DatabaseHelper db, Household household){
-        Cursor cursor = db.exec(FIND_ALL_QUERY);
+        Cursor cursor = db.exec(String.format(FIND_ALL_QUERY,HOUSEHOLD_ID,household.getId()));
         List<ReElectReason> reasons = read(cursor,household);
         db.close();
         return reasons;
