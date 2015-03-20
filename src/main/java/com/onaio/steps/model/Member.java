@@ -61,7 +61,8 @@ public class Member implements Serializable {
     }
 
     public long save(DatabaseHelper db) {
-        String generatedId = household.getName() + "-" + Member.numberOfMembers(db, household);
+        int memberNumber = Member.numberOfMembers(db, household) + 1;
+        String generatedId = household.getName() + "-" + memberNumber;
         ContentValues values = new ContentValues();
         values.put(NAME, getName());
         values.put(GENDER,getGender());
