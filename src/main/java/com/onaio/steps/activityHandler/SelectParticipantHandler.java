@@ -11,6 +11,8 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 import com.onaio.steps.R;
+import com.onaio.steps.activityHandler.Interface.IHandler;
+import com.onaio.steps.activityHandler.Interface.IPrepare;
 import com.onaio.steps.adapter.MemberAdapter;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.model.Household;
@@ -22,11 +24,12 @@ import java.util.Random;
 
 import static com.onaio.steps.model.HouseholdStatus.SELECTED;
 
-public class SelectParticipantHandler implements IHandler, IPrepare{
+public class SelectParticipantHandler implements IHandler, IPrepare {
 
     private final int MENU_ID = R.id.action_select_participant;
     private ListActivity activity;
     private Household household;
+    private Menu menu;
 
     public SelectParticipantHandler(ListActivity activity, Household household) {
         this.activity = activity;
@@ -96,13 +99,13 @@ public class SelectParticipantHandler implements IHandler, IPrepare{
         Member selectedMember = getSelectedMember(listView);
         updateHousehold(selectedMember);
         updateView(listView);
-        activity.invalidateOptionsMenu();
     }
 
     private void updateView(ListView listView) {
         MemberAdapter membersAdapter = (MemberAdapter) listView.getAdapter();
         membersAdapter.setSelectedMemberId(household.getSelectedMember());
         membersAdapter.notifyDataSetChanged();
+        activity.invalidateOptionsMenu();
     }
 
     private void updateHousehold(Member selectedMember) {
@@ -129,15 +132,23 @@ public class SelectParticipantHandler implements IHandler, IPrepare{
     }
 
     @Override
-    public boolean shouldDisable(Household household) {
+    public boolean shouldInactivate() {
         boolean noMember = Member.numberOfMembers(new DatabaseHelper(activity), household) == 0;
-        boolean canSelectParticipant = household.getStatus() == HouseholdStatus.OPEN || household.getStatus() == HouseholdStatus.SELECTED;
+        boolean noSelection = household.getStatus() == HouseholdStatus.OPEN;
+        boolean selected = household.getStatus() == HouseholdStatus.SELECTED;
+        boolean deferred = household.getStatus() == HouseholdStatus.DEFERRED;
+        boolean canSelectParticipant = noSelection || selected || deferred;
         return noMember || !canSelectParticipant;
     }
 
     @Override
-    public void disable(Menu menu) {
+    public void inactivate() {
         MenuItem menuItem = menu.findItem(MENU_ID);
         menuItem.setEnabled(false);
+    }
+
+    public SelectParticipantHandler withMenu(Menu menu){
+        this.menu = menu;
+        return this;
     }
 }

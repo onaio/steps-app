@@ -4,9 +4,10 @@ import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.widget.ArrayAdapter;
+
 import com.onaio.steps.activity.NewHouseholdActivity;
 import com.onaio.steps.R;
+import com.onaio.steps.activityHandler.Interface.IHandler;
 import com.onaio.steps.adapter.HouseholdAdapter;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;

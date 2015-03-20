@@ -12,9 +12,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.onaio.steps.R;
-import com.onaio.steps.activityHandler.ActivityHandlerFactory;
-import com.onaio.steps.activityHandler.IHandler;
-import com.onaio.steps.activityHandler.IPrepare;
+import com.onaio.steps.activityHandler.Factory.HouseholdActivityFactory;
+import com.onaio.steps.activityHandler.Interface.IHandler;
+import com.onaio.steps.activityHandler.Interface.IPrepare;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.adapter.MemberAdapter;
@@ -33,10 +33,26 @@ public class HouseholdActivity extends ListActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.household);
         getActionBar().setDisplayHomeAsUpEnabled(true);
+        Intent intent = getIntent();
+        household = (Household)intent.getSerializableExtra(Constants.HOUSEHOLD);
         populatePhoneNumber();
+        handleMembers();
+        prepareBottomMenuItems();
+        setTitle(household.getName());
+    }
+
+    private void handleMembers() {
         populateMembers();
         bindMemberItems();
-        setTitle(household.getName());
+    }
+
+    private void prepareBottomMenuItems() {
+        List<IPrepare> bottomMenus = HouseholdActivityFactory.getHouseholdBottomMenuItemPreparer(this, household);
+        for(IPrepare menu:bottomMenus)
+            if(menu.shouldInactivate())
+                menu.inactivate();
+
+
     }
 
     private void bindMemberItems() {
@@ -48,18 +64,14 @@ public class HouseholdActivity extends ListActivity {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
             Member member = Member.find_by(db, id, household);
-            ActivityHandlerFactory.getMemberItemHandler(HouseholdActivity.this, member).open();
+            HouseholdActivityFactory.getMemberItemHandler(HouseholdActivity.this, member).open();
         }
     };
 
     private void populatePhoneNumber() {
-        Intent intent = getIntent();
-        household = (Household)intent.getSerializableExtra(Constants.HOUSEHOLD);
         TextView phoneNumber = (TextView) findViewById(R.id.household_number);
         phoneNumber.setText(String.valueOf(household.getPhoneNumber()));
     }
-
-
 
     private void populateMembers() {
         db = new DatabaseHelper(getApplicationContext());
@@ -69,7 +81,7 @@ public class HouseholdActivity extends ListActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        List<IHandler> menuHandlers = ActivityHandlerFactory.getHouseholdMenuHandlers(this,household);
+        List<IHandler> menuHandlers = HouseholdActivityFactory.getHouseholdMenuHandlers(this, household);
         for(IHandler menuHandler:menuHandlers)
             if(menuHandler.shouldOpen(item.getItemId()))
                 menuHandler.open();
@@ -78,10 +90,9 @@ public class HouseholdActivity extends ListActivity {
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        List<IPrepare> menuItemsToPrepare = ActivityHandlerFactory.getHouseholdMenuItemToPrepare(this,household);
-        for(IPrepare menuItemToPrepare: menuItemsToPrepare)
-            if(menuItemToPrepare.shouldDisable(household))
-                menuItemToPrepare.disable(menu);
+        IPrepare menuItem = HouseholdActivityFactory.getHouseholdMenuPreparer(this, household, menu);
+        if(menuItem.shouldInactivate())
+            menuItem.inactivate();
         super.onPrepareOptionsMenu(menu);
         return true;
     }
@@ -95,9 +106,16 @@ public class HouseholdActivity extends ListActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        List<IHandler> menuHandlers = ActivityHandlerFactory.getHouseholdMenuHandlers(this,household);
+        List<IHandler> menuHandlers = HouseholdActivityFactory.getHouseholdMenuHandlers(this, household);
         for(IHandler menuHandler:menuHandlers)
             if(menuHandler.canHandleResult(requestCode))
                 menuHandler.handleResult(data, resultCode);
+    }
+
+    public void handleBottomMenu(View view) {
+        List<IHandler> bottomMenuItem = HouseholdActivityFactory.getHouseholdBottomMenuItemHandler(this, household);
+        for(IHandler menuItem: bottomMenuItem)
+            if(menuItem.shouldOpen(view.getId()))
+                menuItem.open();
     }
 }

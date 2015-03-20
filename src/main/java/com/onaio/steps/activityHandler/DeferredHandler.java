@@ -2,9 +2,11 @@ package com.onaio.steps.activityHandler;
 
 import android.app.ListActivity;
 import android.content.Intent;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.View;
+
 import com.onaio.steps.R;
+import com.onaio.steps.activityHandler.Interface.IHandler;
+import com.onaio.steps.activityHandler.Interface.IPrepare;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.HouseholdStatus;
@@ -45,14 +47,14 @@ public class DeferredHandler implements IHandler,IPrepare {
     }
 
     @Override
-    public boolean shouldDisable(Household household) {
+    public boolean shouldInactivate() {
         boolean memberSelected = household.getStatus() == HouseholdStatus.SELECTED;
         return !(memberSelected);
     }
 
     @Override
-    public void disable(Menu menu) {
-        MenuItem menuItem = menu.findItem(MENU_ID);
-        menuItem.setEnabled(false);
+    public void inactivate() {
+        View item = activity.findViewById(MENU_ID);
+        item.setVisibility(View.INVISIBLE);
     }
 }

@@ -1,4 +1,4 @@
-package com.onaio.steps.activityHandler;
+package com.onaio.steps.activityHandler.Interface;
 
 import android.app.ListActivity;
 import android.content.Intent;

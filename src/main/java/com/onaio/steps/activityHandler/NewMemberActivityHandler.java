@@ -5,6 +5,7 @@ import android.content.Intent;
 
 import com.onaio.steps.R;
 import com.onaio.steps.activity.NewMemberActivity;
+import com.onaio.steps.activityHandler.Interface.IHandler;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.adapter.MemberAdapter;

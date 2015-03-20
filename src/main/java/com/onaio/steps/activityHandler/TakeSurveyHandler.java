@@ -3,14 +3,17 @@ package com.onaio.steps.activityHandler;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.View;
 
 import com.onaio.steps.R;
+import com.onaio.steps.activityHandler.Interface.IHandler;
+import com.onaio.steps.activityHandler.Interface.IPrepare;
 import com.onaio.steps.model.Household;
+import com.onaio.steps.model.HouseholdStatus;
 
-public class TakeSurveyHandler implements IHandler, IPrepare{
+public class TakeSurveyHandler implements IHandler, IPrepare {
     private ListActivity activity;
+    private Household household;
     private static final int MENU_ID= R.id.action_take_survey;
 
     @Override
@@ -18,8 +21,9 @@ public class TakeSurveyHandler implements IHandler, IPrepare{
         return menu_id == MENU_ID;
     }
 
-    public TakeSurveyHandler(ListActivity activity) {
+    public TakeSurveyHandler(ListActivity activity, Household household) {
         this.activity = activity;
+        this.household = household;
     }
 
     @Override
@@ -50,13 +54,15 @@ public class TakeSurveyHandler implements IHandler, IPrepare{
     }
 
     @Override
-    public boolean shouldDisable(Household household) {
-        return household.getSelectedMember() == null;
+    public boolean shouldInactivate() {
+        boolean selected = household.getStatus() == HouseholdStatus.SELECTED;
+        boolean deferred = household.getStatus() == HouseholdStatus.DEFERRED;
+        return !(selected || deferred);
     }
 
     @Override
-    public void disable(Menu menu) {
-        MenuItem menuItem = menu.findItem(MENU_ID);
-        menuItem.setEnabled(false);
+    public void inactivate() {
+        View item = activity.findViewById(MENU_ID);
+        item.setVisibility(View.INVISIBLE);
     }
 }

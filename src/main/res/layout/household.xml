@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="fill_parent">
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
 
     <TextView
         android:layout_width="fill_parent"
@@ -23,7 +25,45 @@
 
     <ListView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:id="@android:id/list"
         android:layout_gravity="center_horizontal"/>
+
 </LinearLayout>
+ <LinearLayout android:id="@+id/footer"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_alignParentBottom="true"
+    style="@android:style/ButtonBar"
+     android:background="#ff000000"
+     android:paddingLeft="0dp"
+     android:paddingRight="0dp">
+
+ <ImageButton android:id="@+id/action_take_survey"
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+     android:layout_weight="1"
+     android:src="@drawable/ic_action_survey"
+     android:background="@android:color/transparent"
+     android:onClick="handleBottomMenu"
+     android:focusable="true"
+     android:focusableInTouchMode="true"
+     android:clickable="false" />
+
+ <ImageButton android:id="@+id/action_deferred"
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+     android:layout_weight="1"
+     android:src="@drawable/ic_action_deferred"
+     android:background="@android:color/transparent"
+     android:onClick="handleBottomMenu"/>
+ <ImageButton android:id="@+id/action_refused"
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+     android:layout_weight="1"
+     android:src="@drawable/ic_action_refused"
+     android:background="@android:color/transparent"
+     android:onClick="handleBottomMenu"/>
+    </LinearLayout>
+</RelativeLayout>

@@ -3,11 +3,9 @@ package com.onaio.steps.activityHandler;
 import android.app.ListActivity;
 import android.content.Intent;
 
-import com.onaio.steps.R;
-import com.onaio.steps.activity.HouseholdActivity;
 import com.onaio.steps.activity.StepsActivity;
+import com.onaio.steps.activityHandler.Interface.IHandler;
 import com.onaio.steps.helper.Constants;
-import com.onaio.steps.model.Household;
 
 public class StepsActivityHandler implements IHandler {
 

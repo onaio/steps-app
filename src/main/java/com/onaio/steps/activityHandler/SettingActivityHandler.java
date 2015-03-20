@@ -4,6 +4,7 @@ import android.app.ListActivity;
 import android.content.Intent;
 import com.onaio.steps.R;
 import com.onaio.steps.activity.SettingsActivity;
+import com.onaio.steps.activityHandler.Interface.IHandler;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.KeyValueStore;
 import com.onaio.steps.helper.KeyValueStoreFactory;

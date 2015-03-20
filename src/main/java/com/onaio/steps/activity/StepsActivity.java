@@ -8,17 +8,15 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
+
 import com.onaio.steps.R;
-import com.onaio.steps.activityHandler.ActivityHandlerFactory;
-import com.onaio.steps.activityHandler.IHandler;
+import com.onaio.steps.activityHandler.Factory.StepsActivityFactory;
+import com.onaio.steps.activityHandler.Interface.IHandler;
 import com.onaio.steps.adapter.HouseholdAdapter;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.model.Household;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class StepsActivity extends ListActivity {
@@ -39,7 +37,7 @@ public class StepsActivity extends ListActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 Household household = Household.find_by(db, id);
-                ActivityHandlerFactory.getHouseholdItemHandler(StepsActivity.this, household).open();
+                StepsActivityFactory.getHouseholdItemHandler(StepsActivity.this, household).open();
             }
         });
     }
@@ -58,7 +56,7 @@ public class StepsActivity extends ListActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        List<IHandler> activityHandlers = ActivityHandlerFactory.getMainMenuHandlers(this);
+        List<IHandler> activityHandlers = StepsActivityFactory.getMainMenuHandlers(this);
         for(IHandler handler : activityHandlers){
             if(handler.shouldOpen(item.getItemId()))
                 return handler.open();
@@ -68,7 +66,7 @@ public class StepsActivity extends ListActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        List<IHandler> activityHandlers = ActivityHandlerFactory.getMainMenuHandlers(this);
+        List<IHandler> activityHandlers = StepsActivityFactory.getMainMenuHandlers(this);
         for(IHandler activityHandler: activityHandlers){
             if(activityHandler.canHandleResult(requestCode))
                 activityHandler.handleResult(data,resultCode);
