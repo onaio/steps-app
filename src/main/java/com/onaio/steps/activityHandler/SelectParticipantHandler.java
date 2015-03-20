@@ -1,6 +1,5 @@
 package com.onaio.steps.activityHandler;
 
-import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -16,6 +15,7 @@ import com.onaio.steps.activityHandler.Interface.IHandler;
 import com.onaio.steps.activityHandler.Interface.IPrepare;
 import com.onaio.steps.adapter.MemberAdapter;
 import com.onaio.steps.helper.DatabaseHelper;
+import com.onaio.steps.helper.Dialog;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.HouseholdStatus;
 import com.onaio.steps.model.Member;
@@ -29,9 +29,15 @@ import static com.onaio.steps.model.HouseholdStatus.SELECTED;
 public class SelectParticipantHandler implements IHandler, IPrepare {
 
     private final int MENU_ID = R.id.action_select_participant;
+    private final int MAX_RE_ELECT_COUNT = 2;
     private ListActivity activity;
     private Household household;
     private Menu menu;
+    private DialogInterface.OnClickListener emptyListener = new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialogInterface, int i) {
+        }
+    };
 
     public SelectParticipantHandler(ListActivity activity, Household household) {
         this.activity = activity;
@@ -45,69 +51,79 @@ public class SelectParticipantHandler implements IHandler, IPrepare {
 
     @Override
     public boolean open() {
-        switch(household.getStatus()){
-            case OPEN: selectParticipant();
-                break;
-            case SELECTED: confirm();
-                break;
-            case DEFERRED: confirm();
-                break;
-            default: canNotReElect();
-        }
+        if(ReElectReason.getAll(new DatabaseHelper(activity),household).size() > MAX_RE_ELECT_COUNT)
+            Dialog.notify(activity, emptyListener, R.string.participant_no_re_elect_message_because_of_count);
+        else
+            trySelectingParticipant();
         return true;
     }
 
-    private void canNotReElect() {
-        new AlertDialog.Builder(activity)
-                .setTitle(activity.getString(R.string.participant_no_re_elect_title))
-                .setMessage(activity.getString(R.string.participant_no_re_elect_message))
-                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                    }
-                })
-                .create().show();
+    @Override
+    public void handleResult(Intent data, int resultCode) {}
+
+    @Override
+    public boolean canHandleResult(int requestCode) {
+        return false;
     }
 
-    private void confirm() {
+    @Override
+    public boolean shouldInactivate() {
+        boolean noMember = Member.numberOfMembers(new DatabaseHelper(activity), household) == 0;
+        boolean noSelection = household.getStatus() == HouseholdStatus.OPEN;
+        boolean selected = household.getStatus() == HouseholdStatus.SELECTED;
+        boolean deferred = household.getStatus() == HouseholdStatus.DEFERRED;
+        boolean canSelectParticipant = noSelection || selected || deferred;
+        return noMember || !canSelectParticipant;
+    }
+
+    @Override
+    public void inactivate() {
+        MenuItem menuItem = menu.findItem(MENU_ID);
+        menuItem.setEnabled(false);
+    }
+
+    @Override
+    public void activate() {
+        MenuItem menuItem = menu.findItem(MENU_ID);
+        menuItem.setEnabled(true);
+    }
+
+    private void trySelectingParticipant() {
         LayoutInflater factory = LayoutInflater.from(activity);
         final View confirmation = factory.inflate(R.layout.selection_confirm, null);
-        new AlertDialog.Builder(activity)
-                .setTitle(activity.getString(R.string.participant_re_elect_reason_title))
-                .setView(confirmation)
-                .setPositiveButton(R.string.confirm_ok,new DialogInterface.OnClickListener(){
+        DialogInterface.OnClickListener confirmListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                saveReason(confirmation);
+                selectParticipant();
+            }
+        };
 
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        saveReason(confirmation);
-                        selectParticipant();
-                    }
-                })
-                .setNegativeButton(R.string.cancel,new DialogInterface.OnClickListener(){
-
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-
-                    }
-                }).create().show();
+        switch(household.getStatus()){
+            case OPEN: selectParticipant();
+                break;
+            case SELECTED: Dialog.confirm(activity, confirmListener, emptyListener, confirmation);
+                break;
+            case DEFERRED: Dialog.confirm(activity, confirmListener, emptyListener, confirmation);
+                break;
+            default: Dialog.notify(activity, emptyListener, R.string.participant_no_re_elect_message_because_of_status);
+        }
     }
 
     private void saveReason(View confirmation) {
         TextView reasonView = (TextView) confirmation.findViewById(R.id.reason);
         ReElectReason reason = new ReElectReason(reasonView.getText().toString(), household);
-        DatabaseHelper db = new DatabaseHelper(activity);
-        reason.save(db);
+        reason.save(new DatabaseHelper(activity));
     }
 
     private void selectParticipant() {
-        ListView listView = activity.getListView();
-        Member selectedMember = getSelectedMember(listView);
-        updateHousehold(selectedMember);
-        updateView(listView);
+        ListView membersView = activity.getListView();
+        updateHousehold(getSelectedMember(membersView));
+        updateView(membersView);
     }
 
-    private void updateView(ListView listView) {
-        MemberAdapter membersAdapter = (MemberAdapter) listView.getAdapter();
+    private void updateView(ListView membersView) {
+        MemberAdapter membersAdapter = (MemberAdapter) membersView.getAdapter();
         membersAdapter.setSelectedMemberId(household.getSelectedMember());
         membersAdapter.notifyDataSetChanged();
         prepareBottomMenuItems();
@@ -142,38 +158,6 @@ public class SelectParticipantHandler implements IHandler, IPrepare {
         Random random = new Random();
         int selectedParticipant = random.nextInt(totalMembers);
         return (Member) listView.getItemAtPosition(selectedParticipant);
-    }
-
-    @Override
-    public void handleResult(Intent data, int resultCode) {
-
-    }
-
-    @Override
-    public boolean canHandleResult(int requestCode) {
-        return false;
-    }
-
-    @Override
-    public boolean shouldInactivate() {
-        boolean noMember = Member.numberOfMembers(new DatabaseHelper(activity), household) == 0;
-        boolean noSelection = household.getStatus() == HouseholdStatus.OPEN;
-        boolean selected = household.getStatus() == HouseholdStatus.SELECTED;
-        boolean deferred = household.getStatus() == HouseholdStatus.DEFERRED;
-        boolean canSelectParticipant = noSelection || selected || deferred;
-        return noMember || !canSelectParticipant;
-    }
-
-    @Override
-    public void inactivate() {
-        MenuItem menuItem = menu.findItem(MENU_ID);
-        menuItem.setEnabled(false);
-    }
-
-    @Override
-    public void activate() {
-        MenuItem menuItem = menu.findItem(MENU_ID);
-        menuItem.setEnabled(true);
     }
 
     public SelectParticipantHandler withMenu(Menu menu){

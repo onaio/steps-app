@@ -35,8 +35,9 @@
     <string name="survey_refusal_title">Confirm Refusal</string>
     <string name="survey_refusal_message">You are going to mark the household for refusal. This action can not be reversed. Are you sure?</string>
     <string name="participant_no_re_elect_title">Can not re elect</string>
-    <string name="participant_no_re_elect_message">You can not re elect the participant with the current status.</string>
+    <string name="participant_no_re_elect_message_because_of_status">You can not re elect the participant with the current status.</string>
     <string name="participant_re_elect_reason_title">Confirm re-election of the participant</string>
     <string name="survey_deferred_title">Survey Deferred</string>
     <string name="survey_deferred_message">The survey has been deferred, you can take the survey later for this household</string>
+    <string name="participant_no_re_elect_message_because_of_count">Already selected participant twice, can not re elect again</string>
 </resources>
