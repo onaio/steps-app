@@ -1,6 +1,8 @@
 package com.onaio.steps.activityHandler;
 
+import android.app.AlertDialog;
 import android.app.ListActivity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.View;
 
@@ -29,11 +31,35 @@ public class RefusedHandler implements IHandler,IPrepare {
 
     @Override
     public boolean open() {
+        confirm();
+        return true;
+    }
+
+    private void refuse() {
         household.setStatus(HouseholdStatus.REFUSED);
         household.update(new DatabaseHelper(activity.getApplicationContext()));
         StepsActivityHandler handler = new StepsActivityHandler(activity);
         handler.open();
-        return true;
+    }
+
+    private void confirm() {
+        new AlertDialog.Builder(activity)
+                .setTitle(activity.getString(R.string.survey_refusal_title))
+                .setMessage(activity.getString(R.string.survey_refusal_message))
+                .setPositiveButton(R.string.confirm_ok, new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        refuse();
+                    }
+                })
+                .setNegativeButton(R.string.cancel,new DialogInterface.OnClickListener(){
+
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                }).create().show();
     }
 
     @Override

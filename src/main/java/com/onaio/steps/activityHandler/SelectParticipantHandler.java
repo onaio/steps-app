@@ -1,7 +1,6 @@
 package com.onaio.steps.activityHandler;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.app.ListActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -58,8 +57,8 @@ public class SelectParticipantHandler implements IHandler, IPrepare {
 
     private void canNotReElect() {
         new AlertDialog.Builder(activity)
-                .setTitle("Can not re elect")
-                .setMessage("You can not re elect the participant with the current status.")
+                .setTitle(activity.getString(R.string.participant_no_re_elect_title))
+                .setMessage(activity.getString(R.string.participant_no_re_elect_message))
                 .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -72,7 +71,7 @@ public class SelectParticipantHandler implements IHandler, IPrepare {
         LayoutInflater factory = LayoutInflater.from(activity);
         final View confirmation = factory.inflate(R.layout.selection_confirm, null);
         new AlertDialog.Builder(activity)
-                .setTitle("Confirm re-election of the participant")
+                .setTitle(activity.getString(R.string.participant_re_elect_reason_title))
                 .setView(confirmation)
                 .setPositiveButton(R.string.confirm_ok,new DialogInterface.OnClickListener(){
 
@@ -109,7 +108,6 @@ public class SelectParticipantHandler implements IHandler, IPrepare {
         MemberAdapter membersAdapter = (MemberAdapter) listView.getAdapter();
         membersAdapter.setSelectedMemberId(household.getSelectedMember());
         membersAdapter.notifyDataSetChanged();
-        activity.invalidateOptionsMenu();
         prepareBottomMenuItems();
     }
 
