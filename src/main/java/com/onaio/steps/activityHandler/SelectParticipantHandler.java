@@ -130,6 +130,14 @@ public class SelectParticipantHandler implements IHandler, IPrepare {
     }
 
     private Member getSelectedMember(ListView listView) {
+        Member randomMember = getRandomMember(listView);
+        while(household.getSelectedMember().equals(String.valueOf(randomMember.getId()))){
+            randomMember = getRandomMember(listView);
+        }
+        return randomMember;
+    }
+
+    private Member getRandomMember(ListView listView) {
         int totalMembers = Member.numberOfMembers(new DatabaseHelper(activity.getApplicationContext()), household);
         Random random = new Random();
         int selectedParticipant = random.nextInt(totalMembers);
