@@ -50,6 +50,8 @@ public class SelectParticipantHandler implements IHandler, IPrepare {
                 break;
             case SELECTED: confirm();
                 break;
+            case DEFERRED: confirm();
+                break;
             default: canNotReElect();
         }
         return true;
