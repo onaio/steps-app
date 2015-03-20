@@ -8,6 +8,7 @@ import android.view.View;
 import com.onaio.steps.R;
 import com.onaio.steps.activityHandler.Interface.IHandler;
 import com.onaio.steps.activityHandler.Interface.IPrepare;
+import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.HouseholdStatus;
 
@@ -40,6 +41,8 @@ public class TakeSurveyHandler implements IHandler, IPrepare {
 
 
         activity.startActivity(surveyIntent);
+        household.setStatus(HouseholdStatus.CLOSED);
+        household.save(new DatabaseHelper(activity));
         return true;
     }
 
