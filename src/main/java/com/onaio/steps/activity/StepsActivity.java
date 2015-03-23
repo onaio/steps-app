@@ -31,6 +31,12 @@ public class StepsActivity extends ListActivity {
         bindHouseholdItems();
     }
 
+    @Override
+    protected void onResume() {
+        populateHouseholds();
+        super.onResume();
+    }
+
     private void bindHouseholdItems() {
         ListView households = getListView();
         households.setOnItemClickListener(new AdapterView.OnItemClickListener() {
