@@ -1,8 +1,10 @@
 package com.onaio.steps.activityHandler;
 
 import android.app.ListActivity;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.view.View;
 
 import com.onaio.steps.R;
@@ -16,6 +18,9 @@ public class TakeSurveyHandler implements IHandler, IPrepare {
     private ListActivity activity;
     private Household household;
     private static final int MENU_ID= R.id.action_take_survey;
+    public static final String COLLECT_INSTANCE_AUTHORITY = "org.odk.collect.android.provider.odk.forms";
+    public static final Uri CONTENT_INSTANCE_URI = Uri.parse("content://"
+            + COLLECT_INSTANCE_AUTHORITY + "/forms");
 
     @Override
     public boolean shouldOpen(int menu_id) {
@@ -29,20 +34,26 @@ public class TakeSurveyHandler implements IHandler, IPrepare {
 
     @Override
     public boolean open() {
-        PackageManager packageManager = activity.getPackageManager();
 //        Intent surveyIntent = packageManager.getLaunchIntentForPackage("org.odk.collect.android");
 //        Uri uri = Uri.parse("vnd.android.cursor.item/vnd.odk.form");
 //        Intent surveyIntent = new Intent(Intent.ACTION_EDIT, uri);
 //        surveyIntent.setClassName("org.odk.collect.android", "org.odk.collect.android..activities.FormEntryActivity");
-        Intent surveyIntent = packageManager.getLaunchIntentForPackage("org.odk.collect.android");
-        surveyIntent.addCategory(Intent.ACTION_EDIT);
 //        surveyIntent.setClassName("org.odk.collect.android","org.odk.collect.android.activities.FormEntryActivity");
 //        List<ResolveInfo> resolveInfos = packageManager.queryIntentActivities(surveyIntent, 0);
+
+//        PackageManager packageManager = activity.getPackageManager();
+//        Intent surveyIntent = packageManager.getLaunchIntentForPackage("org.odk.collect.android");
+//        surveyIntent.addCategory(Intent.ACTION_EDIT);
+
+        Intent surveyIntent = new Intent();
+        surveyIntent.setComponent(new ComponentName("org.odk.collect.android","org.odk.collect.android.activities.FormChooserList"));
+        surveyIntent.setAction(Intent.ACTION_PICK);
+        surveyIntent.setData(CONTENT_INSTANCE_URI);
 
 
         activity.startActivity(surveyIntent);
         household.setStatus(HouseholdStatus.CLOSED);
-        household.save(new DatabaseHelper(activity));
+        household.update(new DatabaseHelper(activity));
         return true;
     }
 
