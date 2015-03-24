@@ -40,4 +40,7 @@
     <string name="survey_deferred_title">Survey Deferred</string>
     <string name="survey_deferred_message">The survey has been deferred, you can take the survey later for this household</string>
     <string name="participant_no_re_elect_message_because_of_count">Already selected participant twice, can not re elect again</string>
+    <string name="odk_app_not_installed">The ODK Collect app is not installed, please install it before proceeding</string>
+    <string name="form_not_present">The required form is not present. Please pull the form and try again.</string>
+    <string name="form_not_present_title">Form not present</string>
 </resources>

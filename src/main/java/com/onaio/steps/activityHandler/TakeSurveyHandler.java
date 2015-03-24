@@ -3,24 +3,25 @@ package com.onaio.steps.activityHandler;
 import android.app.ListActivity;
 import android.content.ComponentName;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.view.View;
 
 import com.onaio.steps.R;
 import com.onaio.steps.activityHandler.Interface.IHandler;
 import com.onaio.steps.activityHandler.Interface.IPrepare;
+import com.onaio.steps.exception.AppNotInstalledException;
+import com.onaio.steps.exception.FormNotPresentException;
+import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;
+import com.onaio.steps.helper.Dialog;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.HouseholdStatus;
+import com.onaio.steps.model.ODKForm;
 
 public class TakeSurveyHandler implements IHandler, IPrepare {
     private ListActivity activity;
     private Household household;
     private static final int MENU_ID= R.id.action_take_survey;
-    public static final String COLLECT_INSTANCE_AUTHORITY = "org.odk.collect.android.provider.odk.forms";
-    public static final Uri CONTENT_INSTANCE_URI = Uri.parse("content://"
-            + COLLECT_INSTANCE_AUTHORITY + "/forms");
+
 
     @Override
     public boolean shouldOpen(int menu_id) {
@@ -46,14 +47,23 @@ public class TakeSurveyHandler implements IHandler, IPrepare {
 //        surveyIntent.addCategory(Intent.ACTION_EDIT);
 
         Intent surveyIntent = new Intent();
-        surveyIntent.setComponent(new ComponentName("org.odk.collect.android","org.odk.collect.android.activities.FormChooserList"));
-        surveyIntent.setAction(Intent.ACTION_PICK);
-        surveyIntent.setData(CONTENT_INSTANCE_URI);
+        surveyIntent.setComponent(new ComponentName("org.odk.collect.android","org.odk.collect.android.activities.FormEntryActivity"));
+        ODKForm requiredForm = null;
+        try {
+            requiredForm = ODKForm.getFrom(activity, Constants.ODK_FORM_ID);
+            surveyIntent.setAction(Intent.ACTION_EDIT);
+            surveyIntent.setData(requiredForm.getUri());
 
 
-        activity.startActivity(surveyIntent);
-        household.setStatus(HouseholdStatus.CLOSED);
-        household.update(new DatabaseHelper(activity));
+            activity.startActivity(surveyIntent);
+            household.setStatus(HouseholdStatus.CLOSED);
+            household.update(new DatabaseHelper(activity));
+        } catch (FormNotPresentException e) {
+            Dialog.notify(activity,Dialog.EmptyListener,R.string.form_not_present, R.string.form_not_present_title);
+        } catch (AppNotInstalledException e) {
+            Dialog.notify(activity,Dialog.EmptyListener,R.string.odk_app_not_installed, R.string.participant_no_re_elect_title);
+        }
+
         return true;
     }
 

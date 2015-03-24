@@ -27,4 +27,7 @@ public class Constants {
     public static final String EXPORT_FILE_NAME = "/households.csv";
 
 
+    public static final String ODK_FORM_ID = "steps_draft_testing";
+    public static final String FORM_NOT_PRESENT = "The required ODK Form is not present in the application, Please upload the form and try again";
+    public static final String APP_NOT_INSTALLED = "The ODK Collect app is not installed";
 }

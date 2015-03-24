@@ -8,9 +8,14 @@ import android.view.View;
 import com.onaio.steps.R;
 
 public class Dialog {
-    public static void notify(Context activity, DialogInterface.OnClickListener okListener, int message) {
+    public static DialogInterface.OnClickListener EmptyListener = new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialogInterface, int i) {
+        }
+    };
+    public static void notify(Context activity, DialogInterface.OnClickListener okListener, int message, int title) {
         new AlertDialog.Builder(activity)
-                .setTitle(activity.getString(R.string.participant_no_re_elect_title))
+                .setTitle(activity.getString(title))
                 .setMessage(activity.getString(message))
                 .setPositiveButton(R.string.ok, okListener)
                 .create().show();

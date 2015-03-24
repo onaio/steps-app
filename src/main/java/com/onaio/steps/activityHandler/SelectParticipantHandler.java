@@ -33,11 +33,6 @@ public class SelectParticipantHandler implements IHandler, IPrepare {
     private ListActivity activity;
     private Household household;
     private Menu menu;
-    private DialogInterface.OnClickListener emptyListener = new DialogInterface.OnClickListener() {
-        @Override
-        public void onClick(DialogInterface dialogInterface, int i) {
-        }
-    };
 
     public SelectParticipantHandler(ListActivity activity, Household household) {
         this.activity = activity;
@@ -52,7 +47,7 @@ public class SelectParticipantHandler implements IHandler, IPrepare {
     @Override
     public boolean open() {
         if(ReElectReason.getAll(new DatabaseHelper(activity),household).size() > MAX_RE_ELECT_COUNT)
-            Dialog.notify(activity, emptyListener, R.string.participant_no_re_elect_message_because_of_count);
+            Dialog.notify(activity, Dialog.EmptyListener, R.string.participant_no_re_elect_message_because_of_count, R.string.participant_no_re_elect_title);
         else
             trySelectingParticipant();
         return true;
@@ -102,11 +97,11 @@ public class SelectParticipantHandler implements IHandler, IPrepare {
         switch(household.getStatus()){
             case OPEN: selectParticipant();
                 break;
-            case SELECTED: Dialog.confirm(activity, confirmListener, emptyListener, confirmation);
+            case SELECTED: Dialog.confirm(activity, confirmListener, Dialog.EmptyListener, confirmation);
                 break;
-            case DEFERRED: Dialog.confirm(activity, confirmListener, emptyListener, confirmation);
+            case DEFERRED: Dialog.confirm(activity, confirmListener, Dialog.EmptyListener, confirmation);
                 break;
-            default: Dialog.notify(activity, emptyListener, R.string.participant_no_re_elect_message_because_of_status);
+            default: Dialog.notify(activity, Dialog.EmptyListener, R.string.participant_no_re_elect_message_because_of_status, R.string.participant_no_re_elect_title);
         }
     }
 
