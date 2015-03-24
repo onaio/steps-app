@@ -47,7 +47,8 @@ public class ExportHandler implements IHandler {
                     row.add(household.getName());
                     row.add(household.getPhoneNumber());
                     row.add(member.getMemberHouseholdId());
-                    row.add(member.getName());
+                    row.add(member.getFamilySurname());
+                    row.add(member.getFirstName());
                     row.add(String.valueOf(member.getAge()));
                     row.add(member.getGender());
                     fileBuilder.withData(row.toArray(new String[row.size()]));

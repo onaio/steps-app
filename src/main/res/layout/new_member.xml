@@ -32,10 +32,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
-        android:hint="@string/member_name_hint"
+        android:hint="@string/member_family_surname_hint"
         android:ems="10"
-        android:id="@+id/member_name"
+        android:id="@+id/member_family_surname"
         android:layout_marginTop="30dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp" />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:hint="@string/member_first_name_hint"
+        android:ems="10"
+        android:id="@+id/member_first_name"
+        android:layout_marginTop="10dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp" />
     <EditText

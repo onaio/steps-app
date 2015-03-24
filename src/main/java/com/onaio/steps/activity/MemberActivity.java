@@ -24,7 +24,7 @@ public class MemberActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.member);
         populateMember();
-        setTitle(member.getName());
+        setTitle(member.getFirstName());
     }
 
     @Override

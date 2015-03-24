@@ -23,13 +23,14 @@ public class Constants {
 
     //Export related
     public static final String ENDPOINT_URL = "endpointUrl";
-    public static final String EXPORT_FIELDS = "Household Id, Phone Number, Member Id, Name, Age, Gender";
+    public static final String EXPORT_FIELDS = "Household Id, Phone Number, Member Id, Family Surname, First Name, Age, Gender";
     public static final String EXPORT_FILE_NAME = "/households.csv";
 
 
     public static final String ODK_FORM_ID = "steps_draft_testing";
-    public static final String ODK_FORM_FIELDS = "hhid_key,name,gender,age";
+    public static final String ODK_FORM_FIELDS = "hhid_key,family_surname,first_name,gender,age";
     public static final String FORM_NOT_PRESENT = "The required ODK Form is not present in the application, Please upload the form and try again";
     public static final String APP_NOT_INSTALLED = "The ODK Collect app is not installed";
     public static final String ODK_DATA_FILENAME = "STEPS.csv";
+    public static final String ODK_HH_ID = "1";
 }

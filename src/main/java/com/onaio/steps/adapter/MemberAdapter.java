@@ -67,7 +67,7 @@ public class MemberAdapter extends BaseAdapter{
     private void setTextInView(TwoLineListItem twoLineListItem, Member memberAtPosition) {
         TextView text1 = twoLineListItem.getText1();
         TextView text2 = twoLineListItem.getText2();
-        text1.setText(memberAtPosition.getName());
+        text1.setText(String.format("%s %s",memberAtPosition.getFamilySurname(),memberAtPosition.getFirstName()));
         text2.setText(memberAtPosition.getGender() +" , "+ memberAtPosition.getAge());
     }
 

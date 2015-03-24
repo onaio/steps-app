@@ -37,11 +37,12 @@ public class NewMemberActivity extends Activity {
     }
 
     private Member getMemberFromView() {
-        TextView nameView = (TextView) findViewById(R.id.member_name);
+        TextView surnameView = (TextView) findViewById(R.id.member_family_surname);
+        TextView firstNameView = (TextView) findViewById(R.id.member_first_name);
         int genderSelectionId = ((RadioGroup) findViewById(R.id.member_gender)).getCheckedRadioButtonId();
         TextView ageView = (TextView) findViewById(R.id.member_age);
         int age = Integer.parseInt(ageView.getText().toString());
-        return new Member(nameView.getText().toString(), genderSelection(genderSelectionId), age, household);
+        return new Member(surnameView.getText().toString(),firstNameView.getText().toString(), genderSelection(genderSelectionId), age, household);
     }
 
     private String genderSelection(int genderSelectionId) {

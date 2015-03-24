@@ -73,9 +73,12 @@ public class TakeSurveyHandler implements IHandler, IPrepare {
         FileBuilder fileBuilder = new FileBuilder().withHeader(Constants.ODK_FORM_FIELDS.split(","));
         Member selectedMember = Member.find_by(new DatabaseHelper(activity), Long.parseLong(household.getSelectedMember()), household);
         ArrayList<String> row = new ArrayList<String>();
-        row.add(String.valueOf(selectedMember.getId()));
-        row.add(selectedMember.getName());
-        row.add(selectedMember.getGender());
+        row.add(Constants.ODK_HH_ID);
+        row.add(selectedMember.getFamilySurname());
+        row.add(selectedMember.getFirstName());
+        String gender = selectedMember.getGender();
+        int genderInt = gender.equals(Constants.MALE)?1:2;
+        row.add(String.valueOf(genderInt));
         row.add(String.valueOf(selectedMember.getAge()));
         fileBuilder.withData(row.toArray(new String[row.size()]));
         fileBuilder.buildCSV(requiredForm.getFormMediaPath()+"/"+Constants.ODK_DATA_FILENAME);
@@ -95,7 +98,7 @@ public class TakeSurveyHandler implements IHandler, IPrepare {
     public boolean shouldInactivate() {
         boolean selected = household.getStatus() == HouseholdStatus.SELECTED;
         boolean deferred = household.getStatus() == HouseholdStatus.DEFERRED;
-        return !(selected || deferred);
+        return !(selected || deferred );
     }
 
     @Override
