@@ -13,9 +13,14 @@ import com.onaio.steps.exception.FormNotPresentException;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.helper.Dialog;
+import com.onaio.steps.helper.FileBuilder;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.HouseholdStatus;
+import com.onaio.steps.model.Member;
 import com.onaio.steps.model.ODKForm;
+
+import java.io.IOException;
+import java.util.ArrayList;
 
 public class TakeSurveyHandler implements IHandler, IPrepare {
     private ListActivity activity;
@@ -35,36 +40,45 @@ public class TakeSurveyHandler implements IHandler, IPrepare {
 
     @Override
     public boolean open() {
-//        Intent surveyIntent = packageManager.getLaunchIntentForPackage("org.odk.collect.android");
-//        Uri uri = Uri.parse("vnd.android.cursor.item/vnd.odk.form");
-//        Intent surveyIntent = new Intent(Intent.ACTION_EDIT, uri);
-//        surveyIntent.setClassName("org.odk.collect.android", "org.odk.collect.android..activities.FormEntryActivity");
-//        surveyIntent.setClassName("org.odk.collect.android","org.odk.collect.android.activities.FormEntryActivity");
-//        List<ResolveInfo> resolveInfos = packageManager.queryIntentActivities(surveyIntent, 0);
-
-//        PackageManager packageManager = activity.getPackageManager();
-//        Intent surveyIntent = packageManager.getLaunchIntentForPackage("org.odk.collect.android");
-//        surveyIntent.addCategory(Intent.ACTION_EDIT);
-
-        Intent surveyIntent = new Intent();
-        surveyIntent.setComponent(new ComponentName("org.odk.collect.android","org.odk.collect.android.activities.FormEntryActivity"));
-        ODKForm requiredForm = null;
         try {
-            requiredForm = ODKForm.getFrom(activity, Constants.ODK_FORM_ID);
-            surveyIntent.setAction(Intent.ACTION_EDIT);
-            surveyIntent.setData(requiredForm.getUri());
-
-
-            activity.startActivity(surveyIntent);
-            household.setStatus(HouseholdStatus.CLOSED);
-            household.update(new DatabaseHelper(activity));
+            ODKForm requiredForm = ODKForm.getWithId(activity, Constants.ODK_FORM_ID);
+            saveFile(requiredForm);
+            launchODKCollect(requiredForm);
+            updateHousehold();
         } catch (FormNotPresentException e) {
             Dialog.notify(activity,Dialog.EmptyListener,R.string.form_not_present, R.string.form_not_present_title);
         } catch (AppNotInstalledException e) {
             Dialog.notify(activity,Dialog.EmptyListener,R.string.odk_app_not_installed, R.string.participant_no_re_elect_title);
+        } catch (IOException e) {
+            Dialog.notify(activity,Dialog.EmptyListener,R.string.something_went_wrong_try_again, R.string.error_title);
         }
 
         return true;
+    }
+
+    private void updateHousehold() {
+        household.setStatus(HouseholdStatus.CLOSED);
+        household.update(new DatabaseHelper(activity));
+    }
+
+    private void launchODKCollect(ODKForm requiredForm) {
+        Intent surveyIntent = new Intent();
+        surveyIntent.setComponent(new ComponentName("org.odk.collect.android","org.odk.collect.android.activities.FormEntryActivity"));
+        surveyIntent.setAction(Intent.ACTION_EDIT);
+        surveyIntent.setData(requiredForm.getUri());
+        activity.startActivity(surveyIntent);
+    }
+
+    private void saveFile(ODKForm requiredForm) throws IOException {
+        FileBuilder fileBuilder = new FileBuilder().withHeader(Constants.ODK_FORM_FIELDS.split(","));
+        Member selectedMember = Member.find_by(new DatabaseHelper(activity), Long.parseLong(household.getSelectedMember()), household);
+        ArrayList<String> row = new ArrayList<String>();
+        row.add(String.valueOf(selectedMember.getId()));
+        row.add(selectedMember.getName());
+        row.add(selectedMember.getGender());
+        row.add(String.valueOf(selectedMember.getAge()));
+        fileBuilder.withData(row.toArray(new String[row.size()]));
+        fileBuilder.buildCSV(requiredForm.getFormMediaPath()+"/"+Constants.ODK_DATA_FILENAME);
     }
 
     @Override

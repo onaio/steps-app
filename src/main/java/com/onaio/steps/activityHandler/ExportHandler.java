@@ -2,17 +2,18 @@ package com.onaio.steps.activityHandler;
 
 import android.app.ListActivity;
 import android.content.Intent;
+
 import com.onaio.steps.R;
 import com.onaio.steps.activityHandler.Interface.IHandler;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;
+import com.onaio.steps.helper.Dialog;
+import com.onaio.steps.helper.FileBuilder;
 import com.onaio.steps.helper.UploadFileTask;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.Member;
-import com.opencsv.CSVWriter;
 
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,9 +39,7 @@ public class ExportHandler implements IHandler {
     @Override
     public boolean open() {
         try {
-            File file = new File(activity.getFilesDir() + Constants.EXPORT_FILE_NAME);
-            CSVWriter writer = new CSVWriter(new FileWriter(file), '\t');
-            writer.writeNext(Constants.EXPORT_FIELDS.split(","));
+            FileBuilder fileBuilder = new FileBuilder().withHeader(Constants.EXPORT_FIELDS.split(","));
             for(Household household: households) {
                 List<Member> membersPerHousehold = Member.getAll(databaseHelper, household);
                 for(Member member: membersPerHousehold){
@@ -51,16 +50,14 @@ public class ExportHandler implements IHandler {
                     row.add(member.getName());
                     row.add(String.valueOf(member.getAge()));
                     row.add(member.getGender());
-                    writer.writeNext(row.toArray(new String[row.size()]));
+                    fileBuilder.withData(row.toArray(new String[row.size()]));
                 }
             }
-            writer.close();
-
+            File file = fileBuilder.buildCSV(activity.getFilesDir() + Constants.EXPORT_FILE_NAME);
             new UploadFileTask(activity).execute(file);
-
             return true;
         } catch (IOException e) {
-            e.printStackTrace();
+            Dialog.notify(activity, Dialog.EmptyListener, R.string.something_went_wrong_try_again, R.string.error_title);
         }
         return false;
     }

@@ -32,6 +32,10 @@ public class ODKForm {
     }
 
 
+    public String getFormMediaPath() {
+        return formMediaPath;
+    }
+
     public ODKForm(String id, String jrFormId, String displayName, String jrVersion, String formMediaPath) {
 
         _id = id;
@@ -41,7 +45,7 @@ public class ODKForm {
         this.formMediaPath = formMediaPath;
     }
 
-    public static ODKForm getFrom(Activity activity, String jrFormId) throws FormNotPresentException, AppNotInstalledException {
+    public static ODKForm getWithId(Activity activity, String jrFormId) throws FormNotPresentException, AppNotInstalledException {
         List<ODKForm> forms = getAll(activity);
         for (ODKForm form: forms)
             if(form.jrFormId.equals(jrFormId))
