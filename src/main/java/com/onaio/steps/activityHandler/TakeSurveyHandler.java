@@ -46,9 +46,9 @@ public class TakeSurveyHandler implements IHandler, IPrepare {
             launchODKCollect(requiredForm);
             updateHousehold();
         } catch (FormNotPresentException e) {
-            new Dialog().notify(activity,Dialog.EmptyListener,R.string.form_not_present, R.string.form_not_present_title);
+            new Dialog().notify(activity,Dialog.EmptyListener,R.string.form_not_present, R.string.error_title);
         } catch (AppNotInstalledException e) {
-            new Dialog().notify(activity,Dialog.EmptyListener,R.string.odk_app_not_installed, R.string.participant_no_re_elect_title);
+            new Dialog().notify(activity,Dialog.EmptyListener,R.string.odk_app_not_installed, R.string.error_title);
         } catch (IOException e) {
             new Dialog().notify(activity,Dialog.EmptyListener,R.string.something_went_wrong_try_again, R.string.error_title);
         }

@@ -57,6 +57,7 @@ public class ODKForm {
         ContentProviderClient formsContentProvider = activity.getContentResolver().acquireContentProviderClient(ODKForm.URI);
         ArrayList<ODKForm> forms = new ArrayList<ODKForm>();
         try {
+            if(formsContentProvider==null) throw new AppNotInstalledException();
             Cursor cursor = formsContentProvider.query(ODKForm.URI, null, null, null, null);
             if(cursor.moveToFirst()){
                 do{

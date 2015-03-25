@@ -16,7 +16,6 @@ import com.onaio.steps.model.Household;
 import com.onaio.steps.model.HouseholdStatus;
 
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -24,12 +23,7 @@ import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowActivity;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 @Config(emulateSdk = 16,manifest = "src/main/AndroidManifest.xml")
