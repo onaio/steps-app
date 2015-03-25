@@ -8,8 +8,13 @@ buildscript {
 
     dependencies {
         classpath 'com.android.tools.build:gradle:1.1.2'
+        classpath 'org.robolectric.gradle:gradle-android-test-plugin:0.10.0'
+        classpath 'org.robolectric:robolectric-gradle-plugin:1.0.1'
     }
 }
+
+apply plugin: 'android'
+apply plugin: 'org.robolectric'
 
 android {
     compileSdkVersion 16
@@ -28,6 +33,9 @@ repositories {
 }
 
 dependencies {
+    testCompile 'junit:junit:4.10'
+    testCompile 'org.robolectric:robolectric:2.4'
+    testCompile 'com.squareup:fest-android:1.0.+'
     compile 'com.opencsv:opencsv:3.3'
     compile 'org.apache.httpcomponents:httpcore:4.2.4'
     compile 'org.apache.httpcomponents:httpclient:4.2.5'
