@@ -3,8 +3,6 @@
           android:icon="@drawable/ic_action_new"
           android:title="@string/action_add"
           android:showAsAction="always"/>
-    <item android:id="@+id/action_settings"
-          android:title="@string/action_settings"/>
     <item android:id="@+id/action_select_participant"
         android:title="@string/action_select_participant"/>
     <item android:id="@+id/action_export"

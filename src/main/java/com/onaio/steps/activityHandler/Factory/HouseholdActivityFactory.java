@@ -26,7 +26,6 @@ public class HouseholdActivityFactory {
     public static List<IHandler> getHouseholdMenuHandlers(ListActivity activity, Household household){
         ArrayList<IHandler> handlers = new ArrayList<IHandler>();
         handlers.add(new NewMemberActivityHandler(activity, household));
-        handlers.add(new SettingActivityHandler(activity));
         handlers.add(new ExportHandler(activity).withHousehold(household));
         handlers.add(new SelectParticipantHandler(activity,household));
         handlers.add(new StepsActivityHandler(activity));
