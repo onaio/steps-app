@@ -58,7 +58,7 @@ public class ExportHandler implements IHandler {
             new UploadFileTask(activity).execute(file);
             return true;
         } catch (IOException e) {
-            Dialog.notify(activity, Dialog.EmptyListener, R.string.something_went_wrong_try_again, R.string.error_title);
+            new Dialog().notify(activity, Dialog.EmptyListener, R.string.something_went_wrong_try_again, R.string.error_title);
         }
         return false;
     }

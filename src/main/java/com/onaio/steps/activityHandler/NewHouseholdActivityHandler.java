@@ -1,6 +1,5 @@
 package com.onaio.steps.activityHandler;
 
-import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,6 +10,9 @@ import com.onaio.steps.activityHandler.Interface.IHandler;
 import com.onaio.steps.adapter.HouseholdAdapter;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;
+import com.onaio.steps.helper.Dialog;
+import com.onaio.steps.helper.KeyValueStore;
+import com.onaio.steps.helper.KeyValueStoreFactory;
 import com.onaio.steps.model.Household;
 
 import static android.app.Activity.RESULT_OK;
@@ -19,10 +21,15 @@ import static android.content.Context.MODE_PRIVATE;
 public class NewHouseholdActivityHandler implements IHandler {
 
     private ListActivity activity;
+    private Dialog dialog = new Dialog();
 
     public NewHouseholdActivityHandler(ListActivity activity) {
+        this(activity,new Dialog());
+    }
 
+    public NewHouseholdActivityHandler(ListActivity activity, Dialog dialog) {
         this.activity = activity;
+        this.dialog = dialog;
     }
 
     @Override
@@ -33,7 +40,7 @@ public class NewHouseholdActivityHandler implements IHandler {
     @Override
     public boolean open() {
         if (getPhoneId(activity)== null) {
-            alertUserToSetPhoneId(activity);
+            notifyUserToSetPhoneId(activity);
         } else {
             Intent intent = new Intent(activity.getBaseContext(), NewHouseholdActivity.class);
             intent.putExtra(Constants.PHONE_ID,getPhoneId(activity));
@@ -58,10 +65,8 @@ public class NewHouseholdActivityHandler implements IHandler {
         return requestCode == Constants.NEW_HOUSEHOLD_IDENTIFIER;
     }
 
-    private void alertUserToSetPhoneId(ListActivity activity) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-        builder.setTitle(R.string.phone_id_message_title).setMessage(R.string.phone_id_message);
-        builder.create().show();
+    private void notifyUserToSetPhoneId(ListActivity activity) {
+        dialog.notify(activity, Dialog.EmptyListener, R.string.phone_id_message, R.string.phone_id_message_title);
     }
 
     private String getPhoneId(ListActivity activity) {
