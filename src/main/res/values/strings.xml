@@ -46,4 +46,5 @@
     <string name="form_not_present_title">Form not present</string>
     <string name="something_went_wrong_try_again">Some thing went wrong, please try again.</string>
     <string name="error_title">Error</string>
+    <string name="household_id_seed_label">Household starting id</string>
 </resources>

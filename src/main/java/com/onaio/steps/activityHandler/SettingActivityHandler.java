@@ -11,6 +11,7 @@ import com.onaio.steps.helper.KeyValueStoreFactory;
 
 import static android.app.Activity.RESULT_OK;
 import static com.onaio.steps.helper.Constants.ENDPOINT_URL;
+import static com.onaio.steps.helper.Constants.HOUSEHOLD_SEED;
 import static com.onaio.steps.helper.Constants.PHONE_ID;
 
 
@@ -31,8 +32,9 @@ public class SettingActivityHandler implements IHandler {
     @Override
     public boolean open() {
         Intent intent = new Intent(activity.getBaseContext(), SettingsActivity.class);
-        intent.putExtra(PHONE_ID,getPhoneId(activity));
-        intent.putExtra(ENDPOINT_URL,getEndpointUrl(activity));
+        intent.putExtra(PHONE_ID, getValue(PHONE_ID));
+        intent.putExtra(ENDPOINT_URL, getValue(ENDPOINT_URL));
+        intent.putExtra(HOUSEHOLD_SEED, getValue(HOUSEHOLD_SEED));
         activity.startActivityForResult(intent, Constants.SETTING_IDENTIFIER);
         return true;
     }
@@ -45,29 +47,30 @@ public class SettingActivityHandler implements IHandler {
     @Override
     public void handleResult(Intent data, int resultCode) {
         if (resultCode == RESULT_OK)
-            handleSuccess(activity, data);
+            handleSuccess(data);
     }
 
-    private void handleSuccess(ListActivity activity, Intent data) {
+    private void handleSuccess(Intent data) {
         String phoneId = data.getStringExtra(PHONE_ID);
         String endpointUrl = data.getStringExtra(ENDPOINT_URL);
+        String householdSeed = data.getStringExtra(HOUSEHOLD_SEED);
+        saveSafely(PHONE_ID, phoneId);
+        saveSafely(ENDPOINT_URL, endpointUrl);
+        saveSafely(HOUSEHOLD_SEED, householdSeed);
+    }
+
+    private void saveSafely(String key, String value) {
         KeyValueStore keyValueStore = KeyValueStoreFactory.instance(activity);
-        if (!keyValueStore.putString(PHONE_ID, phoneId))
-            saveSettingsErrorHandler(PHONE_ID);
-        if (!keyValueStore.putString(ENDPOINT_URL, endpointUrl))
-            saveSettingsErrorHandler(ENDPOINT_URL);
+        if (!keyValueStore.putString(key, value))
+            saveSettingsErrorHandler(key);
     }
 
     private void saveSettingsErrorHandler(String field) {
         //TODO: toast message for save phone id failure
     }
 
-    private String getPhoneId(ListActivity activity) {
-        return KeyValueStoreFactory.instance(activity).getString(PHONE_ID) ;
-    }
-
-    private String getEndpointUrl(ListActivity activity) {
-        return KeyValueStoreFactory.instance(activity).getString(ENDPOINT_URL) ;
+    private String getValue(String key) {
+        return KeyValueStoreFactory.instance(activity).getString(key) ;
     }
 
 }

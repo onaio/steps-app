@@ -11,12 +11,11 @@ import com.onaio.steps.adapter.HouseholdAdapter;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.helper.Dialog;
-import com.onaio.steps.helper.KeyValueStore;
-import com.onaio.steps.helper.KeyValueStoreFactory;
 import com.onaio.steps.model.Household;
 
 import static android.app.Activity.RESULT_OK;
 import static android.content.Context.MODE_PRIVATE;
+import static com.onaio.steps.helper.Constants.*;
 
 public class NewHouseholdActivityHandler implements IHandler {
 
@@ -39,12 +38,13 @@ public class NewHouseholdActivityHandler implements IHandler {
 
     @Override
     public boolean open() {
-        if (getPhoneId(activity)== null) {
+        if (getValue(PHONE_ID)== null || getValue(HOUSEHOLD_SEED) == null) {
             notifyUserToSetPhoneId(activity);
         } else {
             Intent intent = new Intent(activity.getBaseContext(), NewHouseholdActivity.class);
-            intent.putExtra(Constants.PHONE_ID,getPhoneId(activity));
-            activity.startActivityForResult(intent, Constants.NEW_HOUSEHOLD_IDENTIFIER);
+            intent.putExtra(PHONE_ID, getValue(PHONE_ID));
+            intent.putExtra(HOUSEHOLD_SEED, getValue(HOUSEHOLD_SEED));
+            activity.startActivityForResult(intent, NEW_HOUSEHOLD_IDENTIFIER);
         }
         return true;
     }
@@ -62,15 +62,15 @@ public class NewHouseholdActivityHandler implements IHandler {
 
     @Override
     public boolean canHandleResult(int requestCode) {
-        return requestCode == Constants.NEW_HOUSEHOLD_IDENTIFIER;
+        return requestCode == NEW_HOUSEHOLD_IDENTIFIER;
     }
 
     private void notifyUserToSetPhoneId(ListActivity activity) {
         dialog.notify(activity, Dialog.EmptyListener, R.string.phone_id_message, R.string.phone_id_message_title);
     }
 
-    private String getPhoneId(ListActivity activity) {
-        return dataStore(activity).getString(Constants.PHONE_ID, null) ;
+    private String getValue(String key) {
+        return dataStore(activity).getString(key, null) ;
     }
 
     private SharedPreferences dataStore(ListActivity activity) {

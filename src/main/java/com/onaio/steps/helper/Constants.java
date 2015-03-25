@@ -6,6 +6,7 @@ public class Constants {
     public static final String  MEMBER_NAME = "member_name";
     public static final String HOUSEHOLD_NAME = "household_name";
     public static final String PHONE_ID = "phoneId";
+    public static final String HOUSEHOLD_SEED = "householdSeedId";
     public static final String HOUSEHOLD = "HOUSEHOLD";
     public static final String MEMBER = "MEMBER";
 

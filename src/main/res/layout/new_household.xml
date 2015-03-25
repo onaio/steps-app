@@ -47,17 +47,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="number"
-        android:hint="@string/household_id_hint"
-        android:ems="10"
-        android:id="@+id/household_name"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp" />
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="number"
         android:hint="@string/phone_number_hint"
         android:ems="10"
         android:id="@+id/household_number"
