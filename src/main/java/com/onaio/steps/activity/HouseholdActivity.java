@@ -13,7 +13,8 @@ import android.widget.TextView;
 
 import com.onaio.steps.R;
 import com.onaio.steps.activityHandler.Factory.HouseholdActivityFactory;
-import com.onaio.steps.activityHandler.Interface.IHandler;
+import com.onaio.steps.activityHandler.Interface.IMenuHandler;
+import com.onaio.steps.activityHandler.Interface.IMenuResultHandler;
 import com.onaio.steps.activityHandler.Interface.IPrepare;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;
@@ -47,7 +48,7 @@ public class HouseholdActivity extends ListActivity {
     }
 
     private void prepareBottomMenuItems() {
-        List<IPrepare> bottomMenus = HouseholdActivityFactory.getHouseholdBottomMenuItemPreparer(this, household);
+        List<IPrepare> bottomMenus = HouseholdActivityFactory.getBottomMenuPreparer(this, household);
         for(IPrepare menu:bottomMenus)
             if(menu.shouldInactivate())
                 menu.inactivate();
@@ -81,8 +82,8 @@ public class HouseholdActivity extends ListActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        List<IHandler> menuHandlers = HouseholdActivityFactory.getHouseholdMenuHandlers(this, household);
-        for(IHandler menuHandler:menuHandlers)
+        List<IMenuHandler> menuHandlers = HouseholdActivityFactory.getMenuHandlers(this, household);
+        for(IMenuHandler menuHandler:menuHandlers)
             if(menuHandler.shouldOpen(item.getItemId()))
                 menuHandler.open();
         return super.onOptionsItemSelected(item);
@@ -90,7 +91,7 @@ public class HouseholdActivity extends ListActivity {
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        IPrepare menuItem = HouseholdActivityFactory.getHouseholdMenuPreparer(this, household, menu);
+        IPrepare menuItem = HouseholdActivityFactory.getMenuPreparer(this, household, menu);
         if(menuItem.shouldInactivate())
             menuItem.inactivate();
         super.onPrepareOptionsMenu(menu);
@@ -106,15 +107,15 @@ public class HouseholdActivity extends ListActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        List<IHandler> menuHandlers = HouseholdActivityFactory.getHouseholdMenuHandlers(this, household);
-        for(IHandler menuHandler:menuHandlers)
+        List<IMenuResultHandler> menuHandlers = HouseholdActivityFactory.getMenuResultHandlers(this, household);
+        for(IMenuResultHandler menuHandler:menuHandlers)
             if(menuHandler.canHandleResult(requestCode))
                 menuHandler.handleResult(data, resultCode);
     }
 
     public void handleBottomMenu(View view) {
-        List<IHandler> bottomMenuItem = HouseholdActivityFactory.getHouseholdBottomMenuItemHandler(this, household);
-        for(IHandler menuItem: bottomMenuItem)
+        List<IMenuHandler> bottomMenuItem = HouseholdActivityFactory.getBottomMenuHandler(this, household);
+        for(IMenuHandler menuItem: bottomMenuItem)
             if(menuItem.shouldOpen(view.getId()))
                 menuItem.open();
     }

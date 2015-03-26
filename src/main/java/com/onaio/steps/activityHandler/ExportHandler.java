@@ -4,7 +4,7 @@ import android.app.ListActivity;
 import android.content.Intent;
 
 import com.onaio.steps.R;
-import com.onaio.steps.activityHandler.Interface.IHandler;
+import com.onaio.steps.activityHandler.Interface.IMenuHandler;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.helper.Dialog;
@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ExportHandler implements IHandler {
+public class ExportHandler implements IMenuHandler {
 
     private List<Household> households;
     private ListActivity activity;
@@ -73,14 +73,4 @@ public class ExportHandler implements IHandler {
         households.add(household);
         return this;
     }
-
-    @Override
-    public boolean canHandleResult(int requestCode) {
-        return false;
-    }
-
-    @Override
-    public void handleResult(Intent data, int resultCode) {
-    }
-
 }

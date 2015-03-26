@@ -7,13 +7,13 @@ import android.content.Intent;
 import android.view.View;
 
 import com.onaio.steps.R;
-import com.onaio.steps.activityHandler.Interface.IHandler;
+import com.onaio.steps.activityHandler.Interface.IMenuHandler;
 import com.onaio.steps.activityHandler.Interface.IPrepare;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.HouseholdStatus;
 
-public class RefusedHandler implements IHandler,IPrepare {
+public class RefusedHandler implements IMenuHandler,IPrepare {
 
     private Household household;
     private ListActivity activity;
@@ -60,16 +60,6 @@ public class RefusedHandler implements IHandler,IPrepare {
 
                     }
                 }).create().show();
-    }
-
-    @Override
-    public void handleResult(Intent data, int resultCode) {
-
-    }
-
-    @Override
-    public boolean canHandleResult(int requestCode) {
-        return false;
     }
 
     @Override

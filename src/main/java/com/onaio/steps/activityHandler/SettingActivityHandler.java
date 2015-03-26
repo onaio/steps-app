@@ -4,7 +4,8 @@ import android.app.ListActivity;
 import android.content.Intent;
 import com.onaio.steps.R;
 import com.onaio.steps.activity.SettingsActivity;
-import com.onaio.steps.activityHandler.Interface.IHandler;
+import com.onaio.steps.activityHandler.Interface.IMenuHandler;
+import com.onaio.steps.activityHandler.Interface.IMenuResultHandler;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.KeyValueStore;
 import com.onaio.steps.helper.KeyValueStoreFactory;
@@ -15,7 +16,7 @@ import static com.onaio.steps.helper.Constants.HOUSEHOLD_SEED;
 import static com.onaio.steps.helper.Constants.PHONE_ID;
 
 
-public class SettingActivityHandler implements IHandler {
+public class SettingActivityHandler implements IMenuHandler, IMenuResultHandler {
 
     private ListActivity activity;
 

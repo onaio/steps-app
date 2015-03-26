@@ -6,9 +6,9 @@ import android.content.SharedPreferences;
 
 import com.onaio.steps.activity.NewHouseholdActivity;
 import com.onaio.steps.R;
-import com.onaio.steps.activityHandler.Interface.IHandler;
+import com.onaio.steps.activityHandler.Interface.IMenuHandler;
+import com.onaio.steps.activityHandler.Interface.IMenuResultHandler;
 import com.onaio.steps.adapter.HouseholdAdapter;
-import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.helper.Dialog;
 import com.onaio.steps.model.Household;
@@ -17,7 +17,7 @@ import static android.app.Activity.RESULT_OK;
 import static android.content.Context.MODE_PRIVATE;
 import static com.onaio.steps.helper.Constants.*;
 
-public class NewHouseholdActivityHandler implements IHandler {
+public class NewHouseholdActivityHandler implements IMenuHandler, IMenuResultHandler {
 
     private ListActivity activity;
     private Dialog dialog = new Dialog();

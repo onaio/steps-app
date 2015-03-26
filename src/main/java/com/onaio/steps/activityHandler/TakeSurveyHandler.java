@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.view.View;
 
 import com.onaio.steps.R;
-import com.onaio.steps.activityHandler.Interface.IHandler;
+import com.onaio.steps.activityHandler.Interface.IMenuHandler;
 import com.onaio.steps.activityHandler.Interface.IPrepare;
 import com.onaio.steps.exception.AppNotInstalledException;
 import com.onaio.steps.exception.FormNotPresentException;
@@ -22,7 +22,7 @@ import com.onaio.steps.model.ODKForm;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class TakeSurveyHandler implements IHandler, IPrepare {
+public class TakeSurveyHandler implements IMenuHandler, IPrepare {
     private ListActivity activity;
     private Household household;
     private static final int MENU_ID= R.id.action_take_survey;
@@ -82,16 +82,6 @@ public class TakeSurveyHandler implements IHandler, IPrepare {
         row.add(String.valueOf(selectedMember.getAge()));
         fileBuilder.withData(row.toArray(new String[row.size()]));
         fileBuilder.buildCSV(requiredForm.getFormMediaPath()+"/"+Constants.ODK_DATA_FILENAME);
-    }
-
-    @Override
-    public void handleResult(Intent data, int resultCode) {
-
-    }
-
-    @Override
-    public boolean canHandleResult(int requestCode) {
-        return false;
     }
 
     @Override

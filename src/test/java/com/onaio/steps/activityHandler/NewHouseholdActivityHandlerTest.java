@@ -34,6 +34,7 @@ public class NewHouseholdActivityHandlerTest {
     private NewHouseholdActivityHandler handler;
     private Dialog dialogMock;
     private String PHONE_ID = "123";
+    private String HOUSEHOLD_SEED = "100";
 
     @Before
     public void Setup(){
@@ -60,18 +61,37 @@ public class NewHouseholdActivityHandlerTest {
     }
 
     @Test
-    public void ShouldNotNotifyUserWhenPhoneIdIsSet(){
-        setPhoneId();
+    public void ShouldNotifyUserWhenOnlyPhoneIdIsSet(){
+        setValue(Constants.PHONE_ID, PHONE_ID);
+
+        handler.open();
+
+        Mockito.verify(dialogMock).notify(stepsActivity, Dialog.EmptyListener, R.string.phone_id_message, R.string.phone_id_message_title);
+    }
+
+    @Test
+    public void ShouldNotifyUserWhenOnlyHouseholdSeedSet(){
+        setValue(Constants.HOUSEHOLD_SEED, HOUSEHOLD_SEED);
+
+        handler.open();
+
+        Mockito.verify(dialogMock).notify(stepsActivity, Dialog.EmptyListener, R.string.phone_id_message, R.string.phone_id_message_title);
+    }
+
+    @Test
+    public void ShouldNotNotifyUserWhenPhoneIdAndHouseholdSeedSet(){
+        setValue(Constants.HOUSEHOLD_SEED, HOUSEHOLD_SEED);
+        setValue(Constants.PHONE_ID, PHONE_ID);
 
         handler.open();
 
         Mockito.verify(dialogMock,Mockito.never()).notify(stepsActivity, Dialog.EmptyListener, R.string.phone_id_message, R.string.phone_id_message_title);
     }
 
-
     @Test
     public void ShouldOpenNewHouseholdActivityWithDataWhenPhoneIdIsSet(){
-        setPhoneId();
+        setValue(Constants.PHONE_ID, PHONE_ID);
+        setValue(Constants.HOUSEHOLD_SEED, HOUSEHOLD_SEED);
         ShadowActivity stepsActivityShadow = Robolectric.shadowOf(stepsActivity);
 
         handler.open();
@@ -105,10 +125,8 @@ public class NewHouseholdActivityHandlerTest {
         Mockito.verify(householdAdapterMock).notifyDataSetChanged();
     }
 
-    private void setPhoneId() {
+    private void setValue(String key, String value) {
         KeyValueStore keyValueStore = KeyValueStoreFactory.instance(stepsActivity);
-        keyValueStore.putString(Constants.PHONE_ID, PHONE_ID);
+        keyValueStore.putString(key, value);
     }
-
-
 }
