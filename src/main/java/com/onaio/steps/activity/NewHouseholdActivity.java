@@ -39,7 +39,9 @@ public class NewHouseholdActivity extends Activity {
     private void populateDataFromIntent() {
         Intent intent = getIntent();
         phoneId = intent.getStringExtra(PHONE_ID);
-        householdSeed = Integer.parseInt(intent.getStringExtra(HOUSEHOLD_SEED));
+        String householdSeedString = intent.getStringExtra(HOUSEHOLD_SEED);
+        householdSeedString = householdSeedString == null || householdSeedString.equals("") ? "0" : householdSeedString;
+        householdSeed = Integer.parseInt(householdSeedString);
     }
 
     public void saveHousehold(View view) {

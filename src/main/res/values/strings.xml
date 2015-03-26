@@ -46,6 +46,7 @@
     <string name="form_not_present_title">Form not present</string>
     <string name="something_went_wrong_try_again">Some thing went wrong, please try again.</string>
     <string name="error_title">Error</string>
-    <string name="household_id_seed_label">Household starting id</string>
+    <string name="household_id_seed_label">Household starting id (default is 0)</string>
     <string name="member_delete_confirm">Are you sure, you want to delete the member ?</string>
+    <string name="enter_a_value">Please enter a value</string>
 </resources>
