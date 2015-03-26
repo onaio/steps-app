@@ -74,6 +74,10 @@ public class Member implements Serializable {
         return household;
     }
 
+    public String getDeletedString() {
+        return deleted? "Yes":"No";
+    }
+
     public long save(DatabaseHelper db) {
         int memberNumber = Member.numberOfMembers(db, household) + 1;
         String generatedId = household.getName() + "-" + memberNumber;

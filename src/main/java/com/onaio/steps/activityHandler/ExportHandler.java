@@ -51,6 +51,7 @@ public class ExportHandler implements IMenuHandler {
                     row.add(member.getFirstName());
                     row.add(String.valueOf(member.getAge()));
                     row.add(member.getGender());
+                    row.add(member.getDeletedString());
                     fileBuilder.withData(row.toArray(new String[row.size()]));
                 }
             }
