@@ -48,8 +48,8 @@ public class ExportHandler implements IMenuHandler {
                 List<Member> membersPerHousehold = Member.getAllForExport(databaseHelper, household);
                 for(Member member: membersPerHousehold){
                     ArrayList<String> row = new ArrayList<String>();
-                    row.add(household.getName());
                     row.add(household.getPhoneNumber());
+                    row.add(household.getName());
                     row.add(member.getMemberHouseholdId());
                     row.add(member.getFamilySurname());
                     row.add(member.getFirstName());
@@ -62,7 +62,7 @@ public class ExportHandler implements IMenuHandler {
                     fileBuilder.withData(row.toArray(new String[row.size()]));
                 }
             }
-            File file = fileBuilder.buildCSV(activity.getFilesDir() + Constants.EXPORT_FILE_NAME);
+            File file = fileBuilder.buildCSV(activity.getFilesDir() +"/"+ Constants.EXPORT_FILE_NAME);
             new UploadFileTask(activity).execute(file);
             return true;
         } catch (IOException e) {
