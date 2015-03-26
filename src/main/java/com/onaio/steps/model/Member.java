@@ -3,6 +3,8 @@ package com.onaio.steps.model;
 import android.content.ContentValues;
 import android.database.Cursor;
 
+import com.onaio.steps.R;
+import com.onaio.steps.exception.InvalidDataException;
 import com.onaio.steps.helper.DatabaseHelper;
 
 import java.io.Serializable;
@@ -170,4 +172,18 @@ public class Member implements Serializable {
     public String toString() {
         return familySurname + " "+ firstName;
     }
+
+    public void validate() throws InvalidDataException {
+        boolean validFamilySurname = nonEmpty(familySurname);
+        boolean validFirstName = nonEmpty(firstName);
+        boolean validGender = nonEmpty(gender);
+        if(!(validFamilySurname && validFirstName && validGender))
+            throw new InvalidDataException();
+    }
+
+    private boolean nonEmpty(String value) {
+        return value !=null && !value.equals("");
+    }
+
+
 }

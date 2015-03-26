@@ -7,8 +7,10 @@ import android.view.View;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import com.onaio.steps.R;
+import com.onaio.steps.exception.InvalidDataException;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;
+import com.onaio.steps.helper.Dialog;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.Member;
 
@@ -30,18 +32,27 @@ public class NewMemberActivity extends Activity {
 
 
     public void saveMember(View view) {
-        Member member = getMemberFromView();
-        member.save(db);
-        setResult(RESULT_OK, intent);
-        finish();
+        Member member = null;
+        try {
+            member = getMemberFromView();
+            member.validate();
+            member.save(db);
+            setResult(RESULT_OK, intent);
+            finish();
+        } catch (InvalidDataException e) {
+            new Dialog().notify(this,Dialog.EmptyListener,R.string.invalid_member,R.string.error_title);
+        }
     }
 
-    private Member getMemberFromView() {
+    private Member getMemberFromView() throws InvalidDataException {
         TextView surnameView = (TextView) findViewById(R.id.member_family_surname);
         TextView firstNameView = (TextView) findViewById(R.id.member_first_name);
         int genderSelectionId = ((RadioGroup) findViewById(R.id.member_gender)).getCheckedRadioButtonId();
         TextView ageView = (TextView) findViewById(R.id.member_age);
-        int age = Integer.parseInt(ageView.getText().toString());
+        String ageString = ageView.getText().toString();
+        if(ageString == null || ageString.equals(""))
+            throw new InvalidDataException();
+        int age = Integer.parseInt(ageString);
         return new Member(surnameView.getText().toString(),firstNameView.getText().toString(), genderSelection(genderSelectionId), age, household);
     }
 

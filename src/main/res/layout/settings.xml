@@ -47,7 +47,7 @@
     <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="text"
+            android:inputType="number"
             android:hint="@string/household_id_seed_label"
             android:ems="10"
             android:id="@+id/household_seed"
@@ -60,6 +60,7 @@
             android:inputType="text"
             android:ems="10"
             android:id="@+id/endpointUrl"
+        android:hint="@string/endpoint_url_hint"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp" />

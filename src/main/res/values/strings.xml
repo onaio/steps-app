@@ -50,4 +50,6 @@
     <string name="member_delete_confirm">Are you sure, you want to delete the member ?</string>
     <string name="enter_a_value">Please enter a value</string>
     <string name="invalid_household">The household is invalid, please fill the right data and try again.</string>
+    <string name="endpoint_url_hint">Url to export</string>
+    <string name="invalid_member">Insufficient data, please fill all the values.</string>
 </resources>
