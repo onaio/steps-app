@@ -49,25 +49,26 @@ public class MemberAdapter extends BaseAdapter{
     public View getView(int position, View convertView, ViewGroup parent) {
         TwoLineListItem memberItemView;
         Member memberAtPosition = members.get(position);
-
         memberItemView = getViewItem(convertView);
         setTextInView(memberItemView, memberAtPosition);
-        highlightTheSelection(memberItemView, memberAtPosition);
-
         return memberItemView;
     }
 
-    private void highlightTheSelection(TwoLineListItem twoLineListItem, Member memberAtPosition) {
-        if(selectedMemberId.equals(String.valueOf(memberAtPosition.getId())))
-            twoLineListItem.setBackgroundColor(Color.GRAY);
-        else
-            twoLineListItem.setBackgroundColor(Color.WHITE);
+    private void highlightTheSelection(TextView text1, TextView text2, Member memberAtPosition) {
+        if(selectedMemberId.equals(String.valueOf(memberAtPosition.getId()))){
+            text1.setTextColor(Color.parseColor("#40AA44"));
+            text2.setTextColor(Color.parseColor("#40AA44"));
+        }
+        else{
+            text1.setTextColor(Color.BLACK);
+            text2.setTextColor(Color.BLACK);
+        }
     }
 
     private void setTextInView(TwoLineListItem twoLineListItem, Member memberAtPosition) {
         TextView text1 = twoLineListItem.getText1();
         TextView text2 = twoLineListItem.getText2();
-        text1.setTextColor(Color.BLACK);
+        highlightTheSelection(text1,text2,memberAtPosition);
         text1.setText(String.format("%s %s",memberAtPosition.getFamilySurname(),memberAtPosition.getFirstName()));
         text2.setText(memberAtPosition.getGender() +" , "+ memberAtPosition.getAge());
     }

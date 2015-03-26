@@ -80,6 +80,14 @@ public class Member implements Serializable {
         return deleted? "Yes":"No";
     }
 
+    public String getMemberHouseholdId() {
+        return memberHouseholdId;
+    }
+
+    public int getId() {
+        return id;
+    }
+
     public long save(DatabaseHelper db) {
         int memberNumber = Member.numberOfMembers(db, household) + 1;
         String generatedId = household.getName() + "-" + memberNumber;
@@ -159,31 +167,8 @@ public class Member implements Serializable {
         return member;
     }
 
-    public String getMemberHouseholdId() {
-        return memberHouseholdId;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-
     @Override
     public String toString() {
         return familySurname + " "+ firstName;
     }
-
-    public void validate() throws InvalidDataException {
-        boolean validFamilySurname = nonEmpty(familySurname);
-        boolean validFirstName = nonEmpty(firstName);
-        boolean validGender = nonEmpty(gender);
-        if(!(validFamilySurname && validFirstName && validGender))
-            throw new InvalidDataException();
-    }
-
-    private boolean nonEmpty(String value) {
-        return value !=null && !value.equals("");
-    }
-
-
 }

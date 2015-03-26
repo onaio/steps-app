@@ -32,4 +32,13 @@ public class Constants {
     public static final String APP_NOT_INSTALLED = "The ODK Collect app is not installed";
     public static final String ODK_DATA_FILENAME = "STEPS.csv";
     public static final String ODK_HH_ID = "1";
+
+
+    //Error Strings
+    public static final String FAMILY_SURNAME = "Family Surname";
+    public static final String FIRST_NAME = "First Name";
+    public static final String GENDER = "Gender";
+    public static final String AGE = "Age";
+    public static final String MEMBER_ERROR = "Member";
+    public static final String ERROR_STRING = "Invalid %s, please populate the following fields: %s";
 }
