@@ -56,7 +56,7 @@ public class NewHouseholdActivity extends Activity {
         TextView number = (TextView) findViewById(R.id.household_number);
         String phoneNumber = number.getText().toString();
         String currentDate = new SimpleDateFormat("yyyy/MM/dd").format(new Date());
-        return new Household(name.getText().toString(), phoneNumber, HouseholdStatus.OPEN, currentDate);
+        return new Household(name.getText().toString(), phoneNumber, HouseholdStatus.NOT_SELECTED, currentDate);
     }
 
 }

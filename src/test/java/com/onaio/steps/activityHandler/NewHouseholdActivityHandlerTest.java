@@ -113,7 +113,7 @@ public class NewHouseholdActivityHandlerTest {
 
     @Test
     public void ShouldHandleResultForResultCodeOk(){
-        Household name = new Household("name", "123321412312", HouseholdStatus.OPEN, "123");
+        Household name = new Household("name", "123321412312", HouseholdStatus.NOT_SELECTED, "123");
         name.save(new DatabaseHelper(stepsActivity));
         HouseholdAdapter householdAdapterMock = Mockito.mock(HouseholdAdapter.class);
         Mockito.stub(householdAdapterMock.getViewTypeCount()).toReturn(1);

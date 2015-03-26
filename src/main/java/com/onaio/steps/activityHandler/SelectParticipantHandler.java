@@ -55,7 +55,7 @@ public class SelectParticipantHandler implements IMenuHandler, IPrepare {
     @Override
     public boolean shouldInactivate() {
         boolean noMember = Member.numberOfMembers(new DatabaseHelper(activity), household) == 0;
-        boolean noSelection = household.getStatus() == HouseholdStatus.OPEN;
+        boolean noSelection = household.getStatus() == HouseholdStatus.NOT_SELECTED;
         boolean selected = household.getStatus() == HouseholdStatus.NOT_DONE;
         boolean deferred = household.getStatus() == HouseholdStatus.DEFERRED;
         boolean canSelectParticipant = noSelection || selected || deferred;
@@ -86,7 +86,7 @@ public class SelectParticipantHandler implements IMenuHandler, IPrepare {
         };
 
         switch(household.getStatus()){
-            case OPEN: selectParticipant();
+            case NOT_SELECTED: selectParticipant();
                 break;
             case NOT_DONE: Dialog.confirm(activity, confirmListener, Dialog.EmptyListener, confirmation, R.string.participant_re_elect_reason_title);
                 break;
