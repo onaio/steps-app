@@ -1,21 +1,16 @@
 package com.onaio.steps.activityHandler;
 
 import android.app.Activity;
-import android.app.ListActivity;
-import android.content.Intent;
+import android.content.DialogInterface;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.onaio.steps.R;
 import com.onaio.steps.activityHandler.Interface.IMenuHandler;
-import com.onaio.steps.activityHandler.Interface.IMenuResultHandler;
 import com.onaio.steps.activityHandler.Interface.IPrepare;
-import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;
-import com.onaio.steps.model.Household;
+import com.onaio.steps.helper.Dialog;
 import com.onaio.steps.model.Member;
-
-import java.util.List;
 
 public class DeleteMemberHandler implements IMenuHandler,IPrepare {
     private Activity activity;
@@ -35,9 +30,16 @@ public class DeleteMemberHandler implements IMenuHandler,IPrepare {
 
     @Override
     public boolean open() {
-        member.delete(new DatabaseHelper(activity));
-        HouseholdActivityHandler handler = new HouseholdActivityHandler(activity, member.getHousehold());
-        handler.open();
+        DialogInterface.OnClickListener confirmListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                member.delete(new DatabaseHelper(activity));
+                HouseholdActivityHandler handler = new HouseholdActivityHandler(activity, member.getHousehold());
+                handler.open();
+            }
+        };
+        new Dialog()
+                .confirm(activity,confirmListener,Dialog.EmptyListener,R.string.member_delete_confirm, R.string.confirm_ok);
         return true;
     }
 

@@ -2,7 +2,6 @@ package com.onaio.steps.activityHandler;
 
 import android.app.ListActivity;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -89,9 +88,9 @@ public class SelectParticipantHandler implements IMenuHandler, IPrepare {
         switch(household.getStatus()){
             case OPEN: selectParticipant();
                 break;
-            case SELECTED: Dialog.confirm(activity, confirmListener, Dialog.EmptyListener, confirmation);
+            case SELECTED: Dialog.confirm(activity, confirmListener, Dialog.EmptyListener, confirmation, R.string.participant_re_elect_reason_title);
                 break;
-            case DEFERRED: Dialog.confirm(activity, confirmListener, Dialog.EmptyListener, confirmation);
+            case DEFERRED: Dialog.confirm(activity, confirmListener, Dialog.EmptyListener, confirmation, R.string.participant_re_elect_reason_title);
                 break;
             default: new Dialog().notify(activity, Dialog.EmptyListener, R.string.participant_no_re_elect_message_because_of_status, R.string.participant_no_re_elect_title);
         }

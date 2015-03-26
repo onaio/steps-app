@@ -15,16 +15,24 @@ public class Dialog {
     };
     public void notify(Context activity, DialogInterface.OnClickListener okListener, int message, int title) {
         new AlertDialog.Builder(activity)
-                .setTitle(activity.getString(title))
-                .setMessage(activity.getString(message))
+                .setTitle(title)
+                .setMessage(message)
                 .setPositiveButton(R.string.ok, okListener)
                 .create().show();
     }
 
-    public static void confirm(Context activity, DialogInterface.OnClickListener confirmListener, DialogInterface.OnClickListener cancelListener, View confirmation) {
+    public static void confirm(Context activity, DialogInterface.OnClickListener confirmListener, DialogInterface.OnClickListener cancelListener, View confirmation, int title) {
         new AlertDialog.Builder(activity)
-                .setTitle(activity.getString(R.string.participant_re_elect_reason_title))
+                .setTitle(title)
                 .setView(confirmation)
+                .setPositiveButton(R.string.confirm_ok, confirmListener)
+                .setNegativeButton(R.string.cancel, cancelListener).create().show();
+    }
+
+    public static void confirm(Context activity, DialogInterface.OnClickListener confirmListener, DialogInterface.OnClickListener cancelListener, int message, int title) {
+        new AlertDialog.Builder(activity)
+                .setTitle(title)
+                .setMessage(message)
                 .setPositiveButton(R.string.confirm_ok, confirmListener)
                 .setNegativeButton(R.string.cancel, cancelListener).create().show();
     }
