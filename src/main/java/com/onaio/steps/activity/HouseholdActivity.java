@@ -91,9 +91,10 @@ public class HouseholdActivity extends ListActivity {
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        IPrepare menuItem = HouseholdActivityFactory.getMenuPreparer(this, household, menu);
-        if(menuItem.shouldInactivate())
-            menuItem.inactivate();
+        List<IPrepare> menuPreparers = HouseholdActivityFactory.getMenuPreparer(this, household, menu);
+        for (IPrepare menuPreparer: menuPreparers)
+            if(menuPreparer.shouldInactivate())
+                menuPreparer.inactivate();
         super.onPrepareOptionsMenu(menu);
         return true;
     }

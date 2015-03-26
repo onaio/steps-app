@@ -23,7 +23,7 @@ public class SettingsActivity extends Activity {
         String phoneId = intent.getStringExtra(Constants.PHONE_ID);
         String householdSeed = intent.getStringExtra(Constants.HOUSEHOLD_SEED);
         String endpointUrl = intent.getStringExtra(Constants.ENDPOINT_URL);
-        TextView phoneIdView = (TextView) findViewById(R.id.phoneId);
+        TextView phoneIdView = (TextView) findViewById(R.id.deviceId);
         TextView endpointUrlView = (TextView) findViewById(R.id.endpointUrl);
         TextView householdSeedView = (TextView) findViewById(R.id.household_seed);
         phoneIdView.setText(phoneId);
@@ -33,7 +33,7 @@ public class SettingsActivity extends Activity {
 
     public void saveSettings(View view) {
         Intent intent = this.getIntent();
-        String phoneId = ((TextView) findViewById(R.id.phoneId)).getText().toString();
+        String phoneId = ((TextView) findViewById(R.id.deviceId)).getText().toString();
         String endpointUrl = ((TextView) findViewById(R.id.endpointUrl)).getText().toString();
         String householdSeed = ((TextView) findViewById(R.id.household_seed)).getText().toString();
         if (!(isValid(phoneId) && isValid(endpointUrl))){

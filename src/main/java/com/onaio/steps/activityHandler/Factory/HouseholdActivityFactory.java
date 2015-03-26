@@ -43,8 +43,11 @@ public class HouseholdActivityFactory {
         return new MemberActivityHandler(activity, member);
     }
 
-    public static IPrepare getMenuPreparer(ListActivity activity, Household household, Menu menu){
-        return new SelectParticipantHandler(activity, household).withMenu(menu);
+    public static List<IPrepare> getMenuPreparer(ListActivity activity, Household household, Menu menu){
+        List<IPrepare> menuPreparers = new ArrayList<IPrepare>();
+        menuPreparers.add(new SelectParticipantHandler(activity,household).withMenu(menu));
+        menuPreparers.add(new ExportHandler(activity).withHousehold(household).withMenu(menu));
+        return menuPreparers;
     }
 
     public static List<IPrepare> getBottomMenuPreparer(ListActivity activity, Household household){

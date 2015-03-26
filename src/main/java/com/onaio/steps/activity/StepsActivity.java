@@ -28,6 +28,7 @@ public class StepsActivity extends ListActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+        setTitle(R.string.main_header);
         populateHouseholds();
         bindHouseholdItems();
     }

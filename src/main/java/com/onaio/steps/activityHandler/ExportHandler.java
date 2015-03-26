@@ -2,9 +2,12 @@ package com.onaio.steps.activityHandler;
 
 import android.app.ListActivity;
 import android.content.Intent;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.onaio.steps.R;
 import com.onaio.steps.activityHandler.Interface.IMenuHandler;
+import com.onaio.steps.activityHandler.Interface.IPrepare;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.helper.Dialog;
@@ -21,11 +24,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ExportHandler implements IMenuHandler {
+public class ExportHandler implements IMenuHandler,IPrepare {
 
     private List<Household> households;
     private ListActivity activity;
     private DatabaseHelper databaseHelper;
+    private Menu menu;
+    private int MENU_ID = R.id.action_export;
 
     public ExportHandler(ListActivity activity) {
 
@@ -36,7 +41,7 @@ public class ExportHandler implements IMenuHandler {
 
     @Override
     public boolean shouldOpen(int menu_id) {
-        return menu_id == R.id.action_export;
+        return menu_id == MENU_ID;
     }
 
     @Override
@@ -81,4 +86,28 @@ public class ExportHandler implements IMenuHandler {
         households.add(household);
         return this;
     }
+
+    @Override
+    public boolean shouldInactivate() {
+        return Member.numberOfMembers(new DatabaseHelper(activity),households.get(0)) <=0;
+    }
+
+    @Override
+    public void inactivate() {
+        MenuItem item = menu.findItem(MENU_ID);
+        item.setEnabled(false);
+    }
+
+    @Override
+    public void activate() {
+        MenuItem item = menu.findItem(MENU_ID);
+        item.setEnabled(true);
+    }
+
+    public IPrepare withMenu(Menu menu) {
+        this.menu = menu;
+        return this;
+    }
+
+
 }
