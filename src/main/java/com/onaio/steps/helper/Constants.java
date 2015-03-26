@@ -23,7 +23,7 @@ public class Constants {
 
     //Export related
     public static final String ENDPOINT_URL = "endpointUrl";
-    public static final String EXPORT_FIELDS = "Household Id, Phone Number, Member Id, Family Surname, First Name, Age, Gender, Deleted";
+    public static final String EXPORT_FIELDS = "Household Id, Phone Number, Member Id, Family Surname, First Name, Age, Gender, Deleted, Survey Status, Re Election Count, Re Election Reasons";
     public static final String EXPORT_FILE_NAME = "/households.csv";
 
 

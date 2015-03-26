@@ -71,4 +71,8 @@ public class ReElectReason {
         return reasons;
     }
 
+    @Override
+    public String toString() {
+        return reason;
+    }
 }

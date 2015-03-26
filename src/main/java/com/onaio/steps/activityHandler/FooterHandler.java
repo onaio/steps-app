@@ -20,7 +20,7 @@ public class FooterHandler implements IPrepare {
 
     @Override
     public boolean shouldInactivate() {
-        boolean selected = household.getStatus() == HouseholdStatus.SELECTED;
+        boolean selected = household.getStatus() == HouseholdStatus.NOT_DONE;
         boolean deferred = household.getStatus() == HouseholdStatus.DEFERRED;
         return !(selected || deferred);
     }

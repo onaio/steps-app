@@ -3,7 +3,6 @@ package com.onaio.steps.activityHandler;
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.view.View;
 
 import com.onaio.steps.R;
@@ -64,7 +63,7 @@ public class RefusedHandler implements IMenuHandler,IPrepare {
 
     @Override
     public boolean shouldInactivate() {
-        boolean memberSelected = household.getStatus() == HouseholdStatus.SELECTED;
+        boolean memberSelected = household.getStatus() == HouseholdStatus.NOT_DONE;
         boolean memberDeferred = household.getStatus() == HouseholdStatus.DEFERRED;
         return !(memberSelected || memberDeferred);
     }

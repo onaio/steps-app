@@ -12,6 +12,9 @@ import com.onaio.steps.helper.FileBuilder;
 import com.onaio.steps.helper.UploadFileTask;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.Member;
+import com.onaio.steps.model.ReElectReason;
+
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -41,6 +44,7 @@ public class ExportHandler implements IMenuHandler {
         try {
             FileBuilder fileBuilder = new FileBuilder().withHeader(Constants.EXPORT_FIELDS.split(","));
             for(Household household: households) {
+                List<ReElectReason> reasons = ReElectReason.getAll(databaseHelper, household);
                 List<Member> membersPerHousehold = Member.getAllForExport(databaseHelper, household);
                 for(Member member: membersPerHousehold){
                     ArrayList<String> row = new ArrayList<String>();
@@ -52,6 +56,9 @@ public class ExportHandler implements IMenuHandler {
                     row.add(String.valueOf(member.getAge()));
                     row.add(member.getGender());
                     row.add(member.getDeletedString());
+                    row.add(household.getStatus().toString());
+                    row.add(String.valueOf(reasons.size()));
+                    row.add(StringUtils.join(reasons.toArray(),','));
                     fileBuilder.withData(row.toArray(new String[row.size()]));
                 }
             }

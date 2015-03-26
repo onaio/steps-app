@@ -2,8 +2,8 @@ package com.onaio.steps.model;
 
 public enum HouseholdStatus {
     OPEN,
-    SELECTED,
-    CLOSED,
+    NOT_DONE,
+    DONE,
     DEFERRED,
     REFUSED
 }

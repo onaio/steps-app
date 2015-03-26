@@ -57,7 +57,7 @@ public class TakeSurveyHandler implements IMenuHandler, IPrepare {
     }
 
     private void updateHousehold() {
-        household.setStatus(HouseholdStatus.CLOSED);
+        household.setStatus(HouseholdStatus.DONE);
         household.update(new DatabaseHelper(activity));
     }
 
@@ -86,7 +86,7 @@ public class TakeSurveyHandler implements IMenuHandler, IPrepare {
 
     @Override
     public boolean shouldInactivate() {
-        boolean selected = household.getStatus() == HouseholdStatus.SELECTED;
+        boolean selected = household.getStatus() == HouseholdStatus.NOT_DONE;
         boolean deferred = household.getStatus() == HouseholdStatus.DEFERRED;
         return !(selected || deferred );
     }

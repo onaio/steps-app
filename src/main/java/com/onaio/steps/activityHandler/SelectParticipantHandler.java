@@ -23,7 +23,7 @@ import com.onaio.steps.model.ReElectReason;
 import java.util.List;
 import java.util.Random;
 
-import static com.onaio.steps.model.HouseholdStatus.SELECTED;
+import static com.onaio.steps.model.HouseholdStatus.NOT_DONE;
 
 public class SelectParticipantHandler implements IMenuHandler, IPrepare {
 
@@ -56,7 +56,7 @@ public class SelectParticipantHandler implements IMenuHandler, IPrepare {
     public boolean shouldInactivate() {
         boolean noMember = Member.numberOfMembers(new DatabaseHelper(activity), household) == 0;
         boolean noSelection = household.getStatus() == HouseholdStatus.OPEN;
-        boolean selected = household.getStatus() == HouseholdStatus.SELECTED;
+        boolean selected = household.getStatus() == HouseholdStatus.NOT_DONE;
         boolean deferred = household.getStatus() == HouseholdStatus.DEFERRED;
         boolean canSelectParticipant = noSelection || selected || deferred;
         return noMember || !canSelectParticipant;
@@ -88,7 +88,7 @@ public class SelectParticipantHandler implements IMenuHandler, IPrepare {
         switch(household.getStatus()){
             case OPEN: selectParticipant();
                 break;
-            case SELECTED: Dialog.confirm(activity, confirmListener, Dialog.EmptyListener, confirmation, R.string.participant_re_elect_reason_title);
+            case NOT_DONE: Dialog.confirm(activity, confirmListener, Dialog.EmptyListener, confirmation, R.string.participant_re_elect_reason_title);
                 break;
             case DEFERRED: Dialog.confirm(activity, confirmListener, Dialog.EmptyListener, confirmation, R.string.participant_re_elect_reason_title);
                 break;
@@ -127,7 +127,7 @@ public class SelectParticipantHandler implements IMenuHandler, IPrepare {
 
     private void updateHousehold(Member selectedMember) {
         household.setSelectedMember(String.valueOf(selectedMember.getId()));
-        household.setStatus(SELECTED);
+        household.setStatus(NOT_DONE);
         household.update(new DatabaseHelper(activity.getApplicationContext()));
     }
 
