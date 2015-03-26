@@ -125,6 +125,17 @@ public class NewHouseholdActivityHandlerTest {
         Mockito.verify(householdAdapterMock).notifyDataSetChanged();
     }
 
+    @Test
+    public void ShouldNotHandleResultForOtherResultCode(){
+        HouseholdAdapter householdAdapterMock = Mockito.mock(HouseholdAdapter.class);
+        Mockito.stub(householdAdapterMock.getViewTypeCount()).toReturn(1);
+        stepsActivity.getListView().setAdapter(householdAdapterMock);
+        handler.handleResult(null, Activity.RESULT_OK);
+
+        Mockito.verify(householdAdapterMock,Mockito.never()).reinitialize(Mockito.anyList());
+        Mockito.verify(householdAdapterMock,Mockito.never()).notifyDataSetChanged();
+    }
+
     private void setValue(String key, String value) {
         KeyValueStore keyValueStore = KeyValueStoreFactory.instance(stepsActivity);
         keyValueStore.putString(key, value);
