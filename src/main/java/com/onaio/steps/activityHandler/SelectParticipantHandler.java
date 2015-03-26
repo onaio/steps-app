@@ -45,7 +45,7 @@ public class SelectParticipantHandler implements IMenuHandler, IPrepare {
 
     @Override
     public boolean open() {
-        if(ReElectReason.getAll(new DatabaseHelper(activity),household).size() > MAX_RE_ELECT_COUNT)
+        if(ReElectReason.getAll(new DatabaseHelper(activity),household).size() >= MAX_RE_ELECT_COUNT)
             new Dialog().notify(activity, Dialog.EmptyListener, R.string.participant_no_re_elect_message_because_of_count, R.string.participant_no_re_elect_title);
         else
             trySelectingParticipant();
