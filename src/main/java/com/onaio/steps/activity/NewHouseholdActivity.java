@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.TextView;
 import com.onaio.steps.R;
 import com.onaio.steps.helper.DatabaseHelper;
+import com.onaio.steps.helper.Dialog;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.HouseholdStatus;
 
@@ -47,6 +48,10 @@ public class NewHouseholdActivity extends Activity {
     public void saveHousehold(View view) {
         Intent intent = this.getIntent();
         Household household = getHouseholdFromView();
+        if(!household.isValid()){
+            new Dialog().notify(this,Dialog.EmptyListener,R.string.invalid_household,R.string.error_title);
+            return;
+        }
         DatabaseHelper db = new DatabaseHelper(this.getApplicationContext());
         household.save(db);
         setResult(RESULT_OK, intent);

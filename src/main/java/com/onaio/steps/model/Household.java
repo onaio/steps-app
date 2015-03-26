@@ -139,4 +139,8 @@ public class Household implements Serializable {
         cursor.close();
         return householdNames;
     }
+
+    public boolean isValid(){
+        return phoneNumber!=null && !phoneNumber.equals("") && (phoneNumber.length() == 9 || phoneNumber.length() == 10) ;
+    }
 }

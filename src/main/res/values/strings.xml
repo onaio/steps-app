@@ -49,4 +49,5 @@
     <string name="household_id_seed_label">Household starting id (default is 0)</string>
     <string name="member_delete_confirm">Are you sure, you want to delete the member ?</string>
     <string name="enter_a_value">Please enter a value</string>
+    <string name="invalid_household">The household is invalid, please fill the right data and try again.</string>
 </resources>
