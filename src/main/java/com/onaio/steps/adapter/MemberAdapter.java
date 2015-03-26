@@ -59,14 +59,15 @@ public class MemberAdapter extends BaseAdapter{
 
     private void highlightTheSelection(TwoLineListItem twoLineListItem, Member memberAtPosition) {
         if(selectedMemberId.equals(String.valueOf(memberAtPosition.getId())))
-            twoLineListItem.setBackgroundColor(Color.RED);
+            twoLineListItem.setBackgroundColor(Color.GRAY);
         else
-            twoLineListItem.setBackgroundColor(Color.BLACK);
+            twoLineListItem.setBackgroundColor(Color.WHITE);
     }
 
     private void setTextInView(TwoLineListItem twoLineListItem, Member memberAtPosition) {
         TextView text1 = twoLineListItem.getText1();
         TextView text2 = twoLineListItem.getText2();
+        text1.setTextColor(Color.BLACK);
         text1.setText(String.format("%s %s",memberAtPosition.getFamilySurname(),memberAtPosition.getFirstName()));
         text2.setText(memberAtPosition.getGender() +" , "+ memberAtPosition.getAge());
     }

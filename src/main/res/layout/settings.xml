@@ -2,11 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+                android:background="@android:color/white">
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="35dp">
+        android:layout_height="35dp"
+        android:background="@android:color/white">
         <Button
             android:layout_width="70dp"
             android:layout_height="fill_parent"
@@ -16,7 +18,7 @@
             android:text = "Done"
             android:drawableLeft="@drawable/ic_done"
             android:background="@android:color/transparent"
-            android:textColor="@android:color/white"
+            android:textColor="@android:color/black"
             android:onClick="saveSettings"/>
 
         <TextView
@@ -26,7 +28,8 @@
             android:textSize="20sp"
             android:autoText="false"
             android:gravity="center|center_vertical"
-            android:layout_marginLeft="-35dp" />
+            android:layout_marginLeft="-35dp"
+            android:textColor="@android:color/black"/>
 
     </LinearLayout>
     <View android:layout_height="1dp"
@@ -43,7 +46,10 @@
             android:id="@+id/deviceId"
         android:layout_marginTop="30dp"
         android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp" />
+        android:layout_marginRight="5dp"
+        android:singleLine="false"
+        android:background="@drawable/textbox"
+        android:textColor="@android:color/black"/>
     <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -53,7 +59,8 @@
             android:id="@+id/household_seed"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp" />
+        android:layout_marginRight="5dp"
+        android:textColor="@android:color/black"/>
     <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -63,6 +70,7 @@
         android:hint="@string/endpoint_url_hint"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp" />
+        android:layout_marginRight="5dp"
+        android:textColor="@android:color/black"/>
 
 </LinearLayout>

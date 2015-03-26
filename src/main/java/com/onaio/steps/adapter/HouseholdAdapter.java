@@ -22,6 +22,7 @@ public class HouseholdAdapter extends BaseAdapter{
     public HouseholdAdapter(Context context, List households) {
         this.context = context;
         this.households = households;
+
     }
 
     @Override
@@ -58,6 +59,7 @@ public class HouseholdAdapter extends BaseAdapter{
     private void setTextInView(TwoLineListItem twoLineListItem, Household householdAtPosition) {
         TextView text1 = twoLineListItem.getText1();
         TextView text2 = twoLineListItem.getText2();
+        text1.setTextColor(Color.BLACK);
         text1.setText(householdAtPosition.getName());
         int numberOfMembers = Member.numberOfMembers(new DatabaseHelper(context), householdAtPosition);
         text2.setText(String.format("%s, %d members", householdAtPosition.getCreatedAt(),numberOfMembers));
