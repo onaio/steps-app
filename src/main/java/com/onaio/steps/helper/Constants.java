@@ -15,12 +15,11 @@ public class Constants {
     public static final String FEMALE = "Female";
 
     //Identifier for different activities
-    public static final int SETTING_IDENTIFIER = 1;
-    public static final int NEW_HOUSEHOLD_IDENTIFIER = 2;
-    public static final int HOUSEHOLD_IDENTIFIER = 3;
+    public static final int STEPS_IDENTIFIER = 1;
+    public static final int SETTING_IDENTIFIER = 2;
+    public static final int NEW_HOUSEHOLD_IDENTIFIER = 3;
     public static final int NEW_MEMBER_IDENTIFIER = 4;
-    public static final int MEMBER_IDENTIFIER = 5;
-    public static final int STEPS_IDENTIFIER = 6;
+    public static final int DELETE_MEMBER_IDENTIFIER = 4;
 
     //Export related
     public static final String ENDPOINT_URL = "endpointUrl";

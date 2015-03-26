@@ -41,7 +41,7 @@ public class ExportHandler implements IMenuHandler {
         try {
             FileBuilder fileBuilder = new FileBuilder().withHeader(Constants.EXPORT_FIELDS.split(","));
             for(Household household: households) {
-                List<Member> membersPerHousehold = Member.getAll(databaseHelper, household);
+                List<Member> membersPerHousehold = Member.getAllForExport(databaseHelper, household);
                 for(Member member: membersPerHousehold){
                     ArrayList<String> row = new ArrayList<String>();
                     row.add(household.getName());

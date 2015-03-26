@@ -82,21 +82,23 @@ public class Household implements Serializable {
     }
 
     public long save(DatabaseHelper db){
-        ContentValues values = new ContentValues();
-        values.put(NAME, name);
-        values.put(PHONE_NUMBER,phoneNumber);
-        values.put(STATUS,status.toString());
-        values.put(CREATED_AT,createdAt);
-        return db.save(values, TABLE_NAME);
+        ContentValues householdValues = populateWithBasicDetails();
+        householdValues.put(CREATED_AT, createdAt);
+        return db.save(householdValues, TABLE_NAME);
     }
 
     public long update(DatabaseHelper db){
+        ContentValues householdValues = populateWithBasicDetails();
+        householdValues.put(SELECTED_MEMBER, selectedMember);
+        return db.update(householdValues, TABLE_NAME,ID +" = "+getId(),null);
+    }
+
+    private ContentValues populateWithBasicDetails() {
         ContentValues values = new ContentValues();
         values.put(NAME, name);
         values.put(PHONE_NUMBER,phoneNumber);
-        values.put(SELECTED_MEMBER,selectedMember);
         values.put(STATUS,status.toString());
-        return db.update(values, TABLE_NAME,ID +" = "+getId(),null);
+        return values;
     }
 
     public static Household find_by(DatabaseHelper db, Long id) {
@@ -114,7 +116,7 @@ public class Household implements Serializable {
     }
 
     public static int getAllCount(DatabaseHelper db){
-        Cursor cursor = db.exec(FIND_ALL_QUERY);
+        Cursor cursor = db.exec(FIND_ALL_COUNT_QUERY);
         cursor.moveToFirst();
         int householdCounts = cursor.getInt(0);
         db.close();

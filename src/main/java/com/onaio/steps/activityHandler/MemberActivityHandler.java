@@ -25,7 +25,7 @@ public class MemberActivityHandler implements IItemHandler {
         if (member == null) return true;
         Intent intent = new Intent(activity.getBaseContext(), MemberActivity.class);
         intent.putExtra(Constants.MEMBER, member);
-        activity.startActivityForResult(intent, Constants.MEMBER_IDENTIFIER);
+        activity.startActivity(intent);
         return true;
     }
 }

@@ -18,9 +18,12 @@ public class Member implements Serializable {
     private static final String GENDER = "gender";
     private static final String AGE = "age";
     private static final String HOUSEHOLD_ID = "household_id";
-    public static final String TABLE_CREATE_QUERY = String.format("CREATE TABLE %s(%s INTEGER PRIMARY KEY, %s TEXT, %s TEXT,%s TEXT, %s INTEGER, %s TEXT, %s INTEGER, FOREIGN KEY (%s) REFERENCES %s(%s))", TABLE_NAME, ID, MEMBER_HOUSEHOLD_ID,FAMILY_SURNAME,FIRST_NAME, AGE, GENDER, HOUSEHOLD_ID, HOUSEHOLD_ID, Household.TABLE_NAME, Household.ID);
-    private static String FIND_ALL_QUERY = "SELECT * FROM MEMBER WHERE %s=%s ORDER BY Id asc";
+    private static final String DELETED = "deleted";
+    public static final String TABLE_CREATE_QUERY = String.format("CREATE TABLE %s(%s INTEGER PRIMARY KEY, %s TEXT, %s TEXT,%s TEXT, %s INTEGER, %s TEXT, %s INTEGER, %s INTEGER, FOREIGN KEY (%s) REFERENCES %s(%s))", TABLE_NAME, ID, MEMBER_HOUSEHOLD_ID,FAMILY_SURNAME,FIRST_NAME, AGE, GENDER,DELETED, HOUSEHOLD_ID, HOUSEHOLD_ID, Household.TABLE_NAME, Household.ID);
+    private static String FIND_ALL_QUERY = "SELECT * FROM MEMBER WHERE %s=%s and %s=%d ORDER BY Id asc";
+    private static String FIND_ALL_WITH_DELETED_QUERY = "SELECT * FROM MEMBER WHERE %s=%s ORDER BY Id asc";
     private static String FIND_BY_NAME_AND_HOUSEHOLD_QUERY = "SELECT * FROM MEMBER WHERE "+ID+" = '%d'";
+    private static int NOT_DELETED_INT = 0;
 
     private String familySurname;
     private String firstName;
@@ -29,8 +32,9 @@ public class Member implements Serializable {
     private Household household;
     private int id;
     private String memberHouseholdId;
+    private Boolean deleted;
 
-    public Member(int id, String familySurname, String firstName, String gender, int age, Household household, String memberHouseholdId) {
+    public Member(int id, String familySurname, String firstName, String gender, int age, Household household, String memberHouseholdId, Boolean deleted) {
         this.familySurname = familySurname;
         this.firstName = firstName;
         this.gender = gender;
@@ -38,6 +42,7 @@ public class Member implements Serializable {
         this.household = household;
         this.id = id;
         this.memberHouseholdId = memberHouseholdId;
+        this.deleted = deleted;
     }
 
     public Member(String familySurname, String firstName, String gender, int age, Household household) {
@@ -46,6 +51,7 @@ public class Member implements Serializable {
         this.gender = gender;
         this.age = age;
         this.household = household;
+        deleted = false;
     }
 
     public String getFirstName() {
@@ -71,18 +77,34 @@ public class Member implements Serializable {
     public long save(DatabaseHelper db) {
         int memberNumber = Member.numberOfMembers(db, household) + 1;
         String generatedId = household.getName() + "-" + memberNumber;
+        ContentValues memberDetails = populateBasicDetails();
+        memberDetails.put(MEMBER_HOUSEHOLD_ID, generatedId);
+        return db.save(memberDetails, TABLE_NAME);
+    }
+
+    public long update(DatabaseHelper db){
+        ContentValues memberDetails = populateBasicDetails();
+        return db.update(memberDetails,TABLE_NAME,ID+" = "+id,null);
+    }
+
+    public void delete(DatabaseHelper db) {
+        deleted = true;
+        update(db);
+    }
+
+    private ContentValues populateBasicDetails() {
         ContentValues values = new ContentValues();
         values.put(FIRST_NAME, firstName);
         values.put(FAMILY_SURNAME, familySurname);
         values.put(GENDER,gender);
         values.put(AGE,age);
         values.put(HOUSEHOLD_ID,household.getId());
-        values.put(MEMBER_HOUSEHOLD_ID, generatedId);
-        return db.save(values, TABLE_NAME);
+        values.put(DELETED,deleted ? 1 : 0);
+        return values;
     }
 
     public static int numberOfMembers(DatabaseHelper db, Household household){
-        Cursor cursor = db.exec(String.format(FIND_ALL_QUERY,HOUSEHOLD_ID,household.getId()));
+        Cursor cursor = db.exec(String.format(FIND_ALL_QUERY,HOUSEHOLD_ID,household.getId(),DELETED, NOT_DELETED_INT));
         cursor.moveToFirst();
         int count = cursor.getCount();
         cursor.close();
@@ -91,7 +113,14 @@ public class Member implements Serializable {
     }
 
     public static List<Member> getAll(DatabaseHelper db, Household household){
-        Cursor cursor = db.exec(String.format(FIND_ALL_QUERY,HOUSEHOLD_ID,household.getId()));
+        Cursor cursor = db.exec(String.format(FIND_ALL_QUERY,HOUSEHOLD_ID,household.getId(),DELETED,NOT_DELETED_INT));
+        List<Member> members = read(cursor, household);
+        db.close();
+        return members;
+    }
+
+    public static List<Member> getAllForExport(DatabaseHelper db, Household household){
+        Cursor cursor = db.exec(String.format(FIND_ALL_WITH_DELETED_QUERY,HOUSEHOLD_ID,household.getId()));
         List<Member> members = read(cursor, household);
         db.close();
         return members;
@@ -107,8 +136,10 @@ public class Member implements Serializable {
                 String age = cursor.getString(cursor.getColumnIndex(AGE));
                 String id = cursor.getString(cursor.getColumnIndex(ID));
                 String generatedId = cursor.getString(cursor.getColumnIndex(MEMBER_HOUSEHOLD_ID));
+                int deletedInteger = cursor.getInt(cursor.getColumnIndex(DELETED));
+                boolean deleted = deletedInteger == NOT_DELETED_INT ? false : true;
                 if(household.getId().equals(cursor.getString(cursor.getColumnIndex(HOUSEHOLD_ID))))
-                    members.add(new Member(Integer.parseInt(id), familySurname,firstName, gender, Integer.parseInt(age), household,generatedId));
+                    members.add(new Member(Integer.parseInt(id), familySurname,firstName, gender, Integer.parseInt(age), household,generatedId, deleted));
             }while (cursor.moveToNext());
         }
         cursor.close();
@@ -129,6 +160,7 @@ public class Member implements Serializable {
     public int getId() {
         return id;
     }
+
 
     @Override
     public String toString() {
