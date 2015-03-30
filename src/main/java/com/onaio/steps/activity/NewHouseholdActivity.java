@@ -6,13 +6,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 import com.onaio.steps.R;
+import com.onaio.steps.exception.InvalidDataException;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.helper.Dialog;
 import com.onaio.steps.model.Household;
-import com.onaio.steps.model.HouseholdStatus;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import com.onaio.steps.modelViewWrapper.HouseholdViewWrapper;
 
 import static com.onaio.steps.helper.Constants.*;
 
@@ -46,24 +44,17 @@ public class NewHouseholdActivity extends Activity {
     }
 
     public void saveHousehold(View view) {
-        Intent intent = this.getIntent();
-        Household household = getHouseholdFromView();
-        if(!household.isValid()){
-            new Dialog().notify(this,Dialog.EmptyListener,R.string.invalid_household,R.string.error_title);
-            return;
-        }
-        DatabaseHelper db = new DatabaseHelper(this.getApplicationContext());
-        household.save(db);
-        setResult(RESULT_OK, intent);
-        finish();
-    }
+        try {
+            Intent intent = this.getIntent();
+            Household household = new HouseholdViewWrapper(this).getHousehold(R.id.generated_household_id, R.id.household_number);
+            DatabaseHelper db = new DatabaseHelper(getApplicationContext());
+            household.save(db);
+            setResult(RESULT_OK, intent);
+            finish();
 
-    private Household getHouseholdFromView() {
-        TextView name = (TextView) findViewById(R.id.generated_household_id);
-        TextView number = (TextView) findViewById(R.id.household_number);
-        String phoneNumber = number.getText().toString();
-        String currentDate = new SimpleDateFormat("yyyy/MM/dd").format(new Date());
-        return new Household(name.getText().toString(), phoneNumber, HouseholdStatus.NOT_SELECTED, currentDate);
+        } catch (InvalidDataException e) {
+            new Dialog().notify(this,Dialog.EmptyListener,e.getMessage(),R.string.error_title);
+        }
     }
 
 }

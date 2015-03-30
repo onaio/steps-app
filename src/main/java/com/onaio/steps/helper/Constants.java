@@ -2,6 +2,9 @@ package com.onaio.steps.helper;
 
 public class Constants {
 
+    public static final String DATE_FORMAT = "yyyy/MM/dd";
+
+
     //keys for intent data
     public static final String  MEMBER_NAME = "member_name";
     public static final String HOUSEHOLD_NAME = "household_name";
@@ -41,4 +44,6 @@ public class Constants {
     public static final String AGE = "Age";
     public static final String MEMBER_ERROR = "Member";
     public static final String ERROR_STRING = "Invalid %s, please populate the following fields: %s";
+    public static final String EMPTY_PHONE_NUMBER = "Phone number is empty, please enter a valid number and try again.";
+    public static final String INVALID_PHONE_NUMBER = "Phone number is invalid, enter a valid phone number and try again";
 }
