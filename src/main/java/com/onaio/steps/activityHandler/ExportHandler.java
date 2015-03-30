@@ -1,7 +1,6 @@
 package com.onaio.steps.activityHandler;
 
 import android.app.ListActivity;
-import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -89,7 +88,7 @@ public class ExportHandler implements IMenuHandler,IPrepare {
 
     @Override
     public boolean shouldInactivate() {
-        return Member.numberOfMembers(new DatabaseHelper(activity),households.get(0)) <=0;
+        return Member.numberOfNonDeletedMembers(new DatabaseHelper(activity), households.get(0)) <=0;
     }
 
     @Override

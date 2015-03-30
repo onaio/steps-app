@@ -54,7 +54,7 @@ public class SelectParticipantHandler implements IMenuHandler, IPrepare {
 
     @Override
     public boolean shouldInactivate() {
-        boolean noMember = Member.numberOfMembers(new DatabaseHelper(activity), household) == 0;
+        boolean noMember = Member.numberOfNonDeletedMembers(new DatabaseHelper(activity), household) == 0;
         boolean noSelection = household.getStatus() == HouseholdStatus.NOT_SELECTED;
         boolean selected = household.getStatus() == HouseholdStatus.NOT_DONE;
         boolean deferred = household.getStatus() == HouseholdStatus.DEFERRED;
@@ -140,7 +140,7 @@ public class SelectParticipantHandler implements IMenuHandler, IPrepare {
     }
 
     private Member getRandomMember(ListView listView) {
-        int totalMembers = Member.numberOfMembers(new DatabaseHelper(activity.getApplicationContext()), household);
+        int totalMembers = Member.numberOfNonDeletedMembers(new DatabaseHelper(activity.getApplicationContext()), household);
         Random random = new Random();
         int selectedParticipant = random.nextInt(totalMembers);
         return (Member) listView.getItemAtPosition(selectedParticipant);

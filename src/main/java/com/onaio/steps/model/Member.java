@@ -3,8 +3,6 @@ package com.onaio.steps.model;
 import android.content.ContentValues;
 import android.database.Cursor;
 
-import com.onaio.steps.R;
-import com.onaio.steps.exception.InvalidDataException;
 import com.onaio.steps.helper.DatabaseHelper;
 
 import java.io.Serializable;
@@ -24,7 +22,7 @@ public class Member implements Serializable {
     public static final String TABLE_CREATE_QUERY = String.format("CREATE TABLE %s(%s INTEGER PRIMARY KEY, %s TEXT, %s TEXT,%s TEXT, %s INTEGER, %s TEXT, %s INTEGER, %s INTEGER, FOREIGN KEY (%s) REFERENCES %s(%s))", TABLE_NAME, ID, MEMBER_HOUSEHOLD_ID,FAMILY_SURNAME,FIRST_NAME, AGE, GENDER,DELETED, HOUSEHOLD_ID, HOUSEHOLD_ID, Household.TABLE_NAME, Household.ID);
     private static String FIND_ALL_QUERY = "SELECT * FROM MEMBER WHERE %s=%s and %s=%d ORDER BY Id asc";
     private static String FIND_ALL_WITH_DELETED_QUERY = "SELECT * FROM MEMBER WHERE %s=%s ORDER BY Id asc";
-    private static String FIND_BY_NAME_AND_HOUSEHOLD_QUERY = "SELECT * FROM MEMBER WHERE "+ID+" = '%d'";
+    private static String FIND_BY_ID_QUERY = "SELECT * FROM MEMBER WHERE "+ID+" = '%d'";
     private static int NOT_DELETED_INT = 0;
 
     private String familySurname;
@@ -117,8 +115,17 @@ public class Member implements Serializable {
         return values;
     }
 
-    public static int numberOfMembers(DatabaseHelper db, Household household){
+    public static int numberOfNonDeletedMembers(DatabaseHelper db, Household household){
         Cursor cursor = db.exec(String.format(FIND_ALL_QUERY,HOUSEHOLD_ID,household.getId(),DELETED, NOT_DELETED_INT));
+        cursor.moveToFirst();
+        int count = cursor.getCount();
+        cursor.close();
+        db.close();
+        return count;
+    }
+
+    public static int numberOfMembers(DatabaseHelper db, Household household){
+        Cursor cursor = db.exec(String.format(FIND_ALL_WITH_DELETED_QUERY,HOUSEHOLD_ID,household.getId()));
         cursor.moveToFirst();
         int count = cursor.getCount();
         cursor.close();
@@ -161,7 +168,7 @@ public class Member implements Serializable {
     }
 
     public static Member find_by(DatabaseHelper db, Long id, Household household) {
-        Cursor cursor = db.exec(String.format(FIND_BY_NAME_AND_HOUSEHOLD_QUERY, id));
+        Cursor cursor = db.exec(String.format(FIND_BY_ID_QUERY, id));
         Member member = read(cursor, household).get(0);
         db.close();
         return member;

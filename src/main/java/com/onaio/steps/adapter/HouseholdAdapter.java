@@ -61,7 +61,7 @@ public class HouseholdAdapter extends BaseAdapter{
         TextView text2 = twoLineListItem.getText2();
         text1.setTextColor(Color.BLACK);
         text1.setText(householdAtPosition.getName());
-        int numberOfMembers = Member.numberOfMembers(new DatabaseHelper(context), householdAtPosition);
+        int numberOfMembers = Member.numberOfNonDeletedMembers(new DatabaseHelper(context), householdAtPosition);
         text2.setText(String.format("%s, %d members", householdAtPosition.getCreatedAt(),numberOfMembers));
     }
 
