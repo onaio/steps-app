@@ -34,9 +34,4 @@ public class MemberActivityHandlerTest {
         assertTrue(newIntent.getComponent().getClassName().equals(MemberActivity.class.getName()));
       //assertTrue(newIntent.getStringExtra(Constants.MEMBER_IDENTIFIER.toString).equals());
     }
-
-    @Test
-    public void ShouldBeAbleToHandleResultForProperRequestCode(){
-        assertTrue(memberActivityHandler.canHandleResult(Constants.MEMBER_IDENTIFIER));
-    }
 }

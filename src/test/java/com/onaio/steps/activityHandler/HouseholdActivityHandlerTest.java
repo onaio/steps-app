@@ -12,7 +12,7 @@ import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
-@Config(emulateSdk = 16,resourceDir = "src/main/AndroidManifest.xml")
+@Config(emulateSdk = 16,manifest = "src/main/AndroidManifest.xml")
 @RunWith(RobolectricTestRunner.class)
 public class HouseholdActivityHandlerTest {
 

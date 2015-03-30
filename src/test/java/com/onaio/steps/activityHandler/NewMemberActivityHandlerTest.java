@@ -56,12 +56,4 @@ public class NewMemberActivityHandlerTest {
     public void ShouldBeAbleToHandleResultForProperRequestCode(){
         assertTrue(newMemberActivityHandler.canHandleResult(Constants.NEW_MEMBER_IDENTIFIER));
     }
-
-    @Test
-    public void ShouldNotBeAbleToHandleResultForOtherRequestCode(){
-        assertTrue(newMemberActivityHandler.canHandleResult(Constants.MEMBER_IDENTIFIER));
-    }
-
-
-
 }
