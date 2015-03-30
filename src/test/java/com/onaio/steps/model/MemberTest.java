@@ -17,6 +17,10 @@ import org.robolectric.annotation.Config;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
+
+import static junit.framework.Assert.*;
+import static junit.framework.Assert.assertEquals;
 
 @RunWith(RobolectricTestRunner.class)
 @Config(emulateSdk = 16, manifest = "src/main/AndroidManifest.xml",shadows = {ShadowDatabaseHelper.class})
@@ -24,6 +28,7 @@ public class MemberTest {
 
     private final int DELTA = 1;
     private final int NOT_DELETED_INT = 0;
+    private final int DELETED_INT = 1;
     private String currentDate = new SimpleDateFormat(Constants.DATE_FORMAT).format(new Date());
     @Mock
     private DatabaseHelper db;
@@ -37,7 +42,7 @@ public class MemberTest {
     private final String memberGender = Constants.FEMALE;
     private final int memberAge = 23;
     private Household household;
-    private final int numberOfMembers = 1;
+    private final int numberOfMembers = 5;
     private static final String ID = "Id";
     private static final String MEMBER_HOUSEHOLD_ID = "member_household_id";
     private static final String FIRST_NAME = "first_name";
@@ -83,7 +88,6 @@ public class MemberTest {
     public void ShouldBeAbleToDeleteTheMember(){
         int numberOfMembers = 0;
         int memberId = 1;
-        int DELETED_INT = 1;
         Member member = new Member(memberId,memberFamilyName, memberFirstName, memberGender, memberAge, household,householdName+"-1",false);
         stubDb(numberOfMembers);
 
@@ -94,11 +98,11 @@ public class MemberTest {
 
     @Test
     public void ShouldGetNonDeletedNumberOfMembersFromDatabase(){
-        int numberOfMembers = 1;
+        int numberOfMembers = 2;
         Household household = new Household(householdId, householdName, phoneNumber,"", HouseholdStatus.NOT_SELECTED, currentDate);
         stubDb(numberOfMembers);
 
-        Member.numberOfNonDeletedMembers(db, household);
+        assertEquals(numberOfMembers, Member.numberOfNonDeletedMembers(db, household));
 
         Mockito.verify(db).exec(String.format(FIND_ALL_QUERY,HOUSEHOLD_ID,householdId, DELETED, NOT_DELETED_INT));
     }
@@ -108,28 +112,36 @@ public class MemberTest {
         Household household = new Household(householdId, householdName, phoneNumber,"", HouseholdStatus.NOT_SELECTED, currentDate);
         stubDb(numberOfMembers);
 
-        Member.numberOfMembers(db, household);
+        assertEquals(numberOfMembers, Member.numberOfMembers(db, household));
 
         Mockito.verify(db).exec(String.format(FIND_ALL_WITH_DELETED_QUERY,HOUSEHOLD_ID,householdId));
     }
 
     @Test
     public void ShouldGetAllNonDeletedMember(){
+        long memberId = 1L;
         Household household = new Household(householdId, householdName, phoneNumber,"", HouseholdStatus.NOT_SELECTED, currentDate);
         stubDb(numberOfMembers);
+        stubCursor(memberId, NOT_DELETED_INT, householdName + "-1");
 
-        Member.getAll(db, household);
+        List<Member> members = Member.getAll(db, household);
 
+        assertEquals(1,members.size());
+        validateMember(members.get(0),false);
         Mockito.verify(db).exec(String.format(FIND_ALL_QUERY,HOUSEHOLD_ID,householdId,DELETED, NOT_DELETED_INT));
     }
 
     @Test
     public void ShouldGetAllMember(){
+        long memberId = 1L;
         Household household = new Household(householdId, householdName, phoneNumber,"", HouseholdStatus.NOT_SELECTED, currentDate);
         stubDb(numberOfMembers);
+        stubCursor(memberId, DELETED_INT, householdName + "-1");
 
-        Member.getAllForExport(db, household);
+        List<Member> allMembers = Member.getAllForExport(db, household);
 
+        assertEquals(1,allMembers.size());
+        validateMember(allMembers.get(0),true);
         Mockito.verify(db).exec(String.format(FIND_ALL_WITH_DELETED_QUERY,HOUSEHOLD_ID,householdId));
     }
 
@@ -139,11 +151,21 @@ public class MemberTest {
         Household household = new Household(householdId, householdName, phoneNumber,"", HouseholdStatus.NOT_SELECTED, currentDate);
         stubDb(numberOfMembers);
         stubCursor(memberId, NOT_DELETED_INT,householdName+"-1");
-
-        Member.find_by(db, memberId, household);
-
         String FIND_BY_ID_QUERY = "SELECT * FROM MEMBER WHERE " + ID + " = '%d'";
+
+        Member member = Member.find_by(db, memberId, household);
+
+        validateMember(member,false);
         Mockito.verify(db).exec(String.format(FIND_BY_ID_QUERY, memberId));
+    }
+
+    private void validateMember(Member member,boolean isDeleted){
+        assertEquals(memberFamilyName,member.getFamilySurname());
+        assertEquals(memberFirstName,member.getFirstName());
+        assertEquals(memberAge,member.getAge());
+        assertEquals(memberGender,member.getGender());
+        String isDeletedString = isDeleted?"Yes":"No";
+        assertEquals(isDeletedString,member.getDeletedString());
     }
 
     private ArgumentMatcher<ContentValues> saveMemberMatcher(final int memberCount) {
@@ -152,8 +174,8 @@ public class MemberTest {
             public boolean matches(Object argument) {
                 ContentValues contentValues = (ContentValues) argument;
                 assertBasicDetails(contentValues, NOT_DELETED_INT);
-                Assert.assertTrue(contentValues.containsKey(MEMBER_HOUSEHOLD_ID));
-                Assert.assertTrue(contentValues.getAsString(MEMBER_HOUSEHOLD_ID).equals(String.format("%s-%d",householdName,memberCount+ DELTA)));
+                assertTrue(contentValues.containsKey(MEMBER_HOUSEHOLD_ID));
+                assertTrue(contentValues.getAsString(MEMBER_HOUSEHOLD_ID).equals(String.format("%s-%d", householdName, memberCount + DELTA)));
                 return true;
             }
         };
@@ -171,18 +193,18 @@ public class MemberTest {
     }
 
     private void assertBasicDetails(ContentValues contentValues, int deleted) {
-        Assert.assertTrue(contentValues.containsKey(FAMILY_SURNAME));
-        Assert.assertTrue(contentValues.getAsString(FAMILY_SURNAME).equals(memberFamilyName));
-        Assert.assertTrue(contentValues.containsKey(FIRST_NAME));
-        Assert.assertTrue(contentValues.getAsString(FIRST_NAME).equals(memberFirstName));
-        Assert.assertTrue(contentValues.containsKey(GENDER));
-        Assert.assertTrue(contentValues.getAsString(GENDER).equals(memberGender));
-        Assert.assertTrue(contentValues.containsKey(AGE));
-        Assert.assertTrue(contentValues.getAsInteger(AGE) == memberAge);
-        Assert.assertTrue(contentValues.containsKey(HOUSEHOLD_ID));
-        Assert.assertTrue(contentValues.getAsString(HOUSEHOLD_ID).equals(householdId));
-        Assert.assertTrue(contentValues.containsKey(DELETED));
-        Assert.assertTrue(contentValues.getAsInteger(DELETED) == deleted);
+        assertTrue(contentValues.containsKey(FAMILY_SURNAME));
+        assertTrue(contentValues.getAsString(FAMILY_SURNAME).equals(memberFamilyName));
+        assertTrue(contentValues.containsKey(FIRST_NAME));
+        assertTrue(contentValues.getAsString(FIRST_NAME).equals(memberFirstName));
+        assertTrue(contentValues.containsKey(GENDER));
+        assertTrue(contentValues.getAsString(GENDER).equals(memberGender));
+        assertTrue(contentValues.containsKey(AGE));
+        assertTrue(contentValues.getAsInteger(AGE) == memberAge);
+        assertTrue(contentValues.containsKey(HOUSEHOLD_ID));
+        assertTrue(contentValues.getAsString(HOUSEHOLD_ID).equals(householdId));
+        assertTrue(contentValues.containsKey(DELETED));
+        assertTrue(contentValues.getAsInteger(DELETED) == deleted);
     }
 
     private void stubDb(int numberOfMembers) {

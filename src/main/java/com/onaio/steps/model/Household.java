@@ -11,8 +11,8 @@ import java.util.List;
 
 public class Household implements Serializable {
     private static String FIND_BY_ID_QUERY = "SELECT * FROM HOUSEHOLD WHERE id = %d";
-    public static String FIND_ALL_QUERY = "SELECT * FROM HOUSEHOLD ORDER BY Id desc";
-    public static String FIND_ALL_COUNT_QUERY = "SELECT count(*) FROM HOUSEHOLD ORDER BY Id desc";
+    private static String FIND_ALL_QUERY = "SELECT * FROM HOUSEHOLD ORDER BY Id desc";
+    private static String FIND_ALL_COUNT_QUERY = "SELECT count(*) FROM HOUSEHOLD ORDER BY Id desc";
     public static final String TABLE_NAME = "household";
     public static final String ID = "Id";
     private static final String NAME = "Name";
