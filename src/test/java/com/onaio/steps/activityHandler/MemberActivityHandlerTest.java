@@ -4,7 +4,6 @@ import android.content.Intent;
 
 import com.onaio.steps.activity.HouseholdActivity;
 import com.onaio.steps.activity.MemberActivity;
-import com.onaio.steps.helper.Constants;
 import com.onaio.steps.model.Member;
 
 import org.junit.Before;
