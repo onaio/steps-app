@@ -6,8 +6,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TwoLineListItem;
+
+import com.onaio.steps.R;
 import com.onaio.steps.model.Member;
 import java.util.List;
 
@@ -47,41 +50,46 @@ public class MemberAdapter extends BaseAdapter{
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        TwoLineListItem memberItemView;
+        View memberItemView;
         Member memberAtPosition = members.get(position);
         memberItemView = getViewItem(convertView);
         setTextInView(memberItemView, memberAtPosition);
         return memberItemView;
     }
 
-    private void highlightTheSelection(TextView text1, TextView text2, Member memberAtPosition) {
+    private void highlightTheSelection(TextView memberName, TextView memberDetails, Member memberAtPosition) {
         if(selectedMemberId.equals(String.valueOf(memberAtPosition.getId()))){
-            text1.setTextColor(Color.parseColor("#40AA44"));
-            text2.setTextColor(Color.parseColor("#40AA44"));
+            memberName.setTextColor(Color.parseColor("#40AA44"));
+            memberDetails.setTextColor(Color.parseColor("#40AA44"));
         }
         else{
-            text1.setTextColor(Color.BLACK);
-            text2.setTextColor(Color.BLACK);
+            memberName.setTextColor(Color.BLACK);
+            memberDetails.setTextColor(Color.BLACK);
         }
     }
 
-    private void setTextInView(TwoLineListItem twoLineListItem, Member memberAtPosition) {
-        TextView text1 = twoLineListItem.getText1();
-        TextView text2 = twoLineListItem.getText2();
-        highlightTheSelection(text1,text2,memberAtPosition);
-        text1.setText(String.format("%s %s",memberAtPosition.getFamilySurname(),memberAtPosition.getFirstName()));
-        text2.setText(memberAtPosition.getGender() +" , "+ memberAtPosition.getAge());
+    private void setTextInView(View memberListItem, Member memberAtPosition) {
+        TextView memberName = (TextView) memberListItem.findViewById(R.id.main_text);
+        TextView memberDetail = (TextView) memberListItem.findViewById(R.id.sub_text);
+        ImageView image = (ImageView) memberListItem.findViewById(R.id.main_image);
+        ImageView secondaryImage = (ImageView) memberListItem.findViewById(R.id.secondary_image);
+        View divider = memberListItem.findViewById(R.id.divider);
+        highlightTheSelection(memberName,memberDetail,memberAtPosition);
+        memberName.setText(String.format("%s %s",memberAtPosition.getFamilySurname(),memberAtPosition.getFirstName()));
+        memberDetail.setText(memberAtPosition.getGender() +" , "+ memberAtPosition.getAge());
+        image.setImageResource(R.drawable.ic_contact_list);
+        divider.setVisibility(View.INVISIBLE);
+        secondaryImage.setVisibility(View.INVISIBLE);
     }
 
-    private TwoLineListItem getViewItem(View convertView) {
-        TwoLineListItem twoLineListItem;
+    private View getViewItem(View convertView) {
+        View view;
         if (convertView == null) {
-            LayoutInflater inflater = (LayoutInflater) context
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            twoLineListItem = (TwoLineListItem) inflater.inflate(
-                    android.R.layout.simple_list_item_2, null);
+                LayoutInflater inflater = (LayoutInflater) context
+                        .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                view = inflater.inflate(R.layout.list_item, null);
         } else
-            twoLineListItem = (TwoLineListItem) convertView;
-        return twoLineListItem;
+            view = convertView;
+        return view;
     }
 }
