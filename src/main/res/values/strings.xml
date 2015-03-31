@@ -53,4 +53,5 @@
     <string name="endpoint_url_hint">Url to export</string>
     <string name="invalid_member">Insufficient data, please fill all the values.</string>
     <string name="main_header">Households</string>
+    <string name="household_members_header">Household Members</string>
 </resources>

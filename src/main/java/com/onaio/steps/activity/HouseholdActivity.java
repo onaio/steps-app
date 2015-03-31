@@ -2,6 +2,8 @@ package com.onaio.steps.activity;
 
 import android.app.ListActivity;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -33,13 +35,19 @@ public class HouseholdActivity extends ListActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.household);
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        styleActionBar();
         Intent intent = getIntent();
         household = (Household)intent.getSerializableExtra(Constants.HOUSEHOLD);
-        populatePhoneNumber();
+        populateHouseholdName();
         handleMembers();
         prepareBottomMenuItems();
-        setTitle(household.getName());
+    }
+
+    private void styleActionBar() {
+        getActionBar().setDisplayHomeAsUpEnabled(false);
+        getActionBar().setIcon(R.drawable.ic_action_back);
+        getActionBar().setTitle("");
+        getActionBar().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
     }
 
     private void handleMembers() {
@@ -69,9 +77,11 @@ public class HouseholdActivity extends ListActivity {
         }
     };
 
-    private void populatePhoneNumber() {
-        TextView phoneNumber = (TextView) findViewById(R.id.household_number);
-        phoneNumber.setText(String.valueOf(household.getPhoneNumber()));
+    private void populateHouseholdName() {
+        TextView householdName = (TextView) findViewById(R.id.household_name);
+        TextView householdMemberNameLabel = (TextView) findViewById(R.id.household_members_label);
+        householdName.setText(String.valueOf(household.getName()));
+        householdMemberNameLabel.setText(R.string.household_members_header);
     }
 
     private void populateMembers() {
