@@ -74,6 +74,7 @@ public class TakeSurveyHandler implements IMenuHandler, IPrepare {
         Member selectedMember = Member.find_by(new DatabaseHelper(activity), Long.parseLong(household.getSelectedMember()), household);
         ArrayList<String> row = new ArrayList<String>();
         row.add(Constants.ODK_HH_ID);
+        row.add(selectedMember.getMemberHouseholdId());
         row.add(selectedMember.getFamilySurname());
         row.add(selectedMember.getFirstName());
         String gender = selectedMember.getGender();
