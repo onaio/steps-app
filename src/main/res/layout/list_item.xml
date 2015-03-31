@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:layout_height="wrap_content"
+    android:layout_width="fill_parent"
+    android:background="@android:color/transparent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/main_image"
+        android:src="@drawable/ic_action_new_household"
+        android:layout_gravity="center_vertical"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"/>
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="10dp"
+    >
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/main_text"
+        android:layout_weight="1"
+        android:text="Household 1"
+        android:textColor="@android:color/black"
+        android:paddingBottom="5dp"
+        android:paddingLeft="5dp"/>
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/sub_text"
+        android:layout_weight="1"
+        android:text="5 members"
+        android:textColor="@android:color/darker_gray"
+        android:paddingLeft="5dp"/>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/secondary_image"
+        android:src="@drawable/ic_survey_not_done"
+        android:layout_gravity="right"
+        android:layout_marginTop="-40dp" />
+    <View android:layout_height="1dp"
+        android:layout_width="fill_parent"
+        android:background="#ffe2e2e2"
+        android:layout_marginTop="10dp"/>
+</LinearLayout>
+
+
+</LinearLayout>
