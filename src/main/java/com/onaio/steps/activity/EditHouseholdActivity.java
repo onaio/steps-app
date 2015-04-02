@@ -43,6 +43,7 @@ public class EditHouseholdActivity extends Activity {
             household = new HouseholdViewWrapper(this).updateHousehold(household, R.id.household_number);
             DatabaseHelper db = new DatabaseHelper(getApplicationContext());
             household.update(db);
+            intent.putExtra(HOUSEHOLD,household);
             setResult(RESULT_OK, intent);
             finish();
 

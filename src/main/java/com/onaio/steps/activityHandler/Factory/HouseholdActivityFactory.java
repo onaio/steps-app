@@ -38,6 +38,7 @@ public class HouseholdActivityFactory {
     public static List<IMenuResultHandler> getMenuResultHandlers(ListActivity activity, Household household){
         ArrayList<IMenuResultHandler> handlers = new ArrayList<IMenuResultHandler>();
         handlers.add(new NewMemberActivityHandler(activity, household));
+        handlers.add(new EditHouseholdActivityHandler(activity, household));
         return handlers;
     }
 
