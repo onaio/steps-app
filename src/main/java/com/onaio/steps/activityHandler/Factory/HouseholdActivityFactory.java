@@ -4,6 +4,7 @@ import android.app.ListActivity;
 import android.view.Menu;
 
 import com.onaio.steps.activityHandler.DeferredHandler;
+import com.onaio.steps.activityHandler.EditHouseholdActivityHandler;
 import com.onaio.steps.activityHandler.ExportHandler;
 import com.onaio.steps.activityHandler.FooterHandler;
 import com.onaio.steps.activityHandler.Interface.IItemHandler;
@@ -30,6 +31,7 @@ public class HouseholdActivityFactory {
         handlers.add(new ExportHandler(activity).withHousehold(household));
         handlers.add(new SelectParticipantHandler(activity,household));
         handlers.add(new StepsActivityHandler(activity));
+        handlers.add(new EditHouseholdActivityHandler(activity,household));
         return handlers;
     }
 

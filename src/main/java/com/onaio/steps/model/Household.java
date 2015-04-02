@@ -45,6 +45,10 @@ public class Household implements Serializable {
         this.createdAt=createdAt;
     }
 
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
     public String getCreatedAt() {
         return createdAt;
     }

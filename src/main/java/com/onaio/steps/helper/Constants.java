@@ -6,8 +6,6 @@ public class Constants {
 
 
     //keys for intent data
-    public static final String  MEMBER_NAME = "member_name";
-    public static final String HOUSEHOLD_NAME = "household_name";
     public static final String PHONE_ID = "phoneId";
     public static final String HOUSEHOLD_SEED = "householdSeedId";
     public static final String HOUSEHOLD = "HOUSEHOLD";
@@ -32,8 +30,6 @@ public class Constants {
 //    public static final String ODK_FORM_ID = "steps_draft_testing";
     public static final String ODK_FORM_ID = "steps_draft_testing_30March2015";
     public static final String ODK_FORM_FIELDS = "hhid_key,member_id,family_surname,first_name,gender,age";
-    public static final String FORM_NOT_PRESENT = "The required ODK Form is not present in the application, Please upload the form and try again";
-    public static final String APP_NOT_INSTALLED = "The ODK Collect app is not installed";
     public static final String ODK_DATA_FILENAME = "STEPS.csv";
     public static final String ODK_HH_ID = "1";
 

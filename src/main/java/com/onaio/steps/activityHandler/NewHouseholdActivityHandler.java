@@ -38,7 +38,7 @@ public class NewHouseholdActivityHandler implements IMenuHandler, IMenuResultHan
 
     @Override
     public boolean open() {
-        if (getValue(PHONE_ID)== null || getValue(HOUSEHOLD_SEED) == null) {
+        if (isEmpty(getValue(PHONE_ID))) {
             notifyUserToSetPhoneId(activity);
         } else {
             Intent intent = new Intent(activity.getBaseContext(), NewHouseholdActivity.class);
@@ -77,4 +77,7 @@ public class NewHouseholdActivityHandler implements IMenuHandler, IMenuResultHan
         return activity.getPreferences(MODE_PRIVATE);
     }
 
+    private boolean isEmpty(String value) {
+        return value == null || value.equals("");
+    }
 }

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+
 import com.onaio.steps.R;
 import com.onaio.steps.exception.InvalidDataException;
 import com.onaio.steps.helper.DatabaseHelper;
@@ -12,43 +13,36 @@ import com.onaio.steps.helper.Dialog;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.modelViewWrapper.HouseholdViewWrapper;
 
-import static com.onaio.steps.helper.Constants.*;
+import static com.onaio.steps.helper.Constants.HOUSEHOLD;
+import static com.onaio.steps.helper.Constants.HOUSEHOLD_SEED;
+import static com.onaio.steps.helper.Constants.PHONE_ID;
 
-public class NewHouseholdActivity extends Activity {
+public class EditHouseholdActivity extends Activity {
 
-    private String phoneId;
-    private int householdSeed;
-    private int DELTA = 1;
+    private Household household;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.household_form);
         populateDataFromIntent();
-        populateGeneratedHouseholdId();
-    }
-
-    private void populateGeneratedHouseholdId() {
-        TextView phoneIdView = (TextView) findViewById(R.id.generated_household_id);
-        int householdsCount = Household.getAllCount(new DatabaseHelper(this));
-        int generatedId = householdSeed + householdsCount + DELTA;
-        phoneIdView.setText(String.format("%s-%d",phoneId, generatedId));
     }
 
     private void populateDataFromIntent() {
         Intent intent = getIntent();
-        phoneId = intent.getStringExtra(PHONE_ID);
-        String householdSeedString = intent.getStringExtra(HOUSEHOLD_SEED);
-        householdSeedString = householdSeedString == null || householdSeedString.equals("") ? "0" : householdSeedString;
-        householdSeed = Integer.parseInt(householdSeedString);
+        household = (Household) intent.getSerializableExtra(HOUSEHOLD);
+        TextView nameView = (TextView) findViewById(R.id.generated_household_id);
+        TextView  phoneNumberView= (TextView) findViewById(R.id.household_number);
+        nameView.setText(household.getName());
+        phoneNumberView.setText(household.getPhoneNumber());
     }
 
     public void saveHousehold(View view) {
         try {
             Intent intent = this.getIntent();
-            Household household = new HouseholdViewWrapper(this).getHousehold(R.id.generated_household_id, R.id.household_number);
+            household = new HouseholdViewWrapper(this).updateHousehold(household, R.id.household_number);
             DatabaseHelper db = new DatabaseHelper(getApplicationContext());
-            household.save(db);
+            household.update(db);
             setResult(RESULT_OK, intent);
             finish();
 

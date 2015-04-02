@@ -35,19 +35,17 @@ public class HouseholdActivity extends ListActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.household);
-        styleActionBar();
         Intent intent = getIntent();
         household = (Household)intent.getSerializableExtra(Constants.HOUSEHOLD);
+        styleActionBar();
         populateHouseholdName();
         handleMembers();
         prepareBottomMenuItems();
     }
 
     private void styleActionBar() {
-        getActionBar().setDisplayHomeAsUpEnabled(false);
-        getActionBar().setIcon(R.drawable.ic_action_back);
-        getActionBar().setTitle("");
-        getActionBar().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setTitle(household.getName());
     }
 
     private void handleMembers() {
@@ -78,9 +76,7 @@ public class HouseholdActivity extends ListActivity {
     };
 
     private void populateHouseholdName() {
-        TextView householdName = (TextView) findViewById(R.id.household_name);
         TextView householdMemberNameLabel = (TextView) findViewById(R.id.household_members_label);
-        householdName.setText(String.valueOf(household.getName()));
         householdMemberNameLabel.setText(R.string.household_members_header);
     }
 
