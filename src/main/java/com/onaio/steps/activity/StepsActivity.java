@@ -14,8 +14,11 @@ import com.onaio.steps.R;
 import com.onaio.steps.activityHandler.Factory.StepsActivityFactory;
 import com.onaio.steps.activityHandler.Interface.IMenuHandler;
 import com.onaio.steps.activityHandler.Interface.IMenuResultHandler;
+import com.onaio.steps.activityHandler.SettingActivityHandler;
 import com.onaio.steps.adapter.HouseholdAdapter;
+import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;
+import com.onaio.steps.helper.KeyValueStoreFactory;
 import com.onaio.steps.model.Household;
 
 import java.util.List;
@@ -27,10 +30,17 @@ public class StepsActivity extends ListActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
+        setLayout();
         setTitle(R.string.main_header);
         populateHouseholds();
         bindHouseholdItems();
+    }
+
+    private void setLayout() {
+        if(getValue(Constants.PHONE_ID) == null || getValue(Constants.PHONE_ID).equals(""))
+            setContentView(R.layout.first_main);
+        else
+            setContentView(R.layout.main);
     }
 
     @Override
@@ -81,4 +91,11 @@ public class StepsActivity extends ListActivity {
         }
     }
 
+    private String getValue(String key) {
+        return KeyValueStoreFactory.instance(this).getString(key) ;
+    }
+
+    public void goToSetting(View view) {
+        new SettingActivityHandler(this).open();
+    }
 }

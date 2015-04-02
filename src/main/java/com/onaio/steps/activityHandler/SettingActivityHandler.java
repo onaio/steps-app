@@ -58,6 +58,7 @@ public class SettingActivityHandler implements IMenuHandler, IMenuResultHandler 
         saveSafely(PHONE_ID, phoneId);
         saveSafely(ENDPOINT_URL, endpointUrl);
         saveSafely(HOUSEHOLD_SEED, householdSeed);
+        new StepsActivityHandler(activity).open();
     }
 
     private void saveSafely(String key, String value) {
