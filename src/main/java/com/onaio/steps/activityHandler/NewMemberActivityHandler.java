@@ -21,10 +21,18 @@ public class NewMemberActivityHandler implements IMenuHandler, IMenuResultHandle
 
     private Household household;
     private ListActivity activity;
+    private MemberAdapter memberAdapter;
+    private DatabaseHelper db;
+
+    public NewMemberActivityHandler(Household household, ListActivity activity, MemberAdapter memberAdapter, DatabaseHelper db) {
+        this.household = household;
+        this.activity = activity;
+        this.memberAdapter = memberAdapter;
+        this.db = db;
+    }
 
     public NewMemberActivityHandler(ListActivity activity, Household household) {
-        this.activity = activity;
-        this.household = household;
+        this(household,activity,(MemberAdapter) activity.getListView().getAdapter(),new DatabaseHelper(activity.getApplicationContext()));
     }
 
     @Override
@@ -35,7 +43,7 @@ public class NewMemberActivityHandler implements IMenuHandler, IMenuResultHandle
     @Override
     public boolean open() {
         if (household== null) return true;
-        Intent intent = new Intent(activity.getBaseContext(), NewMemberActivity.class);
+        Intent intent = new Intent(activity, NewMemberActivity.class);
         intent.putExtra(Constants.HOUSEHOLD,household);
         activity.startActivityForResult(intent, Constants.NEW_MEMBER_IDENTIFIER);
         return true;
@@ -45,10 +53,9 @@ public class NewMemberActivityHandler implements IMenuHandler, IMenuResultHandle
     public void handleResult(Intent data, int resultCode) {
         if (resultCode != RESULT_OK)
             return ;
-        MemberAdapter memberAdapter = (MemberAdapter) activity.getListView().getAdapter();
         if (memberAdapter == null)
             return;
-        List<Member> members = Member.getAll(new DatabaseHelper(activity.getApplicationContext()), household);
+        List<Member> members = Member.getAll(db, household);
         memberAdapter.reinitialize(members);
         memberAdapter.notifyDataSetChanged();
         activity.invalidateOptionsMenu();

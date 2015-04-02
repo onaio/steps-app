@@ -38,8 +38,7 @@ public class DeleteMemberHandler implements IMenuHandler,IPrepare {
                 handler.open();
             }
         };
-        new Dialog()
-                .confirm(activity,confirmListener,Dialog.EmptyListener,R.string.member_delete_confirm, R.string.confirm_ok);
+        new Dialog().confirm(activity,confirmListener,Dialog.EmptyListener,R.string.member_delete_confirm, R.string.confirm_ok);
         return true;
     }
 
