@@ -4,33 +4,70 @@ import android.content.Intent;
 
 import com.onaio.steps.activity.HouseholdActivity;
 import com.onaio.steps.activity.MemberActivity;
+import com.onaio.steps.helper.Constants;
+import com.onaio.steps.model.Household;
+import com.onaio.steps.model.HouseholdStatus;
 import com.onaio.steps.model.Member;
+
+import junit.framework.Assert;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.ArgumentMatcher;
+import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.robolectric.Robolectric;
-import org.robolectric.shadows.ShadowActivity;
+import org.robolectric.RobolectricTestRunner;
+import org.robolectric.annotation.Config;
 
-import static org.junit.Assert.assertTrue;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
+@Config(emulateSdk = 16,manifest = "src/main/AndroidManifest.xml")
+@RunWith(RobolectricTestRunner.class)
 public class MemberActivityHandlerTest {
 
+    @Mock
     HouseholdActivity householdActivity;
     MemberActivityHandler memberActivityHandler;
+    private Member member;
+    private String currentDate = new SimpleDateFormat(Constants.DATE_FORMAT).format(new Date());
+
     @Before
-    public void setUp() throws Exception {
-        householdActivity = Robolectric.setupActivity(HouseholdActivity.class);
-        Member member = Mockito.mock(Member.class);
-        memberActivityHandler = new MemberActivityHandler(householdActivity, member);
+    public void SetUp() {
+        householdActivity = Mockito.mock(HouseholdActivity.class);
     }
+
     @Test
-    public void ShouldOpen(){
-        ShadowActivity shadowActivity = Robolectric.shadowOf(householdActivity);
-    //    assertTrue(memberActivityHandler.open());
+    public void ShouldStartMemberActivityWhenMemberIsNotNull(){
+        Household household = new Household("2", "Any HouseholdName", "123456789", "", HouseholdStatus.NOT_SELECTED, currentDate);
+        member = new Member("Rana", "Nikhil", "Female", 20, household);
+        memberActivityHandler = new MemberActivityHandler(householdActivity, member);
+
         memberActivityHandler.open();
-        Intent newIntent = shadowActivity.getNextStartedActivityForResult().intent;
-        assertTrue(newIntent.getComponent().getClassName().equals(MemberActivity.class.getName()));
-      //assertTrue(newIntent.getStringExtra(Constants.MEMBER_IDENTIFIER.toString).equals());
+
+        Mockito.verify(householdActivity).startActivity(Mockito.argThat(matchIntent()));
+    }
+
+    private ArgumentMatcher<Intent> matchIntent() {
+        return new ArgumentMatcher<Intent>() {
+            @Override
+            public boolean matches(Object argument) {
+                Intent intent = (Intent) argument;
+                Member actualMember = (Member) intent.getSerializableExtra(Constants.MEMBER);
+                Assert.assertEquals(member,actualMember);
+                Assert.assertEquals(MemberActivity.class.getName(),intent.getComponent().getClassName());
+                return true;
+            }
+        };
+    }
+
+    @Test
+    public void ShouldNotStartMemberActivityWhenMemberIsNull(){
+        member=null;
+        memberActivityHandler = new MemberActivityHandler(householdActivity, member);
+
+        memberActivityHandler.open();
+        Mockito.verify(householdActivity,Mockito.never()).startActivity(Mockito.argThat(matchIntent()));
     }
 }

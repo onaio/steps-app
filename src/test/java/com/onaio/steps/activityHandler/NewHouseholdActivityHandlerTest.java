@@ -130,7 +130,7 @@ public class NewHouseholdActivityHandlerTest {
         HouseholdAdapter householdAdapterMock = Mockito.mock(HouseholdAdapter.class);
         Mockito.stub(householdAdapterMock.getViewTypeCount()).toReturn(1);
         stepsActivity.getListView().setAdapter(householdAdapterMock);
-        handler.handleResult(null, Activity.RESULT_OK);
+        handler.handleResult(null, Activity.RESULT_CANCELED);
 
         Mockito.verify(householdAdapterMock,Mockito.never()).reinitialize(Mockito.anyList());
         Mockito.verify(householdAdapterMock,Mockito.never()).notifyDataSetChanged();
