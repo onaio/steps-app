@@ -20,6 +20,8 @@ public class Constants {
     public static final int SETTING_IDENTIFIER = 2;
     public static final int NEW_HOUSEHOLD_IDENTIFIER = 3;
     public static final int NEW_MEMBER_IDENTIFIER = 4;
+    public static final int EDIT_HOUSEHOLD_IDENTIFIER = 5;
+    public static final int EDIT_MEMBER_IDENTIFIER = 6;
 
     //Export related
     public static final String ENDPOINT_URL = "endpointUrl";

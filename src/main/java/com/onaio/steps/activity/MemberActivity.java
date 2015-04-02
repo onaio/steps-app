@@ -14,6 +14,7 @@ import com.onaio.steps.R;
 import com.onaio.steps.activityHandler.Factory.HouseholdActivityFactory;
 import com.onaio.steps.activityHandler.Factory.MemberActivityFactory;
 import com.onaio.steps.activityHandler.Interface.IMenuHandler;
+import com.onaio.steps.activityHandler.Interface.IMenuResultHandler;
 import com.onaio.steps.activityHandler.Interface.IPrepare;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;
@@ -57,6 +58,14 @@ public class MemberActivity extends Activity {
             if(menuHandler.shouldOpen(item.getItemId()))
                 menuHandler.open();
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        List<IMenuResultHandler> menuHandlers = MemberActivityFactory.getMenuResultHandlers(this, member);
+        for(IMenuResultHandler menuHandler:menuHandlers)
+            if(menuHandler.canHandleResult(requestCode))
+                menuHandler.handleResult(data, resultCode);
     }
 
     @Override

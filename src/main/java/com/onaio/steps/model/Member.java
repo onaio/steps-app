@@ -54,6 +54,10 @@ public class Member implements Serializable {
         deleted = false;
     }
 
+    public Boolean getDeleted() {
+        return deleted;
+    }
+
     public String getFirstName() {
         return firstName;
     }

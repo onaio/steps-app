@@ -1,5 +1,6 @@
 package com.onaio.steps.activityHandler;
 
+import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Intent;
 
@@ -11,9 +12,9 @@ import com.onaio.steps.model.Member;
 public class MemberActivityHandler implements IItemHandler {
 
     private Member member;
-    private ListActivity activity;
+    private Activity activity;
 
-    public MemberActivityHandler(ListActivity activity, Member member) {
+    public MemberActivityHandler(Activity activity, Member member) {
         this.activity = activity;
         this.member = member;
     }

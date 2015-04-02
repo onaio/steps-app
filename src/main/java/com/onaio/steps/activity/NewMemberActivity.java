@@ -4,8 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.RadioGroup;
-import android.widget.TextView;
+
 import com.onaio.steps.R;
 import com.onaio.steps.exception.InvalidDataException;
 import com.onaio.steps.helper.Constants;
@@ -25,7 +24,7 @@ public class NewMemberActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.new_member);
+        setContentView(R.layout.member_form);
         intent = this.getIntent();
         household = (Household) intent.getSerializableExtra(Constants.HOUSEHOLD);
         db = new DatabaseHelper(this.getApplicationContext());

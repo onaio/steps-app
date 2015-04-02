@@ -27,6 +27,10 @@
             android:label="New Member"
             android:theme="@android:style/Theme.NoTitleBar">
         </activity>
+        <activity android:name=".activity.EditMemberActivity"
+            android:label="Edit Member"
+            android:theme="@android:style/Theme.NoTitleBar">
+        </activity>
         <activity android:name=".activity.HouseholdActivity"
             android:label="@string/action_household"
             android:parentActivityName=".activity.StepsActivity">

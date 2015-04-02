@@ -27,13 +27,24 @@ public class MemberViewWrapper {
         String firstName = ((TextView) activity.findViewById(firstNameViewId)).getText().toString();
         String gender = genderSelection(((RadioGroup) activity.findViewById(genderViewId)).getCheckedRadioButtonId());
         String ageString = ((TextView) activity.findViewById(ageViewId)).getText().toString();
+        validateFields(surname, firstName, gender, ageString);
+        if(!errorFields.isEmpty())
+            throw new InvalidDataException(MEMBER_ERROR,errorFields);
+        return new Member(surname, firstName, gender, Integer.parseInt(ageString), household);
+    }
+
+    public Member update(Member member,String surname, String firstName, String gender, String ageString) throws InvalidDataException {
+        validateFields(surname, firstName, gender, ageString);
+        if(!errorFields.isEmpty())
+            throw new InvalidDataException(MEMBER_ERROR,errorFields);
+        return new Member(member.getId(),surname,firstName,gender,Integer.parseInt(ageString),member.getHousehold(),member.getMemberHouseholdId(),member.getDeleted());
+    }
+
+    private void validateFields(String surname, String firstName, String gender, String ageString) {
         validate(surname, FAMILY_SURNAME);
         validate(firstName, FIRST_NAME);
         validate(gender, GENDER);
         validate(ageString, AGE);
-        if(!errorFields.isEmpty())
-            throw new InvalidDataException(MEMBER_ERROR,errorFields);
-        return new Member(surname, firstName, gender, Integer.parseInt(ageString), household);
     }
 
     private void validate(String fieldValue, String errorKey){
