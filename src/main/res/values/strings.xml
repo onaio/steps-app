@@ -13,7 +13,7 @@
     <string name="phone_id_message_title">Alert</string>
     <string name="household_id_label">Household ID</string>
     <string name="phoneNumber">Household ID</string>
-    <string name="generated_household_id">Generated Household ID:</string>
+    <string name="household_id">Household ID:</string>
     <string name="phone_number_hint">Contact Phone Number</string>
     <string name="household_id_hint">Household ID</string>
     <string name="member_family_surname_hint">Family Surname</string>
@@ -46,7 +46,8 @@
     <string name="form_not_present_title">Form not present</string>
     <string name="something_went_wrong_try_again">Some thing went wrong, please try again.</string>
     <string name="error_title">Error</string>
-    <string name="household_id_seed_label">Household starting id (default is 0)</string>
+    <string name="household_id_seed_label">Household starting id</string>
+    <string name="household_id_default_hint">default is 0</string>
     <string name="member_delete_confirm">Are you sure, you want to delete the member ?</string>
     <string name="enter_a_value">Please enter a value</string>
     <string name="invalid_household">The household is invalid, please fill the right data and try again.</string>

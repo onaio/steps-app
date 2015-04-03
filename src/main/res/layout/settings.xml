@@ -36,39 +36,56 @@
         android:layout_width="fill_parent"
         android:background="@android:color/darker_gray"
         />
-
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/device_id_label"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="30dp"
+        />
     <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text"
-            android:hint="@string/device_id_label"
             android:ems="10"
             android:id="@+id/deviceId"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="5dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:singleLine="false"
-        android:background="@drawable/textbox"
         android:textColor="@android:color/black"/>
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/household_id_seed_label"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="20dp"
+        />
     <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="number"
-            android:hint="@string/household_id_seed_label"
+            android:hint="@string/household_id_default_hint"
             android:ems="10"
             android:id="@+id/household_seed"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="5dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:textColor="@android:color/black"/>
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/endpoint_url_hint"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="20dp"
+        />
     <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text"
             android:ems="10"
             android:id="@+id/endpointUrl"
-        android:hint="@string/endpoint_url_hint"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="5dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:textColor="@android:color/black"/>
