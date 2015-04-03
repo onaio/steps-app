@@ -60,7 +60,10 @@ public class ExportHandler implements IMenuHandler,IPrepare {
                     row.add(String.valueOf(member.getAge()));
                     row.add(member.getGender());
                     row.add(member.getDeletedString());
-                    row.add(household.getStatus().toString());
+                    if(household.getSelectedMember().equals(String.valueOf(member.getId())))
+                        row.add(household.getStatus().toString());
+                    else
+                        row.add("NA");
                     row.add(String.valueOf(reasons.size()));
                     row.add(StringUtils.join(reasons.toArray(),','));
                     fileBuilder.withData(row.toArray(new String[row.size()]));
