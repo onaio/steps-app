@@ -42,6 +42,7 @@ public class EditHouseholdActivityHandler implements IMenuHandler, IMenuResultHa
     public void handleResult(Intent intent, int resultCode) {
         if(resultCode != RESULT_OK)
             return;
+        activity.finish();
         household = (Household)intent.getSerializableExtra(HOUSEHOLD);
         new HouseholdActivityHandler(activity,household).open();
     }

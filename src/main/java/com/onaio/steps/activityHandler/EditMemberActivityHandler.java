@@ -43,6 +43,7 @@ public class EditMemberActivityHandler implements IMenuHandler, IMenuResultHandl
     public void handleResult(Intent intent, int resultCode) {
         if (resultCode != RESULT_OK)
             return ;
+        activity.finish();
         member = (Member)intent.getSerializableExtra(Constants.MEMBER);
         new MemberActivityHandler(activity, this.member).open();
     }
