@@ -60,10 +60,7 @@ public class ExportHandler implements IMenuHandler,IPrepare {
                     row.add(String.valueOf(member.getAge()));
                     row.add(member.getGender());
                     row.add(member.getDeletedString());
-                    if(household.getSelectedMember().equals(String.valueOf(member.getId())))
-                        row.add(household.getStatus().toString());
-                    else
-                        row.add("NA");
+                    setStatus(household, member, row);
                     row.add(String.valueOf(reasons.size()));
                     row.add(StringUtils.join(reasons.toArray(),','));
                     fileBuilder.withData(row.toArray(new String[row.size()]));
@@ -76,6 +73,13 @@ public class ExportHandler implements IMenuHandler,IPrepare {
             new Dialog().notify(activity, Dialog.EmptyListener, R.string.something_went_wrong_try_again, R.string.error_title);
         }
         return false;
+    }
+
+    private void setStatus(Household household, Member member, ArrayList<String> row) {
+        if(household.getSelectedMember() == null || household.getSelectedMember().equals("") || household.getSelectedMember().equals(String.valueOf(member.getId())))
+            row.add(household.getStatus().toString());
+        else
+            row.add("NA");
     }
 
     public ExportHandler withAllHouseholds(){
