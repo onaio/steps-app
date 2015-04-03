@@ -7,6 +7,8 @@ import com.onaio.steps.activity.HouseholdActivity;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.HouseholdStatus;
 
+import junit.framework.Assert;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -42,17 +44,39 @@ public class TakeSurveyHandlerTest {
         assertFalse(takeSurveyHandler.shouldOpen(R.id.action_deferred));
     }
 
-
     @Test
-    public void ShouldBeAbleToInactivateActivityWhenHouseholdIsNotSelected(){
-        Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.NOT_DONE);
-        assertTrue(takeSurveyHandler.shouldInactivate());
+    public void ShouldInactivateWhenMemberIsNotSelected(){
+        Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.NOT_SELECTED);
+
+        Assert.assertTrue(takeSurveyHandler.shouldInactivate());
     }
 
     @Test
-    public void ShouldBeAbleToInactivateActivityWhenHouseholdIsNotDefered(){
+    public void ShouldNotInactivateWhenSurveyNotDone(){
+        Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.NOT_DONE);
+
+        Assert.assertFalse(takeSurveyHandler.shouldInactivate());
+    }
+
+    @Test
+    public void ShouldInactivateWhenSurveyDone(){
+        Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.DONE);
+
+        Assert.assertTrue(takeSurveyHandler.shouldInactivate());
+    }
+
+    @Test
+    public void ShouldNotInactivateWhenSurveyDeferred(){
         Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.DEFERRED);
-        assertTrue(takeSurveyHandler.shouldInactivate());
+
+        Assert.assertFalse(takeSurveyHandler.shouldInactivate());
+    }
+
+    @Test
+    public void ShouldInactivateWhenSurveyRefused(){
+        Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.REFUSED);
+
+        Assert.assertTrue(takeSurveyHandler.shouldInactivate());
     }
 
     @Test
