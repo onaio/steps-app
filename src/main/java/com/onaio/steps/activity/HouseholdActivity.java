@@ -59,8 +59,8 @@ public class HouseholdActivity extends ListActivity {
         for(IPrepare menu:bottomMenus)
             if(menu.shouldInactivate())
                 menu.inactivate();
-
-
+            else
+                menu.activate();
     }
 
     private void bindMemberItems() {
@@ -80,6 +80,12 @@ public class HouseholdActivity extends ListActivity {
         db = new DatabaseHelper(getApplicationContext());
         MemberAdapter memberAdapter = new MemberAdapter(this, Member.getAll(db, household), household.getSelectedMember());
         getListView().setAdapter(memberAdapter);
+    }
+
+    @Override
+    protected void onResume() {
+        prepareBottomMenuItems();
+        super.onResume();
     }
 
     @Override
