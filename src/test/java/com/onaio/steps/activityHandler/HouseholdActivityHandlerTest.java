@@ -52,7 +52,7 @@ public class HouseholdActivityHandlerTest {
         householdActivityHandler = new HouseholdActivityHandler(stepsActivity, household);
         householdActivityHandler.open();
 
-        Mockito.verify(stepsActivity,Mockito.never()).startActivity(Mockito.argThat(matchIntent()));
+        Mockito.verify(stepsActivity,Mockito.never()).startActivity(Mockito.any(Intent.class));
     }
 
 

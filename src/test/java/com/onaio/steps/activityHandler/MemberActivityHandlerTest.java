@@ -68,6 +68,6 @@ public class MemberActivityHandlerTest {
         memberActivityHandler = new MemberActivityHandler(householdActivity, member);
 
         memberActivityHandler.open();
-        Mockito.verify(householdActivity,Mockito.never()).startActivity(Mockito.argThat(matchIntent()));
+        Mockito.verify(householdActivity,Mockito.never()).startActivity(Mockito.any(Intent.class));
     }
 }
