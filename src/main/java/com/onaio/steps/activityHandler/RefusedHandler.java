@@ -14,13 +14,21 @@ import com.onaio.steps.model.HouseholdStatus;
 
 public class RefusedHandler implements IMenuHandler,IPrepare {
 
+    private  final AlertDialog.Builder alertDialog;
     private Household household;
     private ListActivity activity;
     private int MENU_ID = R.id.action_refused;
 
     public RefusedHandler(ListActivity activity, Household household) {
+        this(activity,household, new AlertDialog.Builder(activity.getApplicationContext()));
+       ;
+    }
+
+    //Constructor to be used for Testing
+    public RefusedHandler(ListActivity activity, Household household, AlertDialog.Builder alertDialog) {
         this.activity = activity;
         this.household = household;
+        this.alertDialog=alertDialog;
     }
 
     @Override
@@ -42,7 +50,7 @@ public class RefusedHandler implements IMenuHandler,IPrepare {
     }
 
     private void confirm() {
-        new AlertDialog.Builder(activity)
+        alertDialog
                 .setTitle(activity.getString(R.string.survey_refusal_title))
                 .setMessage(activity.getString(R.string.survey_refusal_message))
                 .setPositiveButton(R.string.confirm_ok, new DialogInterface.OnClickListener() {

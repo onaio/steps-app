@@ -44,13 +44,13 @@ public class TakeSurveyHandlerTest {
 
 
     @Test
-    public void ShouldBeAbleToInactivatActivityWhenHouseholdIsNotSelected(){
+    public void ShouldBeAbleToInactivateActivityWhenHouseholdIsNotSelected(){
         Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.NOT_DONE);
         assertTrue(takeSurveyHandler.shouldInactivate());
     }
 
     @Test
-    public void ShouldBeAbleToInactivatActivityWhenHouseholdIsNotDefered(){
+    public void ShouldBeAbleToInactivateActivityWhenHouseholdIsNotDefered(){
         Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.DEFERRED);
         assertTrue(takeSurveyHandler.shouldInactivate());
     }
