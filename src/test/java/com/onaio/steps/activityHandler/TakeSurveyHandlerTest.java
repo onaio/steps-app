@@ -5,6 +5,7 @@ import android.view.View;
 import com.onaio.steps.R;
 import com.onaio.steps.activity.HouseholdActivity;
 import com.onaio.steps.model.Household;
+import com.onaio.steps.model.HouseholdStatus;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -22,11 +23,12 @@ public class TakeSurveyHandlerTest {
 
     private HouseholdActivity householdActivityMock;
     private TakeSurveyHandler takeSurveyHandler;
+    private Household householdMock;
 
     @Before
     public void Setup(){
         householdActivityMock = Mockito.mock(HouseholdActivity.class);
-        Household householdMock = Mockito.mock(Household.class);
+        householdMock= Mockito.mock(Household.class);
         takeSurveyHandler = new TakeSurveyHandler(householdActivityMock, householdMock);
     }
 
@@ -42,7 +44,14 @@ public class TakeSurveyHandlerTest {
 
 
     @Test
-    public void ShouldCheckWhetherActivityCanBeInactivated(){
+    public void ShouldBeAbleToInactivatActivityWhenHouseholdIsNotSelected(){
+        Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.NOT_DONE);
+        assertTrue(takeSurveyHandler.shouldInactivate());
+    }
+
+    @Test
+    public void ShouldBeAbleToInactivatActivityWhenHouseholdIsNotDefered(){
+        Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.DEFERRED);
         assertTrue(takeSurveyHandler.shouldInactivate());
     }
 
