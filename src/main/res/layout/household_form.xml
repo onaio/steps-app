@@ -2,16 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@android:color/white">
+    android:layout_height="match_parent">
 
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="35dp">
+        android:layout_height="50dp">
         <Button
-            android:layout_width="70dp"
+            android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:clickable="true"
             android:scaleType="fitStart"
@@ -22,7 +21,13 @@
             android:textColor="@android:color/black"
             android:onClick="saveHousehold"
             />
-
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/household_form_header"
+            android:textColor="@android:color/black"
+            android:layout_marginLeft="-70dp"
+            android:gravity="center_horizontal" />
     </LinearLayout>
     <View android:layout_height="1dp"
         android:layout_width="fill_parent"

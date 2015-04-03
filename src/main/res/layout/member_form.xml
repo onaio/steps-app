@@ -2,8 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@android:color/white">
+    android:layout_height="match_parent">
 
 
     <LinearLayout
@@ -11,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="35dp">
         <Button
-            android:layout_width="70dp"
+            android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:clickable="true"
             android:scaleType="fitStart"
@@ -21,7 +20,12 @@
             android:background="@android:color/transparent"
             android:textColor="@android:color/black"
             android:onClick="saveMember"/>
-
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/member_form_header"
+            android:layout_marginLeft="-70dp"
+            android:gravity="center_horizontal" />
     </LinearLayout>
     <View android:layout_height="1dp"
         android:layout_width="fill_parent"
@@ -33,15 +37,13 @@
         android:layout_height="wrap_content"
         android:text="@string/member_family_surname_hint"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="30dp"
-        />
+        android:layout_marginTop="30dp"/>
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
         android:ems="10"
         android:id="@+id/member_family_surname"
-        android:layout_marginTop="5dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:textColor="@android:color/black"/>
@@ -58,7 +60,6 @@
         android:inputType="text"
         android:ems="10"
         android:id="@+id/member_first_name"
-        android:layout_marginTop="5dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:textColor="@android:color/black"/>
@@ -75,7 +76,6 @@
         android:inputType="number"
         android:ems="10"
         android:id="@+id/member_age"
-        android:layout_marginTop="5dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:textColor="@android:color/black"/>

@@ -38,13 +38,14 @@ public class HouseholdActivity extends ListActivity {
         Intent intent = getIntent();
         household = (Household)intent.getSerializableExtra(Constants.HOUSEHOLD);
         styleActionBar();
-        populateHouseholdName();
         handleMembers();
         prepareBottomMenuItems();
     }
 
     private void styleActionBar() {
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setDisplayHomeAsUpEnabled(false);
+        getActionBar().setIcon(R.drawable.ic_action_back);
+        getActionBar().setSubtitle("Members");
         getActionBar().setTitle(household.getName());
     }
 
@@ -74,11 +75,6 @@ public class HouseholdActivity extends ListActivity {
             HouseholdActivityFactory.getMemberItemHandler(HouseholdActivity.this, member).open();
         }
     };
-
-    private void populateHouseholdName() {
-        TextView householdMemberNameLabel = (TextView) findViewById(R.id.household_members_label);
-        householdMemberNameLabel.setText(R.string.household_members_header);
-    }
 
     private void populateMembers() {
         db = new DatabaseHelper(getApplicationContext());

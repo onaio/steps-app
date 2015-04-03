@@ -24,8 +24,14 @@ public class EditHouseholdActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.household_form);
+        populateView();
         populateDataFromIntent();
+    }
+
+    private void populateView() {
+        setContentView(R.layout.household_form);
+        TextView header = (TextView) findViewById(R.id.household_form_header);
+        header.setText(R.string.household_edit_header);
     }
 
     private void populateDataFromIntent() {

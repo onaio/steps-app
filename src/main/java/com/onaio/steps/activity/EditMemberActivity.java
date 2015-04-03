@@ -29,11 +29,17 @@ public class EditMemberActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.member_form);
+        populateView();
         intent = this.getIntent();
         member = (Member) intent.getSerializableExtra(Constants.MEMBER);
         db = new DatabaseHelper(this.getApplicationContext());
         populateFields();
+    }
+
+    private void populateView() {
+        setContentView(R.layout.member_form);
+        TextView header = (TextView) findViewById(R.id.member_form_header);
+        header.setText(R.string.member_edit_header);
     }
 
     private void populateFields() {

@@ -23,9 +23,15 @@ public class NewHouseholdActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.household_form);
+        populateView();
         populateDataFromIntent();
         populateGeneratedHouseholdId();
+    }
+
+    private void populateView() {
+        setContentView(R.layout.household_form);
+        TextView header = (TextView) findViewById(R.id.household_form_header);
+        header.setText(R.string.household_new_header);
     }
 
     private void populateGeneratedHouseholdId() {

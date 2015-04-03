@@ -3,7 +3,7 @@
       package="com.onaio.steps"
       android:versionCode="1"
       android:versionName="1.0">
-    <application android:label="@string/app_name" android:icon="@drawable/ic_launcher">
+    <application android:label="@string/app_name" android:icon="@drawable/ic_launcher" android:theme="@android:style/Theme.Holo.Light">
         <activity android:name=".activity.StepsActivity"
                   android:label="@string/app_name">
             <intent-filter>
@@ -13,23 +13,23 @@
         </activity>
         <activity android:name=".activity.SettingsActivity"
                   android:label="@string/action_settings"
-            android:theme="@android:style/Theme.NoTitleBar">
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar">
         </activity>
         <activity android:name=".activity.NewHouseholdActivity"
             android:label="New Household"
-            android:theme="@android:style/Theme.NoTitleBar">
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar">
         </activity>
         <activity android:name=".activity.EditHouseholdActivity"
             android:label="Edit Household"
-            android:theme="@android:style/Theme.NoTitleBar">
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar">
         </activity>
         <activity android:name=".activity.NewMemberActivity"
             android:label="New Member"
-            android:theme="@android:style/Theme.NoTitleBar">
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar">
         </activity>
         <activity android:name=".activity.EditMemberActivity"
             android:label="Edit Member"
-            android:theme="@android:style/Theme.NoTitleBar">
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar">
         </activity>
         <activity android:name=".activity.HouseholdActivity"
             android:label="@string/action_household"

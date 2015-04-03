@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import com.onaio.steps.R;
 import com.onaio.steps.exception.InvalidDataException;
@@ -24,10 +25,16 @@ public class NewMemberActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.member_form);
+        populateView();
         intent = this.getIntent();
         household = (Household) intent.getSerializableExtra(Constants.HOUSEHOLD);
         db = new DatabaseHelper(this.getApplicationContext());
+    }
+
+    private void populateView() {
+        setContentView(R.layout.member_form);
+        TextView header = (TextView) findViewById(R.id.member_form_header);
+        header.setText(R.string.member_new_header);
     }
 
 
