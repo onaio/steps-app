@@ -32,7 +32,7 @@ public class EditHouseholdActivityHandler implements IMenuHandler, IMenuResultHa
 
     @Override
     public boolean open() {
-        Intent intent = new Intent(activity.getBaseContext(), EditHouseholdActivity.class);
+        Intent intent = new Intent(activity, EditHouseholdActivity.class);
         intent.putExtra(HOUSEHOLD,household);
         activity.startActivityForResult(intent, EDIT_HOUSEHOLD_IDENTIFIER);
         return true;

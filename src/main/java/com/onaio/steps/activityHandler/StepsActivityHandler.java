@@ -22,7 +22,7 @@ public class StepsActivityHandler implements IMenuHandler {
 
     @Override
     public boolean open() {
-        Intent intent = new Intent(activity.getBaseContext(), StepsActivity.class);
+        Intent intent = new Intent(activity, StepsActivity.class);
         activity.startActivityForResult(intent, Constants.STEPS_IDENTIFIER);
         return true;
     }

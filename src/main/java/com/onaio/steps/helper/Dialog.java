@@ -37,7 +37,7 @@ public class Dialog {
                 .setNegativeButton(R.string.cancel, cancelListener).create().show();
     }
 
-    public static void confirm(Context activity, DialogInterface.OnClickListener confirmListener, DialogInterface.OnClickListener cancelListener, int message, int title) {
+    public void confirm(Context activity, DialogInterface.OnClickListener confirmListener, DialogInterface.OnClickListener cancelListener, int message, int title) {
         new AlertDialog.Builder(activity)
                 .setTitle(title)
                 .setMessage(message)

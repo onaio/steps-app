@@ -13,14 +13,20 @@ import com.onaio.steps.helper.Dialog;
 import com.onaio.steps.model.Member;
 
 public class DeleteMemberHandler implements IMenuHandler,IPrepare {
+    private final Dialog dialog;
     private Activity activity;
     private Member member;
     private static final int MENU_ID= R.id.action_member_delete;
     private Menu menu;
 
     public DeleteMemberHandler(Activity activity, Member member) {
+        this(activity, member, new Dialog());
+    }
+
+    public DeleteMemberHandler(Activity activity, Member member, Dialog dialog) {
         this.activity = activity;
         this.member = member;
+        this.dialog = dialog;
     }
 
     @Override
@@ -38,7 +44,7 @@ public class DeleteMemberHandler implements IMenuHandler,IPrepare {
                 handler.open();
             }
         };
-        new Dialog().confirm(activity,confirmListener,Dialog.EmptyListener,R.string.member_delete_confirm, R.string.confirm_ok);
+        dialog.confirm(activity, confirmListener, Dialog.EmptyListener, R.string.member_delete_confirm, R.string.confirm_ok);
         return true;
     }
 
