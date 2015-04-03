@@ -45,10 +45,7 @@ public class SelectParticipantHandler implements IMenuHandler, IPrepare {
 
     @Override
     public boolean open() {
-        if(ReElectReason.getAll(new DatabaseHelper(activity),household).size() >= MAX_RE_ELECT_COUNT)
-            new Dialog().notify(activity, Dialog.EmptyListener, R.string.participant_no_re_elect_message_because_of_count, R.string.participant_no_re_elect_title);
-        else
-            trySelectingParticipant();
+        trySelectingParticipant();
         return true;
     }
 
@@ -58,8 +55,9 @@ public class SelectParticipantHandler implements IMenuHandler, IPrepare {
         boolean noSelection = household.getStatus() == HouseholdStatus.NOT_SELECTED;
         boolean selected = household.getStatus() == HouseholdStatus.NOT_DONE;
         boolean deferred = household.getStatus() == HouseholdStatus.DEFERRED;
+        boolean maxReElectionReached = ReElectReason.getAll(new DatabaseHelper(activity), household).size() >= MAX_RE_ELECT_COUNT;
         boolean canSelectParticipant = noSelection || selected || deferred;
-        return noMember || !canSelectParticipant;
+        return noMember || !canSelectParticipant || maxReElectionReached;
     }
 
     @Override
