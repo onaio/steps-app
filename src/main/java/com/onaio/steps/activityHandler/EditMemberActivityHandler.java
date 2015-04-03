@@ -2,12 +2,15 @@ package com.onaio.steps.activityHandler;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.onaio.steps.R;
 import com.onaio.steps.activity.EditMemberActivity;
 import com.onaio.steps.activity.NewMemberActivity;
 import com.onaio.steps.activityHandler.Interface.IMenuHandler;
 import com.onaio.steps.activityHandler.Interface.IMenuResultHandler;
+import com.onaio.steps.activityHandler.Interface.IPrepare;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.model.Member;
 
@@ -15,10 +18,12 @@ import java.io.Serializable;
 
 import static android.app.Activity.RESULT_OK;
 
-public class EditMemberActivityHandler implements IMenuHandler, IMenuResultHandler {
+public class EditMemberActivityHandler implements IMenuHandler, IMenuResultHandler,IPrepare {
 
+    private static final int MENU_ID = R.id.action_edit;
     private Member member;
     private Activity activity;
+    private Menu menu;
 
     public EditMemberActivityHandler(Activity activity, Member member) {
         this.activity = activity;
@@ -27,7 +32,7 @@ public class EditMemberActivityHandler implements IMenuHandler, IMenuResultHandl
 
     @Override
     public boolean shouldOpen(int menu_id) {
-        return menu_id == R.id.action_edit;
+        return menu_id == MENU_ID;
     }
 
     @Override
@@ -53,4 +58,27 @@ public class EditMemberActivityHandler implements IMenuHandler, IMenuResultHandl
         return requestCode == Constants.EDIT_MEMBER_IDENTIFIER;
     }
 
+    public EditMemberActivityHandler withMenu(Menu menu) {
+        this.menu = menu;
+        return this;
+    }
+
+    @Override
+    public boolean shouldInactivate() {
+        return String.valueOf(member.getId()).equals(member.getHousehold().getSelectedMember());
+    }
+
+    @Override
+    public void inactivate() {
+        MenuItem menuItem = menu.findItem(MENU_ID);
+        menuItem.setEnabled(false);
+
+    }
+
+    @Override
+    public void activate() {
+        MenuItem menuItem = menu.findItem(MENU_ID);
+        menuItem.setEnabled(true);
+
+    }
 }

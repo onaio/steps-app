@@ -30,8 +30,11 @@ public class MemberActivityFactory {
         return handlers;
     }
 
-    public static IPrepare getMenuPreparer(Activity activity, Member member, Menu menu){
-        return new DeleteMemberHandler(activity, member).withMenu(menu);
+    public static List<IPrepare> getMenuPreparer(Activity activity, Member member, Menu menu){
+        ArrayList<IPrepare> handlers = new ArrayList<IPrepare>();
+        handlers.add(new DeleteMemberHandler(activity, member).withMenu(menu));
+        handlers.add(new EditMemberActivityHandler(activity,member).withMenu(menu));
+        return handlers;
     }
 
     public static List<IMenuResultHandler> getMenuResultHandlers(Activity activity, Member member) {

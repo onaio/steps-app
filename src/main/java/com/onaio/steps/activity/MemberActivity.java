@@ -70,9 +70,10 @@ public class MemberActivity extends Activity {
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        IPrepare menuItem = MemberActivityFactory.getMenuPreparer(this, member,menu);
-        if(menuItem.shouldInactivate())
-            menuItem.inactivate();
+        List<IPrepare> menuItemHandlers = MemberActivityFactory.getMenuPreparer(this, member,menu);
+        for(IPrepare handler:menuItemHandlers)
+            if(handler.shouldInactivate())
+                handler.inactivate();
         super.onPrepareOptionsMenu(menu);
         return true;
     }
