@@ -25,13 +25,13 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:id="@+id/household_form_header"
-            android:textColor="@android:color/black"
+            android:textColor="#008148"
             android:layout_marginLeft="-70dp"
             android:gravity="center_horizontal" />
     </LinearLayout>
     <View android:layout_height="1dp"
         android:layout_width="fill_parent"
-        android:background="@android:color/darker_gray"
+        android:background="#73C7E5"
         />
 
     <TextView

@@ -23,6 +23,8 @@ public class Constants {
     public static final int EDIT_HOUSEHOLD_IDENTIFIER = 5;
     public static final int EDIT_MEMBER_IDENTIFIER = 6;
 
+    public static final String COLOR_HEADER = "#008148";
+
     //Export related
     public static final String ENDPOINT_URL = "endpointUrl";
     public static final String EXPORT_FIELDS = "Phone Number, Household Id, Member Id, Family Surname, First Name, Age, Gender, Deleted, Survey Status, Re Election Count, Re Election Reasons";

@@ -1,5 +1,6 @@
 package com.onaio.steps.activity;
 
+import android.app.ActionBar;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.graphics.Color;
@@ -43,10 +44,11 @@ public class HouseholdActivity extends ListActivity {
     }
 
     private void styleActionBar() {
-        getActionBar().setDisplayHomeAsUpEnabled(false);
-        getActionBar().setIcon(R.drawable.ic_action_back);
-        getActionBar().setSubtitle("Members");
-        getActionBar().setTitle(household.getName());
+        ActionBar actionBar = getActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(false);
+        actionBar.setIcon(R.drawable.ic_action_back);
+        actionBar.setSubtitle("Members");
+        actionBar.setTitle(household.getName());
     }
 
     private void handleMembers() {

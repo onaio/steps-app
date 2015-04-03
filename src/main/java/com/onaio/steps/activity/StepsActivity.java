@@ -2,6 +2,7 @@ package com.onaio.steps.activity;
 
 import android.app.ListActivity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -23,6 +24,8 @@ import com.onaio.steps.model.Household;
 
 import java.util.List;
 
+import static com.onaio.steps.helper.Constants.*;
+
 public class StepsActivity extends ListActivity {
 
     private DatabaseHelper db;
@@ -31,16 +34,17 @@ public class StepsActivity extends ListActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setLayout();
-        setTitle(R.string.main_header);
         populateHouseholds();
         bindHouseholdItems();
     }
 
     private void setLayout() {
-        if(getValue(Constants.PHONE_ID) == null || getValue(Constants.PHONE_ID).equals(""))
+        if(getValue(PHONE_ID) == null || getValue(PHONE_ID).equals(""))
             setContentView(R.layout.first_main);
         else
             setContentView(R.layout.main);
+        setTitle(R.string.main_header);
+        setTitleColor(Color.parseColor(COLOR_HEADER));
     }
 
     @Override

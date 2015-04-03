@@ -2,6 +2,7 @@ package com.onaio.steps.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -22,6 +23,8 @@ import com.onaio.steps.model.Household;
 import com.onaio.steps.model.Member;
 
 import java.util.List;
+
+import static com.onaio.steps.helper.Constants.*;
 
 public class MemberActivity extends Activity {
 
@@ -44,7 +47,7 @@ public class MemberActivity extends Activity {
 
     private void populateMember() {
         Intent intent = getIntent();
-        member = (Member) intent.getSerializableExtra(Constants.MEMBER);
+        member = (Member) intent.getSerializableExtra(MEMBER);
         TextView ageView = (TextView) findViewById(R.id.member_age);
         TextView genderView = (TextView) findViewById(R.id.member_gender);
         ageView.setText(String.valueOf(member.getAge()));
