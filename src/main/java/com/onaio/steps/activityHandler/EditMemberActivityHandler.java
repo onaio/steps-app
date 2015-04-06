@@ -7,14 +7,11 @@ import android.view.MenuItem;
 
 import com.onaio.steps.R;
 import com.onaio.steps.activity.EditMemberActivity;
-import com.onaio.steps.activity.NewMemberActivity;
 import com.onaio.steps.activityHandler.Interface.IMenuHandler;
 import com.onaio.steps.activityHandler.Interface.IMenuResultHandler;
 import com.onaio.steps.activityHandler.Interface.IPrepare;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.model.Member;
-
-import java.io.Serializable;
 
 import static android.app.Activity.RESULT_OK;
 

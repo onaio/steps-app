@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 
 import com.onaio.steps.helper.Constants;
+import com.onaio.steps.utils.CursorStub;
 import com.onaio.steps.helper.DatabaseHelper;
 
 import org.junit.Before;
@@ -88,7 +89,7 @@ public class HouseholdTest {
     public void ShouldGetAllHouseholds(){
         stubDbForHousehold();
         String FIND_ALL_QUERY = "SELECT * FROM HOUSEHOLD ORDER BY Id desc";
-        stubCursorForHousehold("");
+        new CursorStub(cursor).stubCursorForHousehold(householdName, phoneNumber, String.valueOf(householdId), householdStatus, currentDate, "");
 
         List<Household> households = Household.getAll(db);
 
@@ -100,7 +101,7 @@ public class HouseholdTest {
     @Test
     public void ShouldFindTheHouseholdById(){
         stubDbForHousehold();
-        stubCursorForHousehold("");
+        new CursorStub(cursor).stubCursorForHousehold(householdName, phoneNumber, String.valueOf(householdId), householdStatus, currentDate, "");
         String FIND_BY_ID_QUERY = "SELECT * FROM HOUSEHOLD WHERE id = %d";
 
         Household household = Household.find_by(db, householdId);
@@ -137,7 +138,7 @@ public class HouseholdTest {
         int numberOfMembers = 1;
         Household household = new Household(String.valueOf(householdId), householdName, phoneNumber,"", HouseholdStatus.NOT_SELECTED, currentDate);
         stubDbForMember(numberOfMembers);
-        stubCursorForMember(memberId, Member.NOT_DELETED_INT, householdName + "-1");
+        new CursorStub(cursor).stubCursorForMember(memberId, memberFamilyName, memberFirstName, memberGender, String.valueOf(memberAge), String.valueOf(householdId), Member.NOT_DELETED_INT, householdName + "-1");
 
         List<Member> members = household.getAllMembers(db);
 
@@ -152,7 +153,7 @@ public class HouseholdTest {
         int numberOfMembers = 1;
         Household household = new Household(String.valueOf(householdId), householdName, phoneNumber,"", HouseholdStatus.NOT_SELECTED, currentDate);
         stubDbForMember(numberOfMembers);
-        stubCursorForMember(memberId, Member.DELETED_INT, householdName + "-1");
+        new CursorStub(cursor).stubCursorForMember(memberId,memberFamilyName,memberFirstName,memberGender,String.valueOf(memberAge),String.valueOf(householdId), Member.DELETED_INT, householdName + "-1");
 
         List<Member> allMembers = household.getAllMembersForExport(db);
 
@@ -167,13 +168,12 @@ public class HouseholdTest {
         int numberOfMembers = 1;
         Household household = new Household(String.valueOf(householdId), householdName, phoneNumber,"", HouseholdStatus.NOT_SELECTED, currentDate);
         stubDbForMember(numberOfMembers);
-        stubCursorForMember(memberId, Member.NOT_DELETED_INT,householdName+"-1");
-        String FIND_BY_ID_QUERY = "SELECT * FROM MEMBER WHERE " + ID + " = '%d'";
+        new CursorStub(cursor).stubCursorForMember(memberId, memberFamilyName, memberFirstName, memberGender, String.valueOf(memberAge), String.valueOf(householdId), Member.NOT_DELETED_INT, householdName + "-1");
 
         Member member = household.findMember(db, memberId);
 
         validateMember(member,false);
-        Mockito.verify(db).exec(String.format(FIND_BY_ID_QUERY, memberId));
+        Mockito.verify(db).exec(String.format(Member.FIND_BY_ID_QUERY, memberId));
     }
 
     private void validateHousehold(Household household) {
@@ -227,44 +227,6 @@ public class HouseholdTest {
 
         Mockito.stub(cursor.getCount()).toReturn(numberOfMembers);
         Mockito.stub(db.exec(Mockito.anyString())).toReturn(cursor);
-    }
-
-    private void stubCursorForHousehold(String selectedMember){
-        Mockito.stub(cursor.moveToFirst()).toReturn(true);
-        Mockito.stub(cursor.getColumnIndex(NAME)).toReturn(1);
-        Mockito.stub(cursor.getColumnIndex(PHONE_NUMBER)).toReturn(2);
-        Mockito.stub(cursor.getColumnIndex(ID)).toReturn(3);
-        Mockito.stub(cursor.getColumnIndex(SELECTED_MEMBER)).toReturn(4);
-        Mockito.stub(cursor.getColumnIndex(STATUS)).toReturn(5);
-        Mockito.stub(cursor.getColumnIndex(CREATED_AT)).toReturn(6);
-
-        Mockito.stub(cursor.getString(1)).toReturn(householdName);
-        Mockito.stub(cursor.getString(2)).toReturn(phoneNumber);
-        Mockito.stub(cursor.getString(3)).toReturn(String.valueOf(householdId));
-        Mockito.stub(cursor.getString(4)).toReturn(String.valueOf(selectedMember));
-        Mockito.stub(cursor.getString(5)).toReturn(householdStatus.toString());
-        Mockito.stub(cursor.getString(6)).toReturn(currentDate);
-    }
-
-    private void stubCursorForMember(long id,int isDeleted, String memberHouseholdId){
-        Mockito.stub(cursor.moveToFirst()).toReturn(true);
-        Mockito.stub(cursor.getColumnIndex(Member.FAMILY_SURNAME)).toReturn(1);
-        Mockito.stub(cursor.getColumnIndex(Member.FIRST_NAME)).toReturn(2);
-        Mockito.stub(cursor.getColumnIndex(Member.GENDER)).toReturn(3);
-        Mockito.stub(cursor.getColumnIndex(Member.AGE)).toReturn(4);
-        Mockito.stub(cursor.getColumnIndex(Member.DELETED)).toReturn(5);
-        Mockito.stub(cursor.getColumnIndex(Member.ID)).toReturn(6);
-        Mockito.stub(cursor.getColumnIndex(Member.MEMBER_HOUSEHOLD_ID)).toReturn(7);
-        Mockito.stub(cursor.getColumnIndex(Member.HOUSEHOLD_ID)).toReturn(8);
-
-        Mockito.stub(cursor.getString(1)).toReturn(memberFamilyName);
-        Mockito.stub(cursor.getString(2)).toReturn(memberFirstName);
-        Mockito.stub(cursor.getString(3)).toReturn(memberGender);
-        Mockito.stub(cursor.getString(4)).toReturn(String.valueOf(memberAge));
-        Mockito.stub(cursor.getInt(5)).toReturn(isDeleted);
-        Mockito.stub(cursor.getString(6)).toReturn(String.valueOf(id));
-        Mockito.stub(cursor.getString(7)).toReturn(memberHouseholdId);
-        Mockito.stub(cursor.getString(8)).toReturn(String.valueOf(householdId));
     }
 
     private void validateMember(Member member,boolean isDeleted){

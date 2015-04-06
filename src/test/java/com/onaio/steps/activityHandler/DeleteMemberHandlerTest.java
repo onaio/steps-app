@@ -5,7 +5,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.onaio.steps.R;
-import com.onaio.steps.activity.HouseholdActivity;
 import com.onaio.steps.activity.MemberActivity;
 import com.onaio.steps.helper.Dialog;
 import com.onaio.steps.model.Household;
@@ -16,7 +15,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 

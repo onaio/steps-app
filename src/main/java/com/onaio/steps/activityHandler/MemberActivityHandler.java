@@ -1,7 +1,6 @@
 package com.onaio.steps.activityHandler;
 
 import android.app.Activity;
-import android.app.ListActivity;
 import android.content.Intent;
 
 import com.onaio.steps.activity.MemberActivity;

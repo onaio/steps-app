@@ -17,7 +17,6 @@ import com.onaio.steps.activityHandler.Interface.IMenuHandler;
 import com.onaio.steps.activityHandler.Interface.IMenuResultHandler;
 import com.onaio.steps.activityHandler.SettingActivityHandler;
 import com.onaio.steps.adapter.HouseholdAdapter;
-import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.helper.KeyValueStoreFactory;
 import com.onaio.steps.model.Household;

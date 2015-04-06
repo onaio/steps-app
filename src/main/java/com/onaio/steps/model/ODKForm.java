@@ -6,11 +6,8 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.RemoteException;
 
-import com.onaio.steps.R;
 import com.onaio.steps.exception.AppNotInstalledException;
 import com.onaio.steps.exception.FormNotPresentException;
-import com.onaio.steps.helper.Constants;
-import com.onaio.steps.helper.Dialog;
 
 import java.util.ArrayList;
 import java.util.List;

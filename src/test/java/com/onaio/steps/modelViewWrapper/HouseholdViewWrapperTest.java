@@ -1,6 +1,5 @@
 package com.onaio.steps.modelViewWrapper;
 
-import android.view.View;
 import android.widget.TextView;
 
 import com.onaio.steps.R;
@@ -9,8 +8,6 @@ import com.onaio.steps.exception.InvalidDataException;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.HouseholdStatus;
-
-import junit.framework.Assert;
 
 import org.junit.Before;
 import org.junit.Rule;

@@ -12,7 +12,6 @@ import android.widget.TextView;
 import com.onaio.steps.R;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.model.Household;
-import com.onaio.steps.model.Member;
 
 import java.util.List;
 

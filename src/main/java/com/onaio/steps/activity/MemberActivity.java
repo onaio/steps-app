@@ -2,24 +2,17 @@ package com.onaio.steps.activity;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.onaio.steps.R;
-import com.onaio.steps.activityHandler.Factory.HouseholdActivityFactory;
 import com.onaio.steps.activityHandler.Factory.MemberActivityFactory;
 import com.onaio.steps.activityHandler.Interface.IMenuHandler;
 import com.onaio.steps.activityHandler.Interface.IMenuResultHandler;
 import com.onaio.steps.activityHandler.Interface.IPrepare;
-import com.onaio.steps.helper.Constants;
-import com.onaio.steps.helper.DatabaseHelper;
-import com.onaio.steps.model.Household;
 import com.onaio.steps.model.Member;
 
 import java.util.List;
