@@ -1,16 +1,11 @@
 package com.onaio.steps.activityHandler;
 
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.view.Menu;
-import android.view.MenuItem;
 
 import com.onaio.steps.R;
 import com.onaio.steps.activity.HouseholdActivity;
 import com.onaio.steps.helper.Constants;
-import com.onaio.steps.helper.Dialog;
 import com.onaio.steps.model.Household;
-import com.onaio.steps.model.HouseholdStatus;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -24,16 +19,13 @@ import org.robolectric.annotation.Config;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.stub;
 import static org.mockito.Mockito.verify;
 
 @Config(emulateSdk = 16,manifest = "src/main/AndroidManifest.xml")
 @RunWith(RobolectricTestRunner.class)
-public class EditHouseholdHandlerTest {
+public class EditHouseholdActivityHandlerTest {
 
     private final int MENU_ID = R.id.action_edit;
     @Mock

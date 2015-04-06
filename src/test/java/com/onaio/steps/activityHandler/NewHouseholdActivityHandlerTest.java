@@ -60,14 +60,6 @@ public class NewHouseholdActivityHandlerTest {
         Mockito.verify(dialogMock).notify(stepsActivity,Dialog.EmptyListener,R.string.phone_id_message, R.string.phone_id_message_title);
     }
 
-    @Test
-    public void ShouldNotifyUserWhenOnlyPhoneIdIsSet(){
-        setValue(Constants.PHONE_ID, PHONE_ID);
-
-        handler.open();
-
-        Mockito.verify(dialogMock).notify(stepsActivity, Dialog.EmptyListener, R.string.phone_id_message, R.string.phone_id_message_title);
-    }
 
     @Test
     public void ShouldNotifyUserWhenOnlyHouseholdSeedSet(){

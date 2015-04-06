@@ -7,14 +7,11 @@ import android.view.MenuItem;
 
 import com.onaio.steps.R;
 import com.onaio.steps.activity.EditMemberActivity;
-import com.onaio.steps.activity.NewMemberActivity;
 import com.onaio.steps.activityHandler.Interface.IMenuHandler;
 import com.onaio.steps.activityHandler.Interface.IMenuResultHandler;
 import com.onaio.steps.activityHandler.Interface.IPrepare;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.model.Member;
-
-import java.io.Serializable;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -38,7 +35,7 @@ public class EditMemberActivityHandler implements IMenuHandler, IMenuResultHandl
     @Override
     public boolean open() {
         if (member == null) return true;
-        Intent intent = new Intent(activity.getBaseContext(), EditMemberActivity.class);
+        Intent intent = new Intent(activity, EditMemberActivity.class);
         intent.putExtra(Constants.MEMBER, member);
         activity.startActivityForResult(intent, Constants.EDIT_MEMBER_IDENTIFIER);
         return true;
