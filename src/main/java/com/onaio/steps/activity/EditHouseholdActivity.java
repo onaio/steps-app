@@ -14,8 +14,6 @@ import com.onaio.steps.model.Household;
 import com.onaio.steps.modelViewWrapper.HouseholdViewWrapper;
 
 import static com.onaio.steps.helper.Constants.HOUSEHOLD;
-import static com.onaio.steps.helper.Constants.HOUSEHOLD_SEED;
-import static com.onaio.steps.helper.Constants.PHONE_ID;
 
 public class EditHouseholdActivity extends Activity {
 

@@ -3,8 +3,6 @@ package com.onaio.steps.activity;
 import android.app.ActionBar;
 import android.app.ListActivity;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -12,7 +10,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.onaio.steps.R;
 import com.onaio.steps.activityHandler.Factory.HouseholdActivityFactory;
@@ -73,14 +70,14 @@ public class HouseholdActivity extends ListActivity {
     private AdapterView.OnItemClickListener memberItemListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-            Member member = Member.find_by(db, id, household);
+            Member member = household.findMember(db, id);
             HouseholdActivityFactory.getMemberItemHandler(HouseholdActivity.this, member).open();
         }
     };
 
     private void populateMembers() {
         db = new DatabaseHelper(getApplicationContext());
-        MemberAdapter memberAdapter = new MemberAdapter(this, Member.getAll(db, household), household.getSelectedMember());
+        MemberAdapter memberAdapter = new MemberAdapter(this, household.getAllMembers(db), household.getSelectedMember());
         getListView().setAdapter(memberAdapter);
     }
 

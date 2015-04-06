@@ -12,7 +12,6 @@ import android.widget.TextView;
 import com.onaio.steps.R;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.model.Household;
-import com.onaio.steps.model.Member;
 
 import java.util.List;
 
@@ -64,7 +63,7 @@ public class HouseholdAdapter extends BaseAdapter{
         image.setImageResource(getImage(householdAtPosition));
         householdName.setTextColor(Color.BLACK);
         householdName.setText(householdAtPosition.getName());
-        int numberOfMembers = Member.numberOfNonDeletedMembers(new DatabaseHelper(context), householdAtPosition);
+        int numberOfMembers = householdAtPosition.numberOfNonDeletedMembers(new DatabaseHelper(context));
         membersCount.setText(String.format("%s, %d members", householdAtPosition.getCreatedAt(), numberOfMembers));
     }
 

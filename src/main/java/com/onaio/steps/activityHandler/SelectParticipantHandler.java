@@ -29,13 +29,21 @@ public class SelectParticipantHandler implements IMenuHandler, IPrepare {
 
     private final int MENU_ID = R.id.action_select_participant;
     private final int MAX_RE_ELECT_COUNT = 2;
+    private final Dialog dialog;
     private ListActivity activity;
     private Household household;
     private Menu menu;
+    private DatabaseHelper db;
 
     public SelectParticipantHandler(ListActivity activity, Household household) {
+        this(activity, household, new Dialog(), new DatabaseHelper(activity));
+    }
+
+    public SelectParticipantHandler(ListActivity activity, Household household, Dialog dialog, DatabaseHelper db) {
         this.activity = activity;
         this.household = household;
+        this.dialog = dialog;
+        this.db = db;
     }
 
     @Override
@@ -45,21 +53,19 @@ public class SelectParticipantHandler implements IMenuHandler, IPrepare {
 
     @Override
     public boolean open() {
-        if(ReElectReason.getAll(new DatabaseHelper(activity),household).size() >= MAX_RE_ELECT_COUNT)
-            new Dialog().notify(activity, Dialog.EmptyListener, R.string.participant_no_re_elect_message_because_of_count, R.string.participant_no_re_elect_title);
-        else
-            trySelectingParticipant();
+        trySelectingParticipant();
         return true;
     }
 
     @Override
     public boolean shouldInactivate() {
-        boolean noMember = Member.numberOfNonDeletedMembers(new DatabaseHelper(activity), household) == 0;
+        boolean noMember = household.numberOfNonDeletedMembers(db) == 0;
         boolean noSelection = household.getStatus() == HouseholdStatus.NOT_SELECTED;
         boolean selected = household.getStatus() == HouseholdStatus.NOT_DONE;
         boolean deferred = household.getStatus() == HouseholdStatus.DEFERRED;
+        boolean maxReElectionReached = ReElectReason.getAll(db, household).size() >= MAX_RE_ELECT_COUNT;
         boolean canSelectParticipant = noSelection || selected || deferred;
-        return noMember || !canSelectParticipant;
+        return noMember || !canSelectParticipant || maxReElectionReached;
     }
 
     @Override
@@ -75,8 +81,7 @@ public class SelectParticipantHandler implements IMenuHandler, IPrepare {
     }
 
     private void trySelectingParticipant() {
-        LayoutInflater factory = LayoutInflater.from(activity);
-        final View confirmation = factory.inflate(R.layout.selection_confirm, null);
+        final View confirmation = getView();
         DialogInterface.OnClickListener confirmListener = new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
@@ -88,18 +93,19 @@ public class SelectParticipantHandler implements IMenuHandler, IPrepare {
         switch(household.getStatus()){
             case NOT_SELECTED: selectParticipant();
                 break;
-            case NOT_DONE: Dialog.confirm(activity, confirmListener, Dialog.EmptyListener, confirmation, R.string.participant_re_elect_reason_title);
+            case NOT_DONE: dialog.confirm(activity, confirmListener, Dialog.EmptyListener, confirmation, R.string.participant_re_elect_reason_title);
                 break;
-            case DEFERRED: Dialog.confirm(activity, confirmListener, Dialog.EmptyListener, confirmation, R.string.participant_re_elect_reason_title);
+            case DEFERRED: dialog.confirm(activity, confirmListener, Dialog.EmptyListener, confirmation, R.string.participant_re_elect_reason_title);
                 break;
             default: new Dialog().notify(activity, Dialog.EmptyListener, R.string.participant_no_re_elect_message_because_of_status, R.string.participant_no_re_elect_title);
         }
     }
 
+
     private void saveReason(View confirmation) {
         TextView reasonView = (TextView) confirmation.findViewById(R.id.reason);
         ReElectReason reason = new ReElectReason(reasonView.getText().toString(), household);
-        reason.save(new DatabaseHelper(activity));
+        reason.save(db);
     }
 
     private void selectParticipant() {
@@ -140,7 +146,7 @@ public class SelectParticipantHandler implements IMenuHandler, IPrepare {
     }
 
     private Member getRandomMember(ListView listView) {
-        int totalMembers = Member.numberOfNonDeletedMembers(new DatabaseHelper(activity.getApplicationContext()), household);
+        int totalMembers = household.numberOfNonDeletedMembers(db);
         Random random = new Random();
         int selectedParticipant = random.nextInt(totalMembers);
         return (Member) listView.getItemAtPosition(selectedParticipant);
@@ -150,4 +156,10 @@ public class SelectParticipantHandler implements IMenuHandler, IPrepare {
         this.menu = menu;
         return this;
     }
+
+    protected View getView() {
+        LayoutInflater factory = LayoutInflater.from(activity);
+        return factory.inflate(R.layout.selection_confirm, null);
+    }
+
 }

@@ -4,7 +4,6 @@ import android.view.View;
 
 import com.onaio.steps.R;
 import com.onaio.steps.activity.HouseholdActivity;
-import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.helper.Dialog;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.HouseholdStatus;

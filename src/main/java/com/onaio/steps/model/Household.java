@@ -3,10 +3,10 @@ package com.onaio.steps.model;
 import android.content.ContentValues;
 import android.database.Cursor;
 
+import com.onaio.steps.helper.CursorHelper;
 import com.onaio.steps.helper.DatabaseHelper;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Household implements Serializable {
@@ -15,11 +15,11 @@ public class Household implements Serializable {
     private static String FIND_ALL_COUNT_QUERY = "SELECT count(*) FROM HOUSEHOLD ORDER BY Id desc";
     public static final String TABLE_NAME = "household";
     public static final String ID = "Id";
-    private static final String NAME = "Name";
-    private static final String STATUS = "Status";
-    private static final String PHONE_NUMBER = "Phone_Number";
-    private static final String SELECTED_MEMBER = "selected_member";
-    private static final String CREATED_AT = "Created_At";
+    public static final String NAME = "Name";
+    public static final String STATUS = "Status";
+    public static final String PHONE_NUMBER = "Phone_Number";
+    public static final String SELECTED_MEMBER = "selected_member";
+    public static final String CREATED_AT = "Created_At";
     public static final String TABLE_CREATE_QUERY = String.format("CREATE TABLE %s(%s INTEGER PRIMARY KEY, %s TEXT, %s TEXT, %s INTEGER, %s TEXT, %s TEXT)", TABLE_NAME, ID, NAME, PHONE_NUMBER,SELECTED_MEMBER,STATUS, CREATED_AT);
 
     String id;
@@ -107,14 +107,14 @@ public class Household implements Serializable {
 
     public static Household find_by(DatabaseHelper db, Long id) {
         Cursor cursor = db.exec(String.format(FIND_BY_ID_QUERY,id));
-        Household household = read(cursor).get(0);
+        Household household = new CursorHelper().getHouseholds(cursor).get(0);
         db.close();
         return household;
     }
 
     public static List<Household> getAll(DatabaseHelper db){
         Cursor cursor = db.exec(FIND_ALL_QUERY);
-        List<Household> households = read(cursor);
+        List<Household> households = new CursorHelper().getHouseholds(cursor);
         db.close();
         return households;
     }
@@ -127,21 +127,43 @@ public class Household implements Serializable {
         return householdCounts;
     }
 
-    private static List<Household> read(Cursor cursor) {
-        List<Household> householdNames = new ArrayList<Household>();
-        if(cursor.moveToFirst()){
-            do{
-                String household_name = cursor.getString(cursor.getColumnIndex(NAME));
-                String household_number = cursor.getString(cursor.getColumnIndex(PHONE_NUMBER));
-                String id = cursor.getString(cursor.getColumnIndex(ID));
-                String selectedMember = cursor.getString(cursor.getColumnIndex(SELECTED_MEMBER));
-                String status = cursor.getString(cursor.getColumnIndex(STATUS));
-                String createdAt = cursor.getString(cursor.getColumnIndex(CREATED_AT));
-                householdNames.add(new Household(id,household_name, household_number,selectedMember,HouseholdStatus.valueOf(status),createdAt ));
-            }while (cursor.moveToNext());
-        }
-        cursor.close();
-        return householdNames;
+    public List<Member> getAllMembers(DatabaseHelper db){
+        Cursor cursor = db.exec(String.format(Member.FIND_ALL_QUERY,Member.HOUSEHOLD_ID,this.getId(),Member.DELETED,Member.NOT_DELETED_INT));
+        List<Member> members = new CursorHelper().getMembers(cursor, this);
+        db.close();
+        return members;
     }
 
+    public List<Member> getAllMembersForExport(DatabaseHelper db){
+        Cursor cursor = db.exec(String.format(Member.FIND_ALL_WITH_DELETED_QUERY,Member.HOUSEHOLD_ID,this.getId()));
+        List<Member> members = new CursorHelper().getMembers(cursor, this);
+        db.close();
+        return members;
+    }
+
+    public Member findMember(DatabaseHelper db, Long id) {
+        Cursor cursor = db.exec(String.format(Member.FIND_BY_ID_QUERY, id));
+        Member member = new CursorHelper().getMembers(cursor, this).get(0);
+        db.close();
+        return member;
+    }
+
+
+    public int numberOfNonDeletedMembers(DatabaseHelper db){
+        Cursor cursor = db.exec(String.format(Member.FIND_ALL_QUERY,Member.HOUSEHOLD_ID,getId(),Member.DELETED, Member.NOT_DELETED_INT));
+        cursor.moveToFirst();
+        int count = cursor.getCount();
+        cursor.close();
+        db.close();
+        return count;
+    }
+
+    public int numberOfMembers(DatabaseHelper db){
+        Cursor cursor = db.exec(String.format(Member.FIND_ALL_WITH_DELETED_QUERY,Member.HOUSEHOLD_ID,getId()));
+        cursor.moveToFirst();
+        int count = cursor.getCount();
+        cursor.close();
+        db.close();
+        return count;
+    }
 }
