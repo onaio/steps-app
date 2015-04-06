@@ -55,7 +55,7 @@ public class NewMemberActivityHandler implements IMenuHandler, IMenuResultHandle
             return ;
         if (memberAdapter == null)
             return;
-        List<Member> members = Member.getAll(db, household);
+        List<Member> members = household.getAllMembers(db);
         memberAdapter.reinitialize(members);
         memberAdapter.notifyDataSetChanged();
         activity.invalidateOptionsMenu();

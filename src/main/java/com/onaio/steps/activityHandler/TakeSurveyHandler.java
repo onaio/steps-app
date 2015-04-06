@@ -71,7 +71,7 @@ public class TakeSurveyHandler implements IMenuHandler, IPrepare {
 
     private void saveFile(ODKForm requiredForm) throws IOException {
         FileBuilder fileBuilder = new FileBuilder().withHeader(Constants.ODK_FORM_FIELDS.split(","));
-        Member selectedMember = Member.find_by(new DatabaseHelper(activity), Long.parseLong(household.getSelectedMember()), household);
+        Member selectedMember = household.findMember(new DatabaseHelper(activity), Long.parseLong(household.getSelectedMember()));
         ArrayList<String> row = new ArrayList<String>();
         row.add(Constants.ODK_HH_ID);
         row.add(selectedMember.getMemberHouseholdId());

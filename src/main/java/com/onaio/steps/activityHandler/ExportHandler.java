@@ -49,7 +49,7 @@ public class ExportHandler implements IMenuHandler,IPrepare {
             FileBuilder fileBuilder = new FileBuilder().withHeader(Constants.EXPORT_FIELDS.split(","));
             for(Household household: households) {
                 List<ReElectReason> reasons = ReElectReason.getAll(databaseHelper, household);
-                List<Member> membersPerHousehold = Member.getAllForExport(databaseHelper, household);
+                List<Member> membersPerHousehold = household.getAllMembersForExport(databaseHelper);
                 for(Member member: membersPerHousehold){
                     ArrayList<String> row = new ArrayList<String>();
                     row.add(household.getPhoneNumber());
@@ -95,7 +95,7 @@ public class ExportHandler implements IMenuHandler,IPrepare {
 
     @Override
     public boolean shouldInactivate() {
-        return Member.numberOfNonDeletedMembers(new DatabaseHelper(activity), households.get(0)) <=0;
+        return households.get(0).numberOfNonDeletedMembers(new DatabaseHelper(activity)) <=0;
     }
 
     @Override

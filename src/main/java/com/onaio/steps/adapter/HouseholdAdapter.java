@@ -64,7 +64,7 @@ public class HouseholdAdapter extends BaseAdapter{
         image.setImageResource(getImage(householdAtPosition));
         householdName.setTextColor(Color.BLACK);
         householdName.setText(householdAtPosition.getName());
-        int numberOfMembers = Member.numberOfNonDeletedMembers(new DatabaseHelper(context), householdAtPosition);
+        int numberOfMembers = householdAtPosition.numberOfNonDeletedMembers(new DatabaseHelper(context));
         membersCount.setText(String.format("%s, %d members", householdAtPosition.getCreatedAt(), numberOfMembers));
     }
 

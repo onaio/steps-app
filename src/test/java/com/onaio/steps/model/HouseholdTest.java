@@ -40,6 +40,10 @@ public class HouseholdTest {
     private static final String SELECTED_MEMBER = "selected_member";
     private static final String CREATED_AT = "Created_At";
     private final long householdId = 1;
+    private final String memberFamilyName = "Rana";
+    private final String memberFirstName = "Manisha";
+    private final String memberGender = Constants.FEMALE;
+    private final int memberAge = 23;
 
     @Before
     public void Setup(){
@@ -50,7 +54,7 @@ public class HouseholdTest {
     @Test
     public void ShouldBeAbleToSaveTheHousehold(){
         Household household = new Household(householdName, phoneNumber, householdStatus, currentDate);
-        stubDb();
+        stubDbForHousehold();
 
         household.save(db);
 
@@ -61,7 +65,7 @@ public class HouseholdTest {
     public void ShouldBeAbleToUpdateTheMember(){
         String selectedMember = "3";
         Household household = new Household(String.valueOf(householdId),householdName, phoneNumber, selectedMember,householdStatus, currentDate);
-        stubDb();
+        stubDbForHousehold();
 
         household.update(db);
 
@@ -70,7 +74,7 @@ public class HouseholdTest {
 
     @Test
     public void ShouldGetAllNumberOfHouseholdFromDatabase(){
-        stubDb();
+        stubDbForHousehold();
         int householdCount = 5;
         Mockito.stub(cursor.getInt(0)).toReturn(householdCount);
         String FIND_ALL_COUNT_QUERY = "SELECT count(*) FROM HOUSEHOLD ORDER BY Id desc";
@@ -82,9 +86,9 @@ public class HouseholdTest {
 
     @Test
     public void ShouldGetAllHouseholds(){
-        stubDb();
+        stubDbForHousehold();
         String FIND_ALL_QUERY = "SELECT * FROM HOUSEHOLD ORDER BY Id desc";
-        stubCursor("");
+        stubCursorForHousehold("");
 
         List<Household> households = Household.getAll(db);
 
@@ -95,14 +99,81 @@ public class HouseholdTest {
 
     @Test
     public void ShouldFindTheHouseholdById(){
-        stubDb();
-        stubCursor("");
+        stubDbForHousehold();
+        stubCursorForHousehold("");
         String FIND_BY_ID_QUERY = "SELECT * FROM HOUSEHOLD WHERE id = %d";
 
         Household household = Household.find_by(db, householdId);
 
         validateHousehold(household);
         Mockito.verify(db).exec(String.format(FIND_BY_ID_QUERY, householdId));
+    }
+
+    @Test
+    public void ShouldGetNonDeletedNumberOfMembersFromDatabase(){
+        int numberOfMembers = 2;
+        Household household = new Household(String.valueOf(householdId), householdName, phoneNumber,"", HouseholdStatus.NOT_SELECTED, currentDate);
+        stubDbForMember(numberOfMembers);
+
+        assertEquals(numberOfMembers, household.numberOfNonDeletedMembers(db));
+
+        Mockito.verify(db).exec(String.format(Member.FIND_ALL_QUERY,Member.HOUSEHOLD_ID,householdId, Member.DELETED, Member.NOT_DELETED_INT));
+    }
+
+    @Test
+    public void ShouldGetAllNumberOfMembersFromDatabase(){
+        int numberOfMembers = 1;
+        Household household = new Household(String.valueOf(householdId), householdName, phoneNumber,"", HouseholdStatus.NOT_SELECTED, currentDate);
+        stubDbForMember(numberOfMembers);
+
+        assertEquals(numberOfMembers, household.numberOfMembers(db));
+
+        Mockito.verify(db).exec(String.format(Member.FIND_ALL_WITH_DELETED_QUERY,Member.HOUSEHOLD_ID,householdId));
+    }
+
+    @Test
+    public void ShouldGetAllNonDeletedMember(){
+        long memberId = 1L;
+        int numberOfMembers = 1;
+        Household household = new Household(String.valueOf(householdId), householdName, phoneNumber,"", HouseholdStatus.NOT_SELECTED, currentDate);
+        stubDbForMember(numberOfMembers);
+        stubCursorForMember(memberId, Member.NOT_DELETED_INT, householdName + "-1");
+
+        List<Member> members = household.getAllMembers(db);
+
+        assertEquals(1,members.size());
+        validateMember(members.get(0),false);
+        Mockito.verify(db).exec(String.format(Member.FIND_ALL_QUERY,Member.HOUSEHOLD_ID,householdId,Member.DELETED, Member.NOT_DELETED_INT));
+    }
+
+    @Test
+    public void ShouldGetAllMember(){
+        long memberId = 1L;
+        int numberOfMembers = 1;
+        Household household = new Household(String.valueOf(householdId), householdName, phoneNumber,"", HouseholdStatus.NOT_SELECTED, currentDate);
+        stubDbForMember(numberOfMembers);
+        stubCursorForMember(memberId, Member.DELETED_INT, householdName + "-1");
+
+        List<Member> allMembers = household.getAllMembersForExport(db);
+
+        assertEquals(1,allMembers.size());
+        validateMember(allMembers.get(0),true);
+        Mockito.verify(db).exec(String.format(Member.FIND_ALL_WITH_DELETED_QUERY,Member.HOUSEHOLD_ID,householdId));
+    }
+
+    @Test
+    public void ShouldFindTheMemberById(){
+        long memberId = 1L;
+        int numberOfMembers = 1;
+        Household household = new Household(String.valueOf(householdId), householdName, phoneNumber,"", HouseholdStatus.NOT_SELECTED, currentDate);
+        stubDbForMember(numberOfMembers);
+        stubCursorForMember(memberId, Member.NOT_DELETED_INT,householdName+"-1");
+        String FIND_BY_ID_QUERY = "SELECT * FROM MEMBER WHERE " + ID + " = '%d'";
+
+        Member member = household.findMember(db, memberId);
+
+        validateMember(member,false);
+        Mockito.verify(db).exec(String.format(FIND_BY_ID_QUERY, memberId));
     }
 
     private void validateHousehold(Household household) {
@@ -148,11 +219,17 @@ public class HouseholdTest {
 
     }
 
-    private void stubDb() {
+    private void stubDbForHousehold() {
         Mockito.stub(db.exec(Mockito.anyString())).toReturn(cursor);
     }
 
-    private void stubCursor(String selectedMember){
+    private void stubDbForMember(int numberOfMembers) {
+
+        Mockito.stub(cursor.getCount()).toReturn(numberOfMembers);
+        Mockito.stub(db.exec(Mockito.anyString())).toReturn(cursor);
+    }
+
+    private void stubCursorForHousehold(String selectedMember){
         Mockito.stub(cursor.moveToFirst()).toReturn(true);
         Mockito.stub(cursor.getColumnIndex(NAME)).toReturn(1);
         Mockito.stub(cursor.getColumnIndex(PHONE_NUMBER)).toReturn(2);
@@ -168,5 +245,36 @@ public class HouseholdTest {
         Mockito.stub(cursor.getString(5)).toReturn(householdStatus.toString());
         Mockito.stub(cursor.getString(6)).toReturn(currentDate);
     }
+
+    private void stubCursorForMember(long id,int isDeleted, String memberHouseholdId){
+        Mockito.stub(cursor.moveToFirst()).toReturn(true);
+        Mockito.stub(cursor.getColumnIndex(Member.FAMILY_SURNAME)).toReturn(1);
+        Mockito.stub(cursor.getColumnIndex(Member.FIRST_NAME)).toReturn(2);
+        Mockito.stub(cursor.getColumnIndex(Member.GENDER)).toReturn(3);
+        Mockito.stub(cursor.getColumnIndex(Member.AGE)).toReturn(4);
+        Mockito.stub(cursor.getColumnIndex(Member.DELETED)).toReturn(5);
+        Mockito.stub(cursor.getColumnIndex(Member.ID)).toReturn(6);
+        Mockito.stub(cursor.getColumnIndex(Member.MEMBER_HOUSEHOLD_ID)).toReturn(7);
+        Mockito.stub(cursor.getColumnIndex(Member.HOUSEHOLD_ID)).toReturn(8);
+
+        Mockito.stub(cursor.getString(1)).toReturn(memberFamilyName);
+        Mockito.stub(cursor.getString(2)).toReturn(memberFirstName);
+        Mockito.stub(cursor.getString(3)).toReturn(memberGender);
+        Mockito.stub(cursor.getString(4)).toReturn(String.valueOf(memberAge));
+        Mockito.stub(cursor.getInt(5)).toReturn(isDeleted);
+        Mockito.stub(cursor.getString(6)).toReturn(String.valueOf(id));
+        Mockito.stub(cursor.getString(7)).toReturn(memberHouseholdId);
+        Mockito.stub(cursor.getString(8)).toReturn(String.valueOf(householdId));
+    }
+
+    private void validateMember(Member member,boolean isDeleted){
+        assertEquals(memberFamilyName,member.getFamilySurname());
+        assertEquals(memberFirstName,member.getFirstName());
+        assertEquals(memberAge,member.getAge());
+        assertEquals(memberGender,member.getGender());
+        String isDeletedString = isDeleted?"Yes":"No";
+        assertEquals(isDeletedString,member.getDeletedString());
+    }
+
 
 }

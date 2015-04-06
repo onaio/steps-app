@@ -73,14 +73,14 @@ public class HouseholdActivity extends ListActivity {
     private AdapterView.OnItemClickListener memberItemListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-            Member member = Member.find_by(db, id, household);
+            Member member = household.findMember(db, id);
             HouseholdActivityFactory.getMemberItemHandler(HouseholdActivity.this, member).open();
         }
     };
 
     private void populateMembers() {
         db = new DatabaseHelper(getApplicationContext());
-        MemberAdapter memberAdapter = new MemberAdapter(this, Member.getAll(db, household), household.getSelectedMember());
+        MemberAdapter memberAdapter = new MemberAdapter(this, household.getAllMembers(db), household.getSelectedMember());
         getListView().setAdapter(memberAdapter);
     }
 

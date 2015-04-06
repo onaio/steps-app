@@ -29,7 +29,7 @@ public class Dialog {
                 .create().show();
     }
 
-    public static void confirm(Context activity, DialogInterface.OnClickListener confirmListener, DialogInterface.OnClickListener cancelListener, View confirmation, int title) {
+    public void confirm(Context activity, DialogInterface.OnClickListener confirmListener, DialogInterface.OnClickListener cancelListener, View confirmation, int title) {
         new AlertDialog.Builder(activity)
                 .setTitle(title)
                 .setView(confirmation)
