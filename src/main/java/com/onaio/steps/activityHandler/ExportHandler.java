@@ -82,12 +82,12 @@ public class ExportHandler implements IMenuHandler,IPrepare {
             row.add("NA");
     }
 
-    public ExportHandler withAllHouseholds(){
-        households = Household.getAll(databaseHelper);
+    public ExportHandler with(List<Household> households){
+        this.households = households;
         return this;
     }
 
-    public ExportHandler withHousehold(Household household){
+    public ExportHandler with(Household household){
         households = new ArrayList<Household>();
         households.add(household);
         return this;

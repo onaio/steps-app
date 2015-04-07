@@ -28,7 +28,7 @@ public class HouseholdActivityFactory {
     public static List<IMenuHandler> getMenuHandlers(ListActivity activity, Household household){
         ArrayList<IMenuHandler> handlers = new ArrayList<IMenuHandler>();
         handlers.add(new NewMemberActivityHandler(activity, household));
-        handlers.add(new ExportHandler(activity).withHousehold(household));
+        handlers.add(new ExportHandler(activity).with(household));
         handlers.add(new SelectParticipantHandler(activity,household));
         handlers.add(new StepsActivityHandler(activity));
         handlers.add(new EditHouseholdActivityHandler(activity,household));
@@ -49,7 +49,7 @@ public class HouseholdActivityFactory {
     public static List<IPrepare> getMenuPreparer(ListActivity activity, Household household, Menu menu){
         List<IPrepare> menuPreparers = new ArrayList<IPrepare>();
         menuPreparers.add(new SelectParticipantHandler(activity,household).withMenu(menu));
-        menuPreparers.add(new ExportHandler(activity).withHousehold(household).withMenu(menu));
+        menuPreparers.add(new ExportHandler(activity).with(household).withMenu(menu));
         return menuPreparers;
     }
 

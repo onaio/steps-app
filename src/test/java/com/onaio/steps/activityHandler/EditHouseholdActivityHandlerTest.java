@@ -1,5 +1,6 @@
 package com.onaio.steps.activityHandler;
 
+import android.app.Activity;
 import android.content.Intent;
 
 import com.onaio.steps.R;
@@ -82,14 +83,14 @@ public class EditHouseholdActivityHandlerTest {
 
     @Test
     public void ShouldFinishTheActivityWhenResultHandledWithOkResult(){
-        editHouseholdActivityHandler.handleResult(new Intent(),activityMock.RESULT_OK);
+        editHouseholdActivityHandler.handleResult(new Intent(),Activity.RESULT_OK);
 
         verify(activityMock).finish();
     }
 
     @Test
     public void ShouldNotFinishTheActivityWhenResultHandledForOtherResult(){
-        editHouseholdActivityHandler.handleResult(new Intent(),activityMock.RESULT_CANCELED);
+        editHouseholdActivityHandler.handleResult(new Intent(), Activity.RESULT_CANCELED);
 
         verify(activityMock,never()).finish();
     }

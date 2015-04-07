@@ -9,6 +9,7 @@ import com.onaio.steps.activityHandler.Interface.IMenuHandler;
 import com.onaio.steps.activityHandler.Interface.IMenuResultHandler;
 import com.onaio.steps.activityHandler.NewHouseholdActivityHandler;
 import com.onaio.steps.activityHandler.SettingActivityHandler;
+import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.model.Household;
 
 import java.util.ArrayList;
@@ -19,7 +20,8 @@ public class StepsActivityFactory {
         ArrayList<IMenuHandler> handlers = new ArrayList<IMenuHandler>();
         handlers.add(new NewHouseholdActivityHandler(activity));
         handlers.add(new SettingActivityHandler(activity));
-        handlers.add(new ExportHandler(activity).withAllHouseholds());
+        List<Household> households = Household.getAll(new DatabaseHelper(activity));
+        handlers.add(new ExportHandler(activity).with(households));
         return handlers;
     }
 
