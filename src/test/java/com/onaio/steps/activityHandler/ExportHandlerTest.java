@@ -8,6 +8,7 @@ import com.onaio.steps.R;
 import com.onaio.steps.activity.HouseholdActivity;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.model.Household;
+import com.onaio.steps.model.HouseholdStatus;
 
 import junit.framework.Assert;
 
@@ -48,20 +49,23 @@ public class ExportHandlerTest {
 
     @Test
     public void ShouldInactivateEditOptionForSelectedMember(){
-        ArrayList<Household> households = new ArrayList<Household>();
+        ArrayList<Household> households = Mockito.mock(ArrayList.class);
         Household householdmock = Mockito.mock(Household.class);
+        Household household = new Household("12", "name", "321", "1", HouseholdStatus.NOT_SELECTED, "12-12-2001");
 
-        households.add(householdmock);
+        households.add(household);
         DatabaseHelper dbMock = Mockito.mock(DatabaseHelper.class);
 
+
+        exportHandler.with(households);
+
+        Mockito.stub(households.get(0)).toReturn(household);
         Cursor cursorMock = Mockito.mock(Cursor.class);
         Mockito.stub(dbMock.exec(Mockito.anyString())).toReturn(cursorMock);
-        exportHandler.with(households);
- //       Mockito.stub(households.get(0)).toReturn(householdmock);
- //       Mockito.stub( householdmock.numberOfNonDeletedMembers(dbMock)).toReturn(0);
+        Mockito.stub( household.numberOfNonDeletedMembers(dbMock)).toReturn(0);
 
-
-        assertTrue(exportHandler.with(Household.getAll(new DatabaseHelper(householdActivityMock))).shouldInactivate());
+        Mockito.stub(dbMock.exec(Mockito.anyString())).toReturn(cursorMock);
+        assertTrue(exportHandler.with(Household.getAll(dbMock)).shouldInactivate());
     }
 
     @Test

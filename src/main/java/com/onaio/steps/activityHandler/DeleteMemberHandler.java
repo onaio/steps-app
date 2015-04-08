@@ -10,6 +10,7 @@ import com.onaio.steps.activityHandler.Interface.IMenuHandler;
 import com.onaio.steps.activityHandler.Interface.IPrepare;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.helper.Dialog;
+import com.onaio.steps.model.HouseholdStatus;
 import com.onaio.steps.model.Member;
 
 public class DeleteMemberHandler implements IMenuHandler,IPrepare {
@@ -55,7 +56,7 @@ public class DeleteMemberHandler implements IMenuHandler,IPrepare {
 
     @Override
     public boolean shouldInactivate() {
-        return String.valueOf(member.getId()).equals(member.getHousehold().getSelectedMember());
+        return (String.valueOf(member.getId()).equals(member.getHousehold().getSelectedMember()) || member.getHousehold().getStatus().equals(HouseholdStatus.REFUSED));
     }
 
     @Override

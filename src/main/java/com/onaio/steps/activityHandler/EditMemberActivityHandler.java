@@ -11,6 +11,7 @@ import com.onaio.steps.activityHandler.Interface.IMenuHandler;
 import com.onaio.steps.activityHandler.Interface.IMenuResultHandler;
 import com.onaio.steps.activityHandler.Interface.IPrepare;
 import com.onaio.steps.helper.Constants;
+import com.onaio.steps.model.HouseholdStatus;
 import com.onaio.steps.model.Member;
 
 import static android.app.Activity.RESULT_OK;
@@ -62,20 +63,18 @@ public class EditMemberActivityHandler implements IMenuHandler, IMenuResultHandl
 
     @Override
     public boolean shouldInactivate() {
-        return String.valueOf(member.getId()).equals(member.getHousehold().getSelectedMember());
+        return (String.valueOf(member.getId()).equals(member.getHousehold().getSelectedMember()) || member.getHousehold().getStatus().equals(HouseholdStatus.REFUSED));
     }
 
     @Override
     public void inactivate() {
         MenuItem menuItem = menu.findItem(MENU_ID);
         menuItem.setEnabled(false);
-
     }
 
     @Override
     public void activate() {
         MenuItem menuItem = menu.findItem(MENU_ID);
         menuItem.setEnabled(true);
-
     }
 }
