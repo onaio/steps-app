@@ -7,22 +7,24 @@ import com.onaio.steps.R;
 import com.onaio.steps.activity.NewMemberActivity;
 import com.onaio.steps.activityHandler.Interface.IMenuHandler;
 import com.onaio.steps.activityHandler.Interface.IMenuResultHandler;
+import com.onaio.steps.adapter.MemberAdapter;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;
-import com.onaio.steps.adapter.MemberAdapter;
 import com.onaio.steps.model.Household;
+import com.onaio.steps.model.HouseholdStatus;
 import com.onaio.steps.model.Member;
 
 import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
 
-public class NewMemberActivityHandler implements IMenuHandler, IMenuResultHandler {
+public class NewMemberActivityHandler implements IMenuHandler, IMenuResultHandler{
 
     private Household household;
     private ListActivity activity;
     private MemberAdapter memberAdapter;
     private DatabaseHelper db;
+
 
     public NewMemberActivityHandler(Household household, ListActivity activity, MemberAdapter memberAdapter, DatabaseHelper db) {
         this.household = household;
@@ -37,7 +39,7 @@ public class NewMemberActivityHandler implements IMenuHandler, IMenuResultHandle
 
     @Override
     public boolean shouldOpen(int menu_id) {
-        return menu_id == R.id.action_add;
+        return ( menu_id == R.id.action_add && !household.getStatus().equals(HouseholdStatus.REFUSED));
     }
 
     @Override
@@ -65,5 +67,6 @@ public class NewMemberActivityHandler implements IMenuHandler, IMenuResultHandle
     public boolean canHandleResult(int requestCode) {
         return requestCode == Constants.NEW_MEMBER_IDENTIFIER;
     }
+
 
 }
