@@ -16,10 +16,11 @@ import com.onaio.steps.activityHandler.Factory.HouseholdActivityFactory;
 import com.onaio.steps.activityHandler.Interface.IMenuHandler;
 import com.onaio.steps.activityHandler.Interface.IMenuResultHandler;
 import com.onaio.steps.activityHandler.Interface.IPrepare;
+import com.onaio.steps.adapter.MemberAdapter;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;
-import com.onaio.steps.adapter.MemberAdapter;
 import com.onaio.steps.model.Household;
+import com.onaio.steps.model.HouseholdStatus;
 import com.onaio.steps.model.Member;
 
 import java.util.List;
@@ -110,6 +111,8 @@ public class HouseholdActivity extends ListActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.household_actions, menu);
+        if(household.getStatus().equals(HouseholdStatus.REFUSED))
+            menu.findItem(R.id.action_add).setEnabled(false);
         return super.onCreateOptionsMenu(menu);
     }
 
