@@ -27,7 +27,7 @@ public class HouseholdViewWrapper {
         TextView numberView = (TextView) activity.findViewById(numberViewId);
         String phoneNumber = numberView.getText().toString();
         String currentDate = new SimpleDateFormat(Constants.DATE_FORMAT).format(new Date());
-        validateNonEmptyPhoneNumber(phoneNumber);
+    //    validateNonEmptyPhoneNumber(phoneNumber);
         validatePhoneNumber(phoneNumber);
         if(!errorMessages.isEmpty())
             throw new InvalidDataException(errorMessages);
@@ -37,7 +37,7 @@ public class HouseholdViewWrapper {
     public Household updateHousehold(Household household, int numberViewId) throws InvalidDataException {
         TextView numberView = (TextView) activity.findViewById(numberViewId);
         String phoneNumber = numberView.getText().toString();
-        validateNonEmptyPhoneNumber(phoneNumber);
+    //  validateNonEmptyPhoneNumber(phoneNumber);
         validatePhoneNumber(phoneNumber);
         if(!errorMessages.isEmpty())
             throw new InvalidDataException(errorMessages);
@@ -51,7 +51,7 @@ public class HouseholdViewWrapper {
     }
 
     private void validatePhoneNumber(String phoneNumber){
-        if((phoneNumber.length() != 9 && phoneNumber.length() != 10))
+        if(!((phoneNumber.length() >= 9) || phoneNumber.equals("")))
             errorMessages.add(Constants.INVALID_PHONE_NUMBER);
     }
 }

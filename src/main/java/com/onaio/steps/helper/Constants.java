@@ -46,5 +46,5 @@ public class Constants {
     public static final String MEMBER_ERROR = "Member";
     public static final String ERROR_STRING = "Invalid %s, please populate the following fields: %s";
     public static final String EMPTY_PHONE_NUMBER = "Phone number is empty, please enter a valid number and try again.";
-    public static final String INVALID_PHONE_NUMBER = "Phone number is invalid, enter a valid phone number and try again";
+    public static final String INVALID_PHONE_NUMBER = "Phone number should contain minimum 9 digits, enter a valid phone number and try again";
 }
