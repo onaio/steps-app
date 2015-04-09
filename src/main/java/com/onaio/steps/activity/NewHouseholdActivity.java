@@ -57,7 +57,6 @@ public class NewHouseholdActivity extends Activity {
             household.save(db);
             setResult(RESULT_OK, intent);
             finish();
-
         } catch (InvalidDataException e) {
             new Dialog().notify(this,Dialog.EmptyListener,e.getMessage(),R.string.error_title);
         }

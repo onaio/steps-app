@@ -48,6 +48,7 @@ public class HouseholdActivityFactory {
 
     public static List<IPrepare> getMenuPreparer(ListActivity activity, Household household, Menu menu){
         List<IPrepare> menuPreparers = new ArrayList<IPrepare>();
+        menuPreparers.add(new NewMemberActivityHandler(activity,household).withMenu(menu));
         menuPreparers.add(new SelectParticipantHandler(activity,household).withMenu(menu));
         menuPreparers.add(new ExportHandler(activity).with(household).withMenu(menu));
         return menuPreparers;

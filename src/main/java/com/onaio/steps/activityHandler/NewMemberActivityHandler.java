@@ -2,11 +2,14 @@ package com.onaio.steps.activityHandler;
 
 import android.app.ListActivity;
 import android.content.Intent;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.onaio.steps.R;
 import com.onaio.steps.activity.NewMemberActivity;
 import com.onaio.steps.activityHandler.Interface.IMenuHandler;
 import com.onaio.steps.activityHandler.Interface.IMenuResultHandler;
+import com.onaio.steps.activityHandler.Interface.IPrepare;
 import com.onaio.steps.adapter.MemberAdapter;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;
@@ -18,12 +21,13 @@ import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
 
-public class NewMemberActivityHandler implements IMenuHandler, IMenuResultHandler{
+public class NewMemberActivityHandler implements IMenuHandler, IMenuResultHandler,IPrepare{
 
     private Household household;
     private ListActivity activity;
     private MemberAdapter memberAdapter;
     private DatabaseHelper db;
+    private Menu menu;
 
 
     public NewMemberActivityHandler(Household household, ListActivity activity, MemberAdapter memberAdapter, DatabaseHelper db) {
@@ -39,7 +43,7 @@ public class NewMemberActivityHandler implements IMenuHandler, IMenuResultHandle
 
     @Override
     public boolean shouldOpen(int menu_id) {
-        return ( menu_id == R.id.action_add && !household.getStatus().equals(HouseholdStatus.REFUSED));
+        return ( menu_id == R.id.action_add);
     }
 
     @Override
@@ -69,4 +73,24 @@ public class NewMemberActivityHandler implements IMenuHandler, IMenuResultHandle
     }
 
 
+    @Override
+    public boolean shouldInactivate() {
+        return household.getStatus().equals(HouseholdStatus.REFUSED);
+    }
+
+    public void inactivate() {
+        MenuItem menuItem = menu.findItem(R.id.action_add);
+        menuItem.setEnabled(false);
+    }
+
+    @Override
+    public void activate() {
+        MenuItem menuItem = menu.findItem(R.id.action_add);
+        menuItem.setEnabled(true);
+    }
+
+    public NewMemberActivityHandler withMenu(Menu menu){
+        this.menu = menu;
+        return this;
+    }
 }
