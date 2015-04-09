@@ -7,10 +7,9 @@ import android.view.MenuItem;
 import com.onaio.steps.R;
 import com.onaio.steps.activityHandler.Interface.IMenuHandler;
 import com.onaio.steps.activityHandler.Interface.IPrepare;
-import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.helper.Dialog;
-import com.onaio.steps.helper.FileBuilder;
+import com.onaio.steps.helper.FileUtil;
 import com.onaio.steps.helper.UploadFileTask;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.Member;
@@ -22,6 +21,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.onaio.steps.helper.Constants.*;
 
 public class ExportHandler implements IMenuHandler,IPrepare {
 
@@ -46,7 +47,7 @@ public class ExportHandler implements IMenuHandler,IPrepare {
     @Override
     public boolean open() {
         try {
-            FileBuilder fileBuilder = new FileBuilder().withHeader(Constants.EXPORT_FIELDS.split(","));
+            FileUtil fileUtil = new FileUtil().withHeader(EXPORT_FIELDS.split(","));
             for(Household household: households) {
                 List<ReElectReason> reasons = ReElectReason.getAll(databaseHelper, household);
                 List<Member> membersPerHousehold = household.getAllMembersForExport(databaseHelper);
@@ -62,11 +63,11 @@ public class ExportHandler implements IMenuHandler,IPrepare {
                     row.add(member.getDeletedString());
                     setStatus(household, member, row);
                     row.add(String.valueOf(reasons.size()));
-                    row.add(StringUtils.join(reasons.toArray(),','));
-                    fileBuilder.withData(row.toArray(new String[row.size()]));
+                    row.add(StringUtils.join(reasons.toArray(),';'));
+                    fileUtil.withData(row.toArray(new String[row.size()]));
                 }
             }
-            File file = fileBuilder.buildCSV(activity.getFilesDir() +"/"+ Constants.EXPORT_FILE_NAME);
+            File file = fileUtil.buildCSV(activity.getFilesDir() +"/"+ EXPORT_FILE_NAME);
             new UploadFileTask(activity).execute(file);
             return true;
         } catch (IOException e) {
@@ -76,10 +77,11 @@ public class ExportHandler implements IMenuHandler,IPrepare {
     }
 
     private void setStatus(Household household, Member member, ArrayList<String> row) {
-        if(household.getSelectedMember() == null || household.getSelectedMember().equals("") || household.getSelectedMember().equals(String.valueOf(member.getId())))
+        if(household.getSelectedMemberId() == null || household.getSelectedMemberId().equals("") || household.getSelectedMemberId().equals(String.valueOf(member.getId())))
             row.add(household.getStatus().toString());
-        else
-            row.add("NA");
+        else {
+            row.add(SURVEY_NA);
+        }
     }
 
     public ExportHandler with(List<Household> households){

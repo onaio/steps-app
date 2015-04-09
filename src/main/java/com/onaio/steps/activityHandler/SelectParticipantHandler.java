@@ -116,7 +116,7 @@ public class SelectParticipantHandler implements IMenuHandler, IPrepare {
 
     private void updateView(ListView membersView) {
         MemberAdapter membersAdapter = (MemberAdapter) membersView.getAdapter();
-        membersAdapter.setSelectedMemberId(household.getSelectedMember());
+        membersAdapter.setSelectedMemberId(household.getSelectedMemberId());
         membersAdapter.notifyDataSetChanged();
         prepareBottomMenuItems();
     }
@@ -132,14 +132,14 @@ public class SelectParticipantHandler implements IMenuHandler, IPrepare {
 
 
     private void updateHousehold(Member selectedMember) {
-        household.setSelectedMember(String.valueOf(selectedMember.getId()));
+        household.setSelectedMemberId(String.valueOf(selectedMember.getId()));
         household.setStatus(NOT_DONE);
         household.update(new DatabaseHelper(activity.getApplicationContext()));
     }
 
     private Member getSelectedMember(ListView listView) {
         Member randomMember = getRandomMember(listView);
-        while(household.getSelectedMember() != null && household.getSelectedMember().equals(String.valueOf(randomMember.getId()))){
+        while(household.getSelectedMemberId() != null && household.getSelectedMemberId().equals(String.valueOf(randomMember.getId()))){
             randomMember = getRandomMember(listView);
         }
         return randomMember;

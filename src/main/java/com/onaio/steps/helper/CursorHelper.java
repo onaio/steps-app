@@ -38,7 +38,7 @@ public class CursorHelper {
                 String household_name = cursor.getString(cursor.getColumnIndex(Household.NAME));
                 String household_number = cursor.getString(cursor.getColumnIndex(Household.PHONE_NUMBER));
                 String id = cursor.getString(cursor.getColumnIndex(Household.ID));
-                String selectedMember = cursor.getString(cursor.getColumnIndex(Household.SELECTED_MEMBER));
+                String selectedMember = cursor.getString(cursor.getColumnIndex(Household.SELECTED_MEMBER_ID));
                 String status = cursor.getString(cursor.getColumnIndex(Household.STATUS));
                 String createdAt = cursor.getString(cursor.getColumnIndex(Household.CREATED_AT));
                 householdNames.add(new Household(id,household_name, household_number,selectedMember, HouseholdStatus.valueOf(status),createdAt ));

@@ -63,7 +63,9 @@ public class EditMemberActivityHandler implements IMenuHandler, IMenuResultHandl
 
     @Override
     public boolean shouldInactivate() {
-        return (String.valueOf(member.getId()).equals(member.getHousehold().getSelectedMember()) || member.getHousehold().getStatus().equals(HouseholdStatus.REFUSED));
+        boolean isSelectedMember = String.valueOf(member.getId()).equals(member.getHousehold().getSelectedMemberId());
+        boolean refusedHousehold = member.getHousehold().getStatus().equals(HouseholdStatus.REFUSED);
+        return (isSelectedMember || refusedHousehold);
     }
 
     @Override

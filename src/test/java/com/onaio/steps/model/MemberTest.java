@@ -49,7 +49,7 @@ public class MemberTest {
     @Test
     public void ShouldBeAbleToSaveTheMember(){
         int numberOfMembers = 0;
-        Member member = new Member(memberFamilyName, memberFirstName, memberGender, memberAge, household);
+        Member member = new Member(memberFamilyName, memberFirstName, memberGender, memberAge, household, false);
         stubDb(numberOfMembers);
 
         member.save(db);

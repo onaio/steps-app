@@ -15,21 +15,21 @@ public class CursorStub {
         this.cursor = cursor;
     }
 
-    public void stubCursorForHousehold(String householdName, String phoneNumber, String householdId, HouseholdStatus householdStatus, String currentDate, String selectedMember){
+    public void stubCursorForHousehold(Household household){
         Mockito.stub(cursor.moveToFirst()).toReturn(true);
         Mockito.stub(cursor.getColumnIndex(Household.NAME)).toReturn(1);
         Mockito.stub(cursor.getColumnIndex(Household.PHONE_NUMBER)).toReturn(2);
         Mockito.stub(cursor.getColumnIndex(Household.ID)).toReturn(3);
-        Mockito.stub(cursor.getColumnIndex(Household.SELECTED_MEMBER)).toReturn(4);
+        Mockito.stub(cursor.getColumnIndex(Household.SELECTED_MEMBER_ID)).toReturn(4);
         Mockito.stub(cursor.getColumnIndex(Household.STATUS)).toReturn(5);
         Mockito.stub(cursor.getColumnIndex(Household.CREATED_AT)).toReturn(6);
 
-        Mockito.stub(cursor.getString(1)).toReturn(householdName);
-        Mockito.stub(cursor.getString(2)).toReturn(phoneNumber);
-        Mockito.stub(cursor.getString(3)).toReturn(String.valueOf(householdId));
-        Mockito.stub(cursor.getString(4)).toReturn(String.valueOf(selectedMember));
-        Mockito.stub(cursor.getString(5)).toReturn(householdStatus.toString());
-        Mockito.stub(cursor.getString(6)).toReturn(currentDate);
+        Mockito.stub(cursor.getString(1)).toReturn(household.getName());
+        Mockito.stub(cursor.getString(2)).toReturn(household.getPhoneNumber());
+        Mockito.stub(cursor.getString(3)).toReturn(household.getId());
+        Mockito.stub(cursor.getString(4)).toReturn(household.getSelectedMemberId());
+        Mockito.stub(cursor.getString(5)).toReturn(household.getStatus().toString());
+        Mockito.stub(cursor.getString(6)).toReturn(household.getCreatedAt());
     }
 
     public void stubCursorForMember(long id, String memberFamilyName, String memberFirstName, String memberGender, String memberAge, String householdId, int isDeleted, String memberHouseholdId){

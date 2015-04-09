@@ -44,13 +44,17 @@ public class Member implements Serializable {
         this.deleted = deleted;
     }
 
-    public Member(String familySurname, String firstName, String gender, int age, Household household) {
+    public Member(String familySurname, String firstName, String gender, int age, Household household, boolean deleted) {
         this.familySurname = familySurname;
         this.firstName = firstName;
         this.gender = gender;
         this.age = age;
         this.household = household;
-        deleted = false;
+        this.deleted = deleted;
+    }
+
+    public void setMemberHouseholdId(String memberHouseholdId) {
+        this.memberHouseholdId = memberHouseholdId;
     }
 
     public Boolean getDeleted() {
@@ -94,7 +98,10 @@ public class Member implements Serializable {
         String generatedId = household.getName() + "-" + memberNumber;
         ContentValues memberDetails = populateBasicDetails();
         memberDetails.put(MEMBER_HOUSEHOLD_ID, generatedId);
-        return db.save(memberDetails, TABLE_NAME);
+        long savedId = db.save(memberDetails, TABLE_NAME);
+        if(savedId!= -1)
+            id = (int) savedId;
+        return savedId;
     }
 
     public long update(DatabaseHelper db){

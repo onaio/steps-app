@@ -7,6 +7,8 @@ import com.onaio.steps.helper.Constants;
 import com.onaio.steps.utils.CursorStub;
 import com.onaio.steps.helper.DatabaseHelper;
 
+import junit.framework.Assert;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -38,34 +40,50 @@ public class HouseholdTest {
     private static final String NAME = "Name";
     private static final String STATUS = "Status";
     private static final String PHONE_NUMBER = "Phone_Number";
-    private static final String SELECTED_MEMBER = "selected_member";
+    private static final String SELECTED_MEMBER_ID = "selected_member_id";
     private static final String CREATED_AT = "Created_At";
     private final long householdId = 1;
     private final String memberFamilyName = "Rana";
     private final String memberFirstName = "Manisha";
     private final String memberGender = Constants.FEMALE;
     private final int memberAge = 23;
+    private Household household;
 
     @Before
     public void Setup(){
         db = Mockito.mock(DatabaseHelper.class);
         cursor = Mockito.mock(Cursor.class);
+        household = new Household(householdName, phoneNumber, householdStatus, currentDate);
     }
 
     @Test
-    public void ShouldBeAbleToSaveTheHousehold(){
-        Household household = new Household(householdName, phoneNumber, householdStatus, currentDate);
+    public void ShouldBeAbleToSaveTheHouseholdAndPopulateId(){
         stubDbForHousehold();
+        long householdId = 2L;
+        Mockito.stub(db.save(Mockito.any(ContentValues.class),Mockito.eq(Household.TABLE_NAME))).toReturn(householdId);
 
         household.save(db);
 
         Mockito.verify(db).save(Mockito.argThat(saveHouseholdMatcher(currentDate)),Mockito.eq(Household.TABLE_NAME));
+        Assert.assertEquals(String.valueOf(householdId),household.getId());
+    }
+
+    @Test
+    public void ShouldTryToSaveTheHouseholdButNotPopulateIdWhenFailed(){
+        stubDbForHousehold();
+        long householdId = -1;
+        Mockito.stub(db.save(Mockito.any(ContentValues.class),Mockito.eq(Household.TABLE_NAME))).toReturn(householdId);
+
+        household.save(db);
+
+        Mockito.verify(db).save(Mockito.argThat(saveHouseholdMatcher(currentDate)),Mockito.eq(Household.TABLE_NAME));
+        Assert.assertEquals(null, household.getId());
     }
 
     @Test
     public void ShouldBeAbleToUpdateTheMember(){
         String selectedMember = "3";
-        Household household = new Household(String.valueOf(householdId),householdName, phoneNumber, selectedMember,householdStatus, currentDate);
+        household = new Household(String.valueOf(householdId),householdName, phoneNumber, selectedMember,householdStatus, currentDate);
         stubDbForHousehold();
 
         household.update(db);
@@ -89,7 +107,9 @@ public class HouseholdTest {
     public void ShouldGetAllHouseholds(){
         stubDbForHousehold();
         String FIND_ALL_QUERY = "SELECT * FROM HOUSEHOLD ORDER BY Id desc";
-        new CursorStub(cursor).stubCursorForHousehold(householdName, phoneNumber, String.valueOf(householdId), householdStatus, currentDate, "");
+        household.setId(String.valueOf(householdId));
+        household.setSelectedMemberId("");
+        new CursorStub(cursor).stubCursorForHousehold(household);
 
         List<Household> households = Household.getAll(db);
 
@@ -101,13 +121,28 @@ public class HouseholdTest {
     @Test
     public void ShouldFindTheHouseholdById(){
         stubDbForHousehold();
-        new CursorStub(cursor).stubCursorForHousehold(householdName, phoneNumber, String.valueOf(householdId), householdStatus, currentDate, "");
+        household.setId(String.valueOf(householdId));
+        household.setSelectedMemberId("");
+        new CursorStub(cursor).stubCursorForHousehold(household);
         String FIND_BY_ID_QUERY = "SELECT * FROM HOUSEHOLD WHERE id = %d";
 
         Household household = Household.find_by(db, householdId);
 
         validateHousehold(household);
         Mockito.verify(db).exec(String.format(FIND_BY_ID_QUERY, householdId));
+    }
+
+    @Test
+    public void ShouldFindTheHouseholdByName(){
+        stubDbForHousehold();
+        household.setId(String.valueOf(householdId));
+        household.setSelectedMemberId("");
+        new CursorStub(cursor).stubCursorForHousehold(household);
+
+        Household household = Household.find_by(db, householdName);
+
+        validateHousehold(household);
+        Mockito.verify(db).exec(String.format(Household.FIND_BY_NAME_QUERY,Household.NAME, householdName));
     }
 
     @Test
@@ -202,8 +237,8 @@ public class HouseholdTest {
             public boolean matches(Object argument) {
                 ContentValues contentValues = (ContentValues) argument;
                 assertBasicDetails(contentValues);
-                assertTrue(contentValues.containsKey(SELECTED_MEMBER));
-                assertTrue(contentValues.getAsString(SELECTED_MEMBER).equals(selectedMember));
+                assertTrue(contentValues.containsKey(SELECTED_MEMBER_ID));
+                assertTrue(contentValues.getAsString(SELECTED_MEMBER_ID).equals(selectedMember));
                 return true;
             }
         };

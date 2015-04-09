@@ -4,6 +4,7 @@ import android.app.ListActivity;
 
 import com.onaio.steps.activityHandler.ExportHandler;
 import com.onaio.steps.activityHandler.HouseholdActivityHandler;
+import com.onaio.steps.activityHandler.ImportHandler;
 import com.onaio.steps.activityHandler.Interface.IItemHandler;
 import com.onaio.steps.activityHandler.Interface.IMenuHandler;
 import com.onaio.steps.activityHandler.Interface.IMenuResultHandler;
@@ -22,6 +23,7 @@ public class StepsActivityFactory {
         handlers.add(new SettingActivityHandler(activity));
         List<Household> households = Household.getAll(new DatabaseHelper(activity));
         handlers.add(new ExportHandler(activity).with(households));
+        handlers.add(new ImportHandler(activity));
         return handlers;
     }
 
@@ -29,6 +31,7 @@ public class StepsActivityFactory {
         ArrayList<IMenuResultHandler> handlers = new ArrayList<IMenuResultHandler>();
         handlers.add(new NewHouseholdActivityHandler(activity));
         handlers.add(new SettingActivityHandler(activity));
+        handlers.add(new ImportHandler(activity));
         return handlers;
     }
 

@@ -13,7 +13,7 @@ import com.onaio.steps.exception.FormNotPresentException;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.helper.Dialog;
-import com.onaio.steps.helper.FileBuilder;
+import com.onaio.steps.helper.FileUtil;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.HouseholdStatus;
 import com.onaio.steps.model.Member;
@@ -70,8 +70,8 @@ public class TakeSurveyHandler implements IMenuHandler, IPrepare {
     }
 
     private void saveFile(ODKForm requiredForm) throws IOException {
-        FileBuilder fileBuilder = new FileBuilder().withHeader(Constants.ODK_FORM_FIELDS.split(","));
-        Member selectedMember = household.findMember(new DatabaseHelper(activity), Long.parseLong(household.getSelectedMember()));
+        FileUtil fileUtil = new FileUtil().withHeader(Constants.ODK_FORM_FIELDS.split(","));
+        Member selectedMember = household.findMember(new DatabaseHelper(activity), Long.parseLong(household.getSelectedMemberId()));
         ArrayList<String> row = new ArrayList<String>();
         row.add(Constants.ODK_HH_ID);
         row.add(selectedMember.getMemberHouseholdId());
@@ -81,8 +81,8 @@ public class TakeSurveyHandler implements IMenuHandler, IPrepare {
         int genderInt = gender.equals(Constants.MALE)?1:2;
         row.add(String.valueOf(genderInt));
         row.add(String.valueOf(selectedMember.getAge()));
-        fileBuilder.withData(row.toArray(new String[row.size()]));
-        fileBuilder.buildCSV(requiredForm.getFormMediaPath()+"/"+Constants.ODK_DATA_FILENAME);
+        fileUtil.withData(row.toArray(new String[row.size()]));
+        fileUtil.buildCSV(requiredForm.getFormMediaPath()+"/"+Constants.ODK_DATA_FILENAME);
     }
 
     @Override

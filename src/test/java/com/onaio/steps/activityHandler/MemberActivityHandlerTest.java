@@ -41,7 +41,7 @@ public class MemberActivityHandlerTest {
     @Test
     public void ShouldStartMemberActivityWhenMemberIsNotNull(){
         Household household = new Household("2", "Any HouseholdName", "123456789", "", HouseholdStatus.NOT_SELECTED, currentDate);
-        member = new Member("Rana", "Nikhil", "Female", 20, household);
+        member = new Member("Rana", "Nikhil", "Female", 20, household, false);
         memberActivityHandler = new MemberActivityHandler(householdActivity, member);
 
         memberActivityHandler.open();

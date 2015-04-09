@@ -22,8 +22,11 @@ public class Constants {
     public static final int NEW_MEMBER_IDENTIFIER = 4;
     public static final int EDIT_HOUSEHOLD_IDENTIFIER = 5;
     public static final int EDIT_MEMBER_IDENTIFIER = 6;
+    public static final int IMPORT_IDENTIFIER = 7;
 
     public static final String COLOR_HEADER = "#008148";
+    public static final String SURVEY_NA = "NA";
+
 
     //Export related
     public static final String ENDPOINT_URL = "endpointUrl";

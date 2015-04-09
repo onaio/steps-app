@@ -61,4 +61,5 @@
     <string name="household_new_header">Add New Household</string>
     <string name="member_edit_header">Edit Member</string>
     <string name="member_new_header">Add New Member</string>
+    <string name="action_import">Import</string>
 </resources>

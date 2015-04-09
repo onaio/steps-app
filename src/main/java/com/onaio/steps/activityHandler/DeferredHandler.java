@@ -1,6 +1,7 @@
 package com.onaio.steps.activityHandler;
 
 import android.app.ListActivity;
+import android.content.DialogInterface;
 import android.view.View;
 
 import com.onaio.steps.R;
@@ -37,9 +38,14 @@ public class DeferredHandler implements IMenuHandler,IPrepare {
     public boolean open() {
         household.setStatus(HouseholdStatus.DEFERRED);
         household.update(new DatabaseHelper(activity.getApplicationContext()));
-        dialog.notify(activity, Dialog.EmptyListener, R.string.survey_deferred_message, R.string.survey_deferred_title);
-        activity.finish();
-        new StepsActivityHandler(activity).open();
+        DialogInterface.OnClickListener confirmListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                activity.finish();
+                new StepsActivityHandler(activity).open();
+            }
+        };
+        dialog.notify(activity, confirmListener, R.string.survey_deferred_message, R.string.survey_deferred_title);
         return true;
     }
 

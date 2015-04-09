@@ -11,6 +11,7 @@ import java.util.List;
 
 public class Household implements Serializable {
     private static String FIND_BY_ID_QUERY = "SELECT * FROM HOUSEHOLD WHERE id = %d";
+    public static final String FIND_BY_NAME_QUERY = "SELECT * FROM HOUSEHOLD WHERE %s = '%s'";
     private static String FIND_ALL_QUERY = "SELECT * FROM HOUSEHOLD ORDER BY Id desc";
     private static String FIND_ALL_COUNT_QUERY = "SELECT count(*) FROM HOUSEHOLD ORDER BY Id desc";
     public static final String TABLE_NAME = "household";
@@ -18,22 +19,22 @@ public class Household implements Serializable {
     public static final String NAME = "Name";
     public static final String STATUS = "Status";
     public static final String PHONE_NUMBER = "Phone_Number";
-    public static final String SELECTED_MEMBER = "selected_member";
+    public static final String SELECTED_MEMBER_ID = "selected_member_id";
     public static final String CREATED_AT = "Created_At";
-    public static final String TABLE_CREATE_QUERY = String.format("CREATE TABLE %s(%s INTEGER PRIMARY KEY, %s TEXT, %s TEXT, %s INTEGER, %s TEXT, %s TEXT)", TABLE_NAME, ID, NAME, PHONE_NUMBER,SELECTED_MEMBER,STATUS, CREATED_AT);
+    public static final String TABLE_CREATE_QUERY = String.format("CREATE TABLE %s(%s INTEGER PRIMARY KEY, %s TEXT, %s TEXT, %s INTEGER, %s TEXT, %s TEXT)", TABLE_NAME, ID, NAME, PHONE_NUMBER, SELECTED_MEMBER_ID,STATUS, CREATED_AT);
 
     String id;
     String name;
     String phoneNumber;
     HouseholdStatus status;
-    String selectedMember;
+    String selectedMemberId;
     String createdAt;
     
-    public Household(String id, String name, String phoneNumber, String selectedMember, HouseholdStatus status, String createdAt) {
+    public Household(String id, String name, String phoneNumber, String selectedMemberId, HouseholdStatus status, String createdAt) {
         this.id = id;
         this.name = name;
         this.phoneNumber = phoneNumber;
-        this.selectedMember = selectedMember;
+        this.selectedMemberId = selectedMemberId;
         this.status = status;
         this.createdAt=createdAt;
     }
@@ -61,12 +62,12 @@ public class Household implements Serializable {
         this.status = status;
     }
 
-    public void setSelectedMember(String selectedMember) {
-        this.selectedMember = selectedMember;
+    public void setSelectedMemberId(String selectedMemberId) {
+        this.selectedMemberId = selectedMemberId;
     }
 
-    public String getSelectedMember() {
-        return selectedMember;
+    public String getSelectedMemberId() {
+        return selectedMemberId;
     }
 
     public String getName() {
@@ -88,12 +89,16 @@ public class Household implements Serializable {
     public long save(DatabaseHelper db){
         ContentValues householdValues = populateWithBasicDetails();
         householdValues.put(CREATED_AT, createdAt);
-        return db.save(householdValues, TABLE_NAME);
+
+        long savedId = db.save(householdValues, TABLE_NAME);
+        if(savedId != -1)
+            id = String.valueOf(savedId);
+        return savedId;
     }
 
     public long update(DatabaseHelper db){
         ContentValues householdValues = populateWithBasicDetails();
-        householdValues.put(SELECTED_MEMBER, selectedMember);
+        householdValues.put(SELECTED_MEMBER_ID, selectedMemberId);
         return db.update(householdValues, TABLE_NAME,ID +" = "+getId(),null);
     }
 
@@ -110,6 +115,15 @@ public class Household implements Serializable {
         Household household = new CursorHelper().getHouseholds(cursor).get(0);
         db.close();
         return household;
+    }
+
+    public static Household find_by(DatabaseHelper db, String name) {
+        Cursor cursor = db.exec(String.format(FIND_BY_NAME_QUERY,NAME,name));
+        List<Household> households = new CursorHelper().getHouseholds(cursor);
+        db.close();
+        if(households.isEmpty())
+            return null;
+        return households.get(0);
     }
 
     public static List<Household> getAll(DatabaseHelper db){

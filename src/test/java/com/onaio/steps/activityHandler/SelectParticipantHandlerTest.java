@@ -91,13 +91,13 @@ public class SelectParticipantHandlerTest {
         Mockito.stub(listViewMock.getAdapter()).toReturn(adapterMock);
         Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.NOT_SELECTED);
         Mockito.stub(householdMock.numberOfNonDeletedMembers(dbMock)).toReturn(1);
-        Mockito.stub(householdMock.getSelectedMember()).toReturn("1");
+        Mockito.stub(householdMock.getSelectedMemberId()).toReturn("1");
         Mockito.stub(activityMock.getListView()).toReturn(listViewMock);
         Mockito.stub(activityMock.findViewById(Mockito.anyInt())).toReturn(Mockito.mock(View.class));
 
         selectParticipantHandler.open();
 
-        Mockito.verify(householdMock).setSelectedMember(Mockito.eq(String.valueOf(selectedMemberId)));
+        Mockito.verify(householdMock).setSelectedMemberId(Mockito.eq(String.valueOf(selectedMemberId)));
         Mockito.verify(householdMock).setStatus(Mockito.eq(HouseholdStatus.NOT_DONE));
         Mockito.verify(householdMock).update(Mockito.any(DatabaseHelper.class));
         Mockito.verify(adapterMock).notifyDataSetChanged();

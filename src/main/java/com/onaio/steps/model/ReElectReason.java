@@ -10,6 +10,7 @@ import java.util.List;
 
 public class ReElectReason {
     private static String FIND_ALL_QUERY = "SELECT * FROM REASON WHERE %s=%s ORDER BY Id asc";
+    private static String FIND_COUNT_QUERY = "SELECT count(*) FROM REASON WHERE %s=%s ORDER BY Id asc";
     public static final String TABLE_NAME = "reason";
     public static final String ID = "Id";
     private static final String REASON = "reason";
@@ -54,6 +55,14 @@ public class ReElectReason {
         List<ReElectReason> reasons = read(cursor,household);
         db.close();
         return reasons;
+    }
+
+    public static int count(DatabaseHelper db, Household household){
+        Cursor cursor = db.exec(String.format(FIND_ALL_QUERY, HOUSEHOLD_ID, household.getId()));
+        int count = cursor.getCount();
+        db.close();
+        cursor.close();
+        return count;
     }
 
     private static List<ReElectReason> read(Cursor cursor, Household household) {

@@ -30,7 +30,7 @@ public class MemberViewWrapper {
         validateFields(surname, firstName, gender, ageString);
         if(!errorFields.isEmpty())
             throw new InvalidDataException(MEMBER_ERROR,errorFields);
-        return new Member(surname, firstName, gender, Integer.parseInt(ageString), household);
+        return new Member(surname, firstName, gender, Integer.parseInt(ageString), household, false);
     }
 
     public Member update(Member member,String surname, String firstName, String gender, String ageString) throws InvalidDataException {

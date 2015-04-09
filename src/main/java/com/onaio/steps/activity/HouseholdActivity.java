@@ -77,7 +77,7 @@ public class HouseholdActivity extends ListActivity {
 
     private void populateMembers() {
         db = new DatabaseHelper(getApplicationContext());
-        MemberAdapter memberAdapter = new MemberAdapter(this, household.getAllMembers(db), household.getSelectedMember());
+        MemberAdapter memberAdapter = new MemberAdapter(this, household.getAllMembers(db), household.getSelectedMemberId());
         getListView().setAdapter(memberAdapter);
     }
 
