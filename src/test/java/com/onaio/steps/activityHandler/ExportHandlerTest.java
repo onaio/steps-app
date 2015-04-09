@@ -55,8 +55,6 @@ public class ExportHandlerTest {
 
         households.add(household);
         DatabaseHelper dbMock = Mockito.mock(DatabaseHelper.class);
-
-
         exportHandler.with(households);
 
         Mockito.stub(households.get(0)).toReturn(household);

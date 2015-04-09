@@ -83,7 +83,9 @@ public class TakeSurveyHandlerTest {
     public void ShouldBeAbleToInactivateView(){
         View viewMock = Mockito.mock(View.class);
         Mockito.stub(householdActivityMock.findViewById(R.id.action_take_survey)).toReturn(viewMock);
+
         takeSurveyHandler.inactivate();
+
         Mockito.verify(viewMock).setVisibility(View.INVISIBLE);
     }
 
@@ -91,7 +93,9 @@ public class TakeSurveyHandlerTest {
     public void ShouldBeAbleToActivateView() {
         View viewMock = Mockito.mock(View.class);
         Mockito.stub(householdActivityMock.findViewById(R.id.action_take_survey)).toReturn(viewMock);
+
         takeSurveyHandler.activate();
+
         Mockito.verify(viewMock).setVisibility(View.VISIBLE);
     }
 }
