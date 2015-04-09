@@ -35,11 +35,14 @@ public class HouseholdViewWrapperTest {
     public ExpectedException expectedException = ExpectedException.none();
 
     @Test
-    public void ShouldRaiseExceptionWhenPhoneNumberIsEmpty() throws InvalidDataException {
-        expectedException.expect(InvalidDataException.class);
-        expectedException.expectMessage(Constants.EMPTY_PHONE_NUMBER);
+    public void ShouldGiveHouseholdWhenPhoneNumberIsEmpty() throws InvalidDataException {
+
         HouseholdViewWrapper householdViewWrapper = new HouseholdViewWrapper(activity);
-        householdViewWrapper.getHousehold(R.id.generated_household_id, R.id.household_number);
+        TextView nameView = ((TextView) activity.findViewById(R.id.generated_household_id));
+        nameView.setText("new name");
+        Household household = householdViewWrapper.getHousehold(R.id.generated_household_id, R.id.household_number);
+        assertTrue(household.getName().equals("new name"));
+        assertTrue(household.getStatus().equals(HouseholdStatus.NOT_SELECTED));
     }
 
     @Test
@@ -67,15 +70,15 @@ public class HouseholdViewWrapperTest {
     }
 
     @Test
-    public void ShouldGiveHouseholdWhenPhoneNumberIs10Digit() throws InvalidDataException {
+    public void ShouldGiveHouseholdWhenPhoneNumberIs10DigitOrMore() throws InvalidDataException {
         HouseholdViewWrapper householdViewWrapper = new HouseholdViewWrapper(activity);
         TextView nameView = ((TextView) activity.findViewById(R.id.generated_household_id));
         nameView.setText("new name");
         TextView numberView = (TextView) activity.findViewById(R.id.household_number);
-        numberView.setText("1234567890");
+        numberView.setText("1234567890123");
         Household household = householdViewWrapper.getHousehold(R.id.generated_household_id, R.id.household_number);
         assertTrue(household.getName().equals("new name"));
-        assertTrue(household.getPhoneNumber().equals("1234567890"));
+        assertTrue(household.getPhoneNumber().equals("1234567890123"));
         assertTrue(household.getStatus().equals(HouseholdStatus.NOT_SELECTED));
 
     }

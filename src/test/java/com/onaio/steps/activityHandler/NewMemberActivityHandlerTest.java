@@ -12,6 +12,7 @@ import com.onaio.steps.adapter.MemberAdapter;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.model.Household;
+import com.onaio.steps.model.HouseholdStatus;
 
 import junit.framework.Assert;
 
@@ -48,12 +49,14 @@ public class NewMemberActivityHandlerTest {
     }
 
     @Test
-    public void ShouldOpenActivityWhenProperMenuIdIsPassed(){
+    public void ShouldOpenActivityWhenProperMenuIdIsPassedAndWhenSurveyIsNotRefused(){
+        Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.NOT_DONE);
         assertTrue(newMemberActivityHandler.shouldOpen(R.id.action_add));
     }
 
     @Test
-    public void ShouldNotOpenForOtherMenuId(){
+    public void ShouldNotOpenForOtherMenuIdAndForRefusedState(){
+        Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.REFUSED);
         assertFalse(newMemberActivityHandler.shouldOpen(R.id.action_deferred));
     }
 

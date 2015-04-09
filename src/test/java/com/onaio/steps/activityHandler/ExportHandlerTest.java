@@ -43,7 +43,7 @@ public class ExportHandlerTest {
 
     @Test
     public void ShouldCheckActivityShouldNotOpenForOtherId(){
-        Assert.assertTrue(exportHandler.shouldOpen(R.id.action_settings));
+        Assert.assertFalse(exportHandler.shouldOpen(R.id.action_settings));
     }
 
 
@@ -76,7 +76,7 @@ public class ExportHandlerTest {
 
         exportHandler.withMenu(menuMock).activate();
 
-        Mockito.verify(menuItemMock).setEnabled(false);
+        Mockito.verify(menuItemMock).setEnabled(true);
     }
 
     @Test
@@ -87,7 +87,7 @@ public class ExportHandlerTest {
 
         exportHandler.withMenu(menuMock).inactivate();
 
-        Mockito.verify(menuItemMock).setEnabled(true);
+        Mockito.verify(menuItemMock).setEnabled(false);
     }
 
 
