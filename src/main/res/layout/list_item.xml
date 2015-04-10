@@ -35,13 +35,6 @@
         android:layout_weight="1"
         android:textColor="@android:color/darker_gray"
         android:paddingLeft="5dp"/>
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/secondary_image"
-        android:src="@drawable/ic_survey_not_done"
-        android:layout_gravity="right"
-        android:layout_marginTop="-40dp" />
     <View android:layout_height="1dp"
         android:layout_width="fill_parent"
         android:background="@android:color/darker_gray"

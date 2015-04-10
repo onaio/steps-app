@@ -8,7 +8,7 @@ import android.view.MenuItem;
 import com.onaio.steps.R;
 import com.onaio.steps.activity.EditMemberActivity;
 import com.onaio.steps.activityHandler.Interface.IMenuHandler;
-import com.onaio.steps.activityHandler.Interface.IMenuResultHandler;
+import com.onaio.steps.activityHandler.Interface.IResultHandler;
 import com.onaio.steps.activityHandler.Interface.IPrepare;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.model.HouseholdStatus;
@@ -16,7 +16,7 @@ import com.onaio.steps.model.Member;
 
 import static android.app.Activity.RESULT_OK;
 
-public class EditMemberActivityHandler implements IMenuHandler, IMenuResultHandler,IPrepare {
+public class EditMemberActivityHandler implements IMenuHandler, IResultHandler,IPrepare {
 
     private static final int MENU_ID = R.id.action_edit;
     private Member member;

@@ -1,22 +1,13 @@
 package com.onaio.steps.activityHandler.Factory;
 
 import android.app.Activity;
-import android.app.ListActivity;
 import android.view.Menu;
 
-import com.onaio.steps.activity.MemberActivity;
 import com.onaio.steps.activityHandler.DeleteMemberHandler;
 import com.onaio.steps.activityHandler.EditMemberActivityHandler;
-import com.onaio.steps.activityHandler.ExportHandler;
-import com.onaio.steps.activityHandler.HouseholdActivityHandler;
 import com.onaio.steps.activityHandler.Interface.IMenuHandler;
-import com.onaio.steps.activityHandler.Interface.IMenuResultHandler;
+import com.onaio.steps.activityHandler.Interface.IResultHandler;
 import com.onaio.steps.activityHandler.Interface.IPrepare;
-import com.onaio.steps.activityHandler.MemberActivityHandler;
-import com.onaio.steps.activityHandler.NewHouseholdActivityHandler;
-import com.onaio.steps.activityHandler.SelectParticipantHandler;
-import com.onaio.steps.activityHandler.SettingActivityHandler;
-import com.onaio.steps.model.Household;
 import com.onaio.steps.model.Member;
 
 import java.util.ArrayList;
@@ -37,8 +28,8 @@ public class MemberActivityFactory {
         return handlers;
     }
 
-    public static List<IMenuResultHandler> getMenuResultHandlers(Activity activity, Member member) {
-        ArrayList<IMenuResultHandler> handlers = new ArrayList<IMenuResultHandler>();
+    public static List<IResultHandler> getMenuResultHandlers(Activity activity, Member member) {
+        ArrayList<IResultHandler> handlers = new ArrayList<IResultHandler>();
         handlers.add(new EditMemberActivityHandler(activity,member));
         return handlers;
     }

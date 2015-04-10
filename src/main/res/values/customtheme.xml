@@ -2,10 +2,14 @@
 <resources>
     <style name="CustomTheme" parent="@android:style/Theme.Holo.Light">
         <item name="android:actionBarStyle">@style/CustomTheme.ActionBarStyle</item>
+        <item name="android:actionOverflowButtonStyle">@style/CustomTheme.OverFlowButton</item>
     </style>
 
     <style name="CustomTheme.ActionBarStyle" parent="@android:style/Widget.Holo.Light.ActionBar">
         <item name="android:titleTextStyle">@style/CustomTheme.ActionBar.TitleTextStyle</item>
+    </style>
+
+    <style name="CustomTheme.OverFlowButton" parent="android:style/Widget.Holo.Light.ActionButton.Overflow">
     </style>
 
     <style name="CustomTheme.ActionBar.TitleTextStyle" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">

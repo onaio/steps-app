@@ -6,14 +6,14 @@ import android.content.Intent;
 import com.onaio.steps.R;
 import com.onaio.steps.activity.EditHouseholdActivity;
 import com.onaio.steps.activityHandler.Interface.IMenuHandler;
-import com.onaio.steps.activityHandler.Interface.IMenuResultHandler;
+import com.onaio.steps.activityHandler.Interface.IResultHandler;
 import com.onaio.steps.model.Household;
 
 import static android.app.Activity.*;
 import static com.onaio.steps.helper.Constants.EDIT_HOUSEHOLD_IDENTIFIER;
 import static com.onaio.steps.helper.Constants.HOUSEHOLD;
 
-public class EditHouseholdActivityHandler implements IMenuHandler, IMenuResultHandler {
+public class EditHouseholdActivityHandler implements IMenuHandler, IResultHandler {
 
     private final int MENU_ID = R.id.action_edit;
     private ListActivity activity;

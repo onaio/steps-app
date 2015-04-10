@@ -72,14 +72,12 @@ public class MemberAdapter extends BaseAdapter{
         TextView memberName = (TextView) memberListItem.findViewById(R.id.main_text);
         TextView memberDetail = (TextView) memberListItem.findViewById(R.id.sub_text);
         ImageView image = (ImageView) memberListItem.findViewById(R.id.main_image);
-        ImageView secondaryImage = (ImageView) memberListItem.findViewById(R.id.secondary_image);
         View divider = memberListItem.findViewById(R.id.divider);
         highlightTheSelection(memberName,memberDetail,memberAtPosition);
         memberName.setText(String.format("%s %s",memberAtPosition.getFamilySurname(),memberAtPosition.getFirstName()));
         memberDetail.setText(memberAtPosition.getGender() +" , "+ memberAtPosition.getAge());
         image.setImageResource(R.drawable.ic_contact_list);
         divider.setVisibility(View.INVISIBLE);
-        secondaryImage.setVisibility(View.INVISIBLE);
     }
 
     private View getViewItem(View convertView) {

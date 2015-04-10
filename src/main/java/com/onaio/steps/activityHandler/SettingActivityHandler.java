@@ -5,7 +5,7 @@ import android.content.Intent;
 import com.onaio.steps.R;
 import com.onaio.steps.activity.SettingsActivity;
 import com.onaio.steps.activityHandler.Interface.IMenuHandler;
-import com.onaio.steps.activityHandler.Interface.IMenuResultHandler;
+import com.onaio.steps.activityHandler.Interface.IResultHandler;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.KeyValueStore;
 import com.onaio.steps.helper.KeyValueStoreFactory;
@@ -16,7 +16,7 @@ import static com.onaio.steps.helper.Constants.HOUSEHOLD_SEED;
 import static com.onaio.steps.helper.Constants.PHONE_ID;
 
 
-public class SettingActivityHandler implements IMenuHandler, IMenuResultHandler {
+public class SettingActivityHandler implements IMenuHandler, IResultHandler {
 
     private ListActivity activity;
 
@@ -27,7 +27,7 @@ public class SettingActivityHandler implements IMenuHandler, IMenuResultHandler 
 
     @Override
     public boolean shouldOpen(int menu_id) {
-        return menu_id == R.id.action_settings;
+        return menu_id == R.id.action_settings || menu_id == R.id.go_to_settings;
     }
 
     @Override

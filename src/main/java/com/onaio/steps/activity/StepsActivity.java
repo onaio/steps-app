@@ -14,7 +14,8 @@ import android.widget.ListView;
 import com.onaio.steps.R;
 import com.onaio.steps.activityHandler.Factory.StepsActivityFactory;
 import com.onaio.steps.activityHandler.Interface.IMenuHandler;
-import com.onaio.steps.activityHandler.Interface.IMenuResultHandler;
+import com.onaio.steps.activityHandler.Interface.IResultHandler;
+import com.onaio.steps.activityHandler.NewHouseholdActivityHandler;
 import com.onaio.steps.activityHandler.SettingActivityHandler;
 import com.onaio.steps.adapter.HouseholdAdapter;
 import com.onaio.steps.helper.DatabaseHelper;
@@ -87,8 +88,8 @@ public class StepsActivity extends ListActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        List<IMenuResultHandler> activityHandlers = StepsActivityFactory.getMenuResultsHandlers(this);
-        for(IMenuResultHandler activityHandler: activityHandlers){
+        List<IResultHandler> activityHandlers = StepsActivityFactory.getResultHandlers(this);
+        for(IResultHandler activityHandler: activityHandlers){
             if(activityHandler.canHandleResult(requestCode))
                 activityHandler.handleResult(data,resultCode);
         }
@@ -98,7 +99,10 @@ public class StepsActivity extends ListActivity {
         return KeyValueStoreFactory.instance(this).getString(key) ;
     }
 
-    public void goToSetting(View view) {
-        new SettingActivityHandler(this).open();
+    public void handleCustomMenu(View view){
+        List<IMenuHandler> handlers = StepsActivityFactory.getCustomMenuHandler(this);
+        for(IMenuHandler handler:handlers)
+            if(handler.shouldOpen(view.getId()))
+                handler.open();
     }
 }

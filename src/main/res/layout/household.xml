@@ -8,7 +8,18 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
-
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_margin="15dp"
+        android:background="#499F72"
+        android:text="@string/add_new_member"
+        android:textColor="@android:color/white"
+        android:drawableStart="@drawable/ic_action_new_member"
+        android:drawablePadding="-50dp"
+        android:paddingLeft="50dp"
+        android:onClick="handleCustomMenu"
+        android:id="@+id/action_add_member"/>
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -34,7 +45,7 @@
      android:layout_weight="1"
      android:src="@drawable/ic_action_survey"
      android:background="@android:color/transparent"
-     android:onClick="handleBottomMenu"
+     android:onClick="handleCustomMenu"
      android:focusable="true"
      android:focusableInTouchMode="true"
      android:clickable="false" />
@@ -45,13 +56,13 @@
      android:layout_weight="1"
      android:src="@drawable/ic_action_deferred"
      android:background="@android:color/transparent"
-     android:onClick="handleBottomMenu"/>
+     android:onClick="handleCustomMenu"/>
  <ImageButton android:id="@+id/action_refused"
      android:layout_width="wrap_content"
      android:layout_height="wrap_content"
      android:layout_weight="1"
      android:src="@drawable/ic_action_refused"
      android:background="@android:color/transparent"
-     android:onClick="handleBottomMenu"/>
+     android:onClick="handleCustomMenu"/>
     </LinearLayout>
 </RelativeLayout>

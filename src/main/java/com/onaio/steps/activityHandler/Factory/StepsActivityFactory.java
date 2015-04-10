@@ -7,7 +7,7 @@ import com.onaio.steps.activityHandler.HouseholdActivityHandler;
 import com.onaio.steps.activityHandler.ImportHandler;
 import com.onaio.steps.activityHandler.Interface.IItemHandler;
 import com.onaio.steps.activityHandler.Interface.IMenuHandler;
-import com.onaio.steps.activityHandler.Interface.IMenuResultHandler;
+import com.onaio.steps.activityHandler.Interface.IResultHandler;
 import com.onaio.steps.activityHandler.NewHouseholdActivityHandler;
 import com.onaio.steps.activityHandler.SettingActivityHandler;
 import com.onaio.steps.helper.DatabaseHelper;
@@ -19,7 +19,6 @@ import java.util.List;
 public class StepsActivityFactory {
     public static List<IMenuHandler> getMenuHandlers(ListActivity activity){
         ArrayList<IMenuHandler> handlers = new ArrayList<IMenuHandler>();
-        handlers.add(new NewHouseholdActivityHandler(activity));
         handlers.add(new SettingActivityHandler(activity));
         List<Household> households = Household.getAll(new DatabaseHelper(activity));
         handlers.add(new ExportHandler(activity).with(households));
@@ -27,8 +26,8 @@ public class StepsActivityFactory {
         return handlers;
     }
 
-    public static List<IMenuResultHandler> getMenuResultsHandlers(ListActivity activity){
-        ArrayList<IMenuResultHandler> handlers = new ArrayList<IMenuResultHandler>();
+    public static List<IResultHandler> getResultHandlers(ListActivity activity){
+        ArrayList<IResultHandler> handlers = new ArrayList<IResultHandler>();
         handlers.add(new NewHouseholdActivityHandler(activity));
         handlers.add(new SettingActivityHandler(activity));
         handlers.add(new ImportHandler(activity));
@@ -37,5 +36,12 @@ public class StepsActivityFactory {
 
     public static IItemHandler getHouseholdItemHandler(ListActivity activity, Household household){
         return new HouseholdActivityHandler(activity, household);
+    }
+
+    public static List<IMenuHandler> getCustomMenuHandler(ListActivity activity){
+        ArrayList<IMenuHandler> handlers = new ArrayList<IMenuHandler>();
+        handlers.add(new NewHouseholdActivityHandler(activity));
+        handlers.add(new SettingActivityHandler(activity));
+        return handlers;
     }
 }

@@ -14,7 +14,7 @@ import android.widget.ListView;
 import com.onaio.steps.R;
 import com.onaio.steps.activityHandler.Factory.HouseholdActivityFactory;
 import com.onaio.steps.activityHandler.Interface.IMenuHandler;
-import com.onaio.steps.activityHandler.Interface.IMenuResultHandler;
+import com.onaio.steps.activityHandler.Interface.IResultHandler;
 import com.onaio.steps.activityHandler.Interface.IPrepare;
 import com.onaio.steps.adapter.MemberAdapter;
 import com.onaio.steps.helper.Constants;
@@ -115,14 +115,14 @@ public class HouseholdActivity extends ListActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        List<IMenuResultHandler> menuHandlers = HouseholdActivityFactory.getMenuResultHandlers(this, household);
-        for(IMenuResultHandler menuHandler:menuHandlers)
+        List<IResultHandler> menuHandlers = HouseholdActivityFactory.getMenuResultHandlers(this, household);
+        for(IResultHandler menuHandler:menuHandlers)
             if(menuHandler.canHandleResult(requestCode))
                 menuHandler.handleResult(data, resultCode);
     }
 
-    public void handleBottomMenu(View view) {
-        List<IMenuHandler> bottomMenuItem = HouseholdActivityFactory.getBottomMenuHandler(this, household);
+    public void handleCustomMenu(View view) {
+        List<IMenuHandler> bottomMenuItem = HouseholdActivityFactory.getCustomMenuHandler(this, household);
         for(IMenuHandler menuItem: bottomMenuItem)
             if(menuItem.shouldOpen(view.getId()))
                 menuItem.open();

@@ -4,11 +4,13 @@ import android.app.ListActivity;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 
 import com.onaio.steps.R;
 import com.onaio.steps.activity.NewMemberActivity;
+import com.onaio.steps.activityHandler.Interface.IItemHandler;
 import com.onaio.steps.activityHandler.Interface.IMenuHandler;
-import com.onaio.steps.activityHandler.Interface.IMenuResultHandler;
+import com.onaio.steps.activityHandler.Interface.IResultHandler;
 import com.onaio.steps.activityHandler.Interface.IPrepare;
 import com.onaio.steps.adapter.MemberAdapter;
 import com.onaio.steps.helper.Constants;
@@ -21,13 +23,12 @@ import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
 
-public class NewMemberActivityHandler implements IMenuHandler, IMenuResultHandler,IPrepare{
+public class NewMemberActivityHandler implements IMenuHandler, IResultHandler,IPrepare{
 
     private Household household;
     private ListActivity activity;
     private MemberAdapter memberAdapter;
     private DatabaseHelper db;
-    private Menu menu;
 
 
     NewMemberActivityHandler(Household household, ListActivity activity, MemberAdapter memberAdapter, DatabaseHelper db) {
@@ -43,7 +44,7 @@ public class NewMemberActivityHandler implements IMenuHandler, IMenuResultHandle
 
     @Override
     public boolean shouldOpen(int menu_id) {
-        return ( menu_id == R.id.action_add);
+        return menu_id == R.id.action_add_member;
     }
 
     @Override
@@ -81,18 +82,14 @@ public class NewMemberActivityHandler implements IMenuHandler, IMenuResultHandle
     }
 
     public void inactivate() {
-        MenuItem menuItem = menu.findItem(R.id.action_add);
-        menuItem.setEnabled(false);
+        Button button = (Button) activity.findViewById(R.id.action_add_member);
+        button.setEnabled(false);
     }
 
     @Override
     public void activate() {
-        MenuItem menuItem = menu.findItem(R.id.action_add);
-        menuItem.setEnabled(true);
+        Button button = (Button) activity.findViewById(R.id.action_add_member);
+        button.setEnabled(true);
     }
 
-    public NewMemberActivityHandler withMenu(Menu menu){
-        this.menu = menu;
-        return this;
-    }
 }

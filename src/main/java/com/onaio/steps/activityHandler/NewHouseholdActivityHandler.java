@@ -6,8 +6,9 @@ import android.content.SharedPreferences;
 
 import com.onaio.steps.activity.NewHouseholdActivity;
 import com.onaio.steps.R;
+import com.onaio.steps.activityHandler.Interface.IItemHandler;
 import com.onaio.steps.activityHandler.Interface.IMenuHandler;
-import com.onaio.steps.activityHandler.Interface.IMenuResultHandler;
+import com.onaio.steps.activityHandler.Interface.IResultHandler;
 import com.onaio.steps.adapter.HouseholdAdapter;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.helper.Dialog;
@@ -17,7 +18,7 @@ import static android.app.Activity.RESULT_OK;
 import static android.content.Context.MODE_PRIVATE;
 import static com.onaio.steps.helper.Constants.*;
 
-public class NewHouseholdActivityHandler implements IMenuHandler, IMenuResultHandler {
+public class NewHouseholdActivityHandler implements IMenuHandler, IResultHandler {
 
     private ListActivity activity;
     private Dialog dialog = new Dialog();
@@ -33,7 +34,7 @@ public class NewHouseholdActivityHandler implements IMenuHandler, IMenuResultHan
 
     @Override
     public boolean shouldOpen(int menu_id) {
-        return menu_id == R.id.action_add;
+        return menu_id == R.id.action_add_household;
     }
 
     @Override

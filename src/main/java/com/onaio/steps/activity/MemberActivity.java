@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.onaio.steps.R;
 import com.onaio.steps.activityHandler.Factory.MemberActivityFactory;
 import com.onaio.steps.activityHandler.Interface.IMenuHandler;
-import com.onaio.steps.activityHandler.Interface.IMenuResultHandler;
+import com.onaio.steps.activityHandler.Interface.IResultHandler;
 import com.onaio.steps.activityHandler.Interface.IPrepare;
 import com.onaio.steps.model.Member;
 
@@ -58,8 +58,8 @@ public class MemberActivity extends Activity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        List<IMenuResultHandler> menuHandlers = MemberActivityFactory.getMenuResultHandlers(this, member);
-        for(IMenuResultHandler menuHandler:menuHandlers)
+        List<IResultHandler> menuHandlers = MemberActivityFactory.getMenuResultHandlers(this, member);
+        for(IResultHandler menuHandler:menuHandlers)
             if(menuHandler.canHandleResult(requestCode))
                 menuHandler.handleResult(data, resultCode);
     }
