@@ -69,6 +69,7 @@ public class HouseholdActivityFactory {
         handlers.add(new DeferredHandler(activity,household));
         handlers.add(new RefusedHandler(activity,household));
         handlers.add(new NewMemberActivityHandler(activity,household));
+        handlers.add(new SelectParticipantHandler(activity,household));
         return handlers;
     }
 }

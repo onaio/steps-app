@@ -85,6 +85,7 @@ public class HouseholdAdapter extends BaseAdapter{
             view = inflater.inflate(R.layout.list_item, null);
         } else
             view = convertView;
+        view.setBackgroundColor(Color.WHITE);
         return view;
     }
 }

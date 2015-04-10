@@ -88,6 +88,7 @@ public class MemberAdapter extends BaseAdapter{
                 view = inflater.inflate(R.layout.list_item, null);
         } else
             view = convertView;
+        view.setBackgroundColor(Color.TRANSPARENT);
         return view;
     }
 }
