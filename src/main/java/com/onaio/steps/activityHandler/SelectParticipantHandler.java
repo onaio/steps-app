@@ -6,8 +6,11 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+
 import com.onaio.steps.R;
 import com.onaio.steps.activityHandler.Factory.HouseholdActivityFactory;
 import com.onaio.steps.activityHandler.Interface.IMenuHandler;
@@ -29,7 +32,7 @@ public class SelectParticipantHandler implements IMenuHandler, IPrepare {
 
     private final int MENU_ID = R.id.action_select_participant;
     private final int MAX_RE_ELECT_COUNT = 2;
-    private final Dialog dialog;
+    private Dialog dialog;
     private ListActivity activity;
     private Household household;
     private Menu menu;
@@ -53,7 +56,7 @@ public class SelectParticipantHandler implements IMenuHandler, IPrepare {
 
     @Override
     public boolean open() {
-        confirm();
+        popUpMessage();
         return true;
     }
 
@@ -82,6 +85,40 @@ public class SelectParticipantHandler implements IMenuHandler, IPrepare {
 
     private void confirm() {
         trySelectingParticipant();
+    }
+
+    private void popUpMessage(){
+        final android.app.Dialog dialog1 = new android.app.Dialog(activity);
+        dialog1.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog1.setContentView(R.layout.dialog_layout);
+        dialog1.setCancelable(true);
+        TextView textView = (TextView)dialog1.findViewById(R.id.textView);
+        textView.setText(R.string.select_participant_message);
+
+        //for save
+        Button popone = (Button)dialog1.findViewById(R.id.button1);
+        popone.setText("PROCEED WITH SELECTION");
+        popone.setOnClickListener(new View.OnClickListener()
+        {
+            public void onClick(View v)
+            {
+            trySelectingParticipant();
+            }
+        });
+
+
+        //for cancel
+        Button poptwo = (Button)dialog1.findViewById(R.id.button2);
+        poptwo.setText("RETURN TO HOUSEHOLD MEMBER LIST");
+
+        poptwo.setOnClickListener(new View.OnClickListener()
+        {
+            public void onClick(View v)
+            {
+                dialog1.dismiss();
+            }
+        });
+        dialog1.show();
     }
 
     private void trySelectingParticipant() {
