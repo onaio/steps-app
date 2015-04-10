@@ -84,13 +84,11 @@ public class SelectParticipantHandler implements IMenuHandler, IPrepare {
     private void popUpMessage(){
         final android.app.Dialog selection_dialog = new android.app.Dialog(activity);
         selection_dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        selection_dialog.setContentView(R.layout.dialog_layout);
+        selection_dialog.setContentView(R.layout.select_participant_dialog);
         selection_dialog.setCancelable(true);
-        TextView textView = (TextView)selection_dialog.findViewById(R.id.select_participant_message);
         Button confirm = (Button)selection_dialog.findViewById(R.id.confirm);
         Button cancel = (Button)selection_dialog.findViewById(R.id.cancel);
 
-        textView.setText(R.string.select_participant_message);
         confirm.setOnClickListener(new View.OnClickListener()
         {
             public void onClick(View v)
