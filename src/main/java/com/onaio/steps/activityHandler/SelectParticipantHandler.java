@@ -56,7 +56,7 @@ public class SelectParticipantHandler implements IMenuHandler, IPrepare {
 
     @Override
     public boolean open() {
-        popUpMessage();
+        trySelectingParticipant();
         return true;
     }
 
@@ -83,36 +83,33 @@ public class SelectParticipantHandler implements IMenuHandler, IPrepare {
         menuItem.setEnabled(true);
     }
 
-    private void confirm() {
-        trySelectingParticipant();
-    }
 
     private void popUpMessage(){
-        final android.app.Dialog dialog1 = new android.app.Dialog(activity);
-        dialog1.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog1.setContentView(R.layout.dialog_layout);
-        dialog1.setCancelable(true);
-        TextView textView = (TextView)dialog1.findViewById(R.id.select_participant_message);
-        Button popone = (Button)dialog1.findViewById(R.id.confirm);
-        Button poptwo = (Button)dialog1.findViewById(R.id.cancel);
+        final android.app.Dialog selection_dialog = new android.app.Dialog(activity);
+        selection_dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        selection_dialog.setContentView(R.layout.dialog_layout);
+        selection_dialog.setCancelable(true);
+        TextView textView = (TextView)selection_dialog.findViewById(R.id.select_participant_message);
+        Button confirm = (Button)selection_dialog.findViewById(R.id.confirm);
+        Button cancel = (Button)selection_dialog.findViewById(R.id.cancel);
 
         textView.setText(R.string.select_participant_message);
-        popone.setOnClickListener(new View.OnClickListener()
+        confirm.setOnClickListener(new View.OnClickListener()
         {
             public void onClick(View v)
             {
-            dialog1.dismiss();
-            trySelectingParticipant();
+            selection_dialog.dismiss();
+            selectParticipant();
             }
         });
-        poptwo.setOnClickListener(new View.OnClickListener()
+        cancel.setOnClickListener(new View.OnClickListener()
         {
             public void onClick(View v)
             {
-                dialog1.dismiss();
+                selection_dialog.dismiss();
             }
         });
-        dialog1.show();
+        selection_dialog.show();
     }
 
     private void trySelectingParticipant() {
@@ -124,16 +121,10 @@ public class SelectParticipantHandler implements IMenuHandler, IPrepare {
                 selectParticipant();
             }
         };
-        DialogInterface.OnClickListener confirmListenerForFirstSelection = new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                selectParticipant();
-            }
-        };
+
 
         switch(household.getStatus()){
-            case NOT_SELECTED: dialog.confirm(activity, confirmListenerForFirstSelection, Dialog.EmptyListener, R.string.select_participant_message, R.string.select_participant_title);
-                break;
+            case NOT_SELECTED: popUpMessage(); break;
             case NOT_DONE: dialog.confirm(activity, confirmListenerForReElection, Dialog.EmptyListener, confirmation, R.string.participant_re_elect_reason_title);
                 break;
             case DEFERRED: dialog.confirm(activity, confirmListenerForReElection, Dialog.EmptyListener, confirmation, R.string.participant_re_elect_reason_title);

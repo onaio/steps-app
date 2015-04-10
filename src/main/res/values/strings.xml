@@ -65,5 +65,5 @@
     <string name="action_import">Import</string>
     <string name="proceed_with_selection">PROCEED WITH SELECTION</string>
     <string name="return_to_household_member_list">RETURN TO HOUSEHOLD MEMBER LIST</string>
-    <string name="select_participant_title">SELECT PARTIPANT</string>
+    <string name="select_participant_title">SELECT PARTICIPANT</string>
 </resources>
