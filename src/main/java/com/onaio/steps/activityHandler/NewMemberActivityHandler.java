@@ -75,7 +75,9 @@ public class NewMemberActivityHandler implements IMenuHandler, IMenuResultHandle
 
     @Override
     public boolean shouldInactivate() {
-        return household.getStatus().equals(HouseholdStatus.REFUSED);
+        boolean surveyDone = household.getStatus().equals(HouseholdStatus.DONE);
+        boolean refusedHousehold = household.getStatus().equals(HouseholdStatus.REFUSED);
+        return refusedHousehold || surveyDone;
     }
 
     public void inactivate() {

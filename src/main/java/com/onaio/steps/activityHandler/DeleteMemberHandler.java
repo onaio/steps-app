@@ -58,7 +58,8 @@ public class DeleteMemberHandler implements IMenuHandler,IPrepare {
     public boolean shouldInactivate() {
         boolean isSelectedMember = String.valueOf(member.getId()).equals(member.getHousehold().getSelectedMemberId());
         boolean refusedHousehold = member.getHousehold().getStatus().equals(HouseholdStatus.REFUSED);
-        return (isSelectedMember || refusedHousehold);
+        boolean surveyDone = member.getHousehold().getStatus().equals(HouseholdStatus.DONE);
+        return (isSelectedMember || refusedHousehold || surveyDone);
     }
 
     @Override
