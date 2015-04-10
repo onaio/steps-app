@@ -37,14 +37,14 @@ public class HouseholdActivity extends ListActivity {
         household = (Household)intent.getSerializableExtra(Constants.HOUSEHOLD);
         styleActionBar();
         handleMembers();
-        prepareBottomMenuItems();
+        prepareCustomMenu();
     }
 
     private void styleActionBar() {
         ActionBar actionBar = getActionBar();
         actionBar.setDisplayHomeAsUpEnabled(false);
         actionBar.setIcon(R.drawable.ic_action_back);
-        actionBar.setSubtitle("Members");
+        actionBar.setSubtitle(household.getPhoneNumber());
         actionBar.setTitle(household.getName());
     }
 
@@ -53,8 +53,8 @@ public class HouseholdActivity extends ListActivity {
         bindMemberItems();
     }
 
-    private void prepareBottomMenuItems() {
-        List<IPrepare> bottomMenus = HouseholdActivityFactory.getBottomMenuPreparer(this, household);
+    private void prepareCustomMenu() {
+        List<IPrepare> bottomMenus = HouseholdActivityFactory.getCustomMenuPreparer(this, household);
         for(IPrepare menu:bottomMenus)
             if(menu.shouldInactivate())
                 menu.inactivate();
@@ -83,7 +83,7 @@ public class HouseholdActivity extends ListActivity {
 
     @Override
     protected void onResume() {
-        prepareBottomMenuItems();
+        prepareCustomMenu();
         super.onResume();
     }
 

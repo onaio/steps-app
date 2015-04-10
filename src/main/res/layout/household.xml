@@ -8,18 +8,38 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
-    <Button
+    <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="50dp"
-        android:layout_margin="15dp"
-        android:background="#499F72"
-        android:text="@string/add_new_member"
-        android:textColor="@android:color/white"
-        android:drawableStart="@drawable/ic_action_new_member"
-        android:drawablePadding="-50dp"
-        android:paddingLeft="50dp"
-        android:onClick="handleCustomMenu"
-        android:id="@+id/action_add_member"/>
+        android:layout_height="80dp"
+        android:orientation="horizontal">
+        <Button
+            android:layout_width="1dp"
+            android:layout_weight="1"
+            android:layout_height="50dp"
+            android:layout_margin="15dp"
+            android:background="#499F72"
+            android:text="@string/add_new_member"
+            android:textColor="@android:color/white"
+            android:drawableStart="@drawable/ic_action_new_member"
+            android:drawablePadding="-10dp"
+            android:paddingLeft="10dp"
+            android:onClick="handleCustomMenu"
+            android:id="@+id/action_add_member"/>
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:layout_margin="15dp"
+            android:background="#FFC600"
+            android:text="@string/action_select_participant"
+            android:textColor="@android:color/black"
+            android:drawableStart="@drawable/ic_action_select_participant"
+            android:drawablePadding="-10dp"
+            android:paddingLeft="10dp"
+            android:onClick="handleCustomMenu"
+            android:id="@+id/action_select_participant"/>
+        </LinearLayout>
+
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"

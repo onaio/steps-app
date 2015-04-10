@@ -3,8 +3,6 @@ package com.onaio.steps.activityHandler;
 import android.app.ListActivity;
 import android.content.DialogInterface;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -35,7 +33,6 @@ public class SelectParticipantHandler implements IMenuHandler, IPrepare {
     private Dialog dialog;
     private ListActivity activity;
     private Household household;
-    private Menu menu;
     private DatabaseHelper db;
 
     public SelectParticipantHandler(ListActivity activity, Household household) {
@@ -73,13 +70,13 @@ public class SelectParticipantHandler implements IMenuHandler, IPrepare {
 
     @Override
     public void inactivate() {
-        MenuItem menuItem = menu.findItem(MENU_ID);
-        menuItem.setEnabled(false);
+        View item = activity.findViewById(MENU_ID);
+        item.setEnabled(false);
     }
 
     @Override
     public void activate() {
-        MenuItem menuItem = menu.findItem(MENU_ID);
+        View menuItem = activity.findViewById(MENU_ID);
         menuItem.setEnabled(true);
     }
 
@@ -154,7 +151,7 @@ public class SelectParticipantHandler implements IMenuHandler, IPrepare {
     }
 
     private void prepareBottomMenuItems() {
-        List<IPrepare> bottomMenus = HouseholdActivityFactory.getBottomMenuPreparer(activity, household);
+        List<IPrepare> bottomMenus = HouseholdActivityFactory.getCustomMenuPreparer(activity, household);
         for(IPrepare menu:bottomMenus)
             if(menu.shouldInactivate())
                 menu.inactivate();
@@ -182,11 +179,6 @@ public class SelectParticipantHandler implements IMenuHandler, IPrepare {
         Random random = new Random();
         int selectedParticipant = random.nextInt(totalMembers);
         return (Member) listView.getItemAtPosition(selectedParticipant);
-    }
-
-    public SelectParticipantHandler withMenu(Menu menu){
-        this.menu = menu;
-        return this;
     }
 
     protected View getView() {
