@@ -53,7 +53,7 @@ public class SelectParticipantHandler implements IMenuHandler, IPrepare {
 
     @Override
     public boolean open() {
-        trySelectingParticipant();
+        confirm();
         return true;
     }
 
@@ -78,6 +78,18 @@ public class SelectParticipantHandler implements IMenuHandler, IPrepare {
     public void activate() {
         MenuItem menuItem = menu.findItem(MENU_ID);
         menuItem.setEnabled(true);
+    }
+
+    private void confirm() {
+        DialogInterface.OnClickListener confirmListener = new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                trySelectingParticipant();
+            }
+        };
+
+        dialog.confirm(activity, confirmListener, Dialog.EmptyListener, R.string.select_participant_message, R.string.select_participant_title);
     }
 
     private void trySelectingParticipant() {

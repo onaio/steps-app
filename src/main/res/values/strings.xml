@@ -33,6 +33,8 @@
     <string name="confirm_ok">Confirm</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
+    <string name="select_participant_title">SELECT PARTICIPANT</string>
+    <string name="select_participant_message">Please confirm that all eligible household members have been entered and you are ready to proceed with selection.</string>
     <string name="survey_refusal_title">Confirm Refusal</string>
     <string name="survey_refusal_message">You are going to mark the household for refusal. This action can not be reversed. Are you sure?</string>
     <string name="participant_no_re_elect_title">Can not re elect</string>
