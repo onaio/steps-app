@@ -26,7 +26,7 @@ public class NewHouseholdActivityHandler implements IMenuHandler, IMenuResultHan
         this(activity,new Dialog());
     }
 
-    public NewHouseholdActivityHandler(ListActivity activity, Dialog dialog) {
+    NewHouseholdActivityHandler(ListActivity activity, Dialog dialog) {
         this.activity = activity;
         this.dialog = dialog;
     }

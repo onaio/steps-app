@@ -84,23 +84,11 @@ public class SelectParticipantHandlerTest {
 
     @Test
     public void ShouldSelectParticipantWhenNoSelectionDone(){
-        ListView listViewMock = Mockito.mock(ListView.class);
-        MemberAdapter adapterMock = Mockito.mock(MemberAdapter.class);
-        int selectedMemberId = 2;
-        Mockito.stub(listViewMock.getItemAtPosition(Mockito.anyInt())).toReturn(new Member(selectedMemberId,"family surname", "first name",Constants.MALE,27,householdMock,"household_member_id",false));
-        Mockito.stub(listViewMock.getAdapter()).toReturn(adapterMock);
         Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.NOT_SELECTED);
-        Mockito.stub(householdMock.numberOfNonDeletedMembers(dbMock)).toReturn(1);
-        Mockito.stub(householdMock.getSelectedMemberId()).toReturn("1");
-        Mockito.stub(activityMock.getListView()).toReturn(listViewMock);
-        Mockito.stub(activityMock.findViewById(Mockito.anyInt())).toReturn(Mockito.mock(View.class));
 
         selectParticipantHandler.open();
 
-        Mockito.verify(householdMock).setSelectedMemberId(Mockito.eq(String.valueOf(selectedMemberId)));
-        Mockito.verify(householdMock).setStatus(Mockito.eq(HouseholdStatus.NOT_DONE));
-        Mockito.verify(householdMock).update(Mockito.any(DatabaseHelper.class));
-        Mockito.verify(adapterMock).notifyDataSetChanged();
+        verify(dialogMock).confirm(eq(activityMock),any(DialogInterface.OnClickListener.class),eq(Dialog.EmptyListener),eq(R.string.select_participant_message),eq(R.string.select_participant_title));
     }
 
     private class SelectParticipantHandlerMock extends SelectParticipantHandler{

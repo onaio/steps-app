@@ -24,7 +24,7 @@ public class RefusedHandler implements IMenuHandler,IPrepare {
     }
 
     //Constructor to be used for Testing
-    public RefusedHandler(ListActivity activity, Household household, Dialog dialog) {
+    RefusedHandler(ListActivity activity, Household household, Dialog dialog) {
         this.activity = activity;
         this.household = household;
         this.dialog=dialog;

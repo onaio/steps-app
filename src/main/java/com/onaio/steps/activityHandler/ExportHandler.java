@@ -33,7 +33,6 @@ public class ExportHandler implements IMenuHandler,IPrepare {
     private int MENU_ID = R.id.action_export;
 
     public ExportHandler(ListActivity activity) {
-
         this.activity = activity;
         databaseHelper = new DatabaseHelper(activity.getApplicationContext());
         households = new ArrayList<Household>();

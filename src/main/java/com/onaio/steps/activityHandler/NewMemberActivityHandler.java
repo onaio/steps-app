@@ -30,7 +30,7 @@ public class NewMemberActivityHandler implements IMenuHandler, IMenuResultHandle
     private Menu menu;
 
 
-    public NewMemberActivityHandler(Household household, ListActivity activity, MemberAdapter memberAdapter, DatabaseHelper db) {
+    NewMemberActivityHandler(Household household, ListActivity activity, MemberAdapter memberAdapter, DatabaseHelper db) {
         this.household = household;
         this.activity = activity;
         this.memberAdapter = memberAdapter;

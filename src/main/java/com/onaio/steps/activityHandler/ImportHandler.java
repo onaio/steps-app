@@ -30,7 +30,7 @@ public class ImportHandler implements IMenuHandler, IMenuResultHandler {
         this(activity, new DatabaseHelper(activity),new FileUtil());
     }
 
-    public ImportHandler(ListActivity activity, DatabaseHelper db, FileUtil fileUtil) {
+    ImportHandler(ListActivity activity, DatabaseHelper db, FileUtil fileUtil) {
         this.activity = activity;
         this.db = db;
         this.fileUtil = fileUtil;

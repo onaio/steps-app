@@ -16,6 +16,7 @@ import static com.onaio.steps.helper.Constants.*;
 
 public class NewHouseholdActivity extends Activity {
 
+    private final DatabaseHelper db = new DatabaseHelper(this);
     private String phoneId;
     private int householdSeed;
     private int DELTA = 1;
@@ -36,7 +37,7 @@ public class NewHouseholdActivity extends Activity {
 
     private void populateGeneratedHouseholdId() {
         TextView phoneIdView = (TextView) findViewById(R.id.generated_household_id);
-        int householdsCount = Household.getAllCount(new DatabaseHelper(this));
+        int householdsCount = Household.getAllCount(db);
         int generatedId = householdSeed + householdsCount + DELTA;
         phoneIdView.setText(String.format("%s-%d",phoneId, generatedId));
     }
@@ -53,7 +54,6 @@ public class NewHouseholdActivity extends Activity {
         try {
             Intent intent = this.getIntent();
             Household household = new HouseholdViewWrapper(this).getHousehold(R.id.generated_household_id, R.id.household_number);
-            DatabaseHelper db = new DatabaseHelper(getApplicationContext());
             household.save(db);
             setResult(RESULT_OK, intent);
             finish();

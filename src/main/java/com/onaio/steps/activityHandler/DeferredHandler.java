@@ -23,7 +23,7 @@ public class DeferredHandler implements IMenuHandler,IPrepare {
         this(activity,household,new Dialog());
     }
 
-    public DeferredHandler(ListActivity activity, Household household, Dialog dialog) {
+    DeferredHandler(ListActivity activity, Household household, Dialog dialog) {
         this.activity = activity;
         this.household = household;
         this.dialog = dialog;

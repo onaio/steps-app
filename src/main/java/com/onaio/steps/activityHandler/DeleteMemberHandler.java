@@ -24,7 +24,7 @@ public class DeleteMemberHandler implements IMenuHandler,IPrepare {
         this(activity, member, new Dialog());
     }
 
-    public DeleteMemberHandler(Activity activity, Member member, Dialog dialog) {
+    DeleteMemberHandler(Activity activity, Member member, Dialog dialog) {
         this.activity = activity;
         this.member = member;
         this.dialog = dialog;

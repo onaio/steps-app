@@ -1,5 +1,6 @@
 package com.onaio.steps.activityHandler;
 
+import android.content.DialogInterface;
 import android.view.View;
 
 import com.onaio.steps.R;
@@ -57,8 +58,7 @@ public class DeferredHandlerTest {
 
         verify(householdMock).setStatus(HouseholdStatus.DEFERRED);
         verify(householdMock).update(any(DatabaseHelper.class));
-        verify(dialogMock).notify(activityMock,Dialog.EmptyListener,R.string.survey_deferred_message,R.string.survey_deferred_title);
-        verify(activityMock).finish();
+        verify(dialogMock).notify(eq(activityMock),any(DialogInterface.OnClickListener.class),eq(R.string.survey_deferred_message),eq(R.string.survey_deferred_title));
     }
 
     @Test

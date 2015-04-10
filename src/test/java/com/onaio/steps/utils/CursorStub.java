@@ -53,7 +53,7 @@ public class CursorStub {
         Mockito.stub(cursor.getString(8)).toReturn(householdId);
     }
 
-//    public void stubCursorForMemberCount(int count){
-//        Mockito.stub(cursor.getCount()).toReturn(count);
-//    }
+    public void stubCursorForCount(int count){
+        Mockito.stub(cursor.getCount()).toReturn(count);
+    }
 }

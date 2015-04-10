@@ -27,30 +27,43 @@ import static org.robolectric.Robolectric.shadowOf;
 @RunWith(RobolectricTestRunner.class)
 public class NewHouseholdActivityTest {
 
+    private final String PHONE_ID = "123456789";
+    private final String HOUSEHOLD_SEED = "100";
     private NewHouseholdActivity newHouseholdActivity;
 
     @Before
     public void setup(){
-        newHouseholdActivity = Robolectric.buildActivity(NewHouseholdActivity.class).setup().get();
+        Intent intent = new Intent();
+        intent.putExtra(Constants.PHONE_ID, PHONE_ID);
+        intent.putExtra(Constants.HOUSEHOLD_SEED, HOUSEHOLD_SEED);
+
+        newHouseholdActivity = Robolectric.buildActivity(NewHouseholdActivity.class)
+                                .withIntent(intent)
+                                .create()
+                                .get();
     }
     @Test
     public void ShouldPopulateView(){
-        Intent intentMock = Mockito.mock(Intent.class);
-        Mockito.stub(intentMock.getStringExtra(Constants.PHONE_ID)).toReturn("1234");
-        Mockito.stub(intentMock.getStringExtra(Constants.HOUSEHOLD_SEED)).toReturn("100");
-        DatabaseHelper db = Mockito.mock(DatabaseHelper.class);
-
-        Cursor cursorMock = Mockito.mock(Cursor.class);
-        Mockito.stub(db.exec(Mockito.anyString())).toReturn(cursorMock);
-        Mockito.stub(Household.getAllCount(db)).toReturn(4);
-
+//        DatabaseHelper db = Mockito.mock(DatabaseHelper.class);
+//        Cursor cursorMock = Mockito.mock(Cursor.class);
+//        Mockito.stub(db.exec(Mockito.anyString())).toReturn(cursorMock);
 
         assertEquals(R.id.household_form, shadowOf(newHouseholdActivity).getContentView().getId());
-        TextView header = (TextView)newHouseholdActivity.findViewById(R.id.household_form_header);
-        TextView phoneIdView = (TextView)newHouseholdActivity.findViewById(R.id.generated_household_id);
+        TextView header = (TextView)newHouseholdActivity.findViewById(R.id.form_header);
+        TextView generatedHouseholdId = (TextView)newHouseholdActivity.findViewById(R.id.generated_household_id);
+        TextView phoneNumber = (TextView)newHouseholdActivity.findViewById(R.id.household_number);
 
         assertNotNull(header);
-        assertTrue(header.getText().equals("Add New Household"));
-        assertTrue(phoneIdView.getText().equals("1234-105"));
+        assertNotNull(generatedHouseholdId);
+        assertNotNull(phoneNumber);
+        assertEquals("Add New Household", header.getText().toString());
+        assertEquals("123456789-101", generatedHouseholdId.getText().toString());
+    }
+
+    @Test
+    public void ShouldFinishActivityOnCancel(){
+        newHouseholdActivity.cancel(null);
+
+        assertTrue(newHouseholdActivity.isFinishing());
     }
 }

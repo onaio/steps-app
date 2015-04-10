@@ -39,7 +39,7 @@ public class SelectParticipantHandler implements IMenuHandler, IPrepare {
         this(activity, household, new Dialog(), new DatabaseHelper(activity));
     }
 
-    public SelectParticipantHandler(ListActivity activity, Household household, Dialog dialog, DatabaseHelper db) {
+    SelectParticipantHandler(ListActivity activity, Household household, Dialog dialog, DatabaseHelper db) {
         this.activity = activity;
         this.household = household;
         this.dialog = dialog;
@@ -81,33 +81,31 @@ public class SelectParticipantHandler implements IMenuHandler, IPrepare {
     }
 
     private void confirm() {
-        DialogInterface.OnClickListener confirmListener = new DialogInterface.OnClickListener() {
-
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                trySelectingParticipant();
-            }
-        };
-
-        dialog.confirm(activity, confirmListener, Dialog.EmptyListener, R.string.select_participant_message, R.string.select_participant_title);
+        trySelectingParticipant();
     }
 
     private void trySelectingParticipant() {
         final View confirmation = getView();
-        DialogInterface.OnClickListener confirmListener = new DialogInterface.OnClickListener() {
+        DialogInterface.OnClickListener confirmListenerForReElection = new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 saveReason(confirmation);
                 selectParticipant();
             }
         };
+        DialogInterface.OnClickListener confirmListenerForFirstSelection = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                selectParticipant();
+            }
+        };
 
         switch(household.getStatus()){
-            case NOT_SELECTED: selectParticipant();
+            case NOT_SELECTED: dialog.confirm(activity, confirmListenerForFirstSelection, Dialog.EmptyListener, R.string.select_participant_message, R.string.select_participant_title);
                 break;
-            case NOT_DONE: dialog.confirm(activity, confirmListener, Dialog.EmptyListener, confirmation, R.string.participant_re_elect_reason_title);
+            case NOT_DONE: dialog.confirm(activity, confirmListenerForReElection, Dialog.EmptyListener, confirmation, R.string.participant_re_elect_reason_title);
                 break;
-            case DEFERRED: dialog.confirm(activity, confirmListener, Dialog.EmptyListener, confirmation, R.string.participant_re_elect_reason_title);
+            case DEFERRED: dialog.confirm(activity, confirmListenerForReElection, Dialog.EmptyListener, confirmation, R.string.participant_re_elect_reason_title);
                 break;
             default: new Dialog().notify(activity, Dialog.EmptyListener, R.string.participant_no_re_elect_message_because_of_status, R.string.participant_no_re_elect_title);
         }
