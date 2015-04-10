@@ -13,9 +13,15 @@ public class SettingsActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.settings);
+        setView();
         populatePhoneId();
 
+    }
+
+    private void setView() {
+        setContentView(R.layout.settings);
+        TextView header = (TextView) findViewById(R.id.form_header);
+        header.setText(R.string.action_settings);
     }
 
     private void populatePhoneId() {
@@ -31,7 +37,7 @@ public class SettingsActivity extends Activity {
         householdSeedView.setText(householdSeed);
     }
 
-    public void saveSettings(View view) {
+    public void save(View view) {
         Intent intent = this.getIntent();
         String phoneId = ((TextView) findViewById(R.id.deviceId)).getText().toString();
         String endpointUrl = ((TextView) findViewById(R.id.endpointUrl)).getText().toString();
@@ -44,6 +50,10 @@ public class SettingsActivity extends Activity {
         intent.putExtra(Constants.ENDPOINT_URL, endpointUrl);
         intent.putExtra(Constants.HOUSEHOLD_SEED, householdSeed);
         setResult(RESULT_OK, intent);
+        finish();
+    }
+
+    public void cancel(View view){
         finish();
     }
 

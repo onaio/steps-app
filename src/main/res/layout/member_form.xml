@@ -4,32 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/member_form"    >
-
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="50dp">
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:clickable="true"
-            android:scaleType="fitStart"
-            android:longClickable="true"
-            android:text = "@string/action_done"
-            android:drawableLeft="@drawable/ic_done"
-            android:background="@android:color/transparent"
-            android:textColor="@android:color/black"
-            android:onClick="saveMember"
-            android:id="@+id/ic_done" />
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/member_form_header"
-            android:layout_marginLeft="-70dp"
-            android:gravity="center_horizontal"
-            android:textColor="#008148"/>
-    </LinearLayout>
+    <include layout="@layout/dialog_header"/>
     <View android:layout_height="1dp"
         android:layout_width="fill_parent"
         android:background="#73C7E5"

@@ -4,33 +4,7 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:id="@+id/settings">
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="50dp">
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:clickable="true"
-            android:scaleType="fitStart"
-            android:longClickable="true"
-            android:text = "Done"
-            android:drawableLeft="@drawable/ic_done"
-            android:background="@android:color/transparent"
-            android:textColor="@android:color/black"
-            android:onClick="saveSettings"/>
-
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:text="@string/action_settings"
-            android:textSize="20sp"
-            android:autoText="false"
-            android:gravity="center|center_vertical"
-            android:layout_marginLeft="-70dp"
-            android:textColor="#008148"/>
-
-    </LinearLayout>
+    <include layout="@layout/dialog_header"/>
     <View android:layout_height="2dp"
         android:layout_width="fill_parent"
         android:background="#73C7E5"

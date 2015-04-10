@@ -38,7 +38,7 @@ public class EditMemberActivity extends Activity {
 
     private void populateView() {
         setContentView(R.layout.member_form);
-        TextView header = (TextView) findViewById(R.id.member_form_header);
+        TextView header = (TextView) findViewById(R.id.form_header);
         header.setText(R.string.member_edit_header);
     }
 
@@ -54,7 +54,7 @@ public class EditMemberActivity extends Activity {
     }
 
 
-    public void saveMember(View view) {
+    public void save(View view) {
         try{
             String surname = ((TextView) findViewById(R.id.member_family_surname)).getText().toString();
             String firstName = ((TextView) findViewById(R.id.member_first_name)).getText().toString();
@@ -68,6 +68,10 @@ public class EditMemberActivity extends Activity {
         } catch (InvalidDataException e) {
             new Dialog().notify(this,Dialog.EmptyListener,e.getMessage(),R.string.error_title);
         }
+    }
+
+    public void cancel(View view){
+        finish();
     }
 
     private String genderSelection(int genderSelectionId) {

@@ -33,12 +33,12 @@ public class NewMemberActivity extends Activity {
 
     private void populateView() {
         setContentView(R.layout.member_form);
-        TextView header = (TextView) findViewById(R.id.member_form_header);
+        TextView header = (TextView) findViewById(R.id.form_header);
         header.setText(R.string.member_new_header);
     }
 
 
-    public void saveMember(View view) {
+    public void save(View view) {
         try{
             Member member = new MemberViewWrapper(this)
                     .getMember(R.id.member_family_surname, R.id.member_first_name, R.id.member_gender, R.id.member_age, household);
@@ -48,5 +48,9 @@ public class NewMemberActivity extends Activity {
         } catch (InvalidDataException e) {
             new Dialog().notify(this,Dialog.EmptyListener,e.getMessage(),R.string.error_title);
         }
+    }
+
+    public void cancel(View view){
+        finish();
     }
 }

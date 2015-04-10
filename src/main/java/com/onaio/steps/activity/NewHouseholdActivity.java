@@ -30,7 +30,7 @@ public class NewHouseholdActivity extends Activity {
 
     private void populateView() {
         setContentView(R.layout.household_form);
-        TextView header = (TextView) findViewById(R.id.household_form_header);
+        TextView header = (TextView) findViewById(R.id.form_header);
         header.setText(R.string.household_new_header);
     }
 
@@ -49,7 +49,7 @@ public class NewHouseholdActivity extends Activity {
         householdSeed = Integer.parseInt(householdSeedString);
     }
 
-    public void saveHousehold(View view) {
+    public void save(View view) {
         try {
             Intent intent = this.getIntent();
             Household household = new HouseholdViewWrapper(this).getHousehold(R.id.generated_household_id, R.id.household_number);
@@ -60,6 +60,10 @@ public class NewHouseholdActivity extends Activity {
         } catch (InvalidDataException e) {
             new Dialog().notify(this,Dialog.EmptyListener,e.getMessage(),R.string.error_title);
         }
+    }
+
+    public void cancel(View view){
+        finish();
     }
 
 }
