@@ -14,7 +14,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:textSize="20sp"
-        android:id="@+id/textView"
+        android:id="@+id/select_participant_message"
         />
 
     <Button
@@ -23,8 +23,9 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:textSize="12sp"
-        android:id="@+id/button1"
-        android:layout_below="@+id/textView"
+        android:id="@+id/confirm"
+        android:text="@string/proceed_with_selection"
+        android:layout_below="@+id/select_participant_message"
         android:focusableInTouchMode="true"
        />
 
@@ -34,8 +35,8 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:textSize="12sp"
-        android:id="@+id/button2"
-        android:layout_below="@+id/button1"
-        />
+        android:text="@string/return_to_household_member_list"
+        android:id="@+id/cancel"
+        android:layout_below="@+id/confirm"/>
 
 </RelativeLayout>

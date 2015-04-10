@@ -92,25 +92,19 @@ public class SelectParticipantHandler implements IMenuHandler, IPrepare {
         dialog1.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog1.setContentView(R.layout.dialog_layout);
         dialog1.setCancelable(true);
-        TextView textView = (TextView)dialog1.findViewById(R.id.textView);
-        textView.setText(R.string.select_participant_message);
+        TextView textView = (TextView)dialog1.findViewById(R.id.select_participant_message);
+        Button popone = (Button)dialog1.findViewById(R.id.confirm);
+        Button poptwo = (Button)dialog1.findViewById(R.id.cancel);
 
-        //for save
-        Button popone = (Button)dialog1.findViewById(R.id.button1);
-        popone.setText("PROCEED WITH SELECTION");
+        textView.setText(R.string.select_participant_message);
         popone.setOnClickListener(new View.OnClickListener()
         {
             public void onClick(View v)
             {
+            dialog1.dismiss();
             trySelectingParticipant();
             }
         });
-
-
-        //for cancel
-        Button poptwo = (Button)dialog1.findViewById(R.id.button2);
-        poptwo.setText("RETURN TO HOUSEHOLD MEMBER LIST");
-
         poptwo.setOnClickListener(new View.OnClickListener()
         {
             public void onClick(View v)

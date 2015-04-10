@@ -33,7 +33,6 @@
     <string name="confirm_ok">Confirm</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
-    <string name="select_participant_title">SELECT PARTICIPANT</string>
     <string name="select_participant_message">Please confirm that all eligible household members have been entered and you are ready to proceed with selection.</string>
     <string name="survey_refusal_title">Confirm Refusal</string>
     <string name="survey_refusal_message">You are going to mark the household for refusal. This action can not be reversed. Are you sure?</string>
@@ -64,4 +63,7 @@
     <string name="member_edit_header">Edit Member</string>
     <string name="member_new_header">Add New Member</string>
     <string name="action_import">Import</string>
+    <string name="proceed_with_selection">PROCEED WITH SELECTION</string>
+    <string name="return_to_household_member_list">RETURN TO HOUSEHOLD MEMBER LIST</string>
+    <string name="select_participant_title">SELECT PARTIPANT</string>
 </resources>
