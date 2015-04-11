@@ -15,6 +15,7 @@
             android:textColor="@android:color/white"
             android:onClick="save"
             android:id="@+id/ic_done"
+            android:textSize="16sp"
             android:layout_alignParentRight="true"/>
         <ImageButton
             android:layout_width="50dp"

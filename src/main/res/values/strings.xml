@@ -56,7 +56,7 @@
     <string name="invalid_member">Insufficient data, please fill all the values.</string>
     <string name="main_header">Households</string>
     <string name="household_members_header">Household Members</string>
-    <string name="go_to_settings">GO TO SETTINGS</string>
+    <string name="go_to_settings">GET STARTED</string>
     <string name="welcome_message">Welcome! Start using the WHO STEPs app by entering your Phone id in the app settings.</string>
     <string name="household_edit_header">Edit Household</string>
     <string name="household_new_header">Add New Household</string>

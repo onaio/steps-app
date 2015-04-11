@@ -46,17 +46,7 @@ public class HouseholdViewWrapperTest {
     }
 
     @Test
-    public void ShouldRaiseExceptionWhenPhoneNumberIsInvalid() throws InvalidDataException {
-        expectedException.expect(InvalidDataException.class);
-        expectedException.expectMessage(Constants.INVALID_PHONE_NUMBER);
-        HouseholdViewWrapper householdViewWrapper = new HouseholdViewWrapper(activity);
-        TextView numberView = (TextView) activity.findViewById(R.id.household_number);
-        numberView.setText("1234567");
-        householdViewWrapper.getHousehold(R.id.generated_household_id, R.id.household_number);
-    }
-
-    @Test
-    public void ShouldGiveHouseholdWhenPhoneNumberIs9Digit() throws InvalidDataException {
+    public void ShouldGiveHousehold() throws InvalidDataException {
         HouseholdViewWrapper householdViewWrapper = new HouseholdViewWrapper(activity);
         TextView nameView = ((TextView) activity.findViewById(R.id.generated_household_id));
         nameView.setText("new name");

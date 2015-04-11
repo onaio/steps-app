@@ -27,8 +27,6 @@ public class HouseholdViewWrapper {
         TextView numberView = (TextView) activity.findViewById(numberViewId);
         String phoneNumber = numberView.getText().toString();
         String currentDate = new SimpleDateFormat(Constants.DATE_FORMAT).format(new Date());
-    //    validateNonEmptyPhoneNumber(phoneNumber);
-        validatePhoneNumber(phoneNumber);
         if(!errorMessages.isEmpty())
             throw new InvalidDataException(errorMessages);
         return new Household(nameView.getText().toString(), phoneNumber, HouseholdStatus.NOT_SELECTED, currentDate);
@@ -37,21 +35,11 @@ public class HouseholdViewWrapper {
     public Household updateHousehold(Household household, int numberViewId) throws InvalidDataException {
         TextView numberView = (TextView) activity.findViewById(numberViewId);
         String phoneNumber = numberView.getText().toString();
-    //  validateNonEmptyPhoneNumber(phoneNumber);
-        validatePhoneNumber(phoneNumber);
         if(!errorMessages.isEmpty())
             throw new InvalidDataException(errorMessages);
         household.setPhoneNumber(phoneNumber);
         return household;
     }
 
-    private void validateNonEmptyPhoneNumber(String phoneNumber){
-        if(phoneNumber==null || phoneNumber.equals(""))
-            errorMessages.add(Constants.EMPTY_PHONE_NUMBER);
-    }
 
-    private void validatePhoneNumber(String phoneNumber){
-        if(!((phoneNumber.length() >= 9) || phoneNumber.equals("")))
-            errorMessages.add(Constants.INVALID_PHONE_NUMBER);
-    }
 }

@@ -71,13 +71,13 @@ public class SelectParticipantHandler implements IMenuHandler, IPrepare {
     @Override
     public void inactivate() {
         View item = activity.findViewById(MENU_ID);
-        item.setEnabled(false);
+        item.setVisibility(View.GONE);
     }
 
     @Override
     public void activate() {
         View menuItem = activity.findViewById(MENU_ID);
-        menuItem.setEnabled(true);
+        menuItem.setVisibility(View.VISIBLE);
     }
 
 

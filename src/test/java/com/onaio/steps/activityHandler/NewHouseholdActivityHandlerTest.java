@@ -45,7 +45,7 @@ public class NewHouseholdActivityHandlerTest {
 
     @Test
     public void ShouldOpenWhenProperMenuItemIsClicked(){
-        assertTrue(handler.shouldOpen(R.id.action_add));
+        assertTrue(handler.shouldOpen(R.id.action_add_household));
     }
 
     @Test

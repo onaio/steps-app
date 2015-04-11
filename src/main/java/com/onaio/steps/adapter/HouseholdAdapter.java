@@ -69,7 +69,7 @@ public class HouseholdAdapter extends BaseAdapter{
 
     private int getImage(Household householdAtPosition) {
         switch (householdAtPosition.getStatus()){
-            case DONE: return R.drawable.ic_action_new_household;
+            case DONE: return R.drawable.ic_household_list_done;
             case NOT_DONE: return R.drawable.ic_household_list_not_done;
             case NOT_SELECTED: return R.drawable.ic_household_list_not_selected;
             case DEFERRED: return R.drawable.ic_household_list_deferred;

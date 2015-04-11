@@ -51,7 +51,7 @@ public class NewMemberActivityHandlerTest {
     @Test
     public void ShouldOpenActivityWhenProperMenuIdIsPassedAndWhenSurveyIsNotRefused(){
         Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.NOT_DONE);
-        assertTrue(newMemberActivityHandler.shouldOpen(R.id.action_add));
+        assertTrue(newMemberActivityHandler.shouldOpen(R.id.action_add_member));
     }
 
     @Test

@@ -4,6 +4,7 @@ import android.app.ListActivity;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 
 import com.onaio.steps.R;
@@ -83,13 +84,13 @@ public class NewMemberActivityHandler implements IMenuHandler, IResultHandler,IP
 
     public void inactivate() {
         Button button = (Button) activity.findViewById(R.id.action_add_member);
-        button.setEnabled(false);
+        button.setVisibility(View.GONE);
     }
 
     @Override
     public void activate() {
         Button button = (Button) activity.findViewById(R.id.action_add_member);
-        button.setEnabled(true);
+        button.setVisibility(View.VISIBLE);
     }
 
 }
