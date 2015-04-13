@@ -116,8 +116,6 @@ public class SelectParticipantHandler implements IMenuHandler, IPrepare {
                 selectParticipant();
             }
         };
-
-
         switch(household.getStatus()){
             case NOT_SELECTED: popUpMessage(); break;
             case NOT_DONE: dialog.confirm(activity, confirmListenerForReElection, Dialog.EmptyListener, confirmation, R.string.participant_re_elect_reason_title);
@@ -145,10 +143,19 @@ public class SelectParticipantHandler implements IMenuHandler, IPrepare {
         MemberAdapter membersAdapter = (MemberAdapter) membersView.getAdapter();
         membersAdapter.reinitialize(household.getAllUnselectedMembers(db));
         membersAdapter.notifyDataSetChanged();
-        prepareBottomMenuItems();
+        populateSelectedMember();
+        prepareCustomMenus();
     }
 
-    private void prepareBottomMenuItems() {
+    private void populateSelectedMember() {
+        TextView nameView = (TextView) activity.findViewById(R.id.selected_participant_name);
+        TextView detailView = (TextView) activity.findViewById(R.id.selected_participant_details);
+        Member selectedMember = household.getSelectedMember(db);
+        nameView.setText(selectedMember.getFormattedName());
+        detailView.setText(selectedMember.getFormattedDetail());
+    }
+
+    private void prepareCustomMenus() {
         List<IPrepare> bottomMenus = HouseholdActivityFactory.getCustomMenuPreparer(activity, household);
         for(IPrepare menu:bottomMenus)
             if(menu.shouldInactivate())

@@ -178,7 +178,9 @@ public class Household implements Serializable {
     }
 
     public int numberOfNonSelectedMembers(DatabaseHelper db){
-        String query = String.format(Member.FIND_ALL_UNSELECTED_QUERY, Member.HOUSEHOLD_ID, this.getId(), Member.DELETED, Member.NOT_DELETED_INT, Member.ID, getSelectedMemberId());
+        String query = String.format(Member.FIND_ALL_QUERY,Member.HOUSEHOLD_ID,getId(),Member.DELETED, Member.NOT_DELETED_INT);
+        if(getSelectedMemberId()!=null)
+            query = String.format(Member.FIND_ALL_UNSELECTED_QUERY, Member.HOUSEHOLD_ID, this.getId(), Member.DELETED, Member.NOT_DELETED_INT, Member.ID, getSelectedMemberId());
         return getCount(db, query);
     }
 
