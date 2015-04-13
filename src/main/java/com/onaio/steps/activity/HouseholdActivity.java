@@ -12,6 +12,7 @@ import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 
 import com.onaio.steps.R;
 import com.onaio.steps.activityHandler.Factory.HouseholdActivityFactory;
@@ -35,6 +36,7 @@ public class HouseholdActivity extends ListActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.household);
+        setImageViewSize();
         Intent intent = getIntent();
         household = (Household)intent.getSerializableExtra(Constants.HOUSEHOLD);
         styleActionBar();
@@ -132,11 +134,17 @@ public class HouseholdActivity extends ListActivity {
     }
 
 
-    public void onWindowFocusChanged(boolean hasFocus) {
-        View content = getWindow().findViewById(Window.ID_ANDROID_CONTENT);
-        ImageView who_watermark = (ImageView) findViewById(R.id.item_image);
-        who_watermark.getLayoutParams().height = (content.getHeight())/2;
-        who_watermark.getLayoutParams().width=content.getWidth()/2;
-        super.onWindowFocusChanged(hasFocus);
+    private void setImageViewSize() {
+
+        final RelativeLayout root = (RelativeLayout)findViewById(R.id.household_main);
+        root.post(new Runnable() {
+            public void run() {
+                Window win = getWindow();
+                View contentView = win.findViewById(Window.ID_ANDROID_CONTENT);
+                ImageView imageView = (ImageView) findViewById(R.id.item_image);
+                imageView.getLayoutParams().height = contentView.getHeight() / 2;
+                imageView.getLayoutParams().width = contentView.getWidth() / 2;
+            }
+        });
     }
 }
