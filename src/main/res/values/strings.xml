@@ -68,4 +68,6 @@
     <string name="select_participant_title">SELECT PARTICIPANT</string>
     <string name="add_new_household">Add New Household</string>
     <string name="add_new_member">Add New Member</string>
+    <string name="phone_id_name">Phone ID Name</string>
+    <string name="age_hint">Age in years(eligible age is 12-55)</string>
 </resources>

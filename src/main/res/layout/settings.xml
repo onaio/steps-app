@@ -18,16 +18,17 @@
         android:layout_marginTop="30dp"
         />
     <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="text"
-            android:ems="10"
-            android:id="@+id/deviceId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:ems="10"
+        android:id="@+id/deviceId"
         android:layout_marginTop="5dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:singleLine="false"
         android:textColor="@android:color/black"
+        android:hint="@string/phone_id_name"
         />
     <TextView
         android:layout_width="fill_parent"
@@ -37,12 +38,13 @@
         android:layout_marginTop="20dp"
         />
     <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="number"
-            android:hint="@string/household_id_default_hint"
-            android:ems="10"
-            android:id="@+id/household_seed"
+        android:id="@+id/household_seed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/household_id_default_hint"
+        android:inputType="number"
+
         android:layout_marginTop="5dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
@@ -55,11 +57,12 @@
         android:layout_marginTop="20dp"
         />
     <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="text"
-            android:ems="10"
-            android:id="@+id/endpointUrl"
+        android:id="@+id/endpointUrl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text"
+        android:hint="@string/endpoint_url_hint"
         android:layout_marginTop="5dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
