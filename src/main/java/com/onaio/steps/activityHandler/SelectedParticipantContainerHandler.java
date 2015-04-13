@@ -8,12 +8,12 @@ import com.onaio.steps.activityHandler.Interface.IPrepare;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.HouseholdStatus;
 
-public class FooterHandler implements IPrepare {
+public class SelectedParticipantContainerHandler implements IPrepare {
     private ListActivity activity;
     private Household household;
-    private static final int MENU_ID= R.id.footer;
+    private static final int MENU_ID= R.id.selected_participant;
 
-    public FooterHandler(ListActivity activity, Household household) {
+    public SelectedParticipantContainerHandler(ListActivity activity, Household household) {
         this.activity = activity;
         this.household = household;
     }
@@ -28,7 +28,7 @@ public class FooterHandler implements IPrepare {
     @Override
     public void inactivate() {
         View item = activity.findViewById(MENU_ID);
-        item.setVisibility(View.INVISIBLE);
+        item.setVisibility(View.GONE);
     }
 
     @Override

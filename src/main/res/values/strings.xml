@@ -26,9 +26,7 @@
     <string name="action_member">Member</string>
     <string name="action_edit">Edit</string>
     <string name="action_delete">Delete</string>
-    <string name="action_take_survey">Take Survey</string>
-    <string name="action_deferred">Deferred</string>
-    <string name="action_refused">Refused</string>
+    <string name="refused">REFUSED</string>
     <string name="reason">Reason</string>
     <string name="confirm_ok">Confirm</string>
     <string name="ok">OK</string>
@@ -70,4 +68,6 @@
     <string name="add_new_member">Add New Member</string>
     <string name="phone_id_name">Phone ID Name</string>
     <string name="age_hint">Age(in years)</string>
+    <string name="interview_now">INTERVIEW NOW</string>
+    <string name="interview_later">INTERVIEW LATER</string>
 </resources>

@@ -7,6 +7,7 @@
 
     <style name="CustomTheme.ActionBarStyle" parent="@android:style/Widget.Holo.Light.ActionBar">
         <item name="android:titleTextStyle">@style/CustomTheme.ActionBar.TitleTextStyle</item>
+        <item name="android:background">@android:color/white</item>
     </style>
 
     <style name="CustomTheme.OverFlowButton" parent="android:style/Widget.Holo.Light.ActionButton.Overflow">
