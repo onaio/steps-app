@@ -57,27 +57,26 @@ public class MemberAdapter extends BaseAdapter{
         return memberItemView;
     }
 
-    private void highlightTheSelection(TextView memberName, TextView memberDetails, Member memberAtPosition) {
-        if(selectedMemberId.equals(String.valueOf(memberAtPosition.getId()))){
-            memberName.setTextColor(Color.parseColor("#40AA44"));
-            memberDetails.setTextColor(Color.parseColor("#40AA44"));
-        }
-        else{
-            memberName.setTextColor(Color.BLACK);
-            memberDetails.setTextColor(Color.BLACK);
-        }
+    private void setTextInView(View memberListItem, Member memberAtPosition) {
+        populateText(memberListItem, memberAtPosition);
+        highlightSelection(memberListItem,memberAtPosition);
     }
 
-    private void setTextInView(View memberListItem, Member memberAtPosition) {
+    private void populateText(View memberListItem, Member memberAtPosition) {
         TextView memberName = (TextView) memberListItem.findViewById(R.id.main_text);
         TextView memberDetail = (TextView) memberListItem.findViewById(R.id.sub_text);
-        ImageView image = (ImageView) memberListItem.findViewById(R.id.main_image);
         View divider = memberListItem.findViewById(R.id.divider);
-        highlightTheSelection(memberName,memberDetail,memberAtPosition);
-        memberName.setText(String.format("%s %s",memberAtPosition.getFamilySurname(),memberAtPosition.getFirstName()));
+        memberName.setText(String.format("%s %s", memberAtPosition.getFamilySurname(), memberAtPosition.getFirstName()));
         memberDetail.setText(memberAtPosition.getGender() +" , "+ memberAtPosition.getAge());
-        image.setImageResource(R.mipmap.ic_contact_list);
         divider.setVisibility(View.INVISIBLE);
+    }
+
+    private void highlightSelection(View memberListItem, Member memberAtPosition) {
+        ImageView image = (ImageView) memberListItem.findViewById(R.id.main_image);
+        if(selectedMemberId.equals(String.valueOf(memberAtPosition.getId())))
+            image.setImageResource(R.mipmap.ic_contact_list_selected);
+        else
+            image.setImageResource(R.mipmap.ic_contact_list);
     }
 
     private View getViewItem(View convertView) {

@@ -28,8 +28,8 @@
         android:text="@string/add_new_household"
         android:textColor="@android:color/white"
         android:drawableStart="@drawable/ic_action_new_household"
-        android:drawablePadding="-50dp"
-        android:paddingLeft="50dp"
+        android:drawablePadding="-10dp"
+        android:paddingLeft="10dp"
         android:id="@+id/action_add_household"
         android:onClick="handleCustomMenu"/>
      <ListView
