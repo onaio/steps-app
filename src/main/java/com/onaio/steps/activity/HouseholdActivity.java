@@ -76,7 +76,7 @@ public class HouseholdActivity extends ListActivity {
     };
 
     private void populateMembers() {
-        db = new DatabaseHelper(getApplicationContext());
+        db = new DatabaseHelper(this);
         MemberAdapter memberAdapter = new MemberAdapter(this, household.getAllMembers(db), household.getSelectedMemberId());
         getListView().setAdapter(memberAdapter);
     }
@@ -84,6 +84,7 @@ public class HouseholdActivity extends ListActivity {
     @Override
     protected void onResume() {
         prepareCustomMenu();
+        populateMembers();
         super.onResume();
     }
 
