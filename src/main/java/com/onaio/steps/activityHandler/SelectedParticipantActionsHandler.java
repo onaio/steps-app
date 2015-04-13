@@ -8,12 +8,12 @@ import com.onaio.steps.activityHandler.Interface.IPrepare;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.HouseholdStatus;
 
-public class SelectedParticipantContainerHandler implements IPrepare {
+public class SelectedParticipantActionsHandler implements IPrepare {
     private ListActivity activity;
     private Household household;
-    private static final int MENU_ID= R.id.selected_participant;
+    private static final int MENU_ID= R.id.selected_participant_actions;
 
-    public SelectedParticipantContainerHandler(ListActivity activity, Household household) {
+    public SelectedParticipantActionsHandler(ListActivity activity, Household household) {
         this.activity = activity;
         this.household = household;
     }

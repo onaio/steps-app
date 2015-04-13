@@ -24,7 +24,7 @@ import static org.mockito.Mockito.verify;
 
 @Config(emulateSdk = 16,manifest = "src/main/AndroidManifest.xml")
 @RunWith(RobolectricTestRunner.class)
-public class SelectedParticipantContainerHandlerTest {
+public class SelectedParticipantActionsHandlerTest {
 
     private final int MENU_ID = R.id.selected_participant;
     @Mock
@@ -33,49 +33,49 @@ public class SelectedParticipantContainerHandlerTest {
     private Household householdMock;
     @Mock
     private Dialog dialogMock;
-    private SelectedParticipantContainerHandler selectedParticipantContainerHandler;
+    private SelectedParticipantActionsHandler selectedParticipantActionsHandler;
 
     @Before
     public void Setup(){
         activityMock = mock(HouseholdActivity.class);
         householdMock = mock(Household.class);
         dialogMock = mock(Dialog.class);
-        selectedParticipantContainerHandler = new SelectedParticipantContainerHandler(activityMock, householdMock);
+        selectedParticipantActionsHandler = new SelectedParticipantActionsHandler(activityMock, householdMock);
     }
 
     @Test
     public void ShouldInactivateWhenMemberIsNotSelected(){
         Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.NOT_SELECTED);
 
-        assertTrue(selectedParticipantContainerHandler.shouldInactivate());
+        assertTrue(selectedParticipantActionsHandler.shouldInactivate());
     }
 
     @Test
     public void ShouldNotInactivateWhenSurveyNotDone(){
         Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.NOT_DONE);
 
-        assertFalse(selectedParticipantContainerHandler.shouldInactivate());
+        assertFalse(selectedParticipantActionsHandler.shouldInactivate());
     }
 
     @Test
     public void ShouldNotInactivateWhenSurveyDone(){
         Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.DONE);
 
-        assertTrue(selectedParticipantContainerHandler.shouldInactivate());
+        assertTrue(selectedParticipantActionsHandler.shouldInactivate());
     }
 
     @Test
     public void ShouldInactivateWhenSurveyDeferred(){
         Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.DEFERRED);
 
-        assertFalse(selectedParticipantContainerHandler.shouldInactivate());
+        assertFalse(selectedParticipantActionsHandler.shouldInactivate());
     }
 
     @Test
     public void ShouldInactivateWhenSurveyRefused(){
         Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.REFUSED);
 
-        assertTrue(selectedParticipantContainerHandler.shouldInactivate());
+        assertTrue(selectedParticipantActionsHandler.shouldInactivate());
     }
 
     @Test
@@ -83,7 +83,7 @@ public class SelectedParticipantContainerHandlerTest {
         View viewMock = Mockito.mock(View.class);
         Mockito.stub(activityMock.findViewById(MENU_ID)).toReturn(viewMock);
 
-        selectedParticipantContainerHandler.inactivate();
+        selectedParticipantActionsHandler.inactivate();
 
         verify(viewMock).setVisibility(View.INVISIBLE);
     }
@@ -93,7 +93,7 @@ public class SelectedParticipantContainerHandlerTest {
         View viewMock = Mockito.mock(View.class);
         Mockito.stub(activityMock.findViewById(MENU_ID)).toReturn(viewMock);
 
-        selectedParticipantContainerHandler.activate();
+        selectedParticipantActionsHandler.activate();
 
         verify(viewMock).setVisibility(View.VISIBLE);
     }

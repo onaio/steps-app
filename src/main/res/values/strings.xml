@@ -70,4 +70,5 @@
     <string name="age_hint">Age(in years)</string>
     <string name="interview_now">INTERVIEW NOW</string>
     <string name="interview_later">INTERVIEW LATER</string>
+    <string name="selected_participant">Selected Member</string>
 </resources>

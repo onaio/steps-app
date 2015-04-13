@@ -2,14 +2,11 @@ package com.onaio.steps.activityHandler;
 
 import android.app.ListActivity;
 import android.content.Intent;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
 import com.onaio.steps.R;
 import com.onaio.steps.activity.NewMemberActivity;
-import com.onaio.steps.activityHandler.Interface.IItemHandler;
 import com.onaio.steps.activityHandler.Interface.IMenuHandler;
 import com.onaio.steps.activityHandler.Interface.IResultHandler;
 import com.onaio.steps.activityHandler.Interface.IPrepare;
@@ -63,7 +60,7 @@ public class NewMemberActivityHandler implements IMenuHandler, IResultHandler,IP
             return ;
         if (memberAdapter == null)
             return;
-        List<Member> members = household.getAllMembers(db);
+        List<Member> members = household.getAllUnselectedMembers(db);
         memberAdapter.reinitialize(members);
         memberAdapter.notifyDataSetChanged();
         activity.invalidateOptionsMenu();

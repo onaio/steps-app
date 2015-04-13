@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.onaio.steps.R;
 import com.onaio.steps.activityHandler.Factory.HouseholdActivityFactory;
@@ -55,6 +56,17 @@ public class HouseholdActivity extends ListActivity {
     private void handleMembers() {
         populateMembers();
         bindMemberItems();
+        populateSelectedMember();
+    }
+
+    private void populateSelectedMember() {
+        if(household.getSelectedMemberId()==null)
+            return;
+        TextView nameView = (TextView) findViewById(R.id.selected_participant_name);
+        TextView detailView = (TextView) findViewById(R.id.selected_participant_details);
+        Member selectedMember = household.getSelectedMember(db);
+        nameView.setText(selectedMember.getFormattedName());
+        detailView.setText(selectedMember.getFormattedDetail());
     }
 
     private void prepareCustomMenu() {
@@ -81,7 +93,7 @@ public class HouseholdActivity extends ListActivity {
 
     private void populateMembers() {
         db = new DatabaseHelper(this);
-        MemberAdapter memberAdapter = new MemberAdapter(this, household.getAllMembers(db), household.getSelectedMemberId());
+        MemberAdapter memberAdapter = new MemberAdapter(this, household.getAllUnselectedMembers(db));
         getListView().setAdapter(memberAdapter);
     }
 

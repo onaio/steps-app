@@ -11,16 +11,51 @@
         android:layout_centerVertical="true"
         android:src="@mipmap/who"
         />
-    <LinearLayout android:id="@+id/selected_participant"
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:id="@+id/selected_participant"
+        android:background="#E3ECF5">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/selected_participant"
+            android:id="@+id/selected_participant_text"
+            android:layout_margin="5dp"
+            android:textSize="16sp"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_contact_list_selected"
+            android:id="@+id/selected_participant_image"
+            android:layout_below="@+id/selected_participant_text"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/selected_participant_name"
+            android:layout_toRightOf="@+id/selected_participant_image"
+            android:layout_below="@+id/selected_participant_text"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="2dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/selected_participant_name"
+            android:layout_toRightOf="@+id/selected_participant_image"
+            android:id="@+id/selected_participant_details"
+            android:layout_marginLeft="10dp"
+            android:textColor="@android:color/darker_gray"/>
+    </RelativeLayout>
+    <LinearLayout android:layout_below="@+id/selected_participant"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_alignParentTop="true"
         style="@android:style/ButtonBar"
         android:background="#E3ECF5"
         android:paddingLeft="0dp"
-        android:paddingRight="0dp">
-
+        android:paddingRight="0dp"
+        android:id="@+id/selected_participant_actions">
         <Button android:id="@+id/action_take_survey"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -33,7 +68,6 @@
             android:textColor="@android:color/white"
             android:paddingLeft="5dp"
             android:textSize="12sp"/>
-
         <Button android:id="@+id/action_deferred"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -45,7 +79,6 @@
             android:background="@drawable/secondary_button"
             android:shadowColor="@android:color/black"
             android:textSize="12sp"/>
-
         <Button android:id="@+id/action_refused"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -56,13 +89,17 @@
             android:layout_margin="10dp"
             android:background="@drawable/secondary_button"
             android:textSize="12sp"/>
-
     </LinearLayout>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <View android:layout_height="1dp"
+        android:layout_width="fill_parent"
+        android:background="@android:color/darker_gray"
+        android:id="@+id/divider"
+        android:layout_below="@+id/selected_participant_actions"/>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:layout_below="@+id/selected_participant">
+    android:layout_below="@+id/divider">
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"

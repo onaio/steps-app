@@ -17,16 +17,10 @@ import java.util.List;
 public class MemberAdapter extends BaseAdapter{
     private Context context;
     private List<Member> members;
-    private String selectedMemberId;
 
-    public MemberAdapter(Context context, List members, String selectedMemberId) {
+    public MemberAdapter(Context context, List members) {
         this.context = context;
         this.members = members;
-        this.selectedMemberId = selectedMemberId ==null?"": selectedMemberId;
-    }
-
-    public void setSelectedMemberId(String selectedMemberId) {
-        this.selectedMemberId = selectedMemberId;
     }
 
     @Override
@@ -59,24 +53,17 @@ public class MemberAdapter extends BaseAdapter{
 
     private void setTextInView(View memberListItem, Member memberAtPosition) {
         populateText(memberListItem, memberAtPosition);
-        highlightSelection(memberListItem,memberAtPosition);
     }
 
     private void populateText(View memberListItem, Member memberAtPosition) {
         TextView memberName = (TextView) memberListItem.findViewById(R.id.main_text);
         TextView memberDetail = (TextView) memberListItem.findViewById(R.id.sub_text);
-        View divider = memberListItem.findViewById(R.id.divider);
-        memberName.setText(String.format("%s %s", memberAtPosition.getFamilySurname(), memberAtPosition.getFirstName()));
-        memberDetail.setText(memberAtPosition.getGender() +" , "+ memberAtPosition.getAge());
-        divider.setVisibility(View.INVISIBLE);
-    }
-
-    private void highlightSelection(View memberListItem, Member memberAtPosition) {
         ImageView image = (ImageView) memberListItem.findViewById(R.id.main_image);
-        if(selectedMemberId.equals(String.valueOf(memberAtPosition.getId())))
-            image.setImageResource(R.mipmap.ic_contact_list_selected);
-        else
-            image.setImageResource(R.mipmap.ic_contact_list);
+        View divider = memberListItem.findViewById(R.id.divider);
+        memberName.setText(memberAtPosition.getFormattedName());
+        memberDetail.setText(memberAtPosition.getFormattedDetail());
+        divider.setVisibility(View.GONE);
+        image.setImageResource(R.mipmap.ic_contact_list);
     }
 
     private View getViewItem(View convertView) {

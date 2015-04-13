@@ -59,7 +59,7 @@ public class SelectParticipantHandler implements IMenuHandler, IPrepare {
 
     @Override
     public boolean shouldInactivate() {
-        boolean noMember = household.numberOfNonDeletedMembers(db) == 0;
+        boolean noMember = household.numberOfNonSelectedMembers(db) == 0;
         boolean noSelection = household.getStatus() == HouseholdStatus.NOT_SELECTED;
         boolean selected = household.getStatus() == HouseholdStatus.NOT_DONE;
         boolean deferred = household.getStatus() == HouseholdStatus.DEFERRED;
@@ -143,7 +143,7 @@ public class SelectParticipantHandler implements IMenuHandler, IPrepare {
 
     private void updateView(ListView membersView) {
         MemberAdapter membersAdapter = (MemberAdapter) membersView.getAdapter();
-        membersAdapter.setSelectedMemberId(household.getSelectedMemberId());
+        membersAdapter.reinitialize(household.getAllUnselectedMembers(db));
         membersAdapter.notifyDataSetChanged();
         prepareBottomMenuItems();
     }
@@ -161,7 +161,7 @@ public class SelectParticipantHandler implements IMenuHandler, IPrepare {
     private void updateHousehold(Member selectedMember) {
         household.setSelectedMemberId(String.valueOf(selectedMember.getId()));
         household.setStatus(NOT_DONE);
-        household.update(new DatabaseHelper(activity.getApplicationContext()));
+        household.update(new DatabaseHelper(activity));
     }
 
     private Member getSelectedMember(ListView listView) {
@@ -173,7 +173,7 @@ public class SelectParticipantHandler implements IMenuHandler, IPrepare {
     }
 
     private Member getRandomMember(ListView listView) {
-        int totalMembers = household.numberOfNonDeletedMembers(db);
+        int totalMembers = household.numberOfNonSelectedMembers(db);
         Random random = new Random();
         int selectedParticipant = random.nextInt(totalMembers);
         return (Member) listView.getItemAtPosition(selectedParticipant);

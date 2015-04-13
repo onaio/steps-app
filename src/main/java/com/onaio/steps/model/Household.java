@@ -86,6 +86,12 @@ public class Household implements Serializable {
         return phoneNumber;
     }
 
+    public Member getSelectedMember(DatabaseHelper db){
+        if(selectedMemberId == null)
+            return null;
+        return findMember(db,Long.parseLong(selectedMemberId));
+    }
+
     public long save(DatabaseHelper db){
         ContentValues householdValues = populateWithBasicDetails();
         householdValues.put(CREATED_AT, createdAt);
@@ -141,8 +147,11 @@ public class Household implements Serializable {
         return householdCounts;
     }
 
-    public List<Member> getAllMembers(DatabaseHelper db){
-        Cursor cursor = db.exec(String.format(Member.FIND_ALL_QUERY,Member.HOUSEHOLD_ID,this.getId(),Member.DELETED,Member.NOT_DELETED_INT));
+    public List<Member> getAllUnselectedMembers(DatabaseHelper db){
+        String query = String.format(Member.FIND_ALL_QUERY,Member.HOUSEHOLD_ID,getId(),Member.DELETED, Member.NOT_DELETED_INT);
+        if(getSelectedMemberId()!=null)
+            query = String.format(Member.FIND_ALL_UNSELECTED_QUERY, Member.HOUSEHOLD_ID, this.getId(), Member.DELETED, Member.NOT_DELETED_INT, Member.ID, getSelectedMemberId());
+        Cursor cursor = db.exec(query);
         List<Member> members = new CursorHelper().getMembers(cursor, this);
         db.close();
         return members;
@@ -164,7 +173,17 @@ public class Household implements Serializable {
 
 
     public int numberOfNonDeletedMembers(DatabaseHelper db){
-        Cursor cursor = db.exec(String.format(Member.FIND_ALL_QUERY,Member.HOUSEHOLD_ID,getId(),Member.DELETED, Member.NOT_DELETED_INT));
+        String query = String.format(Member.FIND_ALL_QUERY, Member.HOUSEHOLD_ID, getId(), Member.DELETED, Member.NOT_DELETED_INT);
+        return getCount(db, query);
+    }
+
+    public int numberOfNonSelectedMembers(DatabaseHelper db){
+        String query = String.format(Member.FIND_ALL_UNSELECTED_QUERY, Member.HOUSEHOLD_ID, this.getId(), Member.DELETED, Member.NOT_DELETED_INT, Member.ID, getSelectedMemberId());
+        return getCount(db, query);
+    }
+
+    public int getCount(DatabaseHelper db, String query) {
+        Cursor cursor = db.exec(query);
         cursor.moveToFirst();
         int count = cursor.getCount();
         cursor.close();

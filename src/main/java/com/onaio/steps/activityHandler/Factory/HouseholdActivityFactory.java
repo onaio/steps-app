@@ -6,7 +6,8 @@ import android.view.Menu;
 import com.onaio.steps.activityHandler.DeferredHandler;
 import com.onaio.steps.activityHandler.EditHouseholdActivityHandler;
 import com.onaio.steps.activityHandler.ExportHandler;
-import com.onaio.steps.activityHandler.SelectedParticipantContainerHandler;
+import com.onaio.steps.activityHandler.SelectParticipantContainerHandler;
+import com.onaio.steps.activityHandler.SelectedParticipantActionsHandler;
 import com.onaio.steps.activityHandler.Interface.IItemHandler;
 import com.onaio.steps.activityHandler.Interface.IMenuHandler;
 import com.onaio.steps.activityHandler.Interface.IResultHandler;
@@ -56,10 +57,10 @@ public class HouseholdActivityFactory {
         menuItems.add(new TakeSurveyHandler(activity,household));
         menuItems.add(new DeferredHandler(activity, household));
         menuItems.add(new RefusedHandler(activity,household));
-        menuItems.add(new SelectedParticipantContainerHandler(activity,household));
+        menuItems.add(new SelectedParticipantActionsHandler(activity,household));
         menuItems.add(new NewMemberActivityHandler(activity,household));
         menuItems.add(new SelectParticipantHandler(activity,household));
-
+        menuItems.add(new SelectParticipantContainerHandler(activity,household));
         return menuItems;
     }
 

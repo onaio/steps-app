@@ -153,7 +153,7 @@ public class HouseholdTest {
 
         assertEquals(numberOfMembers, household.numberOfNonDeletedMembers(db));
 
-        Mockito.verify(db).exec(String.format(Member.FIND_ALL_QUERY,Member.HOUSEHOLD_ID,householdId, Member.DELETED, Member.NOT_DELETED_INT));
+        Mockito.verify(db).exec(String.format(Member.FIND_ALL_UNSELECTED_QUERY,Member.HOUSEHOLD_ID,householdId, Member.DELETED, Member.NOT_DELETED_INT));
     }
 
     @Test
@@ -175,11 +175,11 @@ public class HouseholdTest {
         stubDbForMember(numberOfMembers);
         new CursorStub(cursor).stubCursorForMember(memberId, memberFamilyName, memberFirstName, memberGender, String.valueOf(memberAge), String.valueOf(householdId), Member.NOT_DELETED_INT, householdName + "-1");
 
-        List<Member> members = household.getAllMembers(db);
+        List<Member> members = household.getAllUnselectedMembers(db);
 
         assertEquals(1,members.size());
         validateMember(members.get(0),false);
-        Mockito.verify(db).exec(String.format(Member.FIND_ALL_QUERY,Member.HOUSEHOLD_ID,householdId,Member.DELETED, Member.NOT_DELETED_INT));
+        Mockito.verify(db).exec(String.format(Member.FIND_ALL_UNSELECTED_QUERY,Member.HOUSEHOLD_ID,householdId,Member.DELETED, Member.NOT_DELETED_INT));
     }
 
     @Test

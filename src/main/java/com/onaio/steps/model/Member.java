@@ -17,6 +17,7 @@ public class Member implements Serializable {
     public static final String HOUSEHOLD_ID = "household_id";
     public static final String DELETED = "deleted";
     public static final String TABLE_CREATE_QUERY = String.format("CREATE TABLE %s(%s INTEGER PRIMARY KEY, %s TEXT, %s TEXT,%s TEXT, %s INTEGER, %s TEXT, %s INTEGER, %s INTEGER, FOREIGN KEY (%s) REFERENCES %s(%s))", TABLE_NAME, ID, MEMBER_HOUSEHOLD_ID,FAMILY_SURNAME,FIRST_NAME, AGE, GENDER,DELETED, HOUSEHOLD_ID, HOUSEHOLD_ID, Household.TABLE_NAME, Household.ID);
+    public static final String FIND_ALL_UNSELECTED_QUERY = "SELECT * FROM MEMBER WHERE %s=%s and %s=%d  and %s!=%s ORDER BY Id asc";
     public static final String FIND_ALL_QUERY = "SELECT * FROM MEMBER WHERE %s=%s and %s=%d ORDER BY Id asc";
     public static final String FIND_ALL_WITH_DELETED_QUERY = "SELECT * FROM MEMBER WHERE %s=%s ORDER BY Id asc";
     public static final String FIND_BY_ID_QUERY = "SELECT * FROM MEMBER WHERE "+ID+" = '%d'";
@@ -67,6 +68,14 @@ public class Member implements Serializable {
 
     public String getFamilySurname() {
         return familySurname;
+    }
+
+    public String getFormattedName(){
+        return String.format("%s %s",familySurname,firstName);
+    }
+
+    public String getFormattedDetail(){
+        return String.format(gender +", "+ age);
     }
 
     public String getGender() {
