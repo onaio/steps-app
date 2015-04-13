@@ -11,6 +11,7 @@
     </style>
 
     <style name="CustomTheme.OverFlowButton" parent="android:style/Widget.Holo.Light.ActionButton.Overflow">
+        <item name="android:src">@mipmap/ic_menu</item>
     </style>
 
     <style name="CustomTheme.ActionBar.TitleTextStyle" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">

@@ -76,7 +76,7 @@ public class MemberAdapter extends BaseAdapter{
         highlightTheSelection(memberName,memberDetail,memberAtPosition);
         memberName.setText(String.format("%s %s",memberAtPosition.getFamilySurname(),memberAtPosition.getFirstName()));
         memberDetail.setText(memberAtPosition.getGender() +" , "+ memberAtPosition.getAge());
-        image.setImageResource(R.drawable.ic_contact_list);
+        image.setImageResource(R.mipmap.ic_contact_list);
         divider.setVisibility(View.INVISIBLE);
     }
 
