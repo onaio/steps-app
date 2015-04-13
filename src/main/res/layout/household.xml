@@ -4,7 +4,15 @@
     android:layout_height="fill_parent"
     android:id="@+id/household_main">
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <ImageView
+        android:id="@+id/item_image"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/ic_watermark_who"
+        />
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
@@ -41,13 +49,16 @@
             android:id="@+id/action_select_participant"/>
         </LinearLayout>
 
+
+
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@android:id/list"
         android:layout_gravity="center_horizontal"
         android:divider="@null"
-        android:dividerHeight="0dp"/>
+        android:dividerHeight="0dp"
+        />
 
 </LinearLayout>
  <LinearLayout android:id="@+id/footer"
