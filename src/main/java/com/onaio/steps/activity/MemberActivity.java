@@ -11,13 +11,13 @@ import android.widget.TextView;
 import com.onaio.steps.R;
 import com.onaio.steps.activityHandler.Factory.MemberActivityFactory;
 import com.onaio.steps.activityHandler.Interface.IMenuHandler;
-import com.onaio.steps.activityHandler.Interface.IResultHandler;
 import com.onaio.steps.activityHandler.Interface.IPrepare;
+import com.onaio.steps.activityHandler.Interface.IResultHandler;
 import com.onaio.steps.model.Member;
 
 import java.util.List;
 
-import static com.onaio.steps.helper.Constants.*;
+import static com.onaio.steps.helper.Constants.MEMBER;
 
 public class MemberActivity extends Activity {
 
@@ -73,5 +73,6 @@ public class MemberActivity extends Activity {
         super.onPrepareOptionsMenu(menu);
         return true;
     }
+
 
 }

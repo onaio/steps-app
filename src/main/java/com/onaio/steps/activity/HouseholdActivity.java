@@ -8,14 +8,16 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.onaio.steps.R;
 import com.onaio.steps.activityHandler.Factory.HouseholdActivityFactory;
 import com.onaio.steps.activityHandler.Interface.IMenuHandler;
-import com.onaio.steps.activityHandler.Interface.IResultHandler;
 import com.onaio.steps.activityHandler.Interface.IPrepare;
+import com.onaio.steps.activityHandler.Interface.IResultHandler;
 import com.onaio.steps.adapter.MemberAdapter;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;
@@ -127,5 +129,14 @@ public class HouseholdActivity extends ListActivity {
         for(IMenuHandler menuItem: bottomMenuItem)
             if(menuItem.shouldOpen(view.getId()))
                 menuItem.open();
+    }
+
+
+    public void onWindowFocusChanged(boolean hasFocus) {
+        View content = getWindow().findViewById(Window.ID_ANDROID_CONTENT);
+        ImageView who_watermark = (ImageView) findViewById(R.id.item_image);
+        who_watermark.getLayoutParams().height = (content.getHeight())/2;
+        who_watermark.getLayoutParams().width=content.getWidth()/2;
+        super.onWindowFocusChanged(hasFocus);
     }
 }

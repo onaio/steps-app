@@ -8,15 +8,15 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.onaio.steps.R;
 import com.onaio.steps.activityHandler.Factory.StepsActivityFactory;
 import com.onaio.steps.activityHandler.Interface.IMenuHandler;
 import com.onaio.steps.activityHandler.Interface.IResultHandler;
-import com.onaio.steps.activityHandler.NewHouseholdActivityHandler;
-import com.onaio.steps.activityHandler.SettingActivityHandler;
 import com.onaio.steps.adapter.HouseholdAdapter;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.helper.KeyValueStoreFactory;
@@ -24,7 +24,8 @@ import com.onaio.steps.model.Household;
 
 import java.util.List;
 
-import static com.onaio.steps.helper.Constants.*;
+import static com.onaio.steps.helper.Constants.COLOR_HEADER;
+import static com.onaio.steps.helper.Constants.PHONE_ID;
 
 public class StepsActivity extends ListActivity {
 
@@ -104,5 +105,14 @@ public class StepsActivity extends ListActivity {
         for(IMenuHandler handler:handlers)
             if(handler.shouldOpen(view.getId()))
                 handler.open();
+    }
+
+    public void onWindowFocusChanged(boolean hasFocus) {
+        View content = getWindow().findViewById(Window.ID_ANDROID_CONTENT);
+        ImageView who_watermark = (ImageView) findViewById(R.id.item_image);
+        who_watermark.getLayoutParams().height = content.getHeight()/2;
+        who_watermark.getLayoutParams().width=content.getWidth()/2;
+        super.onWindowFocusChanged(hasFocus);
+
     }
 }
