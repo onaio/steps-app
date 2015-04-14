@@ -59,7 +59,6 @@ public class EditMemberActivityTest {
         assertEquals("Edit Member", header.getText());
         assertEquals("surname", surname.getText().toString());
         assertEquals("first name", firstName.getText().toString());
-        System.out.println(gender.getCheckedRadioButtonId());
         assertEquals(R.id.male_selection, gender.getCheckedRadioButtonId());
         assertEquals("28", age.getText().toString());
     }

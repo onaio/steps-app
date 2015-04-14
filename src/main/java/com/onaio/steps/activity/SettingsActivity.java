@@ -32,6 +32,7 @@ public class SettingsActivity extends Activity {
         TextView phoneIdView = (TextView) findViewById(R.id.deviceId);
         TextView endpointUrlView = (TextView) findViewById(R.id.endpointUrl);
         TextView householdSeedView = (TextView) findViewById(R.id.household_seed);
+
         phoneIdView.setText(phoneId);
         endpointUrlView.setText(endpointUrl);
         householdSeedView.setText(householdSeed);
