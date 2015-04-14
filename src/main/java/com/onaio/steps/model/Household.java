@@ -148,28 +148,30 @@ public class Household implements Serializable {
     }
 
     public List<Member> getAllUnselectedMembers(DatabaseHelper db){
-        String query = String.format(Member.FIND_ALL_QUERY,Member.HOUSEHOLD_ID,getId(),Member.DELETED, Member.NOT_DELETED_INT);
-        if(getSelectedMemberId()!=null)
-            query = String.format(Member.FIND_ALL_UNSELECTED_QUERY, Member.HOUSEHOLD_ID, this.getId(), Member.DELETED, Member.NOT_DELETED_INT, Member.ID, getSelectedMemberId());
+        String query = String.format(Member.FIND_ALL_UNSELECTED_QUERY, Member.HOUSEHOLD_ID, this.getId(), Member.DELETED, Member.NOT_DELETED_INT, Member.ID, getSelectedMemberId());
+        if(getSelectedMemberId()==null)
+            query = String.format(Member.FIND_ALL_QUERY,Member.HOUSEHOLD_ID,getId(),Member.DELETED, Member.NOT_DELETED_INT);
+        return getMembers(db,query);
+    }
+
+    public List<Member> getAllMembersForExport(DatabaseHelper db){
+        String query = String.format(Member.FIND_ALL_WITH_DELETED_QUERY, Member.HOUSEHOLD_ID, this.getId());
+        return getMembers(db, query);
+    }
+
+    public Member findMember(DatabaseHelper db, Long id) {
+        String query = String.format(Member.FIND_BY_ID_QUERY, id);
+        return getMembers(db,query).get(0);
+    }
+
+
+    private List<Member> getMembers(DatabaseHelper db, String query) {
         Cursor cursor = db.exec(query);
         List<Member> members = new CursorHelper().getMembers(cursor, this);
         db.close();
         return members;
     }
 
-    public List<Member> getAllMembersForExport(DatabaseHelper db){
-        Cursor cursor = db.exec(String.format(Member.FIND_ALL_WITH_DELETED_QUERY,Member.HOUSEHOLD_ID,this.getId()));
-        List<Member> members = new CursorHelper().getMembers(cursor, this);
-        db.close();
-        return members;
-    }
-
-    public Member findMember(DatabaseHelper db, Long id) {
-        Cursor cursor = db.exec(String.format(Member.FIND_BY_ID_QUERY, id));
-        Member member = new CursorHelper().getMembers(cursor, this).get(0);
-        db.close();
-        return member;
-    }
 
 
     public int numberOfNonDeletedMembers(DatabaseHelper db){
@@ -178,9 +180,9 @@ public class Household implements Serializable {
     }
 
     public int numberOfNonSelectedMembers(DatabaseHelper db){
-        String query = String.format(Member.FIND_ALL_QUERY,Member.HOUSEHOLD_ID,getId(),Member.DELETED, Member.NOT_DELETED_INT);
-        if(getSelectedMemberId()!=null)
-            query = String.format(Member.FIND_ALL_UNSELECTED_QUERY, Member.HOUSEHOLD_ID, this.getId(), Member.DELETED, Member.NOT_DELETED_INT, Member.ID, getSelectedMemberId());
+        if(getSelectedMemberId()==null)
+            return numberOfNonDeletedMembers(db);
+        String query = String.format(Member.FIND_ALL_UNSELECTED_QUERY, Member.HOUSEHOLD_ID, this.getId(), Member.DELETED, Member.NOT_DELETED_INT, Member.ID, getSelectedMemberId());
         return getCount(db, query);
     }
 
