@@ -32,8 +32,7 @@
             android:theme="@android:style/Theme.Holo.Light.NoActionBar">
         </activity>
         <activity android:name=".activity.HouseholdActivity"
-            android:label="@string/action_household"
-            android:parentActivityName=".activity.StepsActivity">
+            android:label="@string/action_household">
         </activity>
         <activity android:name=".activity.MemberActivity"
             android:label="@string/action_member">

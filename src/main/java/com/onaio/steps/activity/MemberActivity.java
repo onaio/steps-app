@@ -1,5 +1,6 @@
 package com.onaio.steps.activity;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -28,7 +29,15 @@ public class MemberActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.member);
         populateMember();
+        styleActionBar();
         setTitle(member.getFirstName());
+    }
+
+    private void styleActionBar() {
+        ActionBar actionBar = getActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(false);
+        actionBar.setHomeButtonEnabled(true);
+        actionBar.setIcon(R.drawable.ic_action_back);
     }
 
     @Override

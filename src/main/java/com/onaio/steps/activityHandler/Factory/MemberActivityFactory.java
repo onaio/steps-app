@@ -5,6 +5,7 @@ import android.view.Menu;
 
 import com.onaio.steps.activityHandler.DeleteMemberHandler;
 import com.onaio.steps.activityHandler.EditMemberActivityHandler;
+import com.onaio.steps.activityHandler.HouseholdActivityHandler;
 import com.onaio.steps.activityHandler.Interface.IMenuHandler;
 import com.onaio.steps.activityHandler.Interface.IResultHandler;
 import com.onaio.steps.activityHandler.Interface.IPrepare;
@@ -18,6 +19,7 @@ public class MemberActivityFactory {
         ArrayList<IMenuHandler> handlers = new ArrayList<IMenuHandler>();
         handlers.add(new DeleteMemberHandler(activity,member));
         handlers.add(new EditMemberActivityHandler(activity,member));
+        handlers.add(new HouseholdActivityHandler(activity,member.getHousehold()));
         return handlers;
     }
 

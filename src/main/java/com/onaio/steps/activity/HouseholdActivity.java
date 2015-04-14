@@ -37,7 +37,7 @@ public class HouseholdActivity extends ListActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.household);
-        setImageViewSize();
+        setWatermark();
         Intent intent = getIntent();
         household = (Household)intent.getSerializableExtra(Constants.HOUSEHOLD);
         styleActionBar();
@@ -48,6 +48,7 @@ public class HouseholdActivity extends ListActivity {
     private void styleActionBar() {
         ActionBar actionBar = getActionBar();
         actionBar.setDisplayHomeAsUpEnabled(false);
+        actionBar.setHomeButtonEnabled(true);
         actionBar.setIcon(R.drawable.ic_action_back);
         actionBar.setSubtitle(household.getPhoneNumber());
         actionBar.setTitle(household.getName());
@@ -146,8 +147,7 @@ public class HouseholdActivity extends ListActivity {
     }
 
 
-    private void setImageViewSize() {
-
+    private void setWatermark() {
         final RelativeLayout root = (RelativeLayout)findViewById(R.id.household_main);
         root.post(new Runnable() {
             public void run() {
