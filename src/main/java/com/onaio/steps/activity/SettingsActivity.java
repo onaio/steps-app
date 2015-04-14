@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import com.onaio.steps.R;
 import com.onaio.steps.helper.Constants;
@@ -22,6 +23,8 @@ public class SettingsActivity extends Activity {
         setContentView(R.layout.settings);
         TextView header = (TextView) findViewById(R.id.form_header);
         header.setText(R.string.action_settings);
+        Button doneButton = (Button) findViewById(R.id.ic_done);
+        doneButton.setText("DONE");
     }
 
     private void populatePhoneId() {

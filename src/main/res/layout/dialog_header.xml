@@ -10,7 +10,7 @@
             android:clickable="true"
             android:scaleType="fitStart"
             android:longClickable="true"
-            android:text = "DONE"
+            android:text = "ADD"
             android:background="@android:color/holo_blue_dark"
             android:textColor="@android:color/white"
             android:onClick="save"
