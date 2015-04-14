@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.onaio.steps.R;
@@ -35,6 +36,8 @@ public class NewMemberActivity extends Activity {
         setContentView(R.layout.member_form);
         TextView header = (TextView) findViewById(R.id.form_header);
         header.setText(R.string.member_new_header);
+        Button doneButton = (Button) findViewById(R.id.ic_done);
+        doneButton.setText("ADD");
     }
 
 

@@ -23,8 +23,6 @@ public class SettingsActivity extends Activity {
         setContentView(R.layout.settings);
         TextView header = (TextView) findViewById(R.id.form_header);
         header.setText(R.string.action_settings);
-        Button doneButton = (Button) findViewById(R.id.ic_done);
-        doneButton.setText("DONE");
     }
 
     private void populatePhoneId() {
