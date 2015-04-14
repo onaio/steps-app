@@ -4,6 +4,8 @@ package com.onaio.steps.activityHandler;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
+import android.view.View;
+import android.widget.Button;
 
 import com.onaio.steps.R;
 import com.onaio.steps.activity.HouseholdActivity;
@@ -27,6 +29,9 @@ import org.robolectric.annotation.Config;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.stub;
+import static org.mockito.Mockito.verify;
 
 @Config(emulateSdk = 16,manifest = "src/main/AndroidManifest.xml")
 @RunWith(RobolectricTestRunner.class)
@@ -108,4 +113,37 @@ public class NewMemberActivityHandlerTest {
     public void ShouldNotBeAbleToHandleResultForOtherRequestCode(){
         assertTrue(newMemberActivityHandler.canHandleResult(Constants.NEW_MEMBER_IDENTIFIER));
     }
+
+    @Test
+    public void ShouldInactivateWhenHouseholdIsSurveyed(){
+        stub(householdMock.getSelectedMemberId()).toReturn("");
+        stub(householdMock.getStatus()).toReturn(HouseholdStatus.DONE);
+        Assert.assertTrue(newMemberActivityHandler.shouldInactivate());
+    }
+
+    @Test
+    public void ShouldInactivateWhenSurveyIsRefused(){
+        stub(householdMock.getSelectedMemberId()).toReturn("");
+        stub(householdMock.getStatus()).toReturn(HouseholdStatus.REFUSED);
+        Assert.assertTrue(newMemberActivityHandler.shouldInactivate());
+    }
+
+    @Test
+    public void ShouldDisableItemWhenInactivated(){
+        Button buttonMock = mock(Button.class);
+        stub(buttonMock.getId()).toReturn(R.id.action_add_member);
+        newMemberActivityHandler.inactivate();
+        verify(buttonMock).setVisibility(View.GONE);
+    }
+
+    @Test
+    public void ShouldShowItemWhenActivated(){
+        Button buttonMock = mock(Button.class);
+        stub(buttonMock.getId()).toReturn(R.id.action_add_member);
+
+        newMemberActivityHandler.activate();
+
+        verify(buttonMock).setVisibility(View.VISIBLE);
+    }
+
 }

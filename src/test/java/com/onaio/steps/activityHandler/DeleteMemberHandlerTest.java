@@ -80,6 +80,21 @@ public class DeleteMemberHandlerTest {
     }
 
     @Test
+    public void ShouldInactivateWhenHouseholdIsSurveyed(){
+        stub(memberMock.getId()).toReturn(1);
+        stub(memberMock.getHousehold()).toReturn(new Household("12","name","321","",HouseholdStatus.DONE,"12-12-2001"));
+        assertTrue(deleteMemberHandler.shouldInactivate());
+    }
+
+    @Test
+    public void ShouldInactivateWhenSurveyIsRefused(){
+        stub(memberMock.getId()).toReturn(1);
+        stub(memberMock.getHousehold()).toReturn(new Household("12","name","321","",HouseholdStatus.REFUSED,"12-12-2001"));
+
+        assertTrue(deleteMemberHandler.shouldInactivate());
+    }
+
+    @Test
     public void ShouldDisableItemWhenInactivated(){
         Menu menuMock = mock(Menu.class);
         deleteMemberHandler.withMenu(menuMock);
@@ -98,9 +113,9 @@ public class DeleteMemberHandlerTest {
         MenuItem menuItemMock = mock(MenuItem.class);
         stub(menuMock.findItem(MENU_ID)).toReturn(menuItemMock);
 
-        deleteMemberHandler.inactivate();
+        deleteMemberHandler.activate();
 
-        verify(menuItemMock).setEnabled(false);
+        verify(menuItemMock).setEnabled(true);
     }
 
 }

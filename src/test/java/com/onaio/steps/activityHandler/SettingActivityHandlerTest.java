@@ -35,7 +35,7 @@ public class SettingActivityHandlerTest {
 
     @Before
     public void setup(){
-        stepsActivityMock = Robolectric.setupActivity(StepsActivity.class);
+        stepsActivityMock = Mockito.mock(StepsActivity.class);
         settingActivityHandler = new SettingActivityHandler(stepsActivityMock);
 
     }

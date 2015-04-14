@@ -26,7 +26,6 @@ public class MemberActivityTest {
     @Test
     public void ShouldBeAbleToPopulateWithMemberViewAnd(){
         assertEquals(R.id.member, shadowOf(memberActivity).getContentView().getId());
-
     }
 
 

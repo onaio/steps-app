@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 
 import com.onaio.steps.activity.NewHouseholdActivity;
 import com.onaio.steps.R;
-import com.onaio.steps.activityHandler.Interface.IItemHandler;
 import com.onaio.steps.activityHandler.Interface.IMenuHandler;
 import com.onaio.steps.activityHandler.Interface.IResultHandler;
 import com.onaio.steps.adapter.HouseholdAdapter;

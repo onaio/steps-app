@@ -38,7 +38,7 @@ public class NewHouseholdActivityHandlerTest {
 
     @Before
     public void Setup(){
-        stepsActivity = Robolectric.setupActivity(StepsActivity.class);
+        stepsActivity = Mockito.mock(StepsActivity.class);
         dialogMock = Mockito.mock(Dialog.class);
         handler = new NewHouseholdActivityHandler(stepsActivity, dialogMock);
     }
@@ -55,6 +55,8 @@ public class NewHouseholdActivityHandlerTest {
 
     @Test
     public void ShouldNotifyUserWhenPhoneIdIsNotSet(){
+        KeyValueStore keyValueStoreMock = Mockito.mock(KeyValueStore.class);
+        Mockito.stub(keyValueStoreMock.getString(PHONE_ID)).toReturn("");
         handler.open();
 
         Mockito.verify(dialogMock).notify(stepsActivity,Dialog.EmptyListener,R.string.phone_id_message, R.string.phone_id_message_title);

@@ -25,6 +25,7 @@ import org.robolectric.annotation.Config;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.stub;
 
 @Config(emulateSdk = 16,manifest = "src/main/AndroidManifest.xml")
 @RunWith(RobolectricTestRunner.class)
@@ -95,6 +96,23 @@ public class EditMemberActivityHandlerTest {
         Mockito.stub(memberMock.getId()).toReturn(1);
 
         assertTrue(editMemberActivityHandler.withMenu(menuMock).shouldInactivate());
+    }
+
+    @Test
+    public void ShouldInactivateWhenHouseholdIsSurveyed(){
+        Menu menuMock = Mockito.mock(Menu.class);
+        stub(memberMock.getId()).toReturn(1);
+        stub(memberMock.getHousehold()).toReturn(new Household("12","name","321","",HouseholdStatus.DONE,"12-12-2001"));
+        Assert.assertTrue(editMemberActivityHandler.withMenu(menuMock).shouldInactivate());
+    }
+
+    @Test
+    public void ShouldInactivateWhenSurveyIsRefused(){
+        Menu menuMock = Mockito.mock(Menu.class);
+        stub(memberMock.getId()).toReturn(1);
+        stub(memberMock.getHousehold()).toReturn(new Household("12","name","321","",HouseholdStatus.REFUSED,"12-12-2001"));
+        Assert.assertTrue(editMemberActivityHandler.withMenu(menuMock).shouldInactivate());
+
     }
 
     @Test
