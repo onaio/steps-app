@@ -15,7 +15,7 @@ public class SettingsActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setView();
-        populatePhoneId();
+        populateData();
 
     }
 
@@ -25,7 +25,7 @@ public class SettingsActivity extends Activity {
         header.setText(R.string.action_settings);
     }
 
-    private void populatePhoneId() {
+    private void populateData() {
         Intent intent = getIntent();
         String phoneId = intent.getStringExtra(Constants.PHONE_ID);
         String householdSeed = intent.getStringExtra(Constants.HOUSEHOLD_SEED);
@@ -44,13 +44,17 @@ public class SettingsActivity extends Activity {
         String phoneId = ((TextView) findViewById(R.id.deviceId)).getText().toString();
         String endpointUrl = ((TextView) findViewById(R.id.endpointUrl)).getText().toString();
         String householdSeed = ((TextView) findViewById(R.id.household_seed)).getText().toString();
-        if (!(isValid(phoneId) && isValid(endpointUrl))){
+        String minAge = ((TextView) findViewById(R.id.min_age)).getText().toString();
+        String maxAge = ((TextView) findViewById(R.id.max_age)).getText().toString();
+        if (!(isValid(phoneId) && isValid(endpointUrl) && isValid(minAge) && isValid(maxAge))){
             new Dialog().notify(this,Dialog.EmptyListener,R.string.enter_a_value,R.string.error_title);
             return;
         }
         intent.putExtra(Constants.PHONE_ID, phoneId);
         intent.putExtra(Constants.ENDPOINT_URL, endpointUrl);
         intent.putExtra(Constants.HOUSEHOLD_SEED, householdSeed);
+        intent.putExtra(Constants.MIN_AGE, minAge);
+        intent.putExtra(Constants.MAX_AGE, maxAge);
         setResult(RESULT_OK, intent);
         finish();
     }

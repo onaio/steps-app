@@ -5,6 +5,8 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import com.onaio.steps.R;
 import com.onaio.steps.exception.InvalidDataException;
+import com.onaio.steps.helper.Constants;
+import com.onaio.steps.helper.KeyValueStoreFactory;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.Member;
 import java.util.ArrayList;
@@ -45,6 +47,17 @@ public class MemberViewWrapper {
         validate(firstName, FIRST_NAME);
         validate(gender, GENDER);
         validate(ageString, AGE);
+        validateAgeRange(ageString,AGE_NOT_IN_RANGE);
+    }
+
+    private void validateAgeRange(String ageString, String errorKey) {
+        if(ageString == null || ageString.equals(""))
+            return;
+        int minAge = getValue(Constants.MIN_AGE);
+        int maxAge = getValue(Constants.MAX_AGE);
+        int age = Integer.parseInt(ageString);
+        if(age<minAge || age>maxAge)
+            errorFields.add(String.format(errorKey,minAge,maxAge));
     }
 
     private void validate(String fieldValue, String errorKey){
@@ -60,5 +73,9 @@ public class MemberViewWrapper {
                 return FEMALE;
             default: return "";
         }
+    }
+
+    private int getValue(String key) {
+        return Integer.parseInt(KeyValueStoreFactory.instance(activity).getString(key)) ;
     }
 }

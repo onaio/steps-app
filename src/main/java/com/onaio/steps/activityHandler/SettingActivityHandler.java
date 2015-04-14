@@ -13,6 +13,8 @@ import com.onaio.steps.helper.KeyValueStoreFactory;
 import static android.app.Activity.RESULT_OK;
 import static com.onaio.steps.helper.Constants.ENDPOINT_URL;
 import static com.onaio.steps.helper.Constants.HOUSEHOLD_SEED;
+import static com.onaio.steps.helper.Constants.MAX_AGE;
+import static com.onaio.steps.helper.Constants.MIN_AGE;
 import static com.onaio.steps.helper.Constants.PHONE_ID;
 
 
@@ -55,9 +57,13 @@ public class SettingActivityHandler implements IMenuHandler, IResultHandler {
         String phoneId = data.getStringExtra(PHONE_ID);
         String endpointUrl = data.getStringExtra(ENDPOINT_URL);
         String householdSeed = data.getStringExtra(HOUSEHOLD_SEED);
+        String minAge = data.getStringExtra(MIN_AGE);
+        String maxAge = data.getStringExtra(MAX_AGE);
         saveSafely(PHONE_ID, phoneId);
         saveSafely(ENDPOINT_URL, endpointUrl);
         saveSafely(HOUSEHOLD_SEED, householdSeed);
+        saveSafely(MIN_AGE, minAge);
+        saveSafely(MAX_AGE, maxAge);
         new StepsActivityHandler(activity).open();
     }
 

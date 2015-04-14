@@ -8,6 +8,8 @@ public class Constants {
     //keys for intent data
     public static final String PHONE_ID = "phoneId";
     public static final String HOUSEHOLD_SEED = "householdSeedId";
+    public static final String MIN_AGE = "minAge";
+    public static final String MAX_AGE = "maxAge";
     public static final String HOUSEHOLD = "HOUSEHOLD";
     public static final String MEMBER = "MEMBER";
 
@@ -47,7 +49,9 @@ public class Constants {
     public static final String GENDER = "Gender";
     public static final String AGE = "Age";
     public static final String MEMBER_ERROR = "Member";
-    public static final String ERROR_STRING = "Invalid %s, please populate the following fields: %s";
+    public static final String ERROR_STRING = "Invalid %s, please fill or rectify the following fields: %s";
+    public static final String AGE_NOT_IN_RANGE = "Age (not in the range of %d-%d)";
+
     public static final String EMPTY_PHONE_NUMBER = "Phone number is empty, please enter a valid number and try again.";
     public static final String INVALID_PHONE_NUMBER = "Phone number should contain minimum 9 digits, enter a valid phone number and try again";
 }

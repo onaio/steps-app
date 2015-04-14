@@ -71,4 +71,7 @@
     <string name="interview_now">INTERVIEW NOW</string>
     <string name="interview_later">INTERVIEW LATER</string>
     <string name="selected_participant">Selected Member</string>
+    <string name="age_range">Min and max age</string>
+    <string name="max_age">Max age</string>
+    <string name="min_age">Min age</string>
 </resources>
