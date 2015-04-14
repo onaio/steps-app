@@ -70,7 +70,7 @@
     <RadioGroup
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:id="@+id/member_gender"
         android:layout_marginLeft="5dp">
         <RadioButton
@@ -84,7 +84,8 @@
             android:layout_height="wrap_content"
             android:text="@string/female_label"
             android:id="@+id/female_selection"
-            android:textColor="@android:color/black"/>
+            android:textColor="@android:color/black"
+            android:layout_marginLeft="20dp"/>
     </RadioGroup>
 
 </LinearLayout>
