@@ -38,13 +38,13 @@ public class StepsActivity extends ListActivity {
         setLayout();
         populateHouseholds();
         bindHouseholdItems();
-        setImageViewSize();
+        setWatermark();
     }
 
-    private void setImageViewSize() {
-
-        final RelativeLayout root = (RelativeLayout)findViewById(R.id.main_layout);
-        root.post(new Runnable() {
+    private void setWatermark() {
+        final RelativeLayout homePage = (RelativeLayout)findViewById(R.id.main_layout);
+        if(homePage == null) return;
+        homePage.post(new Runnable() {
             public void run() {
                 Window win = getWindow();
                 View contentView = win.findViewById(Window.ID_ANDROID_CONTENT);
