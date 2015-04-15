@@ -24,7 +24,6 @@
         android:layout_height="wrap_content"
         android:id="@+id/main_text"
         android:layout_weight="1"
-        android:text="Household 1"
         android:textColor="@android:color/black"
         android:paddingBottom="5dp"
         android:paddingLeft="5dp"/>
@@ -34,11 +33,11 @@
         android:id="@+id/sub_text"
         android:layout_weight="1"
         android:textColor="@android:color/darker_gray"
-        android:paddingLeft="5dp"/>
+        android:paddingLeft="5dp"
+        android:layout_marginBottom="10dp"/>
     <View android:layout_height="1dp"
         android:layout_width="fill_parent"
         android:background="@android:color/darker_gray"
-        android:layout_marginTop="10dp"
         android:id="@+id/divider"/>
 </LinearLayout>
 </LinearLayout>

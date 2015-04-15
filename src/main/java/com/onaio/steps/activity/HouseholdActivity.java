@@ -24,9 +24,12 @@ import com.onaio.steps.adapter.MemberAdapter;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.model.Household;
+import com.onaio.steps.model.HouseholdStatus;
 import com.onaio.steps.model.Member;
 
 import java.util.List;
+
+import static com.onaio.steps.model.HouseholdStatus.*;
 
 public class HouseholdActivity extends ListActivity {
 
@@ -94,8 +97,15 @@ public class HouseholdActivity extends ListActivity {
 
     private void populateMembers() {
         db = new DatabaseHelper(this);
-        MemberAdapter memberAdapter = new MemberAdapter(this, household.getAllUnselectedMembers(db));
+        MemberAdapter memberAdapter = new MemberAdapter(this, getMembers(),household.getSelectedMemberId());
         getListView().setAdapter(memberAdapter);
+    }
+
+    private List<Member> getMembers() {
+        HouseholdStatus status = household.getStatus();
+        if(status.equals(NOT_DONE) || status.equals(DEFERRED))
+            return household.getAllUnselectedMembers(db);
+        return household.getAllNonDeletedMembers(db);
     }
 
     @Override

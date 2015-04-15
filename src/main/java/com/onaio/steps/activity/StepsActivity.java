@@ -25,7 +25,7 @@ import com.onaio.steps.model.Household;
 
 import java.util.List;
 
-import static com.onaio.steps.helper.Constants.COLOR_HEADER;
+import static com.onaio.steps.helper.Constants.HEADER_GREEN;
 import static com.onaio.steps.helper.Constants.PHONE_ID;
 
 public class StepsActivity extends ListActivity {
@@ -61,7 +61,7 @@ public class StepsActivity extends ListActivity {
         else
             setContentView(R.layout.main);
         setTitle(R.string.main_header);
-        setTitleColor(Color.parseColor(COLOR_HEADER));
+        setTitleColor(Color.parseColor(HEADER_GREEN));
     }
 
     @Override

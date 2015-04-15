@@ -58,7 +58,7 @@ public class DeferredHandler implements IMenuHandler,IPrepare {
     @Override
     public void inactivate() {
         View item = activity.findViewById(MENU_ID);
-        item.setVisibility(View.INVISIBLE);
+        item.setVisibility(View.GONE);
     }
 
     @Override

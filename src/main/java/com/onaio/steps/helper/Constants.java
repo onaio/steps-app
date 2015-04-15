@@ -26,7 +26,8 @@ public class Constants {
     public static final int EDIT_MEMBER_IDENTIFIER = 6;
     public static final int IMPORT_IDENTIFIER = 7;
 
-    public static final String COLOR_HEADER = "#008148";
+    public static final String HEADER_GREEN = "#008148";
+    public static final String TEXT_GREEN = "#53B257";
     public static final String SURVEY_NA = "NA";
 
 

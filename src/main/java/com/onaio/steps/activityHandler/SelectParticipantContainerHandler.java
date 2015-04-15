@@ -6,6 +6,7 @@ import android.view.View;
 import com.onaio.steps.R;
 import com.onaio.steps.activityHandler.Interface.IPrepare;
 import com.onaio.steps.model.Household;
+import com.onaio.steps.model.HouseholdStatus;
 
 public class SelectParticipantContainerHandler implements IPrepare{
     private final int MENU_ID = R.id.selected_participant;
@@ -19,7 +20,10 @@ public class SelectParticipantContainerHandler implements IPrepare{
 
     @Override
     public boolean shouldInactivate() {
-        return household.getSelectedMemberId() == null;
+        HouseholdStatus status = household.getStatus();
+        boolean notDone = status.equals(HouseholdStatus.NOT_DONE);
+        boolean deferred = status.equals(HouseholdStatus.DEFERRED);
+        return !notDone && !deferred;
     }
 
     @Override
