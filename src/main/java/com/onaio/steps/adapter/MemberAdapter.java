@@ -41,6 +41,10 @@ public class MemberAdapter extends BaseAdapter{
     public void reinitialize(List members){
         this.members = members;
     }
+    public void reinitialize(List members,String selectedMemberId){
+        this.members = members;
+        this.selectedMemberId = selectedMemberId;
+    }
 
     @Override
     public long getItemId(int position) {

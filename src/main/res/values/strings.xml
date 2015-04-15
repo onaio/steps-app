@@ -74,4 +74,6 @@
     <string name="age_range">Min and max age</string>
     <string name="max_age">Max age</string>
     <string name="min_age">Min age</string>
+    <string name="survey_done_message">Survey is complete!</string>
+    <string name="survey_refused_message">Survey is refused!</string>
 </resources>

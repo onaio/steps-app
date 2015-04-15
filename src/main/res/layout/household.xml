@@ -2,15 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="fill_parent"
-    android:id="@+id/household_main">
-    <ImageView
-        android:id="@+id/item_image"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:src="@mipmap/who"
-        />
+    android:id="@+id/household_main"
+    android:background="@android:color/white">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -134,7 +127,12 @@
             android:id="@+id/action_select_participant"
             android:textSize="12sp"/>
         </LinearLayout>
-
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/survey_message"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"/>
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"

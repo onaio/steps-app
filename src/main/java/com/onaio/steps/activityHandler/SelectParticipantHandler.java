@@ -20,6 +20,7 @@ import com.onaio.steps.model.Household;
 import com.onaio.steps.model.HouseholdStatus;
 import com.onaio.steps.model.Member;
 import com.onaio.steps.model.ReElectReason;
+import com.onaio.steps.modelViewWrapper.SelectedMemberViewWrapper;
 
 import java.util.List;
 import java.util.Random;
@@ -135,24 +136,22 @@ public class SelectParticipantHandler implements IMenuHandler, IPrepare {
 
     private void selectParticipant() {
         ListView membersView = activity.getListView();
-        updateHousehold(getSelectedMember(membersView));
-        updateView(membersView);
+        Member selectedMember = getSelectedMember(membersView);
+        updateHousehold(selectedMember);
+        updateView(membersView,selectedMember);
     }
 
-    private void updateView(ListView membersView) {
+    private void updateView(ListView membersView, Member selectedMember) {
         MemberAdapter membersAdapter = (MemberAdapter) membersView.getAdapter();
-        membersAdapter.reinitialize(household.getAllUnselectedMembers(db));
+        membersAdapter.reinitialize(household.getAllUnselectedMembers(db),String.valueOf(selectedMember.getId()));
         membersAdapter.notifyDataSetChanged();
-        populateSelectedMember();
+        populateSelectedMember(selectedMember);
         prepareCustomMenus();
     }
 
-    private void populateSelectedMember() {
-        TextView nameView = (TextView) activity.findViewById(R.id.selected_participant_name);
-        TextView detailView = (TextView) activity.findViewById(R.id.selected_participant_details);
-        Member selectedMember = household.getSelectedMember(db);
-        nameView.setText(selectedMember.getFormattedName());
-        detailView.setText(selectedMember.getFormattedDetail());
+    private void populateSelectedMember(Member selectedMember) {
+        new SelectedMemberViewWrapper()
+                .populate(household, selectedMember, activity);
     }
 
     private void prepareCustomMenus() {
