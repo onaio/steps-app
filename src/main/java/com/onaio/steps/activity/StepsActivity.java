@@ -34,7 +34,43 @@ public class StepsActivity extends ListActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        prepareScreen();
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    protected void onResume() {
+        prepareScreen();
+        super.onResume();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_activity_actions, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        List<IMenuHandler> activityHandlers = StepsActivityFactory.getMenuHandlers(this);
+        for(IMenuHandler handler : activityHandlers){
+            if(handler.shouldOpen(item.getItemId()))
+                return handler.open();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        List<IResultHandler> activityHandlers = StepsActivityFactory.getResultHandlers(this);
+        for(IResultHandler activityHandler: activityHandlers){
+            if(activityHandler.canHandleResult(requestCode))
+                activityHandler.handleResult(data,resultCode);
+        }
+    }
+
+    public void prepareScreen() {
         setLayout();
         populateHouseholds();
         bindHouseholdItems();
@@ -64,12 +100,6 @@ public class StepsActivity extends ListActivity {
         setTitleColor(Color.parseColor(HEADER_GREEN));
     }
 
-    @Override
-    protected void onResume() {
-        populateHouseholds();
-        super.onResume();
-    }
-
     private void bindHouseholdItems() {
         ListView households = getListView();
         households.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -86,32 +116,6 @@ public class StepsActivity extends ListActivity {
         getListView().setAdapter(new HouseholdAdapter(this, Household.getAll(db)));
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main_activity_actions, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        List<IMenuHandler> activityHandlers = StepsActivityFactory.getMenuHandlers(this);
-        for(IMenuHandler handler : activityHandlers){
-            if(handler.shouldOpen(item.getItemId()))
-                return handler.open();
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        List<IResultHandler> activityHandlers = StepsActivityFactory.getResultHandlers(this);
-        for(IResultHandler activityHandler: activityHandlers){
-            if(activityHandler.canHandleResult(requestCode))
-                activityHandler.handleResult(data,resultCode);
-        }
-    }
-
     private String getValue(String key) {
         return KeyValueStoreFactory.instance(this).getString(key) ;
     }
@@ -122,5 +126,4 @@ public class StepsActivity extends ListActivity {
             if(handler.shouldOpen(view.getId()))
                 handler.open();
     }
-
 }

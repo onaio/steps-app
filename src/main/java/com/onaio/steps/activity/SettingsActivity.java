@@ -30,13 +30,19 @@ public class SettingsActivity extends Activity {
         String phoneId = intent.getStringExtra(Constants.PHONE_ID);
         String householdSeed = intent.getStringExtra(Constants.HOUSEHOLD_SEED);
         String endpointUrl = intent.getStringExtra(Constants.ENDPOINT_URL);
+        String minAge = intent.getStringExtra(Constants.MIN_AGE);
+        String maxAge = intent.getStringExtra(Constants.MAX_AGE);
         TextView phoneIdView = (TextView) findViewById(R.id.deviceId);
         TextView endpointUrlView = (TextView) findViewById(R.id.endpointUrl);
         TextView householdSeedView = (TextView) findViewById(R.id.household_seed);
+        TextView minAgeView = (TextView) findViewById(R.id.min_age);
+        TextView maxAgeView = (TextView) findViewById(R.id.max_age);
 
         phoneIdView.setText(phoneId);
         endpointUrlView.setText(endpointUrl);
         householdSeedView.setText(householdSeed);
+        minAgeView.setText(minAge);
+        maxAgeView.setText(maxAge);
     }
 
     public void save(View view) {

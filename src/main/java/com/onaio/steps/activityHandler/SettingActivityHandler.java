@@ -38,6 +38,8 @@ public class SettingActivityHandler implements IMenuHandler, IResultHandler {
         intent.putExtra(PHONE_ID, getValue(PHONE_ID));
         intent.putExtra(ENDPOINT_URL, getValue(ENDPOINT_URL));
         intent.putExtra(HOUSEHOLD_SEED, getValue(HOUSEHOLD_SEED));
+        intent.putExtra(MIN_AGE, getValue(MIN_AGE));
+        intent.putExtra(MAX_AGE, getValue(MAX_AGE));
         activity.startActivityForResult(intent, Constants.SETTING_IDENTIFIER);
         return true;
     }
