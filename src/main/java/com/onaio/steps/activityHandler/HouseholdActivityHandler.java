@@ -3,14 +3,12 @@ package com.onaio.steps.activityHandler;
 import android.app.Activity;
 import android.content.Intent;
 
-import com.onaio.steps.R;
 import com.onaio.steps.activity.HouseholdActivity;
-import com.onaio.steps.activityHandler.Interface.IItemHandler;
-import com.onaio.steps.activityHandler.Interface.IMenuHandler;
+import com.onaio.steps.activityHandler.Interface.IListItemHandler;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.model.Household;
 
-public class HouseholdActivityHandler implements IItemHandler {
+public class HouseholdActivityHandler implements IListItemHandler {
 
     private Activity activity;
     private Household household;

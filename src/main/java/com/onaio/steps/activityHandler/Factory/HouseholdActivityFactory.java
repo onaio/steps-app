@@ -7,9 +7,9 @@ import com.onaio.steps.activityHandler.BackHomeHandler;
 import com.onaio.steps.activityHandler.DeferredHandler;
 import com.onaio.steps.activityHandler.EditHouseholdActivityHandler;
 import com.onaio.steps.activityHandler.ExportHandler;
+import com.onaio.steps.activityHandler.Interface.IListItemHandler;
 import com.onaio.steps.activityHandler.SelectedParticipantContainerHandler;
 import com.onaio.steps.activityHandler.SelectedParticipantActionsHandler;
-import com.onaio.steps.activityHandler.Interface.IItemHandler;
 import com.onaio.steps.activityHandler.Interface.IMenuHandler;
 import com.onaio.steps.activityHandler.Interface.IResultHandler;
 import com.onaio.steps.activityHandler.Interface.IPrepare;
@@ -42,7 +42,7 @@ public class HouseholdActivityFactory {
         return handlers;
     }
 
-    public static IItemHandler getMemberItemHandler(ListActivity activity, Member member){
+    public static IListItemHandler getMemberItemHandler(ListActivity activity, Member member){
         return new MemberActivityHandler(activity, member);
     }
 

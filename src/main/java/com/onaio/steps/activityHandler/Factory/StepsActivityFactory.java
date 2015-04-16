@@ -5,7 +5,7 @@ import android.app.ListActivity;
 import com.onaio.steps.activityHandler.ExportHandler;
 import com.onaio.steps.activityHandler.HouseholdActivityHandler;
 import com.onaio.steps.activityHandler.ImportHandler;
-import com.onaio.steps.activityHandler.Interface.IItemHandler;
+import com.onaio.steps.activityHandler.Interface.IListItemHandler;
 import com.onaio.steps.activityHandler.Interface.IMenuHandler;
 import com.onaio.steps.activityHandler.Interface.IResultHandler;
 import com.onaio.steps.activityHandler.NewHouseholdActivityHandler;
@@ -34,7 +34,7 @@ public class StepsActivityFactory {
         return handlers;
     }
 
-    public static IItemHandler getHouseholdItemHandler(ListActivity activity, Household household){
+    public static IListItemHandler getHouseholdItemHandler(ListActivity activity, Household household){
         return new HouseholdActivityHandler(activity, household);
     }
 

@@ -4,11 +4,11 @@ import android.app.Activity;
 import android.content.Intent;
 
 import com.onaio.steps.activity.MemberActivity;
-import com.onaio.steps.activityHandler.Interface.IItemHandler;
+import com.onaio.steps.activityHandler.Interface.IListItemHandler;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.model.Member;
 
-public class MemberActivityHandler implements IItemHandler {
+public class MemberActivityHandler implements IListItemHandler {
 
     private Member member;
     private Activity activity;
