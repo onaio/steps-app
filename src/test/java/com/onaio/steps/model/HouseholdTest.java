@@ -153,7 +153,7 @@ public class HouseholdTest {
 
         assertEquals(numberOfMembers, household.numberOfNonDeletedMembers(db));
 
-        Mockito.verify(db).exec(String.format(Member.FIND_ALL_UNSELECTED_QUERY,Member.HOUSEHOLD_ID,householdId, Member.DELETED, Member.NOT_DELETED_INT));
+        Mockito.verify(db).exec(String.format(Member.FIND_ALL_QUERY,Member.HOUSEHOLD_ID,householdId, Member.DELETED, Member.NOT_DELETED_INT));
     }
 
     @Test
@@ -179,7 +179,7 @@ public class HouseholdTest {
 
         assertEquals(1,members.size());
         validateMember(members.get(0),false);
-        Mockito.verify(db).exec(String.format(Member.FIND_ALL_UNSELECTED_QUERY,Member.HOUSEHOLD_ID,householdId,Member.DELETED, Member.NOT_DELETED_INT));
+        Mockito.verify(db).exec(String.format(Member.FIND_ALL_UNSELECTED_QUERY,Member.HOUSEHOLD_ID,householdId,Member.DELETED, Member.NOT_DELETED_INT,Member.ID, household.getSelectedMemberId()));
     }
 
     @Test

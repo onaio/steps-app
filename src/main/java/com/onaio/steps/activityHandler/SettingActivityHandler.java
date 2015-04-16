@@ -34,7 +34,7 @@ public class SettingActivityHandler implements IMenuHandler, IResultHandler {
 
     @Override
     public boolean open() {
-        Intent intent = new Intent(activity.getBaseContext(), SettingsActivity.class);
+        Intent intent = new Intent(activity, SettingsActivity.class);
         intent.putExtra(PHONE_ID, getValue(PHONE_ID));
         intent.putExtra(ENDPOINT_URL, getValue(ENDPOINT_URL));
         intent.putExtra(HOUSEHOLD_SEED, getValue(HOUSEHOLD_SEED));

@@ -35,7 +35,7 @@ public class SettingActivityHandlerTest {
 
     @Before
     public void setup(){
-        stepsActivityMock = Mockito.mock(StepsActivity.class);
+        stepsActivityMock = Robolectric.setupActivity(StepsActivity.class);
         settingActivityHandler = new SettingActivityHandler(stepsActivityMock);
 
     }
@@ -57,9 +57,8 @@ public class SettingActivityHandlerTest {
         setValue(Constants.HOUSEHOLD_SEED,HOUSEHOLD_SEED);
         ShadowActivity stepsActivityShadow = Robolectric.shadowOf(stepsActivityMock);
 
-        settingActivityHandler.open();
-
         Intent newIntent = stepsActivityShadow.getNextStartedActivityForResult().intent;
+        settingActivityHandler.open();
 
         assertTrue(newIntent.getComponent().getClassName().equals(SettingsActivity.class.getName()));
         assertTrue(newIntent.getStringExtra(Constants.PHONE_ID).equals(PHONE_ID));

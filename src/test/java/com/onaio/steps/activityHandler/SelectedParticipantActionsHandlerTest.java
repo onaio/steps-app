@@ -18,7 +18,6 @@ import org.robolectric.annotation.Config;
 
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
-import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
@@ -26,7 +25,7 @@ import static org.mockito.Mockito.verify;
 @RunWith(RobolectricTestRunner.class)
 public class SelectedParticipantActionsHandlerTest {
 
-    private final int MENU_ID = R.id.selected_participant;
+    private final int MENU_ID = R.id.selected_participant_actions;
     @Mock
     private HouseholdActivity activityMock;
     @Mock
@@ -85,7 +84,7 @@ public class SelectedParticipantActionsHandlerTest {
 
         selectedParticipantActionsHandler.inactivate();
 
-        verify(viewMock).setVisibility(View.INVISIBLE);
+        verify(viewMock).setVisibility(View.GONE);
     }
 
     @Test

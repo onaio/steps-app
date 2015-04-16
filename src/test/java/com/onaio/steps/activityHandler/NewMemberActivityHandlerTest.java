@@ -146,4 +146,6 @@ public class NewMemberActivityHandlerTest {
         verify(buttonMock).setVisibility(View.VISIBLE);
     }
 
+
+
 }

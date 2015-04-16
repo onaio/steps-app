@@ -7,7 +7,6 @@ import com.onaio.steps.activity.StepsActivity;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
@@ -24,7 +23,7 @@ public class StepsActivityHandlerTest {
     StepsActivityHandler stepsActivityHandler;
     @Before
     public void setup(){
-        stepsActivityMock = Mockito.mock(StepsActivity.class);
+        stepsActivityMock = Robolectric.setupActivity(StepsActivity.class);
         stepsActivityHandler = new StepsActivityHandler(stepsActivityMock);
     }
 
@@ -43,6 +42,7 @@ public class StepsActivityHandlerTest {
         ShadowActivity stepsActivityShadow = Robolectric.shadowOf(stepsActivityMock);
 
         stepsActivityHandler.open();
+
 
         Intent newIntent = stepsActivityShadow.getNextStartedActivityForResult().intent;
         assertTrue(newIntent.getComponent().getClassName().equals(StepsActivity.class.getName()));

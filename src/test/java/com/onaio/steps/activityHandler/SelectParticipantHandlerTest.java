@@ -3,17 +3,13 @@ package com.onaio.steps.activityHandler;
 import android.app.ListActivity;
 import android.content.DialogInterface;
 import android.view.View;
-import android.widget.ListView;
 
 import com.onaio.steps.R;
 import com.onaio.steps.activity.HouseholdActivity;
-import com.onaio.steps.adapter.MemberAdapter;
-import com.onaio.steps.model.Household;
-import com.onaio.steps.model.HouseholdStatus;
-import com.onaio.steps.model.Member;
-import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.helper.Dialog;
+import com.onaio.steps.model.Household;
+import com.onaio.steps.model.HouseholdStatus;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -83,13 +79,15 @@ public class SelectParticipantHandlerTest {
     }
 
     @Test
-    public void ShouldSelectParticipantWhenNoSelectionDone(){
+    public void ShouldNotifyUserBeforeSelection(){
         Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.NOT_SELECTED);
 
+        android.app.Dialog mock = Mockito.mock(android.app.Dialog.class);
         selectParticipantHandler.open();
 
-        verify(dialogMock).confirm(eq(activityMock),any(DialogInterface.OnClickListener.class),eq(Dialog.EmptyListener),eq(R.string.select_participant_message),eq(R.string.select_participant_title));
+        verify(dialogMock).confirm(eq(activityMock),any(android.app.Dialog.OnClickListener.class),eq(Dialog.EmptyListener),eq(R.string.select_participant_message),eq(R.string.select_participant_title));
     }
+
 
     private class SelectParticipantHandlerMock extends SelectParticipantHandler{
         private View view;

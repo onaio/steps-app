@@ -103,7 +103,7 @@ public class DeferredHandlerTest {
 
         deferredHandler.inactivate();
 
-        verify(viewMock).setVisibility(View.INVISIBLE);
+        verify(viewMock).setVisibility(View.GONE);
     }
 
     @Test

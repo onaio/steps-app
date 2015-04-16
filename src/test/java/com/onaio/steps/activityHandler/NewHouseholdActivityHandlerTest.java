@@ -38,7 +38,7 @@ public class NewHouseholdActivityHandlerTest {
 
     @Before
     public void Setup(){
-        stepsActivity = Mockito.mock(StepsActivity.class);
+        stepsActivity = Robolectric.setupActivity(StepsActivity.class);
         dialogMock = Mockito.mock(Dialog.class);
         handler = new NewHouseholdActivityHandler(stepsActivity, dialogMock);
     }

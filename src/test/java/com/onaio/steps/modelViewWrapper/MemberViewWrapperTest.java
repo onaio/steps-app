@@ -8,6 +8,8 @@ import com.onaio.steps.R;
 import com.onaio.steps.activity.NewMemberActivity;
 import com.onaio.steps.exception.InvalidDataException;
 import com.onaio.steps.helper.Constants;
+import com.onaio.steps.helper.KeyValueStore;
+import com.onaio.steps.helper.KeyValueStoreFactory;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.HouseholdStatus;
 import com.onaio.steps.model.Member;
@@ -47,7 +49,8 @@ public class MemberViewWrapperTest {
 
     @Test
     public void ShouldRaiseExceptionWhenSurnameIsInvalid() throws InvalidDataException {
-        String errorString = Constants.ERROR_STRING;
+        setValue(Constants.MIN_AGE,"12");
+        setValue(Constants.MAX_AGE,"70");
         TextView surname = (TextView) newMemberActivity.findViewById(R.id.member_family_surname);
         TextView firstName = (TextView) newMemberActivity.findViewById(R.id.member_first_name);
         RadioGroup gender = (RadioGroup) newMemberActivity.findViewById(R.id.member_gender);
@@ -59,14 +62,15 @@ public class MemberViewWrapperTest {
         Household household = new Household("1","Any Household", "123456789","", HouseholdStatus.NOT_SELECTED, date);
 
         expectedException.expect(InvalidDataException.class);
-        expectedException.expectMessage(String.format(errorString,"Member",Constants.FAMILY_SURNAME));
+        expectedException.expectMessage(String.format(Constants.ERROR_STRING,"Member",Constants.FAMILY_SURNAME));
 
         memberViewWrapper.getMember(surname.getId(),firstName.getId(),gender.getId(), age.getId(),household);
     }
 
     @Test
     public void ShouldRaiseExceptionWhenFirstNameIsInvalid() throws InvalidDataException {
-        String errorString = Constants.ERROR_STRING;
+        setValue(Constants.MIN_AGE,"12");
+        setValue(Constants.MAX_AGE,"70");
         TextView surname = (TextView) newMemberActivity.findViewById(R.id.member_family_surname);
         TextView firstName = (TextView) newMemberActivity.findViewById(R.id.member_first_name);
         RadioGroup gender = (RadioGroup) newMemberActivity.findViewById(R.id.member_gender);
@@ -78,13 +82,15 @@ public class MemberViewWrapperTest {
         Household household = new Household("1","Any Household", "123456789","", HouseholdStatus.NOT_SELECTED, date);
 
         expectedException.expect(InvalidDataException.class);
-        expectedException.expectMessage(String.format(errorString,"Member",Constants.FIRST_NAME));
+        expectedException.expectMessage(String.format(Constants.ERROR_STRING,"Member",Constants.FIRST_NAME));
 
         memberViewWrapper.getMember(surname.getId(),firstName.getId(),gender.getId(), age.getId(),household);
     }
 
     @Test
     public void ShouldRaiseExceptionWhenGenderIsInvalid() throws InvalidDataException {
+        setValue(Constants.MIN_AGE,"12");
+        setValue(Constants.MAX_AGE,"70");
         String errorString = Constants.ERROR_STRING;
         TextView surname = (TextView) newMemberActivity.findViewById(R.id.member_family_surname);
         TextView firstName = (TextView) newMemberActivity.findViewById(R.id.member_first_name);
@@ -104,6 +110,8 @@ public class MemberViewWrapperTest {
 
     @Test
     public void ShouldRaiseExceptionWhenAgeIsInvalid() throws InvalidDataException {
+        setValue(Constants.MIN_AGE,"12");
+        setValue(Constants.MAX_AGE,"70");
         String errorString = Constants.ERROR_STRING;
         TextView surname = (TextView) newMemberActivity.findViewById(R.id.member_family_surname);
         TextView firstName = (TextView) newMemberActivity.findViewById(R.id.member_first_name);
@@ -122,6 +130,8 @@ public class MemberViewWrapperTest {
 
     @Test
     public void ShouldGiveMemberWhenProperDataIsPassed() throws InvalidDataException {
+        setValue(Constants.MIN_AGE,"12");
+        setValue(Constants.MAX_AGE,"70");
         TextView surname = (TextView) newMemberActivity.findViewById(R.id.member_family_surname);
         TextView firstname = (TextView) newMemberActivity.findViewById(R.id.member_first_name);
         RadioGroup gender = (RadioGroup) newMemberActivity.findViewById(R.id.member_gender);
@@ -129,7 +139,7 @@ public class MemberViewWrapperTest {
         surname.setText("Bansal");
         firstname.setText("Rohit");
         gender.check(R.id.male_selection);
-        age.setText("12");
+        age.setText("15");
         Household household = new Household("1","Any Household", "123456789","", HouseholdStatus.NOT_SELECTED,date );
 
         Member member = memberViewWrapper.getMember(surname.getId(), firstname.getId(), gender.getId(), age.getId(), household);
@@ -137,7 +147,7 @@ public class MemberViewWrapperTest {
         Assert.assertTrue(member.getFamilySurname().equals("Bansal"));
         Assert.assertTrue(member.getFirstName().equals("Rohit"));
         Assert.assertTrue(member.getGender().equals("Male"));
-        Assert.assertTrue(member.getAge()==12);
+        Assert.assertTrue(member.getAge()==15);
     }
 
     @Test
@@ -153,7 +163,11 @@ public class MemberViewWrapperTest {
         expectedException.expectMessage(String.format(errorString,"Member",Constants.FAMILY_SURNAME,Constants.FIRST_NAME,Constants.GENDER,Constants.AGE));
 
         memberViewWrapper.getMember(surname.getId(), firstName.getId(), gender.getId(), age.getId(), household);
+    }
 
+    private void setValue(String key, String value) {
+        KeyValueStore keyValueStore = KeyValueStoreFactory.instance(newMemberActivity);
+        keyValueStore.putString(key, value);
     }
 
 
