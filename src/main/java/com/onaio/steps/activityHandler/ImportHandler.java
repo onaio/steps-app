@@ -5,8 +5,8 @@ import android.app.ListActivity;
 import android.content.Intent;
 
 import com.onaio.steps.R;
+import com.onaio.steps.activityHandler.Interface.IActivityResultHandler;
 import com.onaio.steps.activityHandler.Interface.IMenuHandler;
-import com.onaio.steps.activityHandler.Interface.IResultHandler;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.helper.FileUtil;
@@ -20,7 +20,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-public class ImportHandler implements IMenuHandler, IResultHandler {
+public class ImportHandler implements IMenuHandler, IActivityResultHandler {
     private final DatabaseHelper db;
     private ListActivity activity;
     private static final int MENU_ID= R.id.action_import;

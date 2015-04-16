@@ -4,11 +4,11 @@ import android.app.Activity;
 import android.view.View;
 
 import com.onaio.steps.R;
-import com.onaio.steps.activityHandler.Interface.IPrepare;
+import com.onaio.steps.activityHandler.Interface.IMenuPreparer;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.HouseholdStatus;
 
-public class SelectedParticipantContainerHandler implements IPrepare{
+public class SelectedParticipantContainerHandler implements IMenuPreparer {
     private final int MENU_ID = R.id.selected_participant;
     private Activity activity;
     private Household household;

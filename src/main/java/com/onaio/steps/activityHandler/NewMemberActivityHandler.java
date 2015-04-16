@@ -7,9 +7,9 @@ import android.widget.Button;
 
 import com.onaio.steps.R;
 import com.onaio.steps.activity.NewMemberActivity;
+import com.onaio.steps.activityHandler.Interface.IActivityResultHandler;
 import com.onaio.steps.activityHandler.Interface.IMenuHandler;
-import com.onaio.steps.activityHandler.Interface.IResultHandler;
-import com.onaio.steps.activityHandler.Interface.IPrepare;
+import com.onaio.steps.activityHandler.Interface.IMenuPreparer;
 import com.onaio.steps.adapter.MemberAdapter;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;
@@ -21,7 +21,7 @@ import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
 
-public class NewMemberActivityHandler implements IMenuHandler, IResultHandler,IPrepare{
+public class NewMemberActivityHandler implements IMenuHandler, IActivityResultHandler,IMenuPreparer {
 
     private Household household;
     private ListActivity activity;

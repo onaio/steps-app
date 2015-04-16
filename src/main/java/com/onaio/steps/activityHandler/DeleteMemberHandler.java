@@ -7,13 +7,13 @@ import android.view.MenuItem;
 
 import com.onaio.steps.R;
 import com.onaio.steps.activityHandler.Interface.IMenuHandler;
-import com.onaio.steps.activityHandler.Interface.IPrepare;
+import com.onaio.steps.activityHandler.Interface.IMenuPreparer;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.helper.Dialog;
 import com.onaio.steps.model.HouseholdStatus;
 import com.onaio.steps.model.Member;
 
-public class DeleteMemberHandler implements IMenuHandler,IPrepare {
+public class DeleteMemberHandler implements IMenuHandler,IMenuPreparer {
     private final Dialog dialog;
     private Activity activity;
     private Member member;

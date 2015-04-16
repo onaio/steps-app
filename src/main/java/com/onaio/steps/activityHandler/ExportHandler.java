@@ -6,7 +6,7 @@ import android.view.MenuItem;
 
 import com.onaio.steps.R;
 import com.onaio.steps.activityHandler.Interface.IMenuHandler;
-import com.onaio.steps.activityHandler.Interface.IPrepare;
+import com.onaio.steps.activityHandler.Interface.IMenuPreparer;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.helper.Dialog;
 import com.onaio.steps.helper.FileUtil;
@@ -24,7 +24,7 @@ import java.util.List;
 
 import static com.onaio.steps.helper.Constants.*;
 
-public class ExportHandler implements IMenuHandler,IPrepare {
+public class ExportHandler implements IMenuHandler,IMenuPreparer {
 
     private List<Household> households;
     private ListActivity activity;
@@ -111,7 +111,7 @@ public class ExportHandler implements IMenuHandler,IPrepare {
         item.setEnabled(true);
     }
 
-    public IPrepare withMenu(Menu menu) {
+    public IMenuPreparer withMenu(Menu menu) {
         this.menu = menu;
         return this;
     }

@@ -9,17 +9,14 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.AdapterView;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.onaio.steps.R;
 import com.onaio.steps.activityHandler.Factory.HouseholdActivityFactory;
+import com.onaio.steps.activityHandler.Interface.IActivityResultHandler;
 import com.onaio.steps.activityHandler.Interface.IMenuHandler;
-import com.onaio.steps.activityHandler.Interface.IPrepare;
-import com.onaio.steps.activityHandler.Interface.IResultHandler;
+import com.onaio.steps.activityHandler.Interface.IMenuPreparer;
 import com.onaio.steps.adapter.MemberAdapter;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;
@@ -80,8 +77,8 @@ public class HouseholdActivity extends ListActivity {
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        List<IPrepare> menuPreparers = HouseholdActivityFactory.getMenuPreparer(this, household, menu);
-        for (IPrepare menuPreparer: menuPreparers)
+        List<IMenuPreparer> menuPreparers = HouseholdActivityFactory.getMenuPreparer(this, household, menu);
+        for (IMenuPreparer menuPreparer: menuPreparers)
             if(menuPreparer.shouldInactivate())
                 menuPreparer.inactivate();
         super.onPrepareOptionsMenu(menu);
@@ -97,8 +94,8 @@ public class HouseholdActivity extends ListActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        List<IResultHandler> menuHandlers = HouseholdActivityFactory.getMenuResultHandlers(this, household);
-        for(IResultHandler menuHandler:menuHandlers)
+        List<IActivityResultHandler> menuHandlers = HouseholdActivityFactory.getMenuResultHandlers(this, household);
+        for(IActivityResultHandler menuHandler:menuHandlers)
             if(menuHandler.canHandleResult(requestCode))
                 menuHandler.handleResult(data, resultCode);
     }
@@ -119,7 +116,7 @@ public class HouseholdActivity extends ListActivity {
         TextView numberHeader = (TextView) findViewById(R.id.household_number_header);
         idHeader.setText(String.format("ID-%s",household.getName()));
         idHeader.setTextColor(Color.parseColor(Constants.HEADER_GREEN));
-        numberHeader.setText(String.format("Phone Number: %s",household.getPhoneNumber()));
+        numberHeader.setText(String.format("Phone Number: %s", household.getPhoneNumber()));
         actionBar.setTitle("");
     }
 
@@ -140,8 +137,8 @@ public class HouseholdActivity extends ListActivity {
     }
 
     private void prepareCustomMenu() {
-        List<IPrepare> customMenus = HouseholdActivityFactory.getCustomMenuPreparer(this, household);
-        for(IPrepare customMenu:customMenus)
+        List<IMenuPreparer> customMenus = HouseholdActivityFactory.getCustomMenuPreparer(this, household);
+        for(IMenuPreparer customMenu:customMenus)
             if(customMenu.shouldInactivate())
                 customMenu.inactivate();
             else

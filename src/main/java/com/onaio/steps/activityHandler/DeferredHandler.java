@@ -6,13 +6,13 @@ import android.view.View;
 
 import com.onaio.steps.R;
 import com.onaio.steps.activityHandler.Interface.IMenuHandler;
-import com.onaio.steps.activityHandler.Interface.IPrepare;
+import com.onaio.steps.activityHandler.Interface.IMenuPreparer;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.helper.Dialog;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.HouseholdStatus;
 
-public class DeferredHandler implements IMenuHandler,IPrepare {
+public class DeferredHandler implements IMenuHandler,IMenuPreparer {
 
     private final Dialog dialog;
     private ListActivity activity;

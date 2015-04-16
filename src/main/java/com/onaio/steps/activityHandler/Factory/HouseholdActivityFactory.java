@@ -7,12 +7,12 @@ import com.onaio.steps.activityHandler.BackHomeHandler;
 import com.onaio.steps.activityHandler.DeferredHandler;
 import com.onaio.steps.activityHandler.EditHouseholdActivityHandler;
 import com.onaio.steps.activityHandler.ExportHandler;
+import com.onaio.steps.activityHandler.Interface.IActivityResultHandler;
 import com.onaio.steps.activityHandler.Interface.IListItemHandler;
+import com.onaio.steps.activityHandler.Interface.IMenuPreparer;
 import com.onaio.steps.activityHandler.SelectedParticipantContainerHandler;
 import com.onaio.steps.activityHandler.SelectedParticipantActionsHandler;
 import com.onaio.steps.activityHandler.Interface.IMenuHandler;
-import com.onaio.steps.activityHandler.Interface.IResultHandler;
-import com.onaio.steps.activityHandler.Interface.IPrepare;
 import com.onaio.steps.activityHandler.MemberActivityHandler;
 import com.onaio.steps.activityHandler.NewMemberActivityHandler;
 import com.onaio.steps.activityHandler.RefusedHandler;
@@ -35,8 +35,8 @@ public class HouseholdActivityFactory {
         return handlers;
     }
 
-    public static List<IResultHandler> getMenuResultHandlers(ListActivity activity, Household household){
-        ArrayList<IResultHandler> handlers = new ArrayList<IResultHandler>();
+    public static List<IActivityResultHandler> getMenuResultHandlers(ListActivity activity, Household household){
+        ArrayList<IActivityResultHandler> handlers = new ArrayList<IActivityResultHandler>();
         handlers.add(new NewMemberActivityHandler(activity, household));
         handlers.add(new EditHouseholdActivityHandler(activity, household));
         return handlers;
@@ -46,14 +46,14 @@ public class HouseholdActivityFactory {
         return new MemberActivityHandler(activity, member);
     }
 
-    public static List<IPrepare> getMenuPreparer(ListActivity activity, Household household, Menu menu){
-        List<IPrepare> menuPreparers = new ArrayList<IPrepare>();
+    public static List<IMenuPreparer> getMenuPreparer(ListActivity activity, Household household, Menu menu){
+        List<IMenuPreparer> menuPreparers = new ArrayList<IMenuPreparer>();
         menuPreparers.add(new ExportHandler(activity).with(household).withMenu(menu));
         return menuPreparers;
     }
 
-    public static List<IPrepare> getCustomMenuPreparer(ListActivity activity, Household household){
-        ArrayList<IPrepare> menuItems = new ArrayList<IPrepare>();
+    public static List<IMenuPreparer> getCustomMenuPreparer(ListActivity activity, Household household){
+        ArrayList<IMenuPreparer> menuItems = new ArrayList<IMenuPreparer>();
         menuItems.add(new TakeSurveyHandler(activity,household));
         menuItems.add(new DeferredHandler(activity, household));
         menuItems.add(new RefusedHandler(activity,household));

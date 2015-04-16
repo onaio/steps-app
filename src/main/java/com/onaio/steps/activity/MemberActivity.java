@@ -11,9 +11,9 @@ import android.widget.TextView;
 
 import com.onaio.steps.R;
 import com.onaio.steps.activityHandler.Factory.MemberActivityFactory;
+import com.onaio.steps.activityHandler.Interface.IActivityResultHandler;
 import com.onaio.steps.activityHandler.Interface.IMenuHandler;
-import com.onaio.steps.activityHandler.Interface.IPrepare;
-import com.onaio.steps.activityHandler.Interface.IResultHandler;
+import com.onaio.steps.activityHandler.Interface.IMenuPreparer;
 import com.onaio.steps.model.Member;
 
 import java.util.List;
@@ -67,16 +67,16 @@ public class MemberActivity extends Activity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        List<IResultHandler> menuHandlers = MemberActivityFactory.getMenuResultHandlers(this, member);
-        for(IResultHandler menuHandler:menuHandlers)
+        List<IActivityResultHandler> menuHandlers = MemberActivityFactory.getMenuResultHandlers(this, member);
+        for(IActivityResultHandler menuHandler:menuHandlers)
             if(menuHandler.canHandleResult(requestCode))
                 menuHandler.handleResult(data, resultCode);
     }
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        List<IPrepare> menuItemHandlers = MemberActivityFactory.getMenuPreparer(this, member,menu);
-        for(IPrepare handler:menuItemHandlers)
+        List<IMenuPreparer> menuItemHandlers = MemberActivityFactory.getMenuPreparer(this, member,menu);
+        for(IMenuPreparer handler:menuItemHandlers)
             if(handler.shouldInactivate())
                 handler.inactivate();
         super.onPrepareOptionsMenu(menu);

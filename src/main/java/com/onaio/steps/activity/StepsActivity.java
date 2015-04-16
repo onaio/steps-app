@@ -16,8 +16,8 @@ import android.widget.RelativeLayout;
 
 import com.onaio.steps.R;
 import com.onaio.steps.activityHandler.Factory.StepsActivityFactory;
+import com.onaio.steps.activityHandler.Interface.IActivityResultHandler;
 import com.onaio.steps.activityHandler.Interface.IMenuHandler;
-import com.onaio.steps.activityHandler.Interface.IResultHandler;
 import com.onaio.steps.adapter.HouseholdAdapter;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.helper.KeyValueStoreFactory;
@@ -63,8 +63,8 @@ public class StepsActivity extends ListActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        List<IResultHandler> activityHandlers = StepsActivityFactory.getResultHandlers(this);
-        for(IResultHandler activityHandler: activityHandlers){
+        List<IActivityResultHandler> activityHandlers = StepsActivityFactory.getResultHandlers(this);
+        for(IActivityResultHandler activityHandler: activityHandlers){
             if(activityHandler.canHandleResult(requestCode))
                 activityHandler.handleResult(data,resultCode);
         }

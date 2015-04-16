@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.onaio.steps.R;
 import com.onaio.steps.activityHandler.Factory.HouseholdActivityFactory;
 import com.onaio.steps.activityHandler.Interface.IMenuHandler;
-import com.onaio.steps.activityHandler.Interface.IPrepare;
+import com.onaio.steps.activityHandler.Interface.IMenuPreparer;
 import com.onaio.steps.adapter.MemberAdapter;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.helper.Dialog;
@@ -27,7 +27,7 @@ import java.util.Random;
 
 import static com.onaio.steps.model.HouseholdStatus.NOT_DONE;
 
-public class SelectParticipantHandler implements IMenuHandler, IPrepare {
+public class SelectParticipantHandler implements IMenuHandler, IMenuPreparer {
 
     private final int MENU_ID = R.id.action_select_participant;
     private final int MAX_RE_ELECT_COUNT = 2;
@@ -155,8 +155,8 @@ public class SelectParticipantHandler implements IMenuHandler, IPrepare {
     }
 
     private void prepareCustomMenus() {
-        List<IPrepare> bottomMenus = HouseholdActivityFactory.getCustomMenuPreparer(activity, household);
-        for(IPrepare menu:bottomMenus)
+        List<IMenuPreparer> bottomMenus = HouseholdActivityFactory.getCustomMenuPreparer(activity, household);
+        for(IMenuPreparer menu:bottomMenus)
             if(menu.shouldInactivate())
                 menu.inactivate();
             else

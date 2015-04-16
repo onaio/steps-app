@@ -7,7 +7,7 @@ import android.view.View;
 
 import com.onaio.steps.R;
 import com.onaio.steps.activityHandler.Interface.IMenuHandler;
-import com.onaio.steps.activityHandler.Interface.IPrepare;
+import com.onaio.steps.activityHandler.Interface.IMenuPreparer;
 import com.onaio.steps.exception.AppNotInstalledException;
 import com.onaio.steps.exception.FormNotPresentException;
 import com.onaio.steps.helper.Constants;
@@ -22,7 +22,7 @@ import com.onaio.steps.model.ODKForm;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class TakeSurveyHandler implements IMenuHandler, IPrepare {
+public class TakeSurveyHandler implements IMenuHandler, IMenuPreparer {
     private ListActivity activity;
     private Household household;
     private static final int MENU_ID= R.id.action_take_survey;
