@@ -41,8 +41,7 @@ public class DeferredHandler implements IMenuHandler,IPrepare {
         DialogInterface.OnClickListener confirmListener = new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                activity.finish();
-                new StepsActivityHandler(activity).open();
+                new BackHomeHandler(activity).open();
             }
         };
         dialog.notify(activity, confirmListener, R.string.survey_deferred_message, R.string.survey_deferred_title);

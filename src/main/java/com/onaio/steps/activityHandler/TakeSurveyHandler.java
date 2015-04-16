@@ -44,6 +44,7 @@ public class TakeSurveyHandler implements IMenuHandler, IPrepare {
             ODKForm requiredForm = ODKForm.getWithId(activity, Constants.ODK_FORM_ID);
             saveFile(requiredForm);
             launchODKCollect(requiredForm);
+            activity.finish();
             updateHousehold();
         } catch (FormNotPresentException e) {
             new Dialog().notify(activity,Dialog.EmptyListener,R.string.form_not_present, R.string.error_title);

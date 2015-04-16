@@ -17,31 +17,31 @@ import static org.junit.Assert.assertTrue;
 
 @Config(emulateSdk = 16,manifest = "src/main/AndroidManifest.xml")
 @RunWith(RobolectricTestRunner.class)
-public class StepsActivityHandlerTest {
+public class BackHomeHandlerTest {
 
     StepsActivity stepsActivityMock;
-    StepsActivityHandler stepsActivityHandler;
+    BackHomeHandler backHomeHandler;
     @Before
     public void setup(){
         stepsActivityMock = Robolectric.setupActivity(StepsActivity.class);
-        stepsActivityHandler = new StepsActivityHandler(stepsActivityMock);
+        backHomeHandler = new BackHomeHandler(stepsActivityMock);
     }
 
     @Test
     public void ShouldCheckWhetherActivityCanBeStartedWhenProperIdMatches(){
-        assertTrue(stepsActivityHandler.shouldOpen(android.R.id.home));
+        assertTrue(backHomeHandler.shouldOpen(android.R.id.home));
     }
 
     @Test
     public void ShouldCheckWhetherActivityCanNotBeStartedForOtherId(){
-        assertFalse(stepsActivityHandler.shouldOpen(android.R.id.background));
+        assertFalse(backHomeHandler.shouldOpen(android.R.id.background));
     }
 
     @Test
     public void ShouldOpenStepsActivity(){
         ShadowActivity stepsActivityShadow = Robolectric.shadowOf(stepsActivityMock);
 
-        stepsActivityHandler.open();
+        backHomeHandler.open();
 
 
         Intent newIntent = stepsActivityShadow.getNextStartedActivityForResult().intent;

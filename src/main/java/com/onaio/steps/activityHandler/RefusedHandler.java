@@ -44,8 +44,7 @@ public class RefusedHandler implements IMenuHandler,IPrepare {
     private void refuse() {
         household.setStatus(HouseholdStatus.REFUSED);
         household.update(new DatabaseHelper(activity.getApplicationContext()));
-        StepsActivityHandler handler = new StepsActivityHandler(activity);
-        handler.open();
+        new BackHomeHandler(activity).open();
     }
 
     private void confirm() {

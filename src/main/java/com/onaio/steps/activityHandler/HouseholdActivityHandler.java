@@ -10,7 +10,7 @@ import com.onaio.steps.activityHandler.Interface.IMenuHandler;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.model.Household;
 
-public class HouseholdActivityHandler implements IMenuHandler {
+public class HouseholdActivityHandler implements IItemHandler {
 
     private Activity activity;
     private Household household;
@@ -21,17 +21,11 @@ public class HouseholdActivityHandler implements IMenuHandler {
     }
 
     @Override
-    public boolean shouldOpen(int menu_id) {
-        return menu_id == android.R.id.home;
-    }
-
-    @Override
     public boolean open() {
         if (household == null) return true;
         Intent intent = new Intent(activity, HouseholdActivity.class);
         intent.putExtra(Constants.HOUSEHOLD, household);
         activity.startActivity(intent);
-        activity.finish();
         return true;
     }
 }

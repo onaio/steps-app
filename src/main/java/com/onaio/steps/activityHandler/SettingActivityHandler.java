@@ -66,7 +66,7 @@ public class SettingActivityHandler implements IMenuHandler, IResultHandler {
         saveSafely(HOUSEHOLD_SEED, householdSeed);
         saveSafely(MIN_AGE, minAge);
         saveSafely(MAX_AGE, maxAge);
-        new StepsActivityHandler(activity).open();
+        new BackHomeHandler(activity).open();
     }
 
     private void saveSafely(String key, String value) {

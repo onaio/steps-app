@@ -41,8 +41,7 @@ public class DeleteMemberHandler implements IMenuHandler,IPrepare {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 member.delete(new DatabaseHelper(activity));
-                HouseholdActivityHandler handler = new HouseholdActivityHandler(activity, member.getHousehold());
-                handler.open();
+                new BackHomeHandler(activity).open();
             }
         };
         dialog.confirm(activity, confirmListener, Dialog.EmptyListener, R.string.member_delete_confirm, R.string.confirm_ok);

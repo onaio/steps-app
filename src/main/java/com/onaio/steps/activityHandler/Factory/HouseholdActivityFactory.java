@@ -3,6 +3,7 @@ package com.onaio.steps.activityHandler.Factory;
 import android.app.ListActivity;
 import android.view.Menu;
 
+import com.onaio.steps.activityHandler.BackHomeHandler;
 import com.onaio.steps.activityHandler.DeferredHandler;
 import com.onaio.steps.activityHandler.EditHouseholdActivityHandler;
 import com.onaio.steps.activityHandler.ExportHandler;
@@ -16,7 +17,6 @@ import com.onaio.steps.activityHandler.MemberActivityHandler;
 import com.onaio.steps.activityHandler.NewMemberActivityHandler;
 import com.onaio.steps.activityHandler.RefusedHandler;
 import com.onaio.steps.activityHandler.SelectParticipantHandler;
-import com.onaio.steps.activityHandler.StepsActivityHandler;
 import com.onaio.steps.activityHandler.TakeSurveyHandler;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.Member;
@@ -30,7 +30,7 @@ public class HouseholdActivityFactory {
         ArrayList<IMenuHandler> handlers = new ArrayList<IMenuHandler>();
         handlers.add(new ExportHandler(activity).with(household));
         handlers.add(new SelectParticipantHandler(activity,household));
-        handlers.add(new StepsActivityHandler(activity));
+        handlers.add(new BackHomeHandler(activity));
         handlers.add(new EditHouseholdActivityHandler(activity,household));
         return handlers;
     }

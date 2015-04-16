@@ -34,7 +34,7 @@ public class StepsActivityFactory {
         return handlers;
     }
 
-    public static IMenuHandler getHouseholdItemHandler(ListActivity activity, Household household){
+    public static IItemHandler getHouseholdItemHandler(ListActivity activity, Household household){
         return new HouseholdActivityHandler(activity, household);
     }
 

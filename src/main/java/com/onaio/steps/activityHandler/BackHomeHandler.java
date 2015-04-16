@@ -1,5 +1,6 @@
 package com.onaio.steps.activityHandler;
 
+import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Intent;
 
@@ -7,11 +8,11 @@ import com.onaio.steps.activity.StepsActivity;
 import com.onaio.steps.activityHandler.Interface.IMenuHandler;
 import com.onaio.steps.helper.Constants;
 
-public class StepsActivityHandler implements IMenuHandler {
+public class BackHomeHandler implements IMenuHandler {
 
-    private ListActivity activity;
+    private Activity activity;
 
-    public StepsActivityHandler(ListActivity activity) {
+    public BackHomeHandler(Activity activity) {
         this.activity = activity;
     }
 
@@ -22,8 +23,7 @@ public class StepsActivityHandler implements IMenuHandler {
 
     @Override
     public boolean open() {
-        Intent intent = new Intent(activity, StepsActivity.class);
-        activity.startActivityForResult(intent, Constants.STEPS_IDENTIFIER);
+        activity.finish();
         return true;
     }
 }
