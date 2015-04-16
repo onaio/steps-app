@@ -2,11 +2,14 @@ package com.onaio.steps.activity;
 
 
 import android.content.Intent;
+import android.view.View;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.onaio.steps.R;
 import com.onaio.steps.helper.Constants;
+import com.onaio.steps.helper.KeyValueStore;
+import com.onaio.steps.helper.KeyValueStoreFactory;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.HouseholdStatus;
 import com.onaio.steps.model.Member;
@@ -14,6 +17,7 @@ import com.onaio.steps.model.Member;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
@@ -64,10 +68,37 @@ public class EditMemberActivityTest {
     }
 
     @Test
+    public void ShouldUpdateMemberAndFinishActivity(){
+        setValue(Constants.MIN_AGE,"12");
+        setValue(Constants.MAX_AGE,"60");
+        TextView surnameView = (TextView) editMemberActivity.findViewById(R.id.member_family_surname);
+        TextView firstNameView = (TextView)editMemberActivity.findViewById(R.id.member_first_name);
+        RadioGroup genderView = (RadioGroup)editMemberActivity.findViewById(R.id.member_gender);
+        TextView ageView = (TextView) editMemberActivity.findViewById(R.id.member_age);
+
+        surnameView.setText("Rana");
+        firstNameView.setText("Manisha");
+        genderView.check(R.id.female_selection);
+        ageView.setText("23");
+        View viewMock = Mockito.mock(View.class);
+        Mockito.stub(viewMock.getId()).toReturn(R.id.member_form);
+
+        editMemberActivity.save(viewMock);
+
+        assertTrue(editMemberActivity.isFinishing());
+
+    }
+
+    @Test
     public void ShouldFinishTheActivityOnCancel(){
         editMemberActivity.cancel(null);
 
         assertTrue(editMemberActivity.isFinishing());
+    }
+
+    private void setValue(String key, String value) {
+        KeyValueStore keyValueStore = KeyValueStoreFactory.instance(editMemberActivity);
+        keyValueStore.putString(key, value);
     }
 
 }

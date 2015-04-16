@@ -1,6 +1,7 @@
 package com.onaio.steps.activity;
 
 import android.content.Intent;
+import android.view.View;
 import android.widget.TextView;
 
 import com.onaio.steps.R;
@@ -20,7 +21,6 @@ import org.robolectric.annotation.Config;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.robolectric.Robolectric.shadowOf;
 
@@ -56,8 +56,16 @@ public class EditHouseholdActivityTest {
         assertEquals("Edit Household",header.getText().toString());
         assertEquals("household Name",household_id.getText().toString());
         assertEquals("123456789",household_number.getText().toString());
+    }
 
+    @Test
+    public void ShouldUpdateHouseholdAndFinishActivity(){
+        View viewMock = Mockito.mock(View.class);
+        Mockito.stub(viewMock.getId()).toReturn(R.id.household_form);
 
+        editHouseholdActivity.save(viewMock);
+
+        assertTrue(editHouseholdActivity.isFinishing());
     }
 
     @Test
