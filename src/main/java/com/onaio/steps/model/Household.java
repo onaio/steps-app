@@ -169,7 +169,6 @@ public class Household implements Serializable {
         return getMembers(db,query).get(0);
     }
 
-
     private List<Member> getMembers(DatabaseHelper db, String query) {
         Cursor cursor = db.exec(query);
         List<Member> members = new CursorHelper().getMembers(cursor, this);

@@ -7,6 +7,7 @@ import com.onaio.steps.activity.StepsActivity;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
@@ -23,7 +24,7 @@ public class BackHomeHandlerTest {
     BackHomeHandler backHomeHandler;
     @Before
     public void setup(){
-        stepsActivityMock = Robolectric.setupActivity(StepsActivity.class);
+        stepsActivityMock = Mockito.mock(StepsActivity.class);
         backHomeHandler = new BackHomeHandler(stepsActivityMock);
     }
 
