@@ -81,7 +81,7 @@ public class HouseholdTest {
     }
 
     @Test
-    public void ShouldBeAbleToUpdateTheMember(){
+    public void ShouldBeAbleToUpdateTheHousehold(){
         String selectedMember = "3";
         household = new Household(String.valueOf(householdId),householdName, phoneNumber, selectedMember,householdStatus, currentDate);
         stubDbForHousehold();
@@ -157,6 +157,29 @@ public class HouseholdTest {
     }
 
     @Test
+    public void ShouldGetUnselectedNumberOfMembersFromDatabaseWhenThereIsSelectedMember(){
+        int numberOfMembers = 2;
+        String selectedMemberId = "3";
+        Household household = new Household(String.valueOf(householdId), householdName, phoneNumber, selectedMemberId, HouseholdStatus.NOT_SELECTED, currentDate);
+        stubDbForMember(numberOfMembers);
+
+        assertEquals(numberOfMembers, household.numberOfNonSelectedMembers(db));
+
+        Mockito.verify(db).exec(String.format(Member.FIND_ALL_UNSELECTED_QUERY,Member.HOUSEHOLD_ID,householdId, Member.DELETED, Member.NOT_DELETED_INT,Member.ID,selectedMemberId));
+    }
+
+    @Test
+    public void ShouldGetNonDeletedMembersForUnselectedNumberOfMembersFromDatabaseWhenThereIsNoSelectedMember(){
+        int numberOfMembers = 2;
+        Household household = new Household(String.valueOf(householdId), householdName, phoneNumber,null, HouseholdStatus.NOT_SELECTED, currentDate);
+        stubDbForMember(numberOfMembers);
+
+        assertEquals(numberOfMembers, household.numberOfNonSelectedMembers(db));
+
+        Mockito.verify(db).exec(String.format(Member.FIND_ALL_QUERY,Member.HOUSEHOLD_ID,householdId, Member.DELETED, Member.NOT_DELETED_INT));
+    }
+
+    @Test
     public void ShouldGetAllNumberOfMembersFromDatabase(){
         int numberOfMembers = 1;
         Household household = new Household(String.valueOf(householdId), householdName, phoneNumber,"", HouseholdStatus.NOT_SELECTED, currentDate);
@@ -175,11 +198,42 @@ public class HouseholdTest {
         stubDbForMember(numberOfMembers);
         new CursorStub(cursor).stubCursorForMember(memberId, memberFamilyName, memberFirstName, memberGender, String.valueOf(memberAge), String.valueOf(householdId), Member.NOT_DELETED_INT, householdName + "-1");
 
+        List<Member> members = household.getAllNonDeletedMembers(db);
+
+        assertEquals(1,members.size());
+        validateMember(members.get(0),false);
+        Mockito.verify(db).exec(String.format(Member.FIND_ALL_QUERY,Member.HOUSEHOLD_ID,householdId,Member.DELETED, Member.NOT_DELETED_INT,Member.ID, household.getSelectedMemberId()));
+    }
+
+    @Test
+    public void ShouldGetAllUnselectedMembersWhenThereIsSelectedMember(){
+        long memberId = 1L;
+        int numberOfMembers = 1;
+        String selectedMemberId = "2";
+        Household household = new Household(String.valueOf(householdId), householdName, phoneNumber, selectedMemberId, HouseholdStatus.NOT_SELECTED, currentDate);
+        stubDbForMember(numberOfMembers);
+        new CursorStub(cursor).stubCursorForMember(memberId, memberFamilyName, memberFirstName, memberGender, String.valueOf(memberAge), String.valueOf(householdId), Member.NOT_DELETED_INT, householdName + "-1");
+
         List<Member> members = household.getAllUnselectedMembers(db);
 
         assertEquals(1,members.size());
         validateMember(members.get(0),false);
-        Mockito.verify(db).exec(String.format(Member.FIND_ALL_UNSELECTED_QUERY,Member.HOUSEHOLD_ID,householdId,Member.DELETED, Member.NOT_DELETED_INT,Member.ID, household.getSelectedMemberId()));
+        Mockito.verify(db).exec(String.format(Member.FIND_ALL_UNSELECTED_QUERY,Member.HOUSEHOLD_ID,householdId,Member.DELETED, Member.NOT_DELETED_INT,Member.ID, selectedMemberId));
+    }
+
+    @Test
+    public void ShouldGetAllUnDeletedMembersForUnSelectedMembersWhenThereIsNoSelectedMember(){
+        long memberId = 1L;
+        int numberOfMembers = 1;
+        Household household = new Household(String.valueOf(householdId), householdName, phoneNumber,null, HouseholdStatus.NOT_SELECTED, currentDate);
+        stubDbForMember(numberOfMembers);
+        new CursorStub(cursor).stubCursorForMember(memberId, memberFamilyName, memberFirstName, memberGender, String.valueOf(memberAge), String.valueOf(householdId), Member.NOT_DELETED_INT, householdName + "-1");
+
+        List<Member> members = household.getAllUnselectedMembers(db);
+
+        assertEquals(1,members.size());
+        validateMember(members.get(0),false);
+        Mockito.verify(db).exec(String.format(Member.FIND_ALL_QUERY,Member.HOUSEHOLD_ID,householdId,Member.DELETED, Member.NOT_DELETED_INT,Member.ID, household.getSelectedMemberId()));
     }
 
     @Test

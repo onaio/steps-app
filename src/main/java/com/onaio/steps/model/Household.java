@@ -176,8 +176,6 @@ public class Household implements Serializable {
         return members;
     }
 
-
-
     public int numberOfNonDeletedMembers(DatabaseHelper db){
         String query = String.format(Member.FIND_ALL_QUERY, Member.HOUSEHOLD_ID, getId(), Member.DELETED, Member.NOT_DELETED_INT);
         return getCount(db, query);
