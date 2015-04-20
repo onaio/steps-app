@@ -70,10 +70,12 @@ public class StepsActivityTest extends TestCase {
         MenuItem exportMenuItem = menu.findItem(R.id.action_export);
         MenuItem settingsMenuItem = menu.findItem(R.id.action_settings);
         MenuItem importMenuItem = menu.findItem(R.id.action_import);
+        MenuItem savedFormItem = menu.findItem(R.id.action_saved_form);
 
         assertNotNull(exportMenuItem);
         assertNotNull(settingsMenuItem);
         assertNotNull(importMenuItem);
+        assertNotNull(savedFormItem);
     }
 
 }

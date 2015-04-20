@@ -35,12 +35,12 @@ public class TakeSurveyHandlerTest {
     }
 
     @Test
-    public void ShouldCheckWhetherActivityCanBeStartedForProperMenuId(){
+    public void ShouldOpenActivityForProperMenuId(){
         assertTrue(takeSurveyHandler.shouldOpen(R.id.action_take_survey));
     }
 
     @Test
-    public void ShouldCheckWhetherActivityCanBeStartedForOtherMenuId(){
+    public void ShouldNotOpenForOtherMenuId(){
         assertFalse(takeSurveyHandler.shouldOpen(R.id.action_deferred));
     }
 

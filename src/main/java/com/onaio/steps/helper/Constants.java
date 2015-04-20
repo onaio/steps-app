@@ -43,6 +43,11 @@ public class Constants {
     public static final String ODK_DATA_FILENAME = "STEPS.csv";
     public static final String ODK_HH_ID = "1";
 
+    public static final String ODK_COLLECT_PACKAGE = "org.odk.collect.android";
+    public static final String ODK_COLLECT_SAVED_FORMS_CLASS = "org.odk.collect.android.activities.InstanceUploaderList";
+    public static final String ODK_COLLECT_FORM_ENTRY_CLASS = "org.odk.collect.android.activities.FormEntryActivity";
+
+
 
     //Error Strings
     public static final String FAMILY_SURNAME = "Family Surname";

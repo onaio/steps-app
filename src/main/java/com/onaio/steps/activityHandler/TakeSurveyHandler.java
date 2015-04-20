@@ -44,7 +44,6 @@ public class TakeSurveyHandler implements IMenuHandler, IMenuPreparer {
             ODKForm requiredForm = ODKForm.getWithId(activity, Constants.ODK_FORM_ID);
             saveFile(requiredForm);
             launchODKCollect(requiredForm);
-            activity.finish();
             updateHousehold();
         } catch (FormNotPresentException e) {
             new Dialog().notify(activity,Dialog.EmptyListener,R.string.form_not_present, R.string.error_title);
@@ -64,7 +63,7 @@ public class TakeSurveyHandler implements IMenuHandler, IMenuPreparer {
 
     private void launchODKCollect(ODKForm requiredForm) {
         Intent surveyIntent = new Intent();
-        surveyIntent.setComponent(new ComponentName("org.odk.collect.android","org.odk.collect.android.activities.FormEntryActivity"));
+        surveyIntent.setComponent(new ComponentName(Constants.ODK_COLLECT_PACKAGE,Constants.ODK_COLLECT_FORM_ENTRY_CLASS));
         surveyIntent.setAction(Intent.ACTION_EDIT);
         surveyIntent.setData(requiredForm.getUri());
         activity.startActivity(surveyIntent);

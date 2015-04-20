@@ -9,6 +9,7 @@ import com.onaio.steps.activityHandler.Interface.IActivityResultHandler;
 import com.onaio.steps.activityHandler.Interface.IListItemHandler;
 import com.onaio.steps.activityHandler.Interface.IMenuHandler;
 import com.onaio.steps.activityHandler.NewHouseholdActivityHandler;
+import com.onaio.steps.activityHandler.SavedFormsHandler;
 import com.onaio.steps.activityHandler.SettingActivityHandler;
 import com.onaio.steps.model.Household;
 
@@ -21,6 +22,7 @@ public class StepsActivityFactory {
         handlers.add(new SettingActivityHandler(activity));
         handlers.add(new ExportHandler(activity).with(households));
         handlers.add(new ImportHandler(activity));
+        handlers.add(new SavedFormsHandler(activity));
         return handlers;
     }
 
