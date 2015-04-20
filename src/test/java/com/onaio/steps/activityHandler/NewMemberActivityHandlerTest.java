@@ -130,20 +130,22 @@ public class NewMemberActivityHandlerTest {
 
     @Test
     public void ShouldDisableItemWhenInactivated(){
-        Button buttonMock = mock(Button.class);
-        stub(buttonMock.getId()).toReturn(R.id.action_add_member);
+        View viewMock = Mockito.mock(Button.class);
+        stub(householdActivityMock.findViewById(R.id.action_add_member)).toReturn(viewMock);
+
         newMemberActivityHandler.inactivate();
-        verify(buttonMock).setVisibility(View.GONE);
+
+        verify(viewMock).setVisibility(View.GONE);
     }
 
     @Test
     public void ShouldShowItemWhenActivated(){
-        Button buttonMock = mock(Button.class);
-        stub(buttonMock.getId()).toReturn(R.id.action_add_member);
+        View viewMock = Mockito.mock(Button.class);
+        stub(householdActivityMock.findViewById(R.id.action_add_member)).toReturn(viewMock);
 
         newMemberActivityHandler.activate();
 
-        verify(buttonMock).setVisibility(View.VISIBLE);
+        verify(viewMock).setVisibility(View.VISIBLE);
     }
 
 

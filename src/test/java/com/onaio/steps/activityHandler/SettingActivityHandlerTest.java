@@ -20,6 +20,7 @@ import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowActivity;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -31,7 +32,9 @@ public class SettingActivityHandlerTest {
     private SettingActivityHandler settingActivityHandler;
     private String PHONE_ID = "12345";
     private String HOUSEHOLD_SEED = "200";
-    private String ENDPOINT_URL="endpointUrl";
+    private String MIN_AGE = "18";
+    private String MAX_AGE = "69";
+    private String ENDPOINT_URL="http://www.google.com";
 
     @Before
     public void setup(){
@@ -51,19 +54,23 @@ public class SettingActivityHandlerTest {
     }
 
     @Test
-    public void ShouldBeAbleToOpenSettingActivity(){
+    public void ShouldBeAbleToOpenSettingActivityWithProperIntentValues(){
         setValue(Constants.PHONE_ID, PHONE_ID);
         setValue(Constants.ENDPOINT_URL,ENDPOINT_URL);
         setValue(Constants.HOUSEHOLD_SEED,HOUSEHOLD_SEED);
+        setValue(Constants.MIN_AGE,MIN_AGE);
+        setValue(Constants.MAX_AGE,MAX_AGE);
         ShadowActivity stepsActivityShadow = Robolectric.shadowOf(stepsActivityMock);
 
-        Intent newIntent = stepsActivityShadow.getNextStartedActivityForResult().intent;
         settingActivityHandler.open();
+        Intent newIntent = stepsActivityShadow.getNextStartedActivityForResult().intent;
 
         assertTrue(newIntent.getComponent().getClassName().equals(SettingsActivity.class.getName()));
-        assertTrue(newIntent.getStringExtra(Constants.PHONE_ID).equals(PHONE_ID));
-        assertTrue(newIntent.getStringExtra(Constants.HOUSEHOLD_SEED).equals(HOUSEHOLD_SEED));
-        assertTrue(newIntent.getStringExtra(Constants.ENDPOINT_URL).equals(ENDPOINT_URL));
+        assertEquals(PHONE_ID,newIntent.getStringExtra(Constants.PHONE_ID));
+        assertEquals(HOUSEHOLD_SEED,newIntent.getStringExtra(Constants.HOUSEHOLD_SEED));
+        assertEquals(ENDPOINT_URL,newIntent.getStringExtra(Constants.ENDPOINT_URL));
+        assertEquals(MIN_AGE,newIntent.getStringExtra(Constants.MIN_AGE));
+        assertEquals(MAX_AGE,newIntent.getStringExtra(Constants.MAX_AGE));
 
     }
 
@@ -93,17 +100,22 @@ public class SettingActivityHandlerTest {
 
     @Test
     public void ShouldOpenStepsActivityAndSavePhoneIdHouseSeedEndpointUrl(){
-        SettingsActivity instance = new SettingsActivity();
-        ShadowActivity settingsActivityShadow = Robolectric.shadowOf(instance);
-        Intent intentMock = Mockito.mock(Intent.class);
+        Intent intent = new Intent();
+        intent.putExtra(Constants.PHONE_ID,PHONE_ID);
+        intent.putExtra(Constants.HOUSEHOLD_SEED,HOUSEHOLD_SEED);
+        intent.putExtra(Constants.MIN_AGE,MIN_AGE);
+        intent.putExtra(Constants.MAX_AGE,MAX_AGE);
+        intent.putExtra(Constants.ENDPOINT_URL,ENDPOINT_URL);
 
 
-        settingActivityHandler.handleResult(intentMock, Activity.RESULT_OK);
+        settingActivityHandler.handleResult(intent, Activity.RESULT_OK);
 
-        Intent newIntent = settingsActivityShadow.getNextStartedActivity();
-        // Not Able to check whether PhoneId, EndpointUrl, HouseSeed is saved in keyValueStore
-
-        assertTrue(newIntent.getComponent().getClassName().equals(StepsActivity.class.getName()));
+        KeyValueStore keyValue = KeyValueStoreFactory.instance(stepsActivityMock);
+        assertEquals(PHONE_ID,keyValue.getString(Constants.PHONE_ID));
+        assertEquals(HOUSEHOLD_SEED,keyValue.getString(Constants.HOUSEHOLD_SEED));
+        assertEquals(ENDPOINT_URL,keyValue.getString(Constants.ENDPOINT_URL));
+        assertEquals(MIN_AGE,keyValue.getString(Constants.MIN_AGE));
+        assertEquals(MAX_AGE,keyValue.getString(Constants.MAX_AGE));
     }
 
     private void setValue(String key, String value) {

@@ -2,10 +2,14 @@ package com.onaio.steps.activityHandler;
 
 import android.app.ListActivity;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.view.View;
+import android.view.Window;
+import android.widget.Button;
 
 import com.onaio.steps.R;
 import com.onaio.steps.activity.HouseholdActivity;
+import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.helper.Dialog;
 import com.onaio.steps.model.Household;
@@ -16,6 +20,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
@@ -24,6 +29,7 @@ import static junit.framework.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.eq;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.stub;
 import static org.mockito.Mockito.verify;
 
 
@@ -32,21 +38,26 @@ import static org.mockito.Mockito.verify;
 public class SelectParticipantHandlerTest {
 
     @Mock
-    private HouseholdActivity activityMock;
-    @Mock
     private Household householdMock;
     private SelectParticipantHandler selectParticipantHandler;
     private DatabaseHelper dbMock;
     private Dialog dialogMock;
+    private HouseholdActivity householdActivity;
+    @Mock
+    private android.app.Dialog androidDialogMock;
 
     @Before
     public void Setup(){
-        activityMock = mock(HouseholdActivity.class);
         householdMock = mock(Household.class);
+        Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.NOT_SELECTED);
+        Intent intent = new Intent();
+        intent.putExtra(Constants.HOUSEHOLD,householdMock);
+        householdActivity = Robolectric.buildActivity(HouseholdActivity.class).withIntent(intent).create().get();
         dbMock = mock(DatabaseHelper.class);
         dialogMock = mock(Dialog.class);
 
-        selectParticipantHandler = new SelectParticipantHandlerMock(activityMock, householdMock, dialogMock, dbMock, Mockito.mock(View.class));
+        androidDialogMock = Mockito.mock(android.app.Dialog.class);
+        selectParticipantHandler = new SelectParticipantHandlerMock(householdActivity, householdMock, dialogMock, dbMock, androidDialogMock,Mockito.mock(View.class));
     }
 
     @Test
@@ -66,7 +77,7 @@ public class SelectParticipantHandlerTest {
 
         selectParticipantHandler.open();
 
-        verify(dialogMock).confirm(eq(activityMock),any(DialogInterface.OnClickListener.class),eq(Dialog.EmptyListener),any(View.class),eq(R.string.participant_re_elect_reason_title));
+        verify(dialogMock).confirm(eq(householdActivity),any(DialogInterface.OnClickListener.class),eq(Dialog.EmptyListener),any(View.class),eq(R.string.participant_re_elect_reason_title));
     }
 
     @Test
@@ -75,25 +86,30 @@ public class SelectParticipantHandlerTest {
 
         selectParticipantHandler.open();
 
-        verify(dialogMock).confirm(eq(activityMock),any(DialogInterface.OnClickListener.class),eq(Dialog.EmptyListener),any(View.class),eq(R.string.participant_re_elect_reason_title));
+        verify(dialogMock).confirm(eq(householdActivity),any(DialogInterface.OnClickListener.class),eq(Dialog.EmptyListener),any(View.class),eq(R.string.participant_re_elect_reason_title));
     }
 
     @Test
     public void ShouldNotifyUserBeforeSelection(){
         Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.NOT_SELECTED);
+        Button buttonMock = Mockito.mock(Button.class);
+        stub(androidDialogMock.findViewById(R.id.confirm)).toReturn(buttonMock);
+        stub(androidDialogMock.findViewById(R.id.cancel)).toReturn(buttonMock);
 
-        android.app.Dialog mock = Mockito.mock(android.app.Dialog.class);
         selectParticipantHandler.open();
 
-        verify(dialogMock).confirm(eq(activityMock),any(android.app.Dialog.OnClickListener.class),eq(Dialog.EmptyListener),eq(R.string.select_participant_message),eq(R.string.select_participant_title));
+        verify(androidDialogMock).show();
+        verify(androidDialogMock).setCancelable(true);
+        verify(androidDialogMock).requestWindowFeature(Window.FEATURE_NO_TITLE);
+        verify(androidDialogMock).setContentView(R.layout.select_participant_dialog);
     }
 
 
     private class SelectParticipantHandlerMock extends SelectParticipantHandler{
         private View view;
 
-        public SelectParticipantHandlerMock(ListActivity activity, Household household, Dialog dialog, DatabaseHelper db, View view) {
-            super(activity, household, dialog, db);
+        public SelectParticipantHandlerMock(ListActivity activity, Household household, Dialog dialog, DatabaseHelper db, android.app.Dialog androidDialog, View view) {
+            super(activity, household, dialog, db, androidDialog);
             this.view = view;
         }
 

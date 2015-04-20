@@ -35,16 +35,19 @@ public class SelectParticipantHandler implements IMenuHandler, IMenuPreparer {
     private ListActivity activity;
     private Household household;
     private DatabaseHelper db;
+    private android.app.Dialog selection_dialog;
 
     public SelectParticipantHandler(ListActivity activity, Household household) {
-        this(activity, household, new Dialog(), new DatabaseHelper(activity));
+        this(activity, household, new Dialog(), new DatabaseHelper(activity), new android.app.Dialog(activity));
     }
 
-    SelectParticipantHandler(ListActivity activity, Household household, Dialog dialog, DatabaseHelper db) {
+    SelectParticipantHandler(ListActivity activity, Household household, Dialog dialog, DatabaseHelper db, android.app.Dialog androidDialog) {
         this.activity = activity;
         this.household = household;
         this.dialog = dialog;
         this.db = db;
+        selection_dialog = androidDialog;
+
     }
 
     @Override
@@ -83,12 +86,11 @@ public class SelectParticipantHandler implements IMenuHandler, IMenuPreparer {
 
 
     private void popUpMessage(){
-        final android.app.Dialog selection_dialog = new android.app.Dialog(activity);
         selection_dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         selection_dialog.setContentView(R.layout.select_participant_dialog);
         selection_dialog.setCancelable(true);
-        Button confirm = (Button)selection_dialog.findViewById(R.id.confirm);
-        Button cancel = (Button)selection_dialog.findViewById(R.id.cancel);
+        Button confirm = (Button) selection_dialog.findViewById(R.id.confirm);
+        Button cancel = (Button) selection_dialog.findViewById(R.id.cancel);
 
         confirm.setOnClickListener(new View.OnClickListener()
         {
@@ -118,7 +120,8 @@ public class SelectParticipantHandler implements IMenuHandler, IMenuPreparer {
             }
         };
         switch(household.getStatus()){
-            case NOT_SELECTED: popUpMessage(); break;
+            case NOT_SELECTED: popUpMessage();
+                break;
             case NOT_DONE: dialog.confirm(activity, confirmListenerForReElection, Dialog.EmptyListener, confirmation, R.string.participant_re_elect_reason_title);
                 break;
             case DEFERRED: dialog.confirm(activity, confirmListenerForReElection, Dialog.EmptyListener, confirmation, R.string.participant_re_elect_reason_title);

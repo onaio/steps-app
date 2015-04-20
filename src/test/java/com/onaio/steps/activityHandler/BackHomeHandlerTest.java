@@ -4,6 +4,8 @@ import android.content.Intent;
 
 import com.onaio.steps.activity.StepsActivity;
 
+import junit.framework.Assert;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -39,14 +41,10 @@ public class BackHomeHandlerTest {
     }
 
     @Test
-    public void ShouldOpenStepsActivity(){
-        ShadowActivity stepsActivityShadow = Robolectric.shadowOf(stepsActivityMock);
-
+    public void ShouldFinishCurrentActivity(){
         backHomeHandler.open();
 
-
-        Intent newIntent = stepsActivityShadow.getNextStartedActivityForResult().intent;
-        assertTrue(newIntent.getComponent().getClassName().equals(StepsActivity.class.getName()));
+        Mockito.verify(stepsActivityMock).finish();
     }
 
 }
