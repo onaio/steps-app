@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.view.View;
 
 import com.onaio.steps.R;
+import com.onaio.steps.activityHandler.Interface.IActivityResultHandler;
 import com.onaio.steps.activityHandler.Interface.IMenuHandler;
 import com.onaio.steps.activityHandler.Interface.IMenuPreparer;
 import com.onaio.steps.exception.AppNotInstalledException;
@@ -17,12 +18,13 @@ import com.onaio.steps.helper.FileUtil;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.HouseholdStatus;
 import com.onaio.steps.model.Member;
-import com.onaio.steps.model.ODKForm;
+import com.onaio.steps.model.ODKForm.ODKEntryForm;
+import com.onaio.steps.model.ODKForm.ODKForm;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class TakeSurveyHandler implements IMenuHandler, IMenuPreparer {
+public class TakeSurveyHandler implements IMenuHandler, IMenuPreparer, IActivityResultHandler {
     private ListActivity activity;
     private Household household;
     private static final int MENU_ID= R.id.action_take_survey;
@@ -41,10 +43,9 @@ public class TakeSurveyHandler implements IMenuHandler, IMenuPreparer {
     @Override
     public boolean open() {
         try {
-            ODKForm requiredForm = ODKForm.getWithId(activity, Constants.ODK_FORM_ID);
+            ODKForm requiredForm = ODKEntryForm.getWithId(activity, Constants.ODK_FORM_ID);
             saveFile(requiredForm);
             launchODKCollect(requiredForm);
-            updateHousehold();
         } catch (FormNotPresentException e) {
             new Dialog().notify(activity,Dialog.EmptyListener,R.string.form_not_present, R.string.error_title);
         } catch (AppNotInstalledException e) {
@@ -66,7 +67,7 @@ public class TakeSurveyHandler implements IMenuHandler, IMenuPreparer {
         surveyIntent.setComponent(new ComponentName(Constants.ODK_COLLECT_PACKAGE,Constants.ODK_COLLECT_FORM_ENTRY_CLASS));
         surveyIntent.setAction(Intent.ACTION_EDIT);
         surveyIntent.setData(requiredForm.getUri());
-        activity.startActivity(surveyIntent);
+        activity.startActivityForResult(surveyIntent,Constants.SURVEY_IDENTIFIER);
     }
 
     private void saveFile(ODKForm requiredForm) throws IOException {
@@ -74,6 +75,7 @@ public class TakeSurveyHandler implements IMenuHandler, IMenuPreparer {
         Member selectedMember = household.findMember(new DatabaseHelper(activity), Long.parseLong(household.getSelectedMemberId()));
         ArrayList<String> row = new ArrayList<String>();
         row.add(Constants.ODK_HH_ID);
+        row.add(String.format(Constants.ODK_FORM_NAME_FORMAT,household.getName()));
         row.add(selectedMember.getMemberHouseholdId());
         row.add(selectedMember.getFamilySurname());
         row.add(selectedMember.getFirstName());
@@ -82,7 +84,7 @@ public class TakeSurveyHandler implements IMenuHandler, IMenuPreparer {
         row.add(String.valueOf(genderInt));
         row.add(String.valueOf(selectedMember.getAge()));
         fileUtil.withData(row.toArray(new String[row.size()]));
-        fileUtil.buildCSV(requiredForm.getFormMediaPath()+"/"+Constants.ODK_DATA_FILENAME);
+        fileUtil.buildCSV(requiredForm.getPath()+"/"+Constants.ODK_DATA_FILENAME);
     }
 
     @Override
@@ -102,5 +104,15 @@ public class TakeSurveyHandler implements IMenuHandler, IMenuPreparer {
     public void activate() {
         View item = activity.findViewById(MENU_ID);
         item.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void handleResult(Intent data, int resultCode) {
+        updateHousehold();
+    }
+
+    @Override
+    public boolean canHandleResult(int requestCode) {
+        return requestCode==Constants.SURVEY_IDENTIFIER;
     }
 }

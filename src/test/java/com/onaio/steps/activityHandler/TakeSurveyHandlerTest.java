@@ -1,9 +1,12 @@
 package com.onaio.steps.activityHandler;
 
+import android.app.Activity;
 import android.view.View;
 
 import com.onaio.steps.R;
 import com.onaio.steps.activity.HouseholdActivity;
+import com.onaio.steps.helper.Constants;
+import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.HouseholdStatus;
 
@@ -98,4 +101,23 @@ public class TakeSurveyHandlerTest {
 
         Mockito.verify(viewMock).setVisibility(View.VISIBLE);
     }
+
+    @Test
+    public void ShouldBeAbleToHandleResultForProperRequestCode(){
+        assertTrue(takeSurveyHandler.canHandleResult(Constants.SURVEY_IDENTIFIER));
+    }
+
+    @Test
+    public void ShouldNotBeAbleToHandleResultForOtherRequestCode(){
+        assertFalse(takeSurveyHandler.canHandleResult(Constants.STEPS_IDENTIFIER));
+    }
+
+    @Test
+    public void ShouldHandleResultForResultOk(){
+        takeSurveyHandler.handleResult(null, Activity.RESULT_OK);
+
+        Mockito.verify(householdMock).setStatus(HouseholdStatus.DONE);
+        Mockito.verify(householdMock).update(Mockito.any(DatabaseHelper.class));
+    }
+
 }

@@ -105,7 +105,7 @@ public class Household implements Serializable {
     public long update(DatabaseHelper db){
         ContentValues householdValues = populateWithBasicDetails();
         householdValues.put(SELECTED_MEMBER_ID, selectedMemberId);
-        return db.update(householdValues, TABLE_NAME,ID +" = "+getId(),null);
+        return db.update(householdValues, TABLE_NAME,ID +" = ?",new String[]{getId()});
     }
 
     private ContentValues populateWithBasicDetails() {

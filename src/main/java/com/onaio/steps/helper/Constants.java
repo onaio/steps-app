@@ -25,6 +25,7 @@ public class Constants {
     public static final int EDIT_HOUSEHOLD_IDENTIFIER = 5;
     public static final int EDIT_MEMBER_IDENTIFIER = 6;
     public static final int IMPORT_IDENTIFIER = 7;
+    public static final int SURVEY_IDENTIFIER=8;
 
     public static final String HEADER_GREEN = "#008148";
     public static final String TEXT_GREEN = "#53B257";
@@ -39,14 +40,14 @@ public class Constants {
 
 //    public static final String ODK_FORM_ID = "steps_draft_testing";
     public static final String ODK_FORM_ID = "STEPS_Instrument_V3_1";
-    public static final String ODK_FORM_FIELDS = "hhid_key,member_id,family_surname,first_name,gender,age";
+    public static final String ODK_FORM_FIELDS = "hhid_key,form_name,member_id,family_surname,first_name,gender,age";
     public static final String ODK_DATA_FILENAME = "STEPS.csv";
     public static final String ODK_HH_ID = "1";
 
     public static final String ODK_COLLECT_PACKAGE = "org.odk.collect.android";
     public static final String ODK_COLLECT_SAVED_FORMS_CLASS = "org.odk.collect.android.activities.InstanceUploaderList";
     public static final String ODK_COLLECT_FORM_ENTRY_CLASS = "org.odk.collect.android.activities.FormEntryActivity";
-
+    public static final String ODK_FORM_NAME_FORMAT = ODK_FORM_ID+"-%s";
 
 
     //Error Strings
