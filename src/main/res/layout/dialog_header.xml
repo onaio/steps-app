@@ -7,9 +7,6 @@
         <Button
             android:layout_width="75dp"
             android:layout_height="fill_parent"
-            android:clickable="true"
-            android:scaleType="fitStart"
-            android:longClickable="true"
             android:text = "DONE"
             android:background="@android:color/holo_blue_dark"
             android:textColor="@android:color/white"
@@ -20,8 +17,6 @@
         <ImageButton
             android:layout_width="50dp"
             android:layout_height="fill_parent"
-            android:clickable="true"
-            android:longClickable="true"
             android:src="@drawable/ic_action_cancel"
             android:background="@android:color/transparent"
             android:onClick="cancel"

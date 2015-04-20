@@ -10,17 +10,15 @@ import com.onaio.steps.activityHandler.Interface.IListItemHandler;
 import com.onaio.steps.activityHandler.Interface.IMenuHandler;
 import com.onaio.steps.activityHandler.NewHouseholdActivityHandler;
 import com.onaio.steps.activityHandler.SettingActivityHandler;
-import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.model.Household;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class StepsActivityFactory {
-    public static List<IMenuHandler> getMenuHandlers(ListActivity activity){
+    public static List<IMenuHandler> getMenuHandlers(ListActivity activity, List<Household> households){
         ArrayList<IMenuHandler> handlers = new ArrayList<IMenuHandler>();
         handlers.add(new SettingActivityHandler(activity));
-        List<Household> households = Household.getAll(new DatabaseHelper(activity));
         handlers.add(new ExportHandler(activity).with(households));
         handlers.add(new ImportHandler(activity));
         return handlers;

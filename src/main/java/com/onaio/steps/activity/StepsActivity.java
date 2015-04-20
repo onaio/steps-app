@@ -53,7 +53,7 @@ public class StepsActivity extends ListActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        List<IMenuHandler> activityHandlers = StepsActivityFactory.getMenuHandlers(this);
+        List<IMenuHandler> activityHandlers = StepsActivityFactory.getMenuHandlers(this, Household.getAll(new DatabaseHelper(this)));
         for(IMenuHandler handler : activityHandlers){
             if(handler.shouldOpen(item.getItemId()))
                 return handler.open();

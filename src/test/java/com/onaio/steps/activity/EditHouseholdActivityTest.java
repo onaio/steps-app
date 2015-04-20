@@ -44,7 +44,6 @@ public class EditHouseholdActivityTest {
 
     @Test
     public void ShouldPopulateView(){
-
         TextView header = (TextView)editHouseholdActivity.findViewById(R.id.form_header);
         TextView household_id = (TextView)editHouseholdActivity.findViewById(R.id.generated_household_id);
         TextView household_number = (TextView)editHouseholdActivity.findViewById(R.id.household_number);

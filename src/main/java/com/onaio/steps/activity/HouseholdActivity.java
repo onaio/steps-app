@@ -94,7 +94,7 @@ public class HouseholdActivity extends ListActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        List<IActivityResultHandler> menuHandlers = HouseholdActivityFactory.getMenuResultHandlers(this, household);
+        List<IActivityResultHandler> menuHandlers = HouseholdActivityFactory.getResultHandlers(this, household);
         for(IActivityResultHandler menuHandler:menuHandlers)
             if(menuHandler.canHandleResult(requestCode))
                 menuHandler.handleResult(data, resultCode);
