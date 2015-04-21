@@ -70,9 +70,10 @@ public class HouseholdActivityFactoryTest extends TestCase {
 
         ArrayList<Class> menuHandlerTypes = getTypes(menuHandlers);
 
-        assertEquals(2, menuHandlers.size());
+        assertEquals(3, menuHandlers.size());
         Assert.assertTrue(menuHandlerTypes.contains(NewMemberActivityHandler.class));
         Assert.assertTrue(menuHandlerTypes.contains(EditHouseholdActivityHandler.class));
+        Assert.assertTrue(menuHandlerTypes.contains(SelectParticipantHandler.class));
     }
 
     @Test
