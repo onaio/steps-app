@@ -1,5 +1,6 @@
 package com.onaio.steps.activityHandler;
 
+import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.view.View;
@@ -52,11 +53,6 @@ public class TakeSurveyHandler implements IMenuHandler, IMenuPreparer, IActivity
         return true;
     }
 
-    private void updateHousehold() {
-        household.setStatus(HouseholdStatus.DONE);
-        household.update(new DatabaseHelper(activity));
-    }
-
     @Override
     public boolean shouldInactivate() {
         boolean selected = household.getStatus() == HouseholdStatus.NOT_DONE;
@@ -78,7 +74,10 @@ public class TakeSurveyHandler implements IMenuHandler, IMenuPreparer, IActivity
 
     @Override
     public void handleResult(Intent data, int resultCode) {
-        updateHousehold();
+        if(resultCode == Activity.RESULT_OK) {
+            household.setStatus(HouseholdStatus.DONE);
+            household.update(new DatabaseHelper(activity));
+        }
     }
 
     @Override

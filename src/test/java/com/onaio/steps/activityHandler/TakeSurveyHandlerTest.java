@@ -120,4 +120,12 @@ public class TakeSurveyHandlerTest {
         Mockito.verify(householdMock).update(Mockito.any(DatabaseHelper.class));
     }
 
+    @Test
+    public void ShouldNotHandleResultForErrorResult(){
+        takeSurveyHandler.handleResult(null, Activity.RESULT_CANCELED);
+
+        Mockito.verify(householdMock,Mockito.never()).setStatus(HouseholdStatus.DONE);
+        Mockito.verify(householdMock,Mockito.never()).update(Mockito.any(DatabaseHelper.class));
+    }
+
 }
