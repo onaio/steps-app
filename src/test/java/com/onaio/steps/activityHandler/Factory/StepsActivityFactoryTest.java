@@ -1,6 +1,5 @@
 package com.onaio.steps.activityHandler.Factory;
 
-import com.onaio.steps.activity.SettingsActivity;
 import com.onaio.steps.activity.StepsActivity;
 import com.onaio.steps.activityHandler.ExportHandler;
 import com.onaio.steps.activityHandler.HouseholdActivityHandler;
@@ -11,8 +10,6 @@ import com.onaio.steps.activityHandler.Interface.IMenuHandler;
 import com.onaio.steps.activityHandler.NewHouseholdActivityHandler;
 import com.onaio.steps.activityHandler.SavedFormsHandler;
 import com.onaio.steps.activityHandler.SettingActivityHandler;
-import com.onaio.steps.helper.DatabaseHelper;
-import com.onaio.steps.model.Household;
 
 import junit.framework.Assert;
 import junit.framework.TestCase;
@@ -42,10 +39,11 @@ public class StepsActivityFactoryTest extends TestCase {
         List<IMenuHandler> menuHandlers = StepsActivityFactory.getMenuHandlers(stepsActivityMock, null);
         ArrayList<Class> handlerTypes = getTypes(menuHandlers);
 
-        Assert.assertEquals(3,menuHandlers.size());
+        Assert.assertEquals(4,menuHandlers.size());
         Assert.assertTrue(handlerTypes.contains(SettingActivityHandler.class));
         Assert.assertTrue(handlerTypes.contains(ExportHandler.class));
         Assert.assertTrue(handlerTypes.contains(ImportHandler.class));
+        Assert.assertTrue(handlerTypes.contains(SavedFormsHandler.class));
     }
 
     @Test
@@ -53,11 +51,10 @@ public class StepsActivityFactoryTest extends TestCase {
         List<IActivityResultHandler> resultHandlers = StepsActivityFactory.getResultHandlers(stepsActivityMock);
         ArrayList<Class> handlerTypes = getTypes(resultHandlers);
 
-        Assert.assertEquals(4, resultHandlers.size());
+        Assert.assertEquals(3, resultHandlers.size());
         Assert.assertTrue(handlerTypes.contains(SettingActivityHandler.class));
         Assert.assertTrue(handlerTypes.contains(NewHouseholdActivityHandler.class));
         Assert.assertTrue(handlerTypes.contains(ImportHandler.class));
-        Assert.assertTrue(handlerTypes.contains(SavedFormsHandler.class));
     }
 
     @Test
