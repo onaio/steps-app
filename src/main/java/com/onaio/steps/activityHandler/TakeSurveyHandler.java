@@ -17,8 +17,10 @@ import com.onaio.steps.helper.Dialog;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.HouseholdStatus;
 import com.onaio.steps.model.ODKForm.ODKForm;
+import com.onaio.steps.model.ODKForm.ODKSavedForm;
 
 import java.io.IOException;
+import java.util.List;
 
 public class TakeSurveyHandler implements IMenuHandler, IMenuPreparer, IActivityResultHandler {
     private ListActivity activity;
@@ -74,9 +76,19 @@ public class TakeSurveyHandler implements IMenuHandler, IMenuPreparer, IActivity
 
     @Override
     public void handleResult(Intent data, int resultCode) {
-        if(resultCode == Activity.RESULT_OK) {
-            household.setStatus(HouseholdStatus.DONE);
-            household.update(new DatabaseHelper(activity));
+        if(resultCode != Activity.RESULT_OK)
+            return;
+        try {
+            List<ODKSavedForm> forms = ODKSavedForm.getWithName(activity, String.format(Constants.ODK_FORM_NAME_FORMAT, household.getName()));
+            if(forms == null || forms.isEmpty())
+                return;
+            ODKSavedForm savedForm = forms.get(0);
+            if(Constants.ODK_FORM_COMPLETE_STATUS.equals(savedForm.getStatus())) {
+                household.setStatus(HouseholdStatus.DONE);
+                household.update(new DatabaseHelper(activity));
+            }
+        }catch (AppNotInstalledException e) {
+            new Dialog().notify(activity,Dialog.EmptyListener,R.string.odk_app_not_installed, R.string.error_title);
         }
     }
 

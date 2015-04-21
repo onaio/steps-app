@@ -6,7 +6,6 @@ import android.content.Intent;
 import com.onaio.steps.activity.HouseholdActivity;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;
-import com.onaio.steps.helper.FileUtil;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.HouseholdStatus;
 import com.onaio.steps.model.Member;
@@ -18,7 +17,6 @@ import junit.framework.TestCase;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.ArgumentMatcher;
 import org.mockito.Mockito;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
@@ -26,8 +24,6 @@ import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowActivity;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
 
 @RunWith(RobolectricTestRunner.class)
 @Config(emulateSdk = 16, manifest = "src/main/AndroidManifest.xml",shadows = {ShadowDatabaseHelper.class})
@@ -48,7 +44,7 @@ public class ODKSavedFormTest extends TestCase {
         Intent intent = new Intent();
         intent.putExtra(Constants.HOUSEHOLD,householdMock);
 
-        form = new ODKSavedForm("id", "jrFormId", "displayName", "jrVersion", "path");
+        form = new ODKSavedForm("id", "jrFormId", "displayName", "jrVersion", "path", "complete");
         householdActivity = Robolectric.buildActivity(HouseholdActivity.class).withIntent(intent).create().get();
     }
 

@@ -21,14 +21,16 @@ public class ODKSavedForm extends ODKForm{
     public static final Uri URI = Uri.parse(URI_STRING);
 
     String instanceFilePath;
+    private String status;
 
     public Uri getUri() {
         return URI.parse(URI_STRING+"/"+_id);
     }
 
-    public ODKSavedForm(String id, String jrFormId, String displayName, String jrVersion, String instanceFilePath) {
+    public ODKSavedForm(String id, String jrFormId, String displayName, String jrVersion, String instanceFilePath, String status) {
         super(jrVersion,displayName,jrFormId,id);
         this.instanceFilePath = instanceFilePath;
+        this.status = status;
     }
 
     @Override
@@ -36,8 +38,8 @@ public class ODKSavedForm extends ODKForm{
         launchODKCollect(activity);
     }
 
-    public static List<ODKSavedForm> getWithName(Activity activity, String displayName) throws FormNotPresentException, AppNotInstalledException {
-        List<ODKSavedForm> forms = get(activity,displayName);
+    public static List<ODKSavedForm> getWithName(Activity activity, String displayName) throws AppNotInstalledException {
+        List<ODKSavedForm> forms = get(activity, displayName);
         return forms;
     }
 
@@ -54,12 +56,17 @@ public class ODKSavedForm extends ODKForm{
                     String readDisplayName = cursor.getString(cursor.getColumnIndex("displayName"));
                     String jrVersion = cursor.getString(cursor.getColumnIndex("jrVersion"));
                     String instanceFilePath = cursor.getString(cursor.getColumnIndex("instanceFilePath"));
-                    forms.add(new ODKSavedForm(id, jrFormId, readDisplayName, jrVersion, instanceFilePath));
+                    String status = cursor.getString(cursor.getColumnIndex("status"));
+                    forms.add(new ODKSavedForm(id, jrFormId, readDisplayName, jrVersion, instanceFilePath,status));
                 }while (cursor.moveToNext());
             }
         } catch (RemoteException e) {
             throw new AppNotInstalledException();
         }
         return forms;
+    }
+
+    public String getStatus() {
+        return status;
     }
 }
