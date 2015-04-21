@@ -88,7 +88,7 @@ public class HouseholdTest {
 
         household.update(db);
 
-        Mockito.verify(db).update(Mockito.argThat(updateHouseholdMatcher(selectedMember)), Mockito.eq(Household.TABLE_NAME), Mockito.eq(ID + " = "+householdId),Mockito.any(String[].class));
+        Mockito.verify(db).update(Mockito.argThat(updateHouseholdMatcher(selectedMember)), Mockito.eq(Household.TABLE_NAME), Mockito.eq(ID + " = ?"),Mockito.eq(new String[]{String.valueOf(householdId)}));
     }
 
     @Test

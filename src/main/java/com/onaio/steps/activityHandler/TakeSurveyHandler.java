@@ -1,7 +1,6 @@
 package com.onaio.steps.activityHandler;
 
 import android.app.ListActivity;
-import android.content.ComponentName;
 import android.content.Intent;
 import android.view.View;
 
@@ -14,15 +13,11 @@ import com.onaio.steps.exception.FormNotPresentException;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.helper.Dialog;
-import com.onaio.steps.helper.FileUtil;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.HouseholdStatus;
-import com.onaio.steps.model.Member;
-import com.onaio.steps.model.ODKForm.ODKEntryForm;
 import com.onaio.steps.model.ODKForm.ODKForm;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class TakeSurveyHandler implements IMenuHandler, IMenuPreparer, IActivityResultHandler {
     private ListActivity activity;
@@ -43,9 +38,9 @@ public class TakeSurveyHandler implements IMenuHandler, IMenuPreparer, IActivity
     @Override
     public boolean open() {
         try {
-            ODKForm requiredForm = ODKEntryForm.getWithId(activity, Constants.ODK_FORM_ID);
-            saveFile(requiredForm);
-            launchODKCollect(requiredForm);
+            String formName = String.format(Constants.ODK_FORM_NAME_FORMAT, household.getName());
+            ODKForm requiredForm = ODKForm.get(activity, Constants.ODK_FORM_ID, formName);
+            requiredForm.open(household, activity);
         } catch (FormNotPresentException e) {
             new Dialog().notify(activity,Dialog.EmptyListener,R.string.form_not_present, R.string.error_title);
         } catch (AppNotInstalledException e) {
@@ -60,31 +55,6 @@ public class TakeSurveyHandler implements IMenuHandler, IMenuPreparer, IActivity
     private void updateHousehold() {
         household.setStatus(HouseholdStatus.DONE);
         household.update(new DatabaseHelper(activity));
-    }
-
-    private void launchODKCollect(ODKForm requiredForm) {
-        Intent surveyIntent = new Intent();
-        surveyIntent.setComponent(new ComponentName(Constants.ODK_COLLECT_PACKAGE,Constants.ODK_COLLECT_FORM_ENTRY_CLASS));
-        surveyIntent.setAction(Intent.ACTION_EDIT);
-        surveyIntent.setData(requiredForm.getUri());
-        activity.startActivityForResult(surveyIntent,Constants.SURVEY_IDENTIFIER);
-    }
-
-    private void saveFile(ODKForm requiredForm) throws IOException {
-        FileUtil fileUtil = new FileUtil().withHeader(Constants.ODK_FORM_FIELDS.split(","));
-        Member selectedMember = household.findMember(new DatabaseHelper(activity), Long.parseLong(household.getSelectedMemberId()));
-        ArrayList<String> row = new ArrayList<String>();
-        row.add(Constants.ODK_HH_ID);
-        row.add(String.format(Constants.ODK_FORM_NAME_FORMAT,household.getName()));
-        row.add(selectedMember.getMemberHouseholdId());
-        row.add(selectedMember.getFamilySurname());
-        row.add(selectedMember.getFirstName());
-        String gender = selectedMember.getGender();
-        int genderInt = gender.equals(Constants.MALE)?1:2;
-        row.add(String.valueOf(genderInt));
-        row.add(String.valueOf(selectedMember.getAge()));
-        fileUtil.withData(row.toArray(new String[row.size()]));
-        fileUtil.buildCSV(requiredForm.getPath()+"/"+Constants.ODK_DATA_FILENAME);
     }
 
     @Override

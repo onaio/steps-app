@@ -30,7 +30,7 @@ public class SavedFormsHandler implements IMenuHandler{
 
     private void launchODKCollect() {
         Intent surveyIntent = new Intent();
-        surveyIntent.setComponent(new ComponentName(Constants.ODK_COLLECT_PACKAGE, Constants.ODK_COLLECT_SAVED_FORMS_CLASS));
+        surveyIntent.setComponent(new ComponentName(Constants.ODK_COLLECT_PACKAGE, Constants.ODK_COLLECT_UPLOADER_CLASS));
         surveyIntent.setAction(Intent.ACTION_EDIT);
         activity.startActivity(surveyIntent);
     }

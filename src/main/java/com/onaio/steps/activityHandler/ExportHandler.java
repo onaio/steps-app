@@ -66,7 +66,7 @@ public class ExportHandler implements IMenuHandler,IMenuPreparer {
                     fileUtil.withData(row.toArray(new String[row.size()]));
                 }
             }
-            File file = fileUtil.buildCSV(activity.getFilesDir() +"/"+ EXPORT_FILE_NAME);
+            File file = fileUtil.writeCSV(activity.getFilesDir() + "/" + EXPORT_FILE_NAME);
             new UploadFileTask(activity).execute(file);
             return true;
         } catch (IOException e) {

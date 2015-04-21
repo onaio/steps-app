@@ -28,7 +28,7 @@ public class FileUtil {
         return this;
     }
 
-    public File buildCSV(String fullFileName) throws IOException {
+    public File writeCSV(String fullFileName) throws IOException {
         File file = new File(fullFileName);
         CSVWriter csvWriter = new CSVWriter(new FileWriter(file), ',');
         csvWriter.writeNext(headers);

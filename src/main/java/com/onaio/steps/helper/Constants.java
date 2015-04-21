@@ -45,8 +45,8 @@ public class Constants {
     public static final String ODK_HH_ID = "1";
 
     public static final String ODK_COLLECT_PACKAGE = "org.odk.collect.android";
-    public static final String ODK_COLLECT_SAVED_FORMS_CLASS = "org.odk.collect.android.activities.InstanceUploaderList";
-    public static final String ODK_COLLECT_FORM_ENTRY_CLASS = "org.odk.collect.android.activities.FormEntryActivity";
+    public static final String ODK_COLLECT_UPLOADER_CLASS = "org.odk.collect.android.activities.InstanceUploaderList";
+    public static final String ODK_COLLECT_FORM_CLASS = "org.odk.collect.android.activities.FormEntryActivity";
     public static final String ODK_FORM_NAME_FORMAT = ODK_FORM_ID+"-%s";
 
 
