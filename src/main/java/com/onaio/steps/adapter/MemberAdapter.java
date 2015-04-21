@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import com.onaio.steps.R;
 import com.onaio.steps.helper.Constants;
+import com.onaio.steps.model.Household;
+import com.onaio.steps.model.HouseholdStatus;
 import com.onaio.steps.model.Member;
 
 import org.w3c.dom.Text;
@@ -21,11 +23,13 @@ public class MemberAdapter extends BaseAdapter{
     private Context context;
     private List<Member> members;
     private String selectedMemberId;
+    private Household household;
 
-    public MemberAdapter(Context context, List members, String selectedMemberId) {
+    public MemberAdapter(Context context, List members, String selectedMemberId, Household household) {
         this.context = context;
         this.members = members;
         this.selectedMemberId = selectedMemberId;
+        this.household = household;
     }
 
     @Override
@@ -78,7 +82,10 @@ public class MemberAdapter extends BaseAdapter{
     private void setText(TextView memberName, String text, boolean isSelectedMember, int defaultTextColor) {
         memberName.setText(text);
         if(isSelectedMember)
-            memberName.setTextColor(Color.parseColor(Constants.TEXT_GREEN));
+            if(household.getStatus().equals(HouseholdStatus.DONE))
+                memberName.setTextColor(Color.parseColor(Constants.TEXT_GREEN));
+            else
+                memberName.setTextColor(Color.RED);
         else
             memberName.setTextColor(defaultTextColor);
     }
@@ -86,7 +93,10 @@ public class MemberAdapter extends BaseAdapter{
     private void setImage(View memberListItem, Boolean isSelectedMember) {
         ImageView image = (ImageView) memberListItem.findViewById(R.id.main_image);
         if(isSelectedMember)
-            image.setImageResource(R.mipmap.ic_household_list_done);
+            if(household.getStatus().equals(HouseholdStatus.DONE))
+                image.setImageResource(R.mipmap.ic_household_list_done);
+            else
+                image.setImageResource(R.mipmap.ic_household_list_refused);
         else
             image.setImageResource(R.mipmap.ic_contact_list);
     }

@@ -146,7 +146,7 @@ public class HouseholdActivity extends ListActivity {
     }
 
     private void populateMembers() {
-        MemberAdapter memberAdapter = new MemberAdapter(this, getMembers(),household.getSelectedMemberId());
+        MemberAdapter memberAdapter = new MemberAdapter(this, getMembers(),household.getSelectedMemberId(),household);
         getListView().setAdapter(memberAdapter);
         new SelectedMemberViewWrapper().populate(household,household.getSelectedMember(db), this);
     }
