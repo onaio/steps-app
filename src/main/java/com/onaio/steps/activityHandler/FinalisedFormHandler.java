@@ -1,12 +1,14 @@
 package com.onaio.steps.activityHandler;
 
 import android.app.ListActivity;
+import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Intent;
 
 import com.onaio.steps.R;
 import com.onaio.steps.activityHandler.Interface.IMenuHandler;
 import com.onaio.steps.helper.Constants;
+import com.onaio.steps.helper.Dialog;
 
 public class FinalisedFormHandler implements IMenuHandler{
    private ListActivity activity;
@@ -29,9 +31,14 @@ public class FinalisedFormHandler implements IMenuHandler{
     }
 
     private void launchODKCollect() {
-        Intent surveyIntent = new Intent();
-        surveyIntent.setComponent(new ComponentName(Constants.ODK_COLLECT_PACKAGE, Constants.ODK_COLLECT_UPLOADER_CLASS));
-        surveyIntent.setAction(Intent.ACTION_EDIT);
-        activity.startActivity(surveyIntent);
+        try {
+            Intent surveyIntent = new Intent();
+            surveyIntent.setComponent(new ComponentName(Constants.ODK_COLLECT_PACKAGE, Constants.ODK_COLLECT_UPLOADER_CLASS));
+            surveyIntent.setAction(Intent.ACTION_EDIT);
+            activity.startActivity(surveyIntent);
+        } catch (ActivityNotFoundException e) {
+            new Dialog().notify(activity, Dialog.EmptyListener, R.string.odk_app_not_installed, R.string.error_title);
+
+        }
     }
 }

@@ -63,7 +63,7 @@ public class ODKFormTest extends TestCase {
         odkForm = new ODKForm(blankFormMock, savedFormMock, fileUtilMock);
 
 
-        odkForm.open(householdMock, householdActivity);
+        odkForm.open(householdMock, householdActivity, Constants.SURVEY_IDENTIFIER);
 
         Mockito.verify(fileUtilMock).withHeader(Constants.ODK_FORM_FIELDS.split(","));
         Mockito.verify(blankFormMock).getPath();
@@ -83,7 +83,7 @@ public class ODKFormTest extends TestCase {
         odkForm = new ODKForm(blankFormMock, savedFormMock, fileUtilMock);
 
 
-        odkForm.open(householdMock, householdActivity);
+        odkForm.open(householdMock, householdActivity, Constants.SURVEY_IDENTIFIER);
 
         ShadowActivity.IntentForResult odkActivity = Robolectric.shadowOf(householdActivity).getNextStartedActivityForResult();
 
@@ -106,7 +106,7 @@ public class ODKFormTest extends TestCase {
         odkForm = new ODKForm(blankFormMock, null, fileUtilMock);
 
 
-        odkForm.open(householdMock, householdActivity);
+        odkForm.open(householdMock, householdActivity, Constants.SURVEY_IDENTIFIER);
 
         Mockito.verify(fileUtilMock).withHeader(Constants.ODK_FORM_FIELDS.split(","));
         Mockito.verify(blankFormMock).getPath();
@@ -126,7 +126,7 @@ public class ODKFormTest extends TestCase {
         odkForm = new ODKForm(blankFormMock, null, fileUtilMock);
 
 
-        odkForm.open(householdMock, householdActivity);
+        odkForm.open(householdMock, householdActivity, Constants.SURVEY_IDENTIFIER);
 
         ShadowActivity.IntentForResult odkActivity = Robolectric.shadowOf(householdActivity).getNextStartedActivityForResult();
 

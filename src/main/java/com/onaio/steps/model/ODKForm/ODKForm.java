@@ -37,11 +37,11 @@ public class ODKForm {
         return blankForm;
     }
 
-    public void open(Household household, Activity activity) throws IOException{
+    public void open(Household household, Activity activity, int requestCode) throws IOException{
         //irrespective of the form type the data has to be saved at entry form path.
         String pathToSaveDataFile = blankForm.getPath();
         saveDataFile(household, new DatabaseHelper(activity), pathToSaveDataFile);
-        launchODKCollect(activity);
+        launchODKCollect(activity, requestCode);
     }
 
     public static ODKForm create(Activity activity, String formId, String formName) throws FormNotPresentException, AppNotInstalledException {
@@ -52,12 +52,12 @@ public class ODKForm {
         return new ODKForm(blankForm,null);
     }
 
-    private void launchODKCollect(Activity activity) {
+    private void launchODKCollect(Activity activity, int requestCode) {
         Intent surveyIntent = new Intent();
         surveyIntent.setComponent(new ComponentName(Constants.ODK_COLLECT_PACKAGE,Constants.ODK_COLLECT_FORM_CLASS));
         surveyIntent.setAction(Intent.ACTION_EDIT);
         surveyIntent.setData(getForm().getUri());
-        activity.startActivityForResult(surveyIntent, Constants.SURVEY_IDENTIFIER);
+        activity.startActivityForResult(surveyIntent, requestCode);
     }
 
     private void saveDataFile(Household household, DatabaseHelper db, String pathToSaveDataFile) throws IOException {
