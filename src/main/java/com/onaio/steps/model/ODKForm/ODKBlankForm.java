@@ -25,7 +25,7 @@ public class ODKBlankForm implements IForm{
     String jrVersion;
 
 
-    public ODKBlankForm(String id, String jrFormId, String displayName, String jrVersion, String formMediaPath){
+    protected ODKBlankForm(String id, String jrFormId, String displayName, String jrVersion, String formMediaPath){
         _id = id;
         this.jrFormId = jrFormId;
         this.displayName = displayName;
