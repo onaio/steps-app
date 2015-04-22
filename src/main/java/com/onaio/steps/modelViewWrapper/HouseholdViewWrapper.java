@@ -9,9 +9,7 @@ import com.onaio.steps.model.Household;
 import com.onaio.steps.model.HouseholdStatus;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 public class HouseholdViewWrapper {
     private Activity activity;
@@ -28,7 +26,7 @@ public class HouseholdViewWrapper {
         return new Household(nameView.getText().toString(), phoneNumber, HouseholdStatus.NOT_SELECTED, currentDate);
     }
 
-    public Household updateHousehold(Household household, int numberViewId) throws InvalidDataException {
+    public Household updateHousehold(Household household, int numberViewId) {
         TextView numberView = (TextView) activity.findViewById(numberViewId);
         String phoneNumber = numberView.getText().toString();
         household.setPhoneNumber(phoneNumber);

@@ -7,9 +7,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.onaio.steps.R;
-import com.onaio.steps.exception.InvalidDataException;
 import com.onaio.steps.helper.DatabaseHelper;
-import com.onaio.steps.helper.Dialog;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.modelViewWrapper.HouseholdViewWrapper;
 
@@ -42,7 +40,6 @@ public class EditHouseholdActivity extends Activity {
     }
 
     public void save(View view) {
-        try {
             Intent intent = this.getIntent();
             household = new HouseholdViewWrapper(this).updateHousehold(household, R.id.household_number);
             DatabaseHelper db = new DatabaseHelper(getApplicationContext());
@@ -50,10 +47,6 @@ public class EditHouseholdActivity extends Activity {
             intent.putExtra(HOUSEHOLD,household);
             setResult(RESULT_OK, intent);
             finish();
-
-        } catch (InvalidDataException e) {
-            new Dialog().notify(this,Dialog.EmptyListener,e.getMessage(),R.string.error_title);
-        }
     }
 
     public void cancel(View view){

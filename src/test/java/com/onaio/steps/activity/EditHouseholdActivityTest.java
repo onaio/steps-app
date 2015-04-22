@@ -24,51 +24,54 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.robolectric.Robolectric.shadowOf;
 
-@Config(emulateSdk = 16,manifest = "src/main/AndroidManifest.xml")
+@Config(emulateSdk = 16, manifest = "src/main/AndroidManifest.xml")
 @RunWith(RobolectricTestRunner.class)
 public class EditHouseholdActivityTest {
 
     private EditHouseholdActivity editHouseholdActivity;
+    private Household household;
 
     @Before
-    public void setup(){
-        Household household = new Household("1", "household Name", "123456789", "2", HouseholdStatus.NOT_DONE, "2015-12-13");
+    public void setup() {
+        household = new Household("1", "household Name", "123456789", "2", HouseholdStatus.NOT_DONE, "2015-12-13");
         Intent intent = new Intent();
-        intent.putExtra(Constants.HOUSEHOLD,household);
+        intent.putExtra(Constants.HOUSEHOLD, household);
 
         editHouseholdActivity = Robolectric.buildActivity(EditHouseholdActivity.class)
-                                .withIntent(intent)
-                                .create()
-                                .get();
+                .withIntent(intent)
+                .create()
+                .get();
     }
 
     @Test
-    public void ShouldPopulateView(){
-        TextView header = (TextView)editHouseholdActivity.findViewById(R.id.form_header);
-        TextView household_id = (TextView)editHouseholdActivity.findViewById(R.id.generated_household_id);
-        TextView household_number = (TextView)editHouseholdActivity.findViewById(R.id.household_number);
+    public void ShouldPopulateView() {
+        TextView header = (TextView) editHouseholdActivity.findViewById(R.id.form_header);
+        TextView household_id = (TextView) editHouseholdActivity.findViewById(R.id.generated_household_id);
+        TextView household_number = (TextView) editHouseholdActivity.findViewById(R.id.household_number);
 
         assertEquals(R.id.household_form, shadowOf(editHouseholdActivity).getContentView().getId());
         assertNotNull(header);
         assertNotNull(household_id);
         assertNotNull(household_number);
-        assertEquals("Edit Household",header.getText().toString());
-        assertEquals("household Name",household_id.getText().toString());
-        assertEquals("123456789",household_number.getText().toString());
+        assertEquals("Edit Household", header.getText().toString());
+        assertEquals("household Name", household_id.getText().toString());
+        assertEquals("123456789", household_number.getText().toString());
     }
 
     @Test
-    public void ShouldUpdateHouseholdAndFinishActivity(){
+    public void ShouldUpdateHouseholdAndFinishActivity() {
         View viewMock = Mockito.mock(View.class);
         Mockito.stub(viewMock.getId()).toReturn(R.id.household_form);
 
         editHouseholdActivity.save(viewMock);
 
+        Intent editHouseholdActivityIntent = editHouseholdActivity.getIntent();
+        assertEquals(household, editHouseholdActivityIntent.getSerializableExtra(Constants.HOUSEHOLD));
         assertTrue(editHouseholdActivity.isFinishing());
     }
 
     @Test
-    public void ShouldFinishTheActivityOnCancel(){
+    public void ShouldFinishTheActivityOnCancel() {
         editHouseholdActivity.cancel(null);
 
         Assert.assertTrue(editHouseholdActivity.isFinishing());
