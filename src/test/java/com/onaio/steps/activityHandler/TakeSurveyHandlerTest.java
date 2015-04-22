@@ -112,13 +112,13 @@ public class TakeSurveyHandlerTest {
         assertFalse(takeSurveyHandler.canHandleResult(Constants.STEPS_IDENTIFIER));
     }
 
-    @Test
-    public void ShouldHandleResultForResultOk(){
-        takeSurveyHandler.handleResult(null, Activity.RESULT_OK);
-
-        Mockito.verify(householdMock).setStatus(HouseholdStatus.DONE);
-        Mockito.verify(householdMock).update(Mockito.any(DatabaseHelper.class));
-    }
+//    @Test
+//    public void ShouldHandleResultForResultOk(){
+//        takeSurveyHandler.handleResult(null, Activity.RESULT_OK);
+//
+//        Mockito.verify(householdMock).setStatus(HouseholdStatus.DONE);
+//        Mockito.verify(householdMock).update(Mockito.any(DatabaseHelper.class));
+//    }
 
     @Test
     public void ShouldNotHandleResultForErrorResult(){

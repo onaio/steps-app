@@ -7,45 +7,48 @@ import android.net.Uri;
 import android.os.RemoteException;
 
 import com.onaio.steps.exception.AppNotInstalledException;
-import com.onaio.steps.exception.FormNotPresentException;
+import com.onaio.steps.helper.FileUtil;
 import com.onaio.steps.model.Household;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ODKSavedForm extends ODKForm{
+public class ODKSavedForm implements IForm{
     public static final String COLLECT_FORMS_AUTHORITY = "org.odk.collect.android.provider.odk.instances";
     private static final String URI_STRING = "content://"
             + COLLECT_FORMS_AUTHORITY + "/instances";
     public static final Uri URI = Uri.parse(URI_STRING);
 
     String instanceFilePath;
-    private String status;
+    String status;
+    String _id;
+    String jrFormId;
+    String displayName;
+    String jrVersion;
+
+
+    public ODKSavedForm(String id, String jrFormId, String displayName, String jrVersion, String instanceFilePath, String status) {
+        _id = id;
+        this.jrFormId = jrFormId;
+        this.displayName = displayName;
+        this.jrVersion = jrVersion;
+        this.instanceFilePath = instanceFilePath;
+        this.status = status;
+    }
 
     public Uri getUri() {
         return URI.parse(URI_STRING+"/"+_id);
     }
 
-    public ODKSavedForm(String id, String jrFormId, String displayName, String jrVersion, String instanceFilePath, String status) {
-        super(jrVersion,displayName,jrFormId,id);
-        this.instanceFilePath = instanceFilePath;
-        this.status = status;
-    }
-
     @Override
-    public void open(Household household, Activity activity) throws IOException {
-        launchODKCollect(activity);
+    public String getPath() {
+        return instanceFilePath;
     }
 
-    public static List<ODKSavedForm> getWithName(Activity activity, String displayName) throws AppNotInstalledException {
-        List<ODKSavedForm> forms = get(activity, displayName);
-        return forms;
-    }
-
-    public static List<ODKSavedForm> get(Activity activity, String displayName) throws AppNotInstalledException {
+    public static List<IForm> findAll(Activity activity, String displayName) throws AppNotInstalledException {
         ContentProviderClient formsContentProvider = activity.getContentResolver().acquireContentProviderClient(ODKSavedForm.URI);
-        ArrayList<ODKSavedForm> forms = new ArrayList<ODKSavedForm>();
+        ArrayList<IForm> forms = new ArrayList<IForm>();
         try {
             if(formsContentProvider==null) throw new AppNotInstalledException();
             Cursor cursor = formsContentProvider.query(ODKSavedForm.URI, null, "displayName = ?", new String[]{displayName}, null);

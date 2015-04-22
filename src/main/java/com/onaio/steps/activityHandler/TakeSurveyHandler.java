@@ -16,6 +16,7 @@ import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.helper.Dialog;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.HouseholdStatus;
+import com.onaio.steps.model.ODKForm.IForm;
 import com.onaio.steps.model.ODKForm.ODKForm;
 import com.onaio.steps.model.ODKForm.ODKSavedForm;
 
@@ -42,7 +43,7 @@ public class TakeSurveyHandler implements IMenuHandler, IMenuPreparer, IActivity
     public boolean open() {
         try {
             String formName = String.format(Constants.ODK_FORM_NAME_FORMAT, household.getName());
-            ODKForm requiredForm = ODKForm.get(activity, Constants.ODK_FORM_ID, formName);
+            ODKForm requiredForm = ODKForm.create(activity, Constants.ODK_FORM_ID, formName);
             requiredForm.open(household, activity);
         } catch (FormNotPresentException e) {
             new Dialog().notify(activity,Dialog.EmptyListener,R.string.form_not_present, R.string.error_title);
@@ -79,10 +80,10 @@ public class TakeSurveyHandler implements IMenuHandler, IMenuPreparer, IActivity
         if(resultCode != Activity.RESULT_OK)
             return;
         try {
-            List<ODKSavedForm> forms = ODKSavedForm.getWithName(activity, String.format(Constants.ODK_FORM_NAME_FORMAT, household.getName()));
+            List<IForm> forms = ODKSavedForm.findAll(activity, String.format(Constants.ODK_FORM_NAME_FORMAT, household.getName()));
             if(forms == null || forms.isEmpty())
                 return;
-            ODKSavedForm savedForm = forms.get(0);
+            ODKSavedForm savedForm = (ODKSavedForm)forms.get(0);
             if(Constants.ODK_FORM_COMPLETE_STATUS.equals(savedForm.getStatus())) {
                 household.setStatus(HouseholdStatus.DONE);
                 household.update(new DatabaseHelper(activity));
