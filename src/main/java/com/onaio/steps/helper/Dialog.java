@@ -13,7 +13,7 @@ public class Dialog {
         public void onClick(DialogInterface dialogInterface, int i) {
         }
     };
-    public void notify(Context activity, DialogInterface.OnClickListener okListener, int message, int title) {
+    public void notify(Context activity, DialogInterface.OnClickListener okListener, int title, int message) {
         new AlertDialog.Builder(activity)
                 .setTitle(title)
                 .setMessage(message)

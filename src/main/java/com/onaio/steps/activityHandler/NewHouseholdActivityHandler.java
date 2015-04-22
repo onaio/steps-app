@@ -66,7 +66,7 @@ public class NewHouseholdActivityHandler implements IMenuHandler, IActivityResul
     }
 
     private void notifyUserToSetPhoneId(ListActivity activity) {
-        dialog.notify(activity, Dialog.EmptyListener, R.string.phone_id_message, R.string.phone_id_message_title);
+        dialog.notify(activity, Dialog.EmptyListener, R.string.phone_id_message_title, R.string.phone_id_message);
     }
 
     private String getValue(String key) {

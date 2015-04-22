@@ -37,7 +37,7 @@ public class FinalisedFormHandler implements IMenuHandler{
             surveyIntent.setAction(Intent.ACTION_EDIT);
             activity.startActivity(surveyIntent);
         } catch (ActivityNotFoundException e) {
-            new Dialog().notify(activity, Dialog.EmptyListener, R.string.odk_app_not_installed, R.string.error_title);
+            new Dialog().notify(activity, Dialog.EmptyListener, R.string.error_title, R.string.odk_app_not_installed);
 
         }
     }

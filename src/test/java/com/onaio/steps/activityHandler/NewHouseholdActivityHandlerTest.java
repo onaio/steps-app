@@ -59,7 +59,7 @@ public class NewHouseholdActivityHandlerTest {
         Mockito.stub(keyValueStoreMock.getString(PHONE_ID)).toReturn("");
         handler.open();
 
-        Mockito.verify(dialogMock).notify(stepsActivity,Dialog.EmptyListener,R.string.phone_id_message, R.string.phone_id_message_title);
+        Mockito.verify(dialogMock).notify(stepsActivity,Dialog.EmptyListener, R.string.phone_id_message_title, R.string.phone_id_message);
     }
 
 
@@ -69,7 +69,7 @@ public class NewHouseholdActivityHandlerTest {
 
         handler.open();
 
-        Mockito.verify(dialogMock).notify(stepsActivity, Dialog.EmptyListener, R.string.phone_id_message, R.string.phone_id_message_title);
+        Mockito.verify(dialogMock).notify(stepsActivity, Dialog.EmptyListener, R.string.phone_id_message_title, R.string.phone_id_message);
     }
 
     @Test
@@ -79,7 +79,7 @@ public class NewHouseholdActivityHandlerTest {
 
         handler.open();
 
-        Mockito.verify(dialogMock,Mockito.never()).notify(stepsActivity, Dialog.EmptyListener, R.string.phone_id_message, R.string.phone_id_message_title);
+        Mockito.verify(dialogMock,Mockito.never()).notify(stepsActivity, Dialog.EmptyListener, R.string.phone_id_message_title, R.string.phone_id_message);
     }
 
     @Test

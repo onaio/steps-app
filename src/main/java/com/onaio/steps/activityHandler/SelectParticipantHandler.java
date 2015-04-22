@@ -126,7 +126,7 @@ public class SelectParticipantHandler implements IMenuHandler, IMenuPreparer {
                 break;
             case DEFERRED: dialog.confirm(activity, confirmListenerForReElection, Dialog.EmptyListener, confirmation, R.string.participant_re_elect_reason_title);
                 break;
-            default: new Dialog().notify(activity, Dialog.EmptyListener, R.string.participant_no_re_elect_message_because_of_status, R.string.participant_no_re_elect_title);
+            default: new Dialog().notify(activity, Dialog.EmptyListener, R.string.participant_no_re_elect_title, R.string.participant_no_re_elect_message_because_of_status);
         }
     }
 

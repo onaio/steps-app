@@ -46,11 +46,11 @@ public class TakeSurveyHandler implements IMenuHandler, IMenuPreparer, IActivity
             ODKForm requiredForm = ODKForm.create(activity, Constants.ODK_FORM_ID, formName);
             requiredForm.open(household, activity, Constants.SURVEY_IDENTIFIER);
         } catch (FormNotPresentException e) {
-            new Dialog().notify(activity,Dialog.EmptyListener,R.string.form_not_present, R.string.error_title);
+            new Dialog().notify(activity,Dialog.EmptyListener, R.string.error_title, R.string.form_not_present);
         } catch (AppNotInstalledException e) {
-            new Dialog().notify(activity,Dialog.EmptyListener,R.string.odk_app_not_installed, R.string.error_title);
+            new Dialog().notify(activity,Dialog.EmptyListener, R.string.error_title, R.string.odk_app_not_installed);
         } catch (IOException e) {
-            new Dialog().notify(activity,Dialog.EmptyListener,R.string.something_went_wrong_try_again, R.string.error_title);
+            new Dialog().notify(activity,Dialog.EmptyListener, R.string.error_title, R.string.something_went_wrong_try_again);
         }
 
         return true;
@@ -89,7 +89,7 @@ public class TakeSurveyHandler implements IMenuHandler, IMenuPreparer, IActivity
                 household.update(new DatabaseHelper(activity));
             }
         }catch (AppNotInstalledException e) {
-            new Dialog().notify(activity,Dialog.EmptyListener,R.string.odk_app_not_installed, R.string.error_title);
+            new Dialog().notify(activity,Dialog.EmptyListener, R.string.error_title, R.string.odk_app_not_installed);
         }
     }
 

@@ -1,9 +1,6 @@
 package com.onaio.steps.helper;
 
 import android.app.Activity;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.content.Context;
 import android.os.AsyncTask;
 
 import com.onaio.steps.R;
@@ -35,14 +32,9 @@ public class UploadFileTask extends AsyncTask<File, Void, Void> {
             multipartEntity.addPart("file", new FileBody(files[0]));
             httpPost.setEntity(multipartEntity);
             httpClient.execute(httpPost);
+            new CustomNotification().notify(activity,R.string.export_complete,R.string.export_complete_message);
         } catch (IOException e) {
-            Notification.Builder builder = new Notification.Builder(activity);
-            Notification exportError = builder.setSmallIcon(R.mipmap.ic_launcher)
-                    .setContentTitle(activity.getText(R.string.error_title))
-                    .setContentText(activity.getText(R.string.export_failed))
-                    .build();
-            NotificationManager notificationManager = (NotificationManager) activity.getSystemService(Context.NOTIFICATION_SERVICE);
-            notificationManager.notify(1,exportError);
+            new CustomNotification().notify(activity, R.string.error_title, R.string.export_failed);
         }
         return null;
     }

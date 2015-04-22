@@ -58,7 +58,7 @@ public class DeferredHandlerTest {
 
         verify(householdMock).setStatus(HouseholdStatus.DEFERRED);
         verify(householdMock).update(any(DatabaseHelper.class));
-        verify(dialogMock).notify(eq(activityMock),any(DialogInterface.OnClickListener.class),eq(R.string.survey_deferred_message),eq(R.string.survey_deferred_title));
+        verify(dialogMock).notify(eq(activityMock),any(DialogInterface.OnClickListener.class), eq(R.string.survey_deferred_title), eq(R.string.survey_deferred_message));
     }
 
     @Test

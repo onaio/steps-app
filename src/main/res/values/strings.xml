@@ -67,7 +67,7 @@
     <string name="add_new_household">Add New Household</string>
     <string name="add_new_member">Add New Member</string>
     <string name="phone_id_name">Phone ID Name</string>
-    <string name="age_hint">Age(in years)</string>
+    <string name="age_hint">Age (in years)</string>
     <string name="interview_now">INTERVIEW NOW</string>
     <string name="interview_later">INTERVIEW LATER</string>
     <string name="selected_participant">Selected Member</string>
@@ -78,4 +78,7 @@
     <string name="survey_refused_message">Survey is refused!</string>
     <string name="action_finalized_forms">Finalized Forms</string>
     <string name="export_failed">Export failed, please try again later.</string>
+    <string name="export_complete">Export Complete</string>
+    <string name="export_complete_message">The data has successfully exported.</string>
+    <string name="export_start_message">Export status will notified in the notification tray once it completes. Start the export?</string>
 </resources>

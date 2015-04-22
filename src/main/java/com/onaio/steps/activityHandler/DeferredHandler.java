@@ -44,7 +44,7 @@ public class DeferredHandler implements IMenuHandler,IMenuPreparer {
                 new BackHomeHandler(activity).open();
             }
         };
-        dialog.notify(activity, confirmListener, R.string.survey_deferred_message, R.string.survey_deferred_title);
+        dialog.notify(activity, confirmListener, R.string.survey_deferred_title, R.string.survey_deferred_message);
         return true;
     }
 
