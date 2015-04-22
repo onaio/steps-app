@@ -2,13 +2,13 @@ package com.onaio.steps.activityHandler.Factory;
 
 import com.onaio.steps.activity.StepsActivity;
 import com.onaio.steps.activityHandler.ExportHandler;
+import com.onaio.steps.activityHandler.FinalisedFormHandler;
 import com.onaio.steps.activityHandler.HouseholdActivityHandler;
 import com.onaio.steps.activityHandler.ImportHandler;
 import com.onaio.steps.activityHandler.Interface.IActivityResultHandler;
 import com.onaio.steps.activityHandler.Interface.IListItemHandler;
 import com.onaio.steps.activityHandler.Interface.IMenuHandler;
 import com.onaio.steps.activityHandler.NewHouseholdActivityHandler;
-import com.onaio.steps.activityHandler.SavedFormsHandler;
 import com.onaio.steps.activityHandler.SettingActivityHandler;
 
 import junit.framework.Assert;
@@ -43,7 +43,7 @@ public class StepsActivityFactoryTest extends TestCase {
         Assert.assertTrue(handlerTypes.contains(SettingActivityHandler.class));
         Assert.assertTrue(handlerTypes.contains(ExportHandler.class));
         Assert.assertTrue(handlerTypes.contains(ImportHandler.class));
-        Assert.assertTrue(handlerTypes.contains(SavedFormsHandler.class));
+        Assert.assertTrue(handlerTypes.contains(FinalisedFormHandler.class));
     }
 
     @Test

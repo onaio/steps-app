@@ -16,30 +16,30 @@ import org.robolectric.annotation.Config;
 
 @Config(emulateSdk = 16,manifest = "src/main/AndroidManifest.xml")
 @RunWith(RobolectricTestRunner.class)
-public class SavedFormsHandlerTest extends TestCase {
+public class FinalisedFormHandlerTest extends TestCase {
 
-    private SavedFormsHandler savedFormsHandler;
+    private FinalisedFormHandler finalisedFormHandler;
     private StepsActivity stepsActivity;
 
     @Before
     public void Setup(){
         stepsActivity = Mockito.mock(StepsActivity.class);
-        savedFormsHandler = new SavedFormsHandler(stepsActivity);
+        finalisedFormHandler = new FinalisedFormHandler(stepsActivity);
     }
 
     @Test
     public void ShouldOpenActivityForProperMenuId(){
-        assertTrue(savedFormsHandler.shouldOpen(R.id.action_saved_form));
+        assertTrue(finalisedFormHandler.shouldOpen(R.id.action_saved_form));
     }
 
     @Test
     public void ShouldNotOpenForOtherMenuId(){
-        assertFalse(savedFormsHandler.shouldOpen(R.id.action_deferred));
+        assertFalse(finalisedFormHandler.shouldOpen(R.id.action_deferred));
     }
 
     @Test
     public void ShouldOpenTheProperIntentForSavedForms(){
-        savedFormsHandler.open();
+        finalisedFormHandler.open();
 
         Mockito.verify(stepsActivity).startActivity(Mockito.argThat(intentMatcher()));
     }

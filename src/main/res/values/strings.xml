@@ -77,4 +77,5 @@
     <string name="survey_done_message">Survey is complete!</string>
     <string name="survey_refused_message">Survey is refused!</string>
     <string name="action_finalized_forms">Finalized Forms</string>
+    <string name="export_failed">Export failed, please try again later.</string>
 </resources>

@@ -8,7 +8,7 @@ import com.onaio.steps.R;
 import com.onaio.steps.activityHandler.Interface.IMenuHandler;
 import com.onaio.steps.helper.Constants;
 
-public class SavedFormsHandler implements IMenuHandler{
+public class FinalisedFormHandler implements IMenuHandler{
    private ListActivity activity;
     private static final int MENU_ID= R.id.action_saved_form;
 
@@ -18,7 +18,7 @@ public class SavedFormsHandler implements IMenuHandler{
         return menu_id == MENU_ID;
     }
 
-    public SavedFormsHandler(ListActivity activity) {
+    public FinalisedFormHandler(ListActivity activity) {
         this.activity = activity;
     }
 
