@@ -8,9 +8,11 @@ import com.onaio.steps.activity.HouseholdActivity;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.helper.FileUtil;
+import com.onaio.steps.model.Gender;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.HouseholdStatus;
 import com.onaio.steps.model.Member;
+import com.onaio.steps.model.RequestCode;
 import com.onaio.steps.model.ShadowDatabaseHelper;
 
 import junit.framework.Assert;
@@ -63,7 +65,7 @@ public class ODKFormTest extends TestCase {
         odkForm = new ODKForm(blankFormMock, savedFormMock, fileUtilMock);
 
 
-        odkForm.open(householdMock, householdActivity, Constants.SURVEY_IDENTIFIER);
+        odkForm.open(householdMock, householdActivity, RequestCode.SURVEY.getCode());
 
         Mockito.verify(fileUtilMock).withHeader(Constants.ODK_FORM_FIELDS.split(","));
         Mockito.verify(blankFormMock).getPath();
@@ -83,7 +85,7 @@ public class ODKFormTest extends TestCase {
         odkForm = new ODKForm(blankFormMock, savedFormMock, fileUtilMock);
 
 
-        odkForm.open(householdMock, householdActivity, Constants.SURVEY_IDENTIFIER);
+        odkForm.open(householdMock, householdActivity, RequestCode.SURVEY.getCode());
 
         ShadowActivity.IntentForResult odkActivity = Robolectric.shadowOf(householdActivity).getNextStartedActivityForResult();
 
@@ -94,7 +96,7 @@ public class ODKFormTest extends TestCase {
         Assert.assertEquals(Constants.ODK_COLLECT_FORM_CLASS, component.getClassName());
         Assert.assertEquals(Intent.ACTION_EDIT,intent.getAction());
         Assert.assertEquals(saveFormURI,intent.getData());
-        Assert.assertEquals(Constants.SURVEY_IDENTIFIER,odkActivity.requestCode);
+        Assert.assertEquals(RequestCode.SURVEY.getCode(),odkActivity.requestCode);
     }
 
     @Test
@@ -106,7 +108,7 @@ public class ODKFormTest extends TestCase {
         odkForm = new ODKForm(blankFormMock, null, fileUtilMock);
 
 
-        odkForm.open(householdMock, householdActivity, Constants.SURVEY_IDENTIFIER);
+        odkForm.open(householdMock, householdActivity, RequestCode.SURVEY.getCode());
 
         Mockito.verify(fileUtilMock).withHeader(Constants.ODK_FORM_FIELDS.split(","));
         Mockito.verify(blankFormMock).getPath();
@@ -126,7 +128,7 @@ public class ODKFormTest extends TestCase {
         odkForm = new ODKForm(blankFormMock, null, fileUtilMock);
 
 
-        odkForm.open(householdMock, householdActivity, Constants.SURVEY_IDENTIFIER);
+        odkForm.open(householdMock, householdActivity, RequestCode.SURVEY.getCode());
 
         ShadowActivity.IntentForResult odkActivity = Robolectric.shadowOf(householdActivity).getNextStartedActivityForResult();
 
@@ -137,7 +139,7 @@ public class ODKFormTest extends TestCase {
         Assert.assertEquals(Constants.ODK_COLLECT_FORM_CLASS, component.getClassName());
         Assert.assertEquals(Intent.ACTION_EDIT,intent.getAction());
         Assert.assertEquals(blankFormURI,intent.getData());
-        Assert.assertEquals(Constants.SURVEY_IDENTIFIER,odkActivity.requestCode);
+        Assert.assertEquals(RequestCode.SURVEY.getCode(),odkActivity.requestCode);
     }
 
     private void stubFileUtil() {
@@ -148,7 +150,7 @@ public class ODKFormTest extends TestCase {
 
     private void stubHousehold() {
         householdMock = Mockito.mock(Household.class);
-        selectedMember = new Member(1, "surname", "firstName", Constants.MALE, 28, householdMock, "householdID-1", false);
+        selectedMember = new Member(1, "surname", "firstName", Gender.Male, 28, householdMock, "householdID-1", false);
         Mockito.stub(householdMock.getSelectedMember(Mockito.any(DatabaseHelper.class))).toReturn(selectedMember);
         Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.NOT_SELECTED);
     }

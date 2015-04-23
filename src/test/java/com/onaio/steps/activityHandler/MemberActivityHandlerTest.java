@@ -5,6 +5,7 @@ import android.content.Intent;
 import com.onaio.steps.activity.HouseholdActivity;
 import com.onaio.steps.activity.MemberActivity;
 import com.onaio.steps.helper.Constants;
+import com.onaio.steps.model.Gender;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.HouseholdStatus;
 import com.onaio.steps.model.Member;
@@ -41,7 +42,7 @@ public class MemberActivityHandlerTest {
     @Test
     public void ShouldStartMemberActivityWhenMemberIsNotNull(){
         Household household = new Household("2", "Any HouseholdName", "123456789", "", HouseholdStatus.NOT_SELECTED, currentDate);
-        member = new Member("Rana", "Nikhil", "Female", 20, household, false);
+        member = new Member("Rana", "Nikhil", Gender.Female, 20, household, false);
         memberActivityHandler = new MemberActivityHandler(householdActivity, member);
 
         memberActivityHandler.open();

@@ -75,7 +75,7 @@ public class ExportHandler implements IMenuHandler,IMenuPreparer {
                 row.add(member.getFamilySurname());
                 row.add(member.getFirstName());
                 row.add(String.valueOf(member.getAge()));
-                row.add(member.getGender());
+                row.add(member.getGender().toString());
                 row.add(member.getDeletedString());
                 setStatus(household, member, row);
                 row.add(String.valueOf(reasons.size()));

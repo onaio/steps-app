@@ -12,6 +12,7 @@ import com.onaio.steps.adapter.HouseholdAdapter;
 import com.onaio.steps.helper.CustomDialog;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.model.Household;
+import com.onaio.steps.model.RequestCode;
 
 import static android.app.Activity.RESULT_OK;
 import static android.content.Context.MODE_PRIVATE;
@@ -44,7 +45,7 @@ public class NewHouseholdActivityHandler implements IMenuHandler, IActivityResul
             Intent intent = new Intent(activity.getBaseContext(), NewHouseholdActivity.class);
             intent.putExtra(PHONE_ID, getValue(PHONE_ID));
             intent.putExtra(HOUSEHOLD_SEED, getValue(HOUSEHOLD_SEED));
-            activity.startActivityForResult(intent, NEW_HOUSEHOLD_IDENTIFIER);
+            activity.startActivityForResult(intent, RequestCode.NEW_HOUSEHOLD.getCode());
         }
         return true;
     }
@@ -62,7 +63,7 @@ public class NewHouseholdActivityHandler implements IMenuHandler, IActivityResul
 
     @Override
     public boolean canHandleResult(int requestCode) {
-        return requestCode == NEW_HOUSEHOLD_IDENTIFIER;
+        return requestCode == RequestCode.NEW_HOUSEHOLD.getCode();
     }
 
     private void notifyUserToSetPhoneId(ListActivity activity) {

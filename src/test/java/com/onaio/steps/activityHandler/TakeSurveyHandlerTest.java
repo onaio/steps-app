@@ -9,6 +9,7 @@ import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.HouseholdStatus;
+import com.onaio.steps.model.RequestCode;
 
 import junit.framework.Assert;
 
@@ -104,12 +105,12 @@ public class TakeSurveyHandlerTest {
 
     @Test
     public void ShouldBeAbleToHandleResultForProperRequestCode(){
-        assertTrue(takeSurveyHandler.canHandleResult(Constants.SURVEY_IDENTIFIER));
+        assertTrue(takeSurveyHandler.canHandleResult(RequestCode.SURVEY.getCode()));
     }
 
     @Test
     public void ShouldNotBeAbleToHandleResultForOtherRequestCode(){
-        assertFalse(takeSurveyHandler.canHandleResult(Constants.STEPS_IDENTIFIER));
+        assertFalse(takeSurveyHandler.canHandleResult(RequestCode.NEW_HOUSEHOLD.getCode()));
     }
 
 //    @Test

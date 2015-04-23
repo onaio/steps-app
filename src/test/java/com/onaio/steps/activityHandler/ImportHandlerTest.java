@@ -11,6 +11,7 @@ import com.onaio.steps.helper.CursorHelper;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.helper.FileUtil;
 import com.onaio.steps.model.HouseholdStatus;
+import com.onaio.steps.model.RequestCode;
 import com.onaio.steps.utils.CursorStub;
 
 import junit.framework.Assert;
@@ -61,20 +62,20 @@ public class ImportHandlerTest {
     public void ShouldOpenActivityWithRightIntentAndRequestCode(){
         importHandler.open();
 
-        Mockito.verify(activityMock).startActivityForResult(Mockito.argThat(intentMatcher()),Mockito.eq(Constants.IMPORT_IDENTIFIER));
+        Mockito.verify(activityMock).startActivityForResult(Mockito.argThat(intentMatcher()),Mockito.eq(RequestCode.IMPORT.getCode()));
 
     }
 
     @Test
     public void ShouldBeAbleToHandleResultForImport(){
 
-        Assert.assertTrue(importHandler.canHandleResult(Constants.IMPORT_IDENTIFIER));
+        Assert.assertTrue(importHandler.canHandleResult(RequestCode.IMPORT.getCode()));
     }
 
     @Test
     public void ShouldNotBeAbleToHandleResultForOther(){
 
-        Assert.assertFalse(importHandler.canHandleResult(Constants.EDIT_HOUSEHOLD_IDENTIFIER));
+        Assert.assertFalse(importHandler.canHandleResult(RequestCode.EDIT_HOUSEHOLD.getCode()));
     }
 
     @Test

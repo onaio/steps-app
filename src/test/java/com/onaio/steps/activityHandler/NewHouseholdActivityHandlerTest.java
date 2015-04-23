@@ -14,6 +14,7 @@ import com.onaio.steps.helper.KeyValueStore;
 import com.onaio.steps.helper.KeyValueStoreFactory;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.HouseholdStatus;
+import com.onaio.steps.model.RequestCode;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -97,12 +98,12 @@ public class NewHouseholdActivityHandlerTest {
 
     @Test
     public void ShouldBeAbleToHandleResultForNewHouseholdRequestCode(){
-        assertTrue(handler.canHandleResult(Constants.NEW_HOUSEHOLD_IDENTIFIER));
+        assertTrue(handler.canHandleResult(RequestCode.NEW_HOUSEHOLD.getCode()));
     }
 
     @Test
     public void ShouldNotBeAbleToHandleResultForOtherRequestCode(){
-        assertFalse(handler.canHandleResult(Constants.STEPS_IDENTIFIER));
+        assertFalse(handler.canHandleResult(RequestCode.EDIT_HOUSEHOLD.getCode()));
     }
 
     @Test

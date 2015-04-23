@@ -8,9 +8,9 @@ import com.onaio.steps.activity.EditHouseholdActivity;
 import com.onaio.steps.activityHandler.Interface.IActivityResultHandler;
 import com.onaio.steps.activityHandler.Interface.IMenuHandler;
 import com.onaio.steps.model.Household;
+import com.onaio.steps.model.RequestCode;
 
 import static android.app.Activity.*;
-import static com.onaio.steps.helper.Constants.EDIT_HOUSEHOLD_IDENTIFIER;
 import static com.onaio.steps.helper.Constants.HOUSEHOLD;
 
 public class EditHouseholdActivityHandler implements IMenuHandler, IActivityResultHandler {
@@ -33,7 +33,7 @@ public class EditHouseholdActivityHandler implements IMenuHandler, IActivityResu
     public boolean open() {
         Intent intent = new Intent(activity, EditHouseholdActivity.class);
         intent.putExtra(HOUSEHOLD,household);
-        activity.startActivityForResult(intent, EDIT_HOUSEHOLD_IDENTIFIER);
+        activity.startActivityForResult(intent, RequestCode.EDIT_HOUSEHOLD.getCode());
         return true;
     }
 
@@ -48,6 +48,6 @@ public class EditHouseholdActivityHandler implements IMenuHandler, IActivityResu
 
     @Override
     public boolean canHandleResult(int requestCode) {
-        return requestCode == EDIT_HOUSEHOLD_IDENTIFIER;
+        return requestCode == RequestCode.EDIT_HOUSEHOLD.getCode();
     }
 }

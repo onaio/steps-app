@@ -68,9 +68,7 @@ public class ODKForm {
         row.add(selectedMember.getMemberHouseholdId());
         row.add(selectedMember.getFamilySurname());
         row.add(selectedMember.getFirstName());
-        String gender = selectedMember.getGender();
-        int genderInt = gender.equals(Constants.MALE)?1:2;
-        row.add(String.valueOf(genderInt));
+        row.add(String.valueOf(selectedMember.getGender().getIntValue()));
         row.add(String.valueOf(selectedMember.getAge()));
         fileUtil.withHeader(Constants.ODK_FORM_FIELDS.split(","))
                 .withData(row.toArray(new String[row.size()]))

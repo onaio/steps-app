@@ -2,6 +2,7 @@ package com.onaio.steps.helper;
 
 import android.database.Cursor;
 
+import com.onaio.steps.model.Gender;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.HouseholdStatus;
 import com.onaio.steps.model.Member;
@@ -24,7 +25,7 @@ public class CursorHelper {
                 int deletedInteger = cursor.getInt(cursor.getColumnIndex(Member.DELETED));
                 boolean deleted = deletedInteger == Member.NOT_DELETED_INT ? false : true;
                 if(household.getId().equals(cursor.getString(cursor.getColumnIndex(Member.HOUSEHOLD_ID))))
-                    members.add(new Member(Integer.parseInt(id), familySurname,firstName, gender, Integer.parseInt(age), household,generatedId, deleted));
+                    members.add(new Member(Integer.parseInt(id), familySurname,firstName, Gender.valueOf(gender), Integer.parseInt(age), household,generatedId, deleted));
             }while (cursor.moveToNext());
         }
         cursor.close();

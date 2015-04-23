@@ -45,7 +45,7 @@ public class HouseholdTest {
     private final long householdId = 1;
     private final String memberFamilyName = "Rana";
     private final String memberFirstName = "Manisha";
-    private final String memberGender = Constants.FEMALE;
+    private final Gender memberGender = Gender.Female;
     private final int memberAge = 23;
     private Household household;
 

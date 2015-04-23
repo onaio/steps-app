@@ -19,6 +19,7 @@ import com.onaio.steps.model.HouseholdStatus;
 import com.onaio.steps.model.ODKForm.IForm;
 import com.onaio.steps.model.ODKForm.ODKForm;
 import com.onaio.steps.model.ODKForm.ODKSavedForm;
+import com.onaio.steps.model.RequestCode;
 
 import java.io.IOException;
 import java.util.List;
@@ -44,7 +45,7 @@ public class TakeSurveyHandler implements IMenuHandler, IMenuPreparer, IActivity
         try {
             String formName = String.format(Constants.ODK_FORM_NAME_FORMAT, household.getName());
             ODKForm requiredForm = ODKForm.create(activity, Constants.ODK_FORM_ID, formName);
-            requiredForm.open(household, activity, Constants.SURVEY_IDENTIFIER);
+            requiredForm.open(household, activity, RequestCode.SURVEY.getCode());
         } catch (FormNotPresentException e) {
             new CustomDialog().notify(activity, CustomDialog.EmptyListener, R.string.error_title, R.string.form_not_present);
         } catch (AppNotInstalledException e) {
@@ -95,6 +96,6 @@ public class TakeSurveyHandler implements IMenuHandler, IMenuPreparer, IActivity
 
     @Override
     public boolean canHandleResult(int requestCode) {
-        return requestCode==Constants.SURVEY_IDENTIFIER;
+        return requestCode==RequestCode.SURVEY.getCode();
     }
 }

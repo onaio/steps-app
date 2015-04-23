@@ -14,19 +14,6 @@ public class Constants {
     public static final String MEMBER = "MEMBER";
 
     //Gender
-    public static final String MALE = "Male";
-    public static final String FEMALE = "Female";
-
-    //Identifier for different activities
-    public static final int STEPS_IDENTIFIER = 1;
-    public static final int SETTING_IDENTIFIER = 2;
-    public static final int NEW_HOUSEHOLD_IDENTIFIER = 3;
-    public static final int NEW_MEMBER_IDENTIFIER = 4;
-    public static final int EDIT_HOUSEHOLD_IDENTIFIER = 5;
-    public static final int EDIT_MEMBER_IDENTIFIER = 6;
-    public static final int IMPORT_IDENTIFIER = 7;
-    public static final int SURVEY_IDENTIFIER=8;
-
     public static final String HEADER_GREEN = "#008148";
     public static final String TEXT_GREEN = "#53B257";
     public static final String SURVEY_NA = "NA";

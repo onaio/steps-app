@@ -10,10 +10,12 @@ import com.onaio.steps.activityHandler.Interface.IMenuHandler;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.helper.FileUtil;
+import com.onaio.steps.model.Gender;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.HouseholdStatus;
 import com.onaio.steps.model.Member;
 import com.onaio.steps.model.ReElectReason;
+import com.onaio.steps.model.RequestCode;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -45,7 +47,7 @@ public class ImportHandler implements IMenuHandler, IActivityResultHandler {
     public boolean open() {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("file/*");
-        activity.startActivityForResult(intent, Constants.IMPORT_IDENTIFIER);
+        activity.startActivityForResult(intent, RequestCode.IMPORT.getCode());
         return true;
     }
 
@@ -75,7 +77,7 @@ public class ImportHandler implements IMenuHandler, IActivityResultHandler {
                     household.save(db);
                 }
                 //validate for members
-                Member member = new Member(surname, firstName, gender, Integer.parseInt(age), household, Boolean.getBoolean(deleted));
+                Member member = new Member(surname, firstName, Gender.valueOf(gender), Integer.parseInt(age), household, Boolean.getBoolean(deleted));
                 member.setMemberHouseholdId(memberHouseholdId);
                 member.save(db);
                 if(!(surveyStatus.equals(Constants.SURVEY_NA) || surveyStatus.equals(HouseholdStatus.NOT_SELECTED.toString()))) {
@@ -102,6 +104,6 @@ public class ImportHandler implements IMenuHandler, IActivityResultHandler {
 
     @Override
     public boolean canHandleResult(int requestCode) {
-        return requestCode == Constants.IMPORT_IDENTIFIER;
+        return requestCode == RequestCode.IMPORT.getCode();
     }
 }
