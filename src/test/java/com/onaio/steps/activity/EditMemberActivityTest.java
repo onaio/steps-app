@@ -23,6 +23,7 @@ import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.robolectric.Robolectric.shadowOf;
@@ -32,12 +33,14 @@ import static org.robolectric.Robolectric.shadowOf;
 public class EditMemberActivityTest {
 
     private EditMemberActivity editMemberActivity;
+    private Member member;
+    private Household household;
 
     @Before
     public void setup(){
         Intent intent = new Intent();
-        Household household = new Household("1","123","987654321","1", HouseholdStatus.DEFERRED,"2015-12-13");
-        Member member = new Member(1,"surname","first name",Constants.MALE,28, household,"123-1",false);
+        household = new Household("1", "123", "987654321", "1", HouseholdStatus.DEFERRED, "2015-12-13");
+        member = new Member(1, "rana", "manisha", Constants.MALE, 28, household, "123-1", false);
         intent.putExtra(Constants.MEMBER, member);
         editMemberActivity = Robolectric.buildActivity(EditMemberActivity.class)
                             .withIntent(intent)
@@ -61,8 +64,8 @@ public class EditMemberActivityTest {
         assertNotNull(gender);
         assertNotNull(age);
         assertEquals("Edit Member", header.getText());
-        assertEquals("surname", surname.getText().toString());
-        assertEquals("first name", firstName.getText().toString());
+        assertEquals("rana", surname.getText().toString());
+        assertEquals("manisha", firstName.getText().toString());
         assertEquals(R.id.male_selection, gender.getCheckedRadioButtonId());
         assertEquals("28", age.getText().toString());
     }
@@ -71,22 +74,39 @@ public class EditMemberActivityTest {
     public void ShouldUpdateMemberAndFinishActivity(){
         setValue(Constants.MIN_AGE,"12");
         setValue(Constants.MAX_AGE,"60");
-        TextView surnameView = (TextView) editMemberActivity.findViewById(R.id.member_family_surname);
-        TextView firstNameView = (TextView)editMemberActivity.findViewById(R.id.member_first_name);
-        RadioGroup genderView = (RadioGroup)editMemberActivity.findViewById(R.id.member_gender);
-        TextView ageView = (TextView) editMemberActivity.findViewById(R.id.member_age);
-
-        surnameView.setText("Rana");
-        firstNameView.setText("Manisha");
-        genderView.check(R.id.female_selection);
-        ageView.setText("23");
         View viewMock = Mockito.mock(View.class);
         Mockito.stub(viewMock.getId()).toReturn(R.id.member_form);
 
         editMemberActivity.save(viewMock);
 
+        Intent intent = editMemberActivity.getIntent();
+        assertEquals(member, intent.getSerializableExtra(Constants.MEMBER));
         assertTrue(editMemberActivity.isFinishing());
+    }
 
+    @Test
+    public void ShouldNotPassImproperDataToIntent(){
+        setValue(Constants.MIN_AGE,"12");
+        setValue(Constants.MAX_AGE,"60");
+        View viewMock = Mockito.mock(View.class);
+        Mockito.stub(viewMock.getId()).toReturn(R.id.member_form);
+        TextView surnNameView = (TextView) editMemberActivity.findViewById(R.id.member_family_surname);
+        TextView firstNameView = (TextView) editMemberActivity.findViewById(R.id.member_first_name);
+        TextView ageView = (TextView) editMemberActivity.findViewById(R.id.member_age);
+        RadioGroup genderView = (RadioGroup) editMemberActivity.findViewById(R.id.member_gender);
+
+        surnNameView.setText("");
+        firstNameView.setText("");
+        ageView.setText("");
+        genderView.check(R.id.female_selection);
+
+
+        editMemberActivity.save(viewMock);
+
+        Intent intent = editMemberActivity.getIntent();
+        assertEquals(member,intent.getSerializableExtra(Constants.MEMBER));
+
+        assertFalse(editMemberActivity.isFinishing());
     }
 
     @Test

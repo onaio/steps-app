@@ -26,6 +26,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.robolectric.Robolectric.shadowOf;
 
@@ -34,13 +35,14 @@ import static org.robolectric.Robolectric.shadowOf;
 public class NewMemberActivityTest {
 
     private NewMemberActivity newMemberActivity;
-    private DatabaseHelper databaseHelperMock;
+    private  DatabaseHelper databaseHelperMock;
     private String currentDate = new SimpleDateFormat(Constants.DATE_FORMAT).format(new Date());
+    private Household household;
 
 
     @Before
     public void setup() {
-        Household household = new Household("2", "Any HouseholdName", "123456789", "", HouseholdStatus.NOT_SELECTED, currentDate);
+        household = new Household("2", "Any HouseholdName", "123456789", "", HouseholdStatus.NOT_SELECTED, currentDate);
         Intent intent = new Intent();
         intent.putExtra(Constants.HOUSEHOLD, household);
         newMemberActivity = Robolectric.buildActivity(NewMemberActivity.class).withIntent(intent)
@@ -66,7 +68,7 @@ public class NewMemberActivityTest {
     }
 
     @Test
-    public void ShouldFinishActivityAfterSaving() {
+    public void ShouldFinishActivityAfterSavingMemberData() {
         setValue(Constants.MIN_AGE, "12");
         setValue(Constants.MAX_AGE, "50");
         TextView surname = (TextView) newMemberActivity.findViewById(R.id.member_family_surname);
@@ -82,8 +84,34 @@ public class NewMemberActivityTest {
 
         newMemberActivity.save(view);
 
+        Intent intent = newMemberActivity.getIntent();
+        assertEquals(household,intent.getSerializableExtra(Constants.HOUSEHOLD));
+
         assertTrue(newMemberActivity.isFinishing());
     }
+
+    @Test
+    public void ShouldCreateMemberWithInsufficientDataAndShouldNotFinishActivity() {
+        setValue(Constants.MIN_AGE, "12");
+        setValue(Constants.MAX_AGE, "50");
+        TextView surname = (TextView) newMemberActivity.findViewById(R.id.member_family_surname);
+        TextView firstName = (TextView) newMemberActivity.findViewById(R.id.member_first_name);
+        RadioGroup gender = (RadioGroup) newMemberActivity.findViewById(R.id.member_gender);
+        TextView age = (TextView) newMemberActivity.findViewById(R.id.member_age);
+        surname.setText("");
+        firstName.setText("");
+        gender.check(R.id.male_selection);
+        age.setText("");
+        View view = Mockito.mock(View.class);
+        Mockito.stub(view.getId()).toReturn(R.id.member_form);
+
+        newMemberActivity.save(view);
+
+        assertFalse(newMemberActivity.isFinishing());
+    }
+
+
+
 
     @Test
     public void ShouldFinishActivityWhenCanceled() {

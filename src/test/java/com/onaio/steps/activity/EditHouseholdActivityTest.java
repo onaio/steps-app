@@ -59,7 +59,19 @@ public class EditHouseholdActivityTest {
     }
 
     @Test
-    public void ShouldUpdateHouseholdAndFinishActivity() {
+    public void ShouldPassDataToIntentAndFinishActivity() {
+        View viewMock = Mockito.mock(View.class);
+        Mockito.stub(viewMock.getId()).toReturn(R.id.household_form);
+
+        editHouseholdActivity.save(viewMock);
+
+        Intent editHouseholdActivityIntent = editHouseholdActivity.getIntent();
+        assertEquals(household, editHouseholdActivityIntent.getSerializableExtra(Constants.HOUSEHOLD));
+        assertTrue(editHouseholdActivity.isFinishing());
+    }
+
+    @Test
+    public void ShouldNotPassDataToIntentForInappropriateHouseholdData(){
         View viewMock = Mockito.mock(View.class);
         Mockito.stub(viewMock.getId()).toReturn(R.id.household_form);
 

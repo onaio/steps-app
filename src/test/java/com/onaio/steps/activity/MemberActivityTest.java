@@ -43,7 +43,6 @@ public class MemberActivityTest {
 
     @Test
     public void ShouldBeAbleToPopulateWithMemberView(){
-
         TextView ageView = (TextView)memberActivity.findViewById(R.id.member_age);
         TextView genderView = (TextView)memberActivity.findViewById(R.id.member_gender);
 

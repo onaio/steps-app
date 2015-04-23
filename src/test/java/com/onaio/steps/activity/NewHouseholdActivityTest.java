@@ -61,6 +61,9 @@ public class NewHouseholdActivityTest {
         Mockito.stub(viewMock.getId()).toReturn(R.id.household_form);
         newHouseholdActivity.save(viewMock);
 
+        Intent editHouseholdActivityIntent = newHouseholdActivity.getIntent();
+        assertEquals(HOUSEHOLD_SEED,editHouseholdActivityIntent.getStringExtra(Constants.HOUSEHOLD_SEED));
+        assertEquals(PHONE_ID,editHouseholdActivityIntent.getStringExtra(Constants.PHONE_ID));
         assertTrue(newHouseholdActivity.isFinishing());
     }
 

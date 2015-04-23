@@ -138,4 +138,40 @@ public class Member implements Serializable {
     public String toString() {
         return familySurname + " "+ firstName;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Member member = (Member) o;
+
+        if (age != member.age) return false;
+        if (id != member.id) return false;
+        if (deleted != null ? !deleted.equals(member.deleted) : member.deleted != null)
+            return false;
+        if (familySurname != null ? !familySurname.equals(member.familySurname) : member.familySurname != null)
+            return false;
+        if (firstName != null ? !firstName.equals(member.firstName) : member.firstName != null)
+            return false;
+        if (gender != null ? !gender.equals(member.gender) : member.gender != null) return false;
+        if (household != null ? !household.equals(member.household) : member.household != null)
+            return false;
+        if (memberHouseholdId != null ? !memberHouseholdId.equals(member.memberHouseholdId) : member.memberHouseholdId != null)
+            return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = familySurname != null ? familySurname.hashCode() : 0;
+        result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
+        result = 31 * result + (gender != null ? gender.hashCode() : 0);
+        result = 31 * result + age;
+        result = 31 * result + (household != null ? household.hashCode() : 0);
+        result = 31 * result + id;
+        result = 31 * result + (memberHouseholdId != null ? memberHouseholdId.hashCode() : 0);
+        return result;
+    }
 }
