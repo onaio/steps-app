@@ -4,7 +4,7 @@ import android.view.View;
 
 import com.onaio.steps.R;
 import com.onaio.steps.activity.HouseholdActivity;
-import com.onaio.steps.helper.Dialog;
+import com.onaio.steps.helper.CustomDialog;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.HouseholdStatus;
 
@@ -31,14 +31,14 @@ public class SelectedParticipantActionsHandlerTest {
     @Mock
     private Household householdMock;
     @Mock
-    private Dialog dialogMock;
+    private CustomDialog dialogMock;
     private SelectedParticipantActionsHandler selectedParticipantActionsHandler;
 
     @Before
     public void Setup(){
         activityMock = mock(HouseholdActivity.class);
         householdMock = mock(Household.class);
-        dialogMock = mock(Dialog.class);
+        dialogMock = mock(CustomDialog.class);
         selectedParticipantActionsHandler = new SelectedParticipantActionsHandler(activityMock, householdMock);
     }
 

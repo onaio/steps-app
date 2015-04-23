@@ -5,7 +5,7 @@ import android.view.View;
 
 import com.onaio.steps.R;
 import com.onaio.steps.activity.HouseholdActivity;
-import com.onaio.steps.helper.Dialog;
+import com.onaio.steps.helper.CustomDialog;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.HouseholdStatus;
 
@@ -29,7 +29,7 @@ public class RefusedHandlerTest {
     private HouseholdActivity householdActivityMock;
     private Household householdMock;
     private RefusedHandler refusedHandler;
-    private  Dialog dialogMock;
+    private CustomDialog dialogMock;
     private int MENU_ID = R.id.action_refused;
 
 
@@ -37,7 +37,7 @@ public class RefusedHandlerTest {
     public void setup(){
        householdActivityMock = Mockito.mock(HouseholdActivity.class);
        householdMock = Mockito.mock(Household.class);
-       dialogMock = Mockito.mock(Dialog.class);
+       dialogMock = Mockito.mock(CustomDialog.class);
        refusedHandler = new RefusedHandler(householdActivityMock, householdMock);
     }
 
@@ -57,7 +57,7 @@ public class RefusedHandlerTest {
 
      refusedHandler.open();
 
-     verify(dialogMock).confirm(eq(householdActivityMock), any(DialogInterface.OnClickListener.class), eq(Dialog.EmptyListener), eq(R.string.survey_refusal_message), eq(R.string.survey_refusal_title));
+     verify(dialogMock).confirm(eq(householdActivityMock), any(DialogInterface.OnClickListener.class), eq(CustomDialog.EmptyListener), eq(R.string.survey_refusal_message), eq(R.string.survey_refusal_title));
     }
 
     @Test

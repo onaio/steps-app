@@ -9,8 +9,8 @@ import com.onaio.steps.R;
 import com.onaio.steps.activityHandler.Interface.IActivityResultHandler;
 import com.onaio.steps.activityHandler.Interface.IMenuHandler;
 import com.onaio.steps.adapter.HouseholdAdapter;
+import com.onaio.steps.helper.CustomDialog;
 import com.onaio.steps.helper.DatabaseHelper;
-import com.onaio.steps.helper.Dialog;
 import com.onaio.steps.model.Household;
 
 import static android.app.Activity.RESULT_OK;
@@ -20,13 +20,13 @@ import static com.onaio.steps.helper.Constants.*;
 public class NewHouseholdActivityHandler implements IMenuHandler, IActivityResultHandler {
 
     private ListActivity activity;
-    private Dialog dialog = new Dialog();
+    private CustomDialog dialog = new CustomDialog();
 
     public NewHouseholdActivityHandler(ListActivity activity) {
-        this(activity,new Dialog());
+        this(activity,new CustomDialog());
     }
 
-    NewHouseholdActivityHandler(ListActivity activity, Dialog dialog) {
+    NewHouseholdActivityHandler(ListActivity activity, CustomDialog dialog) {
         this.activity = activity;
         this.dialog = dialog;
     }
@@ -66,7 +66,7 @@ public class NewHouseholdActivityHandler implements IMenuHandler, IActivityResul
     }
 
     private void notifyUserToSetPhoneId(ListActivity activity) {
-        dialog.notify(activity, Dialog.EmptyListener, R.string.phone_id_message_title, R.string.phone_id_message);
+        dialog.notify(activity, CustomDialog.EmptyListener, R.string.phone_id_message_title, R.string.phone_id_message);
     }
 
     private String getValue(String key) {

@@ -9,8 +9,8 @@ import com.onaio.steps.R;
 import com.onaio.steps.activityHandler.Interface.IMenuHandler;
 import com.onaio.steps.activityHandler.Interface.IMenuPreparer;
 import com.onaio.steps.helper.Constants;
+import com.onaio.steps.helper.CustomDialog;
 import com.onaio.steps.helper.DatabaseHelper;
-import com.onaio.steps.helper.Dialog;
 import com.onaio.steps.helper.FileUtil;
 import com.onaio.steps.helper.UploadFileTask;
 import com.onaio.steps.model.Household;
@@ -54,11 +54,11 @@ public class ExportHandler implements IMenuHandler,IMenuPreparer {
                     File file = saveFile();
                     new UploadFileTask(activity).execute(file);
                 } catch (IOException e) {
-                    new Dialog().notify(activity, Dialog.EmptyListener, R.string.error_title, R.string.something_went_wrong_try_again);
+                    new CustomDialog().notify(activity, CustomDialog.EmptyListener, R.string.error_title, R.string.something_went_wrong_try_again);
                 }
             }
         };
-        new Dialog().confirm(activity, uploadConfirmListener, Dialog.EmptyListener, R.string.export_start_message,R.string.action_export);
+        new CustomDialog().confirm(activity, uploadConfirmListener, CustomDialog.EmptyListener, R.string.export_start_message,R.string.action_export);
         return true;
     }
 

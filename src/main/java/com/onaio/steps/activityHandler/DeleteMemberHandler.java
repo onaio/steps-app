@@ -8,23 +8,23 @@ import android.view.MenuItem;
 import com.onaio.steps.R;
 import com.onaio.steps.activityHandler.Interface.IMenuHandler;
 import com.onaio.steps.activityHandler.Interface.IMenuPreparer;
+import com.onaio.steps.helper.CustomDialog;
 import com.onaio.steps.helper.DatabaseHelper;
-import com.onaio.steps.helper.Dialog;
 import com.onaio.steps.model.HouseholdStatus;
 import com.onaio.steps.model.Member;
 
 public class DeleteMemberHandler implements IMenuHandler,IMenuPreparer {
-    private final Dialog dialog;
+    private final CustomDialog dialog;
     private Activity activity;
     private Member member;
     private static final int MENU_ID= R.id.action_member_delete;
     private Menu menu;
 
     public DeleteMemberHandler(Activity activity, Member member) {
-        this(activity, member, new Dialog());
+        this(activity, member, new CustomDialog());
     }
 
-    DeleteMemberHandler(Activity activity, Member member, Dialog dialog) {
+    DeleteMemberHandler(Activity activity, Member member, CustomDialog dialog) {
         this.activity = activity;
         this.member = member;
         this.dialog = dialog;
@@ -44,7 +44,7 @@ public class DeleteMemberHandler implements IMenuHandler,IMenuPreparer {
                 new BackHomeHandler(activity).open();
             }
         };
-        dialog.confirm(activity, confirmListener, Dialog.EmptyListener, R.string.member_delete_confirm, R.string.confirm_ok);
+        dialog.confirm(activity, confirmListener, CustomDialog.EmptyListener, R.string.member_delete_confirm, R.string.confirm_ok);
         return true;
     }
 

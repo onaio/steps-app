@@ -8,7 +8,7 @@ import android.content.Intent;
 import com.onaio.steps.R;
 import com.onaio.steps.activityHandler.Interface.IMenuHandler;
 import com.onaio.steps.helper.Constants;
-import com.onaio.steps.helper.Dialog;
+import com.onaio.steps.helper.CustomDialog;
 
 public class FinalisedFormHandler implements IMenuHandler{
    private ListActivity activity;
@@ -37,7 +37,7 @@ public class FinalisedFormHandler implements IMenuHandler{
             surveyIntent.setAction(Intent.ACTION_EDIT);
             activity.startActivity(surveyIntent);
         } catch (ActivityNotFoundException e) {
-            new Dialog().notify(activity, Dialog.EmptyListener, R.string.error_title, R.string.odk_app_not_installed);
+            new CustomDialog().notify(activity, CustomDialog.EmptyListener, R.string.error_title, R.string.odk_app_not_installed);
 
         }
     }

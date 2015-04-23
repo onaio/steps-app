@@ -12,8 +12,8 @@ import com.onaio.steps.activityHandler.Interface.IMenuPreparer;
 import com.onaio.steps.exception.AppNotInstalledException;
 import com.onaio.steps.exception.FormNotPresentException;
 import com.onaio.steps.helper.Constants;
+import com.onaio.steps.helper.CustomDialog;
 import com.onaio.steps.helper.DatabaseHelper;
-import com.onaio.steps.helper.Dialog;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.HouseholdStatus;
 import com.onaio.steps.model.ODKForm.IForm;
@@ -46,11 +46,11 @@ public class TakeSurveyHandler implements IMenuHandler, IMenuPreparer, IActivity
             ODKForm requiredForm = ODKForm.create(activity, Constants.ODK_FORM_ID, formName);
             requiredForm.open(household, activity, Constants.SURVEY_IDENTIFIER);
         } catch (FormNotPresentException e) {
-            new Dialog().notify(activity,Dialog.EmptyListener, R.string.error_title, R.string.form_not_present);
+            new CustomDialog().notify(activity, CustomDialog.EmptyListener, R.string.error_title, R.string.form_not_present);
         } catch (AppNotInstalledException e) {
-            new Dialog().notify(activity,Dialog.EmptyListener, R.string.error_title, R.string.odk_app_not_installed);
+            new CustomDialog().notify(activity, CustomDialog.EmptyListener, R.string.error_title, R.string.odk_app_not_installed);
         } catch (IOException e) {
-            new Dialog().notify(activity,Dialog.EmptyListener, R.string.error_title, R.string.something_went_wrong_try_again);
+            new CustomDialog().notify(activity, CustomDialog.EmptyListener, R.string.error_title, R.string.something_went_wrong_try_again);
         }
 
         return true;
@@ -89,7 +89,7 @@ public class TakeSurveyHandler implements IMenuHandler, IMenuPreparer, IActivity
                 household.update(new DatabaseHelper(activity));
             }
         }catch (AppNotInstalledException e) {
-            new Dialog().notify(activity,Dialog.EmptyListener, R.string.error_title, R.string.odk_app_not_installed);
+            new CustomDialog().notify(activity, CustomDialog.EmptyListener, R.string.error_title, R.string.odk_app_not_installed);
         }
     }
 

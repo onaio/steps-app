@@ -14,8 +14,8 @@ import com.onaio.steps.activityHandler.Factory.HouseholdActivityFactory;
 import com.onaio.steps.activityHandler.Interface.IMenuHandler;
 import com.onaio.steps.activityHandler.Interface.IMenuPreparer;
 import com.onaio.steps.adapter.MemberAdapter;
+import com.onaio.steps.helper.CustomDialog;
 import com.onaio.steps.helper.DatabaseHelper;
-import com.onaio.steps.helper.Dialog;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.HouseholdStatus;
 import com.onaio.steps.model.Member;
@@ -31,17 +31,17 @@ public class SelectParticipantHandler implements IMenuHandler, IMenuPreparer {
 
     private final int MENU_ID = R.id.action_select_participant;
     private final int MAX_RE_ELECT_COUNT = 2;
-    private Dialog dialog;
+    private CustomDialog dialog;
     private ListActivity activity;
     private Household household;
     private DatabaseHelper db;
     private android.app.Dialog selection_dialog;
 
     public SelectParticipantHandler(ListActivity activity, Household household) {
-        this(activity, household, new Dialog(), new DatabaseHelper(activity), new android.app.Dialog(activity));
+        this(activity, household, new CustomDialog(), new DatabaseHelper(activity), new android.app.Dialog(activity));
     }
 
-    SelectParticipantHandler(ListActivity activity, Household household, Dialog dialog, DatabaseHelper db, android.app.Dialog androidDialog) {
+    SelectParticipantHandler(ListActivity activity, Household household, CustomDialog dialog, DatabaseHelper db, android.app.Dialog androidDialog) {
         this.activity = activity;
         this.household = household;
         this.dialog = dialog;
@@ -122,11 +122,11 @@ public class SelectParticipantHandler implements IMenuHandler, IMenuPreparer {
         switch(household.getStatus()){
             case NOT_SELECTED: popUpMessage();
                 break;
-            case NOT_DONE: dialog.confirm(activity, confirmListenerForReElection, Dialog.EmptyListener, confirmation, R.string.participant_re_elect_reason_title);
+            case NOT_DONE: dialog.confirm(activity, confirmListenerForReElection, CustomDialog.EmptyListener, confirmation, R.string.participant_re_elect_reason_title);
                 break;
-            case DEFERRED: dialog.confirm(activity, confirmListenerForReElection, Dialog.EmptyListener, confirmation, R.string.participant_re_elect_reason_title);
+            case DEFERRED: dialog.confirm(activity, confirmListenerForReElection, CustomDialog.EmptyListener, confirmation, R.string.participant_re_elect_reason_title);
                 break;
-            default: new Dialog().notify(activity, Dialog.EmptyListener, R.string.participant_no_re_elect_title, R.string.participant_no_re_elect_message_because_of_status);
+            default: new CustomDialog().notify(activity, CustomDialog.EmptyListener, R.string.participant_no_re_elect_title, R.string.participant_no_re_elect_message_because_of_status);
         }
     }
 

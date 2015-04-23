@@ -6,7 +6,7 @@ import android.view.MenuItem;
 
 import com.onaio.steps.R;
 import com.onaio.steps.activity.MemberActivity;
-import com.onaio.steps.helper.Dialog;
+import com.onaio.steps.helper.CustomDialog;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.HouseholdStatus;
 import com.onaio.steps.model.Member;
@@ -34,14 +34,14 @@ public class DeleteMemberHandlerTest {
     @Mock
     private Member memberMock;
     @Mock
-    private Dialog dialogMock;
+    private CustomDialog dialogMock;
     private DeleteMemberHandler deleteMemberHandler;
 
     @Before
     public void Setup(){
         activityMock = mock(MemberActivity.class);
         memberMock = mock(Member.class);
-        dialogMock = mock(Dialog.class);
+        dialogMock = mock(CustomDialog.class);
         deleteMemberHandler = new DeleteMemberHandler(activityMock, memberMock,dialogMock);
     }
 
@@ -59,7 +59,7 @@ public class DeleteMemberHandlerTest {
     public void ShouldPopForConfirmationWhenOpened(){
         deleteMemberHandler.open();
 
-        verify(dialogMock).confirm(eq(activityMock), any(DialogInterface.OnClickListener.class), eq(Dialog.EmptyListener), eq(R.string.member_delete_confirm), eq(R.string.confirm_ok));
+        verify(dialogMock).confirm(eq(activityMock), any(DialogInterface.OnClickListener.class), eq(CustomDialog.EmptyListener), eq(R.string.member_delete_confirm), eq(R.string.confirm_ok));
     }
 
     @Test
