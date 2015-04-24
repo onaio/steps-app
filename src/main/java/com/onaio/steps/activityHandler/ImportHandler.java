@@ -8,8 +8,10 @@ import com.onaio.steps.R;
 import com.onaio.steps.activityHandler.Interface.IActivityResultHandler;
 import com.onaio.steps.activityHandler.Interface.IMenuHandler;
 import com.onaio.steps.helper.Constants;
+import com.onaio.steps.helper.CustomDialog;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.helper.FileUtil;
+import com.onaio.steps.helper.Logger;
 import com.onaio.steps.model.Gender;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.HouseholdStatus;
@@ -98,7 +100,8 @@ public class ImportHandler implements IMenuHandler, IActivityResultHandler {
 
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            new Logger().log(e,"Import failed.");
+            new CustomDialog().notify(activity,CustomDialog.EmptyListener,R.string.error_title,R.string.import_fail_message);
         }
     }
 

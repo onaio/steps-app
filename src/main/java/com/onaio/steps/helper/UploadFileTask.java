@@ -34,6 +34,7 @@ public class UploadFileTask extends AsyncTask<File, Void, Void> {
             httpClient.execute(httpPost);
             new CustomNotification().notify(activity,R.string.export_complete,R.string.export_complete_message);
         } catch (IOException e) {
+            new Logger().log(e,"Export failed.");
             new CustomNotification().notify(activity, R.string.error_title, R.string.export_failed);
         }
         return null;

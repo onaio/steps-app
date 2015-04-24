@@ -81,4 +81,5 @@
     <string name="export_complete">Export Complete</string>
     <string name="export_complete_message">The data has successfully exported.</string>
     <string name="export_start_message">Export status will notified in the notification tray once it completes. Start the export?</string>
+    <string name="import_fail_message">Import failed, please use a valid csv file and try again.</string>
 </resources>

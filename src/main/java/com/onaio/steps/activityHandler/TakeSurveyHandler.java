@@ -14,6 +14,7 @@ import com.onaio.steps.exception.FormNotPresentException;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.CustomDialog;
 import com.onaio.steps.helper.DatabaseHelper;
+import com.onaio.steps.helper.Logger;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.HouseholdStatus;
 import com.onaio.steps.model.ODKForm.IForm;
@@ -51,6 +52,7 @@ public class TakeSurveyHandler implements IMenuHandler, IMenuPreparer, IActivity
         } catch (AppNotInstalledException e) {
             new CustomDialog().notify(activity, CustomDialog.EmptyListener, R.string.error_title, R.string.odk_app_not_installed);
         } catch (IOException e) {
+            new Logger().log(e,"Failed to save csv file while opening the ODK Form");
             new CustomDialog().notify(activity, CustomDialog.EmptyListener, R.string.error_title, R.string.something_went_wrong_try_again);
         }
 

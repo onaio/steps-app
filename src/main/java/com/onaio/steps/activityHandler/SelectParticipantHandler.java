@@ -66,9 +66,8 @@ public class SelectParticipantHandler implements IMenuHandler, IMenuPreparer {
         boolean noMember = household.numberOfNonSelectedMembers(db) == 0;
         boolean noSelection = household.getStatus() == HouseholdStatus.NOT_SELECTED;
         boolean selected = household.getStatus() == HouseholdStatus.NOT_DONE;
-        boolean deferred = household.getStatus() == HouseholdStatus.DEFERRED;
         boolean maxReElectionReached = ReElectReason.getAll(db, household).size() >= MAX_RE_ELECT_COUNT;
-        boolean canSelectParticipant = noSelection || selected || deferred;
+        boolean canSelectParticipant = noSelection || selected ;
         return noMember || !canSelectParticipant || maxReElectionReached;
     }
 
