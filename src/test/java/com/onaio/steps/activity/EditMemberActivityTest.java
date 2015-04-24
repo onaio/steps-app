@@ -41,7 +41,7 @@ public class EditMemberActivityTest {
     public void setup(){
         Intent intent = new Intent();
         household = new Household("1","123","987654321","1", HouseholdStatus.DEFERRED,"2015-12-13");
-        Member member = new Member(1,"surname","first name", Gender.Male,28, household,"123-1",false);
+        member = new Member(1,"rana","manisha", Gender.Male,28, household,"123-1",false);
         intent.putExtra(Constants.MEMBER, member);
         editMemberActivity = Robolectric.buildActivity(EditMemberActivity.class)
                             .withIntent(intent)
