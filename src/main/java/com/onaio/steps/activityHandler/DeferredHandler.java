@@ -7,23 +7,23 @@ import android.view.View;
 import com.onaio.steps.R;
 import com.onaio.steps.activityHandler.Interface.IMenuHandler;
 import com.onaio.steps.activityHandler.Interface.IMenuPreparer;
+import com.onaio.steps.helper.CustomDialog;
 import com.onaio.steps.helper.DatabaseHelper;
-import com.onaio.steps.helper.Dialog;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.HouseholdStatus;
 
 public class DeferredHandler implements IMenuHandler,IMenuPreparer {
 
-    private final Dialog dialog;
+    private final CustomDialog dialog;
     private ListActivity activity;
     private Household household;
     private int MENU_ID = R.id.action_deferred;
 
     public DeferredHandler(ListActivity activity, Household household) {
-        this(activity,household,new Dialog());
+        this(activity,household,new CustomDialog());
     }
 
-    DeferredHandler(ListActivity activity, Household household, Dialog dialog) {
+    DeferredHandler(ListActivity activity, Household household, CustomDialog dialog) {
         this.activity = activity;
         this.household = household;
         this.dialog = dialog;
@@ -44,7 +44,7 @@ public class DeferredHandler implements IMenuHandler,IMenuPreparer {
                 new BackHomeHandler(activity).open();
             }
         };
-        dialog.notify(activity, confirmListener, R.string.survey_deferred_message, R.string.survey_deferred_title);
+        dialog.notify(activity, confirmListener, R.string.survey_deferred_title, R.string.survey_deferred_message);
         return true;
     }
 

@@ -1,14 +1,16 @@
 package com.onaio.steps.activityHandler;
 
 import android.app.ListActivity;
+import android.content.DialogInterface;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.onaio.steps.R;
 import com.onaio.steps.activityHandler.Interface.IMenuHandler;
 import com.onaio.steps.activityHandler.Interface.IMenuPreparer;
+import com.onaio.steps.helper.Constants;
+import com.onaio.steps.helper.CustomDialog;
 import com.onaio.steps.helper.DatabaseHelper;
-import com.onaio.steps.helper.Dialog;
 import com.onaio.steps.helper.FileUtil;
 import com.onaio.steps.helper.UploadFileTask;
 import com.onaio.steps.model.Household;
@@ -45,34 +47,43 @@ public class ExportHandler implements IMenuHandler,IMenuPreparer {
 
     @Override
     public boolean open() {
-        try {
-            FileUtil fileUtil = new FileUtil().withHeader(EXPORT_FIELDS.split(","));
-            for(Household household: households) {
-                List<ReElectReason> reasons = ReElectReason.getAll(databaseHelper, household);
-                List<Member> membersPerHousehold = household.getAllMembersForExport(databaseHelper);
-                for(Member member: membersPerHousehold){
-                    ArrayList<String> row = new ArrayList<String>();
-                    row.add(household.getPhoneNumber());
-                    row.add(household.getName());
-                    row.add(member.getMemberHouseholdId());
-                    row.add(member.getFamilySurname());
-                    row.add(member.getFirstName());
-                    row.add(String.valueOf(member.getAge()));
-                    row.add(member.getGender());
-                    row.add(member.getDeletedString());
-                    setStatus(household, member, row);
-                    row.add(String.valueOf(reasons.size()));
-                    row.add(StringUtils.join(reasons.toArray(),';'));
-                    fileUtil.withData(row.toArray(new String[row.size()]));
+        DialogInterface.OnClickListener uploadConfirmListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                try {
+                    File file = saveFile();
+                    new UploadFileTask(activity).execute(file);
+                } catch (IOException e) {
+                    new CustomDialog().notify(activity, CustomDialog.EmptyListener, R.string.error_title, R.string.something_went_wrong_try_again);
                 }
             }
-            File file = fileUtil.writeCSV(activity.getFilesDir() + "/" + EXPORT_FILE_NAME);
-            new UploadFileTask(activity).execute(file);
-            return true;
-        } catch (IOException e) {
-            new Dialog().notify(activity, Dialog.EmptyListener, R.string.something_went_wrong_try_again, R.string.error_title);
+        };
+        new CustomDialog().confirm(activity, uploadConfirmListener, CustomDialog.EmptyListener, R.string.export_start_message,R.string.action_export);
+        return true;
+    }
+
+    private File saveFile() throws IOException {
+        FileUtil fileUtil = new FileUtil().withHeader(EXPORT_FIELDS.split(","));
+        for(Household household: households) {
+            List<ReElectReason> reasons = ReElectReason.getAll(databaseHelper, household);
+            List<Member> membersPerHousehold = household.getAllMembersForExport(databaseHelper);
+            for(Member member: membersPerHousehold){
+                ArrayList<String> row = new ArrayList<String>();
+                row.add(household.getPhoneNumber());
+                row.add(household.getName());
+                row.add(member.getMemberHouseholdId());
+                row.add(member.getFamilySurname());
+                row.add(member.getFirstName());
+                row.add(String.valueOf(member.getAge()));
+                row.add(member.getGender().toString());
+                row.add(member.getDeletedString());
+                setStatus(household, member, row);
+                row.add(String.valueOf(reasons.size()));
+                row.add(StringUtils.join(reasons.toArray(), ';'));
+                fileUtil.withData(row.toArray(new String[row.size()]));
+            }
         }
-        return false;
+        return fileUtil.writeCSV(activity.getFilesDir() + "/" + Constants.EXPORT_FILE_NAME);
     }
 
     private void setStatus(Household household, Member member, ArrayList<String> row) {

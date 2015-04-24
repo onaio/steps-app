@@ -10,13 +10,12 @@ import android.widget.TextView;
 import com.onaio.steps.R;
 import com.onaio.steps.exception.InvalidDataException;
 import com.onaio.steps.helper.Constants;
+import com.onaio.steps.helper.CustomDialog;
 import com.onaio.steps.helper.DatabaseHelper;
-import com.onaio.steps.helper.Dialog;
+import com.onaio.steps.model.Gender;
 import com.onaio.steps.model.Member;
 import com.onaio.steps.modelViewWrapper.MemberViewWrapper;
 
-import static com.onaio.steps.helper.Constants.FEMALE;
-import static com.onaio.steps.helper.Constants.MALE;
 import static com.onaio.steps.helper.Constants.MEMBER;
 
 public class EditMemberActivity extends Activity {
@@ -58,7 +57,7 @@ public class EditMemberActivity extends Activity {
         try{
             String surname = ((TextView) findViewById(R.id.member_family_surname)).getText().toString();
             String firstName = ((TextView) findViewById(R.id.member_first_name)).getText().toString();
-            String gender = genderSelection(((RadioGroup) findViewById(R.id.member_gender)).getCheckedRadioButtonId());
+            Gender gender = genderSelection(((RadioGroup) findViewById(R.id.member_gender)).getCheckedRadioButtonId());
             String ageString = ((TextView) findViewById(R.id.member_age)).getText().toString();
             member = new MemberViewWrapper(this).update(member, surname, firstName, gender, ageString);
             member.update(db);
@@ -66,7 +65,7 @@ public class EditMemberActivity extends Activity {
             setResult(RESULT_OK, intent);
             finish();
         } catch (InvalidDataException e) {
-            new Dialog().notify(this,Dialog.EmptyListener,e.getMessage(),R.string.error_title);
+            new CustomDialog().notify(this, CustomDialog.EmptyListener,e.getMessage(),R.string.error_title);
         }
     }
 
@@ -74,18 +73,18 @@ public class EditMemberActivity extends Activity {
         finish();
     }
 
-    private String genderSelection(int genderSelectionId) {
+    private Gender genderSelection(int genderSelectionId) {
         switch (genderSelectionId){
             case R.id.male_selection :
-                return MALE;
+                return Gender.Male;
             case R.id.female_selection :
-                return FEMALE;
-            default: return "";
+                return Gender.Female;
+            default: return Gender.NotDefined;
         }
     }
 
-    private int genderSelection(String gender) {
-        if (gender.equals(MALE))
+    private int genderSelection(Gender gender) {
+        if (gender.equals(Gender.Male))
             return R.id.male_selection;
         return R.id.female_selection;
 

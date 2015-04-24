@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.onaio.steps.R;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;
+import com.onaio.steps.model.Gender;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.HouseholdStatus;
 import com.onaio.steps.model.Member;
@@ -41,8 +42,8 @@ public class HouseholdActivityTest {
     public void setup() {
         Intent intent = new Intent();
         household = Mockito.mock(Household.class);
-        member1 = new Member(101, "raj", "Nik", Constants.MALE, 19, household, "100", false);
-        member2 = new Member(102, "rana", "Sandhya", Constants.FEMALE, 22, household, "100", false);
+        member1 = new Member(101, "raj", "Nik", Gender.Male, 19, household, "100", false);
+        member2 = new Member(102, "rana", "Sandhya", Gender.Female, 22, household, "100", false);
         ArrayList<Member> members = new ArrayList<Member>();
         members.add(member1);
         members.add(member2);

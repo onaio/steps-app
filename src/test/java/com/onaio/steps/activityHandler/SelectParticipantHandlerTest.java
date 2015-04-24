@@ -10,8 +10,8 @@ import android.widget.Button;
 import com.onaio.steps.R;
 import com.onaio.steps.activity.HouseholdActivity;
 import com.onaio.steps.helper.Constants;
+import com.onaio.steps.helper.CustomDialog;
 import com.onaio.steps.helper.DatabaseHelper;
-import com.onaio.steps.helper.Dialog;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.HouseholdStatus;
 
@@ -41,7 +41,7 @@ public class SelectParticipantHandlerTest {
     private Household householdMock;
     private SelectParticipantHandler selectParticipantHandler;
     private DatabaseHelper dbMock;
-    private Dialog dialogMock;
+    private CustomDialog dialogMock;
     private HouseholdActivity householdActivity;
     @Mock
     private android.app.Dialog androidDialogMock;
@@ -54,7 +54,7 @@ public class SelectParticipantHandlerTest {
         intent.putExtra(Constants.HOUSEHOLD,householdMock);
         householdActivity = Robolectric.buildActivity(HouseholdActivity.class).withIntent(intent).create().get();
         dbMock = mock(DatabaseHelper.class);
-        dialogMock = mock(Dialog.class);
+        dialogMock = mock(CustomDialog.class);
 
         androidDialogMock = Mockito.mock(android.app.Dialog.class);
         selectParticipantHandler = new SelectParticipantHandlerMock(householdActivity, householdMock, dialogMock, dbMock, androidDialogMock,Mockito.mock(View.class));
@@ -77,7 +77,7 @@ public class SelectParticipantHandlerTest {
 
         selectParticipantHandler.open();
 
-        verify(dialogMock).confirm(eq(householdActivity),any(DialogInterface.OnClickListener.class),eq(Dialog.EmptyListener),any(View.class),eq(R.string.participant_re_elect_reason_title));
+        verify(dialogMock).confirm(eq(householdActivity),any(DialogInterface.OnClickListener.class),eq(CustomDialog.EmptyListener),any(View.class),eq(R.string.participant_re_elect_reason_title));
     }
 
     @Test
@@ -86,7 +86,7 @@ public class SelectParticipantHandlerTest {
 
         selectParticipantHandler.open();
 
-        verify(dialogMock).confirm(eq(householdActivity),any(DialogInterface.OnClickListener.class),eq(Dialog.EmptyListener),any(View.class),eq(R.string.participant_re_elect_reason_title));
+        verify(dialogMock).confirm(eq(householdActivity),any(DialogInterface.OnClickListener.class),eq(CustomDialog.EmptyListener),any(View.class),eq(R.string.participant_re_elect_reason_title));
     }
 
     @Test
@@ -108,7 +108,7 @@ public class SelectParticipantHandlerTest {
     private class SelectParticipantHandlerMock extends SelectParticipantHandler{
         private View view;
 
-        public SelectParticipantHandlerMock(ListActivity activity, Household household, Dialog dialog, DatabaseHelper db, android.app.Dialog androidDialog, View view) {
+        public SelectParticipantHandlerMock(ListActivity activity, Household household, CustomDialog dialog, DatabaseHelper db, android.app.Dialog androidDialog, View view) {
             super(activity, household, dialog, db, androidDialog);
             this.view = view;
         }

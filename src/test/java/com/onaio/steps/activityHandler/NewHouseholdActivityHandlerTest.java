@@ -8,12 +8,13 @@ import com.onaio.steps.activity.NewHouseholdActivity;
 import com.onaio.steps.activity.StepsActivity;
 import com.onaio.steps.adapter.HouseholdAdapter;
 import com.onaio.steps.helper.Constants;
+import com.onaio.steps.helper.CustomDialog;
 import com.onaio.steps.helper.DatabaseHelper;
-import com.onaio.steps.helper.Dialog;
 import com.onaio.steps.helper.KeyValueStore;
 import com.onaio.steps.helper.KeyValueStoreFactory;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.HouseholdStatus;
+import com.onaio.steps.model.RequestCode;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -32,14 +33,14 @@ public class NewHouseholdActivityHandlerTest {
 
     private StepsActivity stepsActivity;
     private NewHouseholdActivityHandler handler;
-    private Dialog dialogMock;
+    private CustomDialog dialogMock;
     private String PHONE_ID = "123";
     private String HOUSEHOLD_SEED = "100";
 
     @Before
     public void Setup(){
         stepsActivity = Robolectric.setupActivity(StepsActivity.class);
-        dialogMock = Mockito.mock(Dialog.class);
+        dialogMock = Mockito.mock(CustomDialog.class);
         handler = new NewHouseholdActivityHandler(stepsActivity, dialogMock);
     }
 
@@ -59,7 +60,7 @@ public class NewHouseholdActivityHandlerTest {
         Mockito.stub(keyValueStoreMock.getString(PHONE_ID)).toReturn("");
         handler.open();
 
-        Mockito.verify(dialogMock).notify(stepsActivity,Dialog.EmptyListener,R.string.phone_id_message, R.string.phone_id_message_title);
+        Mockito.verify(dialogMock).notify(stepsActivity, CustomDialog.EmptyListener, R.string.phone_id_message_title, R.string.phone_id_message);
     }
 
 
@@ -69,7 +70,7 @@ public class NewHouseholdActivityHandlerTest {
 
         handler.open();
 
-        Mockito.verify(dialogMock).notify(stepsActivity, Dialog.EmptyListener, R.string.phone_id_message, R.string.phone_id_message_title);
+        Mockito.verify(dialogMock).notify(stepsActivity, CustomDialog.EmptyListener, R.string.phone_id_message_title, R.string.phone_id_message);
     }
 
     @Test
@@ -79,7 +80,7 @@ public class NewHouseholdActivityHandlerTest {
 
         handler.open();
 
-        Mockito.verify(dialogMock,Mockito.never()).notify(stepsActivity, Dialog.EmptyListener, R.string.phone_id_message, R.string.phone_id_message_title);
+        Mockito.verify(dialogMock,Mockito.never()).notify(stepsActivity, CustomDialog.EmptyListener, R.string.phone_id_message_title, R.string.phone_id_message);
     }
 
     @Test
@@ -97,12 +98,12 @@ public class NewHouseholdActivityHandlerTest {
 
     @Test
     public void ShouldBeAbleToHandleResultForNewHouseholdRequestCode(){
-        assertTrue(handler.canHandleResult(Constants.NEW_HOUSEHOLD_IDENTIFIER));
+        assertTrue(handler.canHandleResult(RequestCode.NEW_HOUSEHOLD.getCode()));
     }
 
     @Test
     public void ShouldNotBeAbleToHandleResultForOtherRequestCode(){
-        assertFalse(handler.canHandleResult(Constants.STEPS_IDENTIFIER));
+        assertFalse(handler.canHandleResult(RequestCode.EDIT_HOUSEHOLD.getCode()));
     }
 
     @Test

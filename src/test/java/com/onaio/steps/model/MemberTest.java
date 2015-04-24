@@ -34,7 +34,7 @@ public class MemberTest {
     private final String householdName = "Any household";
     private final String memberFamilyName = "Rana";
     private final String memberFirstName = "Manisha";
-    private final String memberGender = Constants.FEMALE;
+    private final Gender memberGender = Gender.Female;
     private final int memberAge = 23;
     private Household household;
 
@@ -112,7 +112,7 @@ public class MemberTest {
         assertTrue(contentValues.containsKey(Member.FIRST_NAME));
         assertTrue(contentValues.getAsString(Member.FIRST_NAME).equals(memberFirstName));
         assertTrue(contentValues.containsKey(Member.GENDER));
-        assertTrue(contentValues.getAsString(Member.GENDER).equals(memberGender));
+        assertTrue(contentValues.getAsString(Member.GENDER).equals(memberGender.toString()));
         assertTrue(contentValues.containsKey(Member.AGE));
         assertTrue(contentValues.getAsInteger(Member.AGE) == memberAge);
         assertTrue(contentValues.containsKey(Member.HOUSEHOLD_ID));

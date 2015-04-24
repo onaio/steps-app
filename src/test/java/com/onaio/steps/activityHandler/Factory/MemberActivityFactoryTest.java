@@ -14,6 +14,7 @@ import com.onaio.steps.activityHandler.Interface.IMenuHandler;
 import com.onaio.steps.activityHandler.Interface.IMenuPreparer;
 import com.onaio.steps.activityHandler.SelectParticipantHandler;
 import com.onaio.steps.helper.Constants;
+import com.onaio.steps.model.Gender;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.HouseholdStatus;
 import com.onaio.steps.model.Member;
@@ -42,7 +43,7 @@ public class MemberActivityFactoryTest extends TestCase {
     @Before
     public void Setup(){
         household = new Household("name", "123", HouseholdStatus.NOT_SELECTED, "12-12-2015");
-        member = new Member(1,"surname", "firstname", Constants.MALE, 23, household, "",false);
+        member = new Member(1,"surname", "firstname", Gender.Male, 23, household, "",false);
         Intent intent = new Intent().putExtra(Constants.MEMBER, member);
         memberActivity = Robolectric.buildActivity(MemberActivity.class).withIntent(intent).create().get();
     }

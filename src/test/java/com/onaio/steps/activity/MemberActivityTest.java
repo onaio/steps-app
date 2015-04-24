@@ -5,6 +5,7 @@ import android.widget.TextView;
 
 import com.onaio.steps.R;
 import com.onaio.steps.helper.Constants;
+import com.onaio.steps.model.Gender;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.HouseholdStatus;
 import com.onaio.steps.model.Member;
@@ -31,7 +32,7 @@ public class MemberActivityTest {
     @Before
     public void setup(){
         household = new Household("1", "household Name", "123456789", "2", HouseholdStatus.NOT_DONE, "2015-12-13");
-        member = new Member("any surname", "any firstName", Constants.FEMALE, 22, household, false);
+        member = new Member("any surname", "any firstName", Gender.Female, 22, household, false);
         Intent intent = new Intent();
         intent.putExtra(Constants.MEMBER,member);
 
@@ -51,7 +52,7 @@ public class MemberActivityTest {
         assertNotNull(ageView);
         assertNotNull(genderView);
         assertEquals(String.valueOf(member.getAge()), ageView.getText());
-        assertEquals(member.getGender(),genderView.getText());
+        assertEquals(member.getGender().toString(),genderView.getText());
     }
 
 

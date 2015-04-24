@@ -9,6 +9,7 @@ import com.onaio.steps.activityHandler.Interface.IMenuHandler;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.KeyValueStore;
 import com.onaio.steps.helper.KeyValueStoreFactory;
+import com.onaio.steps.model.RequestCode;
 
 import static android.app.Activity.RESULT_OK;
 import static com.onaio.steps.helper.Constants.ENDPOINT_URL;
@@ -40,13 +41,13 @@ public class SettingActivityHandler implements IMenuHandler, IActivityResultHand
         intent.putExtra(HOUSEHOLD_SEED, getValue(HOUSEHOLD_SEED));
         intent.putExtra(MIN_AGE, getValue(MIN_AGE));
         intent.putExtra(MAX_AGE, getValue(MAX_AGE));
-        activity.startActivityForResult(intent, Constants.SETTING_IDENTIFIER);
+        activity.startActivityForResult(intent, RequestCode.SETTINGS.getCode());
         return true;
     }
 
     @Override
     public boolean canHandleResult(int requestCode) {
-        return requestCode == Constants.SETTING_IDENTIFIER;
+        return requestCode == RequestCode.SETTINGS.getCode();
     }
 
     @Override

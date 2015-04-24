@@ -39,6 +39,7 @@ public class HouseholdActivityFactory {
         ArrayList<IActivityResultHandler> handlers = new ArrayList<IActivityResultHandler>();
         handlers.add(new NewMemberActivityHandler(activity, household));
         handlers.add(new EditHouseholdActivityHandler(activity, household));
+        handlers.add(new TakeSurveyHandler(activity,household));
         return handlers;
     }
 

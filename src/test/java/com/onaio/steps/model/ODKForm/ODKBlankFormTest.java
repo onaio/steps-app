@@ -13,30 +13,31 @@ import org.robolectric.annotation.Config;
 
 @RunWith(RobolectricTestRunner.class)
 @Config(emulateSdk = 16, manifest = "src/main/AndroidManifest.xml",shadows = {ShadowDatabaseHelper.class})
-public class ODKSavedFormTest extends TestCase {
+public class ODKBlankFormTest extends TestCase {
 
-    private ODKSavedForm form;
+    private ODKBlankForm form;
 
     @Before
     public void Setup(){
-        form = new ODKSavedForm("id", "jrFormId", "displayName", "jrVersion", "path", "complete");
+        form = new ODKBlankForm("id", "jrFormId", "displayName", "jrVersion", "path");
+    }
+
+    @Test
+    public void ShouldGetTheFormURIWithId(){
+        Assert.assertEquals("content://org.odk.collect.android.provider.odk.forms/forms/id",form.getUri().toString());
     }
 
     @Test
     public void ShouldValidateURIWithoutIdButShouldNotHaveOnlyThat(){
-        String uriWithoutID = "content://org.odk.collect.android.provider.odk.instances/instances";
+        String uriWithoutID = "content://org.odk.collect.android.provider.odk.forms/forms";
 
         Assert.assertTrue(form.getUri().toString().contains(uriWithoutID));
         assertFalse(form.getUri().toString().equals(uriWithoutID));
     }
 
     @Test
-    public void ShouldGetTheFormURIWithId(){
-        Assert.assertEquals("content://org.odk.collect.android.provider.odk.instances/instances/id",form.getUri().toString());
-    }
-
-    @Test
     public void ShouldGetTheMediaPath(){
         Assert.assertEquals("path",form.getPath());
     }
+
 }

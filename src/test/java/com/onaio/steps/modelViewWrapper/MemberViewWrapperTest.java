@@ -146,7 +146,7 @@ public class MemberViewWrapperTest {
 
         Assert.assertTrue(member.getFamilySurname().equals("Bansal"));
         Assert.assertTrue(member.getFirstName().equals("Rohit"));
-        Assert.assertTrue(member.getGender().equals("Male"));
+        Assert.assertTrue(member.getGender().toString().equals("Male"));
         Assert.assertTrue(member.getAge()==15);
     }
 

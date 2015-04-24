@@ -7,13 +7,13 @@ import android.view.View;
 
 import com.onaio.steps.R;
 
-public class Dialog {
+public class CustomDialog {
     public static DialogInterface.OnClickListener EmptyListener = new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialogInterface, int i) {
         }
     };
-    public void notify(Context activity, DialogInterface.OnClickListener okListener, int message, int title) {
+    public void notify(Context activity, DialogInterface.OnClickListener okListener, int title, int message) {
         new AlertDialog.Builder(activity)
                 .setTitle(title)
                 .setMessage(message)

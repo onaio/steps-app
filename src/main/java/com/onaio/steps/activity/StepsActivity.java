@@ -80,7 +80,7 @@ public class StepsActivity extends ListActivity {
     private void setWatermark() {
         final RelativeLayout homePage = (RelativeLayout)findViewById(R.id.main_layout);
         if(homePage == null) return;
-        homePage.post(new Runnable() {
+        runOnUiThread(new Runnable() {
             public void run() {
                 Window win = getWindow();
                 View contentView = win.findViewById(Window.ID_ANDROID_CONTENT);

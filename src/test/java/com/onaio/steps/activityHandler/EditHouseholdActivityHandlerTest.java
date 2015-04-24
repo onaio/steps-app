@@ -7,6 +7,7 @@ import com.onaio.steps.R;
 import com.onaio.steps.activity.HouseholdActivity;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.model.Household;
+import com.onaio.steps.model.RequestCode;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -56,7 +57,7 @@ public class EditHouseholdActivityHandlerTest {
     public void ShouldPopForConfirmationWhenOpened(){
         editHouseholdActivityHandler.open();
 
-        verify(activityMock).startActivityForResult(Mockito.argThat(householdIntentMatcher()), Mockito.eq(Constants.EDIT_HOUSEHOLD_IDENTIFIER));
+        verify(activityMock).startActivityForResult(Mockito.argThat(householdIntentMatcher()), Mockito.eq(RequestCode.EDIT_HOUSEHOLD.getCode()));
     }
 
     private ArgumentMatcher<Intent> householdIntentMatcher() {
@@ -73,12 +74,12 @@ public class EditHouseholdActivityHandlerTest {
 
     @Test
     public void ShouldBeAbleToHandleResultForEditHouseholdIdentifier(){
-        assertTrue(editHouseholdActivityHandler.canHandleResult(Constants.EDIT_HOUSEHOLD_IDENTIFIER));
+        assertTrue(editHouseholdActivityHandler.canHandleResult(RequestCode.EDIT_HOUSEHOLD.getCode()));
     }
 
     @Test
     public void ShouldNotBeAbleToHandleResultForOtherIdentifier(){
-        assertFalse(editHouseholdActivityHandler.canHandleResult(Constants.NEW_HOUSEHOLD_IDENTIFIER));
+        assertFalse(editHouseholdActivityHandler.canHandleResult(RequestCode.NEW_HOUSEHOLD.getCode()));
     }
 
     @Test

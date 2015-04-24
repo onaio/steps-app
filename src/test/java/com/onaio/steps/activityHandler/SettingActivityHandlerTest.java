@@ -10,6 +10,7 @@ import com.onaio.steps.activity.StepsActivity;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.KeyValueStore;
 import com.onaio.steps.helper.KeyValueStoreFactory;
+import com.onaio.steps.model.RequestCode;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -90,12 +91,12 @@ public class SettingActivityHandlerTest {
 
     @Test
     public void ShouldHandleResultForProperRequestCode() {
-        assertTrue(settingActivityHandler.canHandleResult(Constants.SETTING_IDENTIFIER));
+        assertTrue(settingActivityHandler.canHandleResult(RequestCode.SETTINGS.getCode()));
     }
 
     @Test
     public void ShouldNotHandleResultForOtherRequestCode() {
-        assertFalse(settingActivityHandler.canHandleResult(Constants.NEW_MEMBER_IDENTIFIER));
+        assertFalse(settingActivityHandler.canHandleResult(RequestCode.NEW_MEMBER.getCode()));
     }
 
     @Test

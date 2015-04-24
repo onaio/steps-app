@@ -14,19 +14,6 @@ public class Constants {
     public static final String MEMBER = "MEMBER";
 
     //Gender
-    public static final String MALE = "Male";
-    public static final String FEMALE = "Female";
-
-    //Identifier for different activities
-    public static final int STEPS_IDENTIFIER = 1;
-    public static final int SETTING_IDENTIFIER = 2;
-    public static final int NEW_HOUSEHOLD_IDENTIFIER = 3;
-    public static final int NEW_MEMBER_IDENTIFIER = 4;
-    public static final int EDIT_HOUSEHOLD_IDENTIFIER = 5;
-    public static final int EDIT_MEMBER_IDENTIFIER = 6;
-    public static final int IMPORT_IDENTIFIER = 7;
-    public static final int SURVEY_IDENTIFIER=8;
-
     public static final String HEADER_GREEN = "#008148";
     public static final String TEXT_GREEN = "#53B257";
     public static final String SURVEY_NA = "NA";
@@ -43,6 +30,7 @@ public class Constants {
     public static final String ODK_FORM_FIELDS = "hhid_key,form_name,member_id,family_surname,first_name,gender,age";
     public static final String ODK_DATA_FILENAME = "STEPS.csv";
     public static final String ODK_HH_ID = "1";
+    public static final String ODK_FORM_COMPLETE_STATUS = "complete";
 
     public static final String ODK_COLLECT_PACKAGE = "org.odk.collect.android";
     public static final String ODK_COLLECT_UPLOADER_CLASS = "org.odk.collect.android.activities.InstanceUploaderList";
@@ -56,9 +44,6 @@ public class Constants {
     public static final String GENDER = "Gender";
     public static final String AGE = "Age";
     public static final String MEMBER_ERROR = "Member";
-    public static final String ERROR_STRING = "Invalid %s, please fill or rectify the following fields: %s";
+    public static final String ERROR_STRING = "Invalid %s, please fill or correct the following fields: %s";
     public static final String AGE_NOT_IN_RANGE = "Age (not in the range of %d-%d)";
-
-    public static final String EMPTY_PHONE_NUMBER = "Phone number is empty, please enter a valid number and try again.";
-    public static final String INVALID_PHONE_NUMBER = "Phone number should contain minimum 9 digits, enter a valid phone number and try again";
 }

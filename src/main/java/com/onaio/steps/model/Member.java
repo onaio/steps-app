@@ -27,14 +27,14 @@ public class Member implements Serializable {
 
     private String familySurname;
     private String firstName;
-    private String gender;
+    private Gender gender;
     private int age;
     private Household household;
     private int id;
     private String memberHouseholdId;
     private Boolean deleted;
 
-    public Member(int id, String familySurname, String firstName, String gender, int age, Household household, String memberHouseholdId, Boolean deleted) {
+    public Member(int id, String familySurname, String firstName, Gender gender, int age, Household household, String memberHouseholdId, Boolean deleted) {
         this.familySurname = familySurname;
         this.firstName = firstName;
         this.gender = gender;
@@ -45,7 +45,7 @@ public class Member implements Serializable {
         this.deleted = deleted;
     }
 
-    public Member(String familySurname, String firstName, String gender, int age, Household household, boolean deleted) {
+    public Member(String familySurname, String firstName, Gender gender, int age, Household household, boolean deleted) {
         this.familySurname = familySurname;
         this.firstName = firstName;
         this.gender = gender;
@@ -78,7 +78,7 @@ public class Member implements Serializable {
         return String.format(gender +", "+ age);
     }
 
-    public String getGender() {
+    public Gender getGender() {
         return gender;
     }
 
@@ -127,7 +127,7 @@ public class Member implements Serializable {
         ContentValues values = new ContentValues();
         values.put(FIRST_NAME, firstName);
         values.put(FAMILY_SURNAME, familySurname);
-        values.put(GENDER,gender);
+        values.put(GENDER,gender.toString());
         values.put(AGE,age);
         values.put(HOUSEHOLD_ID,household.getId());
         values.put(DELETED,deleted ? DELETED_INT : NOT_DELETED_INT);

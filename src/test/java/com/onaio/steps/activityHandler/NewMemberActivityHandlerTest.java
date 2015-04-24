@@ -15,6 +15,7 @@ import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.HouseholdStatus;
+import com.onaio.steps.model.RequestCode;
 
 import junit.framework.Assert;
 
@@ -69,7 +70,7 @@ public class NewMemberActivityHandlerTest {
     public void ShouldStartNewMemberActivityIfHouseholdIsNotNull() {
         newMemberActivityHandler.open();
 
-        Mockito.verify(householdActivityMock).startActivityForResult(Mockito.argThat(matchIntent()), Mockito.eq(Constants.NEW_MEMBER_IDENTIFIER));
+        Mockito.verify(householdActivityMock).startActivityForResult(Mockito.argThat(matchIntent()), Mockito.eq(RequestCode.NEW_MEMBER.getCode()));
     }
 
     private ArgumentMatcher<Intent> matchIntent() {
@@ -105,13 +106,13 @@ public class NewMemberActivityHandlerTest {
 
     @Test
     public void ShouldBeAbleToHandleResultForProperRequestCode(){
-        assertTrue(newMemberActivityHandler.canHandleResult(Constants.NEW_MEMBER_IDENTIFIER));
+        assertTrue(newMemberActivityHandler.canHandleResult(RequestCode.NEW_MEMBER.getCode()));
     }
 
 
     @Test
     public void ShouldNotBeAbleToHandleResultForOtherRequestCode(){
-        assertTrue(newMemberActivityHandler.canHandleResult(Constants.NEW_MEMBER_IDENTIFIER));
+        assertTrue(newMemberActivityHandler.canHandleResult(RequestCode.NEW_MEMBER.getCode()));
     }
 
     @Test

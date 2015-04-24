@@ -13,6 +13,7 @@ import com.onaio.steps.activityHandler.Interface.IMenuPreparer;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.model.HouseholdStatus;
 import com.onaio.steps.model.Member;
+import com.onaio.steps.model.RequestCode;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -38,7 +39,7 @@ public class EditMemberActivityHandler implements IMenuHandler, IActivityResultH
         if (member == null) return true;
         Intent intent = new Intent(activity, EditMemberActivity.class);
         intent.putExtra(Constants.MEMBER, member);
-        activity.startActivityForResult(intent, Constants.EDIT_MEMBER_IDENTIFIER);
+        activity.startActivityForResult(intent, RequestCode.EDIT_MEMBER.getCode());
         return true;
     }
 
@@ -53,7 +54,7 @@ public class EditMemberActivityHandler implements IMenuHandler, IActivityResultH
 
     @Override
     public boolean canHandleResult(int requestCode) {
-        return requestCode == Constants.EDIT_MEMBER_IDENTIFIER;
+        return requestCode == RequestCode.EDIT_MEMBER.getCode();
     }
 
     public EditMemberActivityHandler withMenu(Menu menu) {

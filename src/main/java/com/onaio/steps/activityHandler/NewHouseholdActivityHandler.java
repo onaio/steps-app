@@ -9,9 +9,10 @@ import com.onaio.steps.R;
 import com.onaio.steps.activityHandler.Interface.IActivityResultHandler;
 import com.onaio.steps.activityHandler.Interface.IMenuHandler;
 import com.onaio.steps.adapter.HouseholdAdapter;
+import com.onaio.steps.helper.CustomDialog;
 import com.onaio.steps.helper.DatabaseHelper;
-import com.onaio.steps.helper.Dialog;
 import com.onaio.steps.model.Household;
+import com.onaio.steps.model.RequestCode;
 
 import static android.app.Activity.RESULT_OK;
 import static android.content.Context.MODE_PRIVATE;
@@ -20,13 +21,13 @@ import static com.onaio.steps.helper.Constants.*;
 public class NewHouseholdActivityHandler implements IMenuHandler, IActivityResultHandler {
 
     private ListActivity activity;
-    private Dialog dialog = new Dialog();
+    private CustomDialog dialog = new CustomDialog();
 
     public NewHouseholdActivityHandler(ListActivity activity) {
-        this(activity,new Dialog());
+        this(activity,new CustomDialog());
     }
 
-    NewHouseholdActivityHandler(ListActivity activity, Dialog dialog) {
+    NewHouseholdActivityHandler(ListActivity activity, CustomDialog dialog) {
         this.activity = activity;
         this.dialog = dialog;
     }
@@ -44,7 +45,7 @@ public class NewHouseholdActivityHandler implements IMenuHandler, IActivityResul
             Intent intent = new Intent(activity.getBaseContext(), NewHouseholdActivity.class);
             intent.putExtra(PHONE_ID, getValue(PHONE_ID));
             intent.putExtra(HOUSEHOLD_SEED, getValue(HOUSEHOLD_SEED));
-            activity.startActivityForResult(intent, NEW_HOUSEHOLD_IDENTIFIER);
+            activity.startActivityForResult(intent, RequestCode.NEW_HOUSEHOLD.getCode());
         }
         return true;
     }
@@ -62,11 +63,11 @@ public class NewHouseholdActivityHandler implements IMenuHandler, IActivityResul
 
     @Override
     public boolean canHandleResult(int requestCode) {
-        return requestCode == NEW_HOUSEHOLD_IDENTIFIER;
+        return requestCode == RequestCode.NEW_HOUSEHOLD.getCode();
     }
 
     private void notifyUserToSetPhoneId(ListActivity activity) {
-        dialog.notify(activity, Dialog.EmptyListener, R.string.phone_id_message, R.string.phone_id_message_title);
+        dialog.notify(activity, CustomDialog.EmptyListener, R.string.phone_id_message_title, R.string.phone_id_message);
     }
 
     private String getValue(String key) {

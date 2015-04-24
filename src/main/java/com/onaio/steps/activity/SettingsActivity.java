@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.TextView;
 import com.onaio.steps.R;
 import com.onaio.steps.helper.Constants;
-import com.onaio.steps.helper.Dialog;
+import com.onaio.steps.helper.CustomDialog;
 
 public class SettingsActivity extends Activity {
     @Override
@@ -52,7 +52,7 @@ public class SettingsActivity extends Activity {
         String minAge = ((TextView) findViewById(R.id.min_age)).getText().toString();
         String maxAge = ((TextView) findViewById(R.id.max_age)).getText().toString();
         if (!(isValid(phoneId) && isValid(endpointUrl) && isValid(minAge) && isValid(maxAge))){
-            new Dialog().notify(this,Dialog.EmptyListener,R.string.enter_a_value,R.string.error_title);
+            new CustomDialog().notify(this, CustomDialog.EmptyListener, R.string.error_title, R.string.enter_a_value);
             return;
         }
         intent.putExtra(Constants.PHONE_ID, phoneId);

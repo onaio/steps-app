@@ -10,8 +10,8 @@ import android.widget.TextView;
 import com.onaio.steps.R;
 import com.onaio.steps.exception.InvalidDataException;
 import com.onaio.steps.helper.Constants;
+import com.onaio.steps.helper.CustomDialog;
 import com.onaio.steps.helper.DatabaseHelper;
-import com.onaio.steps.helper.Dialog;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.Member;
 import com.onaio.steps.modelViewWrapper.MemberViewWrapper;
@@ -49,7 +49,7 @@ public class NewMemberActivity extends Activity {
             setResult(RESULT_OK, intent);
             finish();
         } catch (InvalidDataException e) {
-            new Dialog().notify(this,Dialog.EmptyListener,e.getMessage(),R.string.error_title);
+            new CustomDialog().notify(this, CustomDialog.EmptyListener,e.getMessage(),R.string.error_title);
         }
     }
 

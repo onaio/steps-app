@@ -7,6 +7,7 @@ import com.onaio.steps.R;
 import com.onaio.steps.exception.InvalidDataException;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.KeyValueStoreFactory;
+import com.onaio.steps.model.Gender;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.Member;
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ public class MemberViewWrapper {
     public Member getMember(int familySurnameViewId, int firstNameViewId, int genderViewId, int ageViewId, Household household) throws InvalidDataException {
         String surname = ((TextView) activity.findViewById(familySurnameViewId)).getText().toString();
         String firstName = ((TextView) activity.findViewById(firstNameViewId)).getText().toString();
-        String gender = genderSelection(((RadioGroup) activity.findViewById(genderViewId)).getCheckedRadioButtonId());
+        Gender gender = genderSelection(((RadioGroup) activity.findViewById(genderViewId)).getCheckedRadioButtonId());
         String ageString = ((TextView) activity.findViewById(ageViewId)).getText().toString();
         validateFields(surname, firstName, gender, ageString);
         if(!errorFields.isEmpty())
@@ -35,17 +36,17 @@ public class MemberViewWrapper {
         return new Member(surname, firstName, gender, Integer.parseInt(ageString), household, false);
     }
 
-    public Member update(Member member,String surname, String firstName, String gender, String ageString) throws InvalidDataException {
+    public Member update(Member member,String surname, String firstName, Gender gender, String ageString) throws InvalidDataException {
         validateFields(surname, firstName, gender, ageString);
         if(!errorFields.isEmpty())
             throw new InvalidDataException(MEMBER_ERROR,errorFields);
-        return new Member(member.getId(),surname,firstName,gender,Integer.parseInt(ageString),member.getHousehold(),member.getMemberHouseholdId(),member.getDeleted());
+        return new Member(member.getId(),surname,firstName, gender,Integer.parseInt(ageString),member.getHousehold(),member.getMemberHouseholdId(),member.getDeleted());
     }
 
-    private void validateFields(String surname, String firstName, String gender, String ageString) {
+    private void validateFields(String surname, String firstName, Gender gender, String ageString) {
         validate(surname, FAMILY_SURNAME);
         validate(firstName, FIRST_NAME);
-        validate(gender, GENDER);
+        validate(gender);
         validate(ageString, AGE);
         validateAgeRange(ageString,AGE_NOT_IN_RANGE);
     }
@@ -60,19 +61,22 @@ public class MemberViewWrapper {
             errorFields.add(String.format(errorKey,minAge,maxAge));
     }
 
+    private void validate(Gender gender) {
+        if(gender.equals(Gender.NotDefined))
+            errorFields.add(GENDER);
+    }
+
     private void validate(String fieldValue, String errorKey){
         if(fieldValue==null || fieldValue.equals(""))
             errorFields.add(errorKey);
     }
 
-    private String genderSelection(int genderSelectionId) {
-        switch (genderSelectionId){
-            case R.id.male_selection :
-                return MALE;
-            case R.id.female_selection :
-                return FEMALE;
-            default: return "";
-        }
+    private Gender genderSelection(int genderSelectionId) {
+        if(genderSelectionId == R.id.male_selection)
+            return Gender.Male;
+        if(genderSelectionId == R.id.female_selection)
+            return Gender.Female;
+        return Gender.NotDefined;
     }
 
     private int getValue(String key) {

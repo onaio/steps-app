@@ -12,6 +12,7 @@ import com.onaio.steps.helper.Constants;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.HouseholdStatus;
 import com.onaio.steps.model.Member;
+import com.onaio.steps.model.RequestCode;
 
 import junit.framework.Assert;
 
@@ -61,18 +62,18 @@ public class EditMemberActivityHandlerTest {
 
     @Test
     public void ShouldCheckWhetherResultForProperRequestCodeCanBeHandled(){
-        assertTrue(editMemberActivityHandler.canHandleResult(Constants.EDIT_MEMBER_IDENTIFIER));
+        assertTrue(editMemberActivityHandler.canHandleResult(RequestCode.EDIT_MEMBER.getCode()));
     }
 
     @Test
     public void ShouldCheckWhetherResultForOtherRequestCodeCanNotBeHandled(){
-        assertFalse(editMemberActivityHandler.canHandleResult(Constants.NEW_MEMBER_IDENTIFIER));
+        assertFalse(editMemberActivityHandler.canHandleResult(RequestCode.NEW_MEMBER.getCode()));
     }
 
     @Test
     public void ShouldOpenWhenMemberIsNotNull(){
         editMemberActivityHandler.open();
-        Mockito.verify(memberActivityMock).startActivityForResult(Mockito.argThat(matchIntent()), Mockito.eq(Constants.EDIT_MEMBER_IDENTIFIER));
+        Mockito.verify(memberActivityMock).startActivityForResult(Mockito.argThat(matchIntent()), Mockito.eq(RequestCode.EDIT_MEMBER.getCode()));
     }
 
     private ArgumentMatcher<Intent> matchIntent() {

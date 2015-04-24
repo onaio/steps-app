@@ -16,6 +16,7 @@ import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.HouseholdStatus;
 import com.onaio.steps.model.Member;
+import com.onaio.steps.model.RequestCode;
 
 import java.util.List;
 
@@ -50,7 +51,7 @@ public class NewMemberActivityHandler implements IMenuHandler, IActivityResultHa
         if (household== null) return true;
         Intent intent = new Intent(activity, NewMemberActivity.class);
         intent.putExtra(Constants.HOUSEHOLD,household);
-        activity.startActivityForResult(intent, Constants.NEW_MEMBER_IDENTIFIER);
+        activity.startActivityForResult(intent, RequestCode.NEW_MEMBER.getCode());
         return true;
     }
 
@@ -68,7 +69,7 @@ public class NewMemberActivityHandler implements IMenuHandler, IActivityResultHa
 
     @Override
     public boolean canHandleResult(int requestCode) {
-        return requestCode == Constants.NEW_MEMBER_IDENTIFIER;
+        return requestCode == RequestCode.NEW_MEMBER.getCode();
     }
 
 

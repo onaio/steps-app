@@ -2,6 +2,7 @@ package com.onaio.steps.utils;
 
 import android.database.Cursor;
 
+import com.onaio.steps.model.Gender;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.HouseholdStatus;
 import com.onaio.steps.model.Member;
@@ -32,7 +33,7 @@ public class CursorStub {
         Mockito.stub(cursor.getString(6)).toReturn(household.getCreatedAt());
     }
 
-    public void stubCursorForMember(long id, String memberFamilyName, String memberFirstName, String memberGender, String memberAge, String householdId, int isDeleted, String memberHouseholdId){
+    public void stubCursorForMember(long id, String memberFamilyName, String memberFirstName, Gender memberGender, String memberAge, String householdId, int isDeleted, String memberHouseholdId){
         Mockito.stub(cursor.moveToFirst()).toReturn(true);
         Mockito.stub(cursor.getColumnIndex(Member.FAMILY_SURNAME)).toReturn(1);
         Mockito.stub(cursor.getColumnIndex(Member.FIRST_NAME)).toReturn(2);
@@ -45,7 +46,7 @@ public class CursorStub {
 
         Mockito.stub(cursor.getString(1)).toReturn(memberFamilyName);
         Mockito.stub(cursor.getString(2)).toReturn(memberFirstName);
-        Mockito.stub(cursor.getString(3)).toReturn(memberGender);
+        Mockito.stub(cursor.getString(3)).toReturn(memberGender.toString());
         Mockito.stub(cursor.getString(4)).toReturn(String.valueOf(memberAge));
         Mockito.stub(cursor.getInt(5)).toReturn(isDeleted);
         Mockito.stub(cursor.getString(6)).toReturn(String.valueOf(id));
