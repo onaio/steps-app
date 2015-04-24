@@ -76,7 +76,7 @@
     <string name="min_age">Min age</string>
     <string name="survey_done_message">Survey is complete!</string>
     <string name="survey_refused_message">Survey is refused!</string>
-    <string name="action_finalized_forms">Finalized Forms</string>
+    <string name="action_submit_forms">Submit Forms</string>
     <string name="export_failed">Export failed, please try again later.</string>
     <string name="export_complete">Export Complete</string>
     <string name="export_complete_message">The data has successfully exported.</string>

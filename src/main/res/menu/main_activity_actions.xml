@@ -2,9 +2,9 @@
     <item android:id="@+id/action_settings"
           android:title="@string/action_settings"/>
     <item android:id="@+id/action_export"
-          android:title="@string/action_export"/>
+          android:title="Export Household List"/>
     <item android:id="@+id/action_import"
           android:title="@string/action_import"/>
     <item android:id="@+id/action_saved_form"
-          android:title="@string/action_finalized_forms"/>
+          android:title="@string/action_submit_forms"/>
 </menu>
