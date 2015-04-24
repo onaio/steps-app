@@ -76,9 +76,10 @@ public class NewMemberActivityHandler implements IMenuHandler, IActivityResultHa
     @Override
     public boolean shouldInactivate() {
         boolean surveyDone = household.getStatus().equals(HouseholdStatus.DONE);
+        boolean surveyIncomplete = household.getStatus().equals(HouseholdStatus.INCOMPLETE);
         boolean refusedHousehold = household.getStatus().equals(HouseholdStatus.REFUSED);
-        boolean defferedHousehold = household.getStatus().equals(HouseholdStatus.DEFERRED);
-        return refusedHousehold || surveyDone || defferedHousehold;
+        boolean deferredHousehold = household.getStatus().equals(HouseholdStatus.DEFERRED);
+        return refusedHousehold || surveyDone || surveyIncomplete || deferredHousehold;
     }
 
     public void inactivate() {

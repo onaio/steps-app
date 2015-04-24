@@ -102,7 +102,7 @@ public class RefusedHandlerTest {
 
         refusedHandler.inactivate();
 
-        verify(viewMock).setVisibility(View.INVISIBLE);
+        verify(viewMock).setVisibility(View.GONE);
     }
 
     @Test

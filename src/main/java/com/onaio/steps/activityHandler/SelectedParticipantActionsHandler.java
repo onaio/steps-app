@@ -22,7 +22,8 @@ public class SelectedParticipantActionsHandler implements IMenuPreparer {
     public boolean shouldInactivate() {
         boolean selected = household.getStatus() == HouseholdStatus.NOT_DONE;
         boolean deferred = household.getStatus() == HouseholdStatus.DEFERRED;
-        return !(selected || deferred);
+        boolean incomplete = household.getStatus() == HouseholdStatus.INCOMPLETE;
+        return !(selected || deferred || incomplete);
     }
 
     @Override

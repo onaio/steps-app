@@ -68,7 +68,7 @@ public class RefusedHandler implements IMenuHandler,IMenuPreparer {
     @Override
     public void inactivate() {
         View item = activity.findViewById(MENU_ID);
-        item.setVisibility(View.INVISIBLE);
+        item.setVisibility(View.GONE);
     }
 
     @Override

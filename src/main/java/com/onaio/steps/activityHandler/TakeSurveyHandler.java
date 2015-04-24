@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.view.View;
+import android.widget.Button;
 
 import com.onaio.steps.R;
 import com.onaio.steps.activityHandler.Interface.IActivityResultHandler;
@@ -63,7 +64,8 @@ public class TakeSurveyHandler implements IMenuHandler, IMenuPreparer, IActivity
     public boolean shouldInactivate() {
         boolean selected = household.getStatus() == HouseholdStatus.NOT_DONE;
         boolean deferred = household.getStatus() == HouseholdStatus.DEFERRED;
-        return !(selected || deferred );
+        boolean incomplete = household.getStatus() == HouseholdStatus.INCOMPLETE;
+        return !(selected || deferred || incomplete);
     }
 
     @Override
@@ -74,25 +76,36 @@ public class TakeSurveyHandler implements IMenuHandler, IMenuPreparer, IActivity
 
     @Override
     public void activate() {
-        View item = activity.findViewById(MENU_ID);
-        item.setVisibility(View.VISIBLE);
+        Button button = (Button)activity.findViewById(MENU_ID);
+        button.setVisibility(View.VISIBLE);
+        if(HouseholdStatus.INCOMPLETE.equals(household.getStatus()))
+            button.setText(R.string.continue_interview);
+        else
+            button.setText(R.string.interview_now);
     }
 
     @Override
     public void handleResult(Intent data, int resultCode) {
         if(resultCode != Activity.RESULT_OK)
             return;
+        List<IForm> savedForms = getSavedForms();
+        if(savedForms == null || savedForms.isEmpty())
+            return;
+        ODKSavedForm savedForm = (ODKSavedForm)savedForms.get(0);
+        if(Constants.ODK_FORM_COMPLETE_STATUS.equals(savedForm.getStatus()))
+            household.setStatus(HouseholdStatus.DONE);
+        else
+            household.setStatus(HouseholdStatus.INCOMPLETE);
+        household.update(new DatabaseHelper(activity));
+
+    }
+
+    protected List<IForm> getSavedForms() {
         try {
-            List<IForm> forms = ODKSavedForm.findAll(activity, String.format(Constants.ODK_FORM_NAME_FORMAT, household.getName()));
-            if(forms == null || forms.isEmpty())
-                return;
-            ODKSavedForm savedForm = (ODKSavedForm)forms.get(0);
-            if(Constants.ODK_FORM_COMPLETE_STATUS.equals(savedForm.getStatus())) {
-                household.setStatus(HouseholdStatus.DONE);
-                household.update(new DatabaseHelper(activity));
-            }
-        }catch (AppNotInstalledException e) {
+            return ODKSavedForm.findAll(activity, String.format(Constants.ODK_FORM_NAME_FORMAT, household.getName()));
+        } catch (AppNotInstalledException e) {
             new CustomDialog().notify(activity, CustomDialog.EmptyListener, R.string.error_title, R.string.odk_app_not_installed);
+            return null;
         }
     }
 

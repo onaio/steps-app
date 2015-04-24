@@ -123,6 +123,13 @@ public class NewMemberActivityHandlerTest {
     }
 
     @Test
+    public void ShouldInactivateWhenHouseholdSurveyIsIncomplete(){
+        stub(householdMock.getSelectedMemberId()).toReturn("");
+        stub(householdMock.getStatus()).toReturn(HouseholdStatus.INCOMPLETE);
+        Assert.assertTrue(newMemberActivityHandler.shouldInactivate());
+    }
+
+    @Test
     public void ShouldInactivateWhenSurveyIsRefused(){
         stub(householdMock.getSelectedMemberId()).toReturn("");
         stub(householdMock.getStatus()).toReturn(HouseholdStatus.REFUSED);

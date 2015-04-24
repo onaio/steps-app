@@ -1,7 +1,9 @@
 package com.onaio.steps.activityHandler;
 
 import android.app.Activity;
+import android.app.ListActivity;
 import android.view.View;
+import android.widget.Button;
 
 import com.onaio.steps.R;
 import com.onaio.steps.activity.HouseholdActivity;
@@ -9,6 +11,8 @@ import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.HouseholdStatus;
+import com.onaio.steps.model.ODKForm.IForm;
+import com.onaio.steps.model.ODKForm.ODKSavedForm;
 import com.onaio.steps.model.RequestCode;
 
 import junit.framework.Assert;
@@ -20,6 +24,9 @@ import org.mockito.Mockito;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -30,9 +37,11 @@ public class TakeSurveyHandlerTest {
     private HouseholdActivity householdActivityMock;
     private TakeSurveyHandler takeSurveyHandler;
     private Household householdMock;
+    private ArrayList<IForm> savedForms;
 
     @Before
     public void Setup(){
+        savedForms = new ArrayList<IForm>();
         householdActivityMock = Mockito.mock(HouseholdActivity.class);
         householdMock= Mockito.mock(Household.class);
         takeSurveyHandler = new TakeSurveyHandler(householdActivityMock, householdMock);
@@ -95,12 +104,34 @@ public class TakeSurveyHandlerTest {
 
     @Test
     public void ShouldBeAbleToActivateView() {
-        View viewMock = Mockito.mock(View.class);
+        View viewMock = Mockito.mock(Button.class);
         Mockito.stub(householdActivityMock.findViewById(R.id.action_take_survey)).toReturn(viewMock);
 
         takeSurveyHandler.activate();
 
         Mockito.verify(viewMock).setVisibility(View.VISIBLE);
+    }
+
+    @Test
+    public void ShouldActivateViewWithInterviewNowText() {
+        Button viewMock = Mockito.mock(Button.class);
+        Mockito.stub(householdActivityMock.findViewById(R.id.action_take_survey)).toReturn(viewMock);
+        Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.NOT_SELECTED);
+
+        takeSurveyHandler.activate();
+
+        Mockito.verify(viewMock).setText(R.string.interview_now);
+    }
+
+    @Test
+    public void ShouldActivateViewWithContinueInterviewText() {
+        Button viewMock = Mockito.mock(Button.class);
+        Mockito.stub(householdActivityMock.findViewById(R.id.action_take_survey)).toReturn(viewMock);
+        Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.INCOMPLETE);
+
+        takeSurveyHandler.activate();
+
+        Mockito.verify(viewMock).setText(R.string.continue_interview);
     }
 
     @Test
@@ -113,13 +144,42 @@ public class TakeSurveyHandlerTest {
         assertFalse(takeSurveyHandler.canHandleResult(RequestCode.NEW_HOUSEHOLD.getCode()));
     }
 
-//    @Test
-//    public void ShouldHandleResultForResultOk(){
-//        takeSurveyHandler.handleResult(null, Activity.RESULT_OK);
-//
-//        Mockito.verify(householdMock).setStatus(HouseholdStatus.DONE);
-//        Mockito.verify(householdMock).update(Mockito.any(DatabaseHelper.class));
-//    }
+    @Test
+    public void ShouldDoNothingIfNoSavedFormIsFound(){
+        TakeSurveyHandlerStub surveyHandler = new TakeSurveyHandlerStub(householdActivityMock, householdMock, savedForms);
+
+        surveyHandler.handleResult(null, Activity.RESULT_OK);
+
+        Mockito.verify(householdMock,Mockito.never()).update(Mockito.any(DatabaseHelper.class));
+    }
+
+    @Test
+    public void ShouldUpdateStatusAsDoneWhenFormHasStatusOfComplete(){
+        mockSavedForm(savedForms, Constants.ODK_FORM_COMPLETE_STATUS);
+        TakeSurveyHandlerStub surveyHandler = new TakeSurveyHandlerStub(householdActivityMock, householdMock, savedForms);
+
+        surveyHandler.handleResult(null, Activity.RESULT_OK);
+
+        Mockito.verify(householdMock).setStatus(HouseholdStatus.DONE);
+        Mockito.verify(householdMock).update(Mockito.any(DatabaseHelper.class));
+    }
+
+    @Test
+    public void ShouldUpdateStatusAsInProgressWhenFormHasStatusOfInComplete(){
+        mockSavedForm(savedForms, "incomplete");
+        TakeSurveyHandlerStub surveyHandler = new TakeSurveyHandlerStub(householdActivityMock, householdMock, savedForms);
+
+        surveyHandler.handleResult(null, Activity.RESULT_OK);
+
+        Mockito.verify(householdMock).setStatus(HouseholdStatus.INCOMPLETE);
+        Mockito.verify(householdMock).update(Mockito.any(DatabaseHelper.class));
+    }
+
+    private void mockSavedForm(ArrayList<IForm> savedForms, String formStatus) {
+        ODKSavedForm savedForm = Mockito.mock(ODKSavedForm.class);
+        savedForms.add(savedForm);
+        Mockito.stub(savedForm.getStatus()).toReturn(formStatus);
+    }
 
     @Test
     public void ShouldNotHandleResultForErrorResult(){
@@ -127,6 +187,21 @@ public class TakeSurveyHandlerTest {
 
         Mockito.verify(householdMock,Mockito.never()).setStatus(HouseholdStatus.DONE);
         Mockito.verify(householdMock,Mockito.never()).update(Mockito.any(DatabaseHelper.class));
+    }
+
+    class TakeSurveyHandlerStub extends TakeSurveyHandler{
+
+        private List<IForm> savedForms;
+
+        public TakeSurveyHandlerStub(ListActivity activity, Household household,List<IForm> savedForms) {
+            super(activity, household);
+            this.savedForms = savedForms;
+        }
+
+        @Override
+        protected List<IForm> getSavedForms() {
+            return savedForms;
+        }
     }
 
 }

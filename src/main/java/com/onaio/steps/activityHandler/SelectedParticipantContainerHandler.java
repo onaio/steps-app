@@ -23,7 +23,8 @@ public class SelectedParticipantContainerHandler implements IMenuPreparer {
         HouseholdStatus status = household.getStatus();
         boolean notDone = status.equals(HouseholdStatus.NOT_DONE);
         boolean deferred = status.equals(HouseholdStatus.DEFERRED);
-        return !notDone && !deferred;
+        boolean incomplete = status.equals(HouseholdStatus.INCOMPLETE);
+        return !notDone && !deferred && !incomplete;
     }
 
     @Override

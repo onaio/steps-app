@@ -64,6 +64,13 @@ public class SelectedParticipantActionsHandlerTest {
     }
 
     @Test
+    public void ShouldActivateWhenSurveyIncomplete(){
+        Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.INCOMPLETE);
+
+        assertFalse(selectedParticipantActionsHandler.shouldInactivate());
+    }
+
+    @Test
     public void ShouldInactivateWhenSurveyDeferred(){
         Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.DEFERRED);
 

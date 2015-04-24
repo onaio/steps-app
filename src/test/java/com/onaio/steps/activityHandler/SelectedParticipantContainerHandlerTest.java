@@ -36,24 +36,35 @@ public class SelectedParticipantContainerHandlerTest {
     @Test
     public void ShouldNotInactivateWhenSurveyNotDone(){
         Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.NOT_DONE);
+
         assertFalse(selectedParticipantContainerHandler.shouldInactivate());
     }
 
     @Test
     public void ShouldInactivateWhenMemberIsNotSelected(){
         Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.NOT_SELECTED);
+
         assertTrue(selectedParticipantContainerHandler.shouldInactivate());
+    }
+
+    @Test
+    public void ShouldActivateWhenHouseholdStatusIsIncomplete(){
+        Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.INCOMPLETE);
+
+        assertFalse(selectedParticipantContainerHandler.shouldInactivate());
     }
 
     @Test
     public void ShouldActivateWhenSurveyIsDeferred(){
         Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.DEFERRED);
+
         assertFalse(selectedParticipantContainerHandler.shouldInactivate());
     }
 
     @Test
     public void ShouldActivateWhenSurveyIsRefused(){
         Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.REFUSED);
+
         assertTrue(selectedParticipantContainerHandler.shouldInactivate());
     }
 

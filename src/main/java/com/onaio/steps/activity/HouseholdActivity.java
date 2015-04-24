@@ -153,7 +153,7 @@ public class HouseholdActivity extends ListActivity {
 
     private List<Member> getMembers() {
         HouseholdStatus status = household.getStatus();
-        if(status.equals(NOT_DONE) || status.equals(DEFERRED))
+        if(status.equals(NOT_DONE) || status.equals(DEFERRED) || status.equals(INCOMPLETE))
             return household.getAllUnselectedMembers(db);
         return household.getAllNonDeletedMembers(db);
     }
