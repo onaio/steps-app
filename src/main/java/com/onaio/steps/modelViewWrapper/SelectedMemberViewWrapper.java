@@ -14,7 +14,8 @@ public class SelectedMemberViewWrapper {
             return;
         TextView nameView = (TextView) activity.findViewById(R.id.selected_participant_name);
         TextView detailView = (TextView) activity.findViewById(R.id.selected_participant_details);
-        nameView.setText(selectedMember.getFormattedName());
+        String name = selectedMember.getFormattedName()+" (PID: "+selectedMember.getMemberHouseholdId()+")";
+        nameView.setText(name);
         detailView.setText(selectedMember.getFormattedDetail());
     }
 }
