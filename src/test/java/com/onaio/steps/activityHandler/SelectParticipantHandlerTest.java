@@ -15,6 +15,8 @@ import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.HouseholdStatus;
 
+import junit.framework.Assert;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -51,13 +53,13 @@ public class SelectParticipantHandlerTest {
         householdMock = mock(Household.class);
         Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.NOT_SELECTED);
         Intent intent = new Intent();
-        intent.putExtra(Constants.HOUSEHOLD,householdMock);
+        intent.putExtra(Constants.HOUSEHOLD, householdMock);
         householdActivity = Robolectric.buildActivity(HouseholdActivity.class).withIntent(intent).create().get();
         dbMock = mock(DatabaseHelper.class);
         dialogMock = mock(CustomDialog.class);
 
         androidDialogMock = Mockito.mock(android.app.Dialog.class);
-        selectParticipantHandler = new SelectParticipantHandlerMock(householdActivity, householdMock, dialogMock, dbMock, androidDialogMock,Mockito.mock(View.class));
+        selectParticipantHandler = new SelectParticipantHandlerStub(householdActivity, householdMock, dialogMock, dbMock, androidDialogMock,Mockito.mock(View.class));
     }
 
     @Test
@@ -77,7 +79,7 @@ public class SelectParticipantHandlerTest {
 
         selectParticipantHandler.open();
 
-        verify(dialogMock).confirm(eq(householdActivity),any(DialogInterface.OnClickListener.class),eq(CustomDialog.EmptyListener),any(View.class),eq(R.string.participant_re_elect_reason_title));
+        verify(dialogMock).confirm(eq(householdActivity), any(DialogInterface.OnClickListener.class), eq(CustomDialog.EmptyListener), any(View.class), eq(R.string.participant_re_elect_reason_title));
     }
 
     @Test
@@ -86,7 +88,7 @@ public class SelectParticipantHandlerTest {
 
         selectParticipantHandler.open();
 
-        verify(dialogMock).confirm(eq(householdActivity),any(DialogInterface.OnClickListener.class),eq(CustomDialog.EmptyListener),any(View.class),eq(R.string.participant_re_elect_reason_title));
+        verify(dialogMock).confirm(eq(householdActivity), any(DialogInterface.OnClickListener.class), eq(CustomDialog.EmptyListener), any(View.class), eq(R.string.participant_re_elect_reason_title));
     }
 
     @Test
@@ -104,11 +106,90 @@ public class SelectParticipantHandlerTest {
         verify(androidDialogMock).setContentView(R.layout.select_participant_dialog);
     }
 
+    @Test
+    public void ShouldInActivateWhenThereAreNoMembers(){
+        Mockito.stub(householdMock.numberOfNonSelectedMembers(Mockito.any(DatabaseHelper.class))).toReturn(0);
 
-    private class SelectParticipantHandlerMock extends SelectParticipantHandler{
+        Assert.assertTrue(selectParticipantHandler.shouldInactivate());
+    }
+
+    @Test
+    public void ShouldInActivateWhenHouseholdStatusIsIncomplete(){
+        Mockito.stub(householdMock.numberOfNonSelectedMembers(Mockito.any(DatabaseHelper.class))).toReturn(1);
+        Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.INCOMPLETE);
+
+        Assert.assertTrue(selectParticipantHandler.shouldInactivate());
+    }
+
+    @Test
+    public void ShouldInActivateWhenHouseholdStatusIsDone(){
+        Mockito.stub(householdMock.numberOfNonSelectedMembers(Mockito.any(DatabaseHelper.class))).toReturn(1);
+        Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.DONE);
+
+        Assert.assertTrue(selectParticipantHandler.shouldInactivate());
+    }
+
+    @Test
+    public void ShouldInActivateWhenHouseholdStatusIsDeferred(){
+        Mockito.stub(householdMock.numberOfNonSelectedMembers(Mockito.any(DatabaseHelper.class))).toReturn(1);
+        Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.DEFERRED);
+
+        Assert.assertTrue(selectParticipantHandler.shouldInactivate());
+    }
+
+    @Test
+    public void ShouldInActivateWhenHouseholdStatusIsRefused(){
+        Mockito.stub(householdMock.numberOfNonSelectedMembers(Mockito.any(DatabaseHelper.class))).toReturn(1);
+        Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.REFUSED);
+
+        Assert.assertTrue(selectParticipantHandler.shouldInactivate());
+    }
+
+    @Test
+    public void ShouldNOTInActivateWhenHouseholdStatusIsNotDone(){
+        Mockito.stub(householdMock.numberOfNonSelectedMembers(Mockito.any(DatabaseHelper.class))).toReturn(1);
+        Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.NOT_DONE);
+
+        Assert.assertFalse(selectParticipantHandler.shouldInactivate());
+    }
+
+    @Test
+    public void ShouldNOTInActivateWhenHouseholdStatusIsNotSelected(){
+        Mockito.stub(householdMock.numberOfNonSelectedMembers(Mockito.any(DatabaseHelper.class))).toReturn(1);
+        Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.NOT_SELECTED);
+
+        Assert.assertFalse(selectParticipantHandler.shouldInactivate());
+    }
+
+    @Test
+    public void ShouldHideTheMenuItemWhenInactivated(){
+        HouseholdActivity householdActivityMock = Mockito.mock(HouseholdActivity.class);
+        SelectParticipantHandler handler = new SelectParticipantHandler(householdActivityMock,householdMock, dialogMock, dbMock, androidDialogMock);
+        View viewMock = Mockito.mock(View.class);
+        Mockito.stub(householdActivityMock.findViewById(R.id.action_select_participant)).toReturn(viewMock);
+
+        handler.inactivate();
+
+        Mockito.verify(viewMock).setVisibility(View.GONE);
+    }
+
+    @Test
+    public void ShouldMakeTheMenuVisibleItemWhenActivated(){
+        HouseholdActivity householdActivityMock = Mockito.mock(HouseholdActivity.class);
+        SelectParticipantHandler handlerStub = new SelectParticipantHandler(householdActivityMock,householdMock, dialogMock, dbMock, androidDialogMock);
+        View viewMock = Mockito.mock(View.class);
+        Mockito.stub(householdActivityMock.findViewById(R.id.action_select_participant)).toReturn(viewMock);
+
+        handlerStub.activate();
+
+        Mockito.verify(viewMock).setVisibility(View.VISIBLE);
+    }
+
+
+    private class SelectParticipantHandlerStub extends SelectParticipantHandler{
         private View view;
 
-        public SelectParticipantHandlerMock(ListActivity activity, Household household, CustomDialog dialog, DatabaseHelper db, android.app.Dialog androidDialog, View view) {
+        public SelectParticipantHandlerStub(ListActivity activity, Household household, CustomDialog dialog, DatabaseHelper db, android.app.Dialog androidDialog, View view) {
             super(activity, household, dialog, db, androidDialog);
             this.view = view;
         }

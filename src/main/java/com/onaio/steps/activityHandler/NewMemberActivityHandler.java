@@ -29,7 +29,6 @@ public class NewMemberActivityHandler implements IMenuHandler, IActivityResultHa
     private MemberAdapter memberAdapter;
     private DatabaseHelper db;
 
-
     NewMemberActivityHandler(Household household, ListActivity activity, MemberAdapter memberAdapter, DatabaseHelper db) {
         this.household = household;
         this.activity = activity;
@@ -71,7 +70,6 @@ public class NewMemberActivityHandler implements IMenuHandler, IActivityResultHa
     public boolean canHandleResult(int requestCode) {
         return requestCode == RequestCode.NEW_MEMBER.getCode();
     }
-
 
     @Override
     public boolean shouldInactivate() {

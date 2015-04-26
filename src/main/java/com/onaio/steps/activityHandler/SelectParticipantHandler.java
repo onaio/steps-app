@@ -30,7 +30,6 @@ import static com.onaio.steps.model.HouseholdStatus.NOT_DONE;
 public class SelectParticipantHandler implements IMenuHandler, IMenuPreparer {
 
     private final int MENU_ID = R.id.action_select_participant;
-    private final int MAX_RE_ELECT_COUNT = 2;
     private CustomDialog dialog;
     private ListActivity activity;
     private Household household;
@@ -66,9 +65,8 @@ public class SelectParticipantHandler implements IMenuHandler, IMenuPreparer {
         boolean noMember = household.numberOfNonSelectedMembers(db) == 0;
         boolean noSelection = household.getStatus() == HouseholdStatus.NOT_SELECTED;
         boolean selected = household.getStatus() == HouseholdStatus.NOT_DONE;
-        boolean maxReElectionReached = ReElectReason.getAll(db, household).size() >= MAX_RE_ELECT_COUNT;
         boolean canSelectParticipant = noSelection || selected ;
-        return noMember || !canSelectParticipant || maxReElectionReached;
+        return noMember || !canSelectParticipant ;
     }
 
     @Override
