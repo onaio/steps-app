@@ -2,6 +2,7 @@ package com.onaio.steps.activityHandler;
 
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.view.View;
@@ -12,6 +13,7 @@ import com.onaio.steps.activity.HouseholdActivity;
 import com.onaio.steps.activity.NewMemberActivity;
 import com.onaio.steps.adapter.MemberAdapter;
 import com.onaio.steps.helper.Constants;
+import com.onaio.steps.helper.CustomDialog;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.HouseholdStatus;
@@ -43,6 +45,7 @@ public class NewMemberActivityHandlerTest {
     NewMemberActivityHandler newMemberActivityHandler;
     @Mock
     private MemberAdapter memberAdapterMock;
+    private CustomDialog customDialogMock;
 
 
     @Before
@@ -51,7 +54,8 @@ public class NewMemberActivityHandlerTest {
         householdActivityMock = Mockito.mock(HouseholdActivity.class);
         householdMock = Mockito.mock(Household.class);
         memberAdapterMock = Mockito.mock(MemberAdapter.class);
-        newMemberActivityHandler = new NewMemberActivityHandler(householdMock,householdActivityMock, memberAdapterMock, dbMock);
+        customDialogMock = Mockito.mock(CustomDialog.class);
+        newMemberActivityHandler = new NewMemberActivityHandler(householdMock,householdActivityMock, memberAdapterMock, dbMock, customDialogMock);
     }
 
     @Test
@@ -67,23 +71,40 @@ public class NewMemberActivityHandlerTest {
     }
 
     @Test
-    public void ShouldStartNewMemberActivityIfHouseholdIsNotNull() {
+    public void ShouldStartNewMemberActivityIfHouseholdIsNotNullAndHouseholdSurveyIsNotSelected() {
+        Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.NOT_SELECTED);
+
         newMemberActivityHandler.open();
 
         Mockito.verify(householdActivityMock).startActivityForResult(Mockito.argThat(matchIntent()), Mockito.eq(RequestCode.NEW_MEMBER.getCode()));
     }
 
-    private ArgumentMatcher<Intent> matchIntent() {
-        return new ArgumentMatcher<Intent>() {
-            @Override
-            public boolean matches(Object argument) {
-                Intent intent = (Intent) argument;
-                Household actualHousehold = (Household) intent.getSerializableExtra(Constants.HOUSEHOLD);
-                Assert.assertEquals(householdMock, actualHousehold);
-                Assert.assertEquals(NewMemberActivity.class.getName(),intent.getComponent().getClassName());
-                return true;
-            }
-        };
+    @Test
+    public void ShouldStartNewMemberActivityIfHouseholdIsNotNullAndHouseholdSurveyIsDeselected() {
+        Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.DESELECTED);
+
+        newMemberActivityHandler.open();
+
+        Mockito.verify(householdActivityMock).startActivityForResult(Mockito.argThat(matchIntent()), Mockito.eq(RequestCode.NEW_MEMBER.getCode()));
+    }
+
+    @Test
+    public void ShouldNotStartNewMemberActivityIfHouseholdIsNull() {
+        newMemberActivityHandler = new NewMemberActivityHandler(null,householdActivityMock, memberAdapterMock, dbMock, customDialogMock);
+
+        newMemberActivityHandler.open();
+
+        Mockito.verify(householdActivityMock,Mockito.never()).startActivityForResult(Mockito.argThat(matchIntent()), Mockito.eq(RequestCode.NEW_MEMBER.getCode()));
+        Mockito.verify(customDialogMock,Mockito.never()).confirm(Mockito.eq(householdActivityMock), Mockito.any(DialogInterface.OnClickListener.class),Mockito.eq(CustomDialog.EmptyListener),Mockito.eq(R.string.member_add_confirm),Mockito.eq(R.string.confirm_ok));
+    }
+
+    @Test
+    public void ShouldConfirmIfHouseholdIsNotNullAndHouseholdSurveyIsNotDone() {
+        Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.NOT_DONE);
+
+        newMemberActivityHandler.open();
+
+        Mockito.verify(customDialogMock).confirm(Mockito.eq(householdActivityMock), Mockito.any(DialogInterface.OnClickListener.class),Mockito.eq(CustomDialog.EmptyListener),Mockito.eq(R.string.member_add_confirm),Mockito.eq(R.string.confirm_ok));
     }
 
     @Test
@@ -115,7 +136,7 @@ public class NewMemberActivityHandlerTest {
     }
 
     @Test
-    public void ShouldNotReIntialiseViewForOtherResultCode(){
+    public void ShouldNotReInitialiseViewForOtherResultCode(){
         newMemberActivityHandler.handleResult(null, Activity.RESULT_CANCELED);
 
         Mockito.verify(memberAdapterMock,Mockito.never()).reinitialize(Mockito.anyList());
@@ -172,6 +193,19 @@ public class NewMemberActivityHandlerTest {
         newMemberActivityHandler.activate();
 
         verify(viewMock).setVisibility(View.VISIBLE);
+    }
+
+    private ArgumentMatcher<Intent> matchIntent() {
+        return new ArgumentMatcher<Intent>() {
+            @Override
+            public boolean matches(Object argument) {
+                Intent intent = (Intent) argument;
+                Household actualHousehold = (Household) intent.getSerializableExtra(Constants.HOUSEHOLD);
+                Assert.assertEquals(householdMock, actualHousehold);
+                Assert.assertEquals(NewMemberActivity.class.getName(),intent.getComponent().getClassName());
+                return true;
+            }
+        };
     }
 
 
