@@ -5,7 +5,6 @@ public class Constants {
     public static final String DATE_FORMAT = "yyyy/MM/dd";
 
 
-    //keys for intent data
     public static final String PHONE_ID = "phoneId";
     public static final String HOUSEHOLD_SEED = "householdSeedId";
     public static final String MIN_AGE = "minAge";
@@ -13,7 +12,8 @@ public class Constants {
     public static final String HOUSEHOLD = "HOUSEHOLD";
     public static final String MEMBER = "MEMBER";
 
-    //Gender
+    public static final String HOUSEHOLD_ID_LABEL = "HHID: ";
+
     public static final String HEADER_GREEN = "#008148";
     public static final String TEXT_GREEN = "#53B257";
     public static final String SURVEY_NA = "NA";

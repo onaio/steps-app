@@ -83,5 +83,5 @@
     <string name="export_start_message">Export status will notified in the notification tray once it completes. Start the export?</string>
     <string name="import_fail_message">Import failed, please use a valid csv file and try again.</string>
     <string name="continue_interview">Continue Interview</string>
-    <string name="member_add_confirm">Adding a new member will deselect the participant. Do you want to continue?</string>
+    <string name="member_add_confirm">Are you sure you want to add a member, this action will clear the selection you did before.</string>
 </resources>
