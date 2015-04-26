@@ -87,13 +87,31 @@ public class NewMemberActivityHandlerTest {
     }
 
     @Test
-    public void ShouldReIntialiseViewResultForResultCodeOk(){
+    public void ShouldRecreateActivityAndUpdateHouseholdForResultCodeOk(){
         Cursor cursorMock = Mockito.mock(Cursor.class);
         Mockito.stub(dbMock.exec(Mockito.anyString())).toReturn(cursorMock);
+        Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.NOT_DONE);
+
         newMemberActivityHandler.handleResult(null, Activity.RESULT_OK);
 
-        Mockito.verify(memberAdapterMock).reinitialize(Mockito.anyList());
-        Mockito.verify(memberAdapterMock).notifyDataSetChanged();
+        Mockito.verify(householdMock).setSelectedMemberId(null);
+        Mockito.verify(householdMock).setStatus(HouseholdStatus.DESELECTED);
+        Mockito.verify(householdMock).update(Mockito.any(DatabaseHelper.class));
+        Mockito.verify(householdActivityMock).recreate();
+    }
+
+    @Test
+    public void ShouldRecreateActivityAndUpdateHouseholdWithoutChangingStatusForResultCodeOkAndHouseholdStatusNotSelected(){
+        Cursor cursorMock = Mockito.mock(Cursor.class);
+        Mockito.stub(dbMock.exec(Mockito.anyString())).toReturn(cursorMock);
+        Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.NOT_SELECTED);
+
+        newMemberActivityHandler.handleResult(null, Activity.RESULT_OK);
+
+        Mockito.verify(householdMock).setSelectedMemberId(null);
+        Mockito.verify(householdMock,Mockito.never()).setStatus(HouseholdStatus.DESELECTED);
+        Mockito.verify(householdMock).update(Mockito.any(DatabaseHelper.class));
+        Mockito.verify(householdActivityMock).recreate();
     }
 
     @Test

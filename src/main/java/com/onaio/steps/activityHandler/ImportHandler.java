@@ -82,7 +82,7 @@ public class ImportHandler implements IMenuHandler, IActivityResultHandler {
                 Member member = new Member(surname, firstName, Gender.valueOf(gender), Integer.parseInt(age), household, Boolean.getBoolean(deleted));
                 member.setMemberHouseholdId(memberHouseholdId);
                 member.save(db);
-                if(!(surveyStatus.equals(Constants.SURVEY_NA) || surveyStatus.equals(HouseholdStatus.NOT_SELECTED.toString()))) {
+                if(!(surveyStatus.equals(Constants.SURVEY_NA) || surveyStatus.equals(HouseholdStatus.NOT_SELECTED.toString())|| surveyStatus.equals(HouseholdStatus.DESELECTED.toString()))) {
                     household.setStatus(HouseholdStatus.valueOf(surveyStatus));
                     household.setSelectedMemberId(String.valueOf(member.getId()));
                     household.update(db);

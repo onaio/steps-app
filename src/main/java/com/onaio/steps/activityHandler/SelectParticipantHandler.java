@@ -64,8 +64,9 @@ public class SelectParticipantHandler implements IMenuHandler, IMenuPreparer {
     public boolean shouldInactivate() {
         boolean noMember = household.numberOfNonSelectedMembers(db) == 0;
         boolean noSelection = household.getStatus() == HouseholdStatus.NOT_SELECTED;
+        boolean deSelected = household.getStatus() == HouseholdStatus.DESELECTED;
         boolean selected = household.getStatus() == HouseholdStatus.NOT_DONE;
-        boolean canSelectParticipant = noSelection || selected ;
+        boolean canSelectParticipant = noSelection || selected || deSelected;
         return noMember || !canSelectParticipant ;
     }
 
@@ -118,6 +119,8 @@ public class SelectParticipantHandler implements IMenuHandler, IMenuPreparer {
         };
         switch(household.getStatus()){
             case NOT_SELECTED: popUpMessage();
+                break;
+            case DESELECTED: dialog.confirm(activity, confirmListenerForReElection, CustomDialog.EmptyListener, confirmation, R.string.participant_re_elect_reason_title);
                 break;
             case NOT_DONE: dialog.confirm(activity, confirmListenerForReElection, CustomDialog.EmptyListener, confirmation, R.string.participant_re_elect_reason_title);
                 break;

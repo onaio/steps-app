@@ -83,6 +83,15 @@ public class SelectParticipantHandlerTest {
     }
 
     @Test
+    public void ShouldConfirmWhenSurveyIsDeselected(){
+        Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.DESELECTED);
+
+        selectParticipantHandler.open();
+
+        verify(dialogMock).confirm(eq(householdActivity), any(DialogInterface.OnClickListener.class), eq(CustomDialog.EmptyListener), any(View.class), eq(R.string.participant_re_elect_reason_title));
+    }
+
+    @Test
     public void ShouldConfirmWhenSurveyIsDeferred(){
         Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.DEFERRED);
 
@@ -149,6 +158,14 @@ public class SelectParticipantHandlerTest {
     public void ShouldNOTInActivateWhenHouseholdStatusIsNotDone(){
         Mockito.stub(householdMock.numberOfNonSelectedMembers(Mockito.any(DatabaseHelper.class))).toReturn(1);
         Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.NOT_DONE);
+
+        Assert.assertFalse(selectParticipantHandler.shouldInactivate());
+    }
+
+    @Test
+    public void ShouldNOTInActivateWhenHouseholdStatusIsDeselected(){
+        Mockito.stub(householdMock.numberOfNonSelectedMembers(Mockito.any(DatabaseHelper.class))).toReturn(1);
+        Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.DESELECTED);
 
         Assert.assertFalse(selectParticipantHandler.shouldInactivate());
     }

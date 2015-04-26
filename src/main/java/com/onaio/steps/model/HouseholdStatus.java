@@ -6,5 +6,6 @@ public enum HouseholdStatus {
     NOT_DONE,
     DONE,
     DEFERRED,
+    DESELECTED,
     REFUSED
 }

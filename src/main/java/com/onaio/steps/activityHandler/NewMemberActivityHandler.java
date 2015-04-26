@@ -60,10 +60,16 @@ public class NewMemberActivityHandler implements IMenuHandler, IActivityResultHa
             return ;
         if (memberAdapter == null)
             return;
-        List<Member> members = household.getAllUnselectedMembers(db);
-        memberAdapter.reinitialize(members);
-        memberAdapter.notifyDataSetChanged();
-        activity.invalidateOptionsMenu();
+        updateHousehold();
+        activity.recreate();
+    }
+
+    private void updateHousehold() {
+        household.setSelectedMemberId(null);
+        HouseholdStatus status = household.getStatus();
+        if(!status.equals(HouseholdStatus.NOT_SELECTED))
+            household.setStatus(HouseholdStatus.DESELECTED);
+        household.update(db);
     }
 
     @Override
