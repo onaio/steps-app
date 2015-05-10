@@ -93,10 +93,11 @@ public class StepsActivity extends ListActivity {
 
     private void setLayout() {
         if(getValue(PHONE_ID) == null || getValue(PHONE_ID).equals(""))
-            setContentView(R.layout.first_main);
-        else
+         setContentView(R.layout.first_main);
+        else {
             setContentView(R.layout.main);
-        setTitle(R.string.main_header);
+            setTitle(R.string.main_header);
+        }
         setTitleColor(Color.parseColor(HEADER_GREEN));
     }
 

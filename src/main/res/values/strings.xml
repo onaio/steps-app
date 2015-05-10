@@ -55,7 +55,7 @@
     <string name="main_header">Households</string>
     <string name="household_members_header">Household Members</string>
     <string name="go_to_settings">GET STARTED</string>
-    <string name="welcome_message">Welcome! Start using the WHO STEPs app by entering your Phone id in the app settings.</string>
+    <string name="welcome_message">Welcome! Start using the WHO STEPS app by entering your Device ID in the app settings.</string>
     <string name="household_edit_header">Edit Household</string>
     <string name="household_new_header">Add New Household</string>
     <string name="member_edit_header">Edit Member</string>
