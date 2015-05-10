@@ -2,9 +2,7 @@ package com.onaio.steps.activityHandler.Factory;
 
 import android.content.Intent;
 
-import com.onaio.steps.activity.EditHouseholdActivity;
 import com.onaio.steps.activity.HouseholdActivity;
-import com.onaio.steps.activity.NewMemberActivity;
 import com.onaio.steps.activityHandler.BackHomeHandler;
 import com.onaio.steps.activityHandler.DeferredHandler;
 import com.onaio.steps.activityHandler.EditHouseholdActivityHandler;
@@ -57,8 +55,7 @@ public class HouseholdActivityFactoryTest extends TestCase {
 
         ArrayList<Class> menuHandlerTypes = getTypes(menuHandlers);
 
-        assertEquals(4,menuHandlers.size());
-        Assert.assertTrue(menuHandlerTypes.contains(ExportHandler.class));
+        assertEquals(3,menuHandlers.size());
         Assert.assertTrue(menuHandlerTypes.contains(SelectParticipantHandler.class));
         Assert.assertTrue(menuHandlerTypes.contains(BackHomeHandler.class));
         Assert.assertTrue(menuHandlerTypes.contains(EditHouseholdActivityHandler.class));
@@ -89,7 +86,7 @@ public class HouseholdActivityFactoryTest extends TestCase {
 
         ArrayList<Class> menuHandlerTypes = getTypes(menuHandlers);
 
-        assertEquals(1, menuHandlers.size());
+        assertEquals(0, menuHandlers.size());
         Assert.assertTrue(menuHandlerTypes.contains(ExportHandler.class));
     }
 

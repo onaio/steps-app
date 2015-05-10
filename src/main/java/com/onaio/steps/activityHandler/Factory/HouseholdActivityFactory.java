@@ -6,17 +6,16 @@ import android.view.Menu;
 import com.onaio.steps.activityHandler.BackHomeHandler;
 import com.onaio.steps.activityHandler.DeferredHandler;
 import com.onaio.steps.activityHandler.EditHouseholdActivityHandler;
-import com.onaio.steps.activityHandler.ExportHandler;
 import com.onaio.steps.activityHandler.Interface.IActivityResultHandler;
 import com.onaio.steps.activityHandler.Interface.IListItemHandler;
-import com.onaio.steps.activityHandler.Interface.IMenuPreparer;
-import com.onaio.steps.activityHandler.SelectedParticipantContainerHandler;
-import com.onaio.steps.activityHandler.SelectedParticipantActionsHandler;
 import com.onaio.steps.activityHandler.Interface.IMenuHandler;
+import com.onaio.steps.activityHandler.Interface.IMenuPreparer;
 import com.onaio.steps.activityHandler.MemberActivityHandler;
 import com.onaio.steps.activityHandler.NewMemberActivityHandler;
 import com.onaio.steps.activityHandler.RefusedHandler;
 import com.onaio.steps.activityHandler.SelectParticipantHandler;
+import com.onaio.steps.activityHandler.SelectedParticipantActionsHandler;
+import com.onaio.steps.activityHandler.SelectedParticipantContainerHandler;
 import com.onaio.steps.activityHandler.TakeSurveyHandler;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.Member;
@@ -28,7 +27,7 @@ public class HouseholdActivityFactory {
 
     public static List<IMenuHandler> getMenuHandlers(ListActivity activity, Household household){
         ArrayList<IMenuHandler> handlers = new ArrayList<IMenuHandler>();
-        handlers.add(new ExportHandler(activity).with(household));
+    //    handlers.add(new ExportHandler(activity).with(household));
         handlers.add(new SelectParticipantHandler(activity,household));
         handlers.add(new BackHomeHandler(activity));
         handlers.add(new EditHouseholdActivityHandler(activity,household));
@@ -49,7 +48,7 @@ public class HouseholdActivityFactory {
 
     public static List<IMenuPreparer> getMenuPreparer(ListActivity activity, Household household, Menu menu){
         List<IMenuPreparer> menuPreparers = new ArrayList<IMenuPreparer>();
-        menuPreparers.add(new ExportHandler(activity).with(household).withMenu(menu));
+    //    menuPreparers.add(new ExportHandler(activity).with(household).withMenu(menu));
         return menuPreparers;
     }
 

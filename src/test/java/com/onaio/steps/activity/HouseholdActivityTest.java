@@ -81,10 +81,10 @@ public class HouseholdActivityTest {
 
             householdActivity.onCreateOptionsMenu(menu);
 
-            MenuItem exportMenuItem = menu.findItem(R.id.action_export);
+    //        MenuItem exportMenuItem = menu.findItem(R.id.action_export);
             MenuItem editMenuItem = menu.findItem(R.id.action_edit);
 
-            assertNotNull(exportMenuItem);
+    //        assertNull(exportMenuItem);
             assertNotNull(editMenuItem);
         }
 
