@@ -4,11 +4,13 @@ import android.app.ListActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 
-import com.onaio.steps.activity.NewHouseholdActivity;
 import com.onaio.steps.R;
+import com.onaio.steps.activity.HouseholdActivity;
+import com.onaio.steps.activity.NewHouseholdActivity;
 import com.onaio.steps.activityHandler.Interface.IActivityResultHandler;
 import com.onaio.steps.activityHandler.Interface.IMenuHandler;
 import com.onaio.steps.adapter.HouseholdAdapter;
+import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.CustomDialog;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.model.Household;
@@ -16,7 +18,8 @@ import com.onaio.steps.model.RequestCode;
 
 import static android.app.Activity.RESULT_OK;
 import static android.content.Context.MODE_PRIVATE;
-import static com.onaio.steps.helper.Constants.*;
+import static com.onaio.steps.helper.Constants.HOUSEHOLD_SEED;
+import static com.onaio.steps.helper.Constants.PHONE_ID;
 
 public class NewHouseholdActivityHandler implements IMenuHandler, IActivityResultHandler {
 
@@ -58,6 +61,10 @@ public class NewHouseholdActivityHandler implements IMenuHandler, IActivityResul
                 return;
             householdAdapter.reinitialize(Household.getAll(new DatabaseHelper(activity.getApplicationContext())));
             householdAdapter.notifyDataSetChanged();
+
+            Intent householdActivityIntent = new Intent(activity, HouseholdActivity.class);
+            householdActivityIntent.putExtra(Constants.HOUSEHOLD,data.getSerializableExtra(Constants.HOUSEHOLD));
+            activity.startActivity(householdActivityIntent);
         }
     }
 

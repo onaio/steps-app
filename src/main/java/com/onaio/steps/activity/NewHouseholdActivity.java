@@ -6,14 +6,17 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
 import com.onaio.steps.R;
 import com.onaio.steps.exception.InvalidDataException;
+import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.CustomDialog;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.modelViewWrapper.HouseholdViewWrapper;
 
-import static com.onaio.steps.helper.Constants.*;
+import static com.onaio.steps.helper.Constants.HOUSEHOLD_SEED;
+import static com.onaio.steps.helper.Constants.PHONE_ID;
 
 public class NewHouseholdActivity extends Activity {
 
@@ -58,6 +61,7 @@ public class NewHouseholdActivity extends Activity {
             Intent intent = this.getIntent();
             Household household = new HouseholdViewWrapper(this).getHousehold(R.id.generated_household_id, R.id.household_number);
             household.save(db);
+            intent.putExtra(Constants.HOUSEHOLD,household);
             setResult(RESULT_OK, intent);
             finish();
         } catch (InvalidDataException e) {
