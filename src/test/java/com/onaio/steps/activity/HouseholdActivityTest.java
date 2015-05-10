@@ -59,7 +59,7 @@ public class HouseholdActivityTest {
     public void ShouldStyleActionBar() {
         TextView idHeader = (TextView) householdActivity.findViewById(R.id.household_id_header);
         TextView numberHeader = (TextView) householdActivity.findViewById(R.id.household_number_header);
-        assertEquals("ID-123-100",idHeader.getText().toString());
+        assertEquals("Household ID-123-100",idHeader.getText().toString());
         assertEquals("Phone Number: 1234567",numberHeader.getText().toString());
         assertEquals(Color.parseColor(Constants.HEADER_GREEN),idHeader.getCurrentTextColor());
     }

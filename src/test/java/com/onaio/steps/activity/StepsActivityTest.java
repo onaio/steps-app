@@ -40,7 +40,7 @@ public class StepsActivityTest extends TestCase {
 
         assertNull(mainLayout);
         assertNotNull(firstMain);
-        assertEquals(stepsActivityMock.getString(R.string.main_header), title);
+        assertEquals("STEPS", title);
         assertEquals(Color.parseColor(Constants.HEADER_GREEN),titleColor);
     }
 
