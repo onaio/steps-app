@@ -76,7 +76,6 @@ public class NewMemberActivityHandler implements IMenuHandler, IActivityResultHa
         if (memberAdapter == null)
             return;
         updateHousehold();
-        activity.recreate();
     }
 
     private void updateHousehold() {

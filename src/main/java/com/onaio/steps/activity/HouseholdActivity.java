@@ -61,9 +61,9 @@ public class HouseholdActivity extends ListActivity {
 
     @Override
     protected void onResume() {
+        super.onResume();
         prepareCustomMenu();
         populateMembers();
-        super.onResume();
     }
 
     @Override
@@ -73,16 +73,6 @@ public class HouseholdActivity extends ListActivity {
             if(menuHandler.shouldOpen(item.getItemId()))
                 menuHandler.open();
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        List<IMenuPreparer> menuPreparers = HouseholdActivityFactory.getMenuPreparer(this, household, menu);
-        for (IMenuPreparer menuPreparer: menuPreparers)
-            if(menuPreparer.shouldInactivate())
-                menuPreparer.inactivate();
-        super.onPrepareOptionsMenu(menu);
-        return true;
     }
 
     @Override

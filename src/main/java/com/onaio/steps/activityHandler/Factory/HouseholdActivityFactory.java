@@ -1,7 +1,6 @@
 package com.onaio.steps.activityHandler.Factory;
 
 import android.app.ListActivity;
-import android.view.Menu;
 
 import com.onaio.steps.activityHandler.BackHomeHandler;
 import com.onaio.steps.activityHandler.DeferredHandler;
@@ -27,7 +26,6 @@ public class HouseholdActivityFactory {
 
     public static List<IMenuHandler> getMenuHandlers(ListActivity activity, Household household){
         ArrayList<IMenuHandler> handlers = new ArrayList<IMenuHandler>();
-    //    handlers.add(new ExportHandler(activity).with(household));
         handlers.add(new SelectParticipantHandler(activity,household));
         handlers.add(new BackHomeHandler(activity));
         handlers.add(new EditHouseholdActivityHandler(activity,household));
@@ -46,11 +44,7 @@ public class HouseholdActivityFactory {
         return new MemberActivityHandler(activity, member);
     }
 
-    public static List<IMenuPreparer> getMenuPreparer(ListActivity activity, Household household, Menu menu){
-        List<IMenuPreparer> menuPreparers = new ArrayList<IMenuPreparer>();
-    //    menuPreparers.add(new ExportHandler(activity).with(household).withMenu(menu));
-        return menuPreparers;
-    }
+
 
     public static List<IMenuPreparer> getCustomMenuPreparer(ListActivity activity, Household household){
         ArrayList<IMenuPreparer> menuItems = new ArrayList<IMenuPreparer>();
