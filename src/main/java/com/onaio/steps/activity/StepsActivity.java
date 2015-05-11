@@ -18,6 +18,7 @@ import com.onaio.steps.R;
 import com.onaio.steps.activityHandler.Factory.StepsActivityFactory;
 import com.onaio.steps.activityHandler.Interface.IActivityResultHandler;
 import com.onaio.steps.activityHandler.Interface.IMenuHandler;
+import com.onaio.steps.activityHandler.Interface.IMenuPreparer;
 import com.onaio.steps.adapter.HouseholdAdapter;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.helper.KeyValueStoreFactory;
@@ -55,7 +56,7 @@ public class StepsActivity extends ListActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         List<IMenuHandler> activityHandlers = StepsActivityFactory.getMenuHandlers(this, Household.getAll(new DatabaseHelper(this)));
         for(IMenuHandler handler : activityHandlers){
-            if(handler.shouldOpen(item.getItemId()))
+            if(handler.shouldOpen(item.getItemId()) )
                 return handler.open();
         }
         return super.onOptionsItemSelected(item);
@@ -69,6 +70,20 @@ public class StepsActivity extends ListActivity {
                 activityHandler.handleResult(data,resultCode);
         }
     }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        List<IMenuPreparer> menuItemHandlers = StepsActivityFactory.getMenuPreparer(this,Household.getAll(new DatabaseHelper(this)), menu);
+        for(IMenuPreparer handler:menuItemHandlers)
+            if(handler.shouldInactivate())
+                handler.inactivate();
+            else
+                handler.activate();
+        super.onPrepareOptionsMenu(menu);
+        return true;
+    }
+
+
 
     public void prepareScreen() {
         setLayout();

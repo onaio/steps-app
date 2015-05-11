@@ -101,15 +101,9 @@ public class ExportHandler implements IMenuHandler,IMenuPreparer {
         return this;
     }
 
-    public ExportHandler with(Household household){
-        households = new ArrayList<Household>();
-        households.add(household);
-        return this;
-    }
-
     @Override
     public boolean shouldInactivate() {
-        return households.get(0).numberOfNonDeletedMembers(new DatabaseHelper(activity)) <=0;
+           return households.isEmpty();
     }
 
     @Override
