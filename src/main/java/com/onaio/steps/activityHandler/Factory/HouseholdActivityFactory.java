@@ -44,8 +44,6 @@ public class HouseholdActivityFactory {
         return new MemberActivityHandler(activity, member);
     }
 
-
-
     public static List<IMenuPreparer> getCustomMenuPreparer(ListActivity activity, Household household){
         ArrayList<IMenuPreparer> menuItems = new ArrayList<IMenuPreparer>();
         menuItems.add(new TakeSurveyHandler(activity,household));

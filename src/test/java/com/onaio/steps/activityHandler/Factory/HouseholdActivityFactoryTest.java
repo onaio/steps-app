@@ -6,7 +6,6 @@ import com.onaio.steps.activity.HouseholdActivity;
 import com.onaio.steps.activityHandler.BackHomeHandler;
 import com.onaio.steps.activityHandler.DeferredHandler;
 import com.onaio.steps.activityHandler.EditHouseholdActivityHandler;
-import com.onaio.steps.activityHandler.ExportHandler;
 import com.onaio.steps.activityHandler.Interface.IActivityResultHandler;
 import com.onaio.steps.activityHandler.Interface.IListItemHandler;
 import com.onaio.steps.activityHandler.Interface.IMenuHandler;
@@ -78,16 +77,6 @@ public class HouseholdActivityFactoryTest extends TestCase {
         IListItemHandler itemHandler = HouseholdActivityFactory.getMemberItemHandler(activity, null);
 
         Assert.assertEquals(MemberActivityHandler.class, itemHandler.getClass());
-    }
-
-    @Test
-    public void ShouldHaveProperMenuPreparers(){
-        List<IMenuPreparer> menuHandlers = HouseholdActivityFactory.getMenuPreparer(activity, household, null);
-
-        ArrayList<Class> menuHandlerTypes = getTypes(menuHandlers);
-
-        assertEquals(0, menuHandlers.size());
-        Assert.assertTrue(menuHandlerTypes.contains(ExportHandler.class));
     }
 
     @Test

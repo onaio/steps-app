@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 
 import com.onaio.steps.R;
+import com.onaio.steps.activity.HouseholdActivity;
 import com.onaio.steps.activity.NewHouseholdActivity;
 import com.onaio.steps.activity.StepsActivity;
 import com.onaio.steps.adapter.HouseholdAdapter;
@@ -24,6 +25,8 @@ import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowActivity;
+
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -107,17 +110,25 @@ public class NewHouseholdActivityHandlerTest {
     }
 
     @Test
-    public void ShouldHandleResultForResultCodeOk(){
+    public void ShouldHandleResultAndStartHouseholdActivityForResultCodeOk(){
+        Intent intent = new Intent();
         Household name = new Household("name", "123321412312", HouseholdStatus.NOT_SELECTED, "123");
         name.save(new DatabaseHelper(stepsActivity));
+        intent.putExtra(Constants.HOUSEHOLD,name);
         HouseholdAdapter householdAdapterMock = Mockito.mock(HouseholdAdapter.class);
         Mockito.stub(householdAdapterMock.getViewTypeCount()).toReturn(1);
         stepsActivity.getListView().setAdapter(householdAdapterMock);
+        ShadowActivity stepsActivityShadow = Robolectric.shadowOf(stepsActivity);
 
-        handler.handleResult(null, Activity.RESULT_OK);
+        handler.handleResult(intent, Activity.RESULT_OK);
 
         Mockito.verify(householdAdapterMock).reinitialize(Mockito.anyList());
         Mockito.verify(householdAdapterMock).notifyDataSetChanged();
+
+
+        Intent newIntent = stepsActivityShadow.getNextStartedActivity();
+        assertEquals(HouseholdActivity.class.getName(),newIntent.getComponent().getClassName());
+        assertEquals(name,newIntent.getSerializableExtra(Constants.HOUSEHOLD));
     }
 
     @Test

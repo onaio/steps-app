@@ -32,7 +32,6 @@ import org.robolectric.annotation.Config;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.stub;
 import static org.mockito.Mockito.verify;
 
@@ -108,7 +107,7 @@ public class NewMemberActivityHandlerTest {
     }
 
     @Test
-    public void ShouldRecreateActivityAndUpdateHouseholdForResultCodeOk(){
+    public void ShouldUpdateHouseholdForResultCodeOk(){
         Cursor cursorMock = Mockito.mock(Cursor.class);
         Mockito.stub(dbMock.exec(Mockito.anyString())).toReturn(cursorMock);
         Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.NOT_DONE);
@@ -118,11 +117,10 @@ public class NewMemberActivityHandlerTest {
         Mockito.verify(householdMock).setSelectedMemberId(null);
         Mockito.verify(householdMock).setStatus(HouseholdStatus.DESELECTED);
         Mockito.verify(householdMock).update(Mockito.any(DatabaseHelper.class));
-        Mockito.verify(householdActivityMock).recreate();
     }
 
     @Test
-    public void ShouldRecreateActivityAndUpdateHouseholdWithoutChangingStatusForResultCodeOkAndHouseholdStatusNotSelected(){
+    public void ShouldUpdateHouseholdWithoutChangingStatusForResultCodeOkAndHouseholdStatusNotSelected(){
         Cursor cursorMock = Mockito.mock(Cursor.class);
         Mockito.stub(dbMock.exec(Mockito.anyString())).toReturn(cursorMock);
         Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.NOT_SELECTED);
@@ -132,7 +130,6 @@ public class NewMemberActivityHandlerTest {
         Mockito.verify(householdMock).setSelectedMemberId(null);
         Mockito.verify(householdMock,Mockito.never()).setStatus(HouseholdStatus.DESELECTED);
         Mockito.verify(householdMock).update(Mockito.any(DatabaseHelper.class));
-        Mockito.verify(householdActivityMock).recreate();
     }
 
     @Test
