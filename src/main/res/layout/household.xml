@@ -151,6 +151,22 @@
             android:id="@+id/action_select_participant"
             android:textSize="12sp"
             style="?android:attr/buttonBarButtonStyle"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:layout_margin="15dp"
+            android:background="@android:color/holo_red_dark"
+            android:text="Cancel Selection"
+            android:textColor="@android:color/black"
+            android:drawableStart="@drawable/ic_action_select_participant"
+            android:drawablePadding="-10dp"
+            android:paddingLeft="10dp"
+            android:onClick="handleCustomMenu"
+            android:id="@+id/action_cancel_participant"
+            android:textSize="12sp"
+            style="?android:attr/buttonBarButtonStyle"/>
         </LinearLayout>
     <TextView
         android:layout_width="wrap_content"

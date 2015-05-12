@@ -3,6 +3,7 @@ package com.onaio.steps.activityHandler.Factory;
 import android.app.ListActivity;
 
 import com.onaio.steps.activityHandler.BackHomeHandler;
+import com.onaio.steps.activityHandler.CancelHandler;
 import com.onaio.steps.activityHandler.DeferredHandler;
 import com.onaio.steps.activityHandler.EditHouseholdActivityHandler;
 import com.onaio.steps.activityHandler.Interface.IActivityResultHandler;
@@ -53,6 +54,7 @@ public class HouseholdActivityFactory {
         menuItems.add(new NewMemberActivityHandler(activity,household));
         menuItems.add(new SelectParticipantHandler(activity,household));
         menuItems.add(new SelectedParticipantContainerHandler(activity,household));
+        menuItems.add(new CancelHandler(activity,household));
         return menuItems;
     }
 
@@ -63,6 +65,8 @@ public class HouseholdActivityFactory {
         handlers.add(new RefusedHandler(activity,household));
         handlers.add(new NewMemberActivityHandler(activity,household));
         handlers.add(new SelectParticipantHandler(activity,household));
+        handlers.add(new CancelHandler(activity,household));
+
         return handlers;
     }
 }

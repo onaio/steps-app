@@ -54,7 +54,7 @@ public class NewMemberActivityHandlerTest {
         householdMock = Mockito.mock(Household.class);
         memberAdapterMock = Mockito.mock(MemberAdapter.class);
         customDialogMock = Mockito.mock(CustomDialog.class);
-        newMemberActivityHandler = new NewMemberActivityHandler(householdMock,householdActivityMock, memberAdapterMock, dbMock, customDialogMock);
+        newMemberActivityHandler = new NewMemberActivityHandler(householdMock,householdActivityMock, memberAdapterMock, dbMock);
     }
 
     @Test
@@ -79,17 +79,8 @@ public class NewMemberActivityHandlerTest {
     }
 
     @Test
-    public void ShouldStartNewMemberActivityIfHouseholdIsNotNullAndHouseholdSurveyIsDeselected() {
-        Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.DESELECTED);
-
-        newMemberActivityHandler.open();
-
-        Mockito.verify(householdActivityMock).startActivityForResult(Mockito.argThat(matchIntent()), Mockito.eq(RequestCode.NEW_MEMBER.getCode()));
-    }
-
-    @Test
     public void ShouldNotStartNewMemberActivityIfHouseholdIsNull() {
-        newMemberActivityHandler = new NewMemberActivityHandler(null,householdActivityMock, memberAdapterMock, dbMock, customDialogMock);
+        newMemberActivityHandler = new NewMemberActivityHandler(null,householdActivityMock, memberAdapterMock, dbMock);
 
         newMemberActivityHandler.open();
 
@@ -98,12 +89,13 @@ public class NewMemberActivityHandlerTest {
     }
 
     @Test
-    public void ShouldConfirmIfHouseholdIsNotNullAndHouseholdSurveyIsNotDone() {
+    public void ShouldStartNewMemberActivityIfHouseholdIsNotNull() {
         Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.NOT_DONE);
 
         newMemberActivityHandler.open();
 
-        Mockito.verify(customDialogMock).confirm(Mockito.eq(householdActivityMock), Mockito.any(DialogInterface.OnClickListener.class),Mockito.eq(CustomDialog.EmptyListener),Mockito.eq(R.string.member_add_confirm),Mockito.eq(R.string.confirm_ok));
+        Mockito.verify(householdActivityMock).startActivityForResult(Mockito.argThat(matchIntent()), Mockito.eq(RequestCode.NEW_MEMBER.getCode()));
+
     }
 
     @Test
@@ -115,20 +107,6 @@ public class NewMemberActivityHandlerTest {
         newMemberActivityHandler.handleResult(null, Activity.RESULT_OK);
 
         Mockito.verify(householdMock).setSelectedMemberId(null);
-        Mockito.verify(householdMock).setStatus(HouseholdStatus.DESELECTED);
-        Mockito.verify(householdMock).update(Mockito.any(DatabaseHelper.class));
-    }
-
-    @Test
-    public void ShouldUpdateHouseholdWithoutChangingStatusForResultCodeOkAndHouseholdStatusNotSelected(){
-        Cursor cursorMock = Mockito.mock(Cursor.class);
-        Mockito.stub(dbMock.exec(Mockito.anyString())).toReturn(cursorMock);
-        Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.NOT_SELECTED);
-
-        newMemberActivityHandler.handleResult(null, Activity.RESULT_OK);
-
-        Mockito.verify(householdMock).setSelectedMemberId(null);
-        Mockito.verify(householdMock,Mockito.never()).setStatus(HouseholdStatus.DESELECTED);
         Mockito.verify(householdMock).update(Mockito.any(DatabaseHelper.class));
     }
 

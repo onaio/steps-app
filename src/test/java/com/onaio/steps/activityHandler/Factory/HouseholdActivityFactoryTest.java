@@ -4,6 +4,7 @@ import android.content.Intent;
 
 import com.onaio.steps.activity.HouseholdActivity;
 import com.onaio.steps.activityHandler.BackHomeHandler;
+import com.onaio.steps.activityHandler.CancelHandler;
 import com.onaio.steps.activityHandler.DeferredHandler;
 import com.onaio.steps.activityHandler.EditHouseholdActivityHandler;
 import com.onaio.steps.activityHandler.Interface.IActivityResultHandler;
@@ -85,7 +86,7 @@ public class HouseholdActivityFactoryTest extends TestCase {
 
         ArrayList<Class> menuHandlerTypes = getTypes(menuHandlers);
 
-        assertEquals(7, menuHandlers.size());
+        assertEquals(8, menuHandlers.size());
         Assert.assertTrue(menuHandlerTypes.contains(TakeSurveyHandler.class));
         Assert.assertTrue(menuHandlerTypes.contains(DeferredHandler.class));
         Assert.assertTrue(menuHandlerTypes.contains(RefusedHandler.class));
@@ -93,6 +94,8 @@ public class HouseholdActivityFactoryTest extends TestCase {
         Assert.assertTrue(menuHandlerTypes.contains(NewMemberActivityHandler.class));
         Assert.assertTrue(menuHandlerTypes.contains(SelectParticipantHandler.class));
         Assert.assertTrue(menuHandlerTypes.contains(SelectedParticipantContainerHandler.class));
+        Assert.assertTrue(menuHandlerTypes.contains(CancelHandler.class));
+
     }
 
     @Test
@@ -101,11 +104,12 @@ public class HouseholdActivityFactoryTest extends TestCase {
 
         ArrayList<Class> menuHandlerTypes = getTypes(menuHandlers);
 
-        assertEquals(5, menuHandlers.size());
+        assertEquals(6, menuHandlers.size());
         Assert.assertTrue(menuHandlerTypes.contains(TakeSurveyHandler.class));
         Assert.assertTrue(menuHandlerTypes.contains(DeferredHandler.class));
         Assert.assertTrue(menuHandlerTypes.contains(RefusedHandler.class));
         Assert.assertTrue(menuHandlerTypes.contains(NewMemberActivityHandler.class));
+        Assert.assertTrue(menuHandlerTypes.contains(CancelHandler.class));
         Assert.assertTrue(menuHandlerTypes.contains(SelectParticipantHandler.class));
     }
 

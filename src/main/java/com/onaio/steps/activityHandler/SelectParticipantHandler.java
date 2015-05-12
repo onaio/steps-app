@@ -1,25 +1,21 @@
 package com.onaio.steps.activityHandler;
 
 import android.app.ListActivity;
-import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.onaio.steps.R;
 import com.onaio.steps.activityHandler.Factory.HouseholdActivityFactory;
 import com.onaio.steps.activityHandler.Interface.IMenuHandler;
 import com.onaio.steps.activityHandler.Interface.IMenuPreparer;
 import com.onaio.steps.adapter.MemberAdapter;
-import com.onaio.steps.helper.CustomDialog;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.HouseholdStatus;
 import com.onaio.steps.model.Member;
-import com.onaio.steps.model.ReElectReason;
 import com.onaio.steps.modelViewWrapper.SelectedMemberViewWrapper;
 
 import java.util.List;
@@ -30,23 +26,21 @@ import static com.onaio.steps.model.HouseholdStatus.NOT_DONE;
 public class SelectParticipantHandler implements IMenuHandler, IMenuPreparer {
 
     private final int MENU_ID = R.id.action_select_participant;
-    private CustomDialog dialog;
+
     private ListActivity activity;
     private Household household;
     private DatabaseHelper db;
     private android.app.Dialog selection_dialog;
 
     public SelectParticipantHandler(ListActivity activity, Household household) {
-        this(activity, household, new CustomDialog(), new DatabaseHelper(activity), new android.app.Dialog(activity));
+        this(activity, household, new DatabaseHelper(activity), new android.app.Dialog(activity));
     }
 
-    SelectParticipantHandler(ListActivity activity, Household household, CustomDialog dialog, DatabaseHelper db, android.app.Dialog androidDialog) {
+    SelectParticipantHandler(ListActivity activity, Household household, DatabaseHelper db, android.app.Dialog androidDialog) {
         this.activity = activity;
         this.household = household;
-        this.dialog = dialog;
         this.db = db;
         selection_dialog = androidDialog;
-
     }
 
     @Override
@@ -56,7 +50,7 @@ public class SelectParticipantHandler implements IMenuHandler, IMenuPreparer {
 
     @Override
     public boolean open() {
-        trySelectingParticipant();
+        popUpMessage();
         return true;
     }
 
@@ -64,10 +58,7 @@ public class SelectParticipantHandler implements IMenuHandler, IMenuPreparer {
     public boolean shouldInactivate() {
         boolean noMember = household.numberOfNonSelectedMembers(db) == 0;
         boolean noSelection = household.getStatus() == HouseholdStatus.NOT_SELECTED;
-        boolean deSelected = household.getStatus() == HouseholdStatus.DESELECTED;
-        boolean selected = household.getStatus() == HouseholdStatus.NOT_DONE;
-        boolean canSelectParticipant = noSelection || selected || deSelected;
-        return noMember || !canSelectParticipant ;
+        return noMember || !noSelection;
     }
 
     @Override
@@ -108,34 +99,6 @@ public class SelectParticipantHandler implements IMenuHandler, IMenuPreparer {
         selection_dialog.show();
     }
 
-    private void trySelectingParticipant() {
-        final View confirmation = getView();
-        DialogInterface.OnClickListener confirmListenerForReElection = new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                saveReason(confirmation);
-                selectParticipant();
-            }
-        };
-        switch(household.getStatus()){
-            case NOT_SELECTED: popUpMessage();
-                break;
-            case DESELECTED: dialog.confirm(activity, confirmListenerForReElection, CustomDialog.EmptyListener, confirmation, R.string.participant_re_elect_reason_title);
-                break;
-            case NOT_DONE: dialog.confirm(activity, confirmListenerForReElection, CustomDialog.EmptyListener, confirmation, R.string.participant_re_elect_reason_title);
-                break;
-            case DEFERRED: dialog.confirm(activity, confirmListenerForReElection, CustomDialog.EmptyListener, confirmation, R.string.participant_re_elect_reason_title);
-                break;
-            default: new CustomDialog().notify(activity, CustomDialog.EmptyListener, R.string.participant_no_re_elect_title, R.string.participant_no_re_elect_message_because_of_status);
-        }
-    }
-
-
-    private void saveReason(View confirmation) {
-        TextView reasonView = (TextView) confirmation.findViewById(R.id.reason);
-        ReElectReason reason = new ReElectReason(reasonView.getText().toString(), household);
-        reason.save(db);
-    }
 
     private void selectParticipant() {
         ListView membersView = activity.getListView();

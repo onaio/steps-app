@@ -1,7 +1,6 @@
 package com.onaio.steps.activityHandler;
 
 import android.app.ListActivity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.View;
 import android.view.Window;
@@ -28,8 +27,6 @@ import org.robolectric.annotation.Config;
 
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.stub;
 import static org.mockito.Mockito.verify;
@@ -71,33 +68,6 @@ public class SelectParticipantHandlerTest {
     @Test
     public void ShouldNotBeAbleToOpenForDifferentMenuId(){
         assertFalse(selectParticipantHandler.shouldOpen(R.id.action_refused));
-    }
-
-    @Test
-    public void ShouldConfirmWhenSurveyIsNotDone(){
-        Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.NOT_DONE);
-
-        selectParticipantHandler.open();
-
-        verify(dialogMock).confirm(eq(householdActivity), any(DialogInterface.OnClickListener.class), eq(CustomDialog.EmptyListener), any(View.class), eq(R.string.participant_re_elect_reason_title));
-    }
-
-    @Test
-    public void ShouldConfirmWhenSurveyIsDeselected(){
-        Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.DESELECTED);
-
-        selectParticipantHandler.open();
-
-        verify(dialogMock).confirm(eq(householdActivity), any(DialogInterface.OnClickListener.class), eq(CustomDialog.EmptyListener), any(View.class), eq(R.string.participant_re_elect_reason_title));
-    }
-
-    @Test
-    public void ShouldConfirmWhenSurveyIsDeferred(){
-        Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.DEFERRED);
-
-        selectParticipantHandler.open();
-
-        verify(dialogMock).confirm(eq(householdActivity), any(DialogInterface.OnClickListener.class), eq(CustomDialog.EmptyListener), any(View.class), eq(R.string.participant_re_elect_reason_title));
     }
 
     @Test
@@ -155,23 +125,15 @@ public class SelectParticipantHandlerTest {
     }
 
     @Test
-    public void ShouldNOTInActivateWhenHouseholdStatusIsNotDone(){
+    public void ShouldInActivateWhenHouseholdStatusIsNotDone(){
         Mockito.stub(householdMock.numberOfNonSelectedMembers(Mockito.any(DatabaseHelper.class))).toReturn(1);
         Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.NOT_DONE);
 
-        Assert.assertFalse(selectParticipantHandler.shouldInactivate());
+        Assert.assertTrue(selectParticipantHandler.shouldInactivate());
     }
 
     @Test
-    public void ShouldNOTInActivateWhenHouseholdStatusIsDeselected(){
-        Mockito.stub(householdMock.numberOfNonSelectedMembers(Mockito.any(DatabaseHelper.class))).toReturn(1);
-        Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.DESELECTED);
-
-        Assert.assertFalse(selectParticipantHandler.shouldInactivate());
-    }
-
-    @Test
-    public void ShouldNOTInActivateWhenHouseholdStatusIsNotSelected(){
+    public void ShouldActivateWhenHouseholdStatusIsNotSelected(){
         Mockito.stub(householdMock.numberOfNonSelectedMembers(Mockito.any(DatabaseHelper.class))).toReturn(1);
         Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.NOT_SELECTED);
 
@@ -181,7 +143,7 @@ public class SelectParticipantHandlerTest {
     @Test
     public void ShouldHideTheMenuItemWhenInactivated(){
         HouseholdActivity householdActivityMock = Mockito.mock(HouseholdActivity.class);
-        SelectParticipantHandler handler = new SelectParticipantHandler(householdActivityMock,householdMock, dialogMock, dbMock, androidDialogMock);
+        SelectParticipantHandler handler = new SelectParticipantHandler(householdActivityMock,householdMock, dbMock, androidDialogMock);
         View viewMock = Mockito.mock(View.class);
         Mockito.stub(householdActivityMock.findViewById(R.id.action_select_participant)).toReturn(viewMock);
 
@@ -193,7 +155,7 @@ public class SelectParticipantHandlerTest {
     @Test
     public void ShouldMakeTheMenuVisibleItemWhenActivated(){
         HouseholdActivity householdActivityMock = Mockito.mock(HouseholdActivity.class);
-        SelectParticipantHandler handlerStub = new SelectParticipantHandler(householdActivityMock,householdMock, dialogMock, dbMock, androidDialogMock);
+        SelectParticipantHandler handlerStub = new SelectParticipantHandler(householdActivityMock,householdMock, dbMock, androidDialogMock);
         View viewMock = Mockito.mock(View.class);
         Mockito.stub(householdActivityMock.findViewById(R.id.action_select_participant)).toReturn(viewMock);
 
@@ -207,7 +169,7 @@ public class SelectParticipantHandlerTest {
         private View view;
 
         public SelectParticipantHandlerStub(ListActivity activity, Household household, CustomDialog dialog, DatabaseHelper db, android.app.Dialog androidDialog, View view) {
-            super(activity, household, dialog, db, androidDialog);
+            super(activity, household, db, androidDialog);
             this.view = view;
         }
 
