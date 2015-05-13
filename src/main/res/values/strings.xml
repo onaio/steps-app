@@ -84,4 +84,5 @@
     <string name="import_fail_message">Import failed, please use a valid csv file and try again.</string>
     <string name="continue_interview">Continue Interview</string>
     <string name="member_add_confirm">Are you sure you want to add a member, this action will clear the selection you did before.</string>
+    <string name="household_comments">Comments</string>
 </resources>

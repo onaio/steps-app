@@ -21,7 +21,7 @@ public class Constants {
 
     //Export related
     public static final String ENDPOINT_URL = "endpointUrl";
-    public static final String EXPORT_FIELDS = "Phone Number, Household Id, Member Id, Family Surname, First Name, Age, Gender, Deleted, Survey Status, Re Election Count, Re Election Reasons";
+    public static final String EXPORT_FIELDS = "Phone Number, Household Id, Comments, Member Id, Family Surname, First Name, Age, Gender, Deleted, Survey Status, Re Election Count, Re Election Reasons";
     public static final String EXPORT_FILE_NAME = "households.csv";
 
 

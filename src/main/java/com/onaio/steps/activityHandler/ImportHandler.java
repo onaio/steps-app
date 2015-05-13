@@ -63,19 +63,20 @@ public class ImportHandler implements IMenuHandler, IActivityResultHandler {
                 //Validate for 10 data
                 String phoneNumber = row[0];
                 String householdName = row[1];
-                String memberHouseholdId = row[2];
-                String surname = row[3];
-                String firstName = row[4];
-                String age = row[5];
-                String gender = row[6];
-                String deleted = row[7];
-                String surveyStatus = row[8];
-                String reasonsCount = row[9];
-                String reasons = row[10];
+                String comments = row[2];
+                String memberHouseholdId = row[3];
+                String surname = row[4];
+                String firstName = row[5];
+                String age = row[6];
+                String gender = row[7];
+                String deleted = row[8];
+                String surveyStatus = row[9];
+                String reasonsCount = row[10];
+                String reasons = row[11];
                 Household household = Household.find_by(db, householdName);
                 if(household == null){
                     String currentDate = new SimpleDateFormat(Constants.DATE_FORMAT).format(new Date());
-                    household = new Household(householdName, phoneNumber, HouseholdStatus.NOT_SELECTED, currentDate);
+                    household = new Household(householdName, phoneNumber, HouseholdStatus.NOT_SELECTED, currentDate ,comments);
                     household.save(db);
                 }
                 //validate for members

@@ -21,7 +21,8 @@ public class Household implements Serializable {
     public static final String PHONE_NUMBER = "Phone_Number";
     public static final String SELECTED_MEMBER_ID = "selected_member_id";
     public static final String CREATED_AT = "Created_At";
-    public static final String TABLE_CREATE_QUERY = String.format("CREATE TABLE %s(%s INTEGER PRIMARY KEY, %s TEXT, %s TEXT, %s INTEGER, %s TEXT, %s TEXT)", TABLE_NAME, ID, NAME, PHONE_NUMBER, SELECTED_MEMBER_ID,STATUS, CREATED_AT);
+    public static final String COMMENTS = "Comments";
+    public static final String TABLE_CREATE_QUERY = String.format("CREATE TABLE %s(%s INTEGER PRIMARY KEY, %s TEXT, %s TEXT, %s INTEGER, %s TEXT, %s TEXT, %s TEXT)", TABLE_NAME, ID, NAME, PHONE_NUMBER, SELECTED_MEMBER_ID,STATUS, CREATED_AT ,COMMENTS);
 
     String id;
     String name;
@@ -29,21 +30,24 @@ public class Household implements Serializable {
     HouseholdStatus status;
     String selectedMemberId;
     String createdAt;
+    String comments;
     
-    public Household(String id, String name, String phoneNumber, String selectedMemberId, HouseholdStatus status, String createdAt) {
+    public Household(String id, String name, String phoneNumber, String selectedMemberId, HouseholdStatus status, String createdAt , String comments) {
         this.id = id;
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.selectedMemberId = selectedMemberId;
         this.status = status;
         this.createdAt=createdAt;
+        this.comments=comments;
     }
 
-    public Household(String name, String phoneNumber, HouseholdStatus status, String createdAt) {
+    public Household(String name, String phoneNumber, HouseholdStatus status, String createdAt, String comments) {
         this.name= name;
         this.phoneNumber = phoneNumber;
         this.status = status;
         this.createdAt=createdAt;
+        this.comments = comments;
     }
 
     public void setPhoneNumber(String phoneNumber) {
@@ -64,6 +68,14 @@ public class Household implements Serializable {
 
     public void setSelectedMemberId(String selectedMemberId) {
         this.selectedMemberId = selectedMemberId;
+    }
+
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
     }
 
     public String getSelectedMemberId() {

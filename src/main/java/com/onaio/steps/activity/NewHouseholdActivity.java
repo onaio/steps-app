@@ -59,7 +59,7 @@ public class NewHouseholdActivity extends Activity {
     public void save(View view) {
         try {
             Intent intent = this.getIntent();
-            Household household = new HouseholdViewWrapper(this).getHousehold(R.id.generated_household_id, R.id.household_number);
+            Household household = new HouseholdViewWrapper(this).getHousehold(R.id.generated_household_id, R.id.household_number,R.id.household_comments);
             household.save(db);
             intent.putExtra(Constants.HOUSEHOLD,household);
             setResult(RESULT_OK, intent);

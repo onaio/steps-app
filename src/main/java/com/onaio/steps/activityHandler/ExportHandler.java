@@ -73,6 +73,7 @@ public class ExportHandler implements IMenuHandler,IMenuPreparer {
                 ArrayList<String> row = new ArrayList<String>();
                 row.add(household.getPhoneNumber());
                 row.add(household.getName());
+                row.add(household.getComments());
                 row.add(member.getMemberHouseholdId());
                 row.add(member.getFamilySurname());
                 row.add(member.getFirstName());

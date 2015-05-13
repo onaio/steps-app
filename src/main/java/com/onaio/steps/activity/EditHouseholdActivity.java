@@ -7,8 +7,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.onaio.steps.R;
-
-import com.onaio.steps.helper.CustomDialog;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.modelViewWrapper.HouseholdViewWrapper;
@@ -37,13 +35,15 @@ public class EditHouseholdActivity extends Activity {
         household = (Household) intent.getSerializableExtra(HOUSEHOLD);
         TextView nameView = (TextView) findViewById(R.id.generated_household_id);
         TextView  phoneNumberView= (TextView) findViewById(R.id.household_number);
+        TextView commentsView = (TextView) findViewById(R.id.household_comments);
         nameView.setText(household.getName());
         phoneNumberView.setText(household.getPhoneNumber());
+        commentsView.setText(household.getComments());
     }
 
     public void save(View view) {
             Intent intent = this.getIntent();
-            household = new HouseholdViewWrapper(this).updateHousehold(household, R.id.household_number);
+            household = new HouseholdViewWrapper(this).updateHousehold(household, R.id.household_number,R.id.household_comments);
             DatabaseHelper db = new DatabaseHelper(getApplicationContext());
             household.update(db);
             intent.putExtra(HOUSEHOLD,household);
