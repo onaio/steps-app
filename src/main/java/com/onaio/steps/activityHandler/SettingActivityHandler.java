@@ -2,17 +2,18 @@ package com.onaio.steps.activityHandler;
 
 import android.app.ListActivity;
 import android.content.Intent;
+
 import com.onaio.steps.R;
 import com.onaio.steps.activity.SettingsActivity;
 import com.onaio.steps.activityHandler.Interface.IActivityResultHandler;
 import com.onaio.steps.activityHandler.Interface.IMenuHandler;
-import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.KeyValueStore;
 import com.onaio.steps.helper.KeyValueStoreFactory;
 import com.onaio.steps.model.RequestCode;
 
 import static android.app.Activity.RESULT_OK;
 import static com.onaio.steps.helper.Constants.ENDPOINT_URL;
+import static com.onaio.steps.helper.Constants.FORM_ID;
 import static com.onaio.steps.helper.Constants.HOUSEHOLD_SEED;
 import static com.onaio.steps.helper.Constants.MAX_AGE;
 import static com.onaio.steps.helper.Constants.MIN_AGE;
@@ -37,6 +38,7 @@ public class SettingActivityHandler implements IMenuHandler, IActivityResultHand
     public boolean open() {
         Intent intent = new Intent(activity, SettingsActivity.class);
         intent.putExtra(PHONE_ID, getValue(PHONE_ID));
+        intent.putExtra(FORM_ID,getValue(FORM_ID));
         intent.putExtra(ENDPOINT_URL, getValue(ENDPOINT_URL));
         intent.putExtra(HOUSEHOLD_SEED, getValue(HOUSEHOLD_SEED));
         intent.putExtra(MIN_AGE, getValue(MIN_AGE));
@@ -58,11 +60,14 @@ public class SettingActivityHandler implements IMenuHandler, IActivityResultHand
 
     private void handleSuccess(Intent data) {
         String phoneId = data.getStringExtra(PHONE_ID);
+        String formId = data.getStringExtra(FORM_ID);
         String endpointUrl = data.getStringExtra(ENDPOINT_URL);
         String householdSeed = data.getStringExtra(HOUSEHOLD_SEED);
         String minAge = data.getStringExtra(MIN_AGE);
         String maxAge = data.getStringExtra(MAX_AGE);
+
         saveSafely(PHONE_ID, phoneId);
+        saveSafely(FORM_ID,formId);
         saveSafely(ENDPOINT_URL, endpointUrl);
         saveSafely(HOUSEHOLD_SEED, householdSeed);
         saveSafely(MIN_AGE, minAge);

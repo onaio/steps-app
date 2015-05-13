@@ -124,6 +124,7 @@ public class Household implements Serializable {
         ContentValues values = new ContentValues();
         values.put(NAME, name);
         values.put(PHONE_NUMBER,phoneNumber);
+        values.put(COMMENTS,comments);
         values.put(STATUS,status.toString());
         return values;
     }

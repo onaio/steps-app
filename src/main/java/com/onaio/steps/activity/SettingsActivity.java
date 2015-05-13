@@ -31,9 +31,11 @@ public class SettingsActivity extends Activity {
         String endpointUrl = intent.getStringExtra(Constants.ENDPOINT_URL);
         String minAge = intent.getStringExtra(Constants.MIN_AGE);
         String maxAge = intent.getStringExtra(Constants.MAX_AGE);
+        String formId = intent.getStringExtra(Constants.FORM_ID);
         TextView phoneIdView = (TextView) findViewById(R.id.deviceId);
         TextView endpointUrlView = (TextView) findViewById(R.id.endpointUrl);
         TextView householdSeedView = (TextView) findViewById(R.id.household_seed);
+        TextView formIdView = (TextView) findViewById(R.id.form_id);
         TextView minAgeView = (TextView) findViewById(R.id.min_age);
         TextView maxAgeView = (TextView) findViewById(R.id.max_age);
 
@@ -42,20 +44,23 @@ public class SettingsActivity extends Activity {
         householdSeedView.setText(householdSeed);
         minAgeView.setText(minAge);
         maxAgeView.setText(maxAge);
+        formIdView.setText(formId);
     }
 
     public void save(View view) {
         Intent intent = this.getIntent();
         String phoneId = ((TextView) findViewById(R.id.deviceId)).getText().toString();
+        String formId = ((TextView) findViewById(R.id.form_id)).getText().toString();
         String endpointUrl = ((TextView) findViewById(R.id.endpointUrl)).getText().toString();
         String householdSeed = ((TextView) findViewById(R.id.household_seed)).getText().toString();
         String minAge = ((TextView) findViewById(R.id.min_age)).getText().toString();
         String maxAge = ((TextView) findViewById(R.id.max_age)).getText().toString();
-        if (!(isValid(phoneId) && isValid(endpointUrl) && isValid(minAge) && isValid(maxAge))){
+        if (!(isValid(phoneId) && isValid(endpointUrl) && isValid(minAge) && isValid(maxAge) && isValid(formId))){
             new CustomDialog().notify(this, CustomDialog.EmptyListener, R.string.error_title, R.string.enter_a_value);
             return;
         }
         intent.putExtra(Constants.PHONE_ID, phoneId);
+        intent.putExtra(Constants.FORM_ID, formId);
         intent.putExtra(Constants.ENDPOINT_URL, endpointUrl);
         intent.putExtra(Constants.HOUSEHOLD_SEED, householdSeed);
         intent.putExtra(Constants.MIN_AGE, minAge);

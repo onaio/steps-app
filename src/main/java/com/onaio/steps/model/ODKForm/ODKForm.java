@@ -9,6 +9,7 @@ import com.onaio.steps.exception.FormNotPresentException;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.helper.FileUtil;
+import com.onaio.steps.helper.KeyValueStoreFactory;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.Member;
 
@@ -40,7 +41,7 @@ public class ODKForm {
     public void open(Household household, Activity activity, int requestCode) throws IOException{
         //irrespective of the form type the data has to be saved at entry form path.
         String pathToSaveDataFile = blankForm.getPath();
-        saveDataFile(household, new DatabaseHelper(activity), pathToSaveDataFile);
+        saveDataFile(household,activity, new DatabaseHelper(activity), pathToSaveDataFile);
         launchODKCollect(activity, requestCode);
     }
 
@@ -60,11 +61,13 @@ public class ODKForm {
         activity.startActivityForResult(surveyIntent, requestCode);
     }
 
-    private void saveDataFile(Household household, DatabaseHelper db, String pathToSaveDataFile) throws IOException {
+    private void saveDataFile(Household household, Activity activity, DatabaseHelper db, String pathToSaveDataFile) throws IOException {
         Member selectedMember = household.getSelectedMember(db);
+        String formId = getValue(Constants.FORM_ID,activity);
+        String formNameFormat = formId + "-%s";
         ArrayList<String> row = new ArrayList<String>();
         row.add(Constants.ODK_HH_ID);
-        row.add(String.format(Constants.ODK_FORM_NAME_FORMAT, household.getName()));
+        row.add(String.format(formNameFormat, household.getName()));
         row.add(selectedMember.getMemberHouseholdId());
         row.add(selectedMember.getFamilySurname());
         row.add(selectedMember.getFirstName());
@@ -73,6 +76,9 @@ public class ODKForm {
         fileUtil.withHeader(Constants.ODK_FORM_FIELDS.split(","))
                 .withData(row.toArray(new String[row.size()]))
                 .writeCSV(pathToSaveDataFile + "/" + Constants.ODK_DATA_FILENAME);
+    }
+    private String getValue(String key,Activity activity) {
+        return KeyValueStoreFactory.instance(activity).getString(key) ;
     }
 
 }

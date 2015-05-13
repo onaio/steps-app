@@ -160,7 +160,7 @@
             android:background="@android:color/holo_red_dark"
             android:text="Cancel Selection"
             android:textColor="@android:color/black"
-            android:drawableStart="@drawable/ic_action_select_participant"
+            android:drawableStart="@drawable/ic_action_cancel"
             android:drawablePadding="-10dp"
             android:paddingLeft="10dp"
             android:onClick="handleCustomMenu"

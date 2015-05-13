@@ -49,6 +49,24 @@
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:textColor="@android:color/black"/>
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/form_id"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="20dp"
+        />
+    <EditText
+        android:id="@+id/form_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/form_id"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:textColor="@android:color/black"/>
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"

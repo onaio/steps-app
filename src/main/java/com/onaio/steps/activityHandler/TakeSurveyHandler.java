@@ -15,6 +15,7 @@ import com.onaio.steps.exception.FormNotPresentException;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.CustomDialog;
 import com.onaio.steps.helper.DatabaseHelper;
+import com.onaio.steps.helper.KeyValueStoreFactory;
 import com.onaio.steps.helper.Logger;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.HouseholdStatus;
@@ -45,8 +46,9 @@ public class TakeSurveyHandler implements IMenuHandler, IMenuPreparer, IActivity
     @Override
     public boolean open() {
         try {
-            String formName = String.format(Constants.ODK_FORM_NAME_FORMAT, household.getName());
-            ODKForm requiredForm = ODKForm.create(activity, Constants.ODK_FORM_ID, formName);
+            String formId = getValue(Constants.FORM_ID);
+            String formName = String.format(formId + "-%s", household.getName());
+            ODKForm requiredForm = ODKForm.create(activity, formId, formName);
             requiredForm.open(household, activity, RequestCode.SURVEY.getCode());
         } catch (FormNotPresentException e) {
             new CustomDialog().notify(activity, CustomDialog.EmptyListener, R.string.error_title, R.string.form_not_present);
@@ -102,7 +104,8 @@ public class TakeSurveyHandler implements IMenuHandler, IMenuPreparer, IActivity
 
     protected List<IForm> getSavedForms() {
         try {
-            return ODKSavedForm.findAll(activity, String.format(Constants.ODK_FORM_NAME_FORMAT, household.getName()));
+            String formNameFormat = getValue(Constants.FORM_ID) + "-%s";
+            return ODKSavedForm.findAll(activity, String.format(formNameFormat, household.getName()));
         } catch (AppNotInstalledException e) {
             new CustomDialog().notify(activity, CustomDialog.EmptyListener, R.string.error_title, R.string.odk_app_not_installed);
             return null;
@@ -112,5 +115,9 @@ public class TakeSurveyHandler implements IMenuHandler, IMenuPreparer, IActivity
     @Override
     public boolean canHandleResult(int requestCode) {
         return requestCode==RequestCode.SURVEY.getCode();
+    }
+
+    private String getValue(String key) {
+        return KeyValueStoreFactory.instance(activity).getString(key) ;
     }
 }

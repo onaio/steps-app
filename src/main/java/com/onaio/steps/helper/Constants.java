@@ -9,6 +9,8 @@ public class Constants {
     public static final String HOUSEHOLD_SEED = "householdSeedId";
     public static final String MIN_AGE = "minAge";
     public static final String MAX_AGE = "maxAge";
+    public static final String FORM_ID = "formId" ;
+
     public static final String HOUSEHOLD = "HOUSEHOLD";
     public static final String MEMBER = "MEMBER";
 
@@ -26,7 +28,6 @@ public class Constants {
 
 
 //    public static final String ODK_FORM_ID = "steps_draft_testing";
-    public static final String ODK_FORM_ID = "STEPS_Instrument_V3_1";
     public static final String ODK_FORM_FIELDS = "hhid_key,form_name,member_id,family_surname,first_name,gender,age";
     public static final String ODK_DATA_FILENAME = "STEPS.csv";
     public static final String ODK_HH_ID = "1";
@@ -35,7 +36,6 @@ public class Constants {
     public static final String ODK_COLLECT_PACKAGE = "org.odk.collect.android";
     public static final String ODK_COLLECT_UPLOADER_CLASS = "org.odk.collect.android.activities.InstanceUploaderList";
     public static final String ODK_COLLECT_FORM_CLASS = "org.odk.collect.android.activities.FormEntryActivity";
-    public static final String ODK_FORM_NAME_FORMAT = ODK_FORM_ID+"-%s";
 
 
     //Error Strings
