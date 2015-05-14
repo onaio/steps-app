@@ -27,7 +27,9 @@ import com.onaio.steps.modelViewWrapper.SelectedMemberViewWrapper;
 
 import java.util.List;
 
-import static com.onaio.steps.model.HouseholdStatus.*;
+import static com.onaio.steps.model.HouseholdStatus.DEFERRED;
+import static com.onaio.steps.model.HouseholdStatus.INCOMPLETE;
+import static com.onaio.steps.model.HouseholdStatus.NOT_DONE;
 
 public class HouseholdActivity extends ListActivity {
 
@@ -104,9 +106,16 @@ public class HouseholdActivity extends ListActivity {
         actionBar.setIcon(R.drawable.ic_action_back);
         TextView idHeader = (TextView) findViewById(R.id.household_id_header);
         TextView numberHeader = (TextView) findViewById(R.id.household_number_header);
+        TextView commentView = (TextView) findViewById(R.id.text_view_comment);
+
         idHeader.setText(String.format("Household ID-%s",household.getName()));
         idHeader.setTextColor(Color.parseColor(Constants.HEADER_GREEN));
-        numberHeader.setText(String.format("Phone Number: %s", household.getPhoneNumber()));
+
+        if(!household.getPhoneNumber().equals(""))
+       numberHeader.setText(String.format("Phone Number: %s", household.getPhoneNumber()));
+       /* if(!household.getComments().equals(""))
+        commentView.setText(household.getComments());
+*/
         actionBar.setTitle("");
     }
 

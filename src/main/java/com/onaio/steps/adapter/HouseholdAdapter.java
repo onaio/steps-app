@@ -61,7 +61,11 @@ public class HouseholdAdapter extends BaseAdapter{
         TextView householdName = (TextView) householdListItem.findViewById(R.id.main_text);
         TextView membersCount = (TextView) householdListItem.findViewById(R.id.sub_text);
         ImageView image = (ImageView) householdListItem.findViewById(R.id.main_image);
+        ImageView commentImage = (ImageView) householdListItem.findViewById(R.id.comment_view);
         image.setImageResource(getImage(householdAtPosition));
+
+        if(!householdAtPosition.getComments().equals(""))
+            commentImage.setImageResource(R.mipmap.ic_household_comments);
         householdName.setTextColor(Color.BLACK);
         String householdRow = Constants.HOUSEHOLD_ID_LABEL + householdAtPosition.getName();
         householdName.setText(householdRow);

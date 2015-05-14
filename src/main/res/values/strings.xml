@@ -80,10 +80,11 @@
     <string name="export_failed">Export failed, please try again later.</string>
     <string name="export_complete">Export Complete</string>
     <string name="export_complete_message">The data has successfully exported.</string>
-    <string name="export_start_message">Export status will notified in the notification tray once it completes. Start the export?</string>
+    <string name="export_start_message">Please confirm you want to export household data?</string>
     <string name="import_fail_message">Import failed, please use a valid csv file and try again.</string>
     <string name="continue_interview">Continue Interview</string>
     <string name="member_add_confirm">Are you sure you want to add a member, this action will clear the selection you did before.</string>
     <string name="household_comments">Comments</string>
     <string name="form_id">Form ID</string>
+    <string name="cancel_selection">CANCEL SELECTION</string>
 </resources>
