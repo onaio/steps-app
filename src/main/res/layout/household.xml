@@ -105,6 +105,19 @@
             android:layout_margin="10dp"
             android:background="@android:color/white"
             android:textSize="12sp"/>
+        <Button
+            android:id="@+id/action_cancel_participant"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/cancel_selection"
+            android:drawableLeft="@drawable/ic_action_cancel_selection"
+            android:onClick="handleCustomMenu"
+            android:layout_margin="10dp"
+            android:background="@android:color/white"
+            android:textColor="@android:color/black"
+            android:textSize="12sp"
+           />
     </LinearLayout>
     <View android:layout_height="1dp"
         android:layout_width="fill_parent"
@@ -152,21 +165,7 @@
             android:textSize="12sp"
             style="?android:attr/buttonBarButtonStyle"/>
 
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:layout_margin="15dp"
-            android:background="@android:color/holo_red_dark"
-            android:text="Cancel Selection"
-            android:textColor="@android:color/black"
-            android:drawableStart="@drawable/ic_action_cancel"
-            android:drawablePadding="-10dp"
-            android:paddingLeft="10dp"
-            android:onClick="handleCustomMenu"
-            android:id="@+id/action_cancel_participant"
-            android:textSize="12sp"
-            style="?android:attr/buttonBarButtonStyle"/>
+
         </LinearLayout>
     <TextView
         android:layout_width="wrap_content"
