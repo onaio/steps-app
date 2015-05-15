@@ -4,17 +4,14 @@ public class Constants {
 
     public static final String DATE_FORMAT = "yyyy/MM/dd";
 
-
+//strings passed as parameter to intent
     public static final String PHONE_ID = "phoneId";
     public static final String HOUSEHOLD_SEED = "householdSeedId";
     public static final String MIN_AGE = "minAge";
     public static final String MAX_AGE = "maxAge";
     public static final String FORM_ID = "formId" ;
-
     public static final String HOUSEHOLD = "HOUSEHOLD";
     public static final String MEMBER = "MEMBER";
-
-    public static final String HOUSEHOLD_ID_LABEL = "HHID: ";
 
     public static final String HEADER_GREEN = "#008148";
     public static final String TEXT_GREEN = "#53B257";
@@ -38,12 +35,4 @@ public class Constants {
     public static final String ODK_COLLECT_FORM_CLASS = "org.odk.collect.android.activities.FormEntryActivity";
 
 
-    //Error Strings
-    public static final String FAMILY_SURNAME = "Family Surname";
-    public static final String FIRST_NAME = "First Name";
-    public static final String GENDER = "Gender";
-    public static final String AGE = "Age";
-    public static final String MEMBER_ERROR = "Member";
-    public static final String ERROR_STRING = "Invalid %s, please fill or correct the following fields: %s";
-    public static final String AGE_NOT_IN_RANGE = "Age (not in the range of %d-%d)";
 }

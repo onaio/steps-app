@@ -37,7 +37,7 @@ public class NewMemberActivity extends Activity {
         TextView header = (TextView) findViewById(R.id.form_header);
         header.setText(R.string.member_new_header);
         Button doneButton = (Button) findViewById(R.id.ic_done);
-        doneButton.setText("ADD");
+        doneButton.setText(R.string.add);
     }
 
 

@@ -38,7 +38,7 @@ public class NewHouseholdActivity extends Activity {
         TextView header = (TextView) findViewById(R.id.form_header);
         header.setText(R.string.household_new_header);
         Button doneButton = (Button) findViewById(R.id.ic_done);
-        doneButton.setText("ADD");
+        doneButton.setText(R.string.add);
     }
 
     private void populateGeneratedHouseholdId() {
