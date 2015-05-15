@@ -3,6 +3,7 @@ package com.onaio.steps.modelViewWrapper;
 import android.app.Activity;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+
 import com.onaio.steps.R;
 import com.onaio.steps.exception.InvalidDataException;
 import com.onaio.steps.helper.Constants;
@@ -10,10 +11,9 @@ import com.onaio.steps.helper.KeyValueStoreFactory;
 import com.onaio.steps.model.Gender;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.Member;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.onaio.steps.helper.Constants.*;
 
 public class MemberViewWrapper {
 
@@ -32,23 +32,23 @@ public class MemberViewWrapper {
         String ageString = ((TextView) activity.findViewById(ageViewId)).getText().toString();
         validateFields(surname, firstName, gender, ageString);
         if(!errorFields.isEmpty())
-            throw new InvalidDataException(MEMBER_ERROR,errorFields);
+            throw new InvalidDataException(activity, getStringValue(R.string.action_member),errorFields);
         return new Member(surname, firstName, gender, Integer.parseInt(ageString), household, false);
     }
 
     public Member update(Member member,String surname, String firstName, Gender gender, String ageString) throws InvalidDataException {
         validateFields(surname, firstName, gender, ageString);
         if(!errorFields.isEmpty())
-            throw new InvalidDataException(MEMBER_ERROR,errorFields);
+            throw new InvalidDataException(activity, getStringValue(R.string.action_member),errorFields);
         return new Member(member.getId(),surname,firstName, gender,Integer.parseInt(ageString),member.getHousehold(),member.getMemberHouseholdId(),member.getDeleted());
     }
 
     private void validateFields(String surname, String firstName, Gender gender, String ageString) {
-        validate(surname, FAMILY_SURNAME);
-        validate(firstName, FIRST_NAME);
+        validate(surname, getStringValue(R.string.member_family_surname_hint));
+        validate(firstName, getStringValue(R.string.member_first_name_hint));
         validate(gender);
-        validate(ageString, AGE);
-        validateAgeRange(ageString,AGE_NOT_IN_RANGE);
+        validate(ageString, getStringValue(R.string.age_hint));
+        validateAgeRange(ageString, getStringValue(R.string.age_not_in_range)+"%d-%d)");
     }
 
     private void validateAgeRange(String ageString, String errorKey) {
@@ -63,7 +63,7 @@ public class MemberViewWrapper {
 
     private void validate(Gender gender) {
         if(gender.equals(Gender.NotDefined))
-            errorFields.add(GENDER);
+            errorFields.add(getStringValue(R.string.member_gender_hint));
     }
 
     private void validate(String fieldValue, String errorKey){
@@ -81,5 +81,9 @@ public class MemberViewWrapper {
 
     private int getValue(String key) {
         return Integer.parseInt(KeyValueStoreFactory.instance(activity).getString(key)) ;
+    }
+
+    private String getStringValue(int value){
+        return activity.getApplicationContext().getString(value);
     }
 }

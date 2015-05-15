@@ -108,11 +108,11 @@ public class HouseholdActivity extends ListActivity {
         TextView numberHeader = (TextView) findViewById(R.id.household_number_header);
         TextView commentView = (TextView) findViewById(R.id.text_view_comment);
 
-        idHeader.setText(String.format("Household ID-%s",household.getName()));
+        idHeader.setText(String.format(getString(R.string.household_id_label)+"-%s",household.getName()));
         idHeader.setTextColor(Color.parseColor(Constants.HEADER_GREEN));
 
         if(!household.getPhoneNumber().equals(""))
-       numberHeader.setText(String.format("Phone Number: %s", household.getPhoneNumber()));
+       numberHeader.setText(String.format(getString(R.string.phone_number)+" %s", household.getPhoneNumber()));
        /* if(!household.getComments().equals(""))
         commentView.setText(household.getComments());
 */
@@ -156,4 +156,6 @@ public class HouseholdActivity extends ListActivity {
             return household.getAllUnselectedMembers(db);
         return household.getAllNonDeletedMembers(db);
     }
+
+
 }

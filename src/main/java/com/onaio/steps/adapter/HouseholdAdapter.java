@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.onaio.steps.R;
-import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.model.Household;
 
@@ -67,10 +66,10 @@ public class HouseholdAdapter extends BaseAdapter{
         if(!householdAtPosition.getComments().equals(""))
             commentImage.setImageResource(R.mipmap.ic_household_comments);
         householdName.setTextColor(Color.BLACK);
-        String householdRow = Constants.HOUSEHOLD_ID_LABEL + householdAtPosition.getName();
+        String householdRow = context.getString(R.string.hhid)+ householdAtPosition.getName();
         householdName.setText(householdRow);
         int numberOfMembers = householdAtPosition.numberOfNonDeletedMembers(new DatabaseHelper(context));
-        membersCount.setText(String.format("%s, %d members", householdAtPosition.getCreatedAt(), numberOfMembers));
+        membersCount.setText(String.format("%s, %d "+context.getString(R.string.members), householdAtPosition.getCreatedAt(), numberOfMembers));
     }
 
     private int getImage(Household householdAtPosition) {
