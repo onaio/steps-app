@@ -37,8 +37,7 @@ public class MemberViewWrapperTest {
     private String date;
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
-
-
+    public String error_string= "Invalid %s, please fill or correct the following fields: %s";
     @Before
     public void Setup(){
         newMemberActivity = Robolectric.setupActivity(NewMemberActivity.class);
@@ -59,10 +58,10 @@ public class MemberViewWrapperTest {
         firstName.setText("Manisha");
         gender.check(R.id.female_selection);
         age.setText("23");
-        Household household = new Household("1","Any Household", "123456789","", HouseholdStatus.NOT_SELECTED, date);
+        Household household = new Household("1","Any Household", "123456789","", HouseholdStatus.NOT_SELECTED, date,"Dummy comments");
 
         expectedException.expect(InvalidDataException.class);
-        expectedException.expectMessage(String.format(Constants.ERROR_STRING,"Member",Constants.FAMILY_SURNAME));
+        expectedException.expectMessage(String.format(error_string,"Member",getStringValue(R.string.member_family_surname_hint)));
 
         memberViewWrapper.getMember(surname.getId(),firstName.getId(),gender.getId(), age.getId(),household);
     }
@@ -79,10 +78,10 @@ public class MemberViewWrapperTest {
         firstName.setText("");
         gender.check(R.id.female_selection);
         age.setText("23");
-        Household household = new Household("1","Any Household", "123456789","", HouseholdStatus.NOT_SELECTED, date);
+        Household household = new Household("1","Any Household", "123456789","", HouseholdStatus.NOT_SELECTED, date,"Dummy comments");
 
         expectedException.expect(InvalidDataException.class);
-        expectedException.expectMessage(String.format(Constants.ERROR_STRING,"Member",Constants.FIRST_NAME));
+        expectedException.expectMessage(String.format(error_string,"Member",getStringValue(R.string.member_first_name_hint)));
 
         memberViewWrapper.getMember(surname.getId(),firstName.getId(),gender.getId(), age.getId(),household);
     }
@@ -91,7 +90,6 @@ public class MemberViewWrapperTest {
     public void ShouldRaiseExceptionWhenGenderIsInvalid() throws InvalidDataException {
         setValue(Constants.MIN_AGE,"12");
         setValue(Constants.MAX_AGE,"70");
-        String errorString = Constants.ERROR_STRING;
         TextView surname = (TextView) newMemberActivity.findViewById(R.id.member_family_surname);
         TextView firstName = (TextView) newMemberActivity.findViewById(R.id.member_first_name);
         RadioGroup gender = (RadioGroup) newMemberActivity.findViewById(R.id.member_gender);
@@ -99,10 +97,10 @@ public class MemberViewWrapperTest {
         surname.setText("Rana");
         firstName.setText("Manisha");
         age.setText("23");
-        Household household = new Household("1","Any Household", "123456789","", HouseholdStatus.NOT_SELECTED,date );
+        Household household = new Household("1","Any Household", "123456789","", HouseholdStatus.NOT_SELECTED,date,"Dummy comments" );
 
         expectedException.expect(InvalidDataException.class);
-        expectedException.expectMessage(String.format(errorString,"Member",Constants.GENDER));
+        expectedException.expectMessage(String.format(error_string,"Member",getStringValue(R.string.member_gender_hint)));
 
         memberViewWrapper.getMember(surname.getId(),firstName.getId(),gender.getId(), age.getId(),household);
     }
@@ -112,7 +110,6 @@ public class MemberViewWrapperTest {
     public void ShouldRaiseExceptionWhenAgeIsInvalid() throws InvalidDataException {
         setValue(Constants.MIN_AGE,"12");
         setValue(Constants.MAX_AGE,"70");
-        String errorString = Constants.ERROR_STRING;
         TextView surname = (TextView) newMemberActivity.findViewById(R.id.member_family_surname);
         TextView firstName = (TextView) newMemberActivity.findViewById(R.id.member_first_name);
         RadioGroup gender = (RadioGroup) newMemberActivity.findViewById(R.id.member_gender);
@@ -120,10 +117,10 @@ public class MemberViewWrapperTest {
         surname.setText("Rana");
         firstName.setText("Manisha");
         gender.check(R.id.female_selection);
-        Household household = new Household("1","Any Household", "123456789","", HouseholdStatus.NOT_SELECTED,date );
+        Household household = new Household("1","Any Household", "123456789","", HouseholdStatus.NOT_SELECTED,date,"Dummy comments" );
 
         expectedException.expect(InvalidDataException.class);
-        expectedException.expectMessage(String.format(errorString,"Member",Constants.AGE));
+        expectedException.expectMessage(String.format(error_string,"Member",getStringValue(R.string.age_hint)));
 
         memberViewWrapper.getMember(surname.getId(),firstName.getId(),gender.getId(), age.getId(),household);
     }
@@ -140,7 +137,7 @@ public class MemberViewWrapperTest {
         firstname.setText("Rohit");
         gender.check(R.id.male_selection);
         age.setText("15");
-        Household household = new Household("1","Any Household", "123456789","", HouseholdStatus.NOT_SELECTED,date );
+        Household household = new Household("1","Any Household", "123456789","", HouseholdStatus.NOT_SELECTED,date,"Dummy comments" );
 
         Member member = memberViewWrapper.getMember(surname.getId(), firstname.getId(), gender.getId(), age.getId(), household);
 
@@ -152,15 +149,14 @@ public class MemberViewWrapperTest {
 
     @Test
     public void ShouldRaiseExceptionWhenMultipleFieldsAreEmpty() throws InvalidDataException {
-        String errorString = Constants.ERROR_STRING;
         TextView surname = (TextView) newMemberActivity.findViewById(R.id.member_family_surname);
         TextView firstName = (TextView) newMemberActivity.findViewById(R.id.member_first_name);
         RadioGroup gender = (RadioGroup) newMemberActivity.findViewById(R.id.member_gender);
         TextView age = (TextView)newMemberActivity.findViewById(R.id.member_age);
-        Household household = new Household("1","Any Household", "123456789","", HouseholdStatus.NOT_SELECTED,date );
+        Household household = new Household("1","Any Household", "123456789","", HouseholdStatus.NOT_SELECTED,date,"Dummy comments" );
 
         expectedException.expect(InvalidDataException.class);
-        expectedException.expectMessage(String.format(errorString,"Member",Constants.FAMILY_SURNAME,Constants.FIRST_NAME,Constants.GENDER,Constants.AGE));
+        expectedException.expectMessage(String.format(error_string,"Member",getStringValue(R.string.member_family_surname_hint),getStringValue(R.string.member_first_name_hint),getStringValue(R.string.member_gender_hint),getStringValue(R.string.age_hint)));
 
         memberViewWrapper.getMember(surname.getId(), firstName.getId(), gender.getId(), age.getId(), household);
     }
@@ -169,6 +165,12 @@ public class MemberViewWrapperTest {
         KeyValueStore keyValueStore = KeyValueStoreFactory.instance(newMemberActivity);
         keyValueStore.putString(key, value);
     }
+
+    private String getStringValue(int value){
+
+        return newMemberActivity.getString(value);
+    }
+
 
 
 

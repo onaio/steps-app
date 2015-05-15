@@ -5,7 +5,6 @@ import android.widget.TextView;
 import com.onaio.steps.R;
 import com.onaio.steps.activity.NewHouseholdActivity;
 import com.onaio.steps.exception.InvalidDataException;
-import com.onaio.steps.helper.Constants;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.HouseholdStatus;
 
@@ -18,7 +17,7 @@ import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
-import static junit.framework.Assert.*;
+import static junit.framework.Assert.assertTrue;
 
 @Config(emulateSdk = 16,manifest = "src/main/AndroidManifest.xml")
 @RunWith(RobolectricTestRunner.class)
@@ -40,7 +39,7 @@ public class HouseholdViewWrapperTest {
         HouseholdViewWrapper householdViewWrapper = new HouseholdViewWrapper(activity);
         TextView nameView = ((TextView) activity.findViewById(R.id.generated_household_id));
         nameView.setText("new name");
-        Household household = householdViewWrapper.getHousehold(R.id.generated_household_id, R.id.household_number);
+        Household household = householdViewWrapper.getHousehold(R.id.generated_household_id, R.id.household_number,R.id.household_comments);
         assertTrue(household.getName().equals("new name"));
         assertTrue(household.getStatus().equals(HouseholdStatus.NOT_SELECTED));
     }
@@ -52,7 +51,7 @@ public class HouseholdViewWrapperTest {
         nameView.setText("new name");
         TextView numberView = (TextView) activity.findViewById(R.id.household_number);
         numberView.setText("123456789");
-        Household household = householdViewWrapper.getHousehold(R.id.generated_household_id, R.id.household_number);
+        Household household = householdViewWrapper.getHousehold(R.id.generated_household_id, R.id.household_number,R.id.household_comments);
         assertTrue(household.getName().equals("new name"));
         assertTrue(household.getPhoneNumber().equals("123456789"));
         assertTrue(household.getStatus().equals(HouseholdStatus.NOT_SELECTED));
@@ -66,7 +65,7 @@ public class HouseholdViewWrapperTest {
         nameView.setText("new name");
         TextView numberView = (TextView) activity.findViewById(R.id.household_number);
         numberView.setText("1234567890123");
-        Household household = householdViewWrapper.getHousehold(R.id.generated_household_id, R.id.household_number);
+        Household household = householdViewWrapper.getHousehold(R.id.generated_household_id, R.id.household_number,R.id.household_comments);
         assertTrue(household.getName().equals("new name"));
         assertTrue(household.getPhoneNumber().equals("1234567890123"));
         assertTrue(household.getStatus().equals(HouseholdStatus.NOT_SELECTED));

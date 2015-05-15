@@ -39,7 +39,7 @@ public class HouseholdActivityHandlerTest {
 
     @Test
     public void ShouldStartNewMemberActivityIfHouseholdIsNotNull(){
-        household = new Household("2", "Any HouseholdName", "123456789", "", HouseholdStatus.NOT_SELECTED, currentDate);
+        household = new Household("2", "Any HouseholdName", "123456789", "", HouseholdStatus.NOT_SELECTED, currentDate,"Dummy comments");
         householdActivityHandler = new HouseholdActivityHandler(stepsActivity, household);
         householdActivityHandler.open();
 

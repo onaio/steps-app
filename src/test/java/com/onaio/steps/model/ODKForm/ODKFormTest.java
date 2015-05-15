@@ -8,6 +8,7 @@ import com.onaio.steps.activity.HouseholdActivity;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.helper.FileUtil;
+import com.onaio.steps.helper.KeyValueStoreFactory;
 import com.onaio.steps.model.Gender;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.HouseholdStatus;
@@ -49,6 +50,8 @@ public class ODKFormTest extends TestCase {
         stubFileUtil();
 
         Intent intent = new Intent();
+        Mockito.stub(householdMock.getPhoneNumber()).toReturn("8050342");
+
         intent.putExtra(Constants.HOUSEHOLD,householdMock);
 
         householdActivity = Robolectric.buildActivity(HouseholdActivity.class).withIntent(intent).create().get();
@@ -69,7 +72,8 @@ public class ODKFormTest extends TestCase {
 
         Mockito.verify(fileUtilMock).withHeader(Constants.ODK_FORM_FIELDS.split(","));
         Mockito.verify(blankFormMock).getPath();
-        String formName = String.format(Constants.ODK_FORM_NAME_FORMAT, householdName);
+        String formNameFormat = getValue(Constants.FORM_ID) + "-%s";
+        String formName = String.format(formNameFormat, householdName);
         Mockito.verify(fileUtilMock).withData(Mockito.argThat(formDataValidator(formName)));
         Mockito.verify(fileUtilMock).writeCSV(blankFormMediaPath + "/" + Constants.ODK_DATA_FILENAME);
     }
@@ -112,7 +116,8 @@ public class ODKFormTest extends TestCase {
 
         Mockito.verify(fileUtilMock).withHeader(Constants.ODK_FORM_FIELDS.split(","));
         Mockito.verify(blankFormMock).getPath();
-        String formName = String.format(Constants.ODK_FORM_NAME_FORMAT, householdName);
+        String formNameFormat = getValue(Constants.FORM_ID) + "-%s";
+        String formName = String.format(formNameFormat, householdName);
         Mockito.verify(fileUtilMock).withData(Mockito.argThat(formDataValidator(formName)));
         Mockito.verify(fileUtilMock).writeCSV(blankFormMediaPath + "/" + Constants.ODK_DATA_FILENAME);
     }
@@ -153,6 +158,10 @@ public class ODKFormTest extends TestCase {
         selectedMember = new Member(1, "surname", "firstName", Gender.Male, 28, householdMock, "householdID-1", false);
         Mockito.stub(householdMock.getSelectedMember(Mockito.any(DatabaseHelper.class))).toReturn(selectedMember);
         Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.NOT_SELECTED);
+    }
+
+    private String getValue(String key) {
+        return KeyValueStoreFactory.instance(householdActivity).getString(key) ;
     }
 
     private ArgumentMatcher<String[]> formDataValidator(final String formName) {

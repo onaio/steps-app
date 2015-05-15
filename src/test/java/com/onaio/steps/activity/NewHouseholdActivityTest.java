@@ -3,6 +3,7 @@ package com.onaio.steps.activity;
 
 import android.content.Intent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.onaio.steps.R;
@@ -43,16 +44,18 @@ public class NewHouseholdActivityTest {
 
     @Test
     public void ShouldPopulateView() {
-        assertEquals(R.id.household_form, shadowOf(newHouseholdActivity).getContentView().getId());
         TextView header = (TextView) newHouseholdActivity.findViewById(R.id.form_header);
         TextView generatedHouseholdId = (TextView) newHouseholdActivity.findViewById(R.id.generated_household_id);
         TextView phoneNumber = (TextView) newHouseholdActivity.findViewById(R.id.household_number);
+        Button doneButton = (Button)newHouseholdActivity.findViewById(R.id.ic_done);
 
+        assertEquals(R.id.household_form, shadowOf(newHouseholdActivity).getContentView().getId());
         assertNotNull(header);
         assertNotNull(generatedHouseholdId);
         assertNotNull(phoneNumber);
         assertEquals("Add New Household", header.getText().toString());
         assertEquals("123456789-101", generatedHouseholdId.getText().toString());
+        assertEquals("ADD",doneButton.getText().toString());
     }
 
     @Test

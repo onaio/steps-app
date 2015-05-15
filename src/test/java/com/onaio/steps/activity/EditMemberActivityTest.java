@@ -40,8 +40,8 @@ public class EditMemberActivityTest {
     @Before
     public void setup(){
         Intent intent = new Intent();
-        household = new Household("1","123","987654321","1", HouseholdStatus.DEFERRED,"2015-12-13");
-        member = new Member(1,"rana","manisha", Gender.Male,28, household,"123-1",false);
+        household = new Household("1","123","987654321","1", HouseholdStatus.DEFERRED,"2015-12-13", "Dummy comments");
+        member = new Member(1,"rana","manisha", Gender.Female,28, household,"123-1",false);
         intent.putExtra(Constants.MEMBER, member);
         editMemberActivity = Robolectric.buildActivity(EditMemberActivity.class)
                             .withIntent(intent)
@@ -67,7 +67,7 @@ public class EditMemberActivityTest {
         assertEquals("Edit Member", header.getText());
         assertEquals("rana", surname.getText().toString());
         assertEquals("manisha", firstName.getText().toString());
-        assertEquals(R.id.male_selection, gender.getCheckedRadioButtonId());
+        assertEquals(R.id.female_selection, gender.getCheckedRadioButtonId());
         assertEquals("28", age.getText().toString());
     }
 
@@ -91,12 +91,12 @@ public class EditMemberActivityTest {
         setValue(Constants.MAX_AGE,"60");
         View viewMock = Mockito.mock(View.class);
         Mockito.stub(viewMock.getId()).toReturn(R.id.member_form);
-        TextView surnNameView = (TextView) editMemberActivity.findViewById(R.id.member_family_surname);
+        TextView surnameView = (TextView) editMemberActivity.findViewById(R.id.member_family_surname);
         TextView firstNameView = (TextView) editMemberActivity.findViewById(R.id.member_first_name);
         TextView ageView = (TextView) editMemberActivity.findViewById(R.id.member_age);
         RadioGroup genderView = (RadioGroup) editMemberActivity.findViewById(R.id.member_gender);
 
-        surnNameView.setText("");
+        surnameView.setText("");
         firstNameView.setText("");
         ageView.setText("");
         genderView.check(R.id.female_selection);

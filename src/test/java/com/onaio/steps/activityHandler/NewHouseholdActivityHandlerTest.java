@@ -112,7 +112,7 @@ public class NewHouseholdActivityHandlerTest {
     @Test
     public void ShouldHandleResultAndStartHouseholdActivityForResultCodeOk(){
         Intent intent = new Intent();
-        Household name = new Household("name", "123321412312", HouseholdStatus.NOT_SELECTED, "123");
+        Household name = new Household("name", "123321412312", HouseholdStatus.NOT_SELECTED, "123","Dummy comments");
         name.save(new DatabaseHelper(stepsActivity));
         intent.putExtra(Constants.HOUSEHOLD,name);
         HouseholdAdapter householdAdapterMock = Mockito.mock(HouseholdAdapter.class);

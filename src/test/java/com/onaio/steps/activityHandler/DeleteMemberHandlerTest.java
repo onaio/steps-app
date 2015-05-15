@@ -65,7 +65,7 @@ public class DeleteMemberHandlerTest {
     @Test
     public void ShouldInactivateWhenMemberIsSelectedMember(){
         stub(memberMock.getId()).toReturn(1);
-        stub(memberMock.getHousehold()).toReturn(new Household("12","name","321","1",HouseholdStatus.DEFERRED,"12-12-2001"));
+        stub(memberMock.getHousehold()).toReturn(new Household("12","name","321","1",HouseholdStatus.DEFERRED,"12-12-2001","Dummy comments"));
 
         assertTrue(deleteMemberHandler.shouldInactivate());
     }
@@ -73,7 +73,7 @@ public class DeleteMemberHandlerTest {
     @Test
     public void ShouldNotInactivateWhenMemberIsNotSelectedMember(){
         stub(memberMock.getId()).toReturn(2);
-        stub(memberMock.getHousehold()).toReturn(new Household("12","name","321","1",HouseholdStatus.DEFERRED,"12-12-2001"));
+        stub(memberMock.getHousehold()).toReturn(new Household("12","name","321","1",HouseholdStatus.DEFERRED,"12-12-2001","Dummy comments"));
 
 
         assertFalse(deleteMemberHandler.shouldInactivate());
@@ -82,14 +82,14 @@ public class DeleteMemberHandlerTest {
     @Test
     public void ShouldInactivateWhenHouseholdIsSurveyed(){
         stub(memberMock.getId()).toReturn(1);
-        stub(memberMock.getHousehold()).toReturn(new Household("12","name","321","",HouseholdStatus.DONE,"12-12-2001"));
+        stub(memberMock.getHousehold()).toReturn(new Household("12","name","321","",HouseholdStatus.DONE,"12-12-2001","Dummy comments"));
         assertTrue(deleteMemberHandler.shouldInactivate());
     }
 
     @Test
     public void ShouldInactivateWhenSurveyIsRefused(){
         stub(memberMock.getId()).toReturn(1);
-        stub(memberMock.getHousehold()).toReturn(new Household("12","name","321","",HouseholdStatus.REFUSED,"12-12-2001"));
+        stub(memberMock.getHousehold()).toReturn(new Household("12","name","321","",HouseholdStatus.REFUSED,"12-12-2001","Dummy comments"));
 
         assertTrue(deleteMemberHandler.shouldInactivate());
     }

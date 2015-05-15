@@ -40,6 +40,7 @@ public class SettingsActivityTest {
         intent = new Intent();
         intent.putExtra(Constants.PHONE_ID, "1234");
         intent.putExtra(Constants.HOUSEHOLD_SEED, "100");
+        intent.putExtra(Constants.FORM_ID,"STEPS_Instrument_V3_1");
         intent.putExtra(Constants.ENDPOINT_URL, "http://192.168.0.120");
         intent.putExtra(Constants.MIN_AGE, "14");
         intent.putExtra(Constants.MAX_AGE, "60");
@@ -47,6 +48,7 @@ public class SettingsActivityTest {
         TextView phoneIdView = (TextView) settingsActivity.findViewById(R.id.deviceId);
         TextView endpointUrlView = (TextView) settingsActivity.findViewById(R.id.endpointUrl);
         TextView householdSeedView = (TextView) settingsActivity.findViewById(R.id.household_seed);
+        TextView formIdView = (TextView) settingsActivity.findViewById(R.id.form_id);
 
         assertEquals(R.id.settings, shadowOf(settingsActivity).getContentView().getId());
         assertNotNull(phoneIdView);
@@ -55,6 +57,8 @@ public class SettingsActivityTest {
         assertEquals("1234", phoneIdView.getText().toString());
         assertEquals("100", householdSeedView.getText().toString());
         assertEquals("http://192.168.0.120", endpointUrlView.getText().toString());
+        assertEquals("STEPS_Instrument_V3_1", formIdView.getText().toString());
+
     }
 
     @Test
@@ -62,6 +66,7 @@ public class SettingsActivityTest {
         intent = new Intent();
         intent.putExtra(Constants.PHONE_ID, "1234");
         intent.putExtra(Constants.HOUSEHOLD_SEED, "100");
+        intent.putExtra(Constants.FORM_ID,"STEPS_Instrument_V3_1");
         intent.putExtra(Constants.ENDPOINT_URL, "http://192.168.0.120");
         intent.putExtra(Constants.MIN_AGE, "14");
         intent.putExtra(Constants.MAX_AGE, "60");
@@ -76,6 +81,7 @@ public class SettingsActivityTest {
         assertEquals("http://192.168.0.120", intent1.getSerializableExtra(Constants.ENDPOINT_URL));
         assertEquals("14", intent1.getSerializableExtra(Constants.MIN_AGE));
         assertEquals("60", intent1.getSerializableExtra(Constants.MAX_AGE));
+        assertEquals("STEPS_Instrument_V3_1", intent1.getSerializableExtra(Constants.FORM_ID));
         assertTrue(settingsActivity.isFinishing());
     }
 
@@ -93,6 +99,8 @@ public class SettingsActivityTest {
         assertEquals(null, intent1.getSerializableExtra(Constants.ENDPOINT_URL));
         assertEquals(null, intent1.getSerializableExtra(Constants.MIN_AGE));
         assertEquals(null, intent1.getSerializableExtra(Constants.MAX_AGE));
+        assertEquals(null, intent1.getSerializableExtra(Constants.FORM_ID));
+
         assertFalse(settingsActivity.isFinishing());
     }
 

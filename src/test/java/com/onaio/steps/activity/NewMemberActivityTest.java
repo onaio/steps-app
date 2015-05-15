@@ -42,7 +42,7 @@ public class NewMemberActivityTest {
 
     @Before
     public void setup() {
-        household = new Household("2", "Any HouseholdName", "123456789", "", HouseholdStatus.NOT_SELECTED, currentDate);
+        household = new Household("2", "Any HouseholdName", "123456789", "", HouseholdStatus.NOT_SELECTED, currentDate,"Dummy comments");
         Intent intent = new Intent();
         intent.putExtra(Constants.HOUSEHOLD, household);
         newMemberActivity = Robolectric.buildActivity(NewMemberActivity.class).withIntent(intent)

@@ -44,7 +44,7 @@ public class HouseholdActivityFactoryTest extends TestCase {
 
     @Before
     public void Setup(){
-        household = new Household("name", "123", HouseholdStatus.NOT_SELECTED, "12-12-2015");
+        household = new Household("name", "123", HouseholdStatus.NOT_SELECTED, "12-12-2015","Dummy comments");
         Intent intent = new Intent().putExtra(Constants.HOUSEHOLD, household);
         activity = Robolectric.buildActivity(HouseholdActivity.class).withIntent(intent).create().get();
     }

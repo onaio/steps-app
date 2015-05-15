@@ -33,7 +33,7 @@ public class EditHouseholdActivityTest {
 
     @Before
     public void setup() {
-        household = new Household("1", "household Name", "123456789", "2", HouseholdStatus.NOT_DONE, "2015-12-13");
+        household = new Household("1", "household Name", "123456789", "2", HouseholdStatus.NOT_DONE, "2015-12-13", "Dummy comments");
         Intent intent = new Intent();
         intent.putExtra(Constants.HOUSEHOLD, household);
 
@@ -48,6 +48,8 @@ public class EditHouseholdActivityTest {
         TextView header = (TextView) editHouseholdActivity.findViewById(R.id.form_header);
         TextView household_id = (TextView) editHouseholdActivity.findViewById(R.id.generated_household_id);
         TextView household_number = (TextView) editHouseholdActivity.findViewById(R.id.household_number);
+        TextView commentsView = (TextView) editHouseholdActivity.findViewById(R.id.household_comments);
+
 
         assertEquals(R.id.household_form, shadowOf(editHouseholdActivity).getContentView().getId());
         assertNotNull(header);
@@ -56,6 +58,7 @@ public class EditHouseholdActivityTest {
         assertEquals("Edit Household", header.getText().toString());
         assertEquals("household Name", household_id.getText().toString());
         assertEquals("123456789", household_number.getText().toString());
+        assertEquals("Dummy comments", commentsView.getText().toString());
     }
 
     @Test
@@ -66,18 +69,7 @@ public class EditHouseholdActivityTest {
         editHouseholdActivity.save(viewMock);
 
         Intent editHouseholdActivityIntent = editHouseholdActivity.getIntent();
-        assertEquals(household, editHouseholdActivityIntent.getSerializableExtra(Constants.HOUSEHOLD));
-        assertTrue(editHouseholdActivity.isFinishing());
-    }
 
-    @Test
-    public void ShouldNotPassDataToIntentForInappropriateHouseholdData(){
-        View viewMock = Mockito.mock(View.class);
-        Mockito.stub(viewMock.getId()).toReturn(R.id.household_form);
-
-        editHouseholdActivity.save(viewMock);
-
-        Intent editHouseholdActivityIntent = editHouseholdActivity.getIntent();
         assertEquals(household, editHouseholdActivityIntent.getSerializableExtra(Constants.HOUSEHOLD));
         assertTrue(editHouseholdActivity.isFinishing());
     }
