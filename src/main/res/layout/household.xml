@@ -9,7 +9,8 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:id="@+id/extended_menu"
-        android:layout_marginTop="-5dp">
+        android:layout_marginTop="-5dp"
+        android:weightSum="1">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -17,23 +18,33 @@
             android:gravity="left"
             android:layout_marginLeft="70dp"
             android:textSize="18sp"/>
+
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
+            android:drawablePadding="20dp"
             android:layout_height="wrap_content"
-            android:gravity="left"
+            android:layout_gravity="right"
+            android:drawableLeft="@drawable/ic_action_phone"
             android:id="@+id/household_number_header"
-            android:textSize="12sp"
-            android:layout_marginLeft="70dp"
+            android:textSize="15sp"
+            android:weightSum="1"
+            android:layout_marginLeft="20dp"
             android:layout_marginTop="5dp"/>
+
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:gravity="left"
+            android:layout_gravity="right"
+            android:drawableLeft="@drawable/ic_household_comments"
+            android:drawablePadding="20dp"
             android:id="@+id/text_view_comment"
-            android:textSize="12sp"
-            android:layout_marginLeft="70dp"
+            android:textSize="15sp"
+            android:weightSum="1"
+            android:layout_marginLeft="20dp"
             android:layout_marginBottom="15dp"
             android:layout_marginTop="5dp"/>
+
+
         <View android:layout_height="1dp"
             android:layout_width="fill_parent"
             android:background="@android:color/darker_gray"

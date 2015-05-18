@@ -10,6 +10,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.onaio.steps.R;
@@ -35,6 +36,7 @@ public class HouseholdActivity extends ListActivity {
 
     private Household household;
     private DatabaseHelper db;
+    private ImageView commentView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,10 +113,14 @@ public class HouseholdActivity extends ListActivity {
         idHeader.setText(String.format(getString(R.string.household_id_label)+"-%s",household.getName()));
         idHeader.setTextColor(Color.parseColor(Constants.HEADER_GREEN));
 
-        if(!household.getPhoneNumber().isEmpty())
-            numberHeader.setText(String.format(getString(R.string.phone_number)+" %s", household.getPhoneNumber()));
-        if(!household.getComments().equals(""))
+        if(!household.getPhoneNumber().isEmpty()) {
+            numberHeader.setText(String.format(getString(R.string.phone_number) + " %s", household.getPhoneNumber()));
+
+        }
+        if(!household.getComments().equals("")) {
             commentView.setText(household.getComments());
+        }
+
         actionBar.setTitle("");
     }
 
