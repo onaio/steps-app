@@ -111,11 +111,10 @@ public class HouseholdActivity extends ListActivity {
         idHeader.setText(String.format(getString(R.string.household_id_label)+"-%s",household.getName()));
         idHeader.setTextColor(Color.parseColor(Constants.HEADER_GREEN));
 
-       if(!household.getPhoneNumber().isEmpty())
-       numberHeader.setText(String.format(getString(R.string.phone_number)+" %s", household.getPhoneNumber()));
-       /* if(!household.getComments().equals(""))
-        commentView.setText(household.getComments());
-*/
+        if(!household.getPhoneNumber().isEmpty())
+            numberHeader.setText(String.format(getString(R.string.phone_number)+" %s", household.getPhoneNumber()));
+        if(!household.getComments().equals(""))
+            commentView.setText(household.getComments());
         actionBar.setTitle("");
     }
 

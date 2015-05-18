@@ -74,7 +74,7 @@ public class StepsActivity extends ListActivity {
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        List<IMenuPreparer> menuItemHandlers = StepsActivityFactory.getMenuPreparer(this,Household.getAll(new DatabaseHelper(this)), menu);
+        List<IMenuPreparer> menuItemHandlers = StepsActivityFactory.getMenuPreparer(this,Household.getAllInOrder(new DatabaseHelper(this)), menu);
         for(IMenuPreparer handler:menuItemHandlers)
             if(handler.shouldInactivate())
                 handler.inactivate();

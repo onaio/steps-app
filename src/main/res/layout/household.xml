@@ -24,6 +24,14 @@
             android:id="@+id/household_number_header"
             android:textSize="12sp"
             android:layout_marginLeft="70dp"
+            android:layout_marginTop="5dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:id="@+id/text_view_comment"
+            android:textSize="12sp"
+            android:layout_marginLeft="70dp"
             android:layout_marginBottom="15dp"
             android:layout_marginTop="5dp"/>
         <View android:layout_height="1dp"
