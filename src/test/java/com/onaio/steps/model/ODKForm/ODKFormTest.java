@@ -51,7 +51,7 @@ public class ODKFormTest extends TestCase {
 
         Intent intent = new Intent();
         Mockito.stub(householdMock.getPhoneNumber()).toReturn("8050342");
-
+        Mockito.stub(householdMock.getComments()).toReturn("dummy comments");
         intent.putExtra(Constants.HOUSEHOLD,householdMock);
 
         householdActivity = Robolectric.buildActivity(HouseholdActivity.class).withIntent(intent).create().get();

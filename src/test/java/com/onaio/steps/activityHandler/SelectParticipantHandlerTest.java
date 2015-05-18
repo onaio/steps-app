@@ -50,6 +50,8 @@ public class SelectParticipantHandlerTest {
         householdMock = mock(Household.class);
         Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.NOT_SELECTED);
         Mockito.stub(householdMock.getPhoneNumber()).toReturn("8050342");
+        Mockito.stub(householdMock.getComments()).toReturn("dummy comments");
+
         Intent intent = new Intent();
         intent.putExtra(Constants.HOUSEHOLD, householdMock);
         householdActivity = Robolectric.buildActivity(HouseholdActivity.class).withIntent(intent).create().get();

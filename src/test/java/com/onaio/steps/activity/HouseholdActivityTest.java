@@ -55,18 +55,22 @@ public class HouseholdActivityTest {
     @Test
     public void ShouldStyleActionBar() {
         Mockito.stub(household.getStatus()).toReturn(HouseholdStatus.DONE);
+        Mockito.stub(household.getComments()).toReturn("dummy comments");
         intent.putExtra(Constants.HOUSEHOLD,household);
         HouseholdActivity householdActivity = householdActivityController.withIntent(intent).create().get();
 
         TextView idHeader = (TextView) householdActivity.findViewById(R.id.household_id_header);
         TextView numberHeader = (TextView) householdActivity.findViewById(R.id.household_number_header);
+        TextView commentHeader = (TextView) householdActivity.findViewById(R.id.text_view_comment);
         assertEquals("Household ID-123-100", idHeader.getText().toString());
         assertEquals("Phone Number: 1234567", numberHeader.getText().toString());
+        assertEquals("dummy comments" ,commentHeader.getText().toString());
         assertEquals(Color.parseColor(Constants.HEADER_GREEN), idHeader.getCurrentTextColor());
     }
 
     @Test
     public void ShouldPopulateAdapterWithMembersAndDisplayAppropriateMessage() {
+        Mockito.stub(household.getComments()).toReturn("dummy comments");
         Mockito.stub(household.getStatus()).toReturn(HouseholdStatus.DONE);
         intent.putExtra(Constants.HOUSEHOLD,household);
         HouseholdActivity householdActivity = householdActivityController.withIntent(intent).create().get();
@@ -81,6 +85,7 @@ public class HouseholdActivityTest {
 
     @Test
     public void ShouldPopulateAdapterWithMembersAndDisplaySurveyRefusedMessage() {
+        Mockito.stub(household.getComments()).toReturn("dummy comments");
         Mockito.stub(household.getStatus()).toReturn(HouseholdStatus.REFUSED);
         intent.putExtra(Constants.HOUSEHOLD,household);
         HouseholdActivity householdActivity = householdActivityController.withIntent(intent).create().get();
