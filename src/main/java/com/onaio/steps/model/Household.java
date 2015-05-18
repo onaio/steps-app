@@ -7,9 +7,10 @@ import com.onaio.steps.helper.CursorHelper;
 import com.onaio.steps.helper.DatabaseHelper;
 
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.List;
 
-public class Household implements Serializable {
+public class Household implements Serializable,Comparable<Household> {
     private static String FIND_BY_ID_QUERY = "SELECT * FROM HOUSEHOLD WHERE id = %d";
     public static final String FIND_BY_NAME_QUERY = "SELECT * FROM HOUSEHOLD WHERE %s = '%s'";
     private static String FIND_ALL_QUERY = "SELECT * FROM HOUSEHOLD ORDER BY Id desc";
@@ -145,10 +146,11 @@ public class Household implements Serializable {
         return households.get(0);
     }
 
-    public static List<Household> getAll(DatabaseHelper db){
+    public static List<Household> getAllInOrder(DatabaseHelper db){
         Cursor cursor = db.exec(FIND_ALL_QUERY);
         List<Household> households = new CursorHelper().getHouseholds(cursor);
         db.close();
+        Collections.sort(households);
         return households;
     }
 
@@ -219,5 +221,10 @@ public class Household implements Serializable {
         return count;
     }
 
-
+    @Override
+    public int compareTo(Household otherHousehold) {
+        return status.getOrderWeight() > otherHousehold.status.getOrderWeight()? 1
+                : status.getOrderWeight() < otherHousehold.status.getOrderWeight() ? -1
+                : 0;
+    }
 }

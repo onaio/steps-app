@@ -35,6 +35,7 @@ public class StepsActivity extends ListActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        db = new DatabaseHelper(getApplicationContext());
         prepareScreen();
         super.onCreate(savedInstanceState);
     }
@@ -54,7 +55,7 @@ public class StepsActivity extends ListActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        List<IMenuHandler> activityHandlers = StepsActivityFactory.getMenuHandlers(this, Household.getAll(new DatabaseHelper(this)));
+        List<IMenuHandler> activityHandlers = StepsActivityFactory.getMenuHandlers(this, Household.getAllInOrder(db));
         for(IMenuHandler handler : activityHandlers){
             if(handler.shouldOpen(item.getItemId()) )
                 return handler.open();
@@ -128,8 +129,8 @@ public class StepsActivity extends ListActivity {
     }
 
     private void populateHouseholds() {
-        db = new DatabaseHelper(getApplicationContext());
-        getListView().setAdapter(new HouseholdAdapter(this, Household.getAll(db)));
+        List<Household> households = Household.getAllInOrder(db);
+        getListView().setAdapter(new HouseholdAdapter(this, households));
     }
 
     private String getValue(String key) {

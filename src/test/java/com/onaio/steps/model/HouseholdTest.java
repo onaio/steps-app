@@ -19,6 +19,9 @@ import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -112,11 +115,31 @@ public class HouseholdTest {
         household.setSelectedMemberId("");
         new CursorStub(cursor).stubCursorForHousehold(household);
 
-        List<Household> households = Household.getAll(db);
+        List<Household> households = Household.getAllInOrder(db);
 
         assertEquals(1,households.size());
         validateHousehold(households.get(0));
         Mockito.verify(db).exec(String.format(FIND_ALL_QUERY));
+    }
+
+    @Test
+    public void ShouldSortTheHouseholdsByStatus(){
+        ArrayList<Household> households = new ArrayList<Household>();
+        households.add(new Household("name 1","123",HouseholdStatus.NOT_SELECTED,"12-12-2014"));
+        households.add(new Household("name 2","123",HouseholdStatus.DEFERRED,"12-12-2014"));
+        households.add(new Household("name 3","123",HouseholdStatus.DONE,"12-12-2014"));
+        households.add(new Household("name 4","123",HouseholdStatus.INCOMPLETE,"12-12-2014"));
+        households.add(new Household("name 5","123",HouseholdStatus.NOT_DONE,"12-12-2014"));
+        households.add(new Household("name 6","123",HouseholdStatus.REFUSED,"12-12-2014"));
+
+        Collections.sort(households);
+
+        Assert.assertEquals("name 4",households.get(0).getName());
+        Assert.assertEquals("name 5",households.get(1).getName());
+        Assert.assertEquals("name 2",households.get(2).getName());
+        Assert.assertEquals("name 1",households.get(3).getName());
+        Assert.assertEquals("name 3",households.get(4).getName());
+        Assert.assertEquals("name 6",households.get(5).getName());
     }
 
     @Test

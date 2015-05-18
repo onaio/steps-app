@@ -59,7 +59,7 @@ public class NewHouseholdActivityHandler implements IMenuHandler, IActivityResul
             HouseholdAdapter householdAdapter = (HouseholdAdapter) activity.getListView().getAdapter();
             if (householdAdapter == null)
                 return;
-            householdAdapter.reinitialize(Household.getAll(new DatabaseHelper(activity.getApplicationContext())));
+            householdAdapter.reinitialize(Household.getAllInOrder(new DatabaseHelper(activity.getApplicationContext())));
             householdAdapter.notifyDataSetChanged();
 
             Intent householdActivityIntent = new Intent(activity, HouseholdActivity.class);
