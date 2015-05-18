@@ -22,16 +22,14 @@ import java.util.List;
 
 import static com.onaio.steps.model.HouseholdStatus.NOT_SELECTED;
 
-/**
- * Created by manisharana on 5/12/15.
- */
-public class CancelHandler implements IMenuPreparer,IMenuHandler {
+public class CancelParticipantSelectionHandler implements IMenuPreparer,IMenuHandler {
 
+    private final int MENU_ID = R.id.action_cancel_participant;
     private Household household;
     private ListActivity activity;
     private DatabaseHelper databaseHelper;
 
-    public CancelHandler(ListActivity activity, Household household) {
+    public CancelParticipantSelectionHandler(ListActivity activity, Household household) {
         this.activity=activity;
         this.household=household;
         this.databaseHelper=new DatabaseHelper(activity);
@@ -45,19 +43,19 @@ public class CancelHandler implements IMenuPreparer,IMenuHandler {
 
     @Override
     public void inactivate() {
-        View item = activity.findViewById(R.id.action_cancel_participant);
+        View item = activity.findViewById(MENU_ID);
         item.setVisibility(View.GONE);
     }
 
     @Override
     public void activate() {
-        View item = activity.findViewById(R.id.action_cancel_participant);
+        View item = activity.findViewById(MENU_ID);
         item.setVisibility(View.VISIBLE);
     }
 
     @Override
     public boolean shouldOpen(int menu_id) {
-        return menu_id==R.id.action_cancel_participant;
+        return menu_id==MENU_ID;
     }
 
     @Override

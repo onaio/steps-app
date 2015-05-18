@@ -15,7 +15,7 @@ import static com.onaio.steps.helper.Constants.HOUSEHOLD;
 
 public class EditHouseholdActivityHandler implements IMenuHandler, IActivityResultHandler {
 
-    private final int MENU_ID = R.id.action_edit;
+    private final int MENU_ID = R.id.action_household_edit;
     private ListActivity activity;
     private Household household;
 

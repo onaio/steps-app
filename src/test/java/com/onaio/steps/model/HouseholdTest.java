@@ -125,12 +125,12 @@ public class HouseholdTest {
     @Test
     public void ShouldSortTheHouseholdsByStatus(){
         ArrayList<Household> households = new ArrayList<Household>();
-        households.add(new Household("name 1","123",HouseholdStatus.NOT_SELECTED,"12-12-2014"));
-        households.add(new Household("name 2","123",HouseholdStatus.DEFERRED,"12-12-2014"));
-        households.add(new Household("name 3","123",HouseholdStatus.DONE,"12-12-2014"));
-        households.add(new Household("name 4","123",HouseholdStatus.INCOMPLETE,"12-12-2014"));
-        households.add(new Household("name 5","123",HouseholdStatus.NOT_DONE,"12-12-2014"));
-        households.add(new Household("name 6","123",HouseholdStatus.REFUSED,"12-12-2014"));
+        households.add(new Household("name 1","123",HouseholdStatus.NOT_SELECTED,"12-12-2014",""));
+        households.add(new Household("name 2","123",HouseholdStatus.DEFERRED,"12-12-2014",""));
+        households.add(new Household("name 3","123",HouseholdStatus.DONE,"12-12-2014",""));
+        households.add(new Household("name 4","123",HouseholdStatus.INCOMPLETE,"12-12-2014",""));
+        households.add(new Household("name 5","123",HouseholdStatus.NOT_DONE,"12-12-2014",""));
+        households.add(new Household("name 6","123",HouseholdStatus.REFUSED,"12-12-2014",""));
 
         Collections.sort(households);
 

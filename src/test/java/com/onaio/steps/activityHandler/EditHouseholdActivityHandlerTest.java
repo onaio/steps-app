@@ -29,7 +29,7 @@ import static org.mockito.Mockito.verify;
 @RunWith(RobolectricTestRunner.class)
 public class EditHouseholdActivityHandlerTest {
 
-    private final int MENU_ID = R.id.action_edit;
+    private final int MENU_ID = R.id.action_household_edit;
     @Mock
     private HouseholdActivity activityMock;
     @Mock

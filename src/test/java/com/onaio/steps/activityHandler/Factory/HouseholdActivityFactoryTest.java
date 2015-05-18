@@ -4,7 +4,7 @@ import android.content.Intent;
 
 import com.onaio.steps.activity.HouseholdActivity;
 import com.onaio.steps.activityHandler.BackHomeHandler;
-import com.onaio.steps.activityHandler.CancelHandler;
+import com.onaio.steps.activityHandler.CancelParticipantSelectionHandler;
 import com.onaio.steps.activityHandler.DeferredHandler;
 import com.onaio.steps.activityHandler.EditHouseholdActivityHandler;
 import com.onaio.steps.activityHandler.Interface.IActivityResultHandler;
@@ -94,7 +94,7 @@ public class HouseholdActivityFactoryTest extends TestCase {
         Assert.assertTrue(menuHandlerTypes.contains(NewMemberActivityHandler.class));
         Assert.assertTrue(menuHandlerTypes.contains(SelectParticipantHandler.class));
         Assert.assertTrue(menuHandlerTypes.contains(SelectedParticipantContainerHandler.class));
-        Assert.assertTrue(menuHandlerTypes.contains(CancelHandler.class));
+        Assert.assertTrue(menuHandlerTypes.contains(CancelParticipantSelectionHandler.class));
 
     }
 
@@ -109,7 +109,7 @@ public class HouseholdActivityFactoryTest extends TestCase {
         Assert.assertTrue(menuHandlerTypes.contains(DeferredHandler.class));
         Assert.assertTrue(menuHandlerTypes.contains(RefusedHandler.class));
         Assert.assertTrue(menuHandlerTypes.contains(NewMemberActivityHandler.class));
-        Assert.assertTrue(menuHandlerTypes.contains(CancelHandler.class));
+        Assert.assertTrue(menuHandlerTypes.contains(CancelParticipantSelectionHandler.class));
         Assert.assertTrue(menuHandlerTypes.contains(SelectParticipantHandler.class));
     }
 
