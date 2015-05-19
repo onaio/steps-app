@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="fill_parent"
     android:id="@+id/household_main"
@@ -50,104 +50,11 @@
             android:background="@android:color/darker_gray"
             android:id="@+id/action_bar_divider"/>
         </LinearLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:id="@+id/selected_participant"
-        android:background="#4D4F51"
-        android:layout_below="@id/extended_menu">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/ic_contact_list_selected"
-            android:id="@+id/selected_participant_image"
-            android:contentDescription="@string/selected_participant"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/selected_participant_name"
-            android:layout_toRightOf="@+id/selected_participant_image"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="2dp"
-            android:textColor="@android:color/holo_orange_light"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/selected_participant_name"
-            android:layout_toRightOf="@+id/selected_participant_image"
-            android:id="@+id/selected_participant_details"
-            android:layout_marginLeft="10dp"
-            android:textColor="@android:color/holo_orange_light"/>
-    </RelativeLayout>
-    <LinearLayout android:layout_below="@+id/selected_participant"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        style="@android:style/ButtonBar"
-        android:background="#4D4F51"
-        android:id="@+id/selected_participant_actions">
-        <Button android:id="@+id/action_take_survey"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:drawableLeft="@drawable/ic_action_survey"
-            android:onClick="handleCustomMenu"
-            android:text="@string/interview_now"
-            android:background="@android:color/holo_blue_dark"
-            android:layout_marginLeft="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginRight="10dp"
-            android:textColor="@android:color/white"
-            android:paddingLeft="5dp"
-            android:textSize="12sp"/>
-        <Button android:id="@+id/action_deferred"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:drawableLeft="@drawable/ic_action_deferred"
-            android:text="@string/interview_later"
-            android:onClick="handleCustomMenu"
-            android:layout_margin="10dp"
-            android:background="@android:color/white"
-            android:shadowColor="@android:color/black"
-            android:textSize="12sp"/>
-        <Button android:id="@+id/action_refused"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/refused"
-            android:drawableLeft="@drawable/ic_action_refused"
-            android:onClick="handleCustomMenu"
-            android:layout_margin="10dp"
-            android:background="@android:color/white"
-            android:textSize="12sp"/>
-        <Button
-            android:id="@+id/action_cancel_participant"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/cancel_selection"
-            android:drawableLeft="@drawable/ic_action_cancel_selection"
-            android:onClick="handleCustomMenu"
-            android:layout_margin="10dp"
-            android:background="@android:color/white"
-            android:textColor="@android:color/black"
-            android:textSize="12sp"
-           />
-    </LinearLayout>
-    <View android:layout_height="1dp"
-        android:layout_width="fill_parent"
-        android:background="@android:color/darker_gray"
-        android:id="@+id/divider"
-        android:layout_below="@+id/selected_participant_actions"/>
+    <include layout="@layout/selected_participant"/>
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:layout_below="@+id/divider">
+    android:layout_height="fill_parent">
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -202,4 +109,4 @@
         />
 
 </LinearLayout>
-</RelativeLayout>
+</LinearLayout>
