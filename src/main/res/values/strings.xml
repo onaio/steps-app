@@ -11,7 +11,6 @@
     <string name="device_id_label">Device ID</string>
     <string name="phone_id_message">Set the Device ID first!</string>
     <string name="phone_id_message_title">Alert</string>
-    <string name="household_id_label">Household ID</string>
     <string name="phone_number">Phone Number:</string>
     <string name="phone_number_hint">Contact Phone Number</string>
     <string name="household_id_hint">Household ID</string>
@@ -59,7 +58,6 @@
     <string name="select_participant_title">SELECT PARTICIPANT</string>
     <string name="add_new_household">Add New Household</string>
     <string name="add_new_member">Add New Member</string>
-    <string name="phone_id_name">Phone ID Name</string>
     <string name="age_hint">Age (in years)</string>
     <string name="interview_now">INTERVIEW NOW</string>
     <string name="interview_later">INTERVIEW LATER</string>
