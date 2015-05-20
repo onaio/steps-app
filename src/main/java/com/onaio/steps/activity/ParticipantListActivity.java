@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -79,7 +80,7 @@ public class ParticipantListActivity  extends ListActivity{
         }
 
         private void setWatermark() {
-            final RelativeLayout homePage = (RelativeLayout)findViewById(R.id.participant_layout);
+            final RelativeLayout homePage = (RelativeLayout)findViewById(R.id.main_layout);
             if(homePage == null) return;
             runOnUiThread(new Runnable() {
                 public void run() {
@@ -93,10 +94,10 @@ public class ParticipantListActivity  extends ListActivity{
         }
 
         private void setLayout() {
-            setContentView(R.layout.participant_list);
- //           Button participantHeader = (Button) findViewById(R.id.action_add_household);
-  //          participantHeader.setText(R.string.action_add_participant);
-  //          participantHeader.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_action_new_member,0 ,0,0);
+            setContentView(R.layout.main);
+           Button participantHeader = (Button) findViewById(R.id.action_add_household);
+           participantHeader.setText(R.string.action_add_participant);
+           participantHeader.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_action_new_member,0 ,0,0);
             setTitle(R.string.participant_header);
             setTitleColor(Color.parseColor(HEADER_GREEN));
         }
