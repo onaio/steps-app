@@ -108,7 +108,7 @@ public class StepsActivity extends ListActivity {
     }
 
     private void setLayout() {
-        if(getValue(PHONE_ID) == null || getValue(PHONE_ID).equals(""))
+        if( getValue(PHONE_ID) == null || getValue(PHONE_ID).equals(""))
          setContentView(R.layout.first_main);
         else {
             setContentView(R.layout.main);

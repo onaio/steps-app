@@ -7,7 +7,7 @@
         <Button
             android:layout_width="75dp"
             android:layout_height="fill_parent"
-            android:text = "DONE"
+            android:text = "@string/action_done"
             android:background="@android:color/holo_blue_dark"
             android:textColor="@android:color/white"
             android:onClick="save"

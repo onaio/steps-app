@@ -35,4 +35,5 @@ public class Constants {
     public static final String ODK_COLLECT_FORM_CLASS = "org.odk.collect.android.activities.FormEntryActivity";
 
 
+    public static final String PARTICIPANT = "PARTICIPANT";
 }

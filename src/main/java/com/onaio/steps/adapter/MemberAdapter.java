@@ -1,5 +1,6 @@
 package com.onaio.steps.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
@@ -14,8 +15,6 @@ import com.onaio.steps.helper.Constants;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.HouseholdStatus;
 import com.onaio.steps.model.Member;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -73,7 +72,7 @@ public class MemberAdapter extends BaseAdapter{
         TextView memberNameView = (TextView) memberListItem.findViewById(R.id.main_text);
         setText(memberNameView, memberAtPosition.getFormattedName(), isSelectedMember, Color.BLACK);
         TextView memberDetailView = (TextView)memberListItem.findViewById(R.id.sub_text);
-        setText(memberDetailView, memberAtPosition.getFormattedDetail(), isSelectedMember, Color.GRAY);
+        setText(memberDetailView, memberAtPosition.getFormattedDetail((Activity)context), isSelectedMember, Color.GRAY);
         setImage(memberListItem,isSelectedMember);
         View divider = memberListItem.findViewById(R.id.divider);
         divider.setVisibility(View.GONE);
