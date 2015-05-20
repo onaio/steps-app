@@ -95,4 +95,6 @@
     <string name="participant">Participant</string>
     <string name="interview_refused_message">Interview is refused!</string>
     <string name="interview_done_message">Interview is complete!</string>
+    <string name="participant_survey_deferred_message">The survey has been deferred, you can complete the survey later for this person.</string>
+    <string name="participant_survey_refusal_message">Person Refusal</string>
 </resources>
