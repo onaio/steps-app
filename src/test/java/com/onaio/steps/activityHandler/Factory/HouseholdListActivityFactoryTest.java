@@ -36,7 +36,7 @@ public class HouseholdListActivityFactoryTest extends TestCase {
 
     @Test
     public void ShouldHaveProperMenuHandlers(){
-        List<IMenuHandler> menuHandlers = StepsActivityFactory.getMenuHandlers(householdListActivityMock, null);
+        List<IMenuHandler> menuHandlers = HouseholdListActivityFactory.getMenuHandlers(householdListActivityMock, null);
         ArrayList<Class> handlerTypes = getTypes(menuHandlers);
 
         Assert.assertEquals(4,menuHandlers.size());
@@ -48,7 +48,7 @@ public class HouseholdListActivityFactoryTest extends TestCase {
 
     @Test
     public void ShouldHaveProperResultHandlers(){
-        List<IActivityResultHandler> resultHandlers = StepsActivityFactory.getResultHandlers(householdListActivityMock);
+        List<IActivityResultHandler> resultHandlers = HouseholdListActivityFactory.getResultHandlers(householdListActivityMock);
         ArrayList<Class> handlerTypes = getTypes(resultHandlers);
 
         Assert.assertEquals(3, resultHandlers.size());
@@ -59,7 +59,7 @@ public class HouseholdListActivityFactoryTest extends TestCase {
 
     @Test
     public void ShouldHaveProperCustomMenuHandlers(){
-        List<IMenuHandler> menuHandlers = StepsActivityFactory.getCustomMenuHandler(householdListActivityMock);
+        List<IMenuHandler> menuHandlers = HouseholdListActivityFactory.getCustomMenuHandler(householdListActivityMock);
         ArrayList<Class> handlerTypes = getTypes(menuHandlers);
 
         Assert.assertEquals(2,menuHandlers.size());
@@ -69,7 +69,7 @@ public class HouseholdListActivityFactoryTest extends TestCase {
 
     @Test
     public void ShouldHaveProperHouseholdItemHandler(){
-        IListItemHandler handler = StepsActivityFactory.getHouseholdItemHandler(householdListActivityMock, null);
+        IListItemHandler handler = HouseholdListActivityFactory.getHouseholdItemHandler(householdListActivityMock, null);
 
         Assert.assertEquals(HouseholdActivityHandler.class,handler.getClass());
     }

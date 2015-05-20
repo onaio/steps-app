@@ -18,7 +18,7 @@ import com.onaio.steps.model.Household;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StepsActivityFactory {
+public class HouseholdListActivityFactory {
     public static List<IMenuHandler> getMenuHandlers(ListActivity activity, List<Household> households){
         ArrayList<IMenuHandler> handlers = new ArrayList<IMenuHandler>();
         handlers.add(new SettingActivityHandler(activity));
@@ -44,7 +44,6 @@ public class StepsActivityFactory {
     public static List<IMenuHandler> getCustomMenuHandler(ListActivity activity){
         ArrayList<IMenuHandler> handlers = new ArrayList<IMenuHandler>();
         handlers.add(new NewHouseholdActivityHandler(activity));
-        handlers.add(new SettingActivityHandler(activity));
         return handlers;
     }
 

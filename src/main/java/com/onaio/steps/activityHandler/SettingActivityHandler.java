@@ -1,9 +1,12 @@
 package com.onaio.steps.activityHandler;
 
+import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Intent;
 
+import com.onaio.steps.InitializtionStrategy.InitialFlows;
 import com.onaio.steps.R;
+import com.onaio.steps.activity.MainActivityOrchestrator;
 import com.onaio.steps.activity.SettingsActivity;
 import com.onaio.steps.activityHandler.Interface.IActivityResultHandler;
 import com.onaio.steps.activityHandler.Interface.IMenuHandler;
@@ -13,6 +16,7 @@ import com.onaio.steps.model.RequestCode;
 
 import static android.app.Activity.RESULT_OK;
 import static com.onaio.steps.helper.Constants.ENDPOINT_URL;
+import static com.onaio.steps.helper.Constants.FLOW_TYPE;
 import static com.onaio.steps.helper.Constants.FORM_ID;
 import static com.onaio.steps.helper.Constants.HOUSEHOLD_SEED;
 import static com.onaio.steps.helper.Constants.MAX_AGE;
@@ -22,9 +26,9 @@ import static com.onaio.steps.helper.Constants.PHONE_ID;
 
 public class SettingActivityHandler implements IMenuHandler, IActivityResultHandler {
 
-    private ListActivity activity;
+    private Activity activity;
 
-    public SettingActivityHandler(ListActivity activity) {
+    public SettingActivityHandler(Activity activity) {
 
         this.activity = activity;
     }
@@ -72,6 +76,10 @@ public class SettingActivityHandler implements IMenuHandler, IActivityResultHand
         saveSafely(HOUSEHOLD_SEED, householdSeed);
         saveSafely(MIN_AGE, minAge);
         saveSafely(MAX_AGE, maxAge);
+        saveSafely(FLOW_TYPE, InitialFlows.Household.toString());
+
+        activity.startActivity(new Intent(activity,MainActivityOrchestrator.class));
+        activity.finish();
     }
 
     private void saveSafely(String key, String value) {
