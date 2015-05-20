@@ -2,10 +2,12 @@ package com.onaio.steps.model;
 
 
 public enum ParticipantStatus {
-    DONE(1),
+    NOT_SELECTED(1),
     DEFERRED(2),
     INCOMPLETE(3),
-    REFUSED(4);
+    REFUSED(4),
+    DONE(5);
+
     private int order;
 
     ParticipantStatus(int order){

@@ -10,7 +10,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.onaio.steps.R;
@@ -36,7 +35,6 @@ public class HouseholdActivity extends ListActivity {
 
     private Household household;
     private DatabaseHelper db;
-    private ImageView commentView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

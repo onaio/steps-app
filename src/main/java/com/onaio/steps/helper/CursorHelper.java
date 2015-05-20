@@ -6,6 +6,8 @@ import com.onaio.steps.model.Gender;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.HouseholdStatus;
 import com.onaio.steps.model.Member;
+import com.onaio.steps.model.Participant;
+import com.onaio.steps.model.ParticipantStatus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,5 +51,24 @@ public class CursorHelper {
         cursor.close();
         return householdNames;
 
+    }
+
+    public ArrayList<Participant> getParticipants(Cursor cursor) {
+        ArrayList<Participant> participants = new ArrayList<Participant>();
+        if (cursor.moveToFirst()) {
+            do {
+                String id = cursor.getString(cursor.getColumnIndex(Participant.ID));
+                String firstName = cursor.getString(cursor.getColumnIndex(Participant.FIRST_NAME));
+                String familySurname = cursor.getString(cursor.getColumnIndex(Participant.FAMILY_SURNAME));
+                String gender = cursor.getString(cursor.getColumnIndex(Participant.GENDER));
+                String age = cursor.getString(cursor.getColumnIndex(Participant.AGE));
+                String status = cursor.getString(cursor.getColumnIndex(Participant.STATUS));
+                String createdAt = cursor.getString(cursor.getColumnIndex(Participant.CREATED_AT));
+                participants.add(new Participant(id, familySurname, firstName, Gender.valueOf(gender), Integer.parseInt(age), ParticipantStatus.valueOf(status),createdAt));
+
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return participants;
     }
 }

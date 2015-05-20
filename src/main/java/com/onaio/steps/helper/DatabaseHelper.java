@@ -5,8 +5,10 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.Member;
+import com.onaio.steps.model.Participant;
 import com.onaio.steps.model.ReElectReason;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
@@ -24,6 +26,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(Household.TABLE_CREATE_QUERY);
         db.execSQL(Member.TABLE_CREATE_QUERY);
+        db.execSQL(Participant.TABLE_CREATE_QUERY);
         db.execSQL(ReElectReason.TABLE_CREATE_QUERY);
     }
 
@@ -32,6 +35,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS "+Household.TABLE_NAME);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS "+Member.TABLE_NAME);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS "+ ReElectReason.TABLE_NAME);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS "+ Participant.TABLE_NAME);
         onCreate(sqLiteDatabase);
     }
 
