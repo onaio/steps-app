@@ -7,7 +7,7 @@ import com.onaio.steps.helper.CursorHelper;
 import com.onaio.steps.helper.DatabaseHelper;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.List;
 
 
 public class Participant implements Serializable {
@@ -125,9 +125,9 @@ public class Participant implements Serializable {
     }
 
 
-    public static ArrayList<Participant> getAllParticipants(DatabaseHelper db) {
+    public static List<Participant> getAllParticipants(DatabaseHelper db) {
         Cursor cursor = db.exec(Participant.FIND_ALL_QUERY);
-        ArrayList<Participant> participants = new CursorHelper().getParticipants(cursor);
+        List<Participant> participants = new CursorHelper().getParticipants(cursor);
         db.close();
         return participants;
     }

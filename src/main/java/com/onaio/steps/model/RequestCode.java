@@ -7,7 +7,8 @@ public enum RequestCode {
     EDIT_HOUSEHOLD(4),
     EDIT_MEMBER(5),
     IMPORT(6),
-    SURVEY(7);
+    SURVEY(7),
+    NEW_PARTICIPANT(8);
 
     private final int code;
     RequestCode(int code){

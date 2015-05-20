@@ -19,7 +19,7 @@ public class ParticipantAdapter extends BaseAdapter {
     private Context context;
     private List<Participant> participants;
 
-    public ParticipantAdapter(Context context, List participants) {
+    public ParticipantAdapter(Context context, List<Participant> participants) {
         this.context = context;
         this.participants = participants;
     }
@@ -87,5 +87,10 @@ public class ParticipantAdapter extends BaseAdapter {
 
         view.setBackgroundColor(Color.WHITE);
         return view;
+    }
+
+
+    public void reinitialize(List<Participant> participants) {
+        this.participants = participants;
     }
 }
