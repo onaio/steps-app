@@ -28,12 +28,12 @@ public class Participant implements Serializable {
     private String familySurname;
     private String firstName;
     private Gender gender;
-    ParticipantStatus status;
+    InterviewStatus status;
     private int age;
     private String id;
     private String createdAt;
 
-    public Participant(String id, String familySurname, String firstName, Gender gender, int age, ParticipantStatus status, String createdAt) {
+    public Participant(String id, String familySurname, String firstName, Gender gender, int age, InterviewStatus status, String createdAt) {
         this.familySurname = familySurname;
         this.firstName = firstName;
         this.gender = gender;
@@ -82,16 +82,17 @@ public class Participant implements Serializable {
         return id;
     }
 
-    public ParticipantStatus getStatus() {
-        return status;
-    }
 
     public String getCreatedAt() {
         return createdAt;
     }
 
-    public void setStatus(ParticipantStatus status){
-        this.status=status;
+    public InterviewStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(InterviewStatus status) {
+        this.status = status;
     }
 
     public long save(DatabaseHelper db) {

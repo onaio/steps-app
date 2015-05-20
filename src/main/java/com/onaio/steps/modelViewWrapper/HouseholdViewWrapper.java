@@ -7,7 +7,7 @@ import android.widget.TextView;
 import com.onaio.steps.exception.InvalidDataException;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.model.Household;
-import com.onaio.steps.model.HouseholdStatus;
+import com.onaio.steps.model.InterviewStatus;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -26,7 +26,7 @@ public class HouseholdViewWrapper {
         String currentDate = new SimpleDateFormat(Constants.DATE_FORMAT).format(new Date());
         EditText commentsView = (EditText) activity.findViewById(commentsViewId);
         String comments = commentsView.getText().toString();
-        return new Household(nameView.getText().toString(), phoneNumber, HouseholdStatus.NOT_SELECTED, currentDate,comments);
+        return new Household(nameView.getText().toString(), phoneNumber, InterviewStatus.NOT_SELECTED, currentDate,comments);
     }
 
     public Household updateHousehold(Household household, int numberViewId, int commentsViewId) {

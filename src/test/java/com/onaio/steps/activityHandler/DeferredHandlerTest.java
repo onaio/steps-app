@@ -8,7 +8,7 @@ import com.onaio.steps.activity.HouseholdActivity;
 import com.onaio.steps.helper.CustomDialog;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.model.Household;
-import com.onaio.steps.model.HouseholdStatus;
+import com.onaio.steps.model.InterviewStatus;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -56,42 +56,42 @@ public class DeferredHandlerTest {
     public void ShouldSetProperStatusAndNotifyUserWhenOpened(){
         deferredHandler.open();
 
-        verify(householdMock).setStatus(HouseholdStatus.DEFERRED);
+        verify(householdMock).setStatus(InterviewStatus.DEFERRED);
         verify(householdMock).update(any(DatabaseHelper.class));
         verify(dialogMock).notify(eq(activityMock),any(DialogInterface.OnClickListener.class), eq(R.string.survey_deferred_title), eq(R.string.survey_deferred_message));
     }
 
     @Test
     public void ShouldInactivateWhenMemberIsNotSelected(){
-        Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.NOT_SELECTED);
+        Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.NOT_SELECTED);
 
         assertTrue(deferredHandler.shouldInactivate());
     }
 
     @Test
     public void ShouldNotInactivateWhenSurveyNotDone(){
-        Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.NOT_DONE);
+        Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.NOT_DONE);
 
         assertFalse(deferredHandler.shouldInactivate());
     }
 
     @Test
     public void ShouldInactivateWhenSurveyDone(){
-        Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.DONE);
+        Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.DONE);
 
         assertTrue(deferredHandler.shouldInactivate());
     }
 
     @Test
     public void ShouldInactivateWhenSurveyDeferred(){
-        Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.DEFERRED);
+        Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.DEFERRED);
 
         assertTrue(deferredHandler.shouldInactivate());
     }
 
     @Test
     public void ShouldInactivateWhenSurveyRefused(){
-        Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.REFUSED);
+        Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.REFUSED);
 
         assertTrue(deferredHandler.shouldInactivate());
     }

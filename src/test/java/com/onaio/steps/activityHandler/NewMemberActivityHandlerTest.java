@@ -16,7 +16,7 @@ import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.CustomDialog;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.model.Household;
-import com.onaio.steps.model.HouseholdStatus;
+import com.onaio.steps.model.InterviewStatus;
 import com.onaio.steps.model.RequestCode;
 
 import junit.framework.Assert;
@@ -59,19 +59,19 @@ public class NewMemberActivityHandlerTest {
 
     @Test
     public void ShouldOpenActivityWhenProperMenuIdIsPassedAndWhenSurveyIsNotRefused(){
-        Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.NOT_DONE);
+        Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.NOT_DONE);
         assertTrue(newMemberActivityHandler.shouldOpen(R.id.action_add_member));
     }
 
     @Test
     public void ShouldNotOpenForOtherMenuIdAndForRefusedState(){
-        Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.REFUSED);
+        Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.REFUSED);
         assertFalse(newMemberActivityHandler.shouldOpen(R.id.action_deferred));
     }
 
     @Test
     public void ShouldStartNewMemberActivityIfHouseholdIsNotNullAndHouseholdSurveyIsNotSelected() {
-        Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.NOT_SELECTED);
+        Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.NOT_SELECTED);
 
         newMemberActivityHandler.open();
 
@@ -90,7 +90,7 @@ public class NewMemberActivityHandlerTest {
 
     @Test
     public void ShouldStartNewMemberActivityIfHouseholdIsNotNull() {
-        Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.NOT_DONE);
+        Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.NOT_DONE);
 
         newMemberActivityHandler.open();
 
@@ -102,7 +102,7 @@ public class NewMemberActivityHandlerTest {
     public void ShouldUpdateHouseholdForResultCodeOk(){
         Cursor cursorMock = Mockito.mock(Cursor.class);
         Mockito.stub(dbMock.exec(Mockito.anyString())).toReturn(cursorMock);
-        Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.NOT_DONE);
+        Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.NOT_DONE);
 
         newMemberActivityHandler.handleResult(null, Activity.RESULT_OK);
 
@@ -132,21 +132,21 @@ public class NewMemberActivityHandlerTest {
     @Test
     public void ShouldInactivateWhenHouseholdIsSurveyed(){
         stub(householdMock.getSelectedMemberId()).toReturn("");
-        stub(householdMock.getStatus()).toReturn(HouseholdStatus.DONE);
+        stub(householdMock.getStatus()).toReturn(InterviewStatus.DONE);
         Assert.assertTrue(newMemberActivityHandler.shouldInactivate());
     }
 
     @Test
     public void ShouldInactivateWhenHouseholdSurveyIsIncomplete(){
         stub(householdMock.getSelectedMemberId()).toReturn("");
-        stub(householdMock.getStatus()).toReturn(HouseholdStatus.INCOMPLETE);
+        stub(householdMock.getStatus()).toReturn(InterviewStatus.INCOMPLETE);
         Assert.assertTrue(newMemberActivityHandler.shouldInactivate());
     }
 
     @Test
     public void ShouldInactivateWhenSurveyIsRefused(){
         stub(householdMock.getSelectedMemberId()).toReturn("");
-        stub(householdMock.getStatus()).toReturn(HouseholdStatus.REFUSED);
+        stub(householdMock.getStatus()).toReturn(InterviewStatus.REFUSED);
         Assert.assertTrue(newMemberActivityHandler.shouldInactivate());
     }
 

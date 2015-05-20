@@ -11,7 +11,7 @@ import com.onaio.steps.helper.FileUtil;
 import com.onaio.steps.helper.KeyValueStoreFactory;
 import com.onaio.steps.model.Gender;
 import com.onaio.steps.model.Household;
-import com.onaio.steps.model.HouseholdStatus;
+import com.onaio.steps.model.InterviewStatus;
 import com.onaio.steps.model.Member;
 import com.onaio.steps.model.RequestCode;
 import com.onaio.steps.model.ShadowDatabaseHelper;
@@ -157,7 +157,7 @@ public class ODKFormTest extends TestCase {
         householdMock = Mockito.mock(Household.class);
         selectedMember = new Member(1, "surname", "firstName", Gender.Male, 28, householdMock, "householdID-1", false);
         Mockito.stub(householdMock.getSelectedMember(Mockito.any(DatabaseHelper.class))).toReturn(selectedMember);
-        Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.NOT_SELECTED);
+        Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.NOT_SELECTED);
     }
 
     private String getValue(String key) {

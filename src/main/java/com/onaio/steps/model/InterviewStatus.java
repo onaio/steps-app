@@ -1,6 +1,6 @@
 package com.onaio.steps.model;
 
-public enum HouseholdStatus {
+public enum InterviewStatus {
     NOT_SELECTED(4),
     INCOMPLETE(1),
     NOT_DONE(2),
@@ -9,7 +9,7 @@ public enum HouseholdStatus {
     REFUSED(6);
     private int orderWeight;
 
-    HouseholdStatus(int orderWeight){
+    InterviewStatus(int orderWeight){
 
         this.orderWeight = orderWeight;
     }

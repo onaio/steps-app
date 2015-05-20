@@ -14,7 +14,7 @@ import com.onaio.steps.helper.FileUtil;
 import com.onaio.steps.helper.Logger;
 import com.onaio.steps.model.Gender;
 import com.onaio.steps.model.Household;
-import com.onaio.steps.model.HouseholdStatus;
+import com.onaio.steps.model.InterviewStatus;
 import com.onaio.steps.model.Member;
 import com.onaio.steps.model.ReElectReason;
 import com.onaio.steps.model.RequestCode;
@@ -76,15 +76,15 @@ public class ImportHandler implements IMenuHandler, IActivityResultHandler {
                 Household household = Household.find_by(db, householdName);
                 if(household == null){
                     String currentDate = new SimpleDateFormat(Constants.DATE_FORMAT).format(new Date());
-                    household = new Household(householdName, phoneNumber, HouseholdStatus.NOT_SELECTED, currentDate ,comments);
+                    household = new Household(householdName, phoneNumber, InterviewStatus.NOT_SELECTED, currentDate ,comments);
                     household.save(db);
                 }
                 //validate for members
                 Member member = new Member(surname, firstName, Gender.valueOf(gender), Integer.parseInt(age), household, Boolean.getBoolean(deleted));
                 member.setMemberHouseholdId(memberHouseholdId);
                 member.save(db);
-                if(!(surveyStatus.equals(Constants.SURVEY_NA) || surveyStatus.equals(HouseholdStatus.NOT_SELECTED.toString()) )) {
-                    household.setStatus(HouseholdStatus.valueOf(surveyStatus));
+                if(!(surveyStatus.equals(Constants.SURVEY_NA) || surveyStatus.equals(InterviewStatus.NOT_SELECTED.toString()) )) {
+                    household.setStatus(InterviewStatus.valueOf(surveyStatus));
                     household.setSelectedMemberId(String.valueOf(member.getId()));
                     household.update(db);
                 }

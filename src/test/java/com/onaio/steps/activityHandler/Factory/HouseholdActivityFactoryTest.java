@@ -20,7 +20,7 @@ import com.onaio.steps.activityHandler.SelectedParticipantContainerHandler;
 import com.onaio.steps.activityHandler.TakeSurveyHandler;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.model.Household;
-import com.onaio.steps.model.HouseholdStatus;
+import com.onaio.steps.model.InterviewStatus;
 
 import junit.framework.Assert;
 import junit.framework.TestCase;
@@ -44,7 +44,7 @@ public class HouseholdActivityFactoryTest extends TestCase {
 
     @Before
     public void Setup(){
-        household = new Household("name", "123", HouseholdStatus.NOT_SELECTED, "12-12-2015","Dummy comments");
+        household = new Household("name", "123", InterviewStatus.NOT_SELECTED, "12-12-2015","Dummy comments");
         Intent intent = new Intent().putExtra(Constants.HOUSEHOLD, household);
         activity = Robolectric.buildActivity(HouseholdActivity.class).withIntent(intent).create().get();
     }

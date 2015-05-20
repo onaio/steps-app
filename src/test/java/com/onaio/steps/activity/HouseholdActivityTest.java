@@ -11,7 +11,7 @@ import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.model.Gender;
 import com.onaio.steps.model.Household;
-import com.onaio.steps.model.HouseholdStatus;
+import com.onaio.steps.model.InterviewStatus;
 import com.onaio.steps.model.Member;
 
 import org.junit.Before;
@@ -54,7 +54,7 @@ public class HouseholdActivityTest {
 
     @Test
     public void ShouldStyleActionBar() {
-        Mockito.stub(household.getStatus()).toReturn(HouseholdStatus.DONE);
+        Mockito.stub(household.getStatus()).toReturn(InterviewStatus.DONE);
         Mockito.stub(household.getComments()).toReturn("dummy comments");
         intent.putExtra(Constants.HOUSEHOLD,household);
         HouseholdActivity householdActivity = householdActivityController.withIntent(intent).create().get();
@@ -71,7 +71,7 @@ public class HouseholdActivityTest {
     @Test
     public void ShouldPopulateAdapterWithMembersAndDisplayAppropriateMessage() {
         Mockito.stub(household.getComments()).toReturn("dummy comments");
-        Mockito.stub(household.getStatus()).toReturn(HouseholdStatus.DONE);
+        Mockito.stub(household.getStatus()).toReturn(InterviewStatus.DONE);
         intent.putExtra(Constants.HOUSEHOLD,household);
         HouseholdActivity householdActivity = householdActivityController.withIntent(intent).create().get();
 
@@ -86,7 +86,7 @@ public class HouseholdActivityTest {
     @Test
     public void ShouldPopulateAdapterWithMembersAndDisplaySurveyRefusedMessage() {
         Mockito.stub(household.getComments()).toReturn("dummy comments");
-        Mockito.stub(household.getStatus()).toReturn(HouseholdStatus.REFUSED);
+        Mockito.stub(household.getStatus()).toReturn(InterviewStatus.REFUSED);
         intent.putExtra(Constants.HOUSEHOLD,household);
         HouseholdActivity householdActivity = householdActivityController.withIntent(intent).create().get();
 

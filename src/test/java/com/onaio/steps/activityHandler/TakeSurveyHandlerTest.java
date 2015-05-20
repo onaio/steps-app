@@ -10,7 +10,7 @@ import com.onaio.steps.activity.HouseholdActivity;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.model.Household;
-import com.onaio.steps.model.HouseholdStatus;
+import com.onaio.steps.model.InterviewStatus;
 import com.onaio.steps.model.ODKForm.IForm;
 import com.onaio.steps.model.ODKForm.ODKSavedForm;
 import com.onaio.steps.model.RequestCode;
@@ -59,35 +59,35 @@ public class TakeSurveyHandlerTest {
 
     @Test
     public void ShouldInactivateWhenMemberIsNotSelected(){
-        Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.NOT_SELECTED);
+        Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.NOT_SELECTED);
 
         Assert.assertTrue(takeSurveyHandler.shouldInactivate());
     }
 
     @Test
     public void ShouldNotInactivateWhenSurveyNotDone(){
-        Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.NOT_DONE);
+        Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.NOT_DONE);
 
         Assert.assertFalse(takeSurveyHandler.shouldInactivate());
     }
 
     @Test
     public void ShouldInactivateWhenSurveyDone(){
-        Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.DONE);
+        Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.DONE);
 
         Assert.assertTrue(takeSurveyHandler.shouldInactivate());
     }
 
     @Test
     public void ShouldNotInactivateWhenSurveyDeferred(){
-        Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.DEFERRED);
+        Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.DEFERRED);
 
         Assert.assertFalse(takeSurveyHandler.shouldInactivate());
     }
 
     @Test
     public void ShouldInactivateWhenSurveyRefused(){
-        Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.REFUSED);
+        Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.REFUSED);
 
         Assert.assertTrue(takeSurveyHandler.shouldInactivate());
     }
@@ -116,7 +116,7 @@ public class TakeSurveyHandlerTest {
     public void ShouldActivateViewWithInterviewNowText() {
         Button viewMock = Mockito.mock(Button.class);
         Mockito.stub(householdActivityMock.findViewById(R.id.action_take_survey)).toReturn(viewMock);
-        Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.NOT_SELECTED);
+        Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.NOT_SELECTED);
 
         takeSurveyHandler.activate();
 
@@ -127,7 +127,7 @@ public class TakeSurveyHandlerTest {
     public void ShouldActivateViewWithContinueInterviewText() {
         Button viewMock = Mockito.mock(Button.class);
         Mockito.stub(householdActivityMock.findViewById(R.id.action_take_survey)).toReturn(viewMock);
-        Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.INCOMPLETE);
+        Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.INCOMPLETE);
 
         takeSurveyHandler.activate();
 
@@ -160,7 +160,7 @@ public class TakeSurveyHandlerTest {
 
         surveyHandler.handleResult(null, Activity.RESULT_OK);
 
-        Mockito.verify(householdMock).setStatus(HouseholdStatus.DONE);
+        Mockito.verify(householdMock).setStatus(InterviewStatus.DONE);
         Mockito.verify(householdMock).update(Mockito.any(DatabaseHelper.class));
     }
 
@@ -171,7 +171,7 @@ public class TakeSurveyHandlerTest {
 
         surveyHandler.handleResult(null, Activity.RESULT_OK);
 
-        Mockito.verify(householdMock).setStatus(HouseholdStatus.INCOMPLETE);
+        Mockito.verify(householdMock).setStatus(InterviewStatus.INCOMPLETE);
         Mockito.verify(householdMock).update(Mockito.any(DatabaseHelper.class));
     }
 
@@ -185,7 +185,7 @@ public class TakeSurveyHandlerTest {
     public void ShouldNotHandleResultForErrorResult(){
         takeSurveyHandler.handleResult(null, Activity.RESULT_CANCELED);
 
-        Mockito.verify(householdMock,Mockito.never()).setStatus(HouseholdStatus.DONE);
+        Mockito.verify(householdMock,Mockito.never()).setStatus(InterviewStatus.DONE);
         Mockito.verify(householdMock,Mockito.never()).update(Mockito.any(DatabaseHelper.class));
     }
 

@@ -7,7 +7,7 @@ import android.widget.TextView;
 import com.onaio.steps.R;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.model.Household;
-import com.onaio.steps.model.HouseholdStatus;
+import com.onaio.steps.model.InterviewStatus;
 
 import junit.framework.Assert;
 
@@ -33,7 +33,7 @@ public class EditHouseholdActivityTest {
 
     @Before
     public void setup() {
-        household = new Household("1", "household Name", "123456789", "2", HouseholdStatus.NOT_DONE, "2015-12-13", "Dummy comments");
+        household = new Household("1", "household Name", "123456789", "2", InterviewStatus.NOT_DONE, "2015-12-13", "Dummy comments");
         Intent intent = new Intent();
         intent.putExtra(Constants.HOUSEHOLD, household);
 

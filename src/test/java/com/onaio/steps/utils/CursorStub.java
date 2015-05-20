@@ -4,7 +4,6 @@ import android.database.Cursor;
 
 import com.onaio.steps.model.Gender;
 import com.onaio.steps.model.Household;
-import com.onaio.steps.model.HouseholdStatus;
 import com.onaio.steps.model.Member;
 
 import org.mockito.Mockito;

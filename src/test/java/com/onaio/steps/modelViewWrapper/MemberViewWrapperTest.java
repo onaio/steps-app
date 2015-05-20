@@ -11,7 +11,7 @@ import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.KeyValueStore;
 import com.onaio.steps.helper.KeyValueStoreFactory;
 import com.onaio.steps.model.Household;
-import com.onaio.steps.model.HouseholdStatus;
+import com.onaio.steps.model.InterviewStatus;
 import com.onaio.steps.model.Member;
 
 import junit.framework.Assert;
@@ -58,7 +58,7 @@ public class MemberViewWrapperTest {
         firstName.setText("Manisha");
         gender.check(R.id.female_selection);
         age.setText("23");
-        Household household = new Household("1","Any Household", "123456789","", HouseholdStatus.NOT_SELECTED, date,"Dummy comments");
+        Household household = new Household("1","Any Household", "123456789","", InterviewStatus.NOT_SELECTED, date,"Dummy comments");
 
         expectedException.expect(InvalidDataException.class);
         expectedException.expectMessage(String.format(error_string,"Member",getStringValue(R.string.member_family_surname_hint)));
@@ -78,7 +78,7 @@ public class MemberViewWrapperTest {
         firstName.setText("");
         gender.check(R.id.female_selection);
         age.setText("23");
-        Household household = new Household("1","Any Household", "123456789","", HouseholdStatus.NOT_SELECTED, date,"Dummy comments");
+        Household household = new Household("1","Any Household", "123456789","", InterviewStatus.NOT_SELECTED, date,"Dummy comments");
 
         expectedException.expect(InvalidDataException.class);
         expectedException.expectMessage(String.format(error_string,"Member",getStringValue(R.string.member_first_name_hint)));
@@ -97,7 +97,7 @@ public class MemberViewWrapperTest {
         surname.setText("Rana");
         firstName.setText("Manisha");
         age.setText("23");
-        Household household = new Household("1","Any Household", "123456789","", HouseholdStatus.NOT_SELECTED,date,"Dummy comments" );
+        Household household = new Household("1","Any Household", "123456789","", InterviewStatus.NOT_SELECTED,date,"Dummy comments" );
 
         expectedException.expect(InvalidDataException.class);
         expectedException.expectMessage(String.format(error_string,"Member",getStringValue(R.string.member_gender_hint)));
@@ -117,7 +117,7 @@ public class MemberViewWrapperTest {
         surname.setText("Rana");
         firstName.setText("Manisha");
         gender.check(R.id.female_selection);
-        Household household = new Household("1","Any Household", "123456789","", HouseholdStatus.NOT_SELECTED,date,"Dummy comments" );
+        Household household = new Household("1","Any Household", "123456789","", InterviewStatus.NOT_SELECTED,date,"Dummy comments" );
 
         expectedException.expect(InvalidDataException.class);
         expectedException.expectMessage(String.format(error_string,"Member",getStringValue(R.string.age_hint)));
@@ -137,7 +137,7 @@ public class MemberViewWrapperTest {
         firstname.setText("Rohit");
         gender.check(R.id.male_selection);
         age.setText("15");
-        Household household = new Household("1","Any Household", "123456789","", HouseholdStatus.NOT_SELECTED,date,"Dummy comments" );
+        Household household = new Household("1","Any Household", "123456789","", InterviewStatus.NOT_SELECTED,date,"Dummy comments" );
 
         Member member = memberViewWrapper.getMember(surname.getId(), firstname.getId(), gender.getId(), age.getId(), household);
 
@@ -153,7 +153,7 @@ public class MemberViewWrapperTest {
         TextView firstName = (TextView) newMemberActivity.findViewById(R.id.member_first_name);
         RadioGroup gender = (RadioGroup) newMemberActivity.findViewById(R.id.member_gender);
         TextView age = (TextView)newMemberActivity.findViewById(R.id.member_age);
-        Household household = new Household("1","Any Household", "123456789","", HouseholdStatus.NOT_SELECTED,date,"Dummy comments" );
+        Household household = new Household("1","Any Household", "123456789","", InterviewStatus.NOT_SELECTED,date,"Dummy comments" );
 
         expectedException.expect(InvalidDataException.class);
         expectedException.expectMessage(String.format(error_string,"Member",getStringValue(R.string.member_family_surname_hint),getStringValue(R.string.member_first_name_hint),getStringValue(R.string.member_gender_hint),getStringValue(R.string.age_hint)));

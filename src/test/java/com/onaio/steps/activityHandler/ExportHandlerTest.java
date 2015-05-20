@@ -1,14 +1,10 @@
 package com.onaio.steps.activityHandler;
 
-import android.database.Cursor;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.onaio.steps.R;
 import com.onaio.steps.activity.HouseholdActivity;
-import com.onaio.steps.helper.DatabaseHelper;
-import com.onaio.steps.model.Household;
-import com.onaio.steps.model.HouseholdStatus;
 
 import junit.framework.Assert;
 
@@ -18,10 +14,6 @@ import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
-
-import java.util.ArrayList;
-
-import static org.junit.Assert.assertTrue;
 
 @Config(emulateSdk = 16,manifest = "src/main/AndroidManifest.xml")
 @RunWith(RobolectricTestRunner.class)
@@ -50,7 +42,7 @@ public class ExportHandlerTest {
 //    @Test
 //    public void ShouldInactivateEditOptionForSelectedMember(){
 //        ArrayList<Household> households = Mockito.mock(ArrayList.class);
-//        Household household = new Household("12", "name", "321", "1", HouseholdStatus.NOT_SELECTED, "12-12-2001");
+//        Household household = new Household("12", "name", "321", "1", InterviewStatus.NOT_SELECTED, "12-12-2001");
 //
 //        households.add(household);
 //        DatabaseHelper dbMock = Mockito.mock(DatabaseHelper.class);

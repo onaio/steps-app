@@ -6,7 +6,7 @@ import android.view.View;
 import com.onaio.steps.R;
 import com.onaio.steps.activityHandler.Interface.IMenuPreparer;
 import com.onaio.steps.model.Household;
-import com.onaio.steps.model.HouseholdStatus;
+import com.onaio.steps.model.InterviewStatus;
 
 public class SelectedParticipantActionsHandler implements IMenuPreparer {
     private ListActivity activity;
@@ -20,9 +20,9 @@ public class SelectedParticipantActionsHandler implements IMenuPreparer {
 
     @Override
     public boolean shouldInactivate() {
-        boolean selected = household.getStatus() == HouseholdStatus.NOT_DONE;
-        boolean deferred = household.getStatus() == HouseholdStatus.DEFERRED;
-        boolean incomplete = household.getStatus() == HouseholdStatus.INCOMPLETE;
+        boolean selected = household.getStatus() == InterviewStatus.NOT_DONE;
+        boolean deferred = household.getStatus() == InterviewStatus.DEFERRED;
+        boolean incomplete = household.getStatus() == InterviewStatus.INCOMPLETE;
         return !(selected || deferred || incomplete);
     }
 

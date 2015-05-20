@@ -11,7 +11,7 @@ import com.onaio.steps.activityHandler.Interface.IMenuPreparer;
 import com.onaio.steps.helper.CustomDialog;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.model.Household;
-import com.onaio.steps.model.HouseholdStatus;
+import com.onaio.steps.model.InterviewStatus;
 import com.onaio.steps.model.Participant;
 
 public class DeferredHandler implements IMenuHandler,IMenuPreparer {
@@ -42,7 +42,7 @@ public class DeferredHandler implements IMenuHandler,IMenuPreparer {
 
     @Override
     public boolean open() {
-        household.setStatus(HouseholdStatus.DEFERRED);
+        household.setStatus(InterviewStatus.DEFERRED);
         household.update(new DatabaseHelper(activity.getApplicationContext()));
         DialogInterface.OnClickListener confirmListener = new DialogInterface.OnClickListener() {
             @Override
@@ -56,7 +56,7 @@ public class DeferredHandler implements IMenuHandler,IMenuPreparer {
 
     @Override
     public boolean shouldInactivate() {
-        boolean memberSelected = household.getStatus() == HouseholdStatus.NOT_DONE;
+        boolean memberSelected = household.getStatus() == InterviewStatus.NOT_DONE;
         return !(memberSelected);
     }
 

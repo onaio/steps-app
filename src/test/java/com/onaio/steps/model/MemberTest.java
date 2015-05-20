@@ -44,7 +44,7 @@ public class MemberTest {
         db = Mockito.mock(DatabaseHelper.class);
         cursor = Mockito.mock(Cursor.class);
         String phoneNumber = "123456789";
-        household = new Household(householdId, householdName, phoneNumber,"", HouseholdStatus.NOT_SELECTED, currentDate, comments);
+        household = new Household(householdId, householdName, phoneNumber,"", InterviewStatus.NOT_SELECTED, currentDate, comments);
     }
 
     @Test

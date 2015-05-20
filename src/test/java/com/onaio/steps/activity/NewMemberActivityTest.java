@@ -11,7 +11,7 @@ import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.helper.KeyValueStore;
 import com.onaio.steps.helper.KeyValueStoreFactory;
 import com.onaio.steps.model.Household;
-import com.onaio.steps.model.HouseholdStatus;
+import com.onaio.steps.model.InterviewStatus;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -42,7 +42,7 @@ public class NewMemberActivityTest {
 
     @Before
     public void setup() {
-        household = new Household("2", "Any HouseholdName", "123456789", "", HouseholdStatus.NOT_SELECTED, currentDate,"Dummy comments");
+        household = new Household("2", "Any HouseholdName", "123456789", "", InterviewStatus.NOT_SELECTED, currentDate,"Dummy comments");
         Intent intent = new Intent();
         intent.putExtra(Constants.HOUSEHOLD, household);
         newMemberActivity = Robolectric.buildActivity(NewMemberActivity.class).withIntent(intent)

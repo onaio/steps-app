@@ -15,12 +15,12 @@ import com.onaio.steps.adapter.MemberAdapter;
 import com.onaio.steps.helper.CustomDialog;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.model.Household;
-import com.onaio.steps.model.HouseholdStatus;
+import com.onaio.steps.model.InterviewStatus;
 import com.onaio.steps.model.ReElectReason;
 
 import java.util.List;
 
-import static com.onaio.steps.model.HouseholdStatus.NOT_SELECTED;
+import static com.onaio.steps.model.InterviewStatus.NOT_SELECTED;
 
 public class CancelParticipantSelectionHandler implements IMenuPreparer,IMenuHandler {
 
@@ -37,7 +37,7 @@ public class CancelParticipantSelectionHandler implements IMenuPreparer,IMenuHan
 
     @Override
     public boolean shouldInactivate() {
-        boolean selectedStatus = household.getStatus() == HouseholdStatus.NOT_DONE;
+        boolean selectedStatus = household.getStatus() == InterviewStatus.NOT_DONE;
         return !(selectedStatus);
     }
 

@@ -12,7 +12,7 @@ import com.onaio.steps.helper.KeyValueStore;
 import com.onaio.steps.helper.KeyValueStoreFactory;
 import com.onaio.steps.model.Gender;
 import com.onaio.steps.model.Household;
-import com.onaio.steps.model.HouseholdStatus;
+import com.onaio.steps.model.InterviewStatus;
 import com.onaio.steps.model.Member;
 
 import org.junit.Before;
@@ -40,7 +40,7 @@ public class EditMemberActivityTest {
     @Before
     public void setup(){
         Intent intent = new Intent();
-        household = new Household("1","123","987654321","1", HouseholdStatus.DEFERRED,"2015-12-13", "Dummy comments");
+        household = new Household("1","123","987654321","1", InterviewStatus.DEFERRED,"2015-12-13", "Dummy comments");
         member = new Member(1,"rana","manisha", Gender.Female,28, household,"123-1",false);
         intent.putExtra(Constants.MEMBER, member);
         editMemberActivity = Robolectric.buildActivity(EditMemberActivity.class)

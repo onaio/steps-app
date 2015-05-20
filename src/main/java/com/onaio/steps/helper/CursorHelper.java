@@ -4,7 +4,6 @@ import android.database.Cursor;
 
 import com.onaio.steps.model.Gender;
 import com.onaio.steps.model.Household;
-import com.onaio.steps.model.HouseholdStatus;
 import com.onaio.steps.model.Member;
 import com.onaio.steps.model.Participant;
 import com.onaio.steps.model.ParticipantStatus;
@@ -45,7 +44,7 @@ public class CursorHelper {
                 String status = cursor.getString(cursor.getColumnIndex(Household.STATUS));
                 String createdAt = cursor.getString(cursor.getColumnIndex(Household.CREATED_AT));
                 String comments = cursor.getString(cursor.getColumnIndex(Household.COMMENTS));
-                householdNames.add(new Household(id,household_name, household_number,selectedMemberId, HouseholdStatus.valueOf(status),createdAt, comments ));
+                householdNames.add(new Household(id,household_name, household_number,selectedMemberId, InterviewStatus.valueOf(status),createdAt, comments ));
             }while (cursor.moveToNext());
         }
         cursor.close();

@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.onaio.steps.R;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.model.Household;
-import com.onaio.steps.model.HouseholdStatus;
+import com.onaio.steps.model.InterviewStatus;
 import com.onaio.steps.model.Member;
 
 import java.util.List;
@@ -81,7 +81,7 @@ public class MemberAdapter extends BaseAdapter{
     private void setText(TextView memberName, String text, boolean isSelectedMember, int defaultTextColor) {
         memberName.setText(text);
         if(isSelectedMember)
-            if(household.getStatus().equals(HouseholdStatus.DONE))
+            if(household.getStatus().equals(InterviewStatus.DONE))
                 memberName.setTextColor(Color.parseColor(Constants.TEXT_GREEN));
             else
                 memberName.setTextColor(Color.RED);
@@ -92,7 +92,7 @@ public class MemberAdapter extends BaseAdapter{
     private void setImage(View memberListItem, Boolean isSelectedMember) {
         ImageView image = (ImageView) memberListItem.findViewById(R.id.main_image);
         if(isSelectedMember)
-            if(household.getStatus().equals(HouseholdStatus.DONE))
+            if(household.getStatus().equals(InterviewStatus.DONE))
                 image.setImageResource(R.mipmap.ic_household_list_done);
             else
                 image.setImageResource(R.mipmap.ic_household_list_refused);

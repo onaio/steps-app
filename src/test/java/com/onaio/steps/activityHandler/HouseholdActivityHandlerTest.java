@@ -7,7 +7,7 @@ import com.onaio.steps.activity.HouseholdActivity;
 import com.onaio.steps.activity.StepsActivity;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.model.Household;
-import com.onaio.steps.model.HouseholdStatus;
+import com.onaio.steps.model.InterviewStatus;
 
 import junit.framework.Assert;
 
@@ -39,7 +39,7 @@ public class HouseholdActivityHandlerTest {
 
     @Test
     public void ShouldStartNewMemberActivityIfHouseholdIsNotNull(){
-        household = new Household("2", "Any HouseholdName", "123456789", "", HouseholdStatus.NOT_SELECTED, currentDate,"Dummy comments");
+        household = new Household("2", "Any HouseholdName", "123456789", "", InterviewStatus.NOT_SELECTED, currentDate,"Dummy comments");
         householdActivityHandler = new HouseholdActivityHandler(stepsActivity, household);
         householdActivityHandler.open();
 

@@ -6,7 +6,7 @@ import com.onaio.steps.R;
 import com.onaio.steps.activity.HouseholdActivity;
 import com.onaio.steps.helper.CustomDialog;
 import com.onaio.steps.model.Household;
-import com.onaio.steps.model.HouseholdStatus;
+import com.onaio.steps.model.InterviewStatus;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -44,42 +44,42 @@ public class SelectedParticipantActionsHandlerTest {
 
     @Test
     public void ShouldInactivateWhenMemberIsNotSelected(){
-        Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.NOT_SELECTED);
+        Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.NOT_SELECTED);
 
         assertTrue(selectedParticipantActionsHandler.shouldInactivate());
     }
 
     @Test
     public void ShouldNotInactivateWhenSurveyNotDone(){
-        Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.NOT_DONE);
+        Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.NOT_DONE);
 
         assertFalse(selectedParticipantActionsHandler.shouldInactivate());
     }
 
     @Test
     public void ShouldNotInactivateWhenSurveyDone(){
-        Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.DONE);
+        Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.DONE);
 
         assertTrue(selectedParticipantActionsHandler.shouldInactivate());
     }
 
     @Test
     public void ShouldActivateWhenSurveyIncomplete(){
-        Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.INCOMPLETE);
+        Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.INCOMPLETE);
 
         assertFalse(selectedParticipantActionsHandler.shouldInactivate());
     }
 
     @Test
     public void ShouldInactivateWhenSurveyDeferred(){
-        Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.DEFERRED);
+        Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.DEFERRED);
 
         assertFalse(selectedParticipantActionsHandler.shouldInactivate());
     }
 
     @Test
     public void ShouldInactivateWhenSurveyRefused(){
-        Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.REFUSED);
+        Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.REFUSED);
 
         assertTrue(selectedParticipantActionsHandler.shouldInactivate());
     }

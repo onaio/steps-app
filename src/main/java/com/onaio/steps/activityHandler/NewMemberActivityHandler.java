@@ -14,7 +14,7 @@ import com.onaio.steps.adapter.MemberAdapter;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.model.Household;
-import com.onaio.steps.model.HouseholdStatus;
+import com.onaio.steps.model.InterviewStatus;
 import com.onaio.steps.model.RequestCode;
 
 import static android.app.Activity.RESULT_OK;
@@ -72,7 +72,7 @@ public class NewMemberActivityHandler implements IMenuHandler, IActivityResultHa
 
     @Override
     public boolean shouldInactivate() {
-        return !(household.getStatus().equals(HouseholdStatus.NOT_SELECTED));
+        return !(household.getStatus().equals(InterviewStatus.NOT_SELECTED));
     }
 
     public void inactivate() {

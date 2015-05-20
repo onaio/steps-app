@@ -14,7 +14,7 @@ import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.helper.KeyValueStore;
 import com.onaio.steps.helper.KeyValueStoreFactory;
 import com.onaio.steps.model.Household;
-import com.onaio.steps.model.HouseholdStatus;
+import com.onaio.steps.model.InterviewStatus;
 import com.onaio.steps.model.RequestCode;
 
 import org.junit.Before;
@@ -112,7 +112,7 @@ public class NewHouseholdActivityHandlerTest {
     @Test
     public void ShouldHandleResultAndStartHouseholdActivityForResultCodeOk(){
         Intent intent = new Intent();
-        Household name = new Household("name", "123321412312", HouseholdStatus.NOT_SELECTED, "123","Dummy comments");
+        Household name = new Household("name", "123321412312", InterviewStatus.NOT_SELECTED, "123","Dummy comments");
         name.save(new DatabaseHelper(stepsActivity));
         intent.putExtra(Constants.HOUSEHOLD,name);
         HouseholdAdapter householdAdapterMock = Mockito.mock(HouseholdAdapter.class);

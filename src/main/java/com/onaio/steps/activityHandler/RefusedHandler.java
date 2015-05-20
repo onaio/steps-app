@@ -10,7 +10,7 @@ import com.onaio.steps.activityHandler.Interface.IMenuHandler;
 import com.onaio.steps.activityHandler.Interface.IMenuPreparer;
 import com.onaio.steps.helper.CustomDialog;
 import com.onaio.steps.model.Household;
-import com.onaio.steps.model.HouseholdStatus;
+import com.onaio.steps.model.InterviewStatus;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.model.Participant;
 
@@ -48,7 +48,7 @@ public class RefusedHandler implements IMenuHandler,IMenuPreparer {
     }
 
     private void refuse() {
-        household.setStatus(HouseholdStatus.REFUSED);
+        household.setStatus(InterviewStatus.REFUSED);
         household.update(new DatabaseHelper(activity.getApplicationContext()));
         new BackHomeHandler(activity).open();
     }
@@ -66,8 +66,8 @@ public class RefusedHandler implements IMenuHandler,IMenuPreparer {
 
     @Override
     public boolean shouldInactivate() {
-        boolean memberSelected = household.getStatus() == HouseholdStatus.NOT_DONE;
-        boolean memberDeferred = household.getStatus() == HouseholdStatus.DEFERRED;
+        boolean memberSelected = household.getStatus() == InterviewStatus.NOT_DONE;
+        boolean memberDeferred = household.getStatus() == InterviewStatus.DEFERRED;
         return !(memberSelected || memberDeferred);
     }
 

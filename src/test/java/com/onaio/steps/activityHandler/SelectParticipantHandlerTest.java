@@ -12,7 +12,7 @@ import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.CustomDialog;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.model.Household;
-import com.onaio.steps.model.HouseholdStatus;
+import com.onaio.steps.model.InterviewStatus;
 
 import junit.framework.Assert;
 
@@ -48,7 +48,7 @@ public class SelectParticipantHandlerTest {
     @Before
     public void Setup(){
         householdMock = mock(Household.class);
-        Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.NOT_SELECTED);
+        Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.NOT_SELECTED);
         Mockito.stub(householdMock.getPhoneNumber()).toReturn("8050342");
         Mockito.stub(householdMock.getComments()).toReturn("dummy comments");
 
@@ -75,7 +75,7 @@ public class SelectParticipantHandlerTest {
 
     @Test
     public void ShouldNotifyUserBeforeSelection(){
-        Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.NOT_SELECTED);
+        Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.NOT_SELECTED);
         Button buttonMock = Mockito.mock(Button.class);
         stub(androidDialogMock.findViewById(R.id.confirm)).toReturn(buttonMock);
         stub(androidDialogMock.findViewById(R.id.cancel)).toReturn(buttonMock);
@@ -98,7 +98,7 @@ public class SelectParticipantHandlerTest {
     @Test
     public void ShouldInActivateWhenHouseholdStatusIsIncomplete(){
         Mockito.stub(householdMock.numberOfNonSelectedMembers(Mockito.any(DatabaseHelper.class))).toReturn(1);
-        Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.INCOMPLETE);
+        Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.INCOMPLETE);
 
         Assert.assertTrue(selectParticipantHandler.shouldInactivate());
     }
@@ -106,7 +106,7 @@ public class SelectParticipantHandlerTest {
     @Test
     public void ShouldInActivateWhenHouseholdStatusIsDone(){
         Mockito.stub(householdMock.numberOfNonSelectedMembers(Mockito.any(DatabaseHelper.class))).toReturn(1);
-        Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.DONE);
+        Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.DONE);
 
         Assert.assertTrue(selectParticipantHandler.shouldInactivate());
     }
@@ -114,7 +114,7 @@ public class SelectParticipantHandlerTest {
     @Test
     public void ShouldInActivateWhenHouseholdStatusIsDeferred(){
         Mockito.stub(householdMock.numberOfNonSelectedMembers(Mockito.any(DatabaseHelper.class))).toReturn(1);
-        Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.DEFERRED);
+        Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.DEFERRED);
 
         Assert.assertTrue(selectParticipantHandler.shouldInactivate());
     }
@@ -122,7 +122,7 @@ public class SelectParticipantHandlerTest {
     @Test
     public void ShouldInActivateWhenHouseholdStatusIsRefused(){
         Mockito.stub(householdMock.numberOfNonSelectedMembers(Mockito.any(DatabaseHelper.class))).toReturn(1);
-        Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.REFUSED);
+        Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.REFUSED);
 
         Assert.assertTrue(selectParticipantHandler.shouldInactivate());
     }
@@ -130,7 +130,7 @@ public class SelectParticipantHandlerTest {
     @Test
     public void ShouldInActivateWhenHouseholdStatusIsNotDone(){
         Mockito.stub(householdMock.numberOfNonSelectedMembers(Mockito.any(DatabaseHelper.class))).toReturn(1);
-        Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.NOT_DONE);
+        Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.NOT_DONE);
 
         Assert.assertTrue(selectParticipantHandler.shouldInactivate());
     }
@@ -138,7 +138,7 @@ public class SelectParticipantHandlerTest {
     @Test
     public void ShouldActivateWhenHouseholdStatusIsNotSelected(){
         Mockito.stub(householdMock.numberOfNonSelectedMembers(Mockito.any(DatabaseHelper.class))).toReturn(1);
-        Mockito.stub(householdMock.getStatus()).toReturn(HouseholdStatus.NOT_SELECTED);
+        Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.NOT_SELECTED);
 
         Assert.assertFalse(selectParticipantHandler.shouldInactivate());
     }

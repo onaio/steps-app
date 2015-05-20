@@ -11,7 +11,7 @@ import com.onaio.steps.activityHandler.Interface.IActivityResultHandler;
 import com.onaio.steps.activityHandler.Interface.IMenuHandler;
 import com.onaio.steps.activityHandler.Interface.IMenuPreparer;
 import com.onaio.steps.helper.Constants;
-import com.onaio.steps.model.HouseholdStatus;
+import com.onaio.steps.model.InterviewStatus;
 import com.onaio.steps.model.Member;
 import com.onaio.steps.model.RequestCode;
 
@@ -65,8 +65,8 @@ public class EditMemberActivityHandler implements IMenuHandler, IActivityResultH
     @Override
     public boolean shouldInactivate() {
         boolean isSelectedMember = String.valueOf(member.getId()).equals(member.getHousehold().getSelectedMemberId());
-        boolean refusedHousehold = member.getHousehold().getStatus().equals(HouseholdStatus.REFUSED);
-        boolean surveyDone = member.getHousehold().getStatus().equals(HouseholdStatus.DONE);
+        boolean refusedHousehold = member.getHousehold().getStatus().equals(InterviewStatus.REFUSED);
+        boolean surveyDone = member.getHousehold().getStatus().equals(InterviewStatus.DONE);
         return (isSelectedMember || refusedHousehold || surveyDone);
     }
 

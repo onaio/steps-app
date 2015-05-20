@@ -9,7 +9,7 @@ import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.model.Gender;
 import com.onaio.steps.model.Household;
-import com.onaio.steps.model.HouseholdStatus;
+import com.onaio.steps.model.InterviewStatus;
 import com.onaio.steps.model.Member;
 
 import org.junit.Before;
@@ -58,7 +58,7 @@ public class MemberActivityTest {
     @Test
     public void ShouldBeAbleToPopulateWithMemberView(){
         intent.putExtra(Constants.MEMBER, member);
-        Mockito.stub(household.getStatus()).toReturn(HouseholdStatus.DONE);
+        Mockito.stub(household.getStatus()).toReturn(InterviewStatus.DONE);
         memberActivity = memberActivityController.withIntent(intent)
                 .create().get();
 
@@ -76,7 +76,7 @@ public class MemberActivityTest {
     @Test
     public void ShouldPopulateMenuForDoneStatus(){
         intent.putExtra(Constants.MEMBER, member);
-        Mockito.stub(household.getStatus()).toReturn(HouseholdStatus.DONE);
+        Mockito.stub(household.getStatus()).toReturn(InterviewStatus.DONE);
         memberActivity = memberActivityController.withIntent(intent).create().get();
 
         TestMenu menu = new TestMenu();

@@ -10,7 +10,7 @@ import com.onaio.steps.activityHandler.Interface.IMenuHandler;
 import com.onaio.steps.activityHandler.Interface.IMenuPreparer;
 import com.onaio.steps.helper.CustomDialog;
 import com.onaio.steps.helper.DatabaseHelper;
-import com.onaio.steps.model.HouseholdStatus;
+import com.onaio.steps.model.InterviewStatus;
 import com.onaio.steps.model.Member;
 
 public class DeleteMemberHandler implements IMenuHandler,IMenuPreparer {
@@ -56,8 +56,8 @@ public class DeleteMemberHandler implements IMenuHandler,IMenuPreparer {
     @Override
     public boolean shouldInactivate() {
         boolean isSelectedMember = String.valueOf(member.getId()).equals(member.getHousehold().getSelectedMemberId());
-        boolean refusedHousehold = member.getHousehold().getStatus().equals(HouseholdStatus.REFUSED);
-        boolean surveyDone = member.getHousehold().getStatus().equals(HouseholdStatus.DONE);
+        boolean refusedHousehold = member.getHousehold().getStatus().equals(InterviewStatus.REFUSED);
+        boolean surveyDone = member.getHousehold().getStatus().equals(InterviewStatus.DONE);
         return (isSelectedMember || refusedHousehold || surveyDone);
     }
 

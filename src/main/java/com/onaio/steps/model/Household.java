@@ -28,12 +28,12 @@ public class Household implements Serializable,Comparable<Household> {
     String id;
     String name;
     String phoneNumber;
-    HouseholdStatus status;
+    InterviewStatus status;
     String selectedMemberId;
     String createdAt;
     String comments;
     
-    public Household(String id, String name, String phoneNumber, String selectedMemberId, HouseholdStatus status, String createdAt , String comments) {
+    public Household(String id, String name, String phoneNumber, String selectedMemberId, InterviewStatus status, String createdAt , String comments) {
         this.id = id;
         this.name = name;
         this.phoneNumber = phoneNumber;
@@ -43,7 +43,7 @@ public class Household implements Serializable,Comparable<Household> {
         this.comments=comments;
     }
 
-    public Household(String name, String phoneNumber, HouseholdStatus status, String createdAt, String comments) {
+    public Household(String name, String phoneNumber, InterviewStatus status, String createdAt, String comments) {
         this.name= name;
         this.phoneNumber = phoneNumber;
         this.status = status;
@@ -59,11 +59,11 @@ public class Household implements Serializable,Comparable<Household> {
         return createdAt;
     }
 
-    public HouseholdStatus getStatus() {
+    public InterviewStatus getStatus() {
         return status;
     }
 
-    public void setStatus(HouseholdStatus status) {
+    public void setStatus(InterviewStatus status) {
         this.status = status;
     }
 

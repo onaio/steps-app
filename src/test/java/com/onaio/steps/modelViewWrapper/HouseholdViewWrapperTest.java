@@ -6,7 +6,7 @@ import com.onaio.steps.R;
 import com.onaio.steps.activity.NewHouseholdActivity;
 import com.onaio.steps.exception.InvalidDataException;
 import com.onaio.steps.model.Household;
-import com.onaio.steps.model.HouseholdStatus;
+import com.onaio.steps.model.InterviewStatus;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -41,7 +41,7 @@ public class HouseholdViewWrapperTest {
         nameView.setText("new name");
         Household household = householdViewWrapper.getHousehold(R.id.generated_household_id, R.id.household_number,R.id.household_comments);
         assertTrue(household.getName().equals("new name"));
-        assertTrue(household.getStatus().equals(HouseholdStatus.NOT_SELECTED));
+        assertTrue(household.getStatus().equals(InterviewStatus.NOT_SELECTED));
     }
 
     @Test
@@ -54,7 +54,7 @@ public class HouseholdViewWrapperTest {
         Household household = householdViewWrapper.getHousehold(R.id.generated_household_id, R.id.household_number,R.id.household_comments);
         assertTrue(household.getName().equals("new name"));
         assertTrue(household.getPhoneNumber().equals("123456789"));
-        assertTrue(household.getStatus().equals(HouseholdStatus.NOT_SELECTED));
+        assertTrue(household.getStatus().equals(InterviewStatus.NOT_SELECTED));
 
     }
 
@@ -68,7 +68,7 @@ public class HouseholdViewWrapperTest {
         Household household = householdViewWrapper.getHousehold(R.id.generated_household_id, R.id.household_number,R.id.household_comments);
         assertTrue(household.getName().equals("new name"));
         assertTrue(household.getPhoneNumber().equals("1234567890123"));
-        assertTrue(household.getStatus().equals(HouseholdStatus.NOT_SELECTED));
+        assertTrue(household.getStatus().equals(InterviewStatus.NOT_SELECTED));
 
     }
 }

@@ -14,14 +14,14 @@ import com.onaio.steps.activityHandler.Interface.IMenuPreparer;
 import com.onaio.steps.adapter.MemberAdapter;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.model.Household;
-import com.onaio.steps.model.HouseholdStatus;
+import com.onaio.steps.model.InterviewStatus;
 import com.onaio.steps.model.Member;
 import com.onaio.steps.modelViewWrapper.SelectedMemberViewWrapper;
 
 import java.util.List;
 import java.util.Random;
 
-import static com.onaio.steps.model.HouseholdStatus.NOT_DONE;
+import static com.onaio.steps.model.InterviewStatus.NOT_DONE;
 
 public class SelectParticipantHandler implements IMenuHandler, IMenuPreparer {
 
@@ -57,7 +57,7 @@ public class SelectParticipantHandler implements IMenuHandler, IMenuPreparer {
     @Override
     public boolean shouldInactivate() {
         boolean noMember = household.numberOfNonSelectedMembers(db) == 0;
-        boolean noSelection = household.getStatus() == HouseholdStatus.NOT_SELECTED;
+        boolean noSelection = household.getStatus() == InterviewStatus.NOT_SELECTED;
         return noMember || !noSelection;
     }
 

@@ -12,6 +12,7 @@ import com.onaio.steps.helper.FileUtil;
 import com.onaio.steps.helper.KeyValueStoreFactory;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.Member;
+import com.onaio.steps.model.Participant;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -79,6 +80,12 @@ public class ODKForm {
     }
     private String getValue(String key,Activity activity) {
         return KeyValueStoreFactory.instance(activity).getString(key) ;
+    }
+
+    public void open(Participant participant, Activity activity, int code) {
+        String pathToSaveDataFile = blankForm.getPath();
+        saveDataFile(participant,activity, new DatabaseHelper(activity), pathToSaveDataFile);
+        launchODKCollect(activity, code);
     }
 
 }
