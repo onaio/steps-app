@@ -48,13 +48,13 @@ public class ParticipantActivity extends Activity{
     private void populateParticipant() {
 
         TextView participantName = (TextView) findViewById(R.id.selected_participant_name);
-        TextView participantdetails = (TextView) findViewById(R.id.selected_participant_details);
+        TextView participantDetails = (TextView) findViewById(R.id.selected_participant_details);
         participantName.setText(participant.getFormattedName());
-        participantdetails.setText(participant.getFormattedDetail());
+        participantDetails.setText(participant.getFormattedDetail());
     }
 
     private void populateMessage() {
-        TextView viewById = (TextView) findViewById(R.id.interview_message);
+        TextView viewById = (TextView) findViewById(R.id.survey_message);
         switch (participant.getStatus()){
             case DONE: viewById.setText(R.string.interview_done_message);
                 viewById.setTextColor(Color.parseColor(Constants.TEXT_GREEN));
@@ -114,5 +114,13 @@ public class ParticipantActivity extends Activity{
                 customMenu.activate();
     }
 
-
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        List<IMenuPreparer> menuItemHandlers =ParticipantActivityFactory.getMenuPreparer(this, participant, menu);
+        for(IMenuPreparer handler:menuItemHandlers)
+            if(handler.shouldInactivate())
+                handler.inactivate();
+        super.onPrepareOptionsMenu(menu);
+        return true;
+    }
 }

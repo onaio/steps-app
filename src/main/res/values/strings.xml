@@ -45,7 +45,6 @@
     <string name="member_delete_confirm">Are you sure you want to delete the member?</string>
     <string name="enter_a_value">Please enter a value</string>
     <string name="endpoint_url_hint">URL to export</string>
-    <string name="invalid_member">Insufficient data, please fill all the values.</string>
     <string name="main_header">Households</string>
     <string name="household_members_header">Household Members</string>
     <string name="go_to_settings">GET STARTED</string>
@@ -74,10 +73,9 @@
     <string name="export_failed">Export failed, please try again later.</string>
     <string name="export_complete">Export Complete</string>
     <string name="export_complete_message">The data has successfully exported.</string>
-    <string name="export_start_message">Please confirm you want to export household data?</string>
+    <string name="export_start_message">Please confirm you want to export household data.</string>
     <string name="import_fail_message">Import failed, please use a valid csv file and try again.</string>
     <string name="continue_interview">Continue Interview</string>
-    <string name="member_add_confirm">Are you sure you want to add a member, this action will clear the selection you did before.</string>
     <string name="household_comments">Comments</string>
     <string name="form_id">Form ID</string>
     <string name="cancel_selection">CANCEL SELECTION</string>

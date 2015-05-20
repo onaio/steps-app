@@ -1,6 +1,6 @@
 package com.onaio.steps.activityHandler;
 
-import android.app.ListActivity;
+import android.app.Activity;
 import android.content.Intent;
 
 import com.onaio.steps.activity.ParticipantActivity;
@@ -11,10 +11,10 @@ import com.onaio.steps.model.Participant;
 
 public class ParticipantActivityHandler implements IListItemHandler {
 
-    private ListActivity activity;
+    private Activity activity;
     private Participant participant;
 
-    public ParticipantActivityHandler(ListActivity activity, Participant participant) {
+    public ParticipantActivityHandler(Activity activity, Participant participant) {
         this.activity = activity;
         this.participant=participant;
     }

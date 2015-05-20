@@ -2,6 +2,7 @@ package com.onaio.steps.activityHandler.Factory;
 
 
 import android.app.Activity;
+import android.view.Menu;
 
 import com.onaio.steps.activityHandler.BackHomeHandler;
 import com.onaio.steps.activityHandler.DeferredHandler;
@@ -33,6 +34,7 @@ public class ParticipantActivityFactory {
 
     public static List<IMenuPreparer> getCustomMenuPreparer(Activity activity, Participant participant){
         ArrayList<IMenuPreparer> menuItems = new ArrayList<IMenuPreparer>();
+        menuItems.add(new EditParticipantActivityHandler(activity,participant));
         menuItems.add(new TakeSurveyHandler(activity,participant));
         menuItems.add(new DeferredHandler(activity, participant));
         menuItems.add(new RefusedHandler(activity,participant));
@@ -47,4 +49,9 @@ public class ParticipantActivityFactory {
         return handlers;
     }
 
+    public static List<IMenuPreparer> getMenuPreparer(Activity activity, Participant participant, Menu menu) {
+        ArrayList<IMenuPreparer> menuPreparers = new ArrayList<IMenuPreparer>();
+        menuPreparers.add(new EditParticipantActivityHandler(activity,participant).withMenu(menu));
+        return menuPreparers;
+    }
 }
