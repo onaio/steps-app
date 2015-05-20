@@ -17,7 +17,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 
 import com.onaio.steps.R;
-import com.onaio.steps.activityHandler.Factory.ParticipantActivityFactory;
+import com.onaio.steps.activityHandler.Factory.ParticipantListActivityFactory;
 import com.onaio.steps.activityHandler.Interface.IActivityResultHandler;
 import com.onaio.steps.activityHandler.Interface.IMenuHandler;
 import com.onaio.steps.adapter.ParticipantAdapter;
@@ -55,7 +55,7 @@ public class ParticipantListActivity  extends ListActivity{
 
         @Override
         public boolean onOptionsItemSelected(MenuItem item) {
-            List<IMenuHandler> activityHandlers = ParticipantActivityFactory.getMenuHandlers(this);
+            List<IMenuHandler> activityHandlers = ParticipantListActivityFactory.getMenuHandlers(this);
             for(IMenuHandler handler : activityHandlers){
                 if(handler.shouldOpen(item.getItemId()) )
                     return handler.open();
@@ -65,7 +65,7 @@ public class ParticipantListActivity  extends ListActivity{
 
         @Override
         protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-            List<IActivityResultHandler> activityHandlers = ParticipantActivityFactory.getResultHandlers(this);
+            List<IActivityResultHandler> activityHandlers = ParticipantListActivityFactory.getResultHandlers(this);
             for(IActivityResultHandler activityHandler: activityHandlers){
                 if(activityHandler.canHandleResult(requestCode))
                     activityHandler.handleResult(data,resultCode);
@@ -109,7 +109,7 @@ public class ParticipantListActivity  extends ListActivity{
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                     Participant participant = Participant.find_by(db, id);
-                    ParticipantActivityFactory.getParticipantItemHandler(ParticipantListActivity.this, participant).open();
+                    ParticipantListActivityFactory.getParticipantItemHandler(ParticipantListActivity.this, participant).open();
                 }
             });
         }
@@ -120,7 +120,7 @@ public class ParticipantListActivity  extends ListActivity{
         }
 
        public void handleCustomMenu(View view){
-            List<IMenuHandler> handlers = ParticipantActivityFactory.getCustomMenuHandler(this);
+            List<IMenuHandler> handlers = ParticipantListActivityFactory.getCustomMenuHandler(this);
             for(IMenuHandler handler:handlers)
                 if(handler.shouldOpen(view.getId()))
                     handler.open();

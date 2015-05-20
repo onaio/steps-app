@@ -7,6 +7,7 @@ import com.onaio.steps.activityHandler.Interface.IActivityResultHandler;
 import com.onaio.steps.activityHandler.Interface.IMenuHandler;
 
 public class NewParticipantActivityHandler implements IActivityResultHandler,IMenuHandler {
+
     public NewParticipantActivityHandler(ListActivity activity) {
     }
 

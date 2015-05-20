@@ -1,5 +1,6 @@
 package com.onaio.steps.activityHandler;
 
+import android.app.Activity;
 import android.app.ListActivity;
 import android.content.DialogInterface;
 import android.view.View;
@@ -11,6 +12,7 @@ import com.onaio.steps.helper.CustomDialog;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.HouseholdStatus;
 import com.onaio.steps.helper.DatabaseHelper;
+import com.onaio.steps.model.Participant;
 
 public class RefusedHandler implements IMenuHandler,IMenuPreparer {
 
@@ -28,6 +30,10 @@ public class RefusedHandler implements IMenuHandler,IMenuPreparer {
         this.activity = activity;
         this.household = household;
         this.dialog=dialog;
+    }
+
+    public RefusedHandler(Activity activity, Participant participant) {
+        this.dialog =new CustomDialog();
     }
 
     @Override

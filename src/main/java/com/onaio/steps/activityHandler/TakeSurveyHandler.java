@@ -22,6 +22,7 @@ import com.onaio.steps.model.HouseholdStatus;
 import com.onaio.steps.model.ODKForm.IForm;
 import com.onaio.steps.model.ODKForm.ODKForm;
 import com.onaio.steps.model.ODKForm.ODKSavedForm;
+import com.onaio.steps.model.Participant;
 import com.onaio.steps.model.RequestCode;
 
 import java.io.IOException;
@@ -31,6 +32,10 @@ public class TakeSurveyHandler implements IMenuHandler, IMenuPreparer, IActivity
     private ListActivity activity;
     private Household household;
     private static final int MENU_ID= R.id.action_take_survey;
+
+    public TakeSurveyHandler(Activity activity, Participant participant) {
+
+    }
 
 
     @Override

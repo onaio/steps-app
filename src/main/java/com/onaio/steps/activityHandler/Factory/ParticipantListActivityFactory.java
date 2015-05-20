@@ -15,7 +15,7 @@ import com.onaio.steps.model.Participant;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ParticipantActivityFactory {
+public class ParticipantListActivityFactory {
     public static List<IMenuHandler> getMenuHandlers(ListActivity activity) {
 
         ArrayList<IMenuHandler> menuHandlers = new ArrayList<IMenuHandler>();

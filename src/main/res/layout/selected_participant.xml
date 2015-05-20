@@ -83,4 +83,13 @@
             android:textSize="12sp"
             />
     </LinearLayout>
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/interview_message"
+        android:layout_below="@+id/selected_participant_actions"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="15dp" />
 </RelativeLayout>

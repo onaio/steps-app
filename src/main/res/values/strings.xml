@@ -95,4 +95,6 @@
     <string name="participant_header">Participants</string>
     <string name="action_add_participant">Add New Participant</string>
     <string name="participant">Participant</string>
+    <string name="interview_refused_message">Interview is refused!</string>
+    <string name="interview_done_message">Interview is complete!</string>
 </resources>
