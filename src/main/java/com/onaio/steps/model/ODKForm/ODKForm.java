@@ -82,10 +82,26 @@ public class ODKForm {
         return KeyValueStoreFactory.instance(activity).getString(key) ;
     }
 
-    public void open(Participant participant, Activity activity, int code) {
+    public void open(Participant participant, Activity activity, int code) throws IOException{
         String pathToSaveDataFile = blankForm.getPath();
         saveDataFile(participant,activity, new DatabaseHelper(activity), pathToSaveDataFile);
         launchODKCollect(activity, code);
+    }
+
+    private void saveDataFile(Participant participant, Activity activity, DatabaseHelper db, String pathToSaveDataFile) throws IOException{
+        String formId = getValue(Constants.FORM_ID,activity);
+        String formNameFormat = formId + "-%s";
+        ArrayList<String> row = new ArrayList<String>();
+        row.add(Constants.ODK_PARTICIPANT_ID);
+        row.add(String.format(formNameFormat, participant.getId()));
+        row.add(participant.getFamilySurname());
+        row.add(participant.getFirstName());
+        row.add(String.valueOf(participant.getGender().getIntValue()));
+        row.add(String.valueOf(participant.getAge()));
+        fileUtil.withHeader(Constants.PARTICIPANT_ODK_FORM_FIELDS.split(","))
+                .withData(row.toArray(new String[row.size()]))
+                .writeCSV(pathToSaveDataFile + "/" + Constants.ODK_DATA_FILENAME);
+
     }
 
 }

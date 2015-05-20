@@ -4,9 +4,9 @@ import android.database.Cursor;
 
 import com.onaio.steps.model.Gender;
 import com.onaio.steps.model.Household;
+import com.onaio.steps.model.InterviewStatus;
 import com.onaio.steps.model.Member;
 import com.onaio.steps.model.Participant;
-import com.onaio.steps.model.ParticipantStatus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,7 +63,7 @@ public class CursorHelper {
                 String age = cursor.getString(cursor.getColumnIndex(Participant.AGE));
                 String status = cursor.getString(cursor.getColumnIndex(Participant.STATUS));
                 String createdAt = cursor.getString(cursor.getColumnIndex(Participant.CREATED_AT));
-                participants.add(new Participant(id, familySurname, firstName, Gender.valueOf(gender), Integer.parseInt(age), ParticipantStatus.valueOf(status),createdAt));
+                participants.add(new Participant(id, familySurname, firstName, Gender.valueOf(gender), Integer.parseInt(age), InterviewStatus.valueOf(status),createdAt));
 
             } while (cursor.moveToNext());
         }

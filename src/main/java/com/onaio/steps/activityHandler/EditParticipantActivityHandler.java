@@ -11,8 +11,8 @@ import com.onaio.steps.activityHandler.Interface.IActivityResultHandler;
 import com.onaio.steps.activityHandler.Interface.IMenuHandler;
 import com.onaio.steps.activityHandler.Interface.IMenuPreparer;
 import com.onaio.steps.helper.Constants;
+import com.onaio.steps.model.InterviewStatus;
 import com.onaio.steps.model.Participant;
-import com.onaio.steps.model.ParticipantStatus;
 import com.onaio.steps.model.RequestCode;
 
 import static android.app.Activity.RESULT_OK;
@@ -60,9 +60,9 @@ public class EditParticipantActivityHandler implements IMenuHandler, IActivityRe
 
     @Override
     public boolean shouldInactivate() {
-        boolean doneStatus = participant.getStatus() == ParticipantStatus.DONE;
-        boolean refusedStatus = participant.getStatus() == ParticipantStatus.REFUSED;
-        boolean incompleteStatus = participant.getStatus() == ParticipantStatus.INCOMPLETE;
+        boolean doneStatus = participant.getStatus() == InterviewStatus.DONE;
+        boolean refusedStatus = participant.getStatus() == InterviewStatus.REFUSED;
+        boolean incompleteStatus = participant.getStatus() == InterviewStatus.INCOMPLETE;
         return doneStatus || refusedStatus || incompleteStatus ;
 
     }
