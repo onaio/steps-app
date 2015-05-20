@@ -20,23 +20,23 @@ import org.robolectric.tester.android.view.TestMenu;
 
 @Config(emulateSdk = 16,manifest = "src/main/AndroidManifest.xml")
 @RunWith(RobolectricTestRunner.class)
-public class StepsActivityTest extends TestCase {
+public class HouseholdListActivityTest extends TestCase {
 
-    private StepsActivity stepsActivityMock;
+    private HouseholdListActivity householdListActivityMock;
 
     @Before
     public void Setup(){
-        stepsActivityMock = Robolectric.buildActivity(StepsActivity.class)
+        householdListActivityMock = Robolectric.buildActivity(HouseholdListActivity.class)
                 .create()
                 .get();
 
     }
     @Test
     public void ShouldSetFirstLayoutProperlyWhenPhoneIdIsNotSet(){
-        View mainLayout = stepsActivityMock.findViewById(R.id.main_layout);
-        View firstMain = stepsActivityMock.findViewById(R.id.first_main);
-        String title = stepsActivityMock.getTitle().toString();
-        int titleColor = stepsActivityMock.getTitleColor();
+        View mainLayout = householdListActivityMock.findViewById(R.id.main_layout);
+        View firstMain = householdListActivityMock.findViewById(R.id.first_main);
+        String title = householdListActivityMock.getTitle().toString();
+        int titleColor = householdListActivityMock.getTitleColor();
 
         assertNull(mainLayout);
         assertNotNull(firstMain);
@@ -46,18 +46,18 @@ public class StepsActivityTest extends TestCase {
 
     @Test
     public void ShouldSetMainLayoutProperlyOnCreateWhenPhoneIdIsSet(){
-        KeyValueStoreFactory.instance(stepsActivityMock).putString(Constants.PHONE_ID,"123");
+        KeyValueStoreFactory.instance(householdListActivityMock).putString(Constants.PHONE_ID,"123");
 
-        stepsActivityMock.onCreate(null);
+        householdListActivityMock.onCreate(null);
 
-        View mainLayout = stepsActivityMock.findViewById(R.id.main_layout);
-        View firstMain = stepsActivityMock.findViewById(R.id.first_main);
-        String title = stepsActivityMock.getTitle().toString();
-        int titleColor = stepsActivityMock.getTitleColor();
+        View mainLayout = householdListActivityMock.findViewById(R.id.main_layout);
+        View firstMain = householdListActivityMock.findViewById(R.id.first_main);
+        String title = householdListActivityMock.getTitle().toString();
+        int titleColor = householdListActivityMock.getTitleColor();
 
         assertNotNull(mainLayout);
         assertNull(firstMain);
-        assertEquals(stepsActivityMock.getString(R.string.main_header), title);
+        assertEquals(householdListActivityMock.getString(R.string.main_header), title);
         assertEquals(Color.parseColor(Constants.HEADER_GREEN),titleColor);
     }
 
@@ -65,7 +65,7 @@ public class StepsActivityTest extends TestCase {
     public void ShouldPopulateMenu(){
         TestMenu menu = new TestMenu();
 
-        stepsActivityMock.onCreateOptionsMenu(menu);
+        householdListActivityMock.onCreateOptionsMenu(menu);
 
         MenuItem exportMenuItem = menu.findItem(R.id.action_export);
         MenuItem settingsMenuItem = menu.findItem(R.id.action_settings);

@@ -29,7 +29,7 @@ import java.util.List;
 import static com.onaio.steps.helper.Constants.HEADER_GREEN;
 import static com.onaio.steps.helper.Constants.PHONE_ID;
 
-public class StepsActivity extends ListActivity {
+public class HouseholdListActivity extends ListActivity {
 
     private DatabaseHelper db;
 
@@ -123,7 +123,7 @@ public class StepsActivity extends ListActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 Household household = Household.find_by(db, id);
-                StepsActivityFactory.getHouseholdItemHandler(StepsActivity.this, household).open();
+                StepsActivityFactory.getHouseholdItemHandler(HouseholdListActivity.this, household).open();
             }
         });
     }

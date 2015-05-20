@@ -4,7 +4,7 @@ package com.onaio.steps.activityHandler;
 import android.content.Intent;
 
 import com.onaio.steps.activity.HouseholdActivity;
-import com.onaio.steps.activity.StepsActivity;
+import com.onaio.steps.activity.HouseholdListActivity;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.InterviewStatus;
@@ -26,7 +26,7 @@ import java.util.Date;
 @RunWith(RobolectricTestRunner.class)
 public class HouseholdActivityHandlerTest {
 
-    StepsActivity stepsActivity;
+    HouseholdListActivity householdListActivity;
     HouseholdActivityHandler householdActivityHandler;
     Household household;
     private String currentDate = new SimpleDateFormat(Constants.DATE_FORMAT).format(new Date());
@@ -34,25 +34,24 @@ public class HouseholdActivityHandlerTest {
 
     @Before
     public void Setup(){
-        stepsActivity = Mockito.mock(StepsActivity.class);
+        householdListActivity = Mockito.mock(HouseholdListActivity.class);
     }
 
     @Test
     public void ShouldStartNewMemberActivityIfHouseholdIsNotNull(){
         household = new Household("2", "Any HouseholdName", "123456789", "", InterviewStatus.NOT_SELECTED, currentDate,"Dummy comments");
-        householdActivityHandler = new HouseholdActivityHandler(stepsActivity, household);
+        householdActivityHandler = new HouseholdActivityHandler(householdListActivity, household);
         householdActivityHandler.open();
 
-        Mockito.verify(stepsActivity).startActivity(Mockito.argThat(matchIntent()));
+        Mockito.verify(householdListActivity).startActivity(Mockito.argThat(matchIntent()));
     }
 
     @Test
     public void ShouldNotStartNewMemberActivityIfHouseholdIsNull(){
-        household = null;
-        householdActivityHandler = new HouseholdActivityHandler(stepsActivity, household);
+        householdActivityHandler = new HouseholdActivityHandler(householdListActivity, null);
         householdActivityHandler.open();
 
-        Mockito.verify(stepsActivity,Mockito.never()).startActivity(Mockito.any(Intent.class));
+        Mockito.verify(householdListActivity,Mockito.never()).startActivity(Mockito.any(Intent.class));
     }
 
 

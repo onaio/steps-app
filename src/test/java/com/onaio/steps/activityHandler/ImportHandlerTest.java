@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 
 import com.onaio.steps.R;
-import com.onaio.steps.activity.StepsActivity;
+import com.onaio.steps.activity.HouseholdListActivity;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.helper.FileUtil;
 import com.onaio.steps.model.RequestCode;
@@ -25,15 +25,14 @@ import java.io.IOException;
 @RunWith(RobolectricTestRunner.class)
 public class ImportHandlerTest {
 
-    private StepsActivity activityMock;
+    private HouseholdListActivity activityMock;
     private ImportHandler importHandler;
-    private DatabaseHelper dbMock;
     private FileUtil fileUtilMock;
 
     @Before
     public void Setup(){
-        activityMock = Mockito.mock(StepsActivity.class);
-        dbMock = Mockito.mock(DatabaseHelper.class);
+        activityMock = Mockito.mock(HouseholdListActivity.class);
+        DatabaseHelper dbMock = Mockito.mock(DatabaseHelper.class);
         fileUtilMock = Mockito.mock(FileUtil.class);
         importHandler = new ImportHandler(activityMock, dbMock, fileUtilMock);
     }
