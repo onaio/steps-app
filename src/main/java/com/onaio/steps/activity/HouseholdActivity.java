@@ -21,15 +21,15 @@ import com.onaio.steps.adapter.MemberAdapter;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.model.Household;
-import com.onaio.steps.model.HouseholdStatus;
+import com.onaio.steps.model.InterviewStatus;
 import com.onaio.steps.model.Member;
 import com.onaio.steps.modelViewWrapper.SelectedMemberViewWrapper;
 
 import java.util.List;
 
-import static com.onaio.steps.model.HouseholdStatus.DEFERRED;
-import static com.onaio.steps.model.HouseholdStatus.INCOMPLETE;
-import static com.onaio.steps.model.HouseholdStatus.NOT_DONE;
+import static com.onaio.steps.model.InterviewStatus.DEFERRED;
+import static com.onaio.steps.model.InterviewStatus.INCOMPLETE;
+import static com.onaio.steps.model.InterviewStatus.NOT_DONE;
 
 public class HouseholdActivity extends ListActivity {
 
@@ -154,7 +154,7 @@ public class HouseholdActivity extends ListActivity {
     }
 
     private List<Member> getMembers() {
-        HouseholdStatus status = household.getStatus();
+        InterviewStatus status = household.getStatus();
         if(status.equals(NOT_DONE) || status.equals(DEFERRED) || status.equals(INCOMPLETE))
             return household.getAllUnselectedMembers(db);
         return household.getAllNonDeletedMembers(db);
