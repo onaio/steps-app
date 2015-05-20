@@ -44,6 +44,15 @@ public class Participant implements Serializable {
 
     }
 
+    public Participant(String participantId, String surname, String firstName, Gender gender, int age) {
+        this.id=participantId;
+        this.firstName=firstName;
+        this.familySurname=surname;
+        this.gender=gender;
+        this.age=age;
+    }
+
+
     public String getFirstName() {
         return firstName;
     }

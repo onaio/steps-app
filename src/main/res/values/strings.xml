@@ -94,4 +94,5 @@
     <string name="undefined_label">undefined</string>
     <string name="participant_header">Participants</string>
     <string name="action_add_participant">Add New Participant</string>
+    <string name="participant">Participant</string>
 </resources>
