@@ -91,4 +91,7 @@
     <string name="household_id">Household ID:</string>
     <string name="members">members</string>
     <string name="participant_id">Participant ID</string>
+    <string name="undefined_label">undefined</string>
+    <string name="participant_header">Participants</string>
+    <string name="action_add_participant">Add New Participant</string>
 </resources>
