@@ -71,10 +71,13 @@ public class HouseholdFlow implements IFlow {
     }
 
     private void prepareView() {
-        Button householdFlow = (Button)activity.findViewById(R.id.household_flow);
-        householdFlow.setVisibility(View.GONE);
-        Button participantDisabledFlow = (Button)activity.findViewById(R.id.participant_flow_disabled);
-        participantDisabledFlow.setVisibility(View.GONE);
+        hide(R.id.participant_flow_disabled);
+        hide(R.id.household_flow);
+    }
+
+    private void hide(int viewId) {
+        View viewElement = activity.findViewById(viewId);
+        viewElement.setVisibility(View.GONE);
     }
 
 

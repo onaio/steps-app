@@ -3,7 +3,6 @@ package com.onaio.steps.orchestrators.flows;
 import android.app.Activity;
 import android.content.Intent;
 import android.view.View;
-import android.widget.Button;
 
 import com.onaio.steps.R;
 import com.onaio.steps.activity.WelcomeActivity;
@@ -35,12 +34,14 @@ public class InitialFlow implements IFlow {
     }
 
     private void prepareView() {
-        View settingContents = activity.findViewById(R.id.setting_contents);
-        Button householdFlowDisabled = (Button)activity.findViewById(R.id.household_flow_disabled);
-        Button participantFlowDisabled = (Button)activity.findViewById(R.id.participant_flow_disabled);
-        settingContents.setVisibility(View.GONE);
-        householdFlowDisabled.setVisibility(View.GONE);
-        participantFlowDisabled.setVisibility(View.GONE);
+        hide(R.id.setting_contents);
+        hide(R.id.household_flow_disabled);
+        hide(R.id.participant_flow_disabled);
+    }
+
+    private void hide(int viewId) {
+        View viewElement = activity.findViewById(viewId);
+        viewElement.setVisibility(View.GONE);
     }
 
 }
