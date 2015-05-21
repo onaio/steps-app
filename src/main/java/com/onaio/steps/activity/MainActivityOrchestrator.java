@@ -4,8 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.onaio.steps.InitializtionStrategy.FlowType;
-import com.onaio.steps.InitializtionStrategy.InitializationStrategy;
+import com.onaio.steps.orchestrators.FlowOrchestrator;
+import com.onaio.steps.orchestrators.flows.FlowType;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.KeyValueStoreFactory;
 
@@ -14,8 +14,7 @@ public class MainActivityOrchestrator extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FlowType flowType = FlowType.valueOf(getValue(Constants.FLOW_TYPE));
-        Intent intent = new InitializationStrategy().getIntent(flowType, this);
-        this.startActivity(intent);
+        new FlowOrchestrator(this).start(flowType);
         finish();
     }
 

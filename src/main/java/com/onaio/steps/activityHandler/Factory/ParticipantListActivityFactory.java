@@ -10,6 +10,7 @@ import com.onaio.steps.activityHandler.Interface.IMenuHandler;
 import com.onaio.steps.activityHandler.NewParticipantActivityHandler;
 import com.onaio.steps.activityHandler.ParticipantActivityHandler;
 import com.onaio.steps.activityHandler.SettingActivityHandler;
+import com.onaio.steps.orchestrators.flows.FlowType;
 import com.onaio.steps.model.Participant;
 
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ public class ParticipantListActivityFactory {
     public static List<IMenuHandler> getMenuHandlers(ListActivity activity) {
 
         ArrayList<IMenuHandler> menuHandlers = new ArrayList<IMenuHandler>();
-        menuHandlers.add(new SettingActivityHandler(activity));
+        menuHandlers.add(new SettingActivityHandler(activity).prepareFor(FlowType.Participant));
         menuHandlers.add(new FinalisedFormHandler(activity));
         return menuHandlers;
     }

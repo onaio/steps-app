@@ -1,12 +1,13 @@
-package com.onaio.steps.activityHandler.Settings;
+package com.onaio.steps.orchestrators.flows;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.onaio.steps.InitializtionStrategy.FlowType;
 import com.onaio.steps.R;
+import com.onaio.steps.activity.HouseholdListActivity;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.KeyValueStore;
 import com.onaio.steps.helper.KeyValueStoreFactory;
@@ -20,11 +21,10 @@ import static com.onaio.steps.helper.Constants.MIN_AGE;
 import static com.onaio.steps.helper.Constants.PHONE_ID;
 
 
-public class HouseholdSettingPreparer implements ISettingPreparer{
+public class HouseholdFlow implements IFlow {
     private Activity activity;
 
-    public HouseholdSettingPreparer(Activity activity) {
-
+    public HouseholdFlow(Activity activity) {
         this.activity = activity;
     }
 
@@ -34,9 +34,25 @@ public class HouseholdSettingPreparer implements ISettingPreparer{
     }
 
     @Override
-    public void prepare(){
+    public void prepareSettingScreen(){
         prepareView();
         populateData();
+    }
+
+    @Override
+    public void saveSettings() {
+        saveData(R.id.deviceId,PHONE_ID);
+        saveData(R.id.form_id,FORM_ID);
+        saveData(R.id.min_age,MIN_AGE);
+        saveData(R.id.max_age,MAX_AGE);
+        saveData(R.id.endpointUrl,ENDPOINT_URL);
+        saveData(R.id.household_seed,HOUSEHOLD_SEED);
+        saveSafely(activity, FLOW_TYPE, FlowType.Household.toString());
+    }
+
+    @Override
+    public Intent getIntent() {
+        return new Intent(activity, HouseholdListActivity.class);
     }
 
     private void populateData() {
@@ -61,38 +77,12 @@ public class HouseholdSettingPreparer implements ISettingPreparer{
         participantDisabledFlow.setVisibility(View.GONE);
     }
 
-    @Override
-    public void save() {
-        saveData(R.id.deviceId,PHONE_ID);
-        saveData(R.id.form_id,FORM_ID);
-        saveData(R.id.min_age,MIN_AGE);
-        saveData(R.id.max_age,MAX_AGE);
-        saveData(R.id.endpointUrl,ENDPOINT_URL);
-        saveData(R.id.household_seed,HOUSEHOLD_SEED);
-        saveSafely(activity, FLOW_TYPE, FlowType.Household.toString());
-
-//        activity.startActivity(new Intent(activity, MainActivityOrchestrator.class));
-//        activity.finish();
-    }
 
     private void saveData(int viewId, String keyId){
         TextView textView = (TextView) activity.findViewById(viewId);
         String data = textView.getText().toString();
         saveSafely(activity,keyId,data);
     }
-
-//    @Override
-//    public void start() {
-//        Intent intent = new Intent(activity, SettingsActivity.class);
-////        intent.putExtra(PHONE_ID, getValue(activity,PHONE_ID));
-////        intent.putExtra(FORM_ID, getValue(activity, FORM_ID));
-////        intent.putExtra(ENDPOINT_URL, getValue(activity, ENDPOINT_URL));
-////        intent.putExtra(HOUSEHOLD_SEED, getValue(activity, HOUSEHOLD_SEED));
-////        intent.putExtra(MIN_AGE, getValue(activity, MIN_AGE));
-////        intent.putExtra(MAX_AGE, getValue(activity, MAX_AGE));
-////        intent.putExtra(FLOW_TYPE,FlowType.Household.toString());
-//        activity.startActivityForResult(intent, RequestCode.SETTINGS.getCode());
-//    }
 
     private void saveSafely(Activity activity, String key, String value) {
         KeyValueStore keyValueStore = KeyValueStoreFactory.instance(activity);

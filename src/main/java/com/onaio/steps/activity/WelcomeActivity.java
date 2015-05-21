@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import com.onaio.steps.InitializtionStrategy.FlowType;
+import com.onaio.steps.orchestrators.flows.FlowType;
 import com.onaio.steps.R;
 import com.onaio.steps.activityHandler.SettingActivityHandler;
 

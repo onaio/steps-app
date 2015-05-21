@@ -3,7 +3,7 @@ package com.onaio.steps.activityHandler.Factory;
 import android.app.ListActivity;
 import android.view.Menu;
 
-import com.onaio.steps.InitializtionStrategy.FlowType;
+import com.onaio.steps.orchestrators.flows.FlowType;
 import com.onaio.steps.activityHandler.ExportHandler;
 import com.onaio.steps.activityHandler.FinalisedFormHandler;
 import com.onaio.steps.activityHandler.HouseholdActivityHandler;

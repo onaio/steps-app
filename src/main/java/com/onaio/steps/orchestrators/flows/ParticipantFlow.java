@@ -1,13 +1,14 @@
-package com.onaio.steps.activityHandler.Settings;
+package com.onaio.steps.orchestrators.flows;
 
 
 import android.app.Activity;
+import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.onaio.steps.InitializtionStrategy.FlowType;
 import com.onaio.steps.R;
+import com.onaio.steps.activity.ParticipantListActivity;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.KeyValueStore;
 import com.onaio.steps.helper.KeyValueStoreFactory;
@@ -18,11 +19,11 @@ import static com.onaio.steps.helper.Constants.MAX_AGE;
 import static com.onaio.steps.helper.Constants.MIN_AGE;
 import static com.onaio.steps.helper.Constants.PHONE_ID;
 
-public class ParticipantSettingPreparer implements ISettingPreparer {
+public class ParticipantFlow implements IFlow {
 
     private Activity activity;
 
-    public ParticipantSettingPreparer(Activity activity) {
+    public ParticipantFlow(Activity activity) {
 
         this.activity = activity;
     }
@@ -33,9 +34,23 @@ public class ParticipantSettingPreparer implements ISettingPreparer {
     }
 
     @Override
-    public void prepare(){
+    public void prepareSettingScreen(){
         prepareView();
         populateData();
+    }
+
+    @Override
+    public void saveSettings() {
+        saveData(R.id.deviceId, PHONE_ID);
+        saveData(R.id.form_id, FORM_ID);
+        saveData(R.id.min_age, MIN_AGE);
+        saveData(R.id.max_age, MAX_AGE);
+        saveSafely(activity, FLOW_TYPE, FlowType.Participant.toString());
+    }
+
+    @Override
+    public Intent getIntent() {
+        return new Intent(activity, ParticipantListActivity.class);
     }
 
     private void prepareView() {
@@ -56,16 +71,6 @@ public class ParticipantSettingPreparer implements ISettingPreparer {
         String data = getValue(activity, keyId);
         TextView textView = (TextView) activity.findViewById(viewId);
         textView.setText(data);
-    }
-
-
-    @Override
-    public void save() {
-        saveData(R.id.deviceId, PHONE_ID);
-        saveData(R.id.form_id, FORM_ID);
-        saveData(R.id.min_age, MIN_AGE);
-        saveData(R.id.max_age, MAX_AGE);
-        saveSafely(activity, FLOW_TYPE, FlowType.Participant.toString());
     }
 
     private void saveData(int viewId, String keyId){

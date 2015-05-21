@@ -1,16 +1,17 @@
-package com.onaio.steps.activityHandler.Settings;
+package com.onaio.steps.orchestrators.flows;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
-import com.onaio.steps.InitializtionStrategy.FlowType;
-import com.onaio.steps.R;
 
-public class DefaultSettingPreparer implements ISettingPreparer {
+import com.onaio.steps.R;
+import com.onaio.steps.activity.WelcomeActivity;
+
+public class InitialFlow implements IFlow {
     private Activity activity;
 
-    public DefaultSettingPreparer(Activity activity) {
-
+    public InitialFlow(Activity activity) {
         this.activity = activity;
     }
 
@@ -20,8 +21,17 @@ public class DefaultSettingPreparer implements ISettingPreparer {
     }
 
     @Override
-    public void prepare() {
+    public void prepareSettingScreen() {
         prepareView();
+    }
+
+    @Override
+    public void saveSettings() {
+    }
+
+    @Override
+    public Intent getIntent() {
+        return new Intent(activity, WelcomeActivity.class);
     }
 
     private void prepareView() {
@@ -33,7 +43,4 @@ public class DefaultSettingPreparer implements ISettingPreparer {
         participantFlowDisabled.setVisibility(View.GONE);
     }
 
-    @Override
-    public void save() {
-    }
 }

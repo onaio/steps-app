@@ -3,7 +3,7 @@ package com.onaio.steps.activityHandler;
 import android.app.Activity;
 import android.content.Intent;
 
-import com.onaio.steps.InitializtionStrategy.FlowType;
+import com.onaio.steps.orchestrators.flows.FlowType;
 import com.onaio.steps.R;
 import com.onaio.steps.activity.MainActivityOrchestrator;
 import com.onaio.steps.activity.SettingsActivity;
@@ -44,7 +44,7 @@ public class SettingActivityHandler implements IMenuHandler, IActivityResultHand
     public void handleResult(Intent data, int resultCode) {
         if (resultCode != Activity.RESULT_OK)
             return;
-        activity.startActivity(new Intent(activity,MainActivityOrchestrator.class));
+        activity.startActivity(new Intent(activity, MainActivityOrchestrator.class));
         activity.finish();
     }
 
