@@ -46,6 +46,21 @@
         <activity android:name=".activity.MemberActivity"
             android:label="@string/action_member">
         </activity>
+
+        <activity android:name=".activity.NewParticipantActivity"
+            android:label="New Participant"
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar">
+        </activity>
+
+        <activity android:name=".activity.EditParticipantActivity"
+            android:label="Edit Participant"
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar">
+        </activity>
+        <activity android:name=".activity.ParticipantActivity"
+            android:label="Participant">
+        </activity>
+
+
     </application>
     <uses-sdk android:minSdkVersion="16"/>
     <uses-permission android:name="android.permission.INTERNET" />
