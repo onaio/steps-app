@@ -6,7 +6,6 @@
     android:background="@android:color/white">
 
     <include layout="@layout/dialog_header" />
-
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -27,9 +26,9 @@
         android:textColor="@android:color/black"
         android:inputType="textAutoComplete"/>
 
-    <include layout="@layout/member_form"
-         android:layout_marginTop="-20dp"
+    <include layout="@layout/member_fields"
         android:layout_height="wrap_content"
-        android:layout_width="fill_parent"/>
+        android:layout_width="fill_parent"
+        android:layout_marginTop="10dp"/>
 
 </LinearLayout>

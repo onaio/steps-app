@@ -82,6 +82,7 @@
             android:textColor="@android:color/black"
             android:textSize="12sp"
             />
+
     </LinearLayout>
     <TextView
         android:layout_width="wrap_content"
@@ -89,5 +90,4 @@
         android:id="@+id/survey_message"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"/>
-
 </RelativeLayout>

@@ -6,10 +6,6 @@
     android:id="@+id/household_form"
     android:background="@android:color/white">
     <include layout="@layout/dialog_header"/>
-    <View android:layout_height="1dp"
-        android:layout_width="fill_parent"
-        android:background="#73C7E5"
-        />
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"

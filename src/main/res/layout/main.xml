@@ -31,7 +31,6 @@
         android:background="#499F72"
         android:text="@string/add_new_household"
         android:textColor="@android:color/white"
-        android:drawableStart="@drawable/ic_action_new_household"
         android:drawablePadding="-10dp"
         android:paddingLeft="10dp"
         android:id="@+id/action_add_household"

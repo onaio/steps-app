@@ -6,10 +6,6 @@
               android:id="@+id/settings"
                 android:background="@android:color/white">
     <include layout="@layout/dialog_header"/>
-    <View android:layout_height="2dp"
-        android:layout_width="fill_parent"
-        android:background="#73C7E5"
-        />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="20dp"
