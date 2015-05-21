@@ -1,6 +1,6 @@
 package com.onaio.steps.activityHandler.Factory;
 
-import com.onaio.steps.activity.StepsActivity;
+import com.onaio.steps.activity.HouseholdListActivity;
 import com.onaio.steps.activityHandler.ExportHandler;
 import com.onaio.steps.activityHandler.FinalisedFormHandler;
 import com.onaio.steps.activityHandler.HouseholdActivityHandler;
@@ -26,17 +26,17 @@ import java.util.List;
 
 @Config(emulateSdk = 16,manifest = "src/main/AndroidManifest.xml")
 @RunWith(RobolectricTestRunner.class)
-public class StepsActivityFactoryTest extends TestCase {
+public class HouseholdListActivityFactoryTest extends TestCase {
 
-    private StepsActivity stepsActivityMock;
+    private HouseholdListActivity householdListActivityMock;
     @Before
     public void Setup(){
-        stepsActivityMock = Robolectric.buildActivity(StepsActivity.class).create().get();
+        householdListActivityMock = Robolectric.buildActivity(HouseholdListActivity.class).create().get();
     }
 
     @Test
     public void ShouldHaveProperMenuHandlers(){
-        List<IMenuHandler> menuHandlers = StepsActivityFactory.getMenuHandlers(stepsActivityMock, null);
+        List<IMenuHandler> menuHandlers = HouseholdListActivityFactory.getMenuHandlers(householdListActivityMock, null);
         ArrayList<Class> handlerTypes = getTypes(menuHandlers);
 
         Assert.assertEquals(4,menuHandlers.size());
@@ -48,7 +48,7 @@ public class StepsActivityFactoryTest extends TestCase {
 
     @Test
     public void ShouldHaveProperResultHandlers(){
-        List<IActivityResultHandler> resultHandlers = StepsActivityFactory.getResultHandlers(stepsActivityMock);
+        List<IActivityResultHandler> resultHandlers = HouseholdListActivityFactory.getResultHandlers(householdListActivityMock);
         ArrayList<Class> handlerTypes = getTypes(resultHandlers);
 
         Assert.assertEquals(3, resultHandlers.size());
@@ -59,7 +59,7 @@ public class StepsActivityFactoryTest extends TestCase {
 
     @Test
     public void ShouldHaveProperCustomMenuHandlers(){
-        List<IMenuHandler> menuHandlers = StepsActivityFactory.getCustomMenuHandler(stepsActivityMock);
+        List<IMenuHandler> menuHandlers = HouseholdListActivityFactory.getCustomMenuHandler(householdListActivityMock);
         ArrayList<Class> handlerTypes = getTypes(menuHandlers);
 
         Assert.assertEquals(2,menuHandlers.size());
@@ -69,7 +69,7 @@ public class StepsActivityFactoryTest extends TestCase {
 
     @Test
     public void ShouldHaveProperHouseholdItemHandler(){
-        IListItemHandler handler = StepsActivityFactory.getHouseholdItemHandler(stepsActivityMock, null);
+        IListItemHandler handler = HouseholdListActivityFactory.getHouseholdItemHandler(householdListActivityMock, null);
 
         Assert.assertEquals(HouseholdActivityHandler.class,handler.getClass());
     }

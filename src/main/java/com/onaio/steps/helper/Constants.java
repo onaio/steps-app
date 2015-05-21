@@ -39,4 +39,5 @@ public class Constants {
 
 
     public static final String PARTICIPANT = "PARTICIPANT";
+    public static final String FLOW_TYPE = "flowType";
 }

@@ -49,9 +49,10 @@ public class ParticipantActivityFactory {
         return handlers;
     }
 
-    public static List<IMenuPreparer> getMenuPreparer(Activity activity, Participant participant, Menu menu) {
-        ArrayList<IMenuPreparer> menuPreparers = new ArrayList<IMenuPreparer>();
-        menuPreparers.add(new EditParticipantActivityHandler(activity,participant).withMenu(menu));
-        return menuPreparers;
-    }
+    public static List<IMenuPreparer> getMenuPreparer(Activity activity, Participant participant, Menu menu)
+        {
+            ArrayList<IMenuPreparer> menuPreparers = new ArrayList<IMenuPreparer>();
+            menuPreparers.add(new EditParticipantActivityHandler(activity, participant).withMenu(menu));
+            return menuPreparers;
+        }
 }

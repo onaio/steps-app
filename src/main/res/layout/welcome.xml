@@ -27,11 +27,6 @@
         android:layout_marginRight="15dp"
         android:layout_gravity="right"
         android:id="@+id/go_to_settings"
-        android:onClick="handleCustomMenu"/>
+        android:onClick="openDefaultSetting"/>
     </LinearLayout>
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@android:id/list" android:layout_gravity="center_horizontal"/>
-
 </LinearLayout>

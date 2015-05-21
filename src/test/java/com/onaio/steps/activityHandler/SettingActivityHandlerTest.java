@@ -6,7 +6,7 @@ import android.content.Intent;
 import com.onaio.steps.R;
 import com.onaio.steps.activity.HouseholdActivity;
 import com.onaio.steps.activity.SettingsActivity;
-import com.onaio.steps.activity.StepsActivity;
+import com.onaio.steps.activity.HouseholdListActivity;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.KeyValueStore;
 import com.onaio.steps.helper.KeyValueStoreFactory;
@@ -15,7 +15,6 @@ import com.onaio.steps.model.RequestCode;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
@@ -29,7 +28,7 @@ import static org.junit.Assert.assertTrue;
 @RunWith(RobolectricTestRunner.class)
 public class SettingActivityHandlerTest {
 
-    private StepsActivity stepsActivityMock;
+    private HouseholdListActivity householdListActivityMock;
     private SettingActivityHandler settingActivityHandler;
     private String PHONE_ID = "12345";
     private String HOUSEHOLD_SEED = "200";
@@ -39,8 +38,8 @@ public class SettingActivityHandlerTest {
 
     @Before
     public void setup(){
-        stepsActivityMock = Robolectric.setupActivity(StepsActivity.class);
-        settingActivityHandler = new SettingActivityHandler(stepsActivityMock);
+        householdListActivityMock = Robolectric.setupActivity(HouseholdListActivity.class);
+        settingActivityHandler = new SettingActivityHandler(householdListActivityMock);
 
     }
 
@@ -61,7 +60,7 @@ public class SettingActivityHandlerTest {
         setValue(Constants.HOUSEHOLD_SEED,HOUSEHOLD_SEED);
         setValue(Constants.MIN_AGE,MIN_AGE);
         setValue(Constants.MAX_AGE,MAX_AGE);
-        ShadowActivity stepsActivityShadow = Robolectric.shadowOf(stepsActivityMock);
+        ShadowActivity stepsActivityShadow = Robolectric.shadowOf(householdListActivityMock);
 
         settingActivityHandler.open();
         Intent newIntent = stepsActivityShadow.getNextStartedActivityForResult().intent;
@@ -80,7 +79,7 @@ public class SettingActivityHandlerTest {
         setValue(Constants.PHONE_ID, PHONE_ID);
         setValue(Constants.ENDPOINT_URL,ENDPOINT_URL);
         setValue(Constants.HOUSEHOLD_SEED,HOUSEHOLD_SEED);
-        ShadowActivity stepsActivityShadow = Robolectric.shadowOf(stepsActivityMock);
+        ShadowActivity stepsActivityShadow = Robolectric.shadowOf(householdListActivityMock);
 
         settingActivityHandler.open();
 
@@ -111,7 +110,7 @@ public class SettingActivityHandlerTest {
 
         settingActivityHandler.handleResult(intent, Activity.RESULT_OK);
 
-        KeyValueStore keyValue = KeyValueStoreFactory.instance(stepsActivityMock);
+        KeyValueStore keyValue = KeyValueStoreFactory.instance(householdListActivityMock);
         assertEquals(PHONE_ID,keyValue.getString(Constants.PHONE_ID));
         assertEquals(HOUSEHOLD_SEED,keyValue.getString(Constants.HOUSEHOLD_SEED));
         assertEquals(ENDPOINT_URL,keyValue.getString(Constants.ENDPOINT_URL));
@@ -120,7 +119,7 @@ public class SettingActivityHandlerTest {
     }
 
     private void setValue(String key, String value) {
-        KeyValueStore keyValueStore = KeyValueStoreFactory.instance(stepsActivityMock);
+        KeyValueStore keyValueStore = KeyValueStoreFactory.instance(householdListActivityMock);
         keyValueStore.putString(key, value);
     }
 }

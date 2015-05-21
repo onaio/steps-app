@@ -2,7 +2,6 @@ package com.onaio.steps.activityHandler;
 
 import android.app.ListActivity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 
 import com.onaio.steps.R;
 import com.onaio.steps.activity.HouseholdActivity;
@@ -13,6 +12,7 @@ import com.onaio.steps.adapter.HouseholdAdapter;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.CustomDialog;
 import com.onaio.steps.helper.DatabaseHelper;
+import com.onaio.steps.helper.KeyValueStoreFactory;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.RequestCode;
 
@@ -78,11 +78,7 @@ public class NewHouseholdActivityHandler implements IMenuHandler, IActivityResul
     }
 
     private String getValue(String key) {
-        return dataStore(activity).getString(key, null) ;
-    }
-
-    private SharedPreferences dataStore(ListActivity activity) {
-        return activity.getPreferences(MODE_PRIVATE);
+        return KeyValueStoreFactory.instance(activity).getString(key);
     }
 
     private boolean isEmpty(String value) {

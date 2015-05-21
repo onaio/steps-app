@@ -3,7 +3,7 @@ package com.onaio.steps.activityHandler;
 import android.content.ComponentName;
 import android.content.Intent;
 import com.onaio.steps.R;
-import com.onaio.steps.activity.StepsActivity;
+import com.onaio.steps.activity.HouseholdListActivity;
 import junit.framework.Assert;
 import junit.framework.TestCase;
 import org.junit.Before;
@@ -19,12 +19,12 @@ import org.robolectric.annotation.Config;
 public class FinalisedFormHandlerTest extends TestCase {
 
     private FinalisedFormHandler finalisedFormHandler;
-    private StepsActivity stepsActivity;
+    private HouseholdListActivity householdListActivity;
 
     @Before
     public void Setup(){
-        stepsActivity = Mockito.mock(StepsActivity.class);
-        finalisedFormHandler = new FinalisedFormHandler(stepsActivity);
+        householdListActivity = Mockito.mock(HouseholdListActivity.class);
+        finalisedFormHandler = new FinalisedFormHandler(householdListActivity);
     }
 
     @Test
@@ -41,7 +41,7 @@ public class FinalisedFormHandlerTest extends TestCase {
     public void ShouldOpenTheProperIntentForSavedForms(){
         finalisedFormHandler.open();
 
-        Mockito.verify(stepsActivity).startActivity(Mockito.argThat(intentMatcher()));
+        Mockito.verify(householdListActivity).startActivity(Mockito.argThat(intentMatcher()));
     }
 
     private ArgumentMatcher<Intent> intentMatcher() {

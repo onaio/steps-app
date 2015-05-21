@@ -15,21 +15,19 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 
 import com.onaio.steps.R;
-import com.onaio.steps.activityHandler.Factory.StepsActivityFactory;
+import com.onaio.steps.activityHandler.Factory.HouseholdListActivityFactory;
 import com.onaio.steps.activityHandler.Interface.IActivityResultHandler;
 import com.onaio.steps.activityHandler.Interface.IMenuHandler;
 import com.onaio.steps.activityHandler.Interface.IMenuPreparer;
 import com.onaio.steps.adapter.HouseholdAdapter;
 import com.onaio.steps.helper.DatabaseHelper;
-import com.onaio.steps.helper.KeyValueStoreFactory;
 import com.onaio.steps.model.Household;
 
 import java.util.List;
 
 import static com.onaio.steps.helper.Constants.HEADER_GREEN;
-import static com.onaio.steps.helper.Constants.PHONE_ID;
 
-public class StepsActivity extends ListActivity {
+public class HouseholdListActivity extends ListActivity {
 
     private DatabaseHelper db;
 
@@ -55,7 +53,7 @@ public class StepsActivity extends ListActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        List<IMenuHandler> activityHandlers = StepsActivityFactory.getMenuHandlers(this, Household.getAllInOrder(db));
+        List<IMenuHandler> activityHandlers = HouseholdListActivityFactory.getMenuHandlers(this, Household.getAllInOrder(db));
         for(IMenuHandler handler : activityHandlers){
             if(handler.shouldOpen(item.getItemId()) )
                 return handler.open();
@@ -65,7 +63,7 @@ public class StepsActivity extends ListActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        List<IActivityResultHandler> activityHandlers = StepsActivityFactory.getResultHandlers(this);
+        List<IActivityResultHandler> activityHandlers = HouseholdListActivityFactory.getResultHandlers(this);
         for(IActivityResultHandler activityHandler: activityHandlers){
             if(activityHandler.canHandleResult(requestCode))
                 activityHandler.handleResult(data,resultCode);
@@ -74,7 +72,7 @@ public class StepsActivity extends ListActivity {
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        List<IMenuPreparer> menuItemHandlers = StepsActivityFactory.getMenuPreparer(this,Household.getAllInOrder(new DatabaseHelper(this)), menu);
+        List<IMenuPreparer> menuItemHandlers = HouseholdListActivityFactory.getMenuPreparer(this, Household.getAllInOrder(new DatabaseHelper(this)), menu);
         for(IMenuPreparer handler:menuItemHandlers)
             if(handler.shouldInactivate())
                 handler.inactivate();
@@ -108,12 +106,8 @@ public class StepsActivity extends ListActivity {
     }
 
     private void setLayout() {
-        if( getValue(PHONE_ID) == null || getValue(PHONE_ID).equals(""))
-         setContentView(R.layout.first_main);
-        else {
-            setContentView(R.layout.main);
-            setTitle(R.string.main_header);
-        }
+        setContentView(R.layout.main);
+        setTitle(R.string.main_header);
         setTitleColor(Color.parseColor(HEADER_GREEN));
     }
 
@@ -123,7 +117,7 @@ public class StepsActivity extends ListActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 Household household = Household.find_by(db, id);
-                StepsActivityFactory.getHouseholdItemHandler(StepsActivity.this, household).open();
+                HouseholdListActivityFactory.getHouseholdItemHandler(HouseholdListActivity.this, household).open();
             }
         });
     }
@@ -133,12 +127,8 @@ public class StepsActivity extends ListActivity {
         getListView().setAdapter(new HouseholdAdapter(this, households));
     }
 
-    private String getValue(String key) {
-        return KeyValueStoreFactory.instance(this).getString(key) ;
-    }
-
     public void handleCustomMenu(View view){
-        List<IMenuHandler> handlers = StepsActivityFactory.getCustomMenuHandler(this);
+        List<IMenuHandler> handlers = HouseholdListActivityFactory.getCustomMenuHandler(this);
         for(IMenuHandler handler:handlers)
             if(handler.shouldOpen(view.getId()))
                 handler.open();

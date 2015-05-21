@@ -6,7 +6,7 @@ import android.content.Intent;
 import com.onaio.steps.R;
 import com.onaio.steps.activity.HouseholdActivity;
 import com.onaio.steps.activity.NewHouseholdActivity;
-import com.onaio.steps.activity.StepsActivity;
+import com.onaio.steps.activity.HouseholdListActivity;
 import com.onaio.steps.adapter.HouseholdAdapter;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.CustomDialog;
@@ -34,7 +34,7 @@ import static org.junit.Assert.assertTrue;
 @RunWith(RobolectricTestRunner.class)
 public class NewHouseholdActivityHandlerTest {
 
-    private StepsActivity stepsActivity;
+    private HouseholdListActivity householdListActivity;
     private NewHouseholdActivityHandler handler;
     private CustomDialog dialogMock;
     private String PHONE_ID = "123";
@@ -42,9 +42,9 @@ public class NewHouseholdActivityHandlerTest {
 
     @Before
     public void Setup(){
-        stepsActivity = Robolectric.setupActivity(StepsActivity.class);
+        householdListActivity = Robolectric.setupActivity(HouseholdListActivity.class);
         dialogMock = Mockito.mock(CustomDialog.class);
-        handler = new NewHouseholdActivityHandler(stepsActivity, dialogMock);
+        handler = new NewHouseholdActivityHandler(householdListActivity, dialogMock);
     }
 
     @Test
@@ -63,7 +63,7 @@ public class NewHouseholdActivityHandlerTest {
         Mockito.stub(keyValueStoreMock.getString(PHONE_ID)).toReturn("");
         handler.open();
 
-        Mockito.verify(dialogMock).notify(stepsActivity, CustomDialog.EmptyListener, R.string.phone_id_message_title, R.string.phone_id_message);
+        Mockito.verify(dialogMock).notify(householdListActivity, CustomDialog.EmptyListener, R.string.phone_id_message_title, R.string.phone_id_message);
     }
 
 
@@ -73,7 +73,7 @@ public class NewHouseholdActivityHandlerTest {
 
         handler.open();
 
-        Mockito.verify(dialogMock).notify(stepsActivity, CustomDialog.EmptyListener, R.string.phone_id_message_title, R.string.phone_id_message);
+        Mockito.verify(dialogMock).notify(householdListActivity, CustomDialog.EmptyListener, R.string.phone_id_message_title, R.string.phone_id_message);
     }
 
     @Test
@@ -83,14 +83,14 @@ public class NewHouseholdActivityHandlerTest {
 
         handler.open();
 
-        Mockito.verify(dialogMock,Mockito.never()).notify(stepsActivity, CustomDialog.EmptyListener, R.string.phone_id_message_title, R.string.phone_id_message);
+        Mockito.verify(dialogMock,Mockito.never()).notify(householdListActivity, CustomDialog.EmptyListener, R.string.phone_id_message_title, R.string.phone_id_message);
     }
 
     @Test
     public void ShouldOpenNewHouseholdActivityWithDataWhenPhoneIdIsSet(){
         setValue(Constants.PHONE_ID, PHONE_ID);
         setValue(Constants.HOUSEHOLD_SEED, HOUSEHOLD_SEED);
-        ShadowActivity stepsActivityShadow = Robolectric.shadowOf(stepsActivity);
+        ShadowActivity stepsActivityShadow = Robolectric.shadowOf(householdListActivity);
 
         handler.open();
 
@@ -113,12 +113,12 @@ public class NewHouseholdActivityHandlerTest {
     public void ShouldHandleResultAndStartHouseholdActivityForResultCodeOk(){
         Intent intent = new Intent();
         Household name = new Household("name", "123321412312", InterviewStatus.NOT_SELECTED, "123","Dummy comments");
-        name.save(new DatabaseHelper(stepsActivity));
+        name.save(new DatabaseHelper(householdListActivity));
         intent.putExtra(Constants.HOUSEHOLD,name);
         HouseholdAdapter householdAdapterMock = Mockito.mock(HouseholdAdapter.class);
         Mockito.stub(householdAdapterMock.getViewTypeCount()).toReturn(1);
-        stepsActivity.getListView().setAdapter(householdAdapterMock);
-        ShadowActivity stepsActivityShadow = Robolectric.shadowOf(stepsActivity);
+        householdListActivity.getListView().setAdapter(householdAdapterMock);
+        ShadowActivity stepsActivityShadow = Robolectric.shadowOf(householdListActivity);
 
         handler.handleResult(intent, Activity.RESULT_OK);
 
@@ -135,7 +135,7 @@ public class NewHouseholdActivityHandlerTest {
     public void ShouldNotHandleResultForOtherResultCode(){
         HouseholdAdapter householdAdapterMock = Mockito.mock(HouseholdAdapter.class);
         Mockito.stub(householdAdapterMock.getViewTypeCount()).toReturn(1);
-        stepsActivity.getListView().setAdapter(householdAdapterMock);
+        householdListActivity.getListView().setAdapter(householdAdapterMock);
         handler.handleResult(null, Activity.RESULT_CANCELED);
 
         Mockito.verify(householdAdapterMock,Mockito.never()).reinitialize(Mockito.anyList());
@@ -143,7 +143,7 @@ public class NewHouseholdActivityHandlerTest {
     }
 
     private void setValue(String key, String value) {
-        KeyValueStore keyValueStore = KeyValueStoreFactory.instance(stepsActivity);
+        KeyValueStore keyValueStore = KeyValueStoreFactory.instance(householdListActivity);
         keyValueStore.putString(key, value);
     }
 }
