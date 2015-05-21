@@ -63,13 +63,17 @@ public class HouseholdAdapter extends BaseAdapter{
         ImageView commentImage = (ImageView) householdListItem.findViewById(R.id.comment_view);
         image.setImageResource(getImage(householdAtPosition));
 
-        if(!householdAtPosition.getComments().equals(""))
-            commentImage.setImageResource(R.mipmap.ic_household_comments);
+        if(householdAtPosition.getComments().equals(""))
+            commentImage.setVisibility(View.INVISIBLE);
+        else
+            commentImage.setVisibility(View.VISIBLE);
+
         householdName.setTextColor(Color.BLACK);
         String householdRow = context.getString(R.string.hhid)+ householdAtPosition.getName();
         householdName.setText(householdRow);
         int numberOfMembers = householdAtPosition.numberOfNonDeletedMembers(new DatabaseHelper(context));
         membersCount.setText(String.format("%s, %d "+context.getString(R.string.members), householdAtPosition.getCreatedAt(), numberOfMembers));
+        this.notifyDataSetChanged();
     }
 
     private int getImage(Household householdAtPosition) {

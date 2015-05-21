@@ -50,6 +50,8 @@
     <ImageView
         android:id="@+id/comment_view"
         android:layout_width="30dp"
+        android:src="@drawable/ic_household_comments"
+        android:visibility="gone"
         android:layout_height="match_parent"
         android:layout_gravity="center_vertical"
         android:layout_marginRight="20dp"

@@ -116,7 +116,7 @@ public class TakeSurveyHandlerTest {
     public void ShouldActivateViewWithInterviewNowText() {
         Button viewMock = Mockito.mock(Button.class);
         Mockito.stub(householdActivityMock.findViewById(R.id.action_take_survey)).toReturn(viewMock);
-        Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.NOT_SELECTED);
+        Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.NOT_DONE);
 
         takeSurveyHandler.activate();
 
