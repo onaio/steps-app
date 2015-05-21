@@ -39,7 +39,7 @@ public class EditParticipantActivity extends Activity{
     }
 
     private void populateView() {
-        setContentView(R.layout.member_form);
+        setContentView(R.layout.participant_form);
         TextView header = (TextView) findViewById(R.id.form_header);
         header.setText(R.string.member_edit_header);
     }

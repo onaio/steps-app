@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -108,6 +109,8 @@ public class HouseholdListActivity extends ListActivity {
     private void setLayout() {
         setContentView(R.layout.main);
         setTitle(R.string.main_header);
+        Button householdButton = (Button) findViewById(R.id.action_add_household);
+        householdButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_action_new_household, 0, 0, 0);
         setTitleColor(Color.parseColor(HEADER_GREEN));
     }
 

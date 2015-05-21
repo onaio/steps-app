@@ -9,9 +9,12 @@ import com.onaio.steps.exception.InvalidDataException;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.KeyValueStoreFactory;
 import com.onaio.steps.model.Gender;
+import com.onaio.steps.model.InterviewStatus;
 import com.onaio.steps.model.Participant;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -30,20 +33,21 @@ public class ParticipantViewWrapper {
         String surname = ((TextView) activity.findViewById(familySurnameViewId)).getText().toString();
         String firstName = ((TextView) activity.findViewById(firstNameViewId)).getText().toString();
         Gender gender = genderSelection(((RadioGroup) activity.findViewById(genderViewId)).getCheckedRadioButtonId());
+        String currentDate = new SimpleDateFormat(Constants.DATE_FORMAT).format(new Date());
         String ageString = ((TextView) activity.findViewById(ageViewId)).getText().toString();
         validateFields(participantId,surname, firstName, gender, ageString);
         if(!errorFields.isEmpty())
             throw new InvalidDataException(activity, getStringValue(R.string.participant),errorFields);
-        return new Participant(participantId,surname, firstName, gender, Integer.parseInt(ageString));
+        return new Participant(participantId,surname, firstName, gender, Integer.parseInt(ageString), InterviewStatus.NOT_SELECTED,currentDate);
     }
 
-    public Participant update(Participant participant, String particpantId, String surname, String firstName, Gender gender, String ageString) throws InvalidDataException {
-        validateFields(particpantId,surname, firstName, gender, ageString);
-        if(!errorFields.isEmpty())
-            throw new InvalidDataException(activity, getStringValue(R.string.participant),errorFields);
-        return new Participant(participant.getId(),surname,firstName, gender,Integer.parseInt(ageString));
-    }
+    public Participant update(Participant participant, String participantId, String surname, String firstName, Gender gender, String ageString) throws InvalidDataException {
+        validateFields(participantId, surname, firstName, gender, ageString);
+        if (!errorFields.isEmpty())
+            throw new InvalidDataException(activity, getStringValue(R.string.participant), errorFields);
+        return new Participant(participant.getId(), surname, firstName, gender, Integer.parseInt(ageString),participant.getStatus());
 
+    }
 
     private void validateFields(String participantId, String surname, String firstName, Gender gender, String ageString) {
         validate(participantId, getStringValue(R.string.participant_id));

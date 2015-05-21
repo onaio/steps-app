@@ -44,12 +44,13 @@ public class Participant implements Serializable {
 
     }
 
-    public Participant(String participantId, String surname, String firstName, Gender gender, int age) {
+    public Participant(String participantId, String surname, String firstName, Gender gender, int age, InterviewStatus status) {
         this.id=participantId;
         this.firstName=firstName;
         this.familySurname=surname;
         this.gender=gender;
         this.age=age;
+        this.status = status;
     }
 
 
@@ -97,6 +98,7 @@ public class Participant implements Serializable {
 
     public long save(DatabaseHelper db) {
         ContentValues participantDetails = populateBasicDetails();
+        participantDetails.put(STATUS ,status.toString());
         participantDetails.put(CREATED_AT,createdAt);
         long savedId = db.save(participantDetails, TABLE_NAME);
         if (savedId != -1)
@@ -114,9 +116,8 @@ public class Participant implements Serializable {
         values.put(ID, id);
         values.put(FIRST_NAME, firstName);
         values.put(FAMILY_SURNAME, familySurname);
-        values.put(GENDER, gender.toString());
         values.put(AGE, age);
-        values.put(STATUS, status.toString());
+        values.put(GENDER, gender.toString());
         return values;
     }
 
