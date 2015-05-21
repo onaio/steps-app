@@ -27,6 +27,6 @@
         android:layout_marginRight="15dp"
         android:layout_gravity="right"
         android:id="@+id/go_to_settings"
-        android:onClick="handleCustomMenu"/>
+        android:onClick="openDefaultSetting"/>
     </LinearLayout>
 </LinearLayout>
