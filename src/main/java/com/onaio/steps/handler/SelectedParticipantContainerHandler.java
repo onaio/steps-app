@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.view.View;
 
 import com.onaio.steps.R;
-import com.onaio.steps.handler.Interface.IMenuPreparer;
+import com.onaio.steps.handler.interfaces.IMenuPreparer;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.InterviewStatus;
 

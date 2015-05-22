@@ -4,8 +4,8 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.net.Uri;
 
-import com.onaio.steps.activity.HouseholdActivity;
-import com.onaio.steps.handler.strategies.form.HouseholdMemberFormStrategy;
+import com.onaio.steps.activities.HouseholdActivity;
+import com.onaio.steps.model.ODKForm.strategy.HouseholdMemberFormStrategy;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.helper.FileUtil;

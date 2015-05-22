@@ -5,8 +5,8 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.onaio.steps.R;
-import com.onaio.steps.activity.NewMemberActivity;
-import com.onaio.steps.exception.InvalidDataException;
+import com.onaio.steps.activities.NewMemberActivity;
+import com.onaio.steps.exceptions.InvalidDataException;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.KeyValueStore;
 import com.onaio.steps.helper.KeyValueStoreFactory;

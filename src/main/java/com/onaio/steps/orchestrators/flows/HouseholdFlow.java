@@ -3,11 +3,10 @@ package com.onaio.steps.orchestrators.flows;
 import android.app.Activity;
 import android.content.Intent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.onaio.steps.R;
-import com.onaio.steps.activity.HouseholdListActivity;
+import com.onaio.steps.activities.HouseholdListActivity;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.KeyValueStore;
 import com.onaio.steps.helper.KeyValueStoreFactory;

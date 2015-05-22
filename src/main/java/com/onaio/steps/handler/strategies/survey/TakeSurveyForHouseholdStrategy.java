@@ -3,7 +3,7 @@ package com.onaio.steps.handler.strategies.survey;
 
 import android.app.Activity;
 
-import com.onaio.steps.handler.strategies.form.HouseholdMemberFormStrategy;
+import com.onaio.steps.model.ODKForm.strategy.HouseholdMemberFormStrategy;
 import com.onaio.steps.handler.strategies.survey.interfaces.ITakeSurveyStrategy;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;

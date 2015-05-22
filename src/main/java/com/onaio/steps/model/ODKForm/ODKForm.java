@@ -4,11 +4,10 @@ import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
 
-import com.onaio.steps.exception.AppNotInstalledException;
-import com.onaio.steps.exception.FormNotPresentException;
-import com.onaio.steps.handler.strategies.form.interfaces.IFormStrategy;
+import com.onaio.steps.exceptions.AppNotInstalledException;
+import com.onaio.steps.exceptions.FormNotPresentException;
+import com.onaio.steps.model.ODKForm.strategy.interfaces.IFormStrategy;
 import com.onaio.steps.helper.Constants;
-import com.onaio.steps.model.Participant;
 
 import java.io.IOException;
 import java.util.List;

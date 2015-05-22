@@ -3,8 +3,8 @@ package com.onaio.steps.modelViewWrapper;
 import android.widget.TextView;
 
 import com.onaio.steps.R;
-import com.onaio.steps.activity.NewHouseholdActivity;
-import com.onaio.steps.exception.InvalidDataException;
+import com.onaio.steps.activities.NewHouseholdActivity;
+import com.onaio.steps.exceptions.InvalidDataException;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.InterviewStatus;
 

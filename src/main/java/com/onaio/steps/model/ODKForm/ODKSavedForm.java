@@ -6,11 +6,8 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.RemoteException;
 
-import com.onaio.steps.exception.AppNotInstalledException;
-import com.onaio.steps.helper.FileUtil;
-import com.onaio.steps.model.Household;
+import com.onaio.steps.exceptions.AppNotInstalledException;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 

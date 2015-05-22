@@ -3,7 +3,7 @@ package com.onaio.steps.handler;
 import android.view.View;
 
 import com.onaio.steps.R;
-import com.onaio.steps.activity.HouseholdActivity;
+import com.onaio.steps.activities.HouseholdActivity;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.InterviewStatus;
 

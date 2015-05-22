@@ -5,7 +5,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.onaio.steps.R;
-import com.onaio.steps.exception.InvalidDataException;
+import com.onaio.steps.exceptions.InvalidDataException;
 import com.onaio.steps.helper.DataValidator;
 import com.onaio.steps.model.Gender;
 import com.onaio.steps.model.Household;

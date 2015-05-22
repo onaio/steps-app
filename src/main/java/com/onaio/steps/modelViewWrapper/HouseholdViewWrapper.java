@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.onaio.steps.exception.InvalidDataException;
+import com.onaio.steps.exceptions.InvalidDataException;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.InterviewStatus;

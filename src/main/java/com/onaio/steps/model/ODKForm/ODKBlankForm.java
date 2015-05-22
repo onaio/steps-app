@@ -6,8 +6,8 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.RemoteException;
 
-import com.onaio.steps.exception.AppNotInstalledException;
-import com.onaio.steps.exception.FormNotPresentException;
+import com.onaio.steps.exceptions.AppNotInstalledException;
+import com.onaio.steps.exceptions.FormNotPresentException;
 
 import java.util.ArrayList;
 import java.util.List;

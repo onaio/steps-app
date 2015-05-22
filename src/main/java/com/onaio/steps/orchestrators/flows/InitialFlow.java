@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.view.View;
 
 import com.onaio.steps.R;
-import com.onaio.steps.activity.WelcomeActivity;
+import com.onaio.steps.activities.WelcomeActivity;
 
 public class InitialFlow implements IFlow {
     private Activity activity;

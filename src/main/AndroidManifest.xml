@@ -4,59 +4,59 @@
       android:versionCode="1"
       android:versionName="1.0">
     <application android:label="@string/app_name" android:icon="@mipmap/ic_launcher" android:theme="@style/CustomTheme">
-        <activity android:name=".activity.MainActivityOrchestrator"
+        <activity android:name=".activities.MainActivityOrchestrator"
                   android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.HouseholdListActivity"
+        <activity android:name=".activities.HouseholdListActivity"
             android:label="@string/app_name">
         </activity>
-        <activity android:name=".activity.WelcomeActivity"
+        <activity android:name=".activities.WelcomeActivity"
             android:label="@string/app_name">
         </activity>
-        <activity android:name=".activity.ParticipantListActivity"
+        <activity android:name=".activities.ParticipantListActivity"
             android:label="@string/app_name">
         </activity>
-        <activity android:name=".activity.SettingsActivity"
+        <activity android:name=".activities.SettingsActivity"
                   android:label="@string/action_settings"
             android:theme="@android:style/Theme.Holo.Light.NoActionBar">
         </activity>
-        <activity android:name=".activity.NewHouseholdActivity"
+        <activity android:name=".activities.NewHouseholdActivity"
             android:label="New Household"
             android:theme="@android:style/Theme.Holo.Light.NoActionBar">
         </activity>
-        <activity android:name=".activity.EditHouseholdActivity"
+        <activity android:name=".activities.EditHouseholdActivity"
             android:label="Edit Household"
             android:theme="@android:style/Theme.Holo.Light.NoActionBar">
         </activity>
-        <activity android:name=".activity.NewMemberActivity"
+        <activity android:name=".activities.NewMemberActivity"
             android:label="New Member"
             android:theme="@android:style/Theme.Holo.Light.NoActionBar">
         </activity>
-        <activity android:name=".activity.EditMemberActivity"
+        <activity android:name=".activities.EditMemberActivity"
             android:label="Edit Member"
             android:theme="@android:style/Theme.Holo.Light.NoActionBar">
         </activity>
-        <activity android:name=".activity.HouseholdActivity"
+        <activity android:name=".activities.HouseholdActivity"
             android:label="@string/action_household">
         </activity>
-        <activity android:name=".activity.MemberActivity"
+        <activity android:name=".activities.MemberActivity"
             android:label="@string/action_member">
         </activity>
 
-        <activity android:name=".activity.NewParticipantActivity"
+        <activity android:name=".activities.NewParticipantActivity"
             android:label="New Participant"
             android:theme="@android:style/Theme.Holo.Light.NoActionBar">
         </activity>
 
-        <activity android:name=".activity.EditParticipantActivity"
+        <activity android:name=".activities.EditParticipantActivity"
             android:label="Edit Participant"
             android:theme="@android:style/Theme.Holo.Light.NoActionBar">
         </activity>
-        <activity android:name=".activity.ParticipantActivity"
+        <activity android:name=".activities.ParticipantActivity"
             android:label="Participant">
         </activity>
 
