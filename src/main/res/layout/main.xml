@@ -33,7 +33,7 @@
         android:textColor="@android:color/white"
         android:drawablePadding="-10dp"
         android:paddingLeft="10dp"
-        android:id="@+id/action_add_household"
+        android:id="@+id/action_add_new_item"
         android:onClick="handleCustomMenu"/>
      <ListView
         android:layout_width="match_parent"

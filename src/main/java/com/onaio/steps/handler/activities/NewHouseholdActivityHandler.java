@@ -36,7 +36,7 @@ public class NewHouseholdActivityHandler implements IMenuHandler, IActivityResul
 
     @Override
     public boolean shouldOpen(int menu_id) {
-        return menu_id == R.id.action_add_household;
+        return menu_id == R.id.action_add_new_item;
     }
 
     @Override
