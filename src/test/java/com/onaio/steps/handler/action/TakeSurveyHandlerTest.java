@@ -8,6 +8,7 @@ import android.widget.Button;
 import com.onaio.steps.R;
 import com.onaio.steps.activity.HouseholdActivity;
 import com.onaio.steps.handler.action.TakeSurveyHandler;
+import com.onaio.steps.handler.strategies.survey.TakeSurveyForHouseholdStrategy;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.model.Household;
@@ -45,7 +46,7 @@ public class TakeSurveyHandlerTest {
         savedForms = new ArrayList<IForm>();
         householdActivityMock = Mockito.mock(HouseholdActivity.class);
         householdMock= Mockito.mock(Household.class);
-        takeSurveyHandler = new TakeSurveyHandler(householdActivityMock, householdMock);
+        takeSurveyHandler = new TakeSurveyHandler(householdActivityMock, new TakeSurveyForHouseholdStrategy(householdMock,householdActivityMock));
     }
 
     @Test
@@ -195,7 +196,7 @@ public class TakeSurveyHandlerTest {
         private List<IForm> savedForms;
 
         public TakeSurveyHandlerStub(ListActivity activity, Household household,List<IForm> savedForms) {
-            super(activity, household);
+            super(activity, new TakeSurveyForHouseholdStrategy(household,activity));
             this.savedForms = savedForms;
         }
 

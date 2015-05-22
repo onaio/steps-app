@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 
 import com.onaio.steps.activity.HouseholdActivity;
+import com.onaio.steps.handler.strategies.form.HouseholdMemberFormStrategy;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.helper.FileUtil;
@@ -68,7 +69,7 @@ public class ODKFormTest extends TestCase {
         odkForm = new ODKForm(blankFormMock, savedFormMock);
 
 
-        odkForm.open(householdMock, householdActivity, RequestCode.SURVEY.getCode());
+        odkForm.open(new HouseholdMemberFormStrategy(householdMock), householdActivity, RequestCode.SURVEY.getCode());
 
         Mockito.verify(fileUtilMock).withHeader(Constants.ODK_FORM_FIELDS.split(","));
         Mockito.verify(blankFormMock).getPath();
@@ -89,7 +90,7 @@ public class ODKFormTest extends TestCase {
         odkForm = new ODKForm(blankFormMock, savedFormMock);
 
 
-        odkForm.open(householdMock, householdActivity, RequestCode.SURVEY.getCode());
+        odkForm.open(new HouseholdMemberFormStrategy(householdMock), householdActivity, RequestCode.SURVEY.getCode());
 
         ShadowActivity.IntentForResult odkActivity = Robolectric.shadowOf(householdActivity).getNextStartedActivityForResult();
 
@@ -112,7 +113,7 @@ public class ODKFormTest extends TestCase {
         odkForm = new ODKForm(blankFormMock, null);
 
 
-        odkForm.open(householdMock, householdActivity, RequestCode.SURVEY.getCode());
+        odkForm.open(new HouseholdMemberFormStrategy(householdMock), householdActivity, RequestCode.SURVEY.getCode());
 
         Mockito.verify(fileUtilMock).withHeader(Constants.ODK_FORM_FIELDS.split(","));
         Mockito.verify(blankFormMock).getPath();
@@ -133,7 +134,7 @@ public class ODKFormTest extends TestCase {
         odkForm = new ODKForm(blankFormMock, null);
 
 
-        odkForm.open(householdMock, householdActivity, RequestCode.SURVEY.getCode());
+        odkForm.open(new HouseholdMemberFormStrategy(householdMock), householdActivity, RequestCode.SURVEY.getCode());
 
         ShadowActivity.IntentForResult odkActivity = Robolectric.shadowOf(householdActivity).getNextStartedActivityForResult();
 

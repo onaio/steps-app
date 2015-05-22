@@ -6,6 +6,7 @@ import android.view.View;
 import com.onaio.steps.R;
 import com.onaio.steps.activity.HouseholdActivity;
 import com.onaio.steps.handler.action.DeferredHandler;
+import com.onaio.steps.handler.strategies.survey.DeferSurveyForHouseholdStrategy;
 import com.onaio.steps.helper.CustomDialog;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.model.Household;
@@ -40,7 +41,7 @@ public class DeferredHandlerTest {
         activityMock = mock(HouseholdActivity.class);
         householdMock = mock(Household.class);
         dialogMock = mock(CustomDialog.class);
-        deferredHandler = new DeferredHandler(activityMock, householdMock,dialogMock);
+        deferredHandler = new DeferredHandler(activityMock, new DeferSurveyForHouseholdStrategy(householdMock,activityMock),dialogMock);
     }
 
     @Test

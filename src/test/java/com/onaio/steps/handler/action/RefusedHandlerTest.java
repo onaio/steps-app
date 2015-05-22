@@ -6,6 +6,7 @@ import android.view.View;
 import com.onaio.steps.R;
 import com.onaio.steps.activity.HouseholdActivity;
 import com.onaio.steps.handler.action.RefusedHandler;
+import com.onaio.steps.handler.strategies.survey.RefuseSurveyForHouseholdStrategy;
 import com.onaio.steps.helper.CustomDialog;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.InterviewStatus;
@@ -39,7 +40,7 @@ public class RefusedHandlerTest {
        householdActivityMock = Mockito.mock(HouseholdActivity.class);
        householdMock = Mockito.mock(Household.class);
        dialogMock = Mockito.mock(CustomDialog.class);
-       refusedHandler = new RefusedHandler(householdActivityMock, householdMock);
+       refusedHandler = new RefusedHandler(householdActivityMock, new RefuseSurveyForHouseholdStrategy(householdMock,householdActivityMock));
     }
 
     @Test
@@ -54,7 +55,7 @@ public class RefusedHandlerTest {
 
     @Test
     public void ShouldSetProperStatusWhenUserRefusesForSurvey(){
-     refusedHandler = new RefusedHandler(householdActivityMock, householdMock, dialogMock);
+     refusedHandler = new RefusedHandler(householdActivityMock, new RefuseSurveyForHouseholdStrategy(householdMock,householdActivityMock), dialogMock);
 
      refusedHandler.open();
 
