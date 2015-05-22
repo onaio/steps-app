@@ -100,15 +100,13 @@ public class Participant implements Serializable {
         ContentValues participantDetails = populateBasicDetails();
         participantDetails.put(STATUS ,status.toString());
         participantDetails.put(CREATED_AT,createdAt);
-        long savedId = db.save(participantDetails, TABLE_NAME);
-        if (savedId != -1)
-            id = String.valueOf(savedId);
-        return savedId;
+        return db.save(participantDetails, TABLE_NAME);
+
     }
 
     public long update(DatabaseHelper db) {
         ContentValues participantDetails = populateBasicDetails();
-        return db.update(participantDetails, TABLE_NAME, ID + " =?", new String[]{getId()});
+        return db.update(participantDetails, TABLE_NAME, ID + " ="+ id,null);
     }
 
     private ContentValues populateBasicDetails() {

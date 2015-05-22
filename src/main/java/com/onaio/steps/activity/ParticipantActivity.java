@@ -49,7 +49,7 @@ public class ParticipantActivity extends Activity{
 
         TextView participantName = (TextView) findViewById(R.id.selected_participant_name);
         TextView participantDetails = (TextView) findViewById(R.id.selected_participant_details);
-        participantName.setText(participant.getFormattedName());
+        participantName.setText(participant.getFormattedName()+" ("+this.getString(R.string.pid)+" "+participant.getId()+" )");
         participantDetails.setText(participant.getFormattedDetail());
     }
 
@@ -95,7 +95,7 @@ public class ParticipantActivity extends Activity{
         actionBar.setDisplayHomeAsUpEnabled(false);
         actionBar.setHomeButtonEnabled(true);
         actionBar.setIcon(R.drawable.ic_action_back);
-        actionBar.setTitle(this.getString(R.string.pid)+" "+participant.getId());
+        actionBar.setTitle(participant.getFormattedName());
     }
 
     public void handleCustomMenu(View view) {
