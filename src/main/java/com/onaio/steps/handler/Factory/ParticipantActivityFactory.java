@@ -12,6 +12,9 @@ import com.onaio.steps.handler.Interface.IMenuHandler;
 import com.onaio.steps.handler.Interface.IMenuPreparer;
 import com.onaio.steps.handler.action.RefusedHandler;
 import com.onaio.steps.handler.action.TakeSurveyHandler;
+import com.onaio.steps.handler.strategies.DeferSurveyForParticipantStrategy;
+import com.onaio.steps.handler.strategies.RefuseSurveyForParticipantStrategy;
+import com.onaio.steps.handler.strategies.TakeSurveyForParticipantStrategy;
 import com.onaio.steps.model.Participant;
 
 import java.util.ArrayList;
@@ -28,23 +31,23 @@ public class ParticipantActivityFactory {
     public static List<IActivityResultHandler> getResultHandlers(Activity activity, Participant participant){
         ArrayList<IActivityResultHandler> handlers = new ArrayList<IActivityResultHandler>();
         handlers.add(new EditParticipantActivityHandler(activity, participant));
-        handlers.add(new TakeSurveyHandler(activity,participant));
+        handlers.add(new TakeSurveyHandler(activity,new TakeSurveyForParticipantStrategy(participant,activity)));
         return handlers;
     }
 
     public static List<IMenuPreparer> getCustomMenuPreparer(Activity activity, Participant participant){
         ArrayList<IMenuPreparer> menuItems = new ArrayList<IMenuPreparer>();
-        menuItems.add(new TakeSurveyHandler(activity,participant));
-        menuItems.add(new DeferredHandler(activity, participant));
-        menuItems.add(new RefusedHandler(activity,participant));
+        menuItems.add(new TakeSurveyHandler(activity,new TakeSurveyForParticipantStrategy(participant,activity)));
+        menuItems.add(new DeferredHandler(activity, new DeferSurveyForParticipantStrategy(participant,activity)));
+        menuItems.add(new RefusedHandler(activity,new RefuseSurveyForParticipantStrategy(participant,activity)));
         return menuItems;
     }
 
     public static List<IMenuHandler> getCustomMenuHandler(Activity activity, Participant participant){
         ArrayList<IMenuHandler> handlers = new ArrayList<IMenuHandler>();
-        handlers.add(new TakeSurveyHandler(activity, participant));
-        handlers.add(new DeferredHandler(activity,participant));
-        handlers.add(new RefusedHandler(activity,participant));
+        handlers.add(new TakeSurveyHandler(activity, new TakeSurveyForParticipantStrategy(participant,activity)));
+        handlers.add(new DeferredHandler(activity,new DeferSurveyForParticipantStrategy(participant,activity)));
+        handlers.add(new RefusedHandler(activity,new RefuseSurveyForParticipantStrategy(participant,activity)));
         return handlers;
     }
 

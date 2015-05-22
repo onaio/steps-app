@@ -17,6 +17,9 @@ import com.onaio.steps.handler.action.SelectParticipantHandler;
 import com.onaio.steps.handler.action.SelectedParticipantActionsHandler;
 import com.onaio.steps.handler.SelectedParticipantContainerHandler;
 import com.onaio.steps.handler.action.TakeSurveyHandler;
+import com.onaio.steps.handler.strategies.DeferSurveyForHouseholdStrategy;
+import com.onaio.steps.handler.strategies.RefuseSurveyForHouseholdStrategy;
+import com.onaio.steps.handler.strategies.TakeSurveyForHouseholdStrategy;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.Member;
 
@@ -37,7 +40,7 @@ public class HouseholdActivityFactory {
         ArrayList<IActivityResultHandler> handlers = new ArrayList<IActivityResultHandler>();
         handlers.add(new NewMemberActivityHandler(activity, household));
         handlers.add(new EditHouseholdActivityHandler(activity, household));
-        handlers.add(new TakeSurveyHandler(activity,household));
+        handlers.add(new TakeSurveyHandler(activity,new TakeSurveyForHouseholdStrategy(household,activity)));
         return handlers;
     }
 
@@ -47,9 +50,9 @@ public class HouseholdActivityFactory {
 
     public static List<IMenuPreparer> getCustomMenuPreparer(ListActivity activity, Household household){
         ArrayList<IMenuPreparer> menuItems = new ArrayList<IMenuPreparer>();
-        menuItems.add(new TakeSurveyHandler(activity,household));
-        menuItems.add(new DeferredHandler(activity, household));
-        menuItems.add(new RefusedHandler(activity,household));
+        menuItems.add(new TakeSurveyHandler(activity,new TakeSurveyForHouseholdStrategy(household,activity)));
+        menuItems.add(new DeferredHandler(activity, new DeferSurveyForHouseholdStrategy(household,activity)));
+        menuItems.add(new RefusedHandler(activity,new RefuseSurveyForHouseholdStrategy(household,activity)));
         menuItems.add(new SelectedParticipantActionsHandler(activity,household));
         menuItems.add(new NewMemberActivityHandler(activity,household));
         menuItems.add(new SelectParticipantHandler(activity,household));
@@ -60,9 +63,9 @@ public class HouseholdActivityFactory {
 
     public static List<IMenuHandler> getCustomMenuHandler(ListActivity activity, Household household){
         ArrayList<IMenuHandler> handlers = new ArrayList<IMenuHandler>();
-        handlers.add(new TakeSurveyHandler(activity, household));
-        handlers.add(new DeferredHandler(activity,household));
-        handlers.add(new RefusedHandler(activity,household));
+        handlers.add(new TakeSurveyHandler(activity, new TakeSurveyForHouseholdStrategy(household,activity)));
+        handlers.add(new DeferredHandler(activity, new DeferSurveyForHouseholdStrategy(household,activity)));
+        handlers.add(new RefusedHandler(activity,new RefuseSurveyForHouseholdStrategy(household,activity)));
         handlers.add(new NewMemberActivityHandler(activity,household));
         handlers.add(new SelectParticipantHandler(activity,household));
         handlers.add(new CancelParticipantSelectionHandler(activity,household));

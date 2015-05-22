@@ -26,10 +26,9 @@ public class Constants {
 
 //    public static final String ODK_FORM_ID = "steps_draft_testing";
     public static final String ODK_FORM_FIELDS = "hhid_key,form_name,member_id,family_surname,first_name,gender,age";
-    public static final String PARTICIPANT_ODK_FORM_FIELDS = "pid_key,form_name,family_surname,first_name,gender,age";
+    public static final String PARTICIPANT_ODK_FORM_FIELDS = "hhid_key,form_name,family_surname,first_name,gender,age";
     public static final String ODK_DATA_FILENAME = "STEPS.csv";
     public static final String ODK_HH_ID = "1";
-    public static final String ODK_PARTICIPANT_ID = "2";
 
     public static final String ODK_FORM_COMPLETE_STATUS = "complete";
 

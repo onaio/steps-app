@@ -92,7 +92,7 @@ public class ODKForm {
         String formId = getValue(Constants.FORM_ID,activity);
         String formNameFormat = formId + "-%s";
         ArrayList<String> row = new ArrayList<String>();
-        row.add(Constants.ODK_PARTICIPANT_ID);
+        row.add(Constants.ODK_HH_ID);
         row.add(String.format(formNameFormat, participant.getId()));
         row.add(participant.getFamilySurname());
         row.add(participant.getFirstName());
