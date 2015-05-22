@@ -1,8 +1,10 @@
-package com.onaio.steps.handler.strategies;
+package com.onaio.steps.handler.strategies.survey;
 
 
 import android.app.Activity;
 
+import com.onaio.steps.handler.strategies.form.HouseholdMemberFormStrategy;
+import com.onaio.steps.handler.strategies.survey.interfaces.ITakeSurveyStrategy;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.model.Household;
@@ -13,7 +15,7 @@ import com.onaio.steps.model.RequestCode;
 
 import java.io.IOException;
 
-public class TakeSurveyForHouseholdStrategy  implements ITakeSurveyStrategy{
+public class TakeSurveyForHouseholdStrategy  implements ITakeSurveyStrategy {
     private Household household;
     private Activity activity;
 
@@ -26,7 +28,7 @@ public class TakeSurveyForHouseholdStrategy  implements ITakeSurveyStrategy{
     public void open(String formId) throws IOException {
         String formName = String.format(formId + "-%s", household.getName());
         ODKForm requiredForm = ODKForm.create(activity, formId, formName);
-        requiredForm.open(household, activity, RequestCode.SURVEY.getCode());
+        requiredForm.open(new HouseholdMemberFormStrategy(household), activity, RequestCode.SURVEY.getCode());
     }
 
     public boolean shouldInactivate(){

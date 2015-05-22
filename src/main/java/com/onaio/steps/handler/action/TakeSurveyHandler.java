@@ -11,7 +11,7 @@ import com.onaio.steps.handler.Interface.IMenuHandler;
 import com.onaio.steps.handler.Interface.IMenuPreparer;
 import com.onaio.steps.exception.AppNotInstalledException;
 import com.onaio.steps.exception.FormNotPresentException;
-import com.onaio.steps.handler.strategies.ITakeSurveyStrategy;
+import com.onaio.steps.handler.strategies.survey.interfaces.ITakeSurveyStrategy;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.CustomDialog;
 import com.onaio.steps.helper.KeyValueStoreFactory;

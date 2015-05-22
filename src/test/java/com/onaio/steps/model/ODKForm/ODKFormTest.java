@@ -65,7 +65,7 @@ public class ODKFormTest extends TestCase {
         String householdName = "household name";
         Mockito.stub(householdMock.getName()).toReturn(householdName);
         Mockito.stub(blankFormMock.getPath()).toReturn(blankFormMediaPath);
-        odkForm = new ODKForm(blankFormMock, savedFormMock, fileUtilMock);
+        odkForm = new ODKForm(blankFormMock, savedFormMock);
 
 
         odkForm.open(householdMock, householdActivity, RequestCode.SURVEY.getCode());
@@ -86,7 +86,7 @@ public class ODKFormTest extends TestCase {
         Mockito.stub(householdMock.getName()).toReturn(householdName);
         Mockito.stub(blankFormMock.getPath()).toReturn(blankFormMediaPath);
         Mockito.stub(savedFormMock.getUri()).toReturn(saveFormURI);
-        odkForm = new ODKForm(blankFormMock, savedFormMock, fileUtilMock);
+        odkForm = new ODKForm(blankFormMock, savedFormMock);
 
 
         odkForm.open(householdMock, householdActivity, RequestCode.SURVEY.getCode());
@@ -109,7 +109,7 @@ public class ODKFormTest extends TestCase {
         String householdName = "household name";
         Mockito.stub(householdMock.getName()).toReturn(householdName);
         Mockito.stub(blankFormMock.getPath()).toReturn(blankFormMediaPath);
-        odkForm = new ODKForm(blankFormMock, null, fileUtilMock);
+        odkForm = new ODKForm(blankFormMock, null);
 
 
         odkForm.open(householdMock, householdActivity, RequestCode.SURVEY.getCode());
@@ -130,7 +130,7 @@ public class ODKFormTest extends TestCase {
         Mockito.stub(householdMock.getName()).toReturn(householdName);
         Mockito.stub(blankFormMock.getPath()).toReturn(blankFormMediaPath);
         Mockito.stub(blankFormMock.getUri()).toReturn(blankFormURI);
-        odkForm = new ODKForm(blankFormMock, null, fileUtilMock);
+        odkForm = new ODKForm(blankFormMock, null);
 
 
         odkForm.open(householdMock, householdActivity, RequestCode.SURVEY.getCode());

@@ -7,7 +7,7 @@ import android.view.View;
 import com.onaio.steps.R;
 import com.onaio.steps.handler.Interface.IMenuHandler;
 import com.onaio.steps.handler.Interface.IMenuPreparer;
-import com.onaio.steps.handler.strategies.IDoNotTakeSurveyStrategy;
+import com.onaio.steps.handler.strategies.survey.interfaces.IDoNotTakeSurveyStrategy;
 import com.onaio.steps.helper.CustomDialog;
 
 public class RefusedHandler implements IMenuHandler,IMenuPreparer {

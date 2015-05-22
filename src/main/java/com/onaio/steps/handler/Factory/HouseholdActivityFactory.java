@@ -17,9 +17,9 @@ import com.onaio.steps.handler.action.SelectParticipantHandler;
 import com.onaio.steps.handler.action.SelectedParticipantActionsHandler;
 import com.onaio.steps.handler.SelectedParticipantContainerHandler;
 import com.onaio.steps.handler.action.TakeSurveyHandler;
-import com.onaio.steps.handler.strategies.DeferSurveyForHouseholdStrategy;
-import com.onaio.steps.handler.strategies.RefuseSurveyForHouseholdStrategy;
-import com.onaio.steps.handler.strategies.TakeSurveyForHouseholdStrategy;
+import com.onaio.steps.handler.strategies.survey.DeferSurveyForHouseholdStrategy;
+import com.onaio.steps.handler.strategies.survey.RefuseSurveyForHouseholdStrategy;
+import com.onaio.steps.handler.strategies.survey.TakeSurveyForHouseholdStrategy;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.Member;
 

@@ -1,9 +1,10 @@
-package com.onaio.steps.handler.strategies;
+package com.onaio.steps.handler.strategies.survey;
 
 
 import android.app.Activity;
 
 import com.onaio.steps.R;
+import com.onaio.steps.handler.strategies.survey.interfaces.IDoNotTakeSurveyStrategy;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.model.InterviewStatus;
 import com.onaio.steps.model.Participant;
@@ -21,7 +22,7 @@ public class DeferSurveyForParticipantStrategy implements IDoNotTakeSurveyStrate
     @Override
     public void open(){
         participant.setStatus(InterviewStatus.DEFERRED);
-        participant.update(new DatabaseHelper(activity));
+        long update = participant.update(new DatabaseHelper(activity));
     }
 
     @Override

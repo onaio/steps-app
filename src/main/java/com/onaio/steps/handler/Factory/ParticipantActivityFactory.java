@@ -12,9 +12,9 @@ import com.onaio.steps.handler.Interface.IMenuHandler;
 import com.onaio.steps.handler.Interface.IMenuPreparer;
 import com.onaio.steps.handler.action.RefusedHandler;
 import com.onaio.steps.handler.action.TakeSurveyHandler;
-import com.onaio.steps.handler.strategies.DeferSurveyForParticipantStrategy;
-import com.onaio.steps.handler.strategies.RefuseSurveyForParticipantStrategy;
-import com.onaio.steps.handler.strategies.TakeSurveyForParticipantStrategy;
+import com.onaio.steps.handler.strategies.survey.DeferSurveyForParticipantStrategy;
+import com.onaio.steps.handler.strategies.survey.RefuseSurveyForParticipantStrategy;
+import com.onaio.steps.handler.strategies.survey.TakeSurveyForParticipantStrategy;
 import com.onaio.steps.model.Participant;
 
 import java.util.ArrayList;

@@ -1,8 +1,10 @@
-package com.onaio.steps.handler.strategies;
+package com.onaio.steps.handler.strategies.survey;
 
 
 import android.app.Activity;
 
+import com.onaio.steps.handler.strategies.form.ParticipantFormStrategy;
+import com.onaio.steps.handler.strategies.survey.interfaces.ITakeSurveyStrategy;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.model.InterviewStatus;
@@ -13,7 +15,7 @@ import com.onaio.steps.model.RequestCode;
 
 import java.io.IOException;
 
-public class TakeSurveyForParticipantStrategy  implements ITakeSurveyStrategy{
+public class TakeSurveyForParticipantStrategy  implements ITakeSurveyStrategy {
     private Participant participant;
     private Activity activity;
 
@@ -27,7 +29,7 @@ public class TakeSurveyForParticipantStrategy  implements ITakeSurveyStrategy{
     public void open(String formId) throws IOException {
         String formName = String.format(formId + "-%s", participant.getId());
         ODKForm requiredForm = ODKForm.create(activity, formId, formName);
-        requiredForm.open(participant, activity, RequestCode.SURVEY.getCode());
+        requiredForm.open(new ParticipantFormStrategy(participant), activity, RequestCode.SURVEY.getCode());
     }
 
     @Override
@@ -44,7 +46,7 @@ public class TakeSurveyForParticipantStrategy  implements ITakeSurveyStrategy{
             participant.setStatus(InterviewStatus.DONE);
         else
             participant.setStatus(InterviewStatus.INCOMPLETE);
-        participant.update(new DatabaseHelper(activity));
+        long update = participant.update(new DatabaseHelper(activity));
     }
 
     @Override

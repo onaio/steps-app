@@ -1,4 +1,4 @@
-package com.onaio.steps.handler.strategies;
+package com.onaio.steps.handler.strategies.survey.interfaces;
 
 import com.onaio.steps.model.ODKForm.ODKSavedForm;
 

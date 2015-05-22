@@ -1,4 +1,4 @@
-package com.onaio.steps.handler.strategies;
+package com.onaio.steps.handler.strategies.survey.interfaces;
 
 public interface IDoNotTakeSurveyStrategy {
     public void open();
