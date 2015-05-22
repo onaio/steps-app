@@ -18,7 +18,6 @@ import com.onaio.steps.modelViewWrapper.ParticipantViewWrapper;
 
 public class NewParticipantActivity  extends Activity{
 
-    private final DatabaseHelper db = new DatabaseHelper(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +38,8 @@ public class NewParticipantActivity  extends Activity{
         try{
 
             Participant participant = new ParticipantViewWrapper(this)
-                    .getParticipant(R.id.participant_id_value ,R.id.member_family_surname, R.id.member_first_name, R.id.member_gender, R.id.member_age);
-            participant.save(db);
+                    .getFromView();
+            participant.save(new DatabaseHelper(this));
             intent.putExtra(Constants.PARTICIPANT,participant);
             setResult(RESULT_OK, intent);
             finish();

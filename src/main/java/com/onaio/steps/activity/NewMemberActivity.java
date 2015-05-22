@@ -21,7 +21,6 @@ public class NewMemberActivity extends Activity {
 
     private Household household;
     private Intent intent;
-    private DatabaseHelper db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +28,6 @@ public class NewMemberActivity extends Activity {
         populateView();
         intent = this.getIntent();
         household = (Household) intent.getSerializableExtra(Constants.HOUSEHOLD);
-        db = new DatabaseHelper(this.getApplicationContext());
     }
 
     private void populateView() {
@@ -44,8 +42,8 @@ public class NewMemberActivity extends Activity {
     public void save(View view) {
         try{
             Member member = new MemberViewWrapper(this)
-                    .getMember(R.id.member_family_surname, R.id.member_first_name, R.id.member_gender, R.id.member_age, household);
-            member.save(db);
+                    .getFromView(household);
+            member.save(new DatabaseHelper(this));
             setResult(RESULT_OK, intent);
             finish();
         } catch (InvalidDataException e) {

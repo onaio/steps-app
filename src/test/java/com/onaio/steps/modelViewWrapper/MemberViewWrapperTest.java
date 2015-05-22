@@ -63,7 +63,7 @@ public class MemberViewWrapperTest {
         expectedException.expect(InvalidDataException.class);
         expectedException.expectMessage(String.format(error_string,"Member",getStringValue(R.string.member_family_surname_hint)));
 
-        memberViewWrapper.getMember(surname.getId(),firstName.getId(),gender.getId(), age.getId(),household);
+        memberViewWrapper.getFromView(household);
     }
 
     @Test
@@ -83,7 +83,7 @@ public class MemberViewWrapperTest {
         expectedException.expect(InvalidDataException.class);
         expectedException.expectMessage(String.format(error_string,"Member",getStringValue(R.string.member_first_name_hint)));
 
-        memberViewWrapper.getMember(surname.getId(),firstName.getId(),gender.getId(), age.getId(),household);
+        memberViewWrapper.getFromView(household);
     }
 
     @Test
@@ -102,7 +102,7 @@ public class MemberViewWrapperTest {
         expectedException.expect(InvalidDataException.class);
         expectedException.expectMessage(String.format(error_string,"Member",getStringValue(R.string.member_gender_hint)));
 
-        memberViewWrapper.getMember(surname.getId(),firstName.getId(),gender.getId(), age.getId(),household);
+        memberViewWrapper.getFromView(household);
     }
 
 
@@ -122,7 +122,7 @@ public class MemberViewWrapperTest {
         expectedException.expect(InvalidDataException.class);
         expectedException.expectMessage(String.format(error_string,"Member",getStringValue(R.string.age_hint)));
 
-        memberViewWrapper.getMember(surname.getId(),firstName.getId(),gender.getId(), age.getId(),household);
+        memberViewWrapper.getFromView(household);
     }
 
     @Test
@@ -139,7 +139,7 @@ public class MemberViewWrapperTest {
         age.setText("15");
         Household household = new Household("1","Any Household", "123456789","", InterviewStatus.NOT_SELECTED,date,"Dummy comments" );
 
-        Member member = memberViewWrapper.getMember(surname.getId(), firstname.getId(), gender.getId(), age.getId(), household);
+        Member member = memberViewWrapper.getFromView(household);
 
         Assert.assertTrue(member.getFamilySurname().equals("Bansal"));
         Assert.assertTrue(member.getFirstName().equals("Rohit"));
@@ -158,7 +158,7 @@ public class MemberViewWrapperTest {
         expectedException.expect(InvalidDataException.class);
         expectedException.expectMessage(String.format(error_string,"Member",getStringValue(R.string.member_family_surname_hint),getStringValue(R.string.member_first_name_hint),getStringValue(R.string.member_gender_hint),getStringValue(R.string.age_hint)));
 
-        memberViewWrapper.getMember(surname.getId(), firstName.getId(), gender.getId(), age.getId(), household);
+        memberViewWrapper.getFromView(household);
     }
 
     private void setValue(String key, String value) {

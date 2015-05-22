@@ -1,7 +1,6 @@
 package com.onaio.steps.modelViewWrapper;
 
 import android.app.Activity;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.onaio.steps.R;
@@ -18,43 +17,70 @@ import java.util.Date;
 import java.util.List;
 
 
-public class ParticipantViewWrapper {
+public class ParticipantViewWrapper extends MemberViewWrapper {
 
     private final DataValidator dataValidator;
     private List<String> errorFields;
-    private Activity activity;
+    private final int PARTICIPANT_VIEW_ID = R.id.participant_id_value;
 
     public ParticipantViewWrapper(Activity activity) {
-        this.activity = activity;
+        super(activity);
         errorFields = new ArrayList<String>();
         dataValidator = new DataValidator(activity);
     }
 
-    public Participant getParticipant(int participant_id, int familySurnameViewId, int firstNameViewId, int genderViewId, int ageViewId) throws InvalidDataException {
-        String participantId = ((TextView) activity.findViewById(participant_id)).getText().toString();
-        String surname = ((TextView) activity.findViewById(familySurnameViewId)).getText().toString();
-        String firstName = ((TextView) activity.findViewById(firstNameViewId)).getText().toString();
-        Gender gender = dataValidator.genderSelection(((RadioGroup) activity.findViewById(genderViewId)).getCheckedRadioButtonId());
+    public Participant getFromView() throws InvalidDataException {
+        String participantId = getParticipantId();
+        String surname = getSurname();
+        String firstName = getFirstName();
+        Gender gender = getGender();
+        String ageString = getAge();
+        validate(participantId, surname, firstName, gender, ageString);
+        if (!errorFields.isEmpty()) {
+            throw new InvalidDataException(activity, getStringValue(R.string.participant), errorFields);
+        }
         String currentDate = new SimpleDateFormat(Constants.DATE_FORMAT).format(new Date());
-        String ageString = ((TextView) activity.findViewById(ageViewId)).getText().toString();
-        validation(participantId, surname, firstName, gender, ageString);
-        if (!errorFields.isEmpty())
-            throw new InvalidDataException(activity, dataValidator.getStringValue(R.string.participant), errorFields);
         return new Participant(participantId, surname, firstName, gender, Integer.parseInt(ageString), InterviewStatus.NOT_SELECTED, currentDate);
     }
 
-    public Participant update(Participant participant, String participantId, String surname, String firstName, Gender gender, String ageString) throws InvalidDataException {
-        validation(participantId, surname, firstName, gender, ageString);
+    public Participant updateFromView(Participant participant) throws InvalidDataException {
+        String participantId = getParticipantId();
+        String surname = getSurname();
+        String firstName = getFirstName();
+        Gender gender = getGender();
+        String ageString = getAge();
+        validate(participantId, surname, firstName, gender, ageString);
         if (!errorFields.isEmpty())
-            throw new InvalidDataException(activity, dataValidator.getStringValue(R.string.participant), errorFields);
+            throw new InvalidDataException(activity, getStringValue(R.string.participant), errorFields);
         return new Participant(participant.getId(), surname, firstName, gender, Integer.parseInt(ageString), participant.getStatus());
 
     }
-
-    private void validation(String participantId, String surname, String firstName, Gender gender, String ageString) {
-        dataValidator.validateId(participantId, R.string.participant_id);
-        errorFields= dataValidator.validateFields(surname, firstName, gender, ageString);
+    public void updateView(Participant participant){
+        setParticipantId(participant.getId());
+        setSurname(participant.getFamilySurname());
+        setFirstName(participant.getFirstName());
+        setGender(genderSelection(participant.getGender()));
+        setAge(String.valueOf(participant.getAge()));
     }
+
+    private void validate(String participantId, String surname, String firstName, Gender gender, String ageString) {
+        errorFields = dataValidator.validate(participantId, getStringValue(R.string.participant_id)).
+                validate(surname, getStringValue(R.string.member_family_surname_hint)).
+                validate(firstName, getStringValue(R.string.member_first_name_hint)).
+                validate(gender,getStringValue(R.string.member_gender_hint)).
+                validate(ageString, getStringValue(R.string.age_hint)).
+                validateAgeRange(ageString, getStringValue(R.string.age_not_in_range)+"%d-%d)").
+                finish();
+    }
+
+    private String getParticipantId(){
+        return ((TextView) activity.findViewById(PARTICIPANT_VIEW_ID)).getText().toString();
+    }
+
+    protected void setParticipantId(String participantId){
+        ((TextView) activity.findViewById(PARTICIPANT_VIEW_ID)).setText(participantId);
+    }
+
 
 
 }
