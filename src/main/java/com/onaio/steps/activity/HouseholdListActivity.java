@@ -16,10 +16,10 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 
 import com.onaio.steps.R;
-import com.onaio.steps.activityHandler.Factory.HouseholdListActivityFactory;
-import com.onaio.steps.activityHandler.Interface.IActivityResultHandler;
-import com.onaio.steps.activityHandler.Interface.IMenuHandler;
-import com.onaio.steps.activityHandler.Interface.IMenuPreparer;
+import com.onaio.steps.handler.factory.HouseholdListActivityFactory;
+import com.onaio.steps.handler.Interface.IActivityResultHandler;
+import com.onaio.steps.handler.Interface.IMenuHandler;
+import com.onaio.steps.handler.Interface.IMenuPreparer;
 import com.onaio.steps.adapter.HouseholdAdapter;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.model.Household;

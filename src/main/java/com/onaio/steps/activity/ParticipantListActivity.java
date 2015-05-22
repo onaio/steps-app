@@ -17,9 +17,9 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 
 import com.onaio.steps.R;
-import com.onaio.steps.activityHandler.Factory.ParticipantListActivityFactory;
-import com.onaio.steps.activityHandler.Interface.IActivityResultHandler;
-import com.onaio.steps.activityHandler.Interface.IMenuHandler;
+import com.onaio.steps.handler.factory.ParticipantListActivityFactory;
+import com.onaio.steps.handler.Interface.IActivityResultHandler;
+import com.onaio.steps.handler.Interface.IMenuHandler;
 import com.onaio.steps.adapter.ParticipantAdapter;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.model.Participant;

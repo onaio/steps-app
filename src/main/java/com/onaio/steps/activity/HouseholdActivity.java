@@ -13,10 +13,10 @@ import android.widget.AdapterView;
 import android.widget.TextView;
 
 import com.onaio.steps.R;
-import com.onaio.steps.activityHandler.Factory.HouseholdActivityFactory;
-import com.onaio.steps.activityHandler.Interface.IActivityResultHandler;
-import com.onaio.steps.activityHandler.Interface.IMenuHandler;
-import com.onaio.steps.activityHandler.Interface.IMenuPreparer;
+import com.onaio.steps.handler.factory.HouseholdActivityFactory;
+import com.onaio.steps.handler.Interface.IActivityResultHandler;
+import com.onaio.steps.handler.Interface.IMenuHandler;
+import com.onaio.steps.handler.Interface.IMenuPreparer;
 import com.onaio.steps.adapter.MemberAdapter;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;
