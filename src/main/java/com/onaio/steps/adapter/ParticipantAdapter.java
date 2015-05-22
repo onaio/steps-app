@@ -56,7 +56,7 @@ public class ParticipantAdapter extends BaseAdapter {
         image.setImageResource(getImage(participantAtPosition));
 
         participantPidView.setTextColor(Color.BLACK);
-        String householdRow = context.getString(R.string.pid) + participantAtPosition.getId();
+        String householdRow = participantAtPosition.getFormattedName()+" ("+context.getString(R.string.pid) + participantAtPosition.getId()+")";
         participantPidView.setText(householdRow);
         createdAtView.setText(String.format("%s", participantAtPosition.getCreatedAt()));
     }

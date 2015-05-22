@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.onaio.steps.R;
@@ -34,8 +35,18 @@ public class ParticipantActivity extends Activity{
         participant = (Participant) getIntent().getSerializableExtra(Constants.PARTICIPANT);
         db = new DatabaseHelper(this);
         styleActionBar();
+        customizeOptions();
         prepareCustomMenu();
         populateMessage();
+    }
+
+    private void customizeOptions() {
+        Button cancelButton = (Button) findViewById(R.id.action_cancel_participant);
+        cancelButton.setVisibility(View.GONE);
+        Button takeSurveyButton = (Button) findViewById(R.id.action_take_survey);
+        takeSurveyButton.setText(R.string.enter_data_now);
+        Button deferredButton = (Button) findViewById(R.id.action_deferred);
+        deferredButton.setText(R.string.enter_data_later);
     }
 
     @Override

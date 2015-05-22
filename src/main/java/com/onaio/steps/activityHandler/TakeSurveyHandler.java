@@ -109,7 +109,7 @@ public class TakeSurveyHandler implements IMenuHandler, IMenuPreparer, IActivity
         if( participant!=null && InterviewStatus.INCOMPLETE.equals(participant.getStatus()))
         button.setText(R.string.continue_interview);
         else
-            button.setText(R.string.interview_now);
+            button.setText(R.string.enter_data_now);
 
     }
 

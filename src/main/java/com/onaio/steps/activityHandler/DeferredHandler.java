@@ -69,7 +69,7 @@ public class DeferredHandler implements IMenuHandler,IMenuPreparer {
         boolean memberSelected = household.getStatus() == InterviewStatus.NOT_DONE;
         return !(memberSelected); }
         else {
-            return participant.getStatus() == InterviewStatus.NOT_SELECTED;
+            return !(participant.getStatus() == InterviewStatus.NOT_SELECTED);
         }
 
     }
