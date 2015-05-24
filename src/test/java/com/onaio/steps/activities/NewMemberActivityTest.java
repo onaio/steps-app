@@ -2,12 +2,12 @@ package com.onaio.steps.activities;
 
 import android.content.Intent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.onaio.steps.R;
 import com.onaio.steps.helper.Constants;
-import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.helper.KeyValueStore;
 import com.onaio.steps.helper.KeyValueStoreFactory;
 import com.onaio.steps.model.Household;
@@ -35,20 +35,18 @@ import static org.robolectric.Robolectric.shadowOf;
 public class NewMemberActivityTest {
 
     private NewMemberActivity newMemberActivity;
-    private  DatabaseHelper databaseHelperMock;
     private String currentDate = new SimpleDateFormat(Constants.DATE_FORMAT).format(new Date());
     private Household household;
 
 
     @Before
     public void setup() {
-        household = new Household("2", "Any HouseholdName", "123456789", "", InterviewStatus.NOT_SELECTED, currentDate,"Dummy comments");
+        household = new Household("2", "Any HouseholdName", "123456789", "", InterviewStatus.NOT_SELECTED, currentDate, "Dummy comments");
         Intent intent = new Intent();
         intent.putExtra(Constants.HOUSEHOLD, household);
         newMemberActivity = Robolectric.buildActivity(NewMemberActivity.class).withIntent(intent)
                 .create()
                 .get();
-        databaseHelperMock = Mockito.mock(DatabaseHelper.class);
     }
 
     @Test
@@ -59,6 +57,9 @@ public class NewMemberActivityTest {
         TextView firstName = (TextView) newMemberActivity.findViewById(R.id.member_first_name);
         RadioGroup gender = (RadioGroup) newMemberActivity.findViewById(R.id.member_gender);
         TextView age = (TextView) newMemberActivity.findViewById(R.id.member_age);
+        Button doneButton = (Button) newMemberActivity.findViewById(R.id.ic_done);
+
+        assertEquals(newMemberActivity.getString(R.string.add), doneButton.getText());
         Assert.assertNotNull(header);
         Assert.assertNotNull(surname);
         Assert.assertNotNull(firstName);
@@ -85,13 +86,13 @@ public class NewMemberActivityTest {
         newMemberActivity.save(view);
 
         Intent intent = newMemberActivity.getIntent();
-        assertEquals(household,intent.getSerializableExtra(Constants.HOUSEHOLD));
 
+        assertEquals(household, intent.getSerializableExtra(Constants.HOUSEHOLD));
         assertTrue(newMemberActivity.isFinishing());
     }
 
     @Test
-    public void ShouldCreateMemberWithInsufficientDataAndShouldNotFinishActivity() {
+    public void ShouldNotCreateMemberWithInsufficientDataAndShouldNotFinishActivity() {
         setValue(Constants.MIN_AGE, "12");
         setValue(Constants.MAX_AGE, "50");
         TextView surname = (TextView) newMemberActivity.findViewById(R.id.member_family_surname);
@@ -107,11 +108,11 @@ public class NewMemberActivityTest {
 
         newMemberActivity.save(view);
 
+        Intent intent = newMemberActivity.getIntent();
+
+        assertEquals(household, intent.getSerializableExtra(Constants.HOUSEHOLD));
         assertFalse(newMemberActivity.isFinishing());
     }
-
-
-
 
     @Test
     public void ShouldFinishActivityWhenCanceled() {
