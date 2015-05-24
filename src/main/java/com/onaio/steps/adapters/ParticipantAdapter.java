@@ -36,7 +36,7 @@ public class ParticipantAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        return Long.parseLong(participants.get(position).getId());
+        return participants.get(position).getId();
     }
 
     @Override
@@ -56,7 +56,7 @@ public class ParticipantAdapter extends BaseAdapter {
         image.setImageResource(getImage(participantAtPosition));
 
         participantPidView.setTextColor(Color.BLACK);
-        String householdRow = participantAtPosition.getFormattedName()+" ("+context.getString(R.string.pid) + participantAtPosition.getId()+")";
+        String householdRow = participantAtPosition.getFormattedName()+" ("+context.getString(R.string.pid) + participantAtPosition.getParticipantID()+")";
         participantPidView.setText(householdRow);
         createdAtView.setText(String.format("%s", participantAtPosition.getCreatedAt()));
     }
@@ -65,7 +65,7 @@ public class ParticipantAdapter extends BaseAdapter {
         switch (participantAtPosition.getStatus()) {
             case DONE:
                 return R.mipmap.ic_household_list_done;
-            case NOT_SELECTED:
+            case NOT_DONE:
                 return R.mipmap.ic_participant_not_selected;
             case DEFERRED:
                 return R.mipmap.ic_household_list_deferred;

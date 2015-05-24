@@ -14,6 +14,7 @@ public class Participant implements Serializable {
 
     public static final String TABLE_NAME = "participant";
     public static final String ID = "Id";
+    public static final String PARTICIPANT_ID = "Participant_Id";
     public static final String FIRST_NAME = "first_name";
     public static final String FAMILY_SURNAME = "family_surname";
     public static final String GENDER = "gender";
@@ -21,38 +22,48 @@ public class Participant implements Serializable {
     public static final String STATUS = "Status";
     public static final String CREATED_AT="Created_At";
 
-    public static final String TABLE_CREATE_QUERY = String.format("CREATE TABLE %s(%s TEXT PRIMARY KEY,%s TEXT, %s TEXT, %s INTEGER, %s TEXT, %s TEXT, %s TEXT)", TABLE_NAME, ID, FAMILY_SURNAME, FIRST_NAME, AGE, GENDER, STATUS, CREATED_AT);
+    public static final String TABLE_CREATE_QUERY = String.format("CREATE TABLE %s(%s TEXT PRIMARY KEY,%s TEXT,%s Text, %s TEXT, %s INTEGER, %s TEXT, %s TEXT, %s TEXT)", TABLE_NAME, ID,PARTICIPANT_ID, FAMILY_SURNAME, FIRST_NAME, AGE, GENDER, STATUS, CREATED_AT);
     public static final String FIND_ALL_QUERY = "SELECT * FROM PARTICIPANT ORDER BY Id asc";
     public static final String FIND_BY_ID_QUERY = "SELECT * FROM PARTICIPANT WHERE " + ID + " = '%d'";
 
     private String familySurname;
     private String firstName;
+    private String participantID;
     private Gender gender;
     InterviewStatus status;
     private int age;
-    private String id;
+    private int id;
     private String createdAt;
 
-    public Participant(String id, String familySurname, String firstName, Gender gender, int age, InterviewStatus status, String createdAt) {
+    public Participant(int id,String participantId, String familySurname, String firstName, Gender gender, int age, InterviewStatus status, String createdAt) {
+        this.id = id;
         this.familySurname = familySurname;
         this.firstName = firstName;
+        this.participantID=participantId;
         this.gender = gender;
         this.age = age;
-        this.id = id;
         this.status = status;
         this.createdAt = createdAt;
-
     }
 
-    public Participant(String participantId, String surname, String firstName, Gender gender, int age, InterviewStatus status) {
-        this.id=participantId;
-        this.firstName=firstName;
-        this.familySurname=surname;
-        this.gender=gender;
-        this.age=age;
+
+    public Participant(String participantId, String familySurname, String firstName, Gender gender, int age, InterviewStatus status, String createdAt) {
+        this.familySurname = familySurname;
+        this.firstName = firstName;
+        this.participantID=participantId;
+        this.gender = gender;
+        this.age = age;
         this.status = status;
+        this.createdAt = createdAt;
     }
 
+    public String getParticipantID() {
+        return participantID;
+    }
+
+    public void setParticipantID(String participantID) {
+        this.participantID = participantID;
+    }
 
     public String getFirstName() {
         return firstName;
@@ -79,7 +90,7 @@ public class Participant implements Serializable {
         return age;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
@@ -98,7 +109,6 @@ public class Participant implements Serializable {
 
     public long save(DatabaseHelper db) {
         ContentValues participantDetails = populateBasicDetails();
-        participantDetails.put(STATUS ,status.toString());
         participantDetails.put(CREATED_AT,createdAt);
         return db.save(participantDetails, TABLE_NAME);
 
@@ -112,10 +122,12 @@ public class Participant implements Serializable {
     private ContentValues populateBasicDetails() {
         ContentValues values = new ContentValues();
         values.put(ID, id);
+        values.put(PARTICIPANT_ID, participantID);
         values.put(FIRST_NAME, firstName);
         values.put(FAMILY_SURNAME, familySurname);
         values.put(AGE, age);
         values.put(GENDER, gender.toString());
+        values.put(STATUS ,status.toString());
         return values;
     }
 

@@ -89,5 +89,6 @@
         android:layout_height="wrap_content"
         android:id="@+id/survey_message"
         android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"/>
+        android:layout_marginLeft="10dp"
+        android:layout_below="@+id/selected_participant_actions"/>
 </RelativeLayout>

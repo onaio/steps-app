@@ -60,7 +60,7 @@ public class ParticipantActivity extends Activity{
 
         TextView participantName = (TextView) findViewById(R.id.selected_participant_name);
         TextView participantDetails = (TextView) findViewById(R.id.selected_participant_details);
-        participantName.setText(participant.getFormattedName()+" ("+this.getString(R.string.pid)+" "+participant.getId()+" )");
+        participantName.setText(participant.getFormattedName()+" ("+this.getString(R.string.pid)+" "+participant.getParticipantID()+" )");
         participantDetails.setText(participant.getFormattedDetail());
     }
 

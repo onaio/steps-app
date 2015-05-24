@@ -57,13 +57,14 @@ public class CursorHelper {
         if (cursor.moveToFirst()) {
             do {
                 String id = cursor.getString(cursor.getColumnIndex(Participant.ID));
+                String participantId = cursor.getString(cursor.getColumnIndex(Participant.PARTICIPANT_ID));
                 String firstName = cursor.getString(cursor.getColumnIndex(Participant.FIRST_NAME));
                 String familySurname = cursor.getString(cursor.getColumnIndex(Participant.FAMILY_SURNAME));
                 String gender = cursor.getString(cursor.getColumnIndex(Participant.GENDER));
                 String age = cursor.getString(cursor.getColumnIndex(Participant.AGE));
                 String status = cursor.getString(cursor.getColumnIndex(Participant.STATUS));
                 String createdAt = cursor.getString(cursor.getColumnIndex(Participant.CREATED_AT));
-                participants.add(new Participant(id, familySurname, firstName, Gender.valueOf(gender), Integer.parseInt(age), InterviewStatus.valueOf(status),createdAt));
+                participants.add(new Participant(Integer.parseInt(id), participantId,familySurname, firstName, Gender.valueOf(gender), Integer.parseInt(age), InterviewStatus.valueOf(status),createdAt));
 
             } while (cursor.moveToNext());
         }

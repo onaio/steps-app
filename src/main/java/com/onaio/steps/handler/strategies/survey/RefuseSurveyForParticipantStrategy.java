@@ -29,7 +29,7 @@ public class RefuseSurveyForParticipantStrategy implements IDoNotTakeSurveyStrat
     @Override
     public boolean shouldInactivate(){
         boolean deferredStatus = participant.getStatus() == InterviewStatus.DEFERRED;
-        boolean notSelectedStatus = participant.getStatus() == InterviewStatus.NOT_SELECTED;
+        boolean notSelectedStatus = participant.getStatus() == InterviewStatus.NOT_DONE;
         return  !(deferredStatus || notSelectedStatus);
     }
 

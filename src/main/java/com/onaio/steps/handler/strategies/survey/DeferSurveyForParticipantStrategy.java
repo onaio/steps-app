@@ -22,13 +22,13 @@ public class DeferSurveyForParticipantStrategy implements IDoNotTakeSurveyStrate
     @Override
     public void open(){
         participant.setStatus(InterviewStatus.DEFERRED);
-        long update = participant.update(new DatabaseHelper(activity));
+        participant.update(new DatabaseHelper(activity));
     }
 
     @Override
     public boolean shouldInactivate()
     {
-        boolean participantNotSelected = participant.getStatus() == InterviewStatus.NOT_SELECTED;
+        boolean participantNotSelected = participant.getStatus() == InterviewStatus.NOT_DONE;
         return !participantNotSelected;
     }
 
