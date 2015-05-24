@@ -34,7 +34,7 @@ public class HouseholdListActivityTest extends TestCase {
     @Test
     public void ShouldSetFirstLayoutProperlyWhenPhoneIdIsNotSet(){
         View mainLayout = householdListActivityMock.findViewById(R.id.main_layout);
-        View firstMain = householdListActivityMock.findViewById(R.id.first_main);
+        View firstMain = householdListActivityMock.findViewById(R.id.welcome_layout);
         String title = householdListActivityMock.getTitle().toString();
         int titleColor = householdListActivityMock.getTitleColor();
 
@@ -51,7 +51,7 @@ public class HouseholdListActivityTest extends TestCase {
         householdListActivityMock.onCreate(null);
 
         View mainLayout = householdListActivityMock.findViewById(R.id.main_layout);
-        View firstMain = householdListActivityMock.findViewById(R.id.first_main);
+        View firstMain = householdListActivityMock.findViewById(R.id.welcome_layout);
         String title = householdListActivityMock.getTitle().toString();
         int titleColor = householdListActivityMock.getTitleColor();
 
