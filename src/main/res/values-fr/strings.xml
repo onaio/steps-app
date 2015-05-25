@@ -89,4 +89,16 @@
     <string name="fill_correct_message">"s'il vous plaît remplir ou corriger les champs suivants:"</string>
     <string name="household_id">"Code ID du ménage:"</string>
     <string name="members">"membres"</string>
+    <string name="participant_id">"Participant ID"</string>
+    <string name="undefined_label">"indéfini"</string>
+    <string name="participant_header">"Les participants"</string>
+    <string name="action_add_participant">"Ajouter un nouveau participant"</string>
+    <string name="participant">"Participant"</string>
+    <string name="interview_refused_message">"Interview est refusé!"</string>
+    <string name="interview_done_message">"Interview est terminée!"</string>
+    <string name="participant_survey_deferred_message">"L'enquête a été reporté, vous pouvez compléter le sondage plus tard pour cette personne."</string>
+    <string name="participant_survey_refusal_message">"Vous allez marquer ce participant de refus. Cette action ne peut pas être inversée. Êtes-vous sûr?"</string>
+    <string name="select_app_type">"Sélectionnez le type d'application"</string>
+    <string name="enter_data_now">"ENTRER DONNÉES ENTREPRISE"</string>
+    <string name="enter_data_later">"ENTRER DONNÉES PLUS TARD"</string>
 </resources>

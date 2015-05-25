@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">"PASOS"</string>
+    <string name="app_name">"STEPS"</string>
     <string name="action_settings">"Ajustes"</string>
     <string name="action_export">"Exportación"</string>
     <string name="action_add">"Añadir"</string>
@@ -89,4 +89,16 @@
     <string name="fill_correct_message">"por favor complete o corrija los siguientes campos:"</string>
     <string name="household_id">"Hogares ID:"</string>
     <string name="members">"miembros"</string>
+    <string name="participant_id">"Participante ID"</string>
+    <string name="undefined_label">"indefinido"</string>
+    <string name="participant_header">"Los participantes"</string>
+    <string name="action_add_participant">"Agregar nuevo participante"</string>
+    <string name="participant">"Partícipe"</string>
+    <string name="interview_refused_message">"Entrevista se negó!"</string>
+    <string name="interview_done_message">"Entrevista está completo!"</string>
+    <string name="participant_survey_deferred_message">"La encuesta se ha aplazado, puede completar la encuesta más adelante para esta persona."</string>
+    <string name="participant_survey_refusal_message">"Usted va a marcar este participante de denegación. Esta acción no puede ser revertida. Estás seguro?"</string>
+    <string name="select_app_type">"Seleccione el tipo de aplicación"</string>
+    <string name="enter_data_now">"ENTRAR DATOS EMPRESA"</string>
+    <string name="enter_data_later">"ENTRAR DATOS MÁS TARDE"</string>
 </resources>

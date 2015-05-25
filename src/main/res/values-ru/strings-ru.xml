@@ -93,5 +93,8 @@
     <string name="interview_refused_message">"Интервью отказано!"</string>
     <string name="interview_done_message">"Интервью завершена!"</string>
     <string name="participant_survey_deferred_message">"Опрос был отложен, вы можете заполнить анкету позднее этого человека."</string>
-    <string name="participant_survey_refusal_message">"Человек Отказ"</string>
+    <string name="participant_survey_refusal_message">"Вы собираетесь отмечать этот участник для отказа. Это действие не может быть отменено. Вы уверены?"</string>
+    <string name="select_app_type">"Выберите тип приложения"</string>
+    <string name="enter_data_now">"Введите данные ПРЕДПРИЯТИЕМ"</string>
+    <string name="enter_data_later">"Введите данные ПОЗЖЕ"</string>
 </resources>
