@@ -30,7 +30,7 @@ public class TakeSurveyForParticipantStrategy implements ITakeSurveyStrategy {
 
     @Override
     public void open(String formId) throws IOException {
-        String formName = String.format(formId + "-%s", participant.getId());
+        String formName = String.format(formId + "-%s", participant.getParticipantID());
         ODKForm requiredForm = ODKForm.create(activity, formId, formName);
         requiredForm.open(new ParticipantFormStrategy(participant), activity, RequestCode.SURVEY.getCode());
     }
@@ -54,7 +54,7 @@ public class TakeSurveyForParticipantStrategy implements ITakeSurveyStrategy {
 
     @Override
     public String getFormName(String formNameFormat) {
-        return String.format(formNameFormat, participant.getId());
+        return String.format(formNameFormat, participant.getParticipantID());
     }
 
     @Override
