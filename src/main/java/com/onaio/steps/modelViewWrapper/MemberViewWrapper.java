@@ -65,12 +65,12 @@ public class MemberViewWrapper {
                 validate(firstName, getStringValue(R.string.member_first_name_hint)).
                 validate(gender,getStringValue(R.string.member_gender_hint)).
                 validate(age, getStringValue(R.string.age_hint)).
-                validateAgeRange(age, getStringValue(R.string.age_not_in_range)+"%d-%d)").
+                validateAgeRange(age, getStringValue(R.string.age_not_in_range)+" %d-%d)").
                 finish();
     }
 
     protected String getStringValue(int value){
-        return activity.getApplicationContext().getString(value);
+        return activity.getString(value);
     }
 
     private Gender genderSelection(int genderSelectionId) {
