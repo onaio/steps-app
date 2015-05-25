@@ -6,6 +6,8 @@ import android.widget.TextView;
 
 import com.onaio.steps.R;
 import com.onaio.steps.helper.Constants;
+import com.onaio.steps.orchestrators.FlowOrchestrator;
+import com.onaio.steps.orchestrators.flows.FlowType;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -29,6 +31,7 @@ public class SettingsActivityTest {
     private SettingsActivity settingsActivity;
     private ActivityController<SettingsActivity> activityController;
     private Intent intent;
+    private FlowOrchestrator flowOrchestratorMock;
 
     @Before
     public void setup() {
@@ -36,11 +39,24 @@ public class SettingsActivityTest {
     }
 
     @Test
+    public void ShouldSetSettingsLayout() {
+        intent = new Intent();
+        intent.putExtra(Constants.FLOW_TYPE, FlowType.None.toString());
+        settingsActivity = activityController.withIntent(intent).create().get();
+        flowOrchestratorMock = Mockito.mock(FlowOrchestrator.class);
+        TextView header = (TextView) settingsActivity.findViewById(R.id.form_header);
+
+        assertEquals(R.id.settings, shadowOf(settingsActivity).getContentView().getId());
+        assertEquals(settingsActivity.getString(R.string.action_settings), header.getText());
+//      Mockito.verify(flowOrchestratorMock).prepareSettingScreen(FlowType.None);
+    }
+
+    @Test
     public void ShouldBeAbleToPopulateViewWithSettingsLayout() {
         intent = new Intent();
         intent.putExtra(Constants.PHONE_ID, "1234");
         intent.putExtra(Constants.HOUSEHOLD_SEED, "100");
-        intent.putExtra(Constants.FORM_ID,"STEPS_Instrument_V3_1");
+        intent.putExtra(Constants.FORM_ID, "STEPS_Instrument_V3_1");
         intent.putExtra(Constants.ENDPOINT_URL, "http://192.168.0.120");
         intent.putExtra(Constants.MIN_AGE, "14");
         intent.putExtra(Constants.MAX_AGE, "60");
@@ -58,7 +74,6 @@ public class SettingsActivityTest {
         assertEquals("100", householdSeedView.getText().toString());
         assertEquals("http://192.168.0.120", endpointUrlView.getText().toString());
         assertEquals("STEPS_Instrument_V3_1", formIdView.getText().toString());
-
     }
 
     @Test
@@ -66,7 +81,7 @@ public class SettingsActivityTest {
         intent = new Intent();
         intent.putExtra(Constants.PHONE_ID, "1234");
         intent.putExtra(Constants.HOUSEHOLD_SEED, "100");
-        intent.putExtra(Constants.FORM_ID,"STEPS_Instrument_V3_1");
+        intent.putExtra(Constants.FORM_ID, "STEPS_Instrument_V3_1");
         intent.putExtra(Constants.ENDPOINT_URL, "http://192.168.0.120");
         intent.putExtra(Constants.MIN_AGE, "14");
         intent.putExtra(Constants.MAX_AGE, "60");
