@@ -6,6 +6,7 @@ import android.view.View;
 
 import com.onaio.steps.R;
 import com.onaio.steps.activities.WelcomeActivity;
+import com.onaio.steps.exceptions.InvalidDataException;
 
 public class InitialFlow implements IFlow {
     private Activity activity;
@@ -22,6 +23,11 @@ public class InitialFlow implements IFlow {
     @Override
     public void prepareSettingScreen() {
         prepareView();
+    }
+
+    @Override
+    public boolean validateOptions() throws InvalidDataException {
+        return false;
     }
 
     @Override

@@ -7,6 +7,8 @@ import android.view.View;
 
 import android.widget.TextView;
 
+import com.onaio.steps.exceptions.InvalidDataException;
+import com.onaio.steps.helper.CustomDialog;
 import com.onaio.steps.orchestrators.FlowOrchestrator;
 import com.onaio.steps.orchestrators.flows.FlowType;
 import com.onaio.steps.R;
@@ -38,26 +40,29 @@ public class SettingsActivity extends Activity {
     }
 
     public void save(View view) {
-        flowOrchestrator.saveSettings(flowType);
-        setResult(RESULT_OK, this.getIntent());
+        try {
+            if (flowOrchestrator.validateOptions(flowType)) {
+                flowOrchestrator.saveSettings(flowType);
+                setResult(RESULT_OK, this.getIntent());
+                finish();
+            }
+        } catch (InvalidDataException e) {
+            new CustomDialog().notify(this, CustomDialog.EmptyListener, e.getMessage(), R.string.error_title);
+        }
+    }
+
+    public void cancel(View view) {
         finish();
     }
 
-    public void cancel(View view){
-        finish();
-    }
 
-//    private boolean isValid(String value) {
-//        return value != null && !value.equals("");
-//    }
-
-    public void enableHouseholdFlow(View view){
+    public void enableHouseholdFlow(View view) {
         flowType = FlowType.Household;
         setHeader();
         prepareViewWithData();
     }
 
-    public void enableParticipantFlow(View view){
+    public void enableParticipantFlow(View view) {
         flowType = FlowType.Participant;
         setHeader();
         prepareViewWithData();

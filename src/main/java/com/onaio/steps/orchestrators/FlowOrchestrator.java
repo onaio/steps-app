@@ -4,6 +4,7 @@ package com.onaio.steps.orchestrators;
 import android.app.Activity;
 import android.content.Intent;
 
+import com.onaio.steps.exceptions.InvalidDataException;
 import com.onaio.steps.orchestrators.flows.FlowType;
 import com.onaio.steps.orchestrators.flows.HouseholdFlow;
 import com.onaio.steps.orchestrators.flows.IFlow;
@@ -33,6 +34,9 @@ public class FlowOrchestrator {
         return new InitialFlow(activity);
     }
 
+    public boolean validateOptions(FlowType flowType) throws InvalidDataException{
+        return getFlow(flowType).validateOptions();
+    }
     public void prepareSettingScreen(FlowType flowType){
         getFlow(flowType).prepareSettingScreen();
     }

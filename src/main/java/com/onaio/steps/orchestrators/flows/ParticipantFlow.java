@@ -8,9 +8,14 @@ import android.widget.TextView;
 
 import com.onaio.steps.R;
 import com.onaio.steps.activities.ParticipantListActivity;
+import com.onaio.steps.exceptions.InvalidDataException;
 import com.onaio.steps.helper.Constants;
+import com.onaio.steps.helper.DataValidator;
 import com.onaio.steps.helper.KeyValueStore;
 import com.onaio.steps.helper.KeyValueStoreFactory;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.onaio.steps.helper.Constants.FLOW_TYPE;
 import static com.onaio.steps.helper.Constants.FORM_ID;
@@ -21,19 +26,38 @@ import static com.onaio.steps.helper.Constants.PHONE_ID;
 public class ParticipantFlow implements IFlow {
 
     private Activity activity;
+    protected List<String> errorFields;
+
 
     public ParticipantFlow(Activity activity) {
-
+        errorFields = new ArrayList<String>();
         this.activity = activity;
     }
 
     @Override
-    public boolean canHandle(FlowType flowType){
+    public boolean canHandle(FlowType flowType) {
         return FlowType.Participant.equals(flowType);
     }
 
+    public boolean validateOptions() throws InvalidDataException {
+        String deviceIdValue = ((TextView) activity.findViewById(R.id.deviceId)).getText().toString();
+        String formIdValue = ((TextView) activity.findViewById(R.id.form_id)).getText().toString();
+        String minAgeValue = ((TextView) activity.findViewById(R.id.min_age)).getText().toString();
+        String maxAgeValue = ((TextView) activity.findViewById(R.id.max_age)).getText().toString();
+
+        errorFields = new DataValidator(activity).
+                validate(deviceIdValue, getStringValue(R.string.device_id_label)).
+                validate(formIdValue, getStringValue(R.string.form_id)).
+                validate(minAgeValue, getStringValue(R.string.min_age)).
+                validate(maxAgeValue, getStringValue(R.string.max_age)).
+                finish();
+        if (errorFields != null && !errorFields.isEmpty())
+            throw new InvalidDataException(activity, getStringValue(R.string.action_settings), errorFields);
+        return true;
+    }
+
     @Override
-    public void prepareSettingScreen(){
+    public void prepareSettingScreen() {
         prepareView();
         populateData();
     }
@@ -59,7 +83,6 @@ public class ParticipantFlow implements IFlow {
         hide(R.id.household_seed_label);
         hide(R.id.endpointUrl);
         hide(R.id.endpointUrl_label);
-
     }
 
     private void hide(int viewId) {
@@ -68,22 +91,22 @@ public class ParticipantFlow implements IFlow {
     }
 
     private void populateData() {
-        setData(R.id.deviceId,Constants.PHONE_ID);
-        setData(R.id.form_id,Constants.FORM_ID);
-        setData(R.id.min_age,Constants.MIN_AGE);
-        setData(R.id.max_age,Constants.MAX_AGE);
+        setData(R.id.deviceId, Constants.PHONE_ID);
+        setData(R.id.form_id, Constants.FORM_ID);
+        setData(R.id.min_age, Constants.MIN_AGE);
+        setData(R.id.max_age, Constants.MAX_AGE);
     }
 
-    private void setData(int viewId, String keyId){
+    private void setData(int viewId, String keyId) {
         String data = getValue(activity, keyId);
         TextView textView = (TextView) activity.findViewById(viewId);
         textView.setText(data);
     }
 
-    private void saveData(int viewId, String keyId){
+    private void saveData(int viewId, String keyId) {
         TextView textView = (TextView) activity.findViewById(viewId);
         String data = textView.getText().toString();
-        saveSafely(activity,keyId,data);
+        saveSafely(activity, keyId, data);
     }
 
 
@@ -99,5 +122,9 @@ public class ParticipantFlow implements IFlow {
 
     private String getValue(Activity activity, String key) {
         return KeyValueStoreFactory.instance(activity).getString(key);
+    }
+
+    protected String getStringValue(int value) {
+        return activity.getString(value);
     }
 }
