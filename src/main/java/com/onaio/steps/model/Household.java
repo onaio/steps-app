@@ -227,4 +227,36 @@ public class Household implements Serializable,Comparable<Household> {
                 : status.getOrderWeight() < otherHousehold.status.getOrderWeight() ? -1
                 : 0;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Household household = (Household) o;
+
+        if (comments != null ? !comments.equals(household.comments) : household.comments != null)
+            return false;
+        if (!createdAt.equals(household.createdAt)) return false;
+        if (!name.equals(household.name)) return false;
+        if (phoneNumber != null ? !phoneNumber.equals(household.phoneNumber) : household.phoneNumber != null)
+            return false;
+        if (selectedMemberId != null ? !selectedMemberId.equals(household.selectedMemberId) : household.selectedMemberId != null)
+            return false;
+        if (status != household.status) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id.hashCode();
+        result = 31 * result + name.hashCode();
+        result = 31 * result + (phoneNumber != null ? phoneNumber.hashCode() : 0);
+        result = 31 * result + status.hashCode();
+        result = 31 * result + (selectedMemberId != null ? selectedMemberId.hashCode() : 0);
+        result = 31 * result + createdAt.hashCode();
+        result = 31 * result + (comments != null ? comments.hashCode() : 0);
+        return result;
+    }
 }
