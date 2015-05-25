@@ -44,7 +44,7 @@ public class EditHouseholdActivityTest {
     }
 
     @Test
-    public void ShouldPopulateView() {
+    public void ShouldPopulateViewWithDataFromIntent() {
         TextView header = (TextView) editHouseholdActivity.findViewById(R.id.form_header);
         TextView household_id = (TextView) editHouseholdActivity.findViewById(R.id.generated_household_id);
         TextView household_number = (TextView) editHouseholdActivity.findViewById(R.id.household_number);
@@ -65,7 +65,9 @@ public class EditHouseholdActivityTest {
     public void ShouldPassDataToIntentAndFinishActivity() {
         View viewMock = Mockito.mock(View.class);
         Mockito.stub(viewMock.getId()).toReturn(R.id.household_form);
-
+        TextView textView = Mockito.mock(TextView.class);
+        Mockito.stub(textView.getId()).toReturn(R.id.household_comments);
+        Mockito.stub(textView.getText()).toReturn("dummy");
         editHouseholdActivity.save(viewMock);
 
         Intent editHouseholdActivityIntent = editHouseholdActivity.getIntent();

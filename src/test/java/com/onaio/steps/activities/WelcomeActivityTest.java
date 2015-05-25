@@ -14,6 +14,8 @@ import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 @Config(emulateSdk = 16, manifest = "src/main/AndroidManifest.xml")
 @RunWith(RobolectricTestRunner.class)
@@ -29,6 +31,17 @@ public class WelcomeActivityTest {
     @Test
     public void ShouldBeAbleToLoadWelcomeLayout(){
            assertEquals(R.id.welcome_layout,Robolectric.shadowOf(welcomeActivity).getContentView().getId());
+    }
+
+    @Test
+    public void ShouldSetFirstLayoutProperlyWhenPhoneIdIsNotSet(){
+        View mainLayout = welcomeActivity.findViewById(R.id.main_layout);
+        View firstMain = welcomeActivity.findViewById(R.id.welcome_layout);
+        String title = welcomeActivity.getTitle().toString();
+
+        assertNull(mainLayout);
+        assertNotNull(firstMain);
+        assertEquals("STEPS", title);
     }
 
     @Test
