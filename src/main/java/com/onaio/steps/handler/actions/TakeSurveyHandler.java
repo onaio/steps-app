@@ -70,16 +70,8 @@ public class TakeSurveyHandler implements IMenuHandler, IMenuPreparer, IActivity
     public void activate() {
         Button button = (Button) activity.findViewById(MENU_ID);
         button.setVisibility(View.VISIBLE);
-//        if ( household!= null && InterviewStatus.INCOMPLETE.equals(household.getStatus()))
-//            button.setText(R.string.continue_interview);
-//        else
-//            button.setText(R.string.interview_now);
-//
-//        if( participant!=null && InterviewStatus.INCOMPLETE.equals(participant.getStatus()))
-//        button.setText(R.string.continue_interview);
-//        else
-//            button.setText(R.string.enter_data_now);
 
+        takeSurveyStrategy.activate();
     }
 
     @Override

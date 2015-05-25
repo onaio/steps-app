@@ -12,4 +12,5 @@ public interface ITakeSurveyStrategy {
     public void handleResult(ODKSavedForm savedForm);
 
     public String getFormName(String formNameFormat);
+    public void activate();
 }
