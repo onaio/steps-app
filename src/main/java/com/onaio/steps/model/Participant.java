@@ -22,7 +22,8 @@ public class Participant implements Serializable {
     public static final String STATUS = "Status";
     public static final String CREATED_AT="Created_At";
 
-    public static final String TABLE_CREATE_QUERY = String.format("CREATE TABLE %s(%s TEXT PRIMARY KEY,%s TEXT,%s Text, %s TEXT, %s INTEGER, %s TEXT, %s TEXT, %s TEXT)", TABLE_NAME, ID,PARTICIPANT_ID, FAMILY_SURNAME, FIRST_NAME, AGE, GENDER, STATUS, CREATED_AT);
+
+    public static final String TABLE_CREATE_QUERY = String.format("CREATE TABLE %s(%s INTEGER PRIMARY KEY,%s TEXT,%s Text, %s TEXT, %s INTEGER, %s TEXT, %s TEXT, %s TEXT)", TABLE_NAME, ID,PARTICIPANT_ID, FAMILY_SURNAME, FIRST_NAME, AGE, GENDER, STATUS, CREATED_AT);
     public static final String FIND_ALL_QUERY = "SELECT * FROM PARTICIPANT ORDER BY Id asc";
     public static final String FIND_BY_ID_QUERY = "SELECT * FROM PARTICIPANT WHERE " + ID + " = '%d'";
 
@@ -110,8 +111,10 @@ public class Participant implements Serializable {
     public long save(DatabaseHelper db) {
         ContentValues participantDetails = populateBasicDetails();
         participantDetails.put(CREATED_AT,createdAt);
-        return db.save(participantDetails, TABLE_NAME);
-
+        long savedId = db.save(participantDetails, TABLE_NAME);
+        if(savedId!= -1)
+            id = (int)savedId;
+        return  savedId;
     }
 
     public long update(DatabaseHelper db) {
@@ -121,7 +124,6 @@ public class Participant implements Serializable {
 
     private ContentValues populateBasicDetails() {
         ContentValues values = new ContentValues();
-        values.put(ID, id);
         values.put(PARTICIPANT_ID, participantID);
         values.put(FIRST_NAME, firstName);
         values.put(FAMILY_SURNAME, familySurname);
