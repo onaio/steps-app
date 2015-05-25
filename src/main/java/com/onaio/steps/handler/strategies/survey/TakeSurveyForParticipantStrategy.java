@@ -65,7 +65,6 @@ public class TakeSurveyForParticipantStrategy implements ITakeSurveyStrategy {
             button.setText(R.string.continue_interview);
         else
             button.setText(R.string.enter_data_now);
-
     }
 
 }

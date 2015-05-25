@@ -29,6 +29,7 @@ public class ParticipantFormStrategy implements IFormStrategy{
         ArrayList<String> row = new ArrayList<String>();
         row.add(Constants.ODK_HH_ID);
         row.add(String.format(formNameFormat, participant.getParticipantID()));
+        row.add(participant.getParticipantID());
         row.add(participant.getFamilySurname());
         row.add(participant.getFirstName());
         row.add(String.valueOf(participant.getGender().getIntValue()));
