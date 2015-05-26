@@ -129,24 +129,6 @@ public class MemberActivityTest {
         assertNotNull(deleteMemberItem);
     }
 
-   /* @Test
-    public void ShouldInactivateMenuOptionsForSelectedStatus() {
-        Mockito.stub(household.getStatus()).toReturn(InterviewStatus.NOT_DONE);
-        Mockito.stub(household.getSelectedMemberId()).toReturn(member.getMemberHouseholdId());
-        intent.putExtra(Constants.MEMBER, member);
-        memberActivity = memberActivityController.withIntent(intent).create().get();
 
-        Menu menu = Mockito.mock(Menu.class);
-        MenuItem editMenuItem = Mockito.mock(MenuItem.class);
-        MenuItem deleteMemberItem = Mockito.mock(MenuItem.class);
-        ;
-
-        Mockito.stub(menu.findItem(R.id.action_edit)).toReturn(editMenuItem);
-        Mockito.stub(menu.findItem(R.id.action_member_delete)).toReturn(deleteMemberItem);
-        memberActivity.onPrepareOptionsMenu(menu);
-
-        assertNotNull(editMenuItem);
-        assertNotNull(deleteMemberItem);
-    }*/
 
 }

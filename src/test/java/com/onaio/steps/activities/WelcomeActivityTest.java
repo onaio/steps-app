@@ -35,8 +35,10 @@ public class WelcomeActivityTest {
     public void ShouldSetFirstLayoutProperlyWhenPhoneIdIsNotSet(){
         View mainLayout = welcomeActivity.findViewById(R.id.main_layout);
         View firstMain = welcomeActivity.findViewById(R.id.welcome_layout);
+        View getStarted = welcomeActivity.findViewById(R.id.go_to_settings);
         String title = welcomeActivity.getTitle().toString();
 
+        assertNotNull(getStarted);
         assertNull(mainLayout);
         assertNotNull(firstMain);
         assertEquals("STEPS", title);

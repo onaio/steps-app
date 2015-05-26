@@ -38,7 +38,6 @@ public class NewMemberActivityTest {
     private String currentDate = new SimpleDateFormat(Constants.DATE_FORMAT).format(new Date());
     private Household household;
 
-
     @Before
     public void setup() {
         household = new Household("2", "Any HouseholdName", "123456789", "", InterviewStatus.NOT_SELECTED, currentDate, "Dummy comments");

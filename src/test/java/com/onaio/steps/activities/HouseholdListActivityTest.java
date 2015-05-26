@@ -1,10 +1,14 @@
 package com.onaio.steps.activities;
 
 import android.graphics.Color;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.onaio.steps.R;
+import com.onaio.steps.handler.interfaces.IActivityResultHandler;
+import com.onaio.steps.handler.interfaces.IMenuHandler;
+import com.onaio.steps.handler.interfaces.IMenuPreparer;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.helper.KeyValueStoreFactory;
@@ -13,19 +17,26 @@ import com.onaio.steps.model.Household;
 import com.onaio.steps.model.InterviewStatus;
 import com.onaio.steps.model.Member;
 
-import junit.framework.TestCase;
+
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 import org.robolectric.tester.android.view.TestMenu;
 
+import java.util.List;
+
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+
 @Config(emulateSdk = 16,manifest = "src/main/AndroidManifest.xml")
 @RunWith(RobolectricTestRunner.class)
-public class HouseholdListActivityTest extends TestCase {
+public class HouseholdListActivityTest{
 
     private HouseholdListActivity householdListActivityMock;
     private Household household;
@@ -35,11 +46,11 @@ public class HouseholdListActivityTest extends TestCase {
     public void Setup(){
         household = new Household("1", "household Name", "123456789", "1", InterviewStatus.NOT_DONE, "2015-12-13", "Dummy comments");
         member = new Member(1, "rana", "manisha", Gender.Female, 28, household, "123-1", false);
-        household.save(new DatabaseHelper(householdListActivityMock));
-        member.save(new DatabaseHelper(householdListActivityMock));
         householdListActivityMock = Robolectric.buildActivity(HouseholdListActivity.class)
                 .create()
                 .get();
+        household.save(new DatabaseHelper(householdListActivityMock));
+        member.save(new DatabaseHelper(householdListActivityMock));
 
     }
 
@@ -79,9 +90,31 @@ public class HouseholdListActivityTest extends TestCase {
     }
 
     @Test
-    public void ShouldPopulateTheViewWithAllMembers(){
-        assertEquals(member,householdListActivityMock.getListView().getAdapter().getItem(1));
+    public void ShouldGetMenuViewLayout(){
+        assertEquals(R.menu.main_activity_actions,householdListActivityMock.getMenuViewLayout());
+    }
 
+    @Test
+    public void ShouldGetProperMenuHandlers(){
+        List<IMenuHandler> menuHandlers = householdListActivityMock.getMenuHandlers();
+        assertEquals(4,menuHandlers.size());
+    }
+
+    @Test
+    public void ShouldGetProperResultHandlers(){
+        List<IActivityResultHandler> resultHandlers = householdListActivityMock.getResultHandlers();
+        assertEquals(3,resultHandlers.size());
+    }
+    @Test
+    public void ShouldGetProperMenuPreparer(){
+        Menu mock = Mockito.mock(Menu.class);
+        List<IMenuPreparer> menuHandlers = householdListActivityMock.getMenuPreparer(mock);
+        assertEquals(1,menuHandlers.size());
+    }
+    @Test
+    public void ShouldGetProperCustomMenuHandlers(){
+        List<IMenuHandler> menuHandlers = householdListActivityMock.getCustomMenuHandler();
+        assertEquals(1,menuHandlers.size());
     }
 
 
