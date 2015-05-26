@@ -64,7 +64,6 @@ public class EditParticipantActivityHandler implements IMenuHandler, IActivityRe
         boolean refusedStatus = participant.getStatus() == InterviewStatus.REFUSED;
         boolean incompleteStatus = participant.getStatus() == InterviewStatus.INCOMPLETE;
         return doneStatus || refusedStatus || incompleteStatus ;
-
     }
 
     @Override

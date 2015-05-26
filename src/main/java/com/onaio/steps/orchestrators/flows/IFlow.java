@@ -8,7 +8,7 @@ public interface IFlow {
     boolean canHandle(FlowType flowType);
 
     public void prepareSettingScreen();
-    public boolean validateOptions() throws InvalidDataException;
+    public void validateOptions() throws InvalidDataException;
 
     public void saveSettings();
 

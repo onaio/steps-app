@@ -41,11 +41,9 @@ public class SettingsActivity extends Activity {
 
     public void save(View view) {
         try {
-            if (flowOrchestrator.validateOptions(flowType)) {
                 flowOrchestrator.saveSettings(flowType);
                 setResult(RESULT_OK, this.getIntent());
                 finish();
-            }
         } catch (InvalidDataException e) {
             new CustomDialog().notify(this, CustomDialog.EmptyListener, e.getMessage(), R.string.error_title);
         }

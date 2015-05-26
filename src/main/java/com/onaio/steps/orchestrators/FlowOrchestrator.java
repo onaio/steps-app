@@ -34,9 +34,6 @@ public class FlowOrchestrator {
         return new InitialFlow(activity);
     }
 
-    public boolean validateOptions(FlowType flowType) throws InvalidDataException{
-        return getFlow(flowType).validateOptions();
-    }
     public void prepareSettingScreen(FlowType flowType){
         getFlow(flowType).prepareSettingScreen();
     }
@@ -46,7 +43,8 @@ public class FlowOrchestrator {
         activity.startActivity(intent);
     }
 
-    public void saveSettings(FlowType flowType){
+    public void saveSettings(FlowType flowType) throws InvalidDataException{
+        getFlow(flowType).validateOptions();
         getFlow(flowType).saveSettings();
     }
 

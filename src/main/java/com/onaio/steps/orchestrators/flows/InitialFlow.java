@@ -26,8 +26,8 @@ public class InitialFlow implements IFlow {
     }
 
     @Override
-    public boolean validateOptions() throws InvalidDataException {
-        return false;
+    public void validateOptions() throws InvalidDataException {
+
     }
 
     @Override

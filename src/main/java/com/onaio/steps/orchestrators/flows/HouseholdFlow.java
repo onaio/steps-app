@@ -62,7 +62,8 @@ public class HouseholdFlow implements IFlow {
         return new Intent(activity, HouseholdListActivity.class);
     }
 
-    public boolean validateOptions() throws InvalidDataException {
+    @Override
+    public void validateOptions() throws InvalidDataException {
         String deviceIdValue = ((TextView) activity.findViewById(R.id.deviceId)).getText().toString();
         String formIdValue = ((TextView) activity.findViewById(R.id.form_id)).getText().toString();
         String minAgeValue = ((TextView) activity.findViewById(R.id.min_age)).getText().toString();
@@ -80,7 +81,7 @@ public class HouseholdFlow implements IFlow {
                 finish();
         if (errorFields != null && !errorFields.isEmpty())
             throw new InvalidDataException(activity, getStringValue(R.string.action_settings), errorFields);
-        return true;
+
     }
 
     private void populateData() {
