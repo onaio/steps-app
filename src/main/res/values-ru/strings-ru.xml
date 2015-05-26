@@ -97,4 +97,5 @@
     <string name="select_app_type">"Выберите тип приложения"</string>
     <string name="enter_data_now">"Введите данные ПРЕДПРИЯТИЕМ"</string>
     <string name="enter_data_later">"Введите данные ПОЗЖЕ"</string>
+    <string name="edit_participant_header">Edit Participant</string>
 </resources>

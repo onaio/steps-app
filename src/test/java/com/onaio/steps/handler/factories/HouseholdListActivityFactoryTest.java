@@ -3,16 +3,15 @@ package com.onaio.steps.handler.factories;
 import com.onaio.steps.activities.HouseholdListActivity;
 import com.onaio.steps.handler.actions.ExportHandler;
 import com.onaio.steps.handler.actions.FinalisedFormHandler;
-import com.onaio.steps.handler.activities.HouseholdActivityHandler;
 import com.onaio.steps.handler.actions.ImportHandler;
+import com.onaio.steps.handler.activities.HouseholdActivityHandler;
+import com.onaio.steps.handler.activities.NewHouseholdActivityHandler;
+import com.onaio.steps.handler.activities.SettingActivityHandler;
 import com.onaio.steps.handler.interfaces.IActivityResultHandler;
 import com.onaio.steps.handler.interfaces.IListItemHandler;
 import com.onaio.steps.handler.interfaces.IMenuHandler;
-import com.onaio.steps.handler.activities.NewHouseholdActivityHandler;
-import com.onaio.steps.handler.activities.SettingActivityHandler;
 
 import junit.framework.Assert;
-import junit.framework.TestCase;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -26,7 +25,7 @@ import java.util.List;
 
 @Config(emulateSdk = 16,manifest = "src/main/AndroidManifest.xml")
 @RunWith(RobolectricTestRunner.class)
-public class HouseholdListActivityFactoryTest extends TestCase {
+public class HouseholdListActivityFactoryTest{
 
     private HouseholdListActivity householdListActivityMock;
     @Before
@@ -62,8 +61,7 @@ public class HouseholdListActivityFactoryTest extends TestCase {
         List<IMenuHandler> menuHandlers = HouseholdListActivityFactory.getCustomMenuHandler(householdListActivityMock);
         ArrayList<Class> handlerTypes = getTypes(menuHandlers);
 
-        Assert.assertEquals(2,menuHandlers.size());
-        Assert.assertTrue(handlerTypes.contains(SettingActivityHandler.class));
+        Assert.assertEquals(1,menuHandlers.size());
         Assert.assertTrue(handlerTypes.contains(NewHouseholdActivityHandler.class));
     }
 

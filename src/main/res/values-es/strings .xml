@@ -101,4 +101,5 @@
     <string name="select_app_type">"Seleccione el tipo de aplicación"</string>
     <string name="enter_data_now">"ENTRAR DATOS EMPRESA"</string>
     <string name="enter_data_later">"ENTRAR DATOS MÁS TARDE"</string>
+    <string name="edit_participant_header">Edit Participant</string>
 </resources>

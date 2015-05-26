@@ -58,7 +58,7 @@ public class ParticipantFlow implements IFlow {
     }
 
     @Override
-    public void prepareSettingScreen() {
+    public void  prepareSettingScreen() {
         prepareView();
         populateData();
     }

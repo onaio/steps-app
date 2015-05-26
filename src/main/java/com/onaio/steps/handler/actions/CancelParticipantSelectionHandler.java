@@ -106,8 +106,6 @@ public class CancelParticipantSelectionHandler implements IMenuPreparer,IMenuHan
         reason.save(databaseHelper);
     }
 
-
-
     protected View getView() {
         LayoutInflater factory = LayoutInflater.from(activity);
         return factory.inflate(R.layout.selection_confirm, null);

@@ -4,7 +4,6 @@ import android.view.View;
 
 import com.onaio.steps.R;
 import com.onaio.steps.activities.HouseholdActivity;
-import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.InterviewStatus;
 
@@ -18,7 +17,6 @@ import org.robolectric.annotation.Config;
 
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
-import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
@@ -50,15 +48,6 @@ public class CancelParticipantSelectionHandlerTest {
     public void ShouldNotBeAbleToOpenForDifferentMenuId(){
         assertFalse(selectionHandler.shouldOpen(R.id.action_refused));
     }
-
-    @Test
-    public void ShouldSetProperStatusAndNotifyUserWhenOpened(){
-        selectionHandler.open();
-
-        verify(householdMock).setStatus(InterviewStatus.NOT_SELECTED);
-        verify(householdMock).update(any(DatabaseHelper.class));
-    }
-
 
     @Test
     public void ShouldInactivateWhenMemberIsNotSelected(){
