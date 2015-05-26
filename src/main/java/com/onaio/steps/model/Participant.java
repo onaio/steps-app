@@ -153,8 +153,36 @@ public class Participant implements Serializable {
         return participant;
     }
 
+    // for testing purpose
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
+        Participant that = (Participant) o;
 
+        if (age != that.age) return false;
+        if (!createdAt.equals(that.createdAt)) return false;
+        if (!familySurname.equals(that.familySurname)) return false;
+        if (!firstName.equals(that.firstName)) return false;
+        if (gender != that.gender) return false;
+        if (!participantID.equals(that.participantID)) return false;
+        if (status != that.status) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = familySurname.hashCode();
+        result = 31 * result + firstName.hashCode();
+        result = 31 * result + participantID.hashCode();
+        result = 31 * result + gender.hashCode();
+        result = 31 * result + status.hashCode();
+        result = 31 * result + age;
+        result = 31 * result + createdAt.hashCode();
+        return result;
+    }
 }
 
 

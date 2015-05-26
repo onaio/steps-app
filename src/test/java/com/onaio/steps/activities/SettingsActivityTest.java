@@ -1,26 +1,21 @@
 package com.onaio.steps.activities;
 
 import android.content.Intent;
-import android.view.View;
 import android.widget.TextView;
 
 import com.onaio.steps.R;
 import com.onaio.steps.helper.Constants;
-import com.onaio.steps.orchestrators.FlowOrchestrator;
 import com.onaio.steps.orchestrators.flows.FlowType;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
-import org.robolectric.util.ActivityController;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.robolectric.Robolectric.shadowOf;
 
@@ -29,103 +24,35 @@ import static org.robolectric.Robolectric.shadowOf;
 public class SettingsActivityTest {
 
     private SettingsActivity settingsActivity;
-    private ActivityController<SettingsActivity> activityController;
     private Intent intent;
-    private FlowOrchestrator flowOrchestratorMock;
+
 
     @Before
     public void setup() {
-        activityController = Robolectric.buildActivity(SettingsActivity.class);
+        intent = new Intent();
+        intent.putExtra(Constants.FLOW_TYPE, FlowType.Household.toString());
+
+        settingsActivity=Robolectric.buildActivity(SettingsActivity.class).withIntent(intent).create().get();
     }
 
     @Test
-    public void ShouldSetSettingsLayout() {
-        intent = new Intent();
-        intent.putExtra(Constants.FLOW_TYPE, FlowType.None.toString());
-        settingsActivity = activityController.withIntent(intent).create().get();
-        flowOrchestratorMock = Mockito.mock(FlowOrchestrator.class);
+    public void ShouldSetInitialSettingPage() {
         TextView header = (TextView) settingsActivity.findViewById(R.id.form_header);
 
         assertEquals(R.id.settings, shadowOf(settingsActivity).getContentView().getId());
         assertEquals(settingsActivity.getString(R.string.action_settings), header.getText());
-//      Mockito.verify(flowOrchestratorMock).prepareSettingScreen(FlowType.None);
     }
 
     @Test
-    public void ShouldBeAbleToPopulateViewWithSettingsLayout() {
-        intent = new Intent();
-        intent.putExtra(Constants.PHONE_ID, "1234");
-        intent.putExtra(Constants.HOUSEHOLD_SEED, "100");
-        intent.putExtra(Constants.FORM_ID, "STEPS_Instrument_V3_1");
-        intent.putExtra(Constants.ENDPOINT_URL, "http://192.168.0.120");
-        intent.putExtra(Constants.MIN_AGE, "14");
-        intent.putExtra(Constants.MAX_AGE, "60");
-        settingsActivity = activityController.withIntent(intent).create().get();
-        TextView phoneIdView = (TextView) settingsActivity.findViewById(R.id.deviceId);
-        TextView endpointUrlView = (TextView) settingsActivity.findViewById(R.id.endpointUrl);
-        TextView householdSeedView = (TextView) settingsActivity.findViewById(R.id.household_seed);
-        TextView formIdView = (TextView) settingsActivity.findViewById(R.id.form_id);
-
-        assertEquals(R.id.settings, shadowOf(settingsActivity).getContentView().getId());
-        assertNotNull(phoneIdView);
-        assertNotNull(endpointUrlView);
-        assertNotNull(householdSeedView);
-        assertEquals("1234", phoneIdView.getText().toString());
-        assertEquals("100", householdSeedView.getText().toString());
-        assertEquals("http://192.168.0.120", endpointUrlView.getText().toString());
-        assertEquals("STEPS_Instrument_V3_1", formIdView.getText().toString());
-    }
-
-    @Test
-    public void ShouldSaveDataToIntentAndFinishActivity() {
-        intent = new Intent();
-        intent.putExtra(Constants.PHONE_ID, "1234");
-        intent.putExtra(Constants.HOUSEHOLD_SEED, "100");
-        intent.putExtra(Constants.FORM_ID, "STEPS_Instrument_V3_1");
-        intent.putExtra(Constants.ENDPOINT_URL, "http://192.168.0.120");
-        intent.putExtra(Constants.MIN_AGE, "14");
-        intent.putExtra(Constants.MAX_AGE, "60");
-        settingsActivity = activityController.withIntent(intent).create().get();
-
-        Intent intent1 = settingsActivity.getIntent();
-        View viewMock = Mockito.mock(View.class);
-        Mockito.stub(viewMock.getId()).toReturn(R.id.settings);
-        settingsActivity.save(viewMock);
-
-        assertEquals("1234", intent1.getSerializableExtra(Constants.PHONE_ID));
-        assertEquals("http://192.168.0.120", intent1.getSerializableExtra(Constants.ENDPOINT_URL));
-        assertEquals("14", intent1.getSerializableExtra(Constants.MIN_AGE));
-        assertEquals("60", intent1.getSerializableExtra(Constants.MAX_AGE));
-        assertEquals("STEPS_Instrument_V3_1", intent1.getSerializableExtra(Constants.FORM_ID));
-        assertTrue(settingsActivity.isFinishing());
-    }
-
-    @Test
-    public void ShouldNotPopulateIntentWithDataIfValuesAreEmpty() {
-        intent = new Intent();
-        settingsActivity = activityController.withIntent(intent).create().get();
-        Intent intent1 = settingsActivity.getIntent();
-        View viewMock = Mockito.mock(View.class);
-        Mockito.stub(viewMock.getId()).toReturn(R.id.settings);
-
-        settingsActivity.save(viewMock);
-
-        assertEquals(null, intent1.getSerializableExtra(Constants.PHONE_ID));
-        assertEquals(null, intent1.getSerializableExtra(Constants.ENDPOINT_URL));
-        assertEquals(null, intent1.getSerializableExtra(Constants.MIN_AGE));
-        assertEquals(null, intent1.getSerializableExtra(Constants.MAX_AGE));
-        assertEquals(null, intent1.getSerializableExtra(Constants.FORM_ID));
-
-        assertFalse(settingsActivity.isFinishing());
-    }
-
-    @Test
-    public void ShouldFinishActivityWhenCanceled() {
-        intent = new Intent();
-        settingsActivity = activityController.withIntent(intent).create().get();
+    public void ShouldFinishActivityOnCancel(){
         settingsActivity.cancel(null);
-
         assertTrue(settingsActivity.isFinishing());
+    }
+
+    @Test
+    public void ShouldNotFinishTheActivityWithNullSettingsValue(){
+        settingsActivity.save(null);
+        assertFalse(settingsActivity.isFinishing());
     }
 
 }

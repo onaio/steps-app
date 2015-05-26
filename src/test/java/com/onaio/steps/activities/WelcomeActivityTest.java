@@ -3,12 +3,10 @@ package com.onaio.steps.activities;
 import android.view.View;
 
 import com.onaio.steps.R;
-import com.onaio.steps.handler.activities.SettingActivityHandler;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
@@ -42,16 +40,5 @@ public class WelcomeActivityTest {
         assertNull(mainLayout);
         assertNotNull(firstMain);
         assertEquals("STEPS", title);
-    }
-
-    @Test
-    public void ShouldOpenSettingsActivityHandler(){
-        View viewMock = Mockito.mock(View.class);
-        Mockito.stub(viewMock.getId()).toReturn(R.id.go_to_settings);
-        welcomeActivity.openDefaultSetting(viewMock);
-        SettingActivityHandler settingActivityHandler = Mockito.mock(SettingActivityHandler.class);
-
-//      How to inject settingActivityHandlerMock
- //       Mockito.verify(settingActivityHandler).prepareFor(FlowType.None).open();
     }
 }
