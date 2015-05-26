@@ -37,6 +37,7 @@ public class ParticipantActivity extends Activity{
         styleActionBar();
         customizeOptions();
         prepareCustomMenu();
+        populateParticipant();
         populateMessage();
     }
 
@@ -57,7 +58,6 @@ public class ParticipantActivity extends Activity{
     }
 
     private void populateParticipant() {
-
         TextView participantName = (TextView) findViewById(R.id.selected_participant_name);
         TextView participantDetails = (TextView) findViewById(R.id.selected_participant_details);
         participantName.setText(participant.getFormattedName()+" ("+this.getString(R.string.pid)+" "+participant.getParticipantID()+" )");

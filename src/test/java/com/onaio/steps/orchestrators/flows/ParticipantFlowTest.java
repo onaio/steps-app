@@ -19,9 +19,9 @@ import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
+import static junit.framework.Assert.assertNotNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 @Config(emulateSdk = 16, manifest = "src/main/AndroidManifest.xml")
@@ -58,12 +58,14 @@ public class ParticipantFlowTest {
     @Test
     public void ShouldBeAbleToPopulateViewWithProperTextFields(){
         participantFlow.prepareSettingScreen();
-        assertNull(settingsActivity.findViewById(R.id.household_flow_disabled));
-        assertNull(settingsActivity.findViewById(R.id.participant_flow));
-        assertNull(settingsActivity.findViewById(R.id.household_seed));
-        assertNull(settingsActivity.findViewById(R.id.household_seed_label));
-        assertNull(settingsActivity.findViewById(R.id.endpointUrl));
-        assertNull(settingsActivity.findViewById(R.id.endpointUrl_label));
+        assertNotNull(settingsActivity.findViewById(R.id.household_flow_disabled));
+        assertNotNull(settingsActivity.findViewById(R.id.participant_flow));
+        assertNotNull(settingsActivity.findViewById(R.id.household_seed));
+        assertNotNull(settingsActivity.findViewById(R.id.household_seed_label));
+        assertNotNull(settingsActivity.findViewById(R.id.endpointUrl));
+        assertNotNull(settingsActivity.findViewById(R.id.endpointUrl_label));
+        assertNotNull(settingsActivity.findViewById(R.id.min_age));
+        assertNotNull(settingsActivity.findViewById(R.id.max_age));
    }
 
     @Test

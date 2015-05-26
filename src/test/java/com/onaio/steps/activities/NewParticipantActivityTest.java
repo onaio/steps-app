@@ -7,12 +7,12 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.onaio.steps.R;
-import com.onaio.steps.exceptions.InvalidDataException;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.KeyValueStore;
 import com.onaio.steps.helper.KeyValueStoreFactory;
+import com.onaio.steps.model.Gender;
+import com.onaio.steps.model.InterviewStatus;
 import com.onaio.steps.model.Participant;
-import com.onaio.steps.modelViewWrapper.ParticipantViewWrapper;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -22,6 +22,9 @@ import org.mockito.Mockito;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -38,7 +41,11 @@ public class NewParticipantActivityTest {
 
     @Before
     public void setup() {
-        newParticipantActivity = Robolectric.buildActivity(NewParticipantActivity.class)
+        Intent intent = new Intent();
+        date = new SimpleDateFormat(Constants.DATE_FORMAT).format(new Date());
+        participant = new Participant(1, "123-10", "family surname", "firstName", Gender.Female, 34, InterviewStatus.DONE, date);
+        intent.putExtra(Constants.PARTICIPANT, participant);
+        newParticipantActivity = Robolectric.buildActivity(NewParticipantActivity.class).withIntent(intent)
                 .create()
                 .get();
     }
@@ -63,7 +70,7 @@ public class NewParticipantActivityTest {
     }
 
     @Test
-    public void ShouldFinishActivityAfterSavingParticipantData() throws InvalidDataException {
+    public void ShouldFinishActivityAfterSavingParticipantData() {
         setValue(Constants.MIN_AGE, "12");
         setValue(Constants.MAX_AGE, "50");
         TextView participantId = (TextView) newParticipantActivity.findViewById(R.id.participant_id_value);
@@ -78,8 +85,7 @@ public class NewParticipantActivityTest {
         participantId.setText("123-10");
         View view = Mockito.mock(View.class);
         Mockito.stub(view.getId()).toReturn(R.id.member_form);
-        participant = new ParticipantViewWrapper(newParticipantActivity)
-                .getFromView();
+
         newParticipantActivity.save(view);
 
         Intent intent = newParticipantActivity.getIntent();

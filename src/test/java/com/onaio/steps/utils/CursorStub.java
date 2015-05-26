@@ -8,6 +8,7 @@ import com.onaio.steps.model.Member;
 
 import org.mockito.Mockito;
 
+
 public class CursorStub {
     private Cursor cursor;
 
@@ -15,7 +16,7 @@ public class CursorStub {
         this.cursor = cursor;
     }
 
-    public void stubCursorForHousehold(Household household){
+    public void stubCursorForHousehold(Household household) {
         Mockito.stub(cursor.moveToFirst()).toReturn(true);
         Mockito.stub(cursor.getColumnIndex(Household.NAME)).toReturn(1);
         Mockito.stub(cursor.getColumnIndex(Household.PHONE_NUMBER)).toReturn(2);
@@ -32,7 +33,7 @@ public class CursorStub {
         Mockito.stub(cursor.getString(6)).toReturn(household.getCreatedAt());
     }
 
-    public void stubCursorForMember(long id, String memberFamilyName, String memberFirstName, Gender memberGender, String memberAge, String householdId, int isDeleted, String memberHouseholdId){
+    public void stubCursorForMember(long id, String memberFamilyName, String memberFirstName, Gender memberGender, String memberAge, String householdId, int isDeleted, String memberHouseholdId) {
         Mockito.stub(cursor.moveToFirst()).toReturn(true);
         Mockito.stub(cursor.getColumnIndex(Member.FAMILY_SURNAME)).toReturn(1);
         Mockito.stub(cursor.getColumnIndex(Member.FIRST_NAME)).toReturn(2);
@@ -53,7 +54,8 @@ public class CursorStub {
         Mockito.stub(cursor.getString(8)).toReturn(householdId);
     }
 
-    public void stubCursorForCount(int count){
+    public void stubCursorForCount(int count) {
         Mockito.stub(cursor.getCount()).toReturn(count);
     }
+
 }

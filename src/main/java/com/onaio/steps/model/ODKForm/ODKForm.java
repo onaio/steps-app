@@ -16,9 +16,6 @@ public class ODKForm {
     private IForm savedForm;
     private IForm blankForm;
 
-//    public ODKForm(IForm blankForm, IForm savedForm){
-//        this(blankForm,savedForm);
-//    }
 
     public ODKForm(IForm blankForm, IForm savedForm){
         this.blankForm = blankForm;
