@@ -1,15 +1,10 @@
 package com.onaio.steps.handler.activities;
 
-import android.app.Activity;
 import android.content.Intent;
 
 import com.onaio.steps.R;
-import com.onaio.steps.activities.HouseholdActivity;
-import com.onaio.steps.activities.SettingsActivity;
-import com.onaio.steps.activities.HouseholdListActivity;
-import com.onaio.steps.helper.Constants;
-import com.onaio.steps.helper.KeyValueStore;
-import com.onaio.steps.helper.KeyValueStoreFactory;
+import com.onaio.steps.activities.MainActivityOrchestrator;
+import com.onaio.steps.activities.WelcomeActivity;
 import com.onaio.steps.model.RequestCode;
 
 import org.junit.Before;
@@ -28,64 +23,25 @@ import static org.junit.Assert.assertTrue;
 @RunWith(RobolectricTestRunner.class)
 public class SettingActivityHandlerTest {
 
-    private HouseholdListActivity householdListActivityMock;
+
+    private WelcomeActivity welcomeActivity;
     private SettingActivityHandler settingActivityHandler;
-    private String PHONE_ID = "12345";
-    private String HOUSEHOLD_SEED = "200";
-    private String MIN_AGE = "18";
-    private String MAX_AGE = "69";
-    private String ENDPOINT_URL="http://www.google.com";
 
     @Before
     public void setup(){
-        householdListActivityMock = Robolectric.setupActivity(HouseholdListActivity.class);
-        settingActivityHandler = new SettingActivityHandler(householdListActivityMock);
-
+        welcomeActivity = Robolectric.setupActivity(WelcomeActivity.class);
+        settingActivityHandler = new SettingActivityHandler(welcomeActivity);
     }
 
     @Test
     public void ShouldCheckWhetherSettingsActivityCanBeStartedForProperId(){
         assertTrue(settingActivityHandler.shouldOpen(R.id.action_settings));
+        assertTrue(settingActivityHandler.shouldOpen(R.id.go_to_settings));
     }
 
     @Test
     public void ShouldCheckSettingsActivityShouldNotStartedForOtherId(){
         assertFalse(settingActivityHandler.shouldOpen(R.id.action_deferred));
-    }
-
-    @Test
-    public void ShouldBeAbleToOpenSettingActivityWithProperIntentValues(){
-        setValue(Constants.PHONE_ID, PHONE_ID);
-        setValue(Constants.ENDPOINT_URL,ENDPOINT_URL);
-        setValue(Constants.HOUSEHOLD_SEED,HOUSEHOLD_SEED);
-        setValue(Constants.MIN_AGE,MIN_AGE);
-        setValue(Constants.MAX_AGE,MAX_AGE);
-        ShadowActivity stepsActivityShadow = Robolectric.shadowOf(householdListActivityMock);
-
-        settingActivityHandler.open();
-        Intent newIntent = stepsActivityShadow.getNextStartedActivityForResult().intent;
-
-        assertTrue(newIntent.getComponent().getClassName().equals(SettingsActivity.class.getName()));
-        assertEquals(PHONE_ID,newIntent.getStringExtra(Constants.PHONE_ID));
-        assertEquals(HOUSEHOLD_SEED,newIntent.getStringExtra(Constants.HOUSEHOLD_SEED));
-        assertEquals(ENDPOINT_URL,newIntent.getStringExtra(Constants.ENDPOINT_URL));
-        assertEquals(MIN_AGE,newIntent.getStringExtra(Constants.MIN_AGE));
-        assertEquals(MAX_AGE,newIntent.getStringExtra(Constants.MAX_AGE));
-
-    }
-
-    @Test
-    public void ShouldNotOpenOtherActivity(){
-        setValue(Constants.PHONE_ID, PHONE_ID);
-        setValue(Constants.ENDPOINT_URL,ENDPOINT_URL);
-        setValue(Constants.HOUSEHOLD_SEED,HOUSEHOLD_SEED);
-        ShadowActivity stepsActivityShadow = Robolectric.shadowOf(householdListActivityMock);
-
-        settingActivityHandler.open();
-
-        Intent newIntent = stepsActivityShadow.getNextStartedActivityForResult().intent;
-
-        assertFalse(newIntent.getComponent().getClassName().equals(HouseholdActivity.class.getName()));
     }
 
     @Test
@@ -99,27 +55,12 @@ public class SettingActivityHandlerTest {
     }
 
     @Test
-    public void ShouldOpenStepsActivityAndSavePhoneIdHouseSeedEndpointUrl(){
-        Intent intent = new Intent();
-        intent.putExtra(Constants.PHONE_ID,PHONE_ID);
-        intent.putExtra(Constants.HOUSEHOLD_SEED,HOUSEHOLD_SEED);
-        intent.putExtra(Constants.MIN_AGE,MIN_AGE);
-        intent.putExtra(Constants.MAX_AGE,MAX_AGE);
-        intent.putExtra(Constants.ENDPOINT_URL,ENDPOINT_URL);
-
-
-        settingActivityHandler.handleResult(intent, Activity.RESULT_OK);
-
-        KeyValueStore keyValue = KeyValueStoreFactory.instance(householdListActivityMock);
-        assertEquals(PHONE_ID,keyValue.getString(Constants.PHONE_ID));
-        assertEquals(HOUSEHOLD_SEED,keyValue.getString(Constants.HOUSEHOLD_SEED));
-        assertEquals(ENDPOINT_URL,keyValue.getString(Constants.ENDPOINT_URL));
-        assertEquals(MIN_AGE,keyValue.getString(Constants.MIN_AGE));
-        assertEquals(MAX_AGE,keyValue.getString(Constants.MAX_AGE));
+    public void ShouldBeAbleToHandleResultAndStartMainOrchestraActivity(){
+        settingActivityHandler.handleResult(null, WelcomeActivity.RESULT_OK);
+        ShadowActivity shadowActivity = Robolectric.shadowOf(welcomeActivity);
+        Intent nextStartedActivity = shadowActivity.getNextStartedActivity();
+        assertEquals(MainActivityOrchestrator.class.getName(),nextStartedActivity.getComponent().getClassName());
+        assertTrue(welcomeActivity.isFinishing());
     }
 
-    private void setValue(String key, String value) {
-        KeyValueStore keyValueStore = KeyValueStoreFactory.instance(householdListActivityMock);
-        keyValueStore.putString(key, value);
-    }
 }
