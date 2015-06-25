@@ -13,6 +13,7 @@
     <string name="phone_id_message_title">Alert</string>
     <string name="phone_number">Phone Number:</string>
     <string name="phone_number_hint">Contact Phone Number</string>
+    <string name="household_id_label">Household ID</string>
     <string name="household_id_hint">Household ID</string>
     <string name="member_family_surname_hint">Family Surname</string>
     <string name="member_first_name_hint">First Name</string>
@@ -58,6 +59,7 @@
     <string name="select_participant_title">SELECT PARTICIPANT</string>
     <string name="add_new_household">Add New Household</string>
     <string name="add_new_member">Add New Member</string>
+    <string name="phone_id_name">"Device ID"</string>
     <string name="age_hint">Age (in years)</string>
     <string name="interview_now">INTERVIEW NOW</string>
     <string name="interview_later">INTERVIEW LATER</string>
