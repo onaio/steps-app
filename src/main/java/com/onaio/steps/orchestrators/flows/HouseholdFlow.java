@@ -64,7 +64,6 @@ public class HouseholdFlow implements IFlow {
 
     @Override
     public void validateOptions() throws InvalidDataException {
-        String deviceIdValue = ((TextView) activity.findViewById(R.id.deviceId)).getText().toString();
         String formIdValue = ((TextView) activity.findViewById(R.id.form_id)).getText().toString();
         String minAgeValue = ((TextView) activity.findViewById(R.id.min_age)).getText().toString();
         String maxAgeValue = ((TextView) activity.findViewById(R.id.max_age)).getText().toString();
@@ -72,11 +71,9 @@ public class HouseholdFlow implements IFlow {
         String endpointUrlValue = ((TextView) activity.findViewById(R.id.endpointUrl)).getText().toString();
 
         errorFields = new DataValidator(activity).
-                validate(deviceIdValue, getStringValue(R.string.device_id_label)).
                 validate(formIdValue, getStringValue(R.string.form_id)).
                 validate(minAgeValue, getStringValue(R.string.min_age)).
                 validate(maxAgeValue, getStringValue(R.string.max_age)).
-                validate(householdSeedValue, getStringValue(R.string.household_id_seed_label)).
                 validate(endpointUrlValue, getStringValue(R.string.endpoint_url_hint)).
                 finish();
         if (errorFields != null && !errorFields.isEmpty())

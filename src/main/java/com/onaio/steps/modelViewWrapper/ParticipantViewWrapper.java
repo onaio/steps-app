@@ -69,7 +69,7 @@ public class ParticipantViewWrapper extends MemberViewWrapper {
                 validate(firstName, getStringValue(R.string.member_first_name_hint)).
                 validate(gender,getStringValue(R.string.member_gender_hint)).
                 validate(ageString, getStringValue(R.string.age_hint)).
-                validateAgeRange(ageString, getStringValue(R.string.age_not_in_range)+"%d-%d)").
+                validateAgeRange(ageString, getStringValue(R.string.age_not_in_range)+" %d-%d)").
                 finish();
     }
 

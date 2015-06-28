@@ -15,7 +15,6 @@ import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.robolectric.Robolectric.shadowOf;
 
@@ -49,10 +48,6 @@ public class SettingsActivityTest {
         assertTrue(settingsActivity.isFinishing());
     }
 
-    @Test
-    public void ShouldNotFinishTheActivityWithNullSettingsValue(){
-        settingsActivity.save(null);
-        assertFalse(settingsActivity.isFinishing());
-    }
+
 
 }

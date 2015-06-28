@@ -75,13 +75,11 @@ public class HouseholdFlowTest {
         TextView maxage = (TextView) settingsActivity.findViewById(R.id.max_age);
         TextView minage = (TextView) settingsActivity.findViewById(R.id.min_age);
         TextView endPointUrl = (TextView) settingsActivity.findViewById(R.id.endpointUrl);
-        TextView householdseed = (TextView) settingsActivity.findViewById(R.id.household_seed);
         deviceId.setText("1234567");
         formId.setText("STEPS_Instrument_V3_1");
         maxage.setText("69");
         minage.setText("18");
         endPointUrl.setText("http://192.168.1.20:8000");
-        householdseed.setText("100");
         householdFlow.saveSettings();
         assertEquals("1234567", getValue(settingsActivity, Constants.PHONE_ID));
         assertEquals("STEPS_Instrument_V3_1", getValue(settingsActivity, Constants.FORM_ID));
@@ -103,8 +101,9 @@ public class HouseholdFlowTest {
         minage.setText("18");
         endPointUrl.setText("http://192.168.1.20:8000");
         householdseed.setText("100");
+
+        expectedException.expectMessage(String.format(error_string, "Settings", getStringValue(R.string.max_age)));
         expectedException.expect(InvalidDataException.class);
-        expectedException.expectMessage(String.format(error_string, "Settings", "Device ID", "Max Age"));
 
         householdFlow.validateOptions();
 
@@ -113,6 +112,10 @@ public class HouseholdFlowTest {
 
     private String getValue(Activity activity, String key) {
         return KeyValueStoreFactory.instance(activity).getString(key);
+    }
+
+    private String getStringValue(int value) {
+        return settingsActivity.getString(value);
     }
 
 
