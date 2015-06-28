@@ -30,6 +30,7 @@ public class ParticipantViewWrapper extends MemberViewWrapper {
     }
 
     public Participant getFromView() throws InvalidDataException {
+        errorFields.clear();
         String participantId = getParticipantId();
         String surname = getSurname();
         String firstName = getFirstName();
@@ -44,6 +45,7 @@ public class ParticipantViewWrapper extends MemberViewWrapper {
     }
 
     public Participant updateFromView(Participant participant) throws InvalidDataException {
+        errorFields.clear();
         String participantId = getParticipantId();
         String surname = getSurname();
         String firstName = getFirstName();
@@ -53,7 +55,6 @@ public class ParticipantViewWrapper extends MemberViewWrapper {
         if (!errorFields.isEmpty())
             throw new InvalidDataException(activity, getStringValue(R.string.participant), errorFields);
         return new Participant(participant.getId(),participantId, surname, firstName, gender, Integer.parseInt(ageString), participant.getStatus(),participant.getCreatedAt());
-
     }
     public void updateView(Participant participant){
         setParticipantId(participant.getParticipantID());

@@ -31,6 +31,7 @@ public class MemberViewWrapper {
     }
 
     public Member getFromView(Household household) throws InvalidDataException {
+        errorFields.clear();
         String surname = getSurname();
         String firstName = getFirstName();
         Gender gender = getGender();
@@ -42,6 +43,7 @@ public class MemberViewWrapper {
     }
 
     public Member updateFromView(Member member) throws InvalidDataException {
+        errorFields.clear();
         String surname = getSurname();
         String firstName = getFirstName();
         Gender gender = getGender();
