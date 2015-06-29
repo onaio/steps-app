@@ -102,12 +102,12 @@ public class HouseholdFlowTest {
         maxage.setText("");
         minage.setText("18");
         endPointUrl.setText("http://192.168.1.20:8000");
-        householdseed.setText("100");
+        householdseed.setText("");
+
         expectedException.expect(InvalidDataException.class);
-        expectedException.expectMessage(String.format(error_string, "Settings", "Device ID", "Max Age"));
+        expectedException.expectMessage(String.format(error_string, "Settings", "Device ID,Max age,Starting Household ID"));
 
         householdFlow.validateOptions();
-
     }
 
 
