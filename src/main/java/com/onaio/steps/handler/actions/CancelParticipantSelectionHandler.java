@@ -8,10 +8,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.onaio.steps.R;
+import com.onaio.steps.adapters.MemberAdapter;
 import com.onaio.steps.handler.factories.HouseholdActivityFactory;
 import com.onaio.steps.handler.interfaces.IMenuHandler;
 import com.onaio.steps.handler.interfaces.IMenuPreparer;
-import com.onaio.steps.adapters.MemberAdapter;
 import com.onaio.steps.helper.CustomDialog;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.model.Household;
@@ -63,6 +63,7 @@ public class CancelParticipantSelectionHandler implements IMenuPreparer,IMenuHan
         final ListView membersView = activity.getListView();
         final View confirmation = getView();
         CustomDialog customDialog = new CustomDialog();
+
         DialogInterface.OnClickListener confirmationDialogListener = new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -73,7 +74,6 @@ public class CancelParticipantSelectionHandler implements IMenuPreparer,IMenuHan
             }
         };
         customDialog.confirm(activity, confirmationDialogListener, CustomDialog.EmptyListener, confirmation, R.string.confirm_ok);
-
         return true;
     }
 
