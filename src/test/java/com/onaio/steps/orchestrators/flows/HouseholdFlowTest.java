@@ -98,14 +98,14 @@ public class HouseholdFlowTest {
         TextView endPointUrl = (TextView) settingsActivity.findViewById(R.id.endpointUrl);
         TextView householdseed = (TextView) settingsActivity.findViewById(R.id.household_seed);
         deviceId.setText("");
-        formId.setText("STEPS_Instrument_V3_1");
+        formId.setText("");
         maxage.setText("");
         minage.setText("18");
         endPointUrl.setText("http://192.168.1.20:8000");
         householdseed.setText("");
 
         expectedException.expect(InvalidDataException.class);
-        expectedException.expectMessage(String.format(error_string, "Settings", "Device ID,Max age,Starting Household ID"));
+        expectedException.expectMessage(String.format(error_string, "Settings", "Device ID,Form ID,Max age."));
 
         householdFlow.validateOptions();
     }
