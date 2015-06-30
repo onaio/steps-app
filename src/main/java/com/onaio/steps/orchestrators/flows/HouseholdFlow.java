@@ -67,7 +67,6 @@ public class HouseholdFlow implements IFlow {
         String formIdValue = ((TextView) activity.findViewById(R.id.form_id)).getText().toString();
         String minAgeValue = ((TextView) activity.findViewById(R.id.min_age)).getText().toString();
         String maxAgeValue = ((TextView) activity.findViewById(R.id.max_age)).getText().toString();
-        String householdSeedValue = ((TextView) activity.findViewById(R.id.household_seed)).getText().toString();
         String endpointUrlValue = ((TextView) activity.findViewById(R.id.endpointUrl)).getText().toString();
 
         errorFields = new DataValidator(activity).

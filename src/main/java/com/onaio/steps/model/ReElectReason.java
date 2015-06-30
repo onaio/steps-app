@@ -41,13 +41,15 @@ public class ReElectReason {
         this.id = id;
     }
 
-
     public long save(DatabaseHelper db){
         ContentValues values = new ContentValues();
-        values.put(ID, id);
-        values.put(REASON,reason);
-        values.put(HOUSEHOLD_ID,household.getId());
-        return db.save(values, TABLE_NAME);
+        if(! reason.isEmpty()) {
+            values.put(ID, id);
+            values.put(REASON, reason);
+            values.put(HOUSEHOLD_ID, household.getId());
+            return db.save(values, TABLE_NAME);
+        }
+        return (long)-1;
     }
 
     public static List<ReElectReason> getAll(DatabaseHelper db, Household household){

@@ -23,7 +23,6 @@ public class NewHouseholdActivity extends Activity {
     private final DatabaseHelper db = new DatabaseHelper(this);
     private String phoneId;
     private int householdSeed;
-    private int DELTA = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +43,7 @@ public class NewHouseholdActivity extends Activity {
     private void populateGeneratedHouseholdId() {
         TextView phoneIdView = (TextView) findViewById(R.id.generated_household_id);
         int householdsCount = Household.getAllCount(db);
-        int generatedId = householdSeed + householdsCount + DELTA;
+        int generatedId = householdSeed + householdsCount;
         phoneIdView.setText(String.format("%s-%d",phoneId, generatedId));
     }
 
@@ -52,7 +51,7 @@ public class NewHouseholdActivity extends Activity {
         Intent intent = getIntent();
         phoneId = intent.getStringExtra(PHONE_ID);
         String householdSeedString = intent.getStringExtra(HOUSEHOLD_SEED);
-        householdSeedString = householdSeedString == null || householdSeedString.equals("") ? "0" : householdSeedString;
+        householdSeedString = householdSeedString == null || householdSeedString.equals("") ? "1" : householdSeedString;
         householdSeed = Integer.parseInt(householdSeedString);
     }
 

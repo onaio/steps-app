@@ -58,7 +58,7 @@ public class NewHouseholdActivityTest {
         assertNotNull(generatedHouseholdId);
         assertNotNull(phoneNumber);
         assertEquals(newHouseholdActivity.getString(R.string.add_new_household), header.getText().toString());
-        assertEquals("12345-101", generatedHouseholdId.getText().toString());
+        assertEquals("12345-100", generatedHouseholdId.getText().toString());
         assertEquals(newHouseholdActivity.getString(R.string.add), doneButton.getText().toString());
     }
 
