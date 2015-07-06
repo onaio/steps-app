@@ -2,7 +2,6 @@ package com.onaio.steps.handler.activities;
 
 
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.view.View;
@@ -85,7 +84,6 @@ public class NewMemberActivityHandlerTest {
         newMemberActivityHandler.open();
 
         Mockito.verify(householdActivityMock,Mockito.never()).startActivityForResult(Mockito.argThat(matchIntent()), Mockito.eq(RequestCode.NEW_MEMBER.getCode()));
-        Mockito.verify(customDialogMock,Mockito.never()).confirm(Mockito.eq(householdActivityMock), Mockito.any(DialogInterface.OnClickListener.class),Mockito.eq(CustomDialog.EmptyListener),Mockito.eq(R.string.member_add_confirm),Mockito.eq(R.string.confirm_ok));
     }
 
     @Test
