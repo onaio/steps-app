@@ -52,8 +52,10 @@ public class MemberActivity extends Activity {
         member = (Member) intent.getSerializableExtra(MEMBER);
         TextView ageView = (TextView) findViewById(R.id.member_age);
         TextView genderView = (TextView) findViewById(R.id.member_gender);
+
         ageView.setText(String.valueOf(member.getAge()));
-        genderView.setText(String.valueOf(member.getGender()));
+
+        genderView.setText(String.format(member.getGender().getInternationalizedString(this)));
     }
 
     @Override

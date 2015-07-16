@@ -24,7 +24,7 @@
     <string name="action_member">"Miembro"</string>
     <string name="action_edit">"Editar"</string>
     <string name="action_delete">"Borrar"</string>
-    <string name="refused">"Rechazado"</string>
+    <string name="refused">"RECHAZADO"</string>
     <string name="reason">"Razón"</string>
     <string name="confirm_ok">"Confirme"</string>
     <string name="ok">"OK"</string>
@@ -35,7 +35,7 @@
     <string name="survey_deferred_title">"Encuesta diferida"</string>
     <string name="survey_deferred_message">"Esta encuesta ha sido diferida, puede completar la encuesta para este hogar más tarde"</string>
     <string name="odk_app_not_installed">"La aplicación ODK Collect no está instalada, por favor, instálela antes de continuar"</string>
-    <string name="form_not_present">"El formulario requerido no está disponible. Por favor descarge el formulario e inténtelo de nuevo"</string>
+    <string name="form_not_present">"El formulario requerido no está disponible. Por favor descarge el formulario e inténtelo de nuevo."</string>
     <string name="form_not_present_title">"Formulario faltante"</string>
     <string name="something_went_wrong_try_again">"Algo ha salido mal, por favor, inténtelo de nuevo."</string>
     <string name="error_title">"Error"</string>

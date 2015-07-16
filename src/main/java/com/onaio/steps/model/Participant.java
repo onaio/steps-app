@@ -1,5 +1,6 @@
 package com.onaio.steps.model;
 
+import android.app.Activity;
 import android.content.ContentValues;
 import android.database.Cursor;
 
@@ -78,8 +79,8 @@ public class Participant implements Serializable {
         return String.format("%s %s", familySurname, firstName);
     }
 
-    public String getFormattedDetail() {
-        return String.format(gender + ", " + age);
+    public String getFormattedDetail(Activity activity) {
+        return String.format(gender.getInternationalizedString(activity) +", "+ age);
     }
 
 
