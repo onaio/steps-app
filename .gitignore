@@ -8,3 +8,5 @@ out/*
 local.properties
 gradle/*
 gradle*
+*.apk
+*.jks
