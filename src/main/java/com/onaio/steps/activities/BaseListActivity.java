@@ -81,20 +81,15 @@ public abstract class BaseListActivity extends ListActivity{
     private void setWatermark() {
         final RelativeLayout homePage = (RelativeLayout)findViewById(R.id.main_layout);
         if(homePage == null) return;
-        Thread wThread = new Thread() {
+        runOnUiThread(new Runnable() {
             public void run() {
-                runOnUiThread(new Runnable() {
-                    public void run() {
-                        Window win = getWindow();
-                        View contentView = win.findViewById(Window.ID_ANDROID_CONTENT);
-                        ImageView imageView = (ImageView) findViewById(R.id.item_image);
-                        imageView.getLayoutParams().height = contentView.getHeight() / 2;
-                        imageView.getLayoutParams().width = contentView.getWidth() / 2;
-                    }
-                });
+                Window win = getWindow();
+                View contentView = win.findViewById(Window.ID_ANDROID_CONTENT);
+                ImageView imageView = (ImageView) findViewById(R.id.item_image);
+                imageView.getLayoutParams().height = contentView.getHeight() / 2;
+                imageView.getLayoutParams().width = contentView.getWidth() / 2;
             }
-        };
-        wThread.start();
+        });
     }
 
     public void handleCustomMenu(View view){
