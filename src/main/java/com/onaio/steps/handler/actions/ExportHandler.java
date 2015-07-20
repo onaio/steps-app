@@ -1,9 +1,15 @@
 package com.onaio.steps.handler.actions;
 
 import android.app.ListActivity;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Environment;
+import android.provider.Settings;
+import android.telephony.TelephonyManager;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.onaio.steps.R;
 import com.onaio.steps.handler.interfaces.IMenuHandler;
@@ -12,6 +18,7 @@ import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.CustomDialog;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.helper.FileUtil;
+import com.onaio.steps.helper.KeyValueStoreFactory;
 import com.onaio.steps.helper.Logger;
 import com.onaio.steps.helper.UploadFileTask;
 import com.onaio.steps.model.Household;
@@ -34,6 +41,8 @@ public class ExportHandler implements IMenuHandler,IMenuPreparer {
     private DatabaseHelper databaseHelper;
     private Menu menu;
     private int MENU_ID = R.id.action_export;
+
+    public static final String APP_DIR = "STEPS";
 
     public ExportHandler(ListActivity activity) {
         this.activity = activity;
@@ -65,7 +74,14 @@ public class ExportHandler implements IMenuHandler,IMenuPreparer {
     }
 
     private File saveFile() throws IOException {
-        FileUtil fileUtil = new FileUtil().withHeader(EXPORT_FIELDS.split(","));
+        //Remove whitespaces from header names
+        String[] headers = EXPORT_FIELDS.split(",");
+        for (int i = 0; i < headers.length; i++) {
+            headers[i] = headers[i].trim();
+        }
+        String deviceId = getdeviceId();
+
+        FileUtil fileUtil = new FileUtil().withHeader(headers);
         for(Household household: households) {
             List<ReElectReason> reasons = ReElectReason.getAll(databaseHelper, household);
             List<Member> membersPerHousehold = household.getAllMembersForExport(databaseHelper);
@@ -83,10 +99,37 @@ public class ExportHandler implements IMenuHandler,IMenuPreparer {
                 setStatus(household, member, row);
                 row.add(String.valueOf(reasons.size()));
                 row.add(StringUtils.join(reasons.toArray(), ';'));
+                //Add enumerator and device Id
+                row.add(KeyValueStoreFactory.instance(activity).getString(PHONE_ID));
+                row.add(deviceId);
                 fileUtil.withData(row.toArray(new String[row.size()]));
             }
         }
-        return fileUtil.writeCSV(activity.getFilesDir() + "/" + Constants.EXPORT_FILE_NAME);
+        //Write the csv to external storage for the user to access.
+        saveToExternalStorage(fileUtil);
+
+        return fileUtil.writeCSV(activity.getFilesDir() + "/" + Constants.EXPORT_FILE_NAME + "_" + deviceId + ".csv");
+    }
+
+    //
+    public void saveToExternalStorage(FileUtil fileUtil) throws IOException {
+        if (createAppDir()) {
+            fileUtil.writeCSV(Environment.getExternalStorageDirectory() + "/"
+                    + APP_DIR + "/" + Constants.EXPORT_FILE_NAME + ".csv");
+        } else {
+            Toast.makeText(activity, "Could not save file to sdcard", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    //Create a steps directory in external storage if it does not exist.
+    public static boolean createAppDir() {
+        File folder = new File(Environment.getExternalStorageDirectory() + "/"
+                + APP_DIR);
+        boolean createStatus = true;
+        if (!folder.exists()) {
+            createStatus = folder.mkdirs() ? true : false;
+        }
+        return createStatus;
     }
 
     private void setStatus(Household household, Member member, ArrayList<String> row) {
@@ -124,5 +167,17 @@ public class ExportHandler implements IMenuHandler,IMenuPreparer {
         return this;
     }
 
-
+    //Get the device Id
+    public String getdeviceId() {
+        String deviceId = null;
+        TelephonyManager telephonyManager =
+                (TelephonyManager)activity.getSystemService(Context.TELEPHONY_SERVICE);
+        if (telephonyManager != null) {
+            deviceId = telephonyManager.getDeviceId();
+        }
+        if (TextUtils.isEmpty(deviceId)) {
+            deviceId = Settings.Secure.getString(activity.getContentResolver(), Settings.Secure.ANDROID_ID);
+        }
+        return deviceId;
+    }
 }
