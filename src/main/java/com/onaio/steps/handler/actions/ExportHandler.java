@@ -1,12 +1,8 @@
 package com.onaio.steps.handler.actions;
 
 import android.app.ListActivity;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Environment;
-import android.provider.Settings;
-import android.telephony.TelephonyManager;
-import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -69,7 +65,7 @@ public class ExportHandler implements IMenuHandler,IMenuPreparer {
                 }
             }
         };
-        new CustomDialog().confirm(activity, uploadConfirmListener, CustomDialog.EmptyListener, R.string.export_start_message,R.string.action_export);
+        new CustomDialog().confirm(activity, uploadConfirmListener, CustomDialog.EmptyListener, R.string.export_start_message, R.string.action_export);
         return true;
     }
 
@@ -79,7 +75,7 @@ public class ExportHandler implements IMenuHandler,IMenuPreparer {
         for (int i = 0; i < headers.length; i++) {
             headers[i] = headers[i].trim();
         }
-        String deviceId = getdeviceId();
+        String deviceId = getDeviceId();
 
         FileUtil fileUtil = new FileUtil().withHeader(headers);
         for(Household household: households) {
@@ -99,8 +95,6 @@ public class ExportHandler implements IMenuHandler,IMenuPreparer {
                 setStatus(household, member, row);
                 row.add(String.valueOf(reasons.size()));
                 row.add(StringUtils.join(reasons.toArray(), ';'));
-                //Add enumerator and device Id
-                row.add(KeyValueStoreFactory.instance(activity).getString(PHONE_ID));
                 row.add(deviceId);
                 fileUtil.withData(row.toArray(new String[row.size()]));
             }
@@ -115,7 +109,7 @@ public class ExportHandler implements IMenuHandler,IMenuPreparer {
     public void saveToExternalStorage(FileUtil fileUtil) throws IOException {
         if (createAppDir()) {
             fileUtil.writeCSV(Environment.getExternalStorageDirectory() + "/"
-                    + APP_DIR + "/" + Constants.EXPORT_FILE_NAME + ".csv");
+                    + APP_DIR + "/" + Constants.EXPORT_FILE_NAME + "_" + getDeviceId() + ".csv");
         } else {
             Toast.makeText(activity, "Could not save file to sdcard", Toast.LENGTH_LONG).show();
         }
@@ -167,17 +161,7 @@ public class ExportHandler implements IMenuHandler,IMenuPreparer {
         return this;
     }
 
-    //Get the device Id
-    public String getdeviceId() {
-        String deviceId = null;
-        TelephonyManager telephonyManager =
-                (TelephonyManager)activity.getSystemService(Context.TELEPHONY_SERVICE);
-        if (telephonyManager != null) {
-            deviceId = telephonyManager.getDeviceId();
-        }
-        if (TextUtils.isEmpty(deviceId)) {
-            deviceId = Settings.Secure.getString(activity.getContentResolver(), Settings.Secure.ANDROID_ID);
-        }
-        return deviceId;
+    public String getDeviceId() {
+        return KeyValueStoreFactory.instance(activity).getString(PHONE_ID);
     }
 }
