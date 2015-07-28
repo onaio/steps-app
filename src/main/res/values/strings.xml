@@ -76,6 +76,8 @@
     <string name="export_complete">Export Complete</string>
     <string name="export_complete_message">The data has successfully exported.</string>
     <string name="export_start_message">Please confirm you want to export household data.</string>
+    <string name="import_complete">Import Complete</string>
+    <string name="import_complete_message">The data has successfully been imported.</string>
     <string name="import_fail_message">Import failed, please use a valid csv file and try again.</string>
     <string name="continue_interview">Continue Interview</string>
     <string name="household_comments">Comments</string>

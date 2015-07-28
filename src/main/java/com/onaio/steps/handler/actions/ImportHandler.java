@@ -4,9 +4,11 @@ import android.app.ListActivity;
 import android.os.Environment;
 
 import com.onaio.steps.R;
+import com.onaio.steps.activities.HouseholdListActivity;
 import com.onaio.steps.handler.interfaces.IMenuHandler;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.CustomDialog;
+import com.onaio.steps.helper.CustomNotification;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.helper.DownloadFileTask;
 import com.onaio.steps.helper.FileUtil;
@@ -49,17 +51,18 @@ public class ImportHandler implements IMenuHandler {
 
     @Override
     public boolean open() {
+        String deviceId = KeyValueStoreFactory.instance(activity).getString(PHONE_ID);
         String filename = Environment.getExternalStorageDirectory()+"/"+Constants.APP_DIR+"/"+Constants.EXPORT_FILE_NAME+"_"+
-                KeyValueStoreFactory.instance(activity).getString(PHONE_ID)+".csv";
+                deviceId +".csv";
         DownloadFileTask handler = new DownloadFileTask(this, filename);
-        handler.execute(KeyValueStoreFactory.instance(activity).getString(IMPORT_URL));
+        handler.execute(KeyValueStoreFactory.instance(activity).getString(IMPORT_URL)+"/"+deviceId);
         return true;
     }
 
     public void importDataFromDownloadedFile(String filepath) {
         try {
             List<String[]> rows = fileUtil.readFile(filepath);
-            for(String[] row:rows){
+            for(String[] row : rows){
                 //Validate for 10 data
                 String phoneNumber = row[0];
                 String householdName = row[1];
@@ -80,26 +83,30 @@ public class ImportHandler implements IMenuHandler {
                     household.save(db);
                 }
                 //validate for members
-                Member member = new Member(surname, firstName, Gender.valueOf(gender), Integer.parseInt(age), household, Boolean.getBoolean(deleted));
-                member.setMemberHouseholdId(memberHouseholdId);
-                member.save(db);
-                if(!(surveyStatus.equals(Constants.SURVEY_NA) || surveyStatus.equals(InterviewStatus.NOT_SELECTED.toString()) )) {
-                    household.setStatus(InterviewStatus.valueOf(surveyStatus));
-                    household.setSelectedMemberId(String.valueOf(member.getId()));
-                    household.update(db);
-                }
-                int reasonCount = ReElectReason.count(db, household);
-                //validate for reasons
-                if(reasonCount != 0){
-                    String[] separateReasons = reasons.split(";");
-                    for(String reason:separateReasons){
-                        ReElectReason reElectReason = new ReElectReason(reason, household);
-                        reElectReason.save(db);
+                Member member = Member.find_by_household_id(db, household, memberHouseholdId);
+                if (member == null) {
+                    member = new Member(surname, firstName, Gender.valueOf(gender), Integer.parseInt(age), household, Boolean.getBoolean(deleted));
+                    member.setMemberHouseholdId(memberHouseholdId);
+                    member.save(db);
+                    if (!(surveyStatus.equals(Constants.SURVEY_NA) || surveyStatus.equals(InterviewStatus.NOT_SELECTED.toString()))) {
+                        household.setStatus(InterviewStatus.valueOf(surveyStatus));
+                        household.setSelectedMemberId(String.valueOf(member.getId()));
+                        household.update(db);
+                    }
+                    int reasonCount = ReElectReason.count(db, household);
+                    //validate for reasons
+                    if (reasonCount != 0) {
+                        String[] separateReasons = reasons.split(";");
+                        for (String reason : separateReasons) {
+                            ReElectReason reElectReason = new ReElectReason(reason, household);
+                            reElectReason.save(db);
+                        }
                     }
                 }
-
-
             }
+            new CustomNotification().notify(activity, R.string.import_complete, R.string.import_complete_message);
+            // Show imported households
+            activity.recreate();
         } catch (IOException e) {
             new Logger().log(e,"Import failed.");
             new CustomDialog().notify(activity,CustomDialog.EmptyListener,R.string.error_title,R.string.import_fail_message);
