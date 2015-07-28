@@ -3,6 +3,7 @@ package com.onaio.steps.handler.actions;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.PowerManager;
+import android.widget.Toast;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -14,16 +15,12 @@ import java.net.URL;
 /**
  * Created by coder on 7/27/15.
  */
-// usually, subclasses of AsyncTask are declared inside the activity class.
-// that way, you can easily modify the UI thread from here
 public class DownloadTask extends AsyncTask<String, Integer, String> {
-
-    private Context context;
-    private PowerManager.WakeLock mWakeLock;
+    ImportHandler importHandler;
     String filename;
 
-    public DownloadTask(Context context, String filename) {
-        this.context = context;
+    public DownloadTask(ImportHandler importHandler, String filename) {
+        this.importHandler = importHandler;
         this.filename = filename;
     }
 
@@ -84,8 +81,8 @@ public class DownloadTask extends AsyncTask<String, Integer, String> {
         return null;
     }
 
-    protected void onPostExecute(Long result) {
-        showDialog("Downloaded " + result + " bytes");
+    @Override
+    protected void onPostExecute(String result) {
+        importHandler.importDataFromDownloadedFile(filename);
     }
-
 }

@@ -20,9 +20,11 @@ import static com.onaio.steps.helper.Constants.ENDPOINT_URL;
 import static com.onaio.steps.helper.Constants.FLOW_TYPE;
 import static com.onaio.steps.helper.Constants.FORM_ID;
 import static com.onaio.steps.helper.Constants.HOUSEHOLD_SEED;
+import static com.onaio.steps.helper.Constants.IMPORT_URL;
 import static com.onaio.steps.helper.Constants.MAX_AGE;
 import static com.onaio.steps.helper.Constants.MIN_AGE;
 import static com.onaio.steps.helper.Constants.PHONE_ID;
+import static com.onaio.steps.helper.Constants.CAMPAIGN_ID;
 
 
 public class HouseholdFlow implements IFlow {
@@ -48,11 +50,13 @@ public class HouseholdFlow implements IFlow {
 
     @Override
     public void saveSettings() {
+        saveData(R.id.campaignId, CAMPAIGN_ID);
         saveData(R.id.deviceId, PHONE_ID);
         saveData(R.id.form_id, FORM_ID);
         saveData(R.id.min_age, MIN_AGE);
         saveData(R.id.max_age, MAX_AGE);
         saveData(R.id.endpointUrl, ENDPOINT_URL);
+        saveData(R.id.importUrl, IMPORT_URL);
         saveData(R.id.household_seed, HOUSEHOLD_SEED);
         saveSafely(activity, FLOW_TYPE, FlowType.Household.toString());
     }
@@ -81,12 +85,14 @@ public class HouseholdFlow implements IFlow {
     }
 
     private void populateData() {
+        setData(R.id.campaignId, Constants.CAMPAIGN_ID);
         setData(R.id.deviceId, Constants.PHONE_ID);
         setData(R.id.form_id, Constants.FORM_ID);
         setData(R.id.min_age, Constants.MIN_AGE);
         setData(R.id.max_age, Constants.MAX_AGE);
         setData(R.id.household_seed, Constants.HOUSEHOLD_SEED);
         setData(R.id.endpointUrl, Constants.ENDPOINT_URL);
+        setData(R.id.importUrl, Constants.IMPORT_URL);
     }
 
     private void setData(int viewId, String keyId) {

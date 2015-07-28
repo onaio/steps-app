@@ -88,6 +88,27 @@
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/campaignId_label"
+        android:text="@string/campaign_id_label"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:ems="10"
+        android:id="@+id/campaignId"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:singleLine="false"
+        android:textColor="@android:color/black"
+        android:hint="@string/campaign_id_label"
+        />
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
         android:text="@string/device_id_label"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
@@ -194,6 +215,27 @@
         android:ems="10"
         android:inputType="textUri"
         android:hint="@string/endpoint_url_hint"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:textColor="@android:color/black"/>
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/import_url_hint"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="20dp"
+        android:id="@+id/importUrl_label"
+        />
+
+    <EditText
+        android:id="@+id/importUrl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textUri"
+        android:hint="@string/import_url_hint"
         android:layout_marginTop="5dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"

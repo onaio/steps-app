@@ -3,6 +3,8 @@ package com.onaio.steps.handler.actions;
 import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Intent;
+import android.os.Environment;
+import android.widget.Toast;
 
 import com.onaio.steps.R;
 import com.onaio.steps.handler.interfaces.IActivityResultHandler;
@@ -11,6 +13,7 @@ import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.CustomDialog;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.helper.FileUtil;
+import com.onaio.steps.helper.KeyValueStoreFactory;
 import com.onaio.steps.helper.Logger;
 import com.onaio.steps.model.Gender;
 import com.onaio.steps.model.Household;
@@ -24,7 +27,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-public class ImportHandler implements IMenuHandler, IActivityResultHandler {
+import static com.onaio.steps.helper.Constants.IMPORT_URL;
+import static com.onaio.steps.helper.Constants.PHONE_ID;
+
+public class ImportHandler implements IMenuHandler {
     private final DatabaseHelper db;
     private ListActivity activity;
     private static final int MENU_ID= R.id.action_import;
@@ -47,18 +53,16 @@ public class ImportHandler implements IMenuHandler, IActivityResultHandler {
 
     @Override
     public boolean open() {
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("file/*");
-        activity.startActivityForResult(intent, RequestCode.IMPORT.getCode());
+        String filename = Environment.getExternalStorageDirectory()+"/"+Constants.APP_DIR+"/"+Constants.EXPORT_FILE_NAME+"_"+
+                KeyValueStoreFactory.instance(activity).getString(PHONE_ID)+".csv";
+        DownloadTask handler = new DownloadTask(this, filename);
+        handler.execute(KeyValueStoreFactory.instance(activity).getString(IMPORT_URL));
         return true;
     }
 
-    @Override
-    public void handleResult(Intent data, int resultCode) {
-        if(resultCode!= Activity.RESULT_OK)
-            return;
+    public void importDataFromDownloadedFile(String filepath) {
         try {
-            List<String[]> rows = fileUtil.readFile(data.getData().getPath());
+            List<String[]> rows = fileUtil.readFile(filepath);
             for(String[] row:rows){
                 //Validate for 10 data
                 String phoneNumber = row[0];
@@ -104,10 +108,5 @@ public class ImportHandler implements IMenuHandler, IActivityResultHandler {
             new Logger().log(e,"Import failed.");
             new CustomDialog().notify(activity,CustomDialog.EmptyListener,R.string.error_title,R.string.import_fail_message);
         }
-    }
-
-    @Override
-    public boolean canHandleResult(int requestCode) {
-        return requestCode == RequestCode.IMPORT.getCode();
     }
 }

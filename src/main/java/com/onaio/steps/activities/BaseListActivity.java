@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.onaio.steps.R;
 import com.onaio.steps.handler.interfaces.IActivityResultHandler;
@@ -86,8 +87,10 @@ public abstract class BaseListActivity extends ListActivity{
                 Window win = getWindow();
                 View contentView = win.findViewById(Window.ID_ANDROID_CONTENT);
                 ImageView imageView = (ImageView) findViewById(R.id.item_image);
-                imageView.getLayoutParams().height = contentView.getHeight() / 2;
-                imageView.getLayoutParams().width = contentView.getWidth() / 2;
+                int height = contentView.getHeight() / 2;
+                int width = contentView.getWidth() / 2;
+                imageView.getLayoutParams().height = height == 0 ? 300 : height;
+                imageView.getLayoutParams().width = width == 0 ? 300 : width;
             }
         });
     }

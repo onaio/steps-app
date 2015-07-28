@@ -96,6 +96,7 @@ public class ExportHandler implements IMenuHandler,IMenuPreparer {
                 row.add(String.valueOf(reasons.size()));
                 row.add(StringUtils.join(reasons.toArray(), ';'));
                 row.add(deviceId);
+                row.add(KeyValueStoreFactory.instance(activity).getString(CAMPAIGN_ID));
                 fileUtil.withData(row.toArray(new String[row.size()]));
             }
         }
