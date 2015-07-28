@@ -1,9 +1,11 @@
-package com.onaio.steps.handler.actions;
+package com.onaio.steps.helper;
 
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.PowerManager;
 import android.widget.Toast;
+
+import com.onaio.steps.handler.actions.ImportHandler;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -15,11 +17,11 @@ import java.net.URL;
 /**
  * Created by coder on 7/27/15.
  */
-public class DownloadTask extends AsyncTask<String, Integer, String> {
+public class DownloadFileTask extends AsyncTask<String, Integer, String> {
     ImportHandler importHandler;
     String filename;
 
-    public DownloadTask(ImportHandler importHandler, String filename) {
+    public DownloadFileTask(ImportHandler importHandler, String filename) {
         this.importHandler = importHandler;
         this.filename = filename;
     }

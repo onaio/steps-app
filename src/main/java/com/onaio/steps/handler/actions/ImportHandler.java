@@ -1,17 +1,14 @@
 package com.onaio.steps.handler.actions;
 
-import android.app.Activity;
 import android.app.ListActivity;
-import android.content.Intent;
 import android.os.Environment;
-import android.widget.Toast;
 
 import com.onaio.steps.R;
-import com.onaio.steps.handler.interfaces.IActivityResultHandler;
 import com.onaio.steps.handler.interfaces.IMenuHandler;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.CustomDialog;
 import com.onaio.steps.helper.DatabaseHelper;
+import com.onaio.steps.helper.DownloadFileTask;
 import com.onaio.steps.helper.FileUtil;
 import com.onaio.steps.helper.KeyValueStoreFactory;
 import com.onaio.steps.helper.Logger;
@@ -20,7 +17,6 @@ import com.onaio.steps.model.Household;
 import com.onaio.steps.model.InterviewStatus;
 import com.onaio.steps.model.Member;
 import com.onaio.steps.model.ReElectReason;
-import com.onaio.steps.model.RequestCode;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -55,7 +51,7 @@ public class ImportHandler implements IMenuHandler {
     public boolean open() {
         String filename = Environment.getExternalStorageDirectory()+"/"+Constants.APP_DIR+"/"+Constants.EXPORT_FILE_NAME+"_"+
                 KeyValueStoreFactory.instance(activity).getString(PHONE_ID)+".csv";
-        DownloadTask handler = new DownloadTask(this, filename);
+        DownloadFileTask handler = new DownloadFileTask(this, filename);
         handler.execute(KeyValueStoreFactory.instance(activity).getString(IMPORT_URL));
         return true;
     }

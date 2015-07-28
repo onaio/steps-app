@@ -33,7 +33,6 @@ public class HouseholdListActivityFactory {
     public static List<IActivityResultHandler> getResultHandlers(ListActivity activity){
         ArrayList<IActivityResultHandler> handlers = new ArrayList<IActivityResultHandler>();
         handlers.add(new NewHouseholdActivityHandler(activity));
-        //handlers.add(new ImportHandler(activity));
         handlers.add(new SettingActivityHandler(activity));
         return handlers;
     }

@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.onaio.steps.R;
 import com.onaio.steps.handler.interfaces.IActivityResultHandler;
