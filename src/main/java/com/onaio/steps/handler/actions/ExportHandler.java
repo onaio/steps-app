@@ -16,6 +16,7 @@ import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.helper.FileUtil;
 import com.onaio.steps.helper.KeyValueStoreFactory;
 import com.onaio.steps.helper.Logger;
+import com.onaio.steps.helper.NetworkConnectivity;
 import com.onaio.steps.helper.UploadFileTask;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.Member;
@@ -58,7 +59,11 @@ public class ExportHandler implements IMenuHandler,IMenuPreparer {
             public void onClick(DialogInterface dialogInterface, int i) {
                 try {
                     File file = saveFile();
-                    new UploadFileTask(activity).execute(file);
+                    if (NetworkConnectivity.isNetworkAvailable(activity)) {
+                        new UploadFileTask(activity).execute(file);
+                    } else {
+                        new CustomDialog().notify(activity, CustomDialog.EmptyListener, R.string.error_title, R.string.fail_no_connectivity);
+                    }
                 } catch (IOException e) {
                     new Logger().log(e,"Not able to write CSV file for export.");
                     new CustomDialog().notify(activity, CustomDialog.EmptyListener, R.string.error_title, R.string.something_went_wrong_try_again);

@@ -1,6 +1,9 @@
 package com.onaio.steps.handler.actions;
 
 import android.app.ListActivity;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Environment;
 
 import com.onaio.steps.R;
@@ -14,6 +17,7 @@ import com.onaio.steps.helper.DownloadFileTask;
 import com.onaio.steps.helper.FileUtil;
 import com.onaio.steps.helper.KeyValueStoreFactory;
 import com.onaio.steps.helper.Logger;
+import com.onaio.steps.helper.NetworkConnectivity;
 import com.onaio.steps.model.Gender;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.InterviewStatus;
@@ -108,8 +112,12 @@ public class ImportHandler implements IMenuHandler {
             // Show imported households
             activity.recreate();
         } catch (IOException e) {
-            new Logger().log(e,"Import failed.");
-            new CustomDialog().notify(activity,CustomDialog.EmptyListener,R.string.error_title,R.string.import_fail_message);
+            if (NetworkConnectivity.isNetworkAvailable(activity)) {
+                new Logger().log(e, "Import failed.");
+                new CustomDialog().notify(activity, CustomDialog.EmptyListener, R.string.error_title, R.string.import_fail_message);
+            } else {
+                new CustomDialog().notify(activity, CustomDialog.EmptyListener, R.string.error_title, R.string.fail_no_connectivity);
+            }
         }
     }
 }
