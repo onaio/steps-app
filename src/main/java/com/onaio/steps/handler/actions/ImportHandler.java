@@ -1,13 +1,9 @@
 package com.onaio.steps.handler.actions;
 
 import android.app.ListActivity;
-import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Environment;
 
 import com.onaio.steps.R;
-import com.onaio.steps.activities.HouseholdListActivity;
 import com.onaio.steps.handler.interfaces.IMenuHandler;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.CustomDialog;
