@@ -24,7 +24,7 @@ import static com.onaio.steps.helper.Constants.IMPORT_URL;
 import static com.onaio.steps.helper.Constants.MAX_AGE;
 import static com.onaio.steps.helper.Constants.MIN_AGE;
 import static com.onaio.steps.helper.Constants.PHONE_ID;
-import static com.onaio.steps.helper.Constants.CAMPAIGN_ID;
+import static com.onaio.steps.helper.Constants.SURVEY_ID;
 
 
 public class HouseholdFlow implements IFlow {
@@ -50,7 +50,7 @@ public class HouseholdFlow implements IFlow {
 
     @Override
     public void saveSettings() {
-        saveData(R.id.campaignId, CAMPAIGN_ID);
+        saveData(R.id.campaignId, SURVEY_ID);
         saveData(R.id.deviceId, PHONE_ID);
         saveData(R.id.form_id, FORM_ID);
         saveData(R.id.min_age, MIN_AGE);
@@ -68,16 +68,22 @@ public class HouseholdFlow implements IFlow {
 
     @Override
     public void validateOptions() throws InvalidDataException {
+        String surveyIdValue = ((TextView) activity.findViewById(R.id.campaignId)).getText().toString();
+        String deviceIdValue = ((TextView) activity.findViewById(R.id.deviceId)).getText().toString();
         String formIdValue = ((TextView) activity.findViewById(R.id.form_id)).getText().toString();
         String minAgeValue = ((TextView) activity.findViewById(R.id.min_age)).getText().toString();
         String maxAgeValue = ((TextView) activity.findViewById(R.id.max_age)).getText().toString();
         String endpointUrlValue = ((TextView) activity.findViewById(R.id.endpointUrl)).getText().toString();
+        String importUrlValue = ((TextView) activity.findViewById(R.id.importUrl)).getText().toString();
 
         errorFields = new DataValidator(activity).
+                validate(surveyIdValue, getStringValue(R.string.survey_id_label)).
+                validate(deviceIdValue, getStringValue(R.string.device_id_label)).
                 validate(formIdValue, getStringValue(R.string.form_id)).
                 validate(minAgeValue, getStringValue(R.string.min_age)).
                 validate(maxAgeValue, getStringValue(R.string.max_age)).
                 validate(endpointUrlValue, getStringValue(R.string.endpoint_url_hint)).
+                validate(importUrlValue, getStringValue(R.string.import_url_hint)).
                 finish();
         if (errorFields != null && !errorFields.isEmpty())
             throw new InvalidDataException(activity, getStringValue(R.string.action_settings), errorFields);
@@ -85,7 +91,7 @@ public class HouseholdFlow implements IFlow {
     }
 
     private void populateData() {
-        setData(R.id.campaignId, Constants.CAMPAIGN_ID);
+        setData(R.id.campaignId, Constants.SURVEY_ID);
         setData(R.id.deviceId, Constants.PHONE_ID);
         setData(R.id.form_id, Constants.FORM_ID);
         setData(R.id.min_age, Constants.MIN_AGE);

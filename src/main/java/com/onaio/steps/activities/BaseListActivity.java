@@ -2,20 +2,22 @@ package com.onaio.steps.activities;
 
 
 import android.app.ListActivity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.onaio.steps.R;
+import com.onaio.steps.handler.actions.ImportHandler;
 import com.onaio.steps.handler.interfaces.IActivityResultHandler;
 import com.onaio.steps.handler.interfaces.IMenuHandler;
 import com.onaio.steps.handler.interfaces.IMenuPreparer;
+import com.onaio.steps.helper.CustomDialog;
 import com.onaio.steps.helper.DatabaseHelper;
 
 import java.util.List;
@@ -48,9 +50,26 @@ public abstract class BaseListActivity extends ListActivity{
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         List<IMenuHandler> activityHandlers = getMenuHandlers();
-        for(IMenuHandler handler : activityHandlers){
-            if(handler.shouldOpen(item.getItemId()) )
-                return handler.open();
+        for(final IMenuHandler handler : activityHandlers){
+            if(handler.shouldOpen(item.getItemId()) ) {
+                if (handler instanceof ImportHandler) {
+                    DialogInterface.OnClickListener confirmListener = new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            handler.open();
+                        }
+                    };
+                    DialogInterface.OnClickListener cancelListener = new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            //Dismiss dialog.
+                        }
+                    };
+                    new CustomDialog().confirm(this, confirmListener, cancelListener, R.string.warning_merging_data, R.string.warning_title);
+                } else {
+                    return handler.open();
+                }
+            }
         }
         return super.onOptionsItemSelected(item);
     }
@@ -83,13 +102,11 @@ public abstract class BaseListActivity extends ListActivity{
         if(homePage == null) return;
         runOnUiThread(new Runnable() {
             public void run() {
-                Window win = getWindow();
-                View contentView = win.findViewById(Window.ID_ANDROID_CONTENT);
                 ImageView imageView = (ImageView) findViewById(R.id.item_image);
-                int height = contentView.getHeight() / 2;
-                int width = contentView.getWidth() / 2;
-                imageView.getLayoutParams().height = height == 0 ? 300 : height;
-                imageView.getLayoutParams().width = width == 0 ? 300 : width;
+                imageView.getLayoutParams().height = (int) (getResources().getDimension(R.dimen.watermark_height)
+                        / getResources().getDisplayMetrics().density);
+                imageView.getLayoutParams().width = (int) (getResources().getDimension(R.dimen.watermark_width)
+                        / getResources().getDisplayMetrics().density);
             }
         });
     }

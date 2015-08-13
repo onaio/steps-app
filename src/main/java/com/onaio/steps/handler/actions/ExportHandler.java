@@ -101,36 +101,17 @@ public class ExportHandler implements IMenuHandler,IMenuPreparer {
                 row.add(String.valueOf(reasons.size()));
                 row.add(StringUtils.join(reasons.toArray(), ';'));
                 row.add(deviceId);
-                row.add(KeyValueStoreFactory.instance(activity).getString(CAMPAIGN_ID));
+                row.add(KeyValueStoreFactory.instance(activity).getString(SURVEY_ID));
                 fileUtil.withData(row.toArray(new String[row.size()]));
             }
         }
         //Write the csv to external storage for the user to access.
-        saveToExternalStorage(fileUtil);
+        new SaveToSDCardHandler(activity).saveToExternalStorage(fileUtil);
 
         return fileUtil.writeCSV(activity.getFilesDir() + "/" + Constants.EXPORT_FILE_NAME + "_" + deviceId + ".csv");
     }
 
-    //
-    public void saveToExternalStorage(FileUtil fileUtil) throws IOException {
-        if (createAppDir()) {
-            fileUtil.writeCSV(Environment.getExternalStorageDirectory() + "/"
-                    + APP_DIR + "/" + Constants.EXPORT_FILE_NAME + "_" + getDeviceId() + ".csv");
-        } else {
-            Toast.makeText(activity, "Could not save file to sdcard", Toast.LENGTH_LONG).show();
-        }
-    }
 
-    //Create a steps directory in external storage if it does not exist.
-    public static boolean createAppDir() {
-        File folder = new File(Environment.getExternalStorageDirectory() + "/"
-                + APP_DIR);
-        boolean createStatus = true;
-        if (!folder.exists()) {
-            createStatus = folder.mkdirs() ? true : false;
-        }
-        return createStatus;
-    }
 
     private void setStatus(Household household, Member member, ArrayList<String> row) {
         if(household.getSelectedMemberId() == null || household.getSelectedMemberId().equals("") || household.getSelectedMemberId().equals(String.valueOf(member.getId())))

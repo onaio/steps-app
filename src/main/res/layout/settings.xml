@@ -89,7 +89,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/campaignId_label"
-        android:text="@string/campaign_id_label"
+        android:text="@string/survey_id_label"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         />
@@ -104,7 +104,7 @@
         android:layout_marginRight="5dp"
         android:singleLine="false"
         android:textColor="@android:color/black"
-        android:hint="@string/campaign_id_label"
+        android:hint="@string/survey_id_label"
         />
     <TextView
         android:layout_width="fill_parent"
