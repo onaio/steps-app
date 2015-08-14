@@ -21,7 +21,7 @@ import java.io.OutputStream;
 import static com.onaio.steps.helper.Constants.PHONE_ID;
 
 /**
- * Created by coder on 8/10/15.
+ * Created by imwongela on 8/10/15.
  */
 public class SaveToSDCardHandler implements IMenuHandler {
     private ListActivity activity;
@@ -100,7 +100,7 @@ public class SaveToSDCardHandler implements IMenuHandler {
 
             OutputStream out = new FileOutputStream(targetLocation);
 
-            // Copy the bits from instream to outstream
+            // Copy the bits from input-stream to output-stream
             byte[] buf = new byte[1024];
             int len;
             while ((len = in.read(buf)) > 0) {

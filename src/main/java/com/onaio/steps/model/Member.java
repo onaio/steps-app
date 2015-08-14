@@ -132,9 +132,9 @@ public class Member implements Serializable {
         ContentValues values = new ContentValues();
         values.put(FIRST_NAME, firstName);
         values.put(FAMILY_SURNAME, familySurname);
-        values.put(GENDER,gender.toString());
-        values.put(AGE,age);
-        values.put(HOUSEHOLD_ID,household.getId());
+        values.put(GENDER, gender.toString());
+        values.put(AGE, age);
+        values.put(HOUSEHOLD_ID, household.getId());
         values.put(DELETED, deleted ? DELETED_INT : NOT_DELETED_INT);
         return values;
     }

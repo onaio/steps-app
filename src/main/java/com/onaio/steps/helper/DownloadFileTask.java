@@ -1,9 +1,6 @@
 package com.onaio.steps.helper;
 
-import android.content.Context;
 import android.os.AsyncTask;
-import android.os.PowerManager;
-import android.widget.Toast;
 
 import com.onaio.steps.handler.actions.ImportHandler;
 

@@ -2,10 +2,8 @@ package com.onaio.steps.handler.actions;
 
 import android.app.ListActivity;
 import android.content.DialogInterface;
-import android.os.Environment;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.onaio.steps.R;
 import com.onaio.steps.handler.interfaces.IMenuHandler;
@@ -29,7 +27,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.onaio.steps.helper.Constants.*;
+import static com.onaio.steps.helper.Constants.EXPORT_FIELDS;
+import static com.onaio.steps.helper.Constants.PHONE_ID;
+import static com.onaio.steps.helper.Constants.SURVEY_ID;
+import static com.onaio.steps.helper.Constants.SURVEY_NA;
 
 public class ExportHandler implements IMenuHandler,IMenuPreparer {
 
@@ -75,14 +76,9 @@ public class ExportHandler implements IMenuHandler,IMenuPreparer {
     }
 
     private File saveFile() throws IOException {
-        //Remove whitespaces from header names
-        String[] headers = EXPORT_FIELDS.split(",");
-        for (int i = 0; i < headers.length; i++) {
-            headers[i] = headers[i].trim();
-        }
         String deviceId = getDeviceId();
 
-        FileUtil fileUtil = new FileUtil().withHeader(headers);
+        FileUtil fileUtil = new FileUtil().withHeader(EXPORT_FIELDS);
         for(Household household: households) {
             List<ReElectReason> reasons = ReElectReason.getAll(databaseHelper, household);
             List<Member> membersPerHousehold = household.getAllMembersForExport(databaseHelper);

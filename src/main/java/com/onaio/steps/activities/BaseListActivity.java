@@ -59,13 +59,7 @@ public abstract class BaseListActivity extends ListActivity{
                             handler.open();
                         }
                     };
-                    DialogInterface.OnClickListener cancelListener = new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            //Dismiss dialog.
-                        }
-                    };
-                    new CustomDialog().confirm(this, confirmListener, cancelListener, R.string.warning_merging_data, R.string.warning_title);
+                    new CustomDialog().confirm(this, confirmListener, CustomDialog.EmptyListener, R.string.warning_merging_data, R.string.warning_title);
                 } else {
                     return handler.open();
                 }
