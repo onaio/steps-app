@@ -25,7 +25,7 @@ import static com.onaio.steps.helper.Constants.PHONE_ID;
  */
 public class SaveToSDCardHandler implements IMenuHandler {
     private ListActivity activity;
-    private int MENU_ID = R.id.action_save_to_sdcard;
+    private int MENU_ID;
 
     public SaveToSDCardHandler(ListActivity activity) {
         this.activity = activity;

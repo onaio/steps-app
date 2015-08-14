@@ -7,6 +7,4 @@
           android:title="@string/action_import"/>
     <item android:id="@+id/action_saved_form"
           android:title="@string/action_submit_forms"/>
-    <item android:id="@+id/action_save_to_sdcard"
-        android:title="@string/action_save_to_sdcard"/>
 </menu>

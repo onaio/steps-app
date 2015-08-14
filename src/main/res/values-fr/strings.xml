@@ -81,7 +81,7 @@
     <string name="import_complete">Importation terminée avec succès</string>
     <string name="import_complete_message">Les données ont été importées avec succès</string>
     <string name="import_fail_message">"L'importation a échoué, vérifiez Code ID de l'appareil et essayez encore une fois."</string>
-    <string name="fail_no_connectivity">L'opération a échoué, vérifiez votre connexion Internet.</string>
+    <string name="fail_no_connectivity">"L'opération a échoué, vérifiez votre connexion Internet."</string>
     <string name="continue_interview">"Continuer l'entretien"</string>
     <!--<string name="member_add_confirm">"SVP confirmez que vous voulez exporter les données des ménages."</string>-->
     <string name="household_comments">"Commentaires"</string>
@@ -108,6 +108,6 @@
     <string name="select_app_type">"Sélectionnez le type de l'appli"</string>
     <string name="enter_data_now">"Faire passer l'entretien maintenant"</string>
     <string name="enter_data_later">"Faire passer l'entretien plus tard"</string>
-    <string name="error_no_sdcard">Vous avez tenté de sauvegarder les donnees sur une carte SD, cependant votre appareil n'a pas de carte SD. SVP insérez une carte SD pour effectuer la sauvegarde.</string>
+    <string name="error_no_sdcard">"Vous avez tenté de sauvegarder les donnees sur une carte SD, cependant votre appareil n'a pas de carte SD. SVP insérez une carte SD pour effectuer la sauvegarde."</string>
     <string name="edit_participant_header">Editer le participant</string>
 </resources>
