@@ -2,7 +2,6 @@ package com.onaio.steps.helper;
 
 import android.app.Activity;
 
-import com.onaio.steps.R;
 import com.onaio.steps.model.Gender;
 
 import java.util.ArrayList;

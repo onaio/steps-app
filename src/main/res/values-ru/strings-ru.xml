@@ -7,6 +7,7 @@
     <string name="action_new_household">"Новое домохозяйство"</string>
     <string name="action_household">"Домохозяйство"</string>
     <string name="save_button">"Сохранить"</string>
+    <string name="survey_id_label">"Идентификатор Опроса"</string>
     <string name="device_id_label">"Идентификатор устройства"</string>
     <string name="phone_id_message">"Установите идентификатор устройства сначала!"</string>
     <string name="phone_id_message_title">"Тревога"</string>
@@ -39,11 +40,14 @@
     <string name="form_not_present_title">"Форма Отсутствует"</string>
     <string name="something_went_wrong_try_again">"Что-то пошло не так, пожалуйста, попробуйте еще раз."</string>
     <string name="error_title">"Ошибка"</string>
+    <string name="warning_title">Предупреждение</string>
+    <string name="warning_merging_data">Этим вы скачаете все домохозяйства, перечисленные на сервере, которые отсутствуют на вашем устройстве. Хотите продолжить?</string>
     <string name="household_id_seed_label">"Отправной идентификатор Домохозяйства"</string>
     <string name="household_id_default_hint">"по умолчанию "1""</string>
     <string name="member_delete_confirm">"Вы уверены, что хотите удалить данного члена?"</string>
     <string name="enter_a_value">"Пожалуйста, введите значение"</string>
     <string name="endpoint_url_hint">"Ссылка для экспорта"</string>
+    <string name="import_url_hint">Ссылка для импорта</string>
     <string name="main_header">"Домохозяйства"</string>
     <string name="household_members_header">"Члены домохозяйства"</string>
     <string name="go_to_settings">"НАЧАТЬ"</string>
@@ -73,7 +77,10 @@
     <string name="export_complete">"Экспорт Завершен"</string>
     <string name="export_complete_message">"Данные успешно экспортированы."</string>
     <string name="export_start_message">"Пожалуйста, подтвердите, что вы хотите экспортировать данные по домохозяйствам."</string>
-    <string name="import_fail_message">"Импорт не удалось, пожалуйста, используйте правильный файл CSV и попробуйте еще раз."</string>
+    <string name="import_complete">Импорт Завершен</string>
+    <string name="import_complete_message">Данные успешно импортированы</string>
+    <string name="import_fail_message">"Импорт не удался, пожалуйста, проверьте ID устrойства и попробуйте еще раз"</string>
+    <string name="fail_no_connectivity">Операция провалилась, Проверьте подключение к Интернету.</string>
     <string name="continue_interview">"Продолжить Интервью"</string>
     <string name="household_comments">"Комментарии"</string>
     <string name="form_id">"Идентификатор Формы"</string>
@@ -99,5 +106,6 @@
     <string name="select_app_type">"Выберите тип приложения"</string>
     <string name="enter_data_now">"ИНТЕРВЬЮИРОВАТЬ СЕЙЧАС"</string>
     <string name="enter_data_later">"ИНТЕРВЬЮИРОВАТЬ ПОЗЖЕ"</string>
+    <string name="error_no_sdcard">Вы попытались сделать резервную копию данных на карту памяти SD, однако, карта отсутствует. Пожалуйста, введите карту SD для начала резервного копирования.</string>
     <string name="edit_participant_header">Редактировать Участника</string>
 </resources>

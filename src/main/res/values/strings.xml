@@ -8,6 +8,7 @@
     <string name="action_new_household">New Household</string>
     <string name="action_household">Household</string>
     <string name="save_button">Save</string>
+    <string name="survey_id_label">"Survey ID"</string>
     <string name="device_id_label">Device ID</string>
     <string name="phone_id_message">Set the Device ID first!</string>
     <string name="phone_id_message_title">Alert</string>
@@ -40,11 +41,14 @@
     <string name="form_not_present_title">Form Missing</string>
     <string name="something_went_wrong_try_again">Something went wrong, please try again.</string>
     <string name="error_title">Error</string>
+    <string name="warning_title">Warning</string>
+    <string name="warning_merging_data">This is going to download all the households listed on the server that are not on your device. Do you want to proceed?</string>
     <string name="household_id_seed_label">Starting Household ID</string>
     <string name="household_id_default_hint">default is 1</string>
     <string name="member_delete_confirm">Are you sure you want to delete the member?</string>
     <string name="enter_a_value">Please enter a value</string>
     <string name="endpoint_url_hint">URL to export</string>
+    <string name="import_url_hint">URL to import</string>
     <string name="main_header">Households</string>
     <string name="household_members_header">Household Members</string>
     <string name="go_to_settings">GET STARTED</string>
@@ -74,7 +78,10 @@
     <string name="export_complete">Export Complete</string>
     <string name="export_complete_message">The data has successfully exported.</string>
     <string name="export_start_message">Please confirm you want to export household data.</string>
-    <string name="import_fail_message">Import failed, please use a valid csv file and try again.</string>
+    <string name="import_complete">Import Complete</string>
+    <string name="import_complete_message">The data has successfully been imported.</string>
+    <string name="import_fail_message">Import failed, please double check Device ID and try again.</string>
+    <string name="fail_no_connectivity">Operation failed, Check your internet connectivity.</string>
     <string name="continue_interview">Continue Interview</string>
     <string name="household_comments">Comments</string>
     <string name="form_id">Form ID</string>
@@ -101,4 +108,6 @@
     <string name="enter_data_now">ENTER DATA NOW</string>
     <string name="enter_data_later">ENTER DATA LATER</string>
     <string name="edit_participant_header">Edit Participant</string>
+    <string name="error_no_sdcard">You attempted to backup data to an SD Card, however, your device does not have an SD Card. Please insert one to proceed with the backup.</string>
+    <string name="action_save_to_sdcard">Backup to SD Card</string>
 </resources>

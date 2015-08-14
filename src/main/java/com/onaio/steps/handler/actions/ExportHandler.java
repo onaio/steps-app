@@ -12,7 +12,9 @@ import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.CustomDialog;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.helper.FileUtil;
+import com.onaio.steps.helper.KeyValueStoreFactory;
 import com.onaio.steps.helper.Logger;
+import com.onaio.steps.helper.NetworkConnectivity;
 import com.onaio.steps.helper.UploadFileTask;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.Member;
@@ -25,7 +27,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.onaio.steps.helper.Constants.*;
+import static com.onaio.steps.helper.Constants.EXPORT_FIELDS;
+import static com.onaio.steps.helper.Constants.PHONE_ID;
+import static com.onaio.steps.helper.Constants.SURVEY_ID;
+import static com.onaio.steps.helper.Constants.SURVEY_NA;
 
 public class ExportHandler implements IMenuHandler,IMenuPreparer {
 
@@ -34,6 +39,8 @@ public class ExportHandler implements IMenuHandler,IMenuPreparer {
     private DatabaseHelper databaseHelper;
     private Menu menu;
     private int MENU_ID = R.id.action_export;
+
+    public static final String APP_DIR = "STEPS";
 
     public ExportHandler(ListActivity activity) {
         this.activity = activity;
@@ -53,19 +60,25 @@ public class ExportHandler implements IMenuHandler,IMenuPreparer {
             public void onClick(DialogInterface dialogInterface, int i) {
                 try {
                     File file = saveFile();
-                    new UploadFileTask(activity).execute(file);
+                    if (NetworkConnectivity.isNetworkAvailable(activity)) {
+                        new UploadFileTask(activity).execute(file);
+                    } else {
+                        new CustomDialog().notify(activity, CustomDialog.EmptyListener, R.string.error_title, R.string.fail_no_connectivity);
+                    }
                 } catch (IOException e) {
                     new Logger().log(e,"Not able to write CSV file for export.");
                     new CustomDialog().notify(activity, CustomDialog.EmptyListener, R.string.error_title, R.string.something_went_wrong_try_again);
                 }
             }
         };
-        new CustomDialog().confirm(activity, uploadConfirmListener, CustomDialog.EmptyListener, R.string.export_start_message,R.string.action_export);
+        new CustomDialog().confirm(activity, uploadConfirmListener, CustomDialog.EmptyListener, R.string.export_start_message, R.string.action_export);
         return true;
     }
 
     private File saveFile() throws IOException {
-        FileUtil fileUtil = new FileUtil().withHeader(EXPORT_FIELDS.split(","));
+        String deviceId = getDeviceId();
+
+        FileUtil fileUtil = new FileUtil().withHeader(EXPORT_FIELDS);
         for(Household household: households) {
             List<ReElectReason> reasons = ReElectReason.getAll(databaseHelper, household);
             List<Member> membersPerHousehold = household.getAllMembersForExport(databaseHelper);
@@ -83,11 +96,18 @@ public class ExportHandler implements IMenuHandler,IMenuPreparer {
                 setStatus(household, member, row);
                 row.add(String.valueOf(reasons.size()));
                 row.add(StringUtils.join(reasons.toArray(), ';'));
+                row.add(deviceId);
+                row.add(KeyValueStoreFactory.instance(activity).getString(SURVEY_ID));
                 fileUtil.withData(row.toArray(new String[row.size()]));
             }
         }
-        return fileUtil.writeCSV(activity.getFilesDir() + "/" + Constants.EXPORT_FILE_NAME);
+        //Write the csv to external storage for the user to access.
+        new SaveToSDCardHandler(activity).saveToExternalStorage(fileUtil);
+
+        return fileUtil.writeCSV(activity.getFilesDir() + "/" + Constants.EXPORT_FILE_NAME + "_" + deviceId + ".csv");
     }
+
+
 
     private void setStatus(Household household, Member member, ArrayList<String> row) {
         if(household.getSelectedMemberId() == null || household.getSelectedMemberId().equals("") || household.getSelectedMemberId().equals(String.valueOf(member.getId())))
@@ -124,5 +144,7 @@ public class ExportHandler implements IMenuHandler,IMenuPreparer {
         return this;
     }
 
-
+    public String getDeviceId() {
+        return KeyValueStoreFactory.instance(activity).getString(PHONE_ID);
+    }
 }

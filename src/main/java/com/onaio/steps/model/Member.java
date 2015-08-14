@@ -2,10 +2,13 @@ package com.onaio.steps.model;
 
 import android.app.Activity;
 import android.content.ContentValues;
+import android.database.Cursor;
 
+import com.onaio.steps.helper.CursorHelper;
 import com.onaio.steps.helper.DatabaseHelper;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class Member implements Serializable {
     public static final String TABLE_NAME = "member";
@@ -22,6 +25,7 @@ public class Member implements Serializable {
     public static final String FIND_ALL_QUERY = "SELECT * FROM MEMBER WHERE %s=%s and %s=%d ORDER BY Id asc";
     public static final String FIND_ALL_WITH_DELETED_QUERY = "SELECT * FROM MEMBER WHERE %s=%s ORDER BY Id asc";
     public static final String FIND_BY_ID_QUERY = "SELECT * FROM MEMBER WHERE "+ID+" = '%d'";
+    public static final String FIND_MEMBER_BY_HOUSEHOLD_ID_QUERY = "SELECT * FROM MEMBER WHERE "+MEMBER_HOUSEHOLD_ID+" = '%s'";
     public static final int NOT_DELETED_INT = 0;
     public static final int DELETED_INT = 1;
     private final int DELTA = 1;
@@ -128,10 +132,10 @@ public class Member implements Serializable {
         ContentValues values = new ContentValues();
         values.put(FIRST_NAME, firstName);
         values.put(FAMILY_SURNAME, familySurname);
-        values.put(GENDER,gender.toString());
-        values.put(AGE,age);
-        values.put(HOUSEHOLD_ID,household.getId());
-        values.put(DELETED,deleted ? DELETED_INT : NOT_DELETED_INT);
+        values.put(GENDER, gender.toString());
+        values.put(AGE, age);
+        values.put(HOUSEHOLD_ID, household.getId());
+        values.put(DELETED, deleted ? DELETED_INT : NOT_DELETED_INT);
         return values;
     }
 
@@ -162,6 +166,18 @@ public class Member implements Serializable {
             return false;
 
         return true;
+    }
+
+    public static Member find_by_household_id(DatabaseHelper db, Household household, String memberId) {
+        Cursor cursor = db.exec(String.format(FIND_MEMBER_BY_HOUSEHOLD_ID_QUERY, memberId));
+        List<Member> members = new CursorHelper().getMembers(cursor, household);
+        if (members.size() > 0) {
+            Member member = members.get(0);
+            db.close();
+            return member;
+        } else {
+            return  null;
+        }
     }
 
     @Override

@@ -78,12 +78,16 @@ public class ParticipantFlow implements IFlow {
     }
 
     private void prepareView() {
+        hide(R.id.campaignId_label);
+        hide(R.id.campaignId);
         hide(R.id.household_flow_disabled);
         hide(R.id.participant_flow);
         hide(R.id.household_seed);
         hide(R.id.household_seed_label);
         hide(R.id.endpointUrl);
         hide(R.id.endpointUrl_label);
+        hide(R.id.importUrl);
+        hide(R.id.importUrl_label);
     }
 
     private void hide(int viewId) {

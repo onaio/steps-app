@@ -3,6 +3,7 @@ package com.onaio.steps.handler.factories;
 import android.app.ListActivity;
 import android.view.Menu;
 
+import com.onaio.steps.handler.actions.SaveToSDCardHandler;
 import com.onaio.steps.orchestrators.flows.FlowType;
 import com.onaio.steps.handler.actions.ExportHandler;
 import com.onaio.steps.handler.actions.FinalisedFormHandler;
@@ -26,6 +27,7 @@ public class HouseholdListActivityFactory {
         handlers.add(new ExportHandler(activity).with(households));
         handlers.add(new ImportHandler(activity));
         handlers.add(new FinalisedFormHandler(activity));
+        handlers.add(new SaveToSDCardHandler(activity));
         return handlers;
     }
 
@@ -33,7 +35,6 @@ public class HouseholdListActivityFactory {
     public static List<IActivityResultHandler> getResultHandlers(ListActivity activity){
         ArrayList<IActivityResultHandler> handlers = new ArrayList<IActivityResultHandler>();
         handlers.add(new NewHouseholdActivityHandler(activity));
-        handlers.add(new ImportHandler(activity));
         handlers.add(new SettingActivityHandler(activity));
         return handlers;
     }

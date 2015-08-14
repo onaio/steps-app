@@ -2,9 +2,11 @@ package com.onaio.steps.helper;
 
 public class Constants {
 
+    public static final String APP_DIR = "STEPS";
     public static final String DATE_FORMAT = "yyyy/MM/dd";
 
 //strings passed as parameter to intent
+    public static final String SURVEY_ID = "surveyId";
     public static final String PHONE_ID = "phoneId";
     public static final String HOUSEHOLD_SEED = "householdSeedId";
     public static final String MIN_AGE = "minAge";
@@ -20,8 +22,9 @@ public class Constants {
 
     //Export related
     public static final String ENDPOINT_URL = "endpointUrl";
-    public static final String EXPORT_FIELDS = "Phone Number, Household Id, Comments, Member Id, Family Surname, First Name, Age, Gender, Deleted, Survey Status, Re Election Count, Re Election Reasons";
-    public static final String EXPORT_FILE_NAME = "households.csv";
+    public static final String IMPORT_URL = "importUrl";
+    public static final String[] EXPORT_FIELDS = new String[]{"Phone Number", "Household Id", "Comments", "Member Id", "Family Surname", "First Name", "Age", "Gender", "Deleted", "Survey Status", "Re Election Count", "Re Election Reasons", "Device ID", "Survey ID"};
+    public static final String EXPORT_FILE_NAME = "households";
 
 
 //    public static final String ODK_FORM_ID = "steps_draft_testing";

@@ -7,15 +7,11 @@ import com.opencsv.CSVWriter;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.io.PrintStream;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class FileUtil {
@@ -53,7 +49,8 @@ public class FileUtil {
 
     public List<String[]> readFile(String filePath) throws IOException {
         FileReader fileReader = new FileReader(new File(filePath));
-        int dataEntryPosition = 2;
+        //Start from row 1 of the csv.
+        int dataEntryPosition = 1;
         CSVReader csvReader = new CSVReader(fileReader,CSVParser.DEFAULT_SEPARATOR,CSVParser.DEFAULT_QUOTE_CHARACTER, dataEntryPosition);
         String[] line;
         List<String []> lines = new ArrayList<String[]>();

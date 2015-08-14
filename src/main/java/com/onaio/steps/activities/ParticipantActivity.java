@@ -26,7 +26,7 @@ import java.util.List;
 public class ParticipantActivity extends Activity{
 
     private DatabaseHelper db;
-;   private Participant participant;
+    private Participant participant;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
