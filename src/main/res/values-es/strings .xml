@@ -7,6 +7,7 @@
     <string name="action_new_household">"Nuevo Hogar"</string>
     <string name="action_household">"Hogar"</string>
     <string name="save_button">"Guardar"</string>
+    <string name="survey_id_label">"Número de identificación de la encuesta"</string>
     <string name="device_id_label">"Número de identificación del aparato"</string>
     <string name="phone_id_message">"¡Establezca primero el número de identificación del aparato!"</string>
     <string name="phone_id_message_title">"Alerta"</string>
@@ -39,11 +40,14 @@
     <string name="form_not_present_title">"Formulario faltante"</string>
     <string name="something_went_wrong_try_again">"Algo ha salido mal, por favor, inténtelo de nuevo."</string>
     <string name="error_title">"Error"</string>
+    <string name="warning_title">Advertencia</string>
+    <string name="warning_merging_data">Va a descargar todos los hogares listados en el servidor que no están en su aparato, ¿desea proceder?</string>
     <string name="household_id_seed_label">"Primer código de hogar"</string>
     <string name="household_id_default_hint">"El valor por defecto es 1"</string>
     <string name="member_delete_confirm">"¿Está seguro de que quiere eliminar este miembro?"</string>
     <string name="enter_a_value">"Por favor, introduzca un valor"</string>
     <string name="endpoint_url_hint">"URL para exportar"</string>
+    <string name="import_url_hint">URL para importar</string>
     <!--<string name="invalid_member">"Son insuficientes, por favor rellene todos los valores."</string>-->
     <string name="main_header">"Hogares"</string>
     <string name="household_members_header">"Miembros del hogar"</string>
@@ -74,7 +78,10 @@
     <string name="export_complete">"Exportación finalizada"</string>
     <string name="export_complete_message">"Los datos han sido exportados correctamente."</string>
     <string name="export_start_message">"Por favor, confirme que desea exportar los datos del hogar?"</string>
-    <string name="import_fail_message">"Fallo en la importación, por favor utilize un archivo csv válido e inténtelo de nuevo."</string>
+    <string name="import_complete">Importación finalizada</string>
+    <string name="import_complete_message">Los datos han sido importados con éxito</string>
+    <string name="import_fail_message">"Fallo en la importación, por favor, compruebe el número de identificación de su aparato y vuelva a intentarlo"</string>
+    <string name="fail_no_connectivity">La operación ha fallado, por favor, compruebe su conexión a internet</string>
     <string name="continue_interview">"Continúe la entrevista"</string>
     <!--<string name="member_add_confirm">"¿Seguro que quieres añadir un miembro, esta acción borrará la selección que hizo antes."</string>-->
     <string name="household_comments">"Comentarios"</string>
@@ -101,5 +108,6 @@
     <string name="select_app_type">"Seleccione el tipo de aplicación"</string>
     <string name="enter_data_now">"INTRODUZCA LOS DATOS AHORA"</string>
     <string name="enter_data_later">"INTRODUZCA LOS DATOS MÁS TARDE"</string>
+    <string name="error_no_sdcard">Ha intentado respaldar los datos en la tarjeta SD, sin embargo su aparato no dispone de una tarjeta SD. Por favor, introduzca una tarjeta para proceder con el respaldo.</string>
     <string name="edit_participant_header">Editar participante</string>
 </resources>
