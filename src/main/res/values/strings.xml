@@ -110,4 +110,5 @@
     <string name="edit_participant_header">Edit Participant</string>
     <string name="error_no_sdcard">You attempted to backup data to an SD Card, however, your device does not have an SD Card. Please insert one to proceed with the backup.</string>
     <string name="action_save_to_sdcard">Backup to SD Card</string>
+    <string name="error_cannot_write_sdcard">Cannot write to SD Card</string>
 </resources>
