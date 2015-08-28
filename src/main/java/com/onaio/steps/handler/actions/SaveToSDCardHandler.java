@@ -50,7 +50,7 @@ public class SaveToSDCardHandler implements IMenuHandler {
 
     //Saves the csv file the phone external file system.
     public void saveToExternalStorage(FileUtil fileUtil) throws IOException {
-        if (createAppDir()) {git 
+        if (createAppDir()) {
             fileUtil.writeCSV(Environment.getExternalStorageDirectory() + "/"
                     + Constants.APP_DIR + "/" + Constants.EXPORT_FILE_NAME + "_" + getDeviceId() + ".csv");
         }
