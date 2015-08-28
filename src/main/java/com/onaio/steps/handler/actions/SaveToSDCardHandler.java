@@ -2,9 +2,7 @@ package com.onaio.steps.handler.actions;
 
 import android.app.ListActivity;
 import android.os.Environment;
-import android.provider.MediaStore;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.onaio.steps.R;
 import com.onaio.steps.handler.interfaces.IMenuHandler;
@@ -16,12 +14,10 @@ import com.onaio.steps.helper.KeyValueStoreFactory;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.Map;
 
 import static com.onaio.steps.helper.Constants.PHONE_ID;
 
