@@ -8,8 +8,10 @@ import com.onaio.steps.R;
 import com.onaio.steps.handler.interfaces.IMenuHandler;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.CustomDialog;
+import com.onaio.steps.helper.CustomNotification;
 import com.onaio.steps.helper.FileUtil;
 import com.onaio.steps.helper.KeyValueStoreFactory;
+import com.onaio.steps.model.Household;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -18,6 +20,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.List;
 
 import static com.onaio.steps.helper.Constants.PHONE_ID;
 
@@ -25,6 +28,7 @@ import static com.onaio.steps.helper.Constants.PHONE_ID;
  * Created by imwongela on 8/10/15.
  */
 public class SaveToSDCardHandler implements IMenuHandler {
+    private List<Household> households;
     private ListActivity activity;
     private int MENU_ID = R.id.action_save_to_sdcard;
     private boolean canWriteSDCard = true;
@@ -74,10 +78,22 @@ public class SaveToSDCardHandler implements IMenuHandler {
         return KeyValueStoreFactory.instance(activity).getString(PHONE_ID);
     }
 
+    public SaveToSDCardHandler with(List<Household> households){
+        this.households = households;
+        return this;
+    }
+
     /**
      * Saves the households CSV files and odk directory to the SD Card in a directory named STEPS.
      */
     public void saveToSDCard() {
+        // Write CSV to internal and external storage before transferring to SD Card.
+        try {
+            new ExportHandler(activity).with(households).saveFile();
+        } catch (IOException e) {
+            Log.d("Error", "Writing csv to internal and external storage failed.");
+        }
+
         File[] sdcards = getSDCards();
         if (sdcards.length > 0) {
             for (File sdcard : sdcards) {
@@ -88,6 +104,9 @@ public class SaveToSDCardHandler implements IMenuHandler {
                     File stepsOdkDir = new File(stepsDirName + "/odk");
                     copyDirectory(odkDir, stepsOdkDir);
                     copyDirectory(activity.getFilesDir(), stepsDir);
+                    if (canWriteSDCard) { // Successfully back up data to SD Card.
+                        new CustomNotification().notify(activity, R.string.save_to_sdcard_complete, R.string.save_to_sdcard_complete_message);
+                    }
                 } else {
                     new CustomDialog().notify(activity, CustomDialog.EmptyListener, R.string.error_title, R.string.error_cannot_write_sdcard);
                 }
@@ -140,6 +159,7 @@ public class SaveToSDCardHandler implements IMenuHandler {
         if (sourceLocation.isDirectory()) {
             if (!targetLocation.exists() && !targetLocation.mkdirs()) {
                 // Cannot write to the SD Card.
+                showBackUpToSDCardError();
                 return;
             }
             String[] children = sourceLocation.list();
@@ -152,6 +172,7 @@ public class SaveToSDCardHandler implements IMenuHandler {
             File directory = targetLocation.getParentFile();
             if (directory != null && !directory.exists() && !directory.mkdirs()) {
                 // Cannot write to the SD Card.
+                showBackUpToSDCardError();
                 return;
             }
             try {
@@ -167,13 +188,17 @@ public class SaveToSDCardHandler implements IMenuHandler {
                 in.close();
                 out.close();
             } catch (IOException e) {
-                if (canWriteSDCard) { // Cannot copy file, show error dialog once.
-                    canWriteSDCard = false;
-                    Log.d("Error", "Writing file to SD Card failed");
-                    new CustomDialog().notify(activity, CustomDialog.EmptyListener, R.string.error_title, R.string.error_cannot_write_sdcard);
-                    return;
-                }
+                showBackUpToSDCardError();
             }
+        }
+    }
+
+    private void showBackUpToSDCardError() {
+        if (canWriteSDCard) { // Cannot copy file, show error dialog once.
+            canWriteSDCard = false;
+            Log.d("Error", "Writing file to SD Card failed");
+            new CustomDialog().notify(activity, CustomDialog.EmptyListener, R.string.error_title, R.string.error_cannot_write_sdcard);
+            return;
         }
     }
 }

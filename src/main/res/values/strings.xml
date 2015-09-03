@@ -76,11 +76,13 @@
     <string name="action_submit_forms">Submit Records</string>
     <string name="export_failed">Export failed, please try again later.</string>
     <string name="export_complete">Export Complete</string>
-    <string name="export_complete_message">The data has successfully exported.</string>
+    <string name="export_complete_message">The data has been exported successfully.</string>
     <string name="export_start_message">Please confirm you want to export household data.</string>
     <string name="import_complete">Import Complete</string>
-    <string name="import_complete_message">The data has successfully been imported.</string>
+    <string name="import_complete_message">The data has been imported successfully.</string>
     <string name="import_fail_message">Import failed, please double check Device ID and try again.</string>
+    <string name="save_to_sdcard_complete">Back up to SD Card complete</string>
+    <string name="save_to_sdcard_complete_message">The data has been backed up to SD Card successfully.</string>
     <string name="fail_no_connectivity">Operation failed, Check your internet connectivity.</string>
     <string name="continue_interview">Continue Interview</string>
     <string name="household_comments">Comments</string>

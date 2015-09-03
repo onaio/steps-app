@@ -75,7 +75,7 @@ public class ExportHandler implements IMenuHandler,IMenuPreparer {
         return true;
     }
 
-    private File saveFile() throws IOException {
+    public File saveFile() throws IOException {
         String deviceId = getDeviceId();
 
         FileUtil fileUtil = new FileUtil().withHeader(EXPORT_FIELDS);

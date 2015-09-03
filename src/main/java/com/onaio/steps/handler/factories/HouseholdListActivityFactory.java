@@ -27,7 +27,7 @@ public class HouseholdListActivityFactory {
         handlers.add(new ExportHandler(activity).with(households));
         handlers.add(new ImportHandler(activity));
         handlers.add(new FinalisedFormHandler(activity));
-        handlers.add(new SaveToSDCardHandler(activity));
+        handlers.add(new SaveToSDCardHandler(activity).with(households));
         return handlers;
     }
 
