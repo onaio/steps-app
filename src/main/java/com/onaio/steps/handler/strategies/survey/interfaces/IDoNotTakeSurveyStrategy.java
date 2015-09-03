@@ -1,9 +1,9 @@
 package com.onaio.steps.handler.strategies.survey.interfaces;
 
 public interface IDoNotTakeSurveyStrategy {
-    public void open();
+    void open();
 
-    public boolean shouldInactivate();
+    boolean shouldInactivate();
 
-    public int dialogMessage();
+    int dialogMessage();
 }

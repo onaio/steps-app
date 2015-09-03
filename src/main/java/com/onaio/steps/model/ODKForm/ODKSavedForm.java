@@ -35,7 +35,7 @@ public class ODKSavedForm implements IForm{
     }
 
     public Uri getUri() {
-        return URI.parse(URI_STRING+"/"+_id);
+        return Uri.parse(URI_STRING + "/" + _id);
     }
 
     @Override

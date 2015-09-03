@@ -243,9 +243,8 @@ public class Household implements Serializable,Comparable<Household> {
             return false;
         if (selectedMemberId != null ? !selectedMemberId.equals(household.selectedMemberId) : household.selectedMemberId != null)
             return false;
-        if (status != household.status) return false;
+        return status == household.status;
 
-        return true;
     }
 
     @Override

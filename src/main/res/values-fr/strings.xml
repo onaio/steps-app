@@ -59,8 +59,7 @@
     <string name="action_import">"Importer"</string>
     <string name="proceed_with_selection">"CONTINUER LA SÉLECTION"</string>
     <string name="return_to_household_member_list">"RETOURNER A LA LISTE DES MEMBRES DU MÉNAGE"</string>
-    <string name="select_participant_title">"SÉLECTIONNER LE RÉPONDANT
-"</string>
+    <string name="select_participant_title">"SÉLECTIONNER LE RÉPONDANT"</string>
     <string name="add_new_household">"Ajouter un nouveau ménage"</string>
     <string name="add_new_member">"Ajouter un nouveau membre"</string>
     <string name="phone_id_name">"Code ID de l'appareil"</string>
@@ -81,6 +80,8 @@
     <string name="import_complete">Importation terminée avec succès</string>
     <string name="import_complete_message">Les données ont été importées avec succès</string>
     <string name="import_fail_message">"L'importation a échoué, vérifiez Code ID de l'appareil et essayez encore une fois."</string>
+    <string name="save_to_sdcard_complete">Back up to SD Card complete</string>
+    <string name="save_to_sdcard_complete_message">The data has been backed up to SD Card successfully.</string>
     <string name="fail_no_connectivity">"L'opération a échoué, vérifiez votre connexion Internet."</string>
     <string name="continue_interview">"Continuer l'entretien"</string>
     <!--<string name="member_add_confirm">"SVP confirmez que vous voulez exporter les données des ménages."</string>-->
@@ -110,4 +111,6 @@
     <string name="enter_data_later">"Faire passer l'entretien plus tard"</string>
     <string name="error_no_sdcard">"Vous avez tenté de sauvegarder les donnees sur une carte SD, cependant votre appareil n'a pas de carte SD. SVP insérez une carte SD pour effectuer la sauvegarde."</string>
     <string name="edit_participant_header">Editer le participant</string>
+    <string name="action_save_to_sdcard">Backup to SD Card</string>
+    <string name="error_cannot_write_sdcard">Backup to SD Card not complete due to write permissions; Please contact your supervisor for assistance.</string>
 </resources>

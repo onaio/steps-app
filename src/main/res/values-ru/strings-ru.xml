@@ -80,6 +80,8 @@
     <string name="import_complete">Импорт Завершен</string>
     <string name="import_complete_message">Данные успешно импортированы</string>
     <string name="import_fail_message">"Импорт не удался, пожалуйста, проверьте ID устrойства и попробуйте еще раз"</string>
+    <string name="save_to_sdcard_complete">Back up to SD Card complete</string>
+    <string name="save_to_sdcard_complete_message">The data has been backed up to SD Card successfully.</string>
     <string name="fail_no_connectivity">Операция провалилась, Проверьте подключение к Интернету.</string>
     <string name="continue_interview">"Продолжить Интервью"</string>
     <string name="household_comments">"Комментарии"</string>
@@ -108,4 +110,6 @@
     <string name="enter_data_later">"ИНТЕРВЬЮИРОВАТЬ ПОЗЖЕ"</string>
     <string name="error_no_sdcard">Вы попытались сделать резервную копию данных на карту памяти SD, однако, карта отсутствует. Пожалуйста, введите карту SD для начала резервного копирования.</string>
     <string name="edit_participant_header">Редактировать Участника</string>
+    <string name="action_save_to_sdcard">Backup to SD Card</string>
+    <string name="error_cannot_write_sdcard">Backup to SD Card not complete due to write permissions; Please contact your supervisor for assistance.</string>
 </resources>

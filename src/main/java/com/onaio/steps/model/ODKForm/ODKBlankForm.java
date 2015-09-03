@@ -45,7 +45,7 @@ public class ODKBlankForm implements IForm{
     }
 
     public Uri getUri() {
-        return URI.parse(URI_STRING+"/"+_id);
+        return Uri.parse(URI_STRING + "/" + _id);
     }
 
     public static List<IForm> get(Activity activity, String odkFormId) throws AppNotInstalledException {

@@ -162,10 +162,8 @@ public class Member implements Serializable {
         if (gender != null ? !gender.equals(member.gender) : member.gender != null) return false;
         if (household != null ? !household.equals(member.household) : member.household != null)
             return false;
-        if (memberHouseholdId != null ? !memberHouseholdId.equals(member.memberHouseholdId) : member.memberHouseholdId != null)
-            return false;
+        return !(memberHouseholdId != null ? !memberHouseholdId.equals(member.memberHouseholdId) : member.memberHouseholdId != null);
 
-        return true;
     }
 
     public static Member find_by_household_id(DatabaseHelper db, Household household, String memberId) {

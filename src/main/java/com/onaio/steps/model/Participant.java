@@ -168,9 +168,8 @@ public class Participant implements Serializable {
         if (!firstName.equals(that.firstName)) return false;
         if (gender != that.gender) return false;
         if (!participantID.equals(that.participantID)) return false;
-        if (status != that.status) return false;
+        return status == that.status;
 
-        return true;
     }
 
     @Override

@@ -5,12 +5,12 @@ import com.onaio.steps.model.ODKForm.ODKSavedForm;
 import java.io.IOException;
 
 public interface ITakeSurveyStrategy {
-    public void open(String formId) throws IOException;
+    void open(String formId) throws IOException;
 
-    public boolean shouldInactivate();
+    boolean shouldInactivate();
 
-    public void handleResult(ODKSavedForm savedForm);
+    void handleResult(ODKSavedForm savedForm);
 
-    public String getFormName(String formNameFormat);
-    public void activate();
+    String getFormName(String formNameFormat);
+    void activate();
 }

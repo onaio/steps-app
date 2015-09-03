@@ -81,6 +81,8 @@
     <string name="import_complete">Importación finalizada</string>
     <string name="import_complete_message">Los datos han sido importados con éxito</string>
     <string name="import_fail_message">"Fallo en la importación, por favor, compruebe el número de identificación de su aparato y vuelva a intentarlo"</string>
+    <string name="save_to_sdcard_complete">Back up to SD Card complete</string>
+    <string name="save_to_sdcard_complete_message">The data has been backed up to SD Card successfully.</string>
     <string name="fail_no_connectivity">La operación ha fallado, por favor, compruebe su conexión a internet</string>
     <string name="continue_interview">"Continúe la entrevista"</string>
     <!--<string name="member_add_confirm">"¿Seguro que quieres añadir un miembro, esta acción borrará la selección que hizo antes."</string>-->
@@ -110,4 +112,6 @@
     <string name="enter_data_later">"INTRODUZCA LOS DATOS MÁS TARDE"</string>
     <string name="error_no_sdcard">Ha intentado respaldar los datos en la tarjeta SD, sin embargo su aparato no dispone de una tarjeta SD. Por favor, introduzca una tarjeta para proceder con el respaldo.</string>
     <string name="edit_participant_header">Editar participante</string>
+    <string name="action_save_to_sdcard">Backup to SD Card</string>
+    <string name="error_cannot_write_sdcard">Backup to SD Card not complete due to write permissions; Please contact your supervisor for assistance.</string>
 </resources>

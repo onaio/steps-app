@@ -7,10 +7,10 @@ import com.onaio.steps.exceptions.InvalidDataException;
 public interface IFlow {
     boolean canHandle(FlowType flowType);
 
-    public void prepareSettingScreen();
-    public void validateOptions() throws InvalidDataException;
+    void prepareSettingScreen();
+    void validateOptions() throws InvalidDataException;
 
-    public void saveSettings();
+    void saveSettings();
 
-    public Intent getIntent();
+    Intent getIntent();
 }
