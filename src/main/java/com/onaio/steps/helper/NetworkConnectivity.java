@@ -5,6 +5,8 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
 /**
+ * Checks whether device has internet connection before starting export or import of data.
+ *
  * Created by imwongela on 7/28/15.
  */
 public class NetworkConnectivity {

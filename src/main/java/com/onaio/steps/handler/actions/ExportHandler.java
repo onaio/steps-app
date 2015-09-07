@@ -40,8 +40,6 @@ public class ExportHandler implements IMenuHandler,IMenuPreparer {
     private Menu menu;
     private int MENU_ID = R.id.action_export;
 
-    public static final String APP_DIR = "STEPS";
-
     public ExportHandler(ListActivity activity) {
         this.activity = activity;
         databaseHelper = new DatabaseHelper(activity.getApplicationContext());

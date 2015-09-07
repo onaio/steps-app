@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import static com.onaio.steps.helper.Constants.IMPORT_URL;
 import static com.onaio.steps.helper.Constants.PHONE_ID;
@@ -74,11 +75,10 @@ public class ImportHandler implements IMenuHandler {
                 String gender = row[7];
                 String deleted = row[8];
                 String surveyStatus = row[9];
-                String reasonsCount = row[10];
                 String reasons = row[11];
                 Household household = Household.find_by(db, householdName);
                 if(household == null){
-                    String currentDate = new SimpleDateFormat(Constants.DATE_FORMAT).format(new Date());
+                    String currentDate = new SimpleDateFormat(Constants.DATE_FORMAT, Locale.ENGLISH).format(new Date());
                     household = new Household(householdName, phoneNumber, InterviewStatus.NOT_SELECTED, currentDate ,comments);
                     household.save(db);
                 }

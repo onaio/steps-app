@@ -55,8 +55,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public Cursor exec(String query){
         readableDb = getReadableDatabase();
-        Cursor cursor = readableDb.rawQuery(query, null);
-        return cursor;
+        return readableDb.rawQuery(query, null);
     }
 
     public void close(){

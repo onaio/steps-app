@@ -12,6 +12,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 /**
+ * Helper class for downloading files from provided URLs.
+ *
  * Created by coder on 7/27/15.
  */
 public class DownloadFileTask extends AsyncTask<String, Integer, String> {

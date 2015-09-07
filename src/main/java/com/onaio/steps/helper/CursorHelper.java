@@ -24,7 +24,7 @@ public class CursorHelper {
                 String id = cursor.getString(cursor.getColumnIndex(Member.ID));
                 String generatedId = cursor.getString(cursor.getColumnIndex(Member.MEMBER_HOUSEHOLD_ID));
                 int deletedInteger = cursor.getInt(cursor.getColumnIndex(Member.DELETED));
-                boolean deleted = deletedInteger == Member.NOT_DELETED_INT ? false : true;
+                boolean deleted = deletedInteger != Member.NOT_DELETED_INT;
                 if(household.getId().equals(cursor.getString(cursor.getColumnIndex(Member.HOUSEHOLD_ID))))
                     members.add(new Member(Integer.parseInt(id), familySurname,firstName, Gender.valueOf(gender), Integer.parseInt(age), household,generatedId, deleted));
             }while (cursor.moveToNext());

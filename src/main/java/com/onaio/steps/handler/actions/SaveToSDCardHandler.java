@@ -25,12 +25,14 @@ import java.util.List;
 import static com.onaio.steps.helper.Constants.PHONE_ID;
 
 /**
+ * Backs up households csv data and ODK folder to the SD Card.
+ *
  * Created by imwongela on 8/10/15.
  */
 public class SaveToSDCardHandler implements IMenuHandler {
     private List<Household> households;
     private ListActivity activity;
-    private int MENU_ID = R.id.action_save_to_sdcard;
+    private static final int MENU_ID = R.id.action_save_to_sdcard;
     private boolean canWriteSDCard = true;
 
     public SaveToSDCardHandler(ListActivity activity) {
@@ -69,7 +71,7 @@ public class SaveToSDCardHandler implements IMenuHandler {
         File folder = new File(dirName);
         boolean createStatus = true;
         if (!folder.exists()) {
-            createStatus = folder.mkdirs() ? true : false;
+            createStatus = folder.mkdirs();
         }
         return createStatus;
     }
@@ -124,7 +126,7 @@ public class SaveToSDCardHandler implements IMenuHandler {
         if (!mnt.exists()) {
             mnt = new File("/mnt");
         }
-        File[] roots = mnt.listFiles(new FileFilter() {
+        return mnt.listFiles(new FileFilter() {
             @Override
             public boolean accept(File pathname) {
                 try {
@@ -136,7 +138,6 @@ public class SaveToSDCardHandler implements IMenuHandler {
                 }
             }
         });
-        return roots;
     }
 
     public static boolean isSymlink(File file) throws IOException {
@@ -163,9 +164,9 @@ public class SaveToSDCardHandler implements IMenuHandler {
                 return;
             }
             String[] children = sourceLocation.list();
-            for (int i = 0; i < children.length; i++) {
-                copyDirectory(new File(sourceLocation, children[i]),
-                        new File(targetLocation, children[i]));
+            for (String aChildren : children) {
+                copyDirectory(new File(sourceLocation, aChildren),
+                        new File(targetLocation, aChildren));
             }
         } else {
             // make sure the directory we plan to store the recording in exists
@@ -198,7 +199,6 @@ public class SaveToSDCardHandler implements IMenuHandler {
             canWriteSDCard = false;
             Log.d("Error", "Writing file to SD Card failed");
             new CustomDialog().notify(activity, CustomDialog.EmptyListener, R.string.error_title, R.string.error_cannot_write_sdcard);
-            return;
         }
     }
 }
