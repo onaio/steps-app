@@ -126,6 +126,12 @@ public class SaveToSDCardHandler implements IMenuHandler {
         if (!mnt.exists()) {
             mnt = new File("/mnt");
         }
+        if (!mnt.exists()) {
+            mnt = new File("/removable");
+        }
+        if (!mnt.exists()) {
+            mnt = new File("/Removable");
+        }
         return mnt.listFiles(new FileFilter() {
             @Override
             public boolean accept(File pathname) {
