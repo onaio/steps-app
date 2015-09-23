@@ -123,13 +123,13 @@ public class SaveToSDCardHandler implements IMenuHandler {
      */
     public static File[] getSDCards() {
         File mnt = new File("/storage");
-        if (!mnt.exists()) {
+        if (!mnt.exists() || mnt.listFiles().length == 0) {
             mnt = new File("/mnt");
         }
-        if (!mnt.exists()) {
+        if (!mnt.exists() || mnt.listFiles().length == 0) {
             mnt = new File("/removable");
         }
-        if (!mnt.exists()) {
+        if (!mnt.exists() || mnt.listFiles().length == 0) {
             mnt = new File("/Removable");
         }
         return mnt.listFiles(new FileFilter() {
