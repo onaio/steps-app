@@ -84,7 +84,7 @@ public class ExportHandler implements IMenuHandler,IMenuPreparer {
                 ArrayList<String> row = new ArrayList<String>();
                 row.add(household.getPhoneNumber());
                 row.add(household.getName());
-                row.add(wrapCSVColumn(household.getComments()));
+                row.add(replaceCommas(household.getComments()));
                 row.add(member.getMemberHouseholdId());
                 row.add(member.getFamilySurname());
                 row.add(member.getFirstName());
@@ -93,7 +93,7 @@ public class ExportHandler implements IMenuHandler,IMenuPreparer {
                 row.add(member.getDeletedString());
                 setStatus(household, member, row);
                 row.add(String.valueOf(reasons.size()));
-                row.add(wrapCSVColumn(StringUtils.join(reasons.toArray(), ';')));
+                row.add(replaceCommas(StringUtils.join(reasons.toArray(), ';')));
                 row.add(deviceId);
                 row.add(KeyValueStoreFactory.instance(activity).getString(SURVEY_ID));
                 fileUtil.withData(row.toArray(new String[row.size()]));
@@ -106,14 +106,12 @@ public class ExportHandler implements IMenuHandler,IMenuPreparer {
     }
 
     /**
-     * Safely wrap columns with commas when generating CSV.
+     * Remove commas within a column to prevent split.
      * @param column
      * @return
      */
-    private String wrapCSVColumn(String column) {
-        // Remove quotes within strings
-        column = column.replace("\"", "");
-        return "\""+column+"\"";
+    private String replaceCommas(String column) {
+        return column.replace("\"", "").replace(",", ";");
     }
 
 
