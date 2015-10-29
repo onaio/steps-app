@@ -23,7 +23,7 @@ public class Constants {
     //Export related
     public static final String ENDPOINT_URL = "endpointUrl";
     public static final String IMPORT_URL = "importUrl";
-    public static final String[] EXPORT_FIELDS = new String[]{"Phone Number", "Household Id", "Comments", "Member Id", "Family Surname", "First Name", "Age", "Gender", "Deleted", "Survey Status", "Re Election Count", "Re Election Reasons", "Device ID", "Survey ID", "Non deleted members"};
+    public static final String[] EXPORT_FIELDS = new String[]{"Phone Number", "Household Id", "Comments", "Member Id", "Family Surname", "First Name", "Age", "Gender", "Deleted", "Survey Status", "Re Election Count", "Re Election Reasons", "Device ID", "Survey ID", "Non-deleted members"};
     public static final String EXPORT_FILE_NAME = "households";
 
 
