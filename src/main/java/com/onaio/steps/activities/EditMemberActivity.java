@@ -14,7 +14,7 @@ import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.model.Member;
 import com.onaio.steps.modelViewWrapper.MemberViewWrapper;
 
-import static com.onaio.steps.helper.Constants.MEMBER;
+import static com.onaio.steps.helper.Constants.HH_MEMBER;
 
 public class EditMemberActivity extends Activity {
 
@@ -29,7 +29,7 @@ public class EditMemberActivity extends Activity {
         super.onCreate(savedInstanceState);
         populateView();
         intent = this.getIntent();
-        member = (Member) intent.getSerializableExtra(Constants.MEMBER);
+        member = (Member) intent.getSerializableExtra(Constants.HH_MEMBER);
         memberViewWrapper = new MemberViewWrapper(this);
         db = new DatabaseHelper(this.getApplicationContext());
         populateFields();
@@ -50,7 +50,7 @@ public class EditMemberActivity extends Activity {
         try{
             member = memberViewWrapper.updateFromView(member);
             member.update(db);
-            intent.putExtra(MEMBER,member);
+            intent.putExtra(HH_MEMBER,member);
             setResult(RESULT_OK, intent);
             finish();
         } catch (InvalidDataException e) {

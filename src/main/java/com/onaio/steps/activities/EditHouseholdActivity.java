@@ -11,7 +11,7 @@ import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.modelViewWrapper.HouseholdViewWrapper;
 
-import static com.onaio.steps.helper.Constants.HOUSEHOLD;
+import static com.onaio.steps.helper.Constants.HH_HOUSEHOLD;
 
 public class EditHouseholdActivity extends Activity {
 
@@ -32,7 +32,7 @@ public class EditHouseholdActivity extends Activity {
 
     private void populateDataFromIntent() {
         Intent intent = getIntent();
-        household = (Household) intent.getSerializableExtra(HOUSEHOLD);
+        household = (Household) intent.getSerializableExtra(HH_HOUSEHOLD);
         TextView nameView = (TextView) findViewById(R.id.generated_household_id);
         TextView  phoneNumberView= (TextView) findViewById(R.id.household_number);
         TextView commentsView = (TextView) findViewById(R.id.household_comments);
@@ -46,7 +46,7 @@ public class EditHouseholdActivity extends Activity {
             household = new HouseholdViewWrapper(this).updateHousehold(household, R.id.household_number,R.id.household_comments);
             DatabaseHelper db = new DatabaseHelper(getApplicationContext());
             household.update(db);
-            intent.putExtra(HOUSEHOLD,household);
+            intent.putExtra(HH_HOUSEHOLD,household);
             setResult(RESULT_OK, intent);
             finish();
     }

@@ -24,7 +24,7 @@ public class ParticipantFormStrategy implements IFormStrategy{
     }
     @Override
     public void saveDataFile(Activity activity, String pathToSaveDataFile) throws IOException {
-        String formId = getValue(Constants.FORM_ID,activity);
+        String formId = getValue(Constants.PA_FORM_ID,activity);
         String formNameFormat = formId + "-%s";
         ArrayList<String> row = new ArrayList<String>();
         row.add(Constants.ODK_HH_ID);

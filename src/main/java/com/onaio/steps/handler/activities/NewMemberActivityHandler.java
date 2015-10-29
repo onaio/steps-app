@@ -46,7 +46,7 @@ public class NewMemberActivityHandler implements IMenuHandler, IActivityResultHa
     public boolean open() {
         if (household== null) return true;
         Intent intent = new Intent(activity, NewMemberActivity.class);
-        intent.putExtra(Constants.HOUSEHOLD,household);
+        intent.putExtra(Constants.HH_HOUSEHOLD,household);
         activity.startActivityForResult(intent, RequestCode.NEW_MEMBER.getCode());
         return true;
     }

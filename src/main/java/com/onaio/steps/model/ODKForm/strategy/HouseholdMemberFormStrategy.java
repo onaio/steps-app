@@ -28,7 +28,7 @@ public class HouseholdMemberFormStrategy implements IFormStrategy{
     @Override
     public void saveDataFile(Activity activity, String pathToSaveDataFile) throws IOException {
         Member selectedMember = household.getSelectedMember(new DatabaseHelper(activity));
-        String formId = getValue(Constants.FORM_ID,activity);
+        String formId = getValue(Constants.HH_FORM_ID,activity);
         String formNameFormat = formId + "-%s";
         ArrayList<String> row = new ArrayList<String>();
         row.add(Constants.ODK_HH_ID);

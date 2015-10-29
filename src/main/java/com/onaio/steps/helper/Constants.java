@@ -6,14 +6,19 @@ public class Constants {
     public static final String DATE_FORMAT = "yyyy/MM/dd";
 
 //strings passed as parameter to intent
-    public static final String SURVEY_ID = "surveyId";
-    public static final String PHONE_ID = "phoneId";
-    public static final String HOUSEHOLD_SEED = "householdSeedId";
-    public static final String MIN_AGE = "minAge";
-    public static final String MAX_AGE = "maxAge";
-    public static final String FORM_ID = "formId" ;
-    public static final String HOUSEHOLD = "HOUSEHOLD";
-    public static final String MEMBER = "MEMBER";
+    public static final String HH_SURVEY_ID = "hhSurveyId";
+    public static final String HH_PHONE_ID = "hhPhoneId";
+    public static final String HH_HOUSEHOLD_SEED = "hhHouseholdSeedId";
+    public static final String HH_MIN_AGE = "hhMinAge";
+    public static final String HH_MAX_AGE = "hhMaxAge";
+    public static final String HH_FORM_ID = "hhFormId" ;
+    public static final String HH_HOUSEHOLD = "hhHOUSEHOLD";
+    public static final String HH_MEMBER = "hhMEMBER";
+    
+    public static final String PA_PHONE_ID = "paPhoneId";
+    public static final String PA_MIN_AGE = "paMinAge";
+    public static final String PA_MAX_AGE = "paMaxAge";
+    public static final String PA_FORM_ID = "paFormId" ;
 
     public static final String HEADER_GREEN = "#008148";
     public static final String TEXT_GREEN = "#53B257";

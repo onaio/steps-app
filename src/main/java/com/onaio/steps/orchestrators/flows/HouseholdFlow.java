@@ -18,13 +18,13 @@ import java.util.List;
 
 import static com.onaio.steps.helper.Constants.ENDPOINT_URL;
 import static com.onaio.steps.helper.Constants.FLOW_TYPE;
-import static com.onaio.steps.helper.Constants.FORM_ID;
-import static com.onaio.steps.helper.Constants.HOUSEHOLD_SEED;
+import static com.onaio.steps.helper.Constants.HH_FORM_ID;
+import static com.onaio.steps.helper.Constants.HH_HOUSEHOLD_SEED;
+import static com.onaio.steps.helper.Constants.HH_MAX_AGE;
+import static com.onaio.steps.helper.Constants.HH_MIN_AGE;
+import static com.onaio.steps.helper.Constants.HH_PHONE_ID;
+import static com.onaio.steps.helper.Constants.HH_SURVEY_ID;
 import static com.onaio.steps.helper.Constants.IMPORT_URL;
-import static com.onaio.steps.helper.Constants.MAX_AGE;
-import static com.onaio.steps.helper.Constants.MIN_AGE;
-import static com.onaio.steps.helper.Constants.PHONE_ID;
-import static com.onaio.steps.helper.Constants.SURVEY_ID;
 
 
 public class HouseholdFlow implements IFlow {
@@ -50,14 +50,14 @@ public class HouseholdFlow implements IFlow {
 
     @Override
     public void saveSettings() {
-        saveData(R.id.campaignId, SURVEY_ID);
-        saveData(R.id.deviceId, PHONE_ID);
-        saveData(R.id.form_id, FORM_ID);
-        saveData(R.id.min_age, MIN_AGE);
-        saveData(R.id.max_age, MAX_AGE);
+        saveData(R.id.campaignId, HH_SURVEY_ID);
+        saveData(R.id.deviceId, HH_PHONE_ID);
+        saveData(R.id.form_id, HH_FORM_ID);
+        saveData(R.id.min_age, HH_MIN_AGE);
+        saveData(R.id.max_age, HH_MAX_AGE);
         saveData(R.id.endpointUrl, ENDPOINT_URL);
         saveData(R.id.importUrl, IMPORT_URL);
-        saveData(R.id.household_seed, HOUSEHOLD_SEED);
+        saveData(R.id.household_seed, HH_HOUSEHOLD_SEED);
         saveSafely(activity, FLOW_TYPE, FlowType.Household.toString());
     }
 
@@ -91,12 +91,12 @@ public class HouseholdFlow implements IFlow {
     }
 
     private void populateData() {
-        setData(R.id.campaignId, Constants.SURVEY_ID);
-        setData(R.id.deviceId, Constants.PHONE_ID);
-        setData(R.id.form_id, Constants.FORM_ID);
-        setData(R.id.min_age, Constants.MIN_AGE);
-        setData(R.id.max_age, Constants.MAX_AGE);
-        setData(R.id.household_seed, Constants.HOUSEHOLD_SEED);
+        setData(R.id.campaignId, Constants.HH_SURVEY_ID);
+        setData(R.id.deviceId, Constants.HH_PHONE_ID);
+        setData(R.id.form_id, Constants.HH_FORM_ID);
+        setData(R.id.min_age, Constants.HH_MIN_AGE);
+        setData(R.id.max_age, Constants.HH_MAX_AGE);
+        setData(R.id.household_seed, Constants.HH_HOUSEHOLD_SEED);
         setData(R.id.endpointUrl, Constants.ENDPOINT_URL);
         setData(R.id.importUrl, Constants.IMPORT_URL);
     }

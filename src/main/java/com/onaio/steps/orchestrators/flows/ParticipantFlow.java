@@ -18,10 +18,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.onaio.steps.helper.Constants.FLOW_TYPE;
-import static com.onaio.steps.helper.Constants.FORM_ID;
-import static com.onaio.steps.helper.Constants.MAX_AGE;
-import static com.onaio.steps.helper.Constants.MIN_AGE;
-import static com.onaio.steps.helper.Constants.PHONE_ID;
+import static com.onaio.steps.helper.Constants.PA_FORM_ID;
+import static com.onaio.steps.helper.Constants.PA_MAX_AGE;
+import static com.onaio.steps.helper.Constants.PA_MIN_AGE;
+import static com.onaio.steps.helper.Constants.PA_PHONE_ID;
 
 public class ParticipantFlow implements IFlow {
 
@@ -65,10 +65,10 @@ public class ParticipantFlow implements IFlow {
 
     @Override
     public void saveSettings() {
-        saveData(R.id.deviceId, PHONE_ID);
-        saveData(R.id.form_id, FORM_ID);
-        saveData(R.id.min_age, MIN_AGE);
-        saveData(R.id.max_age, MAX_AGE);
+        saveData(R.id.deviceId, PA_PHONE_ID);
+        saveData(R.id.form_id, PA_FORM_ID);
+        saveData(R.id.min_age, PA_MIN_AGE);
+        saveData(R.id.max_age, PA_MAX_AGE);
         saveSafely(activity, FLOW_TYPE, FlowType.Participant.toString());
     }
 
@@ -96,10 +96,10 @@ public class ParticipantFlow implements IFlow {
     }
 
     private void populateData() {
-        setData(R.id.deviceId, Constants.PHONE_ID);
-        setData(R.id.form_id, Constants.FORM_ID);
-        setData(R.id.min_age, Constants.MIN_AGE);
-        setData(R.id.max_age, Constants.MAX_AGE);
+        setData(R.id.deviceId, Constants.PA_PHONE_ID);
+        setData(R.id.form_id, Constants.PA_FORM_ID);
+        setData(R.id.min_age, Constants.PA_MIN_AGE);
+        setData(R.id.max_age, Constants.PA_MAX_AGE);
     }
 
     private void setData(int viewId, String keyId) {

@@ -11,6 +11,9 @@ import com.onaio.steps.handler.interfaces.IMenuHandler;
 import com.onaio.steps.handler.interfaces.IMenuPreparer;
 import com.onaio.steps.exceptions.AppNotInstalledException;
 import com.onaio.steps.exceptions.FormNotPresentException;
+import com.onaio.steps.handler.strategies.survey.DeferSurveyForParticipantStrategy;
+import com.onaio.steps.handler.strategies.survey.RefuseSurveyForParticipantStrategy;
+import com.onaio.steps.handler.strategies.survey.TakeSurveyForParticipantStrategy;
 import com.onaio.steps.handler.strategies.survey.interfaces.ITakeSurveyStrategy;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.CustomDialog;
@@ -27,6 +30,7 @@ public class TakeSurveyHandler implements IMenuHandler, IMenuPreparer, IActivity
     private Activity activity;
     private ITakeSurveyStrategy takeSurveyStrategy;
     private static final int MENU_ID = R.id.action_take_survey;
+    private String formId = null;
 
     @Override
     public boolean shouldOpen(int menu_id) {
@@ -41,7 +45,13 @@ public class TakeSurveyHandler implements IMenuHandler, IMenuPreparer, IActivity
     @Override
     public boolean open() {
         try {
-            String formId = getValue(Constants.FORM_ID);
+            if (takeSurveyStrategy instanceof DeferSurveyForParticipantStrategy ||
+                    takeSurveyStrategy instanceof RefuseSurveyForParticipantStrategy ||
+                    takeSurveyStrategy instanceof TakeSurveyForParticipantStrategy) {
+                formId = getValue(Constants.PA_FORM_ID);
+            } else {
+                formId = getValue(Constants.HH_FORM_ID);
+            }
             takeSurveyStrategy.open(formId);
         } catch (FormNotPresentException e) {
             new CustomDialog().notify(activity, CustomDialog.EmptyListener, R.string.error_title, R.string.form_not_present);
@@ -93,7 +103,7 @@ public class TakeSurveyHandler implements IMenuHandler, IMenuPreparer, IActivity
 
     protected List<IForm> getSavedForms() {
         try {
-            String formNameFormat = getValue(Constants.FORM_ID) + "-%s";
+            String formNameFormat = formId + "-%s";
             return ODKSavedForm.findAll(activity, takeSurveyStrategy.getFormName(formNameFormat));
         } catch (AppNotInstalledException e) {
             new CustomDialog().notify(activity, CustomDialog.EmptyListener, R.string.error_title, R.string.odk_app_not_installed);

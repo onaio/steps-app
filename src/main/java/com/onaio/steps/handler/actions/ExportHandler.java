@@ -28,8 +28,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.onaio.steps.helper.Constants.EXPORT_FIELDS;
-import static com.onaio.steps.helper.Constants.PHONE_ID;
-import static com.onaio.steps.helper.Constants.SURVEY_ID;
+import static com.onaio.steps.helper.Constants.HH_PHONE_ID;
+import static com.onaio.steps.helper.Constants.HH_SURVEY_ID;
 import static com.onaio.steps.helper.Constants.SURVEY_NA;
 
 public class ExportHandler implements IMenuHandler,IMenuPreparer {
@@ -95,7 +95,7 @@ public class ExportHandler implements IMenuHandler,IMenuPreparer {
                 row.add(String.valueOf(reasons.size()));
                 row.add(replaceCommas(StringUtils.join(reasons.toArray(), ';')));
                 row.add(deviceId);
-                row.add(KeyValueStoreFactory.instance(activity).getString(SURVEY_ID));
+                row.add(KeyValueStoreFactory.instance(activity).getString(HH_SURVEY_ID));
                 fileUtil.withData(row.toArray(new String[row.size()]));
             }
         }
@@ -151,6 +151,6 @@ public class ExportHandler implements IMenuHandler,IMenuPreparer {
     }
 
     public String getDeviceId() {
-        return KeyValueStoreFactory.instance(activity).getString(PHONE_ID);
+        return KeyValueStoreFactory.instance(activity).getString(HH_PHONE_ID);
     }
 }

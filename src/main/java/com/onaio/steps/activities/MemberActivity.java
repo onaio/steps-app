@@ -18,7 +18,7 @@ import com.onaio.steps.model.Member;
 
 import java.util.List;
 
-import static com.onaio.steps.helper.Constants.MEMBER;
+import static com.onaio.steps.helper.Constants.HH_MEMBER;
 
 public class MemberActivity extends Activity {
 
@@ -49,7 +49,7 @@ public class MemberActivity extends Activity {
 
     private void populateMember() {
         Intent intent = getIntent();
-        member = (Member) intent.getSerializableExtra(MEMBER);
+        member = (Member) intent.getSerializableExtra(HH_MEMBER);
         TextView ageView = (TextView) findViewById(R.id.member_age);
         TextView genderView = (TextView) findViewById(R.id.member_gender);
 

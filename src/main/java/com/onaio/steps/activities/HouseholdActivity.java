@@ -40,7 +40,7 @@ public class HouseholdActivity extends ListActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.household);
-        household = (Household) getIntent().getSerializableExtra(Constants.HOUSEHOLD);
+        household = (Household) getIntent().getSerializableExtra(Constants.HH_HOUSEHOLD);
         db = new DatabaseHelper(this);
         styleActionBar();
         handleMembers();

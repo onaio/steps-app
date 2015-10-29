@@ -27,7 +27,7 @@ public class NewMemberActivity extends Activity {
         super.onCreate(savedInstanceState);
         populateView();
         intent = this.getIntent();
-        household = (Household) intent.getSerializableExtra(Constants.HOUSEHOLD);
+        household = (Household) intent.getSerializableExtra(Constants.HH_HOUSEHOLD);
     }
 
     private void populateView() {

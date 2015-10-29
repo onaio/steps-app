@@ -22,7 +22,7 @@ public class HouseholdActivityHandler implements IListItemHandler {
     public boolean open() {
         if (household == null) return true;
         Intent intent = new Intent(activity, HouseholdActivity.class);
-        intent.putExtra(Constants.HOUSEHOLD, household);
+        intent.putExtra(Constants.HH_HOUSEHOLD, household);
         activity.startActivity(intent);
         return true;
     }

@@ -26,8 +26,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import static com.onaio.steps.helper.Constants.HH_PHONE_ID;
 import static com.onaio.steps.helper.Constants.IMPORT_URL;
-import static com.onaio.steps.helper.Constants.PHONE_ID;
 
 public class ImportHandler implements IMenuHandler {
     private final DatabaseHelper db;
@@ -52,7 +52,7 @@ public class ImportHandler implements IMenuHandler {
 
     @Override
     public boolean open() {
-        String deviceId = KeyValueStoreFactory.instance(activity).getString(PHONE_ID);
+        String deviceId = KeyValueStoreFactory.instance(activity).getString(HH_PHONE_ID);
         String filename = Environment.getExternalStorageDirectory()+"/"+Constants.APP_DIR+"/"+Constants.EXPORT_FILE_NAME+"_"+
                 deviceId +".csv";
         DownloadFileTask handler = new DownloadFileTask(this, filename);

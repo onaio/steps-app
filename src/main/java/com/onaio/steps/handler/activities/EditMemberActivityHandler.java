@@ -38,7 +38,7 @@ public class EditMemberActivityHandler implements IMenuHandler, IActivityResultH
     public boolean open() {
         if (member == null) return true;
         Intent intent = new Intent(activity, EditMemberActivity.class);
-        intent.putExtra(Constants.MEMBER, member);
+        intent.putExtra(Constants.HH_MEMBER, member);
         activity.startActivityForResult(intent, RequestCode.EDIT_MEMBER.getCode());
         return true;
     }
@@ -48,7 +48,7 @@ public class EditMemberActivityHandler implements IMenuHandler, IActivityResultH
         if (resultCode != RESULT_OK)
             return ;
         activity.finish();
-        member = (Member)intent.getSerializableExtra(Constants.MEMBER);
+        member = (Member)intent.getSerializableExtra(Constants.HH_MEMBER);
         new MemberActivityHandler(activity, this.member).open();
     }
 

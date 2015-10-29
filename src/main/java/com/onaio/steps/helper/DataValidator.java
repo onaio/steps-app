@@ -17,11 +17,12 @@ public class DataValidator {
         errorFields =new ArrayList<String>();
     }
 
-    public DataValidator validateAgeRange(String ageString, String errorKey) {
+    public DataValidator validateAgeRange(String ageString, String errorKey, String minString,
+                                          String maxString) {
         if(ageString == null || ageString.equals(""))
             return this;
-        int minAge = getValue(Constants.MIN_AGE);
-        int maxAge = getValue(Constants.MAX_AGE);
+        int minAge = getValue(minString);
+        int maxAge = getValue(maxString);
         int age = Integer.parseInt(ageString);
         if(age<minAge || age>maxAge)
             errorFields.add(String.format(errorKey,minAge,maxAge));

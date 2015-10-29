@@ -11,7 +11,7 @@ import com.onaio.steps.model.Household;
 import com.onaio.steps.model.RequestCode;
 
 import static android.app.Activity.*;
-import static com.onaio.steps.helper.Constants.HOUSEHOLD;
+import static com.onaio.steps.helper.Constants.HH_HOUSEHOLD;
 
 public class EditHouseholdActivityHandler implements IMenuHandler, IActivityResultHandler {
 
@@ -32,7 +32,7 @@ public class EditHouseholdActivityHandler implements IMenuHandler, IActivityResu
     @Override
     public boolean open() {
         Intent intent = new Intent(activity, EditHouseholdActivity.class);
-        intent.putExtra(HOUSEHOLD,household);
+        intent.putExtra(HH_HOUSEHOLD,household);
         activity.startActivityForResult(intent, RequestCode.EDIT_HOUSEHOLD.getCode());
         return true;
     }
@@ -42,7 +42,7 @@ public class EditHouseholdActivityHandler implements IMenuHandler, IActivityResu
         if(resultCode != RESULT_OK)
             return;
         activity.finish();
-        household = (Household)intent.getSerializableExtra(HOUSEHOLD);
+        household = (Household)intent.getSerializableExtra(HH_HOUSEHOLD);
         new HouseholdActivityHandler(activity,household).open();
     }
 

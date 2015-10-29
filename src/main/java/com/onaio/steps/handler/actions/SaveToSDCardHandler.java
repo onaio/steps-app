@@ -22,7 +22,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.List;
 
-import static com.onaio.steps.helper.Constants.PHONE_ID;
 
 /**
  * Backs up households csv data and ODK folder to the SD Card.
@@ -77,7 +76,7 @@ public class SaveToSDCardHandler implements IMenuHandler {
     }
 
     public String getDeviceId() {
-        return KeyValueStoreFactory.instance(activity).getString(PHONE_ID);
+        return KeyValueStoreFactory.instance(activity).getString(Constants.HH_PHONE_ID);
     }
 
     public SaveToSDCardHandler with(List<Household> households){

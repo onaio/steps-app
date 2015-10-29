@@ -17,8 +17,6 @@ import com.onaio.steps.model.Household;
 import com.onaio.steps.model.RequestCode;
 
 import static android.app.Activity.RESULT_OK;
-import static com.onaio.steps.helper.Constants.HOUSEHOLD_SEED;
-import static com.onaio.steps.helper.Constants.PHONE_ID;
 
 public class NewHouseholdActivityHandler implements IMenuHandler, IActivityResultHandler {
 
@@ -41,12 +39,12 @@ public class NewHouseholdActivityHandler implements IMenuHandler, IActivityResul
 
     @Override
     public boolean open() {
-        if (isEmpty(getValue(PHONE_ID))) {
+        if (isEmpty(getValue(Constants.HH_PHONE_ID))) {
             notifyUserToSetPhoneId(activity);
         } else {
             Intent intent = new Intent(activity.getBaseContext(), NewHouseholdActivity.class);
-            intent.putExtra(PHONE_ID, getValue(PHONE_ID));
-            intent.putExtra(HOUSEHOLD_SEED, getValue(HOUSEHOLD_SEED));
+            intent.putExtra(Constants.HH_PHONE_ID, getValue(Constants.HH_PHONE_ID));
+            intent.putExtra(Constants.HH_HOUSEHOLD_SEED, getValue(Constants.HH_HOUSEHOLD_SEED));
             activity.startActivityForResult(intent, RequestCode.NEW_HOUSEHOLD.getCode());
         }
         return true;
@@ -62,7 +60,7 @@ public class NewHouseholdActivityHandler implements IMenuHandler, IActivityResul
             householdAdapter.notifyDataSetChanged();
 
             Intent householdActivityIntent = new Intent(activity, HouseholdActivity.class);
-            householdActivityIntent.putExtra(Constants.HOUSEHOLD,data.getSerializableExtra(Constants.HOUSEHOLD));
+            householdActivityIntent.putExtra(Constants.HH_HOUSEHOLD,data.getSerializableExtra(Constants.HH_HOUSEHOLD));
             activity.startActivity(householdActivityIntent);
         }
     }

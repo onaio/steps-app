@@ -15,8 +15,8 @@ import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.modelViewWrapper.HouseholdViewWrapper;
 
-import static com.onaio.steps.helper.Constants.HOUSEHOLD_SEED;
-import static com.onaio.steps.helper.Constants.PHONE_ID;
+import static com.onaio.steps.helper.Constants.HH_HOUSEHOLD_SEED;
+import static com.onaio.steps.helper.Constants.HH_PHONE_ID;
 
 public class NewHouseholdActivity extends Activity {
 
@@ -49,8 +49,8 @@ public class NewHouseholdActivity extends Activity {
 
     private void populateDataFromIntent() {
         Intent intent = getIntent();
-        phoneId = intent.getStringExtra(PHONE_ID);
-        String householdSeedString = intent.getStringExtra(HOUSEHOLD_SEED);
+        phoneId = intent.getStringExtra(HH_PHONE_ID);
+        String householdSeedString = intent.getStringExtra(HH_HOUSEHOLD_SEED);
         householdSeedString = householdSeedString == null || householdSeedString.equals("") ? "1" : householdSeedString;
         householdSeed = Integer.parseInt(householdSeedString);
     }
@@ -60,7 +60,7 @@ public class NewHouseholdActivity extends Activity {
             Intent intent = this.getIntent();
             Household household = new HouseholdViewWrapper(this).getHousehold(R.id.generated_household_id, R.id.household_number,R.id.household_comments);
             household.save(db);
-            intent.putExtra(Constants.HOUSEHOLD,household);
+            intent.putExtra(Constants.HH_HOUSEHOLD,household);
             setResult(RESULT_OK, intent);
             finish();
         } catch (InvalidDataException e) {

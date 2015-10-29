@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import com.onaio.steps.R;
 import com.onaio.steps.exceptions.InvalidDataException;
+import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DataValidator;
 import com.onaio.steps.model.Gender;
 import com.onaio.steps.model.Household;
@@ -67,7 +68,8 @@ public class MemberViewWrapper {
                 validate(firstName, getStringValue(R.string.member_first_name_hint)).
                 validate(gender,getStringValue(R.string.member_gender_hint)).
                 validate(age, getStringValue(R.string.age_hint)).
-                validateAgeRange(age, getStringValue(R.string.age_not_in_range)+" %d-%d)").
+                validateAgeRange(age, getStringValue(R.string.age_not_in_range)+" %d-%d)",
+                        Constants.HH_MIN_AGE, Constants.HH_MAX_AGE).
                 finish();
     }
 

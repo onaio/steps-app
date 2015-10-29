@@ -22,7 +22,7 @@ public class MemberActivityHandler implements IListItemHandler {
     public boolean open() {
         if (member == null) return true;
         Intent intent = new Intent(activity, MemberActivity.class);
-        intent.putExtra(Constants.MEMBER, member);
+        intent.putExtra(Constants.HH_MEMBER, member);
         activity.startActivity(intent);
         return true;
     }
