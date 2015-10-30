@@ -15,6 +15,7 @@ public class ParticipantFormStrategy implements IFormStrategy{
 
     private Participant participant;
     private FileUtil fileUtil;
+    private static final String HH_SIZE = "1";
 
 
     public ParticipantFormStrategy(Participant participant){
@@ -34,6 +35,7 @@ public class ParticipantFormStrategy implements IFormStrategy{
         row.add(participant.getFirstName());
         row.add(String.valueOf(participant.getGender().getIntValue()));
         row.add(String.valueOf(participant.getAge()));
+        row.add(HH_SIZE);
         fileUtil.withHeader(Constants.PARTICIPANT_ODK_FORM_FIELDS.split(","))
                 .withData(row.toArray(new String[row.size()]))
                 .writeCSV(pathToSaveDataFile + "/" + Constants.ODK_DATA_FILENAME);
