@@ -27,7 +27,8 @@ public class HouseholdMemberFormStrategy implements IFormStrategy{
 
     @Override
     public void saveDataFile(Activity activity, String pathToSaveDataFile) throws IOException {
-        Member selectedMember = household.getSelectedMember(new DatabaseHelper(activity));
+        DatabaseHelper databaseHelper = new DatabaseHelper(activity);
+        Member selectedMember = household.getSelectedMember(databaseHelper);
         String formId = getValue(Constants.HH_FORM_ID,activity);
         String formNameFormat = formId + "-%s";
         ArrayList<String> row = new ArrayList<String>();
@@ -38,6 +39,7 @@ public class HouseholdMemberFormStrategy implements IFormStrategy{
         row.add(selectedMember.getFirstName());
         row.add(String.valueOf(selectedMember.getGender().getIntValue()));
         row.add(String.valueOf(selectedMember.getAge()));
+        row.add(String.valueOf(household.numberOfNonDeletedMembers(databaseHelper)));
         fileUtil.withHeader(Constants.ODK_FORM_FIELDS.split(","))
                 .withData(row.toArray(new String[row.size()]))
                 .writeCSV(pathToSaveDataFile + "/" + Constants.ODK_DATA_FILENAME);
