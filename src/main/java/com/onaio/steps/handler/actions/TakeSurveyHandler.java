@@ -30,7 +30,6 @@ public class TakeSurveyHandler implements IMenuHandler, IMenuPreparer, IActivity
     private Activity activity;
     private ITakeSurveyStrategy takeSurveyStrategy;
     private static final int MENU_ID = R.id.action_take_survey;
-    private String formId = null;
 
     @Override
     public boolean shouldOpen(int menu_id) {
@@ -45,6 +44,7 @@ public class TakeSurveyHandler implements IMenuHandler, IMenuPreparer, IActivity
     @Override
     public boolean open() {
         try {
+            String formId;
             if (takeSurveyStrategy instanceof DeferSurveyForParticipantStrategy ||
                     takeSurveyStrategy instanceof RefuseSurveyForParticipantStrategy ||
                     takeSurveyStrategy instanceof TakeSurveyForParticipantStrategy) {
@@ -103,6 +103,14 @@ public class TakeSurveyHandler implements IMenuHandler, IMenuPreparer, IActivity
 
     protected List<IForm> getSavedForms() {
         try {
+            String formId;
+            if (takeSurveyStrategy instanceof DeferSurveyForParticipantStrategy ||
+                    takeSurveyStrategy instanceof RefuseSurveyForParticipantStrategy ||
+                    takeSurveyStrategy instanceof TakeSurveyForParticipantStrategy) {
+                formId = getValue(Constants.PA_FORM_ID);
+            } else {
+                formId = getValue(Constants.HH_FORM_ID);
+            }
             String formNameFormat = formId + "-%s";
             return ODKSavedForm.findAll(activity, takeSurveyStrategy.getFormName(formNameFormat));
         } catch (AppNotInstalledException e) {
