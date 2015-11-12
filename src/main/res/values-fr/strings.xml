@@ -113,4 +113,6 @@
     <string name="edit_participant_header">Editer le participant</string>
     <string name="action_save_to_sdcard">Sauvegarder sur la carte SD</string>
     <string name="error_cannot_write_sdcard"> La sauvegarde sur la carte SD n’a pas été effectuée à cause des autorisations d’écriture. SVP contactez votre superviseur pour l’assistance. </string>
+    <string name="select_backup_location">Click on the button to select your backup location</string>
+    <string name="backup_location">Backup location</string>
 </resources>

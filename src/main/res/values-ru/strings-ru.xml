@@ -112,4 +112,6 @@
     <string name="edit_participant_header">Редактировать Участника</string>
     <string name="action_save_to_sdcard">Резервное копирование на SD-карту</string>
     <string name="error_cannot_write_sdcard"> Резервное копирование на SD-карту не завершено из-за ограничения записи. Пожалуйста, обратитесь к руководителю за помощью. </string>
+    <string name="select_backup_location">Click on the button to select your backup location</string>
+    <string name="backup_location">Backup location</string>
 </resources>

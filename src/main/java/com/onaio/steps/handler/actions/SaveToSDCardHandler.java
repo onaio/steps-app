@@ -1,10 +1,13 @@
 package com.onaio.steps.handler.actions;
 
 import android.app.ListActivity;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Environment;
 import android.util.Log;
 
 import com.onaio.steps.R;
+import com.onaio.steps.activities.BackupLocationActivity;
 import com.onaio.steps.handler.interfaces.IMenuHandler;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.CustomDialog;
@@ -45,7 +48,12 @@ public class SaveToSDCardHandler implements IMenuHandler {
 
     @Override
     public boolean open() {
-        saveToSDCard();
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Intent intent = new Intent(activity, BackupLocationActivity.class);
+            activity.startActivity(intent);
+        } else {
+            saveToSDCard();
+        }
         return true;
     }
 

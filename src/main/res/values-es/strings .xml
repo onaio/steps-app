@@ -114,4 +114,6 @@
     <string name="edit_participant_header">Editar participante</string>
     <string name="action_save_to_sdcard">Respaldar en la tarjeta SD</string>
     <string name="error_cannot_write_sdcard">El respaldo en la tarjeta SD no ha sido completado debido a permisos de escritura. Por favor, contacte a su supervisor para recibir ayuda.</string>
+    <string name="select_backup_location">Click on the button to select your backup location</string>
+    <string name="backup_location">Backup location</string>
 </resources>
