@@ -113,6 +113,6 @@
     <string name="error_no_sdcard">You attempted to backup data to an SD Card, however, your device does not have an SD Card. Please insert one to proceed with the backup.</string>
     <string name="action_save_to_sdcard">Backup to SD Card</string>
     <string name="error_cannot_write_sdcard">Backup to SD Card not complete due to write permissions; Please contact your supervisor for assistance.</string>
-    <string name="select_backup_location">Click on the button to select your backup location</string>
+    <string name="select_backup_location">Tap on the button to select your backup location</string>
     <string name="backup_location">Backup location</string>
 </resources>

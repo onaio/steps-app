@@ -79,10 +79,10 @@ public class ParticipantFlowTest {
         maxage.setText("69");
         minage.setText("18");
         participantFlow.saveSettings();
-        assertEquals("1234567", getValue(settingsActivity, Constants.PHONE_ID));
-        assertEquals("STEPS_Instrument_V3_1", getValue(settingsActivity, Constants.FORM_ID));
-        assertEquals("69", getValue(settingsActivity, Constants.MAX_AGE));
-        assertEquals("18",getValue(settingsActivity,Constants.MIN_AGE));
+        assertEquals("1234567", getValue(settingsActivity, Constants.PA_PHONE_ID));
+        assertEquals("STEPS_Instrument_V3_1", getValue(settingsActivity, Constants.PA_FORM_ID));
+        assertEquals("69", getValue(settingsActivity, Constants.PA_MAX_AGE));
+        assertEquals("18",getValue(settingsActivity,Constants.PA_MIN_AGE));
     }
 
     @Test
