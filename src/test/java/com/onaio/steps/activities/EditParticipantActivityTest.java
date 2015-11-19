@@ -81,8 +81,8 @@ public class EditParticipantActivityTest {
 
     @Test
     public void ShouldNotPassImproperDataToIntent(){
-        setValue(Constants.MIN_AGE,"12");
-        setValue(Constants.MAX_AGE,"60");
+        setValue(Constants.HH_MIN_AGE,"12");
+        setValue(Constants.HH_MAX_AGE,"60");
         View viewMock = Mockito.mock(View.class);
         Mockito.stub(viewMock.getId()).toReturn(R.id.member_form);
         TextView participantId = (TextView) editParticipantActivity.findViewById(R.id.participant_id_value);
@@ -109,8 +109,8 @@ public class EditParticipantActivityTest {
 
     @Test
     public void ShouldUpdateMemberAndFinishActivity(){
-        setValue(Constants.MIN_AGE,"12");
-        setValue(Constants.MAX_AGE,"60");
+        setValue(Constants.HH_MIN_AGE,"12");
+        setValue(Constants.HH_MAX_AGE,"60");
         View viewMock = Mockito.mock(View.class);
         Mockito.stub(viewMock.getId()).toReturn(R.id.member_form);
 

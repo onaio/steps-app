@@ -69,7 +69,7 @@ public class NewHouseholdActivityHandlerTest {
 
     @Test
     public void ShouldNotifyUserWhenOnlyHouseholdSeedSet(){
-        setValue(Constants.HOUSEHOLD_SEED, HOUSEHOLD_SEED);
+        setValue(Constants.HH_HOUSEHOLD_SEED, HOUSEHOLD_SEED);
 
         handler.open();
 
@@ -78,8 +78,8 @@ public class NewHouseholdActivityHandlerTest {
 
     @Test
     public void ShouldNotNotifyUserWhenPhoneIdAndHouseholdSeedSet(){
-        setValue(Constants.HOUSEHOLD_SEED, HOUSEHOLD_SEED);
-        setValue(Constants.PHONE_ID, PHONE_ID);
+        setValue(Constants.HH_HOUSEHOLD_SEED, HOUSEHOLD_SEED);
+        setValue(Constants.HH_PHONE_ID, PHONE_ID);
 
         handler.open();
 
@@ -88,15 +88,15 @@ public class NewHouseholdActivityHandlerTest {
 
     @Test
     public void ShouldOpenNewHouseholdActivityWithDataWhenPhoneIdIsSet(){
-        setValue(Constants.PHONE_ID, PHONE_ID);
-        setValue(Constants.HOUSEHOLD_SEED, HOUSEHOLD_SEED);
+        setValue(Constants.HH_PHONE_ID, PHONE_ID);
+        setValue(Constants.HH_HOUSEHOLD_SEED, HOUSEHOLD_SEED);
         ShadowActivity stepsActivityShadow = Robolectric.shadowOf(householdListActivity);
 
         handler.open();
 
         Intent newIntent = stepsActivityShadow.getNextStartedActivityForResult().intent;
         assertTrue(newIntent.getComponent().getClassName().equals(NewHouseholdActivity.class.getName()));
-        assertTrue(newIntent.getStringExtra(Constants.PHONE_ID).equals(PHONE_ID));
+        assertTrue(newIntent.getStringExtra(Constants.HH_PHONE_ID).equals(PHONE_ID));
     }
 
     @Test
@@ -114,7 +114,7 @@ public class NewHouseholdActivityHandlerTest {
         Intent intent = new Intent();
         Household name = new Household("name", "123321412312", InterviewStatus.NOT_SELECTED, "123","Dummy comments");
         name.save(new DatabaseHelper(householdListActivity));
-        intent.putExtra(Constants.HOUSEHOLD,name);
+        intent.putExtra(Constants.HH_HOUSEHOLD,name);
         HouseholdAdapter householdAdapterMock = Mockito.mock(HouseholdAdapter.class);
         Mockito.stub(householdAdapterMock.getViewTypeCount()).toReturn(1);
         householdListActivity.getListView().setAdapter(householdAdapterMock);
@@ -128,7 +128,7 @@ public class NewHouseholdActivityHandlerTest {
 
         Intent newIntent = stepsActivityShadow.getNextStartedActivity();
         assertEquals(HouseholdActivity.class.getName(),newIntent.getComponent().getClassName());
-        assertEquals(name,newIntent.getSerializableExtra(Constants.HOUSEHOLD));
+        assertEquals(name,newIntent.getSerializableExtra(Constants.HH_HOUSEHOLD));
     }
 
     @Test

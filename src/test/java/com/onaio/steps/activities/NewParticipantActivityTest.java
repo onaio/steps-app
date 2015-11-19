@@ -71,8 +71,8 @@ public class NewParticipantActivityTest {
 
     @Test
     public void ShouldFinishActivityAfterSavingParticipantData() {
-        setValue(Constants.MIN_AGE, "12");
-        setValue(Constants.MAX_AGE, "50");
+        setValue(Constants.HH_MIN_AGE, "12");
+        setValue(Constants.HH_MAX_AGE, "50");
         TextView participantId = (TextView) newParticipantActivity.findViewById(R.id.participant_id_value);
         TextView surname = (TextView) newParticipantActivity.findViewById(R.id.member_family_surname);
         TextView firstName = (TextView) newParticipantActivity.findViewById(R.id.member_first_name);
@@ -96,8 +96,8 @@ public class NewParticipantActivityTest {
 
     @Test
     public void ShouldNotCreateParticipantWithInsufficientDataAndShouldNotFinishActivity() {
-        setValue(Constants.MIN_AGE, "12");
-        setValue(Constants.MAX_AGE, "50");
+        setValue(Constants.HH_MIN_AGE, "12");
+        setValue(Constants.HH_MAX_AGE, "50");
         TextView surname = (TextView) newParticipantActivity.findViewById(R.id.member_family_surname);
         TextView participantId = (TextView) newParticipantActivity.findViewById(R.id.participant_id_value);
         TextView firstName = (TextView) newParticipantActivity.findViewById(R.id.member_first_name);

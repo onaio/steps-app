@@ -57,8 +57,8 @@ public class ParticipantViewWrapperTest {
         date = new SimpleDateFormat(Constants.DATE_FORMAT).format(new Date());
         participant = new Participant(1, "123-10", "family surname", "firstName", Gender.Female, 34, InterviewStatus.DONE, date);
         error_string = getStringValue(R.string.invalid) + " %s, " + getStringValue(R.string.fill_correct_message) + " %s";
-        setValue(Constants.MIN_AGE, "18");
-        setValue(Constants.MAX_AGE, "70");
+        setValue(Constants.PA_MIN_AGE, "18");
+        setValue(Constants.PA_MAX_AGE, "70");
     }
 
 

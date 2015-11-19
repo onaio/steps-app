@@ -42,7 +42,7 @@ public class EditMemberActivityTest {
         Intent intent = new Intent();
         household = new Household("1","123","987654321","1", InterviewStatus.DEFERRED,"2015-12-13", "Dummy comments");
         member = new Member(1,"rana","manisha", Gender.Female,28, household,"123-1",false);
-        intent.putExtra(Constants.MEMBER, member);
+        intent.putExtra(Constants.HH_MEMBER, member);
         editMemberActivity = Robolectric.buildActivity(EditMemberActivity.class)
                             .withIntent(intent)
                             .create()
@@ -73,22 +73,22 @@ public class EditMemberActivityTest {
 
     @Test
     public void ShouldUpdateMemberAndFinishActivity(){
-        setValue(Constants.MIN_AGE,"12");
-        setValue(Constants.MAX_AGE,"60");
+        setValue(Constants.HH_MIN_AGE,"12");
+        setValue(Constants.HH_MAX_AGE,"60");
         View viewMock = Mockito.mock(View.class);
         Mockito.stub(viewMock.getId()).toReturn(R.id.member_form);
 
         editMemberActivity.save(viewMock);
 
         Intent intent = editMemberActivity.getIntent();
-        assertEquals(member, intent.getSerializableExtra(Constants.MEMBER));
+        assertEquals(member, intent.getSerializableExtra(Constants.HH_MEMBER));
         assertTrue(editMemberActivity.isFinishing());
     }
 
     @Test
     public void ShouldNotPassImproperDataToIntent(){
-        setValue(Constants.MIN_AGE,"12");
-        setValue(Constants.MAX_AGE,"60");
+        setValue(Constants.HH_MIN_AGE,"12");
+        setValue(Constants.HH_MAX_AGE,"60");
         View viewMock = Mockito.mock(View.class);
         Mockito.stub(viewMock.getId()).toReturn(R.id.member_form);
         TextView surnameView = (TextView) editMemberActivity.findViewById(R.id.member_family_surname);
@@ -105,7 +105,7 @@ public class EditMemberActivityTest {
         editMemberActivity.save(viewMock);
 
         Intent intent = editMemberActivity.getIntent();
-        assertEquals(member,intent.getSerializableExtra(Constants.MEMBER));
+        assertEquals(member,intent.getSerializableExtra(Constants.HH_MEMBER));
 
         assertFalse(editMemberActivity.isFinishing());
     }

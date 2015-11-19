@@ -55,7 +55,7 @@ public class MemberActivityTest {
 
     @Test
     public void ShouldBeAbleToPopulateWithMemberView() {
-        intent.putExtra(Constants.MEMBER, member);
+        intent.putExtra(Constants.HH_MEMBER, member);
         Mockito.stub(household.getStatus()).toReturn(InterviewStatus.DONE);
         memberActivity = memberActivityController.withIntent(intent)
                 .create().get();
@@ -74,7 +74,7 @@ public class MemberActivityTest {
 
     @Test
     public void ShouldInvalidateMenuOptionsForDoneStatus() {
-        intent.putExtra(Constants.MEMBER, member);
+        intent.putExtra(Constants.HH_MEMBER, member);
         Mockito.stub(household.getStatus()).toReturn(InterviewStatus.DONE);
         memberActivity = memberActivityController.withIntent(intent).create().get();
 
@@ -93,7 +93,7 @@ public class MemberActivityTest {
 
     @Test
     public void ShouldInvalidateMenuOptionsForRefusedStatus() {
-        intent.putExtra(Constants.MEMBER, member);
+        intent.putExtra(Constants.HH_MEMBER, member);
         Mockito.stub(household.getStatus()).toReturn(InterviewStatus.REFUSED);
         memberActivity = memberActivityController.withIntent(intent).create().get();
 
@@ -112,7 +112,7 @@ public class MemberActivityTest {
 
     @Test
     public void ShouldActivateMenuOptionsForNotSelectedStatus() {
-        intent.putExtra(Constants.MEMBER, member);
+        intent.putExtra(Constants.HH_MEMBER, member);
         Mockito.stub(household.getStatus()).toReturn(InterviewStatus.NOT_SELECTED);
         memberActivity = memberActivityController.withIntent(intent).create().get();
 

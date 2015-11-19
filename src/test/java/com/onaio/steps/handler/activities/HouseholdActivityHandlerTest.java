@@ -60,7 +60,7 @@ public class HouseholdActivityHandlerTest {
             @Override
             public boolean matches(Object argument) {
                 Intent intent = (Intent) argument;
-                Household actualHousehold = (Household) intent.getSerializableExtra(Constants.HOUSEHOLD);
+                Household actualHousehold = (Household) intent.getSerializableExtra(Constants.HH_HOUSEHOLD);
                 Assert.assertEquals(household, actualHousehold);
                 Assert.assertEquals(HouseholdActivity.class.getName(),intent.getComponent().getClassName());
                 return true;

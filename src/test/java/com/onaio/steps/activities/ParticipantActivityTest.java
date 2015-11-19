@@ -74,7 +74,7 @@ public class ParticipantActivityTest {
         assertNotNull(participantName);
         assertNotNull(participantDetails);
         assertEquals(participantFormattedName, participantName.getText().toString());
-        assertEquals(participant.getFormattedDetail(), participantDetails.getText().toString());
+        assertEquals(participant.getFormattedDetail(participantActivity), participantDetails.getText().toString());
         assertEquals("Interview is complete!",viewById.getText());
     }
 
@@ -92,7 +92,7 @@ public class ParticipantActivityTest {
         assertNotNull(participantName);
         assertNotNull(participantDetails);
         assertEquals(participantFormattedName, participantName.getText().toString());
-        assertEquals(participant.getFormattedDetail(), participantDetails.getText().toString());
+        assertEquals(participant.getFormattedDetail(participantActivity), participantDetails.getText().toString());
         assertEquals("Interview is refused!",viewById.getText());
     }
 
@@ -110,7 +110,7 @@ public class ParticipantActivityTest {
         assertNotNull(participantName);
         assertNotNull(participantDetails);
         assertEquals(participantFormattedName, participantName.getText().toString());
-        assertEquals(participant.getFormattedDetail(), participantDetails.getText().toString());
+        assertEquals(participant.getFormattedDetail(participantActivity), participantDetails.getText().toString());
         assertEquals("",viewById.getText());
     }
 

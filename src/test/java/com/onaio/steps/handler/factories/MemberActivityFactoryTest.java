@@ -40,7 +40,7 @@ public class MemberActivityFactoryTest extends TestCase {
     public void Setup(){
         household = new Household("name", "123", InterviewStatus.NOT_SELECTED, "12-12-2015","Dummy comments");
         member = new Member(1,"surname", "firstname", Gender.Male, 23, household, "",false);
-        Intent intent = new Intent().putExtra(Constants.MEMBER, member);
+        Intent intent = new Intent().putExtra(Constants.HH_MEMBER, member);
         memberActivity = Robolectric.buildActivity(MemberActivity.class).withIntent(intent).create().get();
     }
 

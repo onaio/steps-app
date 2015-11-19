@@ -57,8 +57,8 @@ public class MemberViewWrapperTest {
         error_string = getStringValue(R.string.invalid) + " %s, " + getStringValue(R.string.fill_correct_message) + " %s";
         household = new Household("1", "Any Household", "123456789", "", InterviewStatus.NOT_SELECTED, date, "Dummy comments");
         anotherMember = new Member("some surname","firstName",Gender.Female, 22, household, false);
-        setValue(Constants.MIN_AGE, "18");
-        setValue(Constants.MAX_AGE, "70");
+        setValue(Constants.HH_MIN_AGE, "18");
+        setValue(Constants.HH_MAX_AGE, "70");
     }
 
     @Test

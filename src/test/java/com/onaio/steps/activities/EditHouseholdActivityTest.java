@@ -35,7 +35,7 @@ public class EditHouseholdActivityTest {
     public void setup() {
         household = new Household("1", "household Name", "123456789", "2", InterviewStatus.NOT_DONE, "2015-12-13", "Dummy comments");
         Intent intent = new Intent();
-        intent.putExtra(Constants.HOUSEHOLD, household);
+        intent.putExtra(Constants.HH_HOUSEHOLD, household);
 
         editHouseholdActivity = Robolectric.buildActivity(EditHouseholdActivity.class)
                 .withIntent(intent)
@@ -72,7 +72,7 @@ public class EditHouseholdActivityTest {
 
         Intent editHouseholdActivityIntent = editHouseholdActivity.getIntent();
 
-        assertEquals(household, editHouseholdActivityIntent.getSerializableExtra(Constants.HOUSEHOLD));
+        assertEquals(household, editHouseholdActivityIntent.getSerializableExtra(Constants.HH_HOUSEHOLD));
         assertTrue(editHouseholdActivity.isFinishing());
     }
 

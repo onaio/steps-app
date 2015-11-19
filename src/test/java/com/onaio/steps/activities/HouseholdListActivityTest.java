@@ -57,7 +57,7 @@ public class HouseholdListActivityTest{
 
     @Test
     public void ShouldSetMainLayoutProperlyOnCreateWhenPhoneIdIsSet(){
-        KeyValueStoreFactory.instance(householdListActivityMock).putString(Constants.PHONE_ID,"123");
+        KeyValueStoreFactory.instance(householdListActivityMock).putString(Constants.HH_PHONE_ID,"123");
 
         householdListActivityMock.onCreate(null);
 

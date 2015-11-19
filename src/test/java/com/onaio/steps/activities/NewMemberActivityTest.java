@@ -42,7 +42,7 @@ public class NewMemberActivityTest {
     public void setup() {
         household = new Household("2", "Any HouseholdName", "123456789", "", InterviewStatus.NOT_SELECTED, currentDate, "Dummy comments");
         Intent intent = new Intent();
-        intent.putExtra(Constants.HOUSEHOLD, household);
+        intent.putExtra(Constants.HH_HOUSEHOLD, household);
         newMemberActivity = Robolectric.buildActivity(NewMemberActivity.class).withIntent(intent)
                 .create()
                 .get();
@@ -69,8 +69,8 @@ public class NewMemberActivityTest {
 
     @Test
     public void ShouldFinishActivityAfterSavingMemberData() {
-        setValue(Constants.MIN_AGE, "12");
-        setValue(Constants.MAX_AGE, "50");
+        setValue(Constants.HH_MIN_AGE, "12");
+        setValue(Constants.HH_MAX_AGE, "50");
         TextView surname = (TextView) newMemberActivity.findViewById(R.id.member_family_surname);
         TextView firstName = (TextView) newMemberActivity.findViewById(R.id.member_first_name);
         RadioGroup gender = (RadioGroup) newMemberActivity.findViewById(R.id.member_gender);
@@ -86,14 +86,14 @@ public class NewMemberActivityTest {
 
         Intent intent = newMemberActivity.getIntent();
 
-        assertEquals(household, intent.getSerializableExtra(Constants.HOUSEHOLD));
+        assertEquals(household, intent.getSerializableExtra(Constants.HH_HOUSEHOLD));
         assertTrue(newMemberActivity.isFinishing());
     }
 
     @Test
     public void ShouldNotCreateMemberWithInsufficientDataAndShouldNotFinishActivity() {
-        setValue(Constants.MIN_AGE, "12");
-        setValue(Constants.MAX_AGE, "50");
+        setValue(Constants.HH_MIN_AGE, "12");
+        setValue(Constants.HH_MAX_AGE, "50");
         TextView surname = (TextView) newMemberActivity.findViewById(R.id.member_family_surname);
         TextView firstName = (TextView) newMemberActivity.findViewById(R.id.member_first_name);
         RadioGroup gender = (RadioGroup) newMemberActivity.findViewById(R.id.member_gender);
@@ -109,7 +109,7 @@ public class NewMemberActivityTest {
 
         Intent intent = newMemberActivity.getIntent();
 
-        assertEquals(household, intent.getSerializableExtra(Constants.HOUSEHOLD));
+        assertEquals(household, intent.getSerializableExtra(Constants.HH_HOUSEHOLD));
         assertFalse(newMemberActivity.isFinishing());
     }
 

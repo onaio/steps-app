@@ -56,7 +56,7 @@ public class HouseholdActivityTest {
     public void ShouldStyleActionBar() {
         Mockito.stub(household.getStatus()).toReturn(InterviewStatus.DONE);
         Mockito.stub(household.getComments()).toReturn("dummy comments");
-        intent.putExtra(Constants.HOUSEHOLD,household);
+        intent.putExtra(Constants.HH_HOUSEHOLD,household);
         HouseholdActivity householdActivity = householdActivityController.withIntent(intent).create().get();
 
         TextView idHeader = (TextView) householdActivity.findViewById(R.id.household_id_header);
@@ -72,7 +72,7 @@ public class HouseholdActivityTest {
     public void ShouldPopulateAdapterWithMembersAndDisplayAppropriateMessage() {
         Mockito.stub(household.getComments()).toReturn("dummy comments");
         Mockito.stub(household.getStatus()).toReturn(InterviewStatus.DONE);
-        intent.putExtra(Constants.HOUSEHOLD,household);
+        intent.putExtra(Constants.HH_HOUSEHOLD,household);
         HouseholdActivity householdActivity = householdActivityController.withIntent(intent).create().get();
 
         ListAdapter listAdapter = householdActivity.getListView().getAdapter();
@@ -87,7 +87,7 @@ public class HouseholdActivityTest {
     public void ShouldPopulateAdapterWithMembersAndDisplaySurveyRefusedMessage() {
         Mockito.stub(household.getComments()).toReturn("dummy comments");
         Mockito.stub(household.getStatus()).toReturn(InterviewStatus.REFUSED);
-        intent.putExtra(Constants.HOUSEHOLD,household);
+        intent.putExtra(Constants.HH_HOUSEHOLD,household);
         HouseholdActivity householdActivity = householdActivityController.withIntent(intent).create().get();
 
         ListAdapter listAdapter = householdActivity.getListView().getAdapter();

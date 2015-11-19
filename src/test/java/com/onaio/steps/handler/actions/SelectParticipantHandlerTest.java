@@ -53,7 +53,7 @@ public class SelectParticipantHandlerTest {
         Mockito.stub(householdMock.getComments()).toReturn("dummy comments");
 
         Intent intent = new Intent();
-        intent.putExtra(Constants.HOUSEHOLD, householdMock);
+        intent.putExtra(Constants.HH_HOUSEHOLD, householdMock);
         householdActivity = Robolectric.buildActivity(HouseholdActivity.class).withIntent(intent).create().get();
         dbMock = mock(DatabaseHelper.class);
         dialogMock = mock(CustomDialog.class);

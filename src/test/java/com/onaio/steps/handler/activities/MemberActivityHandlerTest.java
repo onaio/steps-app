@@ -55,7 +55,7 @@ public class MemberActivityHandlerTest {
             @Override
             public boolean matches(Object argument) {
                 Intent intent = (Intent) argument;
-                Member actualMember = (Member) intent.getSerializableExtra(Constants.MEMBER);
+                Member actualMember = (Member) intent.getSerializableExtra(Constants.HH_MEMBER);
                 Assert.assertEquals(member,actualMember);
                 Assert.assertEquals(MemberActivity.class.getName(),intent.getComponent().getClassName());
                 return true;

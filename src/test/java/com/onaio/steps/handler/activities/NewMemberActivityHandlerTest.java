@@ -173,7 +173,7 @@ public class NewMemberActivityHandlerTest {
             @Override
             public boolean matches(Object argument) {
                 Intent intent = (Intent) argument;
-                Household actualHousehold = (Household) intent.getSerializableExtra(Constants.HOUSEHOLD);
+                Household actualHousehold = (Household) intent.getSerializableExtra(Constants.HH_HOUSEHOLD);
                 Assert.assertEquals(householdMock, actualHousehold);
                 Assert.assertEquals(NewMemberActivity.class.getName(),intent.getComponent().getClassName());
                 return true;

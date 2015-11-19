@@ -37,8 +37,8 @@ public class NewHouseholdActivityTest {
     @Before
     public void setup() {
         Intent intent = new Intent();
-        intent.putExtra(Constants.PHONE_ID, PHONE_ID);
-        intent.putExtra(Constants.HOUSEHOLD_SEED, HOUSEHOLD_SEED);
+        intent.putExtra(Constants.HH_PHONE_ID, PHONE_ID);
+        intent.putExtra(Constants.HH_HOUSEHOLD_SEED, HOUSEHOLD_SEED);
 
         newHouseholdActivity = Robolectric.buildActivity(NewHouseholdActivity.class)
                 .withIntent(intent)
@@ -77,7 +77,7 @@ public class NewHouseholdActivityTest {
         newHouseholdActivity.save(viewMock);
 
         Intent intent = newHouseholdActivity.getIntent();
-        assertEquals(household, intent.getSerializableExtra(Constants.HOUSEHOLD));
+        assertEquals(household, intent.getSerializableExtra(Constants.HH_HOUSEHOLD));
         assertTrue(newHouseholdActivity.isFinishing());
     }
 
