@@ -43,7 +43,6 @@ public class BackupLocationActivity extends Activity {
         setContentView(R.layout.select_backup_location);
         // Request permissions.
         sharedPreferences = getSharedPreferences(APP_SETTINGS, Context.MODE_PRIVATE);
-        String set = sharedPreferences.getString(SD_CARD_PERM, null);
         chooseBackupLocationButton = (Button) findViewById(R.id.backup_location_button);
         chooseBackupLocationButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
