@@ -114,7 +114,8 @@
     <string name="edit_participant_header">Editar participante</string>
     <string name="action_save_to_sdcard">Respaldar en la tarjeta SD</string>
     <string name="error_cannot_write_sdcard">El respaldo en la tarjeta SD no ha sido completado debido a permisos de escritura. Por favor, contacte a su supervisor para recibir ayuda.</string>
-    <string name="select_backup_label">Click on the button to select your backup location</string>
-    <string name="backup_location">Backup location</string>
-    <string name="select_backup_location">Select Backup Location</string>
+    <string name="select_backup_label">Pulse sobre el botón para seleccionar dónde respaldar los datos</string>
+    <string name="backup_location">Seleccione la ubicación para el respaldo de datos</string>
+    <string name="select_backup_location">Seleccione la ubicación para el respaldo de datos</string>
+    <string name="refused_or_unable">Rechazado / No fue posible realizar la entrevista</string>
 </resources>

@@ -115,4 +115,5 @@
     <string name="select_backup_label">Нажмите на кнопку, чтобы выбрать расположение резервного копирования</string>
     <string name="backup_location">Расположение резервного копирования</string>
     <string name="select_backup_location">Выберите расположение резервного копирования</string>
+    <string name="refused_or_unable">Отказ, или Невозможно проводить опрос</string>
 </resources>
