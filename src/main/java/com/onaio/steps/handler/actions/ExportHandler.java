@@ -80,7 +80,7 @@ public class ExportHandler implements IMenuHandler,IMenuPreparer {
         for(Household household: households) {
             List<ReElectReason> reasons = ReElectReason.getAll(databaseHelper, household);
             List<Member> membersPerHousehold = household.getAllMembersForExport(databaseHelper);
-            for(Member member: membersPerHousehold){
+            for(Member member: membersPerHousehold) {
                 ArrayList<String> row = new ArrayList<String>();
                 row.add(household.getPhoneNumber());
                 row.add(household.getName());
