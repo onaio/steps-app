@@ -44,7 +44,7 @@ public class NewHouseholdActivity extends Activity {
         TextView phoneIdView = (TextView) findViewById(R.id.generated_household_id);
         int householdsCount = Household.getAllCount(db);
         int generatedId = householdSeed + householdsCount;
-        phoneIdView.setText(String.format("%s-%d",phoneId, generatedId));
+        phoneIdView.setText(String.format("%s-%s",phoneId, String.valueOf(generatedId)));
     }
 
     private void populateDataFromIntent() {

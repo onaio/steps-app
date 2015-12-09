@@ -68,8 +68,8 @@ public class MemberViewWrapper {
                 validate(firstName, getStringValue(R.string.member_first_name_hint)).
                 validate(gender,getStringValue(R.string.member_gender_hint)).
                 validate(age, getStringValue(R.string.age_hint)).
-                validateAgeRange(age, getStringValue(R.string.age_not_in_range)+" %d-%d)",
-                        Constants.HH_MIN_AGE, Constants.HH_MAX_AGE).
+                validateAgeRange(age, getStringValue(R.string.age_not_in_range) + " %s-%s)",
+                        String.valueOf(Constants.HH_MIN_AGE), String.valueOf(Constants.HH_MAX_AGE)).
                 finish();
     }
 

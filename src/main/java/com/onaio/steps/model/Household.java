@@ -11,7 +11,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class Household implements Serializable,Comparable<Household> {
-    private static String FIND_BY_ID_QUERY = "SELECT * FROM HOUSEHOLD WHERE id = %d";
+    private static String FIND_BY_ID_QUERY = "SELECT * FROM HOUSEHOLD WHERE id = %s";
     public static final String FIND_BY_NAME_QUERY = "SELECT * FROM HOUSEHOLD WHERE %s = '%s'";
     private static String FIND_ALL_QUERY = "SELECT * FROM HOUSEHOLD ORDER BY Id desc";
     private static String FIND_ALL_COUNT_QUERY = "SELECT count(*) FROM HOUSEHOLD ORDER BY Id desc";
@@ -131,7 +131,7 @@ public class Household implements Serializable,Comparable<Household> {
     }
 
     public static Household find_by(DatabaseHelper db, Long id) {
-        Cursor cursor = db.exec(String.format(FIND_BY_ID_QUERY,id));
+        Cursor cursor = db.exec(String.format(FIND_BY_ID_QUERY, String.valueOf(id)));
         Household household = new CursorHelper().getHouseholds(cursor).get(0);
         db.close();
         return household;
@@ -165,12 +165,12 @@ public class Household implements Serializable,Comparable<Household> {
     public List<Member> getAllUnselectedMembers(DatabaseHelper db){
         if(getSelectedMemberId()==null)
             return getAllNonDeletedMembers(db);
-        String query = String.format(Member.FIND_ALL_UNSELECTED_QUERY, Member.HOUSEHOLD_ID, this.getId(), Member.DELETED, Member.NOT_DELETED_INT, Member.ID, getSelectedMemberId());
+        String query = String.format(Member.FIND_ALL_UNSELECTED_QUERY, Member.HOUSEHOLD_ID, this.getId(), Member.DELETED, String.valueOf(Member.NOT_DELETED_INT), Member.ID, getSelectedMemberId());
         return getMembers(db,query);
     }
 
     public List<Member> getAllNonDeletedMembers(DatabaseHelper db){
-        String query = String.format(Member.FIND_ALL_QUERY, Member.HOUSEHOLD_ID, this.getId(), Member.DELETED, Member.NOT_DELETED_INT, Member.ID, getSelectedMemberId());
+        String query = String.format(Member.FIND_ALL_QUERY, Member.HOUSEHOLD_ID, this.getId(), Member.DELETED, String.valueOf(Member.NOT_DELETED_INT), Member.ID, getSelectedMemberId());
         return getMembers(db,query);
     }
 
@@ -180,7 +180,7 @@ public class Household implements Serializable,Comparable<Household> {
     }
 
     public Member findMember(DatabaseHelper db, Long id) {
-        String query = String.format(Member.FIND_BY_ID_QUERY, id);
+        String query = String.format(Member.FIND_BY_ID_QUERY, String.valueOf(id));
         return getMembers(db,query).get(0);
     }
 
@@ -192,14 +192,14 @@ public class Household implements Serializable,Comparable<Household> {
     }
 
     public int numberOfNonDeletedMembers(DatabaseHelper db){
-        String query = String.format(Member.FIND_ALL_QUERY, Member.HOUSEHOLD_ID, getId(), Member.DELETED, Member.NOT_DELETED_INT);
+        String query = String.format(Member.FIND_ALL_QUERY, Member.HOUSEHOLD_ID, getId(), Member.DELETED, String.valueOf(Member.NOT_DELETED_INT));
         return getCount(db, query);
     }
 
     public int numberOfNonSelectedMembers(DatabaseHelper db){
         if(getSelectedMemberId()==null)
             return numberOfNonDeletedMembers(db);
-        String query = String.format(Member.FIND_ALL_UNSELECTED_QUERY, Member.HOUSEHOLD_ID, this.getId(), Member.DELETED, Member.NOT_DELETED_INT, Member.ID, getSelectedMemberId());
+        String query = String.format(Member.FIND_ALL_UNSELECTED_QUERY, Member.HOUSEHOLD_ID, this.getId(), Member.DELETED, String.valueOf(Member.NOT_DELETED_INT), Member.ID, getSelectedMemberId());
         return getCount(db, query);
     }
 
