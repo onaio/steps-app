@@ -39,6 +39,7 @@ public class ExportHandler implements IMenuHandler,IMenuPreparer {
     private DatabaseHelper databaseHelper;
     private Menu menu;
     private int MENU_ID = R.id.action_export;
+    private static final String EMPTY_COLUMN = "";
 
     public ExportHandler(ListActivity activity) {
         this.activity = activity;
@@ -77,11 +78,12 @@ public class ExportHandler implements IMenuHandler,IMenuPreparer {
         String deviceId = getDeviceId();
 
         FileUtil fileUtil = new FileUtil().withHeader(EXPORT_FIELDS);
+        List<Household> emptyHouseholds = new ArrayList<>();
         for(Household household: households) {
             List<ReElectReason> reasons = ReElectReason.getAll(databaseHelper, household);
             List<Member> membersPerHousehold = household.getAllMembersForExport(databaseHelper);
             for(Member member: membersPerHousehold) {
-                ArrayList<String> row = new ArrayList<String>();
+                ArrayList<String> row = new ArrayList<>();
                 row.add(household.getPhoneNumber());
                 row.add(household.getName());
                 row.add(replaceCommas(household.getComments()));
@@ -99,6 +101,30 @@ public class ExportHandler implements IMenuHandler,IMenuPreparer {
                 row.add(String.valueOf(household.numberOfNonDeletedMembers(databaseHelper)));
                 fileUtil.withData(row.toArray(new String[row.size()]));
             }
+            if (membersPerHousehold.size() == 0) {
+                emptyHouseholds.add(household);
+            }
+        }
+        // Add households with no members
+        for (Household household : emptyHouseholds) {
+            List<ReElectReason> reasons = ReElectReason.getAll(databaseHelper, household);
+            ArrayList<String> row = new ArrayList<>();
+            row.add(household.getPhoneNumber());
+            row.add(household.getName());
+            row.add(replaceCommas(household.getComments()));
+            row.add(EMPTY_COLUMN);
+            row.add(EMPTY_COLUMN);
+            row.add(EMPTY_COLUMN);
+            row.add(EMPTY_COLUMN);
+            row.add(EMPTY_COLUMN);
+            row.add(EMPTY_COLUMN);
+            row.add(SURVEY_NA);
+            row.add(String.valueOf(reasons.size()));
+            row.add(replaceCommas(StringUtils.join(reasons.toArray(), ';')));
+            row.add(deviceId);
+            row.add(KeyValueStoreFactory.instance(activity).getString(HH_SURVEY_ID));
+            row.add(String.valueOf(household.numberOfNonDeletedMembers(databaseHelper)));
+            fileUtil.withData(row.toArray(new String[row.size()]));
         }
         //Write the csv to external storage for the user to access.
         new SaveToSDCardHandler(activity).saveToExternalStorage(fileUtil);
