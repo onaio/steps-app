@@ -4,6 +4,7 @@ public class Constants {
 
     public static final String APP_DIR = "STEPS";
     public static final String DATE_FORMAT = "yyyy/MM/dd";
+    public static final String DUMMY_MEMBER_ID = "-0";
 
 //strings passed as parameter to intent
     public static final String HH_SURVEY_ID = "hhSurveyId";

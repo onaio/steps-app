@@ -84,7 +84,7 @@ public class ImportHandler implements IMenuHandler {
                 }
                 //validate for members
                 Member member = Member.find_by_household_id(db, household, memberHouseholdId);
-                if (member == null && memberHouseholdId.trim().length() > 0) {
+                if (member == null && !memberHouseholdId.trim().endsWith(Constants.DUMMY_MEMBER_ID)) {
                     member = new Member(surname, firstName, Gender.valueOf(gender), Integer.parseInt(age), household, Boolean.getBoolean(deleted));
                     member.setMemberHouseholdId(memberHouseholdId);
                     member.save(db);
