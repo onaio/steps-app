@@ -112,7 +112,7 @@ public class ExportHandler implements IMenuHandler,IMenuPreparer {
             row.add(household.getPhoneNumber());
             row.add(household.getName());
             row.add(replaceCommas(household.getComments()));
-            row.add(EMPTY_COLUMN);
+            row.add(household.getName() + "-0");
             row.add(EMPTY_COLUMN);
             row.add(EMPTY_COLUMN);
             row.add(EMPTY_COLUMN);
