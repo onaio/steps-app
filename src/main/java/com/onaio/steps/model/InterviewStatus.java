@@ -6,7 +6,8 @@ public enum InterviewStatus {
     NOT_DONE(2),
     DONE(5),
     DEFERRED(3),
-    REFUSED(6);
+    REFUSED(6),
+    INCOMPLETE_REFUSED(7);
     private int orderWeight;
 
     InterviewStatus(int orderWeight){
