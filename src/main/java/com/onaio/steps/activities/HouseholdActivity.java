@@ -54,7 +54,7 @@ public class HouseholdActivity extends ListActivity {
             case DONE: viewById.setText(R.string.survey_done_message);
                 viewById.setTextColor(Color.parseColor(Constants.TEXT_GREEN));
                 break;
-            case INCOMPLETE_REFUSED: viewById.setText(R.string.partially_completed);
+            case INCOMPLETE_REFUSED: viewById.setText(R.string.survey_partially_completed);
                 viewById.setTextColor(Color.YELLOW);
                 break;
             case REFUSED: viewById.setText(R.string.survey_refused_message);

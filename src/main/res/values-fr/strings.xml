@@ -117,4 +117,7 @@
     <string name="backup_location">Emplacement de sauvegarde</string>
     <string name="select_backup_location">Sélectionnez l’emplacement de sauvegarde</string>
     <string name="refused_or_unable">Refusé / Entretien impossible</string>
+    <string name="survey_partially_completed">Survey was partially completed!</string>
+    <string name="interview_partially_completed">Interview was partially completed!</string>
+    <string name="refused_or_unable_to_complete">Refused / Unable to Complete</string>
 </resources>

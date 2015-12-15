@@ -118,4 +118,7 @@
     <string name="backup_location">Seleccione la ubicación para el respaldo de datos</string>
     <string name="select_backup_location">Seleccione la ubicación para el respaldo de datos</string>
     <string name="refused_or_unable">Rechazado / No fue posible realizar la entrevista</string>
+    <string name="survey_partially_completed">Survey was partially completed!</string>
+    <string name="interview_partially_completed">Interview was partially completed!</string>
+    <string name="refused_or_unable_to_complete">Refused / Unable to Complete</string>
 </resources>
