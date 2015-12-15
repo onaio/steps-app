@@ -35,7 +35,7 @@ public class SettingActivityHandler implements IMenuHandler, IActivityResultHand
         return true;
     }
 
-    public SettingActivityHandler prepareFor(FlowType flowType){
+    public SettingActivityHandler prepareFor(FlowType flowType) {
         this.flowType = flowType;
         return this;
     }

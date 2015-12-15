@@ -91,13 +91,17 @@ public class MemberAdapter extends BaseAdapter{
 
     private void setImage(View memberListItem, Boolean isSelectedMember) {
         ImageView image = (ImageView) memberListItem.findViewById(R.id.main_image);
-        if(isSelectedMember)
-            if(household.getStatus().equals(InterviewStatus.DONE))
+        if(isSelectedMember) {
+            if (household.getStatus().equals(InterviewStatus.DONE)) {
                 image.setImageResource(R.mipmap.ic_household_list_done);
-            else
+            } else if (household.getStatus().equals(InterviewStatus.INCOMPLETE_REFUSED)) {
+                image.setImageResource(R.mipmap.ic_household_list_incomplete_refused);
+            } else {
                 image.setImageResource(R.mipmap.ic_household_list_refused);
-        else
+            }
+        } else {
             image.setImageResource(R.mipmap.ic_contact_list);
+        }
     }
 
     private View getViewItem(View convertView) {

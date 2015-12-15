@@ -67,7 +67,8 @@ public class EditMemberActivityHandler implements IMenuHandler, IActivityResultH
         boolean isSelectedMember = String.valueOf(member.getId()).equals(member.getHousehold().getSelectedMemberId());
         boolean refusedHousehold = member.getHousehold().getStatus().equals(InterviewStatus.REFUSED);
         boolean surveyDone = member.getHousehold().getStatus().equals(InterviewStatus.DONE);
-        return (isSelectedMember || refusedHousehold || surveyDone);
+        boolean incompleteRefused = member.getHousehold().getStatus().equals(InterviewStatus.INCOMPLETE_REFUSED);
+        return (isSelectedMember || refusedHousehold || surveyDone || incompleteRefused);
     }
 
     @Override

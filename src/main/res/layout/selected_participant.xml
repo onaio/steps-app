@@ -51,6 +51,17 @@
             android:textColor="@android:color/white"
             android:paddingLeft="5dp"
             android:textSize="12sp"/>
+        <Button android:id="@+id/action_refused_incomplete"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textAllCaps="true"
+            android:text="@string/refused_or_unable"
+            android:drawableLeft="@drawable/ic_action_refused"
+            android:onClick="handleCustomMenu"
+            android:layout_margin="10dp"
+            android:background="@android:color/holo_red_light"
+            android:textColor="@android:color/white"
+            android:textSize="12sp"/>
         <Button android:id="@+id/action_deferred"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"

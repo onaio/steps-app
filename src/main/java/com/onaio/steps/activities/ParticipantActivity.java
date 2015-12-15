@@ -70,6 +70,9 @@ public class ParticipantActivity extends Activity{
             case DONE: viewById.setText(R.string.interview_done_message);
                 viewById.setTextColor(Color.parseColor(Constants.TEXT_GREEN));
                 break;
+            case INCOMPLETE_REFUSED: viewById.setText(R.string.partially_completed);
+                viewById.setTextColor(Color.YELLOW);
+                break;
             case REFUSED: viewById.setText(R.string.interview_refused_message);
                 viewById.setTextColor(Color.RED);
                 break;

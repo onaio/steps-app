@@ -117,4 +117,5 @@
     <string name="backup_location">Backup location</string>
     <string name="select_backup_location">Select Backup Location</string>
     <string name="refused_or_unable">Refused / Unable to Interview</string>
+    <string name="partially_completed">Survey was partially completed!</string>
 </resources>

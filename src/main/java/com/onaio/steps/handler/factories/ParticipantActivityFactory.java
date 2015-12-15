@@ -6,6 +6,7 @@ import android.view.Menu;
 
 import com.onaio.steps.handler.actions.BackHomeHandler;
 import com.onaio.steps.handler.actions.DeferredHandler;
+import com.onaio.steps.handler.actions.IncompleteRefusedHandler;
 import com.onaio.steps.handler.activities.EditParticipantActivityHandler;
 import com.onaio.steps.handler.interfaces.IActivityResultHandler;
 import com.onaio.steps.handler.interfaces.IMenuHandler;
@@ -13,6 +14,7 @@ import com.onaio.steps.handler.interfaces.IMenuPreparer;
 import com.onaio.steps.handler.actions.RefusedHandler;
 import com.onaio.steps.handler.actions.TakeSurveyHandler;
 import com.onaio.steps.handler.strategies.survey.DeferSurveyForParticipantStrategy;
+import com.onaio.steps.handler.strategies.survey.RefuseIncompleteSurveyForParticipantStrategy;
 import com.onaio.steps.handler.strategies.survey.RefuseSurveyForParticipantStrategy;
 import com.onaio.steps.handler.strategies.survey.TakeSurveyForParticipantStrategy;
 import com.onaio.steps.model.Participant;
@@ -40,6 +42,7 @@ public class ParticipantActivityFactory {
         menuItems.add(new TakeSurveyHandler(activity,new TakeSurveyForParticipantStrategy(participant,activity)));
         menuItems.add(new DeferredHandler(activity, new DeferSurveyForParticipantStrategy(participant,activity)));
         menuItems.add(new RefusedHandler(activity,new RefuseSurveyForParticipantStrategy(participant,activity)));
+        menuItems.add(new IncompleteRefusedHandler(activity,new RefuseIncompleteSurveyForParticipantStrategy(participant,activity)));
         return menuItems;
     }
 
@@ -48,6 +51,7 @@ public class ParticipantActivityFactory {
         handlers.add(new TakeSurveyHandler(activity, new TakeSurveyForParticipantStrategy(participant,activity)));
         handlers.add(new DeferredHandler(activity,new DeferSurveyForParticipantStrategy(participant,activity)));
         handlers.add(new RefusedHandler(activity,new RefuseSurveyForParticipantStrategy(participant,activity)));
+        handlers.add(new IncompleteRefusedHandler(activity,new RefuseIncompleteSurveyForParticipantStrategy(participant,activity)));
         return handlers;
     }
 
