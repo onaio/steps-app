@@ -95,7 +95,7 @@ public class MemberAdapter extends BaseAdapter{
             if (household.getStatus().equals(InterviewStatus.DONE)) {
                 image.setImageResource(R.mipmap.ic_household_list_done);
             } else if (household.getStatus().equals(InterviewStatus.INCOMPLETE_REFUSED)) {
-                image.setImageResource(R.mipmap.ic_household_list_incomplete_refused);
+                image.setImageResource(R.mipmap.ic_household_list_refused);
             } else {
                 image.setImageResource(R.mipmap.ic_household_list_refused);
             }
