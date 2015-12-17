@@ -56,7 +56,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/refused_or_unable_to_complete"
-            android:drawableLeft="@drawable/ic_action_refused"
+            android:drawableLeft="@drawable/ic_action_refused_white"
             android:onClick="handleCustomMenu"
             android:layout_margin="10dp"
             android:background="@color/pink"
