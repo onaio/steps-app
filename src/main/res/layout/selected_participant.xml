@@ -59,8 +59,8 @@
             android:drawableLeft="@drawable/ic_action_refused_white"
             android:onClick="handleCustomMenu"
             android:layout_margin="10dp"
-            android:background="@color/pink"
-            android:textColor="@android:color/white"
+            android:background="@android:color/white"
+            android:shadowColor="@android:color/black"
             android:paddingLeft="5dp"
             android:textSize="12sp"/>
         <Button android:id="@+id/action_deferred"
