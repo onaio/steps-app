@@ -114,11 +114,14 @@
     <string name="edit_participant_header">Editar participante</string>
     <string name="action_save_to_sdcard">Respaldar en la tarjeta SD</string>
     <string name="error_cannot_write_sdcard">El respaldo en la tarjeta SD no ha sido completado debido a permisos de escritura. Por favor, contacte a su supervisor para recibir ayuda.</string>
-    <string name="select_backup_label">Pulse sobre el botón para seleccionar dónde respaldar los datos</string>
-    <string name="backup_location">Seleccione dónde quiere respaldar los datos</string>
-    <string name="select_backup_location">Seleccione dónde quiere respaldar los datos</string>
+    <string name="select_backup_label">Pulse sobre el botón para seleccionar dónde hacer la copia de seguridad.</string>
+    <string name="backup_location">Sitio para hacer copia de seguridad</string>
+    <string name="select_backup_location">Seleccione dónde quiere hacer la copia de seguridad</string>
     <string name="refused_or_unable">Rechazo/No ha sido posibible realizar la encuesta</string>
     <string name="survey_partially_completed">¡La encuesta ha sido completada parcialmente!</string>
     <string name="interview_partially_completed">¡La encuesta ha sido completada parcialmente!</string>
     <string name="refused_or_unable_to_complete">Rechazo/Imposible completar</string>
+    <string name="invalid_settings">Ajustes inválidos. Por favor, complete o corrija los siguientes campos:</string>
+    <string name="invalid_member">Inválido Miembro. Por favor, complete o corrija los siguientes campos:</string>
+
 </resources>

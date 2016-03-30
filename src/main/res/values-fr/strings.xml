@@ -120,4 +120,7 @@
     <string name="survey_partially_completed">Enquête inachevée !</string>
     <string name="interview_partially_completed">Entretien inachevé !</string>
     <string name="refused_or_unable_to_complete">Refusé / Achèvement impossible</string>
+    <string name="invalid_settings">Non valide Réglages,SVP remplissez ou corrigez les champs suivants:</string>
+    <string name="invalid_member">Membre non valide, SVP remplissez ou corrigez les champs suivants:</string>
+
 </resources>

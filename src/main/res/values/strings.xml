@@ -120,4 +120,6 @@
     <string name="survey_partially_completed">Survey was partially completed!</string>
     <string name="interview_partially_completed">Interview was partially completed!</string>
     <string name="refused_or_unable_to_complete">Refused / Unable to Complete</string>
+    <string name="invalid_settings">Invalid Settings, please fill or correct the following fields:</string>
+    <string name="invalid_member">Invalid Member, please fill or correct the following fields:</string>
 </resources>
