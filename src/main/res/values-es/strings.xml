@@ -12,7 +12,7 @@
     <string name="phone_id_message">"¡Establezca primero el número de identificación del aparato!"</string>
     <string name="phone_id_message_title">"Alerta"</string>
     <string name="household_id_hint">"Número de identificación del hogar"</string>
-    <string name="phone_number">"Número Telefónico:"</string>
+    <string name="phone_number">"Número de teléfono:"</string>
     <string name="phone_number_hint">"Número de teléfono"</string>
     <string name="household_id_label">"Número de identificación del hogar:"</string>
     <string name="member_family_surname_hint">"Apellido"</string>
@@ -117,7 +117,7 @@
     <string name="select_backup_label">Pulse sobre el botón para seleccionar dónde hacer la copia de seguridad.</string>
     <string name="backup_location">Sitio para hacer copia de seguridad</string>
     <string name="select_backup_location">Seleccione dónde quiere hacer la copia de seguridad</string>
-    <string name="refused_or_unable">Rechazo/No ha sido posibible realizar la encuesta</string>
+    <string name="refused_or_unable">RECHAZO/NO HA SIDO POSSIBLE REALIZAR LA ENCUESTA</string>
     <string name="survey_partially_completed">¡La encuesta ha sido completada parcialmente!</string>
     <string name="interview_partially_completed">¡La encuesta ha sido completada parcialmente!</string>
     <string name="refused_or_unable_to_complete">Rechazo/Imposible completar</string>

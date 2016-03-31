@@ -76,7 +76,7 @@
         <Button android:id="@+id/action_refused"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:textAllCaps="true"
+            android:textAllCaps="false"
             android:text="@string/refused_or_unable"
             android:drawableLeft="@drawable/ic_action_refused"
             android:onClick="handleCustomMenu"

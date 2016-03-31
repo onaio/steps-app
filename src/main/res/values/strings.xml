@@ -116,7 +116,7 @@
     <string name="select_backup_label">Tap on the button to select your backup location</string>
     <string name="backup_location">Backup location</string>
     <string name="select_backup_location">Select Backup Location</string>
-    <string name="refused_or_unable">Refused / Unable to Interview</string>
+    <string name="refused_or_unable">REFUSED / UNABLE TO INTERVIEW</string>
     <string name="survey_partially_completed">Survey was partially completed!</string>
     <string name="interview_partially_completed">Interview was partially completed!</string>
     <string name="refused_or_unable_to_complete">Refused / Unable to Complete</string>

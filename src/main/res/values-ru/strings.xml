@@ -115,7 +115,7 @@
     <string name="select_backup_label">Нажмите на кнопку, чтобы выбрать расположение резервного копирования</string>
     <string name="backup_location">Расположение резервного копирования</string>
     <string name="select_backup_location">Выберите расположение резервного копирования</string>
-    <string name="refused_or_unable">Отказ, или Невозможно проводить опрос</string>
+    <string name="refused_or_unable">ОТКАЗ, ИЛИ НЕВОЗМОЖНО ПРОВОДИТЬ ОПРОС</string>
     <string name="survey_partially_completed">Опрос был завершен частично!</string>
     <string name="interview_partially_completed">Интервью частично завершено!</string>
     <string name="refused_or_unable_to_complete">Отказался / Не удается завершить</string>
