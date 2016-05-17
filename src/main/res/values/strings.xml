@@ -122,4 +122,20 @@
     <string name="refused_or_unable_to_complete">Refused / Unable to Complete</string>
     <string name="invalid_settings">Invalid Settings, please fill or correct the following fields:</string>
     <string name="invalid_member">Invalid Member, please fill or correct the following fields:</string>
+    <string name="eligible">Eligible</string>
+    <string name="nobody_at_home">Nobody at home</string>
+    <string name="consent">Consent</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="no_house_member">No house member at home/ No competent house member at home</string>
+    <string name="entire_household_absent">Entire household absent for extended period of time</string>
+    <string name="postponed">Postponed</string>
+    <string name="interview_refused">Refused</string>
+    <string name="dwelling_vacant_not_exist">Dwelling Vacant/Does not exist</string>
+    <string name="not_found">Not found</string>
+    <string name="other">Other</string>
+    <string name="specify">Specify</string>
+    <string name="eligible_members">Are there eligible members in this household?</string>
+
+
 </resources>

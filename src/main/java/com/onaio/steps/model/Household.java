@@ -23,7 +23,9 @@ public class Household implements Serializable,Comparable<Household> {
     public static final String SELECTED_MEMBER_ID = "selected_member_id";
     public static final String CREATED_AT = "Created_At";
     public static final String COMMENTS = "Comments";
-    public static final String TABLE_CREATE_QUERY = String.format("CREATE TABLE %s(%s INTEGER PRIMARY KEY, %s TEXT, %s TEXT, %s INTEGER, %s TEXT, %s TEXT, %s TEXT)", TABLE_NAME, ID, NAME, PHONE_NUMBER, SELECTED_MEMBER_ID,STATUS, CREATED_AT ,COMMENTS);
+    public static final String INTERVIEW_ELIGIBILITY = "interview_eligibility";
+    public static final String INTERVIEW_ELIGIBILITY_COMMENT = "interview_eligibility_comment";
+    public static final String TABLE_CREATE_QUERY = String.format("CREATE TABLE %s(%s INTEGER PRIMARY KEY, %s TEXT, %s TEXT, %s INTEGER, %s TEXT, %s TEXT, %s TEXT, %s TEXT, %s TEXT)", TABLE_NAME, ID, NAME, PHONE_NUMBER, SELECTED_MEMBER_ID,STATUS, CREATED_AT ,COMMENTS,INTERVIEW_ELIGIBILITY,INTERVIEW_ELIGIBILITY_COMMENT);
 
     String id;
     String name;
@@ -32,6 +34,8 @@ public class Household implements Serializable,Comparable<Household> {
     String selectedMemberId;
     String createdAt;
     String comments;
+    String inteviewEligibility;
+    String interviewEligibilityComment;
     
     public Household(String id, String name, String phoneNumber, String selectedMemberId, InterviewStatus status, String createdAt , String comments) {
         this.id = id;
@@ -42,13 +46,22 @@ public class Household implements Serializable,Comparable<Household> {
         this.createdAt=createdAt;
         this.comments=comments;
     }
-
     public Household(String name, String phoneNumber, InterviewStatus status, String createdAt, String comments) {
         this.name= name;
         this.phoneNumber = phoneNumber;
         this.status = status;
         this.createdAt=createdAt;
         this.comments = comments;
+    }
+
+    public Household(String name, String phoneNumber, InterviewStatus status, String createdAt, String comments,String eligibilityValue,String otherSpecifyValue) {
+        this.name= name;
+        this.phoneNumber = phoneNumber;
+        this.status = status;
+        this.createdAt=createdAt;
+        this.comments = comments;
+        this.inteviewEligibility=eligibilityValue;
+        this.interviewEligibilityComment=otherSpecifyValue;
     }
 
     public void setPhoneNumber(String phoneNumber) {
@@ -127,6 +140,9 @@ public class Household implements Serializable,Comparable<Household> {
         values.put(PHONE_NUMBER,phoneNumber);
         values.put(COMMENTS,comments);
         values.put(STATUS,status.toString());
+        values.put(INTERVIEW_ELIGIBILITY, inteviewEligibility.toString());
+        values.put(INTERVIEW_ELIGIBILITY_COMMENT,interviewEligibilityComment!=null ? interviewEligibilityComment:null);
+
         return values;
     }
 

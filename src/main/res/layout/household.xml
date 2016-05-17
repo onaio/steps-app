@@ -1,114 +1,162 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/household_main"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="fill_parent"
+    android:layout_height="match_parent"
     android:background="@android:color/white"
+    android:fillViewport="true"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/extended_menu"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/household_main"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="-5dp"
-        android:orientation="vertical"
-        android:weightSum="1">
-
-        <TextView
-            android:id="@+id/household_id_header"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="70dp"
-            android:gravity="left"
-            android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/household_number_header"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="5dp"
-            android:drawableLeft="@drawable/ic_action_phone"
-            android:drawablePadding="20dp"
-            android:textSize="15sp"
-            android:weightSum="1" />
-
-        <TextView
-            android:id="@+id/text_view_comment"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:layout_marginBottom="15dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="5dp"
-            android:drawableLeft="@drawable/ic_household_comments"
-            android:drawablePadding="20dp"
-            android:textSize="15sp"
-            android:weightSum="1" />
-
-
-        <View
-            android:id="@+id/action_bar_divider"
-            android:layout_width="fill_parent"
-            android:layout_height="1dp"
-            android:background="@android:color/darker_gray" />
-    </LinearLayout>
-
-    <include layout="@layout/selected_participant" />
-
-    <LinearLayout
-        android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:background="@android:color/white"
         android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="fill_parent"
+            android:id="@+id/extended_menu"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:id="@+id/custom_actions">
+            android:layout_marginTop="-5dp"
+            android:orientation="vertical"
+            android:weightSum="1">
 
-            <Button
-                android:id="@+id/action_add_member"
-                style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="1dp"
-                android:layout_height="50dp"
-                android:layout_margin="15dp"
-                android:layout_weight="1"
-                android:background="#499F72"
-                android:drawablePadding="-10dp"
-                android:drawableStart="@drawable/ic_action_new_member"
-                android:onClick="handleCustomMenu"
-                android:paddingLeft="10dp"
-                android:text="@string/add_new_member"
-                android:textColor="@android:color/white"
-                android:textSize="12sp" />
+            <TextView
+                android:id="@+id/household_id_header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="70dp"
+                android:gravity="left"
+                android:textSize="18sp" />
 
-            <Button
-                android:id="@+id/action_select_participant"
-                style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_margin="15dp"
-                android:layout_weight="1"
-                android:background="#FFC600"
-                android:drawablePadding="-10dp"
-                android:drawableStart="@drawable/ic_action_select_participant"
-                android:onClick="handleCustomMenu"
-                android:paddingLeft="10dp"
-                android:text="@string/action_select_participant"
-                android:textColor="@android:color/black"
-                android:textSize="12sp" />
+            <TextView
+                android:id="@+id/household_number_header"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="5dp"
+                android:drawableLeft="@drawable/ic_action_phone"
+                android:drawablePadding="20dp"
+                android:textSize="15sp"
+                android:weightSum="1" />
+
+            <TextView
+                android:id="@+id/text_view_comment"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginBottom="15dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="5dp"
+                android:drawableLeft="@drawable/ic_household_comments"
+                android:drawablePadding="20dp"
+                android:textSize="15sp"
+                android:weightSum="1" />
+
+
+            <View
+                android:id="@+id/action_bar_divider"
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray" />
         </LinearLayout>
 
-        <ListView
-            android:id="@android:id/list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_horizontal"
-            android:divider="@null"
-            android:dividerHeight="0dp" />
+        <include layout="@layout/selected_participant" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical">
+
+            <include layout="@layout/household_eligibility" />
+
+            <LinearLayout
+                android:id="@+id/layout_any_eligible_members"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="@string/eligible_members" />
+
+                <RadioGroup
+                    android:id="@+id/rGrp_household_eligible_members"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical">
+
+                    <RadioButton
+                        android:id="@+id/rBtn_yes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/no" />
+
+                    <RadioButton
+                        android:id="@+id/rBtn_no"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:text="@string/yes" />
+                </RadioGroup>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/custom_actions"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/action_add_member"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="1dp"
+                    android:layout_height="50dp"
+                    android:layout_margin="15dp"
+                    android:layout_weight="1"
+                    android:background="#499F72"
+                    android:drawablePadding="-10dp"
+                    android:drawableStart="@drawable/ic_action_new_member"
+                    android:onClick="handleCustomMenu"
+                    android:paddingLeft="10dp"
+                    android:text="@string/add_new_member"
+                    android:textColor="@android:color/white"
+                    android:textSize="12sp" />
+
+                <Button
+                    android:id="@+id/action_select_participant"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_margin="15dp"
+                    android:layout_weight="1"
+                    android:background="#FFC600"
+                    android:drawablePadding="-10dp"
+                    android:drawableStart="@drawable/ic_action_select_participant"
+                    android:onClick="handleCustomMenu"
+                    android:paddingLeft="10dp"
+                    android:text="@string/action_select_participant"
+                    android:textColor="@android:color/black"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <ListView
+                android:id="@android:id/list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
+                android:divider="@null"
+                android:dividerHeight="0dp" />
+
+        </LinearLayout>
 
     </LinearLayout>
-</LinearLayout>
+</ScrollView>

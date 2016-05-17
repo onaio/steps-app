@@ -1,65 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/household_form"
-    android:background="@android:color/white">
-    <include layout="@layout/dialog_header"/>
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:text="@string/household_id"
-        android:layout_marginLeft="10dp"
-        android:id="@+id/generated_household_id_label"
-        android:textColor="@android:color/black"/>
+    android:background="@android:color/white"
+    android:fillViewport="true"
+    android:orientation="vertical">
 
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="45dp"
-        android:layout_marginLeft="10dp"
-        android:id="@+id/generated_household_id"
-        android:textColor="#ff888888"
-        />
-
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/phone_number_hint"
-        android:layout_marginLeft="10dp"/>
-
-    <EditText
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/household_form"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:ems="10"
-        android:id="@+id/household_number"
-        android:hint="@string/phone_number_hint"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="5dp"
-        android:textColor="@android:color/black"/>
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:orientation="vertical">
 
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="@string/household_comments"
-        android:layout_marginLeft="10dp"/>
+        <include layout="@layout/dialog_header" />
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textMultiLine"
-        android:ems="10"
-        android:id="@+id/household_comments"
-        android:hint="@string/household_comments"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="5dp"
-        android:textColor="@android:color/black"/>
+        <TextView
+            android:id="@+id/generated_household_id_label"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="30dp"
+            android:text="@string/household_id"
+            android:textColor="@android:color/black" />
 
+        <TextView
+            android:id="@+id/generated_household_id"
+            android:layout_width="fill_parent"
+            android:layout_height="45dp"
+            android:layout_marginLeft="10dp"
+            android:textColor="#ff888888" />
 
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="@string/phone_number_hint" />
 
-</LinearLayout>
+        <EditText
+            android:id="@+id/household_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="10dp"
+            android:ems="10"
+            android:hint="@string/phone_number_hint"
+            android:inputType="number"
+            android:textColor="@android:color/black" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/household_comments" />
+
+        <EditText
+            android:id="@+id/household_comments"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="10dp"
+            android:ems="10"
+            android:focusable="true"
+            android:hint="@string/household_comments"
+            android:inputType="textMultiLine"
+            android:textColor="@android:color/black" />
+
+        <include layout="@layout/household_eligibility" />
+    </LinearLayout>
+</ScrollView>
