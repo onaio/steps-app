@@ -83,7 +83,7 @@ public class NewMemberActivityHandler implements IMenuHandler, IActivityResultHa
     @Override
     public void activate() {
         Button button = (Button) activity.findViewById(R.id.action_add_member);
-        button.setVisibility(View.VISIBLE);
+        //button.setVisibility(View.VISIBLE);
     }
 
 }

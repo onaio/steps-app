@@ -37,7 +37,7 @@ public class Household implements Serializable,Comparable<Household> {
     String inteviewEligibility;
     String interviewEligibilityComment;
     
-    public Household(String id, String name, String phoneNumber, String selectedMemberId, InterviewStatus status, String createdAt , String comments) {
+    public Household(String id, String name, String phoneNumber, String selectedMemberId, InterviewStatus status, String createdAt , String comments,String eligibilityValue,String otherSpecifyValue) {
         this.id = id;
         this.name = name;
         this.phoneNumber = phoneNumber;
@@ -45,6 +45,8 @@ public class Household implements Serializable,Comparable<Household> {
         this.status = status;
         this.createdAt=createdAt;
         this.comments=comments;
+        this.inteviewEligibility=eligibilityValue;
+        this.interviewEligibilityComment=otherSpecifyValue;
     }
     public Household(String name, String phoneNumber, InterviewStatus status, String createdAt, String comments) {
         this.name= name;
@@ -112,6 +114,21 @@ public class Household implements Serializable,Comparable<Household> {
         return phoneNumber;
     }
 
+    public String getInteviewEligibility() {
+        return inteviewEligibility;
+    }
+
+    public void setInteviewEligibility(String inteviewEligibility) {
+        this.inteviewEligibility = inteviewEligibility;
+    }
+
+    public String getInterviewEligibilityComment() {
+        return interviewEligibilityComment;
+    }
+
+    public void setInterviewEligibilityComment(String interviewEligibilityComment) {
+        this.interviewEligibilityComment = interviewEligibilityComment;
+    }
     public Member getSelectedMember(DatabaseHelper db){
         if(selectedMemberId == null)
             return null;

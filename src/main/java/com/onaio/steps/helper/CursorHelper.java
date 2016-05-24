@@ -44,7 +44,9 @@ public class CursorHelper {
                 String status = cursor.getString(cursor.getColumnIndex(Household.STATUS));
                 String createdAt = cursor.getString(cursor.getColumnIndex(Household.CREATED_AT));
                 String comments = cursor.getString(cursor.getColumnIndex(Household.COMMENTS));
-                householdNames.add(new Household(id,household_name, household_number,selectedMemberId, InterviewStatus.valueOf(status),createdAt, comments ));
+                String interviewEligibility = cursor.getString(cursor.getColumnIndex(Household.INTERVIEW_ELIGIBILITY));
+                String interviewEligibilityComment = cursor.getString(cursor.getColumnIndex(Household.INTERVIEW_ELIGIBILITY_COMMENT));
+                householdNames.add(new Household(id,household_name, household_number,selectedMemberId, InterviewStatus.valueOf(status),createdAt, comments,interviewEligibility,interviewEligibilityComment ));
             }while (cursor.moveToNext());
         }
         cursor.close();

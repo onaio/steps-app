@@ -11,7 +11,9 @@ public class Constants {
     public static final String HH_PHONE_ID = "hhPhoneId";
     public static final String HH_HOUSEHOLD_SEED = "hhHouseholdSeedId";
     public static final String HH_MIN_AGE = "hhMinAge";
+    public static final String CHILD_MIN_AGE = "childMinAge";
     public static final String HH_MAX_AGE = "hhMaxAge";
+    public static final String CHILD_MAX_AGE = "childMaxAge";
     public static final String HH_FORM_ID = "hhFormId" ;
     public static final String HH_HOUSEHOLD = "hhHOUSEHOLD";
     public static final String HH_MEMBER = "hhMEMBER";

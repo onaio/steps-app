@@ -47,16 +47,14 @@
             android:background="@android:color/darker_gray" />
     </LinearLayout>
 
-
     <ImageView
         android:id="@+id/add_care_giver"
         android:layout_width="30dp"
-        android:visibility="gone"
         android:src="@drawable/ic_person_add_black_24dp"
         android:layout_height="match_parent"
         android:layout_gravity="center_vertical"
         android:layout_marginRight="20dp"
-        />
+        android:layout_weight=".1" />
 
     <ImageView
         android:id="@+id/comment_view"
