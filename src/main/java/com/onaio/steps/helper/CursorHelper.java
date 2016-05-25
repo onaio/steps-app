@@ -4,6 +4,7 @@ import android.database.Cursor;
 
 import com.onaio.steps.model.Gender;
 import com.onaio.steps.model.Household;
+import com.onaio.steps.model.HouseholdVisit;
 import com.onaio.steps.model.InterviewStatus;
 import com.onaio.steps.model.Member;
 import com.onaio.steps.model.Participant;
@@ -44,9 +45,10 @@ public class CursorHelper {
                 String status = cursor.getString(cursor.getColumnIndex(Household.STATUS));
                 String createdAt = cursor.getString(cursor.getColumnIndex(Household.CREATED_AT));
                 String comments = cursor.getString(cursor.getColumnIndex(Household.COMMENTS));
-                String interviewEligibility = cursor.getString(cursor.getColumnIndex(Household.INTERVIEW_ELIGIBILITY));
-                String interviewEligibilityComment = cursor.getString(cursor.getColumnIndex(Household.INTERVIEW_ELIGIBILITY_COMMENT));
-                householdNames.add(new Household(id,household_name, household_number,selectedMemberId, InterviewStatus.valueOf(status),createdAt, comments,interviewEligibility,interviewEligibilityComment ));
+                String visits = cursor.getString(cursor.getColumnIndex(Household.NO_OF_VISITS));
+                Household household = new Household(id, household_name, household_number, selectedMemberId, InterviewStatus.valueOf(status), createdAt, comments);
+                household.setNoOfVisits(visits);
+                householdNames.add(household);
             }while (cursor.moveToNext());
         }
         cursor.close();
@@ -72,5 +74,23 @@ public class CursorHelper {
         }
         cursor.close();
         return participants;
+    }
+
+    public List<HouseholdVisit> getHouseholdVisits(Cursor cursor){
+        List<HouseholdVisit> householdVisits = new ArrayList<HouseholdVisit>();
+        if(cursor.moveToFirst()){
+            do{
+                Long id = cursor.getLong(cursor.getColumnIndex(HouseholdVisit.ID));
+                Long householdId = cursor.getLong(cursor.getColumnIndex(HouseholdVisit.HH_ID));
+                String status = cursor.getString(cursor.getColumnIndex(HouseholdVisit.STATUS));
+                String createdAt = cursor.getString(cursor.getColumnIndex(HouseholdVisit.CREATED_AT));
+                String comments = cursor.getString(cursor.getColumnIndex(HouseholdVisit.COMMENTS));
+                String createdBy = cursor.getString(cursor.getColumnIndex(HouseholdVisit.CREATED_BY));
+                householdVisits.add(new HouseholdVisit(id,householdId, status,createdAt, comments,createdBy ));
+            }while (cursor.moveToNext());
+        }
+        cursor.close();
+        return householdVisits;
+
     }
 }

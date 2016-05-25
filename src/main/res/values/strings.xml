@@ -136,11 +136,14 @@
     <string name="other">Other</string>
     <string name="specify">Specify</string>
     <string name="eligible_members">Are there eligible members in this household?</string>
-    <string name="action_add_caregiver">Add Care Giver</string>
+    <string name="action_add_caregiver">Add CareGiver</string>
+    <string name="action_select_caregiver">Select CareGiver</string>
     <string name="action_add_child">Add New Child</string>
     <string name="dob_hint">Date of birth</string>
     <string name="dob">Date of Birth</string>
     <string name="child_new_header">Add New Child</string>
+    <string name="caregiver_new_header">Add New CareGiver</string>
+    <string name="visits">visits</string>
 
 
 

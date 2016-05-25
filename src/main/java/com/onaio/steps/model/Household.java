@@ -13,7 +13,7 @@ import java.util.List;
 public class Household implements Serializable,Comparable<Household> {
     private static String FIND_BY_ID_QUERY = "SELECT * FROM HOUSEHOLD WHERE id = %s";
     public static final String FIND_BY_NAME_QUERY = "SELECT * FROM HOUSEHOLD WHERE %s = '%s'";
-    private static String FIND_ALL_QUERY = "SELECT * FROM HOUSEHOLD ORDER BY Id desc";
+    private static String FIND_ALL_QUERY = "SELECT hh.*, (select count(*) from household_visits where household_id=hh.id) as no_of_visits FROM HOUSEHOLD  hh ORDER BY Id desc";
     private static String FIND_ALL_COUNT_QUERY = "SELECT count(*) FROM HOUSEHOLD ORDER BY Id desc";
     public static final String TABLE_NAME = "household";
     public static final String ID = "Id";
@@ -23,9 +23,9 @@ public class Household implements Serializable,Comparable<Household> {
     public static final String SELECTED_MEMBER_ID = "selected_member_id";
     public static final String CREATED_AT = "Created_At";
     public static final String COMMENTS = "Comments";
-    public static final String INTERVIEW_ELIGIBILITY = "interview_eligibility";
-    public static final String INTERVIEW_ELIGIBILITY_COMMENT = "interview_eligibility_comment";
-    public static final String TABLE_CREATE_QUERY = String.format("CREATE TABLE %s(%s INTEGER PRIMARY KEY, %s TEXT, %s TEXT, %s INTEGER, %s TEXT, %s TEXT, %s TEXT, %s TEXT, %s TEXT)", TABLE_NAME, ID, NAME, PHONE_NUMBER, SELECTED_MEMBER_ID,STATUS, CREATED_AT ,COMMENTS,INTERVIEW_ELIGIBILITY,INTERVIEW_ELIGIBILITY_COMMENT);
+    public static final String NO_OF_VISITS = "no_of_visits";
+
+    public static final String TABLE_CREATE_QUERY = String.format("CREATE TABLE %s(%s INTEGER PRIMARY KEY, %s TEXT, %s TEXT, %s INTEGER, %s TEXT, %s TEXT, %s TEXT)", TABLE_NAME, ID, NAME, PHONE_NUMBER, SELECTED_MEMBER_ID,STATUS, CREATED_AT ,COMMENTS);
 
     String id;
     String name;
@@ -34,10 +34,10 @@ public class Household implements Serializable,Comparable<Household> {
     String selectedMemberId;
     String createdAt;
     String comments;
-    String inteviewEligibility;
-    String interviewEligibilityComment;
-    
-    public Household(String id, String name, String phoneNumber, String selectedMemberId, InterviewStatus status, String createdAt , String comments,String eligibilityValue,String otherSpecifyValue) {
+    String  noOfVisits;
+
+
+    public Household(String id, String name, String phoneNumber, String selectedMemberId, InterviewStatus status, String createdAt , String comments) {
         this.id = id;
         this.name = name;
         this.phoneNumber = phoneNumber;
@@ -45,8 +45,6 @@ public class Household implements Serializable,Comparable<Household> {
         this.status = status;
         this.createdAt=createdAt;
         this.comments=comments;
-        this.inteviewEligibility=eligibilityValue;
-        this.interviewEligibilityComment=otherSpecifyValue;
     }
     public Household(String name, String phoneNumber, InterviewStatus status, String createdAt, String comments) {
         this.name= name;
@@ -62,8 +60,6 @@ public class Household implements Serializable,Comparable<Household> {
         this.status = status;
         this.createdAt=createdAt;
         this.comments = comments;
-        this.inteviewEligibility=eligibilityValue;
-        this.interviewEligibilityComment=otherSpecifyValue;
     }
 
     public void setPhoneNumber(String phoneNumber) {
@@ -114,23 +110,16 @@ public class Household implements Serializable,Comparable<Household> {
         return phoneNumber;
     }
 
-    public String getInteviewEligibility() {
-        return inteviewEligibility;
+    public String getNoOfVisits() {
+        return noOfVisits;
     }
 
-    public void setInteviewEligibility(String inteviewEligibility) {
-        this.inteviewEligibility = inteviewEligibility;
+    public void setNoOfVisits(String noOfVisits) {
+        this.noOfVisits = noOfVisits;
     }
 
-    public String getInterviewEligibilityComment() {
-        return interviewEligibilityComment;
-    }
-
-    public void setInterviewEligibilityComment(String interviewEligibilityComment) {
-        this.interviewEligibilityComment = interviewEligibilityComment;
-    }
     public Member getSelectedMember(DatabaseHelper db){
-        if(selectedMemberId == null)
+        if (selectedMemberId == null)
             return null;
         return findMember(db,Long.parseLong(selectedMemberId));
     }
@@ -148,17 +137,15 @@ public class Household implements Serializable,Comparable<Household> {
     public long update(DatabaseHelper db){
         ContentValues householdValues = populateWithBasicDetails();
         householdValues.put(SELECTED_MEMBER_ID, selectedMemberId);
-        return db.update(householdValues, TABLE_NAME,ID +" = ?",new String[]{getId()});
+        return db.update(householdValues, TABLE_NAME, ID + " = ?", new String[]{getId()});
     }
 
     private ContentValues populateWithBasicDetails() {
         ContentValues values = new ContentValues();
         values.put(NAME, name);
-        values.put(PHONE_NUMBER,phoneNumber);
+        values.put(PHONE_NUMBER, phoneNumber);
         values.put(COMMENTS,comments);
         values.put(STATUS,status.toString());
-        values.put(INTERVIEW_ELIGIBILITY, inteviewEligibility.toString());
-        values.put(INTERVIEW_ELIGIBILITY_COMMENT,interviewEligibilityComment!=null ? interviewEligibilityComment:null);
 
         return values;
     }
@@ -171,7 +158,7 @@ public class Household implements Serializable,Comparable<Household> {
     }
 
     public static Household find_by(DatabaseHelper db, String name) {
-        Cursor cursor = db.exec(String.format(FIND_BY_NAME_QUERY,NAME,name));
+        Cursor cursor = db.exec(String.format(FIND_BY_NAME_QUERY, NAME, name));
         List<Household> households = new CursorHelper().getHouseholds(cursor);
         db.close();
         if(households.isEmpty())
@@ -207,7 +194,7 @@ public class Household implements Serializable,Comparable<Household> {
         return getMembers(db,query);
     }
 
-    public List<Member> getAllMembersForExport(DatabaseHelper db){
+    public List<Member> getAllMembersForExport(DatabaseHelper db) {
         String query = String.format(Member.FIND_ALL_WITH_DELETED_QUERY, Member.HOUSEHOLD_ID, this.getId());
         return getMembers(db, query);
     }
@@ -224,7 +211,7 @@ public class Household implements Serializable,Comparable<Household> {
         return members;
     }
 
-    public int numberOfNonDeletedMembers(DatabaseHelper db){
+    public int numberOfNonDeletedMembers(DatabaseHelper db) {
         String query = String.format(Member.FIND_ALL_QUERY, Member.HOUSEHOLD_ID, getId(), Member.DELETED, String.valueOf(Member.NOT_DELETED_INT));
         return getCount(db, query);
     }

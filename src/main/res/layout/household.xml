@@ -133,7 +133,7 @@
                     android:textSize="14sp" />
 
                 <Button
-                    android:id="@+id/action_add_member"
+                    android:id="@+id/action_add_child"
                     style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="1dp"
                     android:layout_height="50dp"
@@ -144,7 +144,7 @@
                     android:drawableStart="@drawable/ic_action_new_member"
                     android:onClick="addChild"
                     android:paddingLeft="10dp"
-                    android:visibility="visible"
+                    android:visibility="gone"
                     android:text="@string/action_add_child"
                     android:textColor="@android:color/white"
                     android:textSize="12sp" />
@@ -162,7 +162,7 @@
                     android:drawableStart="@drawable/ic_action_select_participant"
                     android:onClick="addCareGiver"
                     android:paddingLeft="10dp"
-                    android:text="@string/action_add_caregiver"
+                    android:text="@string/caregiver_new_header"
                     android:textColor="@android:color/black"
                     android:textSize="12sp" />
             </LinearLayout>

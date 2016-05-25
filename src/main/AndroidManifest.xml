@@ -66,11 +66,18 @@
             android:label="Participant"></activity>
         <activity
             android:name=".activities.BackupLocationActivity"
-            android:label="@string/select_backup_location">
-        </activity>
+            android:label="@string/select_backup_location"></activity>
         <activity
             android:name=".activities.NewChildActivity"
             android:label="New Child"
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar"></activity>
+        <activity
+            android:name=".activities.CareGiversActivity"
+            android:label="Care Givers">
+            </activity>
+        <activity
+            android:name=".activities.NewCareGiverActivity"
+            android:label="New CareGiver"
             android:theme="@android:style/Theme.Holo.Light.NoActionBar"></activity>
 
 

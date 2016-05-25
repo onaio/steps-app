@@ -17,7 +17,10 @@ import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.CustomDialog;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.model.Household;
+import com.onaio.steps.model.HouseholdVisit;
 import com.onaio.steps.modelViewWrapper.HouseholdViewWrapper;
+
+import java.util.Date;
 
 import static com.onaio.steps.helper.Constants.HH_HOUSEHOLD_SEED;
 import static com.onaio.steps.helper.Constants.HH_PHONE_ID;
@@ -84,8 +87,13 @@ public class NewHouseholdActivity extends Activity {
     public void save(View view) {
         try {
             Intent intent = this.getIntent();
-            Household household = new HouseholdViewWrapper(this).getHousehold(R.id.generated_household_id, R.id.household_number, R.id.household_comments,R.id.rGrp_household_eligibility,R.id.others_specify);
+            Household household = new HouseholdViewWrapper(this).getHousehold(R.id.generated_household_id, R.id.household_number, R.id.household_comments, R.id.rGrp_household_eligibility, R.id.others_specify);
             household.save(db);
+
+            HouseholdVisit householdVisit = new HouseholdViewWrapper(this).getHouseholdVisit( R.id.rGrp_household_eligibility, R.id.others_specify);
+            householdVisit.setHouseholdId(Long.valueOf(household.getId()));
+            householdVisit.save(db);
+
             intent.putExtra(Constants.HH_HOUSEHOLD, household);
             setResult(RESULT_OK, intent);
             finish();

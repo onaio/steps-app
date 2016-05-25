@@ -69,46 +69,7 @@
             android:layout_height="fill_parent"
             android:orientation="vertical">
 
-            <include layout="@layout/household_eligibility" />
 
-            <LinearLayout
-                android:id="@+id/layout_any_eligible_members"
-                android:layout_width="match_parent"
-                android:layout_marginTop="10dp"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:visibility="gone">
-
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:text="@string/eligible_members" />
-
-                <RadioGroup
-                    android:id="@+id/rGrp_household_eligible_members"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="5dp"
-                    android:layout_marginTop="10dp"
-                    android:orientation="vertical">
-
-                    <RadioButton
-                        android:id="@+id/rBtn_yes"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/no" />
-
-                    <RadioButton
-                        android:id="@+id/rBtn_no"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="left"
-                        android:text="@string/yes" />
-                </RadioGroup>
-            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/custom_actions"
@@ -116,21 +77,6 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-
-                <Button
-                    android:id="@+id/action_save_household_eligibility"
-                    style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="1dp"
-                    android:layout_height="50dp"
-                    android:layout_margin="15dp"
-                    android:layout_weight="1"
-                    android:background="#499F72"
-                    android:drawablePadding="-10dp"
-                    android:onClick="handleCustomMenu"
-                    android:paddingLeft="10dp"
-                    android:text="@string/save_button"
-                    android:textColor="@android:color/white"
-                    android:textSize="14sp" />
 
                 <Button
                     android:id="@+id/action_add_member"
@@ -142,10 +88,10 @@
                     android:background="#499F72"
                     android:drawablePadding="-10dp"
                     android:drawableStart="@drawable/ic_action_new_member"
-                    android:onClick="handleCustomMenu"
+                    android:onClick="addCareGiver"
                     android:paddingLeft="10dp"
                     android:visibility="visible"
-                    android:text="@string/action_add_child"
+                    android:text="@string/action_add_caregiver"
                     android:textColor="@android:color/white"
                     android:textSize="12sp" />
 
@@ -153,15 +99,16 @@
                     android:id="@+id/action_select_participant"
                     style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="0dp"
+                    android:visibility="gone"
                     android:layout_height="50dp"
                     android:layout_margin="15dp"
                     android:layout_weight="1"
                     android:background="#FFC600"
                     android:drawablePadding="-10dp"
                     android:drawableStart="@drawable/ic_action_select_participant"
-                    android:onClick="handleCustomMenu"
+                    android:onClick="selectCareGiver"
                     android:paddingLeft="10dp"
-                    android:text="@string/action_add_caregiver"
+                    android:text="@string/action_select_caregiver"
                     android:textColor="@android:color/black"
                     android:textSize="12sp" />
             </LinearLayout>

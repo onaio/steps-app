@@ -14,7 +14,10 @@ import com.onaio.steps.helper.CustomDialog;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.helper.KeyValueStoreFactory;
 import com.onaio.steps.model.Household;
+import com.onaio.steps.model.HouseholdVisit;
 import com.onaio.steps.model.RequestCode;
+
+import java.io.Serializable;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -24,7 +27,7 @@ public class NewHouseholdActivityHandler implements IMenuHandler, IActivityResul
     private CustomDialog dialog = new CustomDialog();
 
     public NewHouseholdActivityHandler(ListActivity activity) {
-        this(activity,new CustomDialog());
+        this(activity, new CustomDialog());
     }
 
     NewHouseholdActivityHandler(ListActivity activity, CustomDialog dialog) {
@@ -59,9 +62,19 @@ public class NewHouseholdActivityHandler implements IMenuHandler, IActivityResul
             householdAdapter.reinitialize(Household.getAllInOrder(new DatabaseHelper(activity.getApplicationContext())));
             householdAdapter.notifyDataSetChanged();
 
-            Intent householdActivityIntent = new Intent(activity, HouseholdActivity.class);
-            householdActivityIntent.putExtra(Constants.HH_HOUSEHOLD,data.getSerializableExtra(Constants.HH_HOUSEHOLD));
-            activity.startActivity(householdActivityIntent);
+            Serializable intentData = data.getSerializableExtra(Constants.HH_HOUSEHOLD);
+
+            String householdId = ((Household) intentData).getId();
+            DatabaseHelper db = new DatabaseHelper(activity);
+            HouseholdVisit lastVisit = HouseholdVisit.findByHouseholdId(db, Long.valueOf(householdId));
+
+            if (lastVisit.getStatus().equalsIgnoreCase(activity.getString(R.string.consent))) {
+                Intent householdActivityIntent = new Intent(activity, HouseholdActivity.class);
+                householdActivityIntent.putExtra(Constants.HH_HOUSEHOLD, intentData);
+                activity.startActivity(householdActivityIntent);
+            } else {
+                activity.finishActivity(0);
+            }
         }
     }
 

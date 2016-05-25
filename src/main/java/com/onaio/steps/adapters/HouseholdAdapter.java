@@ -72,7 +72,7 @@ public class HouseholdAdapter extends BaseAdapter{
         String householdRow = context.getString(R.string.hhid)+ householdAtPosition.getName();
         householdName.setText(householdRow);
         int numberOfMembers = householdAtPosition.numberOfNonDeletedMembers(new DatabaseHelper(context));
-        membersCount.setText(String.format("%s, %s "+context.getString(R.string.members), householdAtPosition.getCreatedAt(), String.valueOf(numberOfMembers)));
+        membersCount.setText(String.format("%s, %s "+context.getString(R.string.members)+", %s "+context.getString(R.string.visits), householdAtPosition.getCreatedAt(), String.valueOf(numberOfMembers),householdAtPosition.getNoOfVisits()));
         this.notifyDataSetChanged();
     }
 

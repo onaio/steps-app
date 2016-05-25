@@ -6,13 +6,11 @@ import android.app.ListActivity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -21,7 +19,6 @@ import android.widget.TextView;
 
 import com.onaio.steps.R;
 import com.onaio.steps.adapters.MemberAdapter;
-import com.onaio.steps.exceptions.InvalidDataException;
 import com.onaio.steps.handler.factories.HouseholdActivityFactory;
 import com.onaio.steps.handler.interfaces.IActivityResultHandler;
 import com.onaio.steps.handler.interfaces.IMenuHandler;
@@ -29,11 +26,9 @@ import com.onaio.steps.handler.interfaces.IMenuPreparer;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.model.Household;
-import com.onaio.steps.model.HouseholdVisit;
 import com.onaio.steps.model.InterviewStatus;
 import com.onaio.steps.model.Member;
 import com.onaio.steps.model.RequestCode;
-import com.onaio.steps.modelViewWrapper.HouseholdViewWrapper;
 import com.onaio.steps.modelViewWrapper.SelectedMemberViewWrapper;
 
 import java.util.List;
@@ -42,7 +37,7 @@ import static com.onaio.steps.model.InterviewStatus.DEFERRED;
 import static com.onaio.steps.model.InterviewStatus.INCOMPLETE;
 import static com.onaio.steps.model.InterviewStatus.NOT_DONE;
 
-public class HouseholdActivity extends ListActivity {
+public class CareGiversActivity extends ListActivity {
 
     private Household household;
     private DatabaseHelper db;
@@ -51,7 +46,7 @@ public class HouseholdActivity extends ListActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.household);
+        setContentView(R.layout.caregivers);
 
         activity = this;
 
@@ -126,27 +121,23 @@ public class HouseholdActivity extends ListActivity {
 
     /**
      * added in the view action entry
-     *
      * @param view
      */
-    public void addChild(View view) {
+    public void addCareGiver(View view) {
 
         if (household == null) return;
-        Intent intent = new Intent(activity, NewChildActivity.class);
+        Intent intent = new Intent(activity, NewCareGiverActivity.class);
         intent.putExtra(Constants.HH_HOUSEHOLD, household);
         activity.startActivityForResult(intent, RequestCode.NEW_MEMBER.getCode());
 
     }
 
-    public void addCareGiver(View view) {
-        try {
-            if (household == null) return;
-            Intent intent = new Intent(activity, CareGiversActivity.class);
-            intent.putExtra(Constants.HH_HOUSEHOLD, household);
-            activity.startActivityForResult(intent, RequestCode.NEW_MEMBER.getCode());
-        } catch (Exception e) {
-            Log.e("", e.getMessage());
-        }
+    public void selectCareGiver(View view) {
+
+        if (household == null) return;
+        Intent intent = new Intent(activity, NewMemberActivity.class);
+        intent.putExtra(Constants.HH_HOUSEHOLD, household);
+        activity.startActivityForResult(intent, RequestCode.NEW_MEMBER.getCode());
     }
 
 
@@ -177,99 +168,7 @@ public class HouseholdActivity extends ListActivity {
         populateMembers();
         bindMembers();
 
-        String interviewEligibility = "";//household.getInteviewEligibility();
 
-
-        RadioGroup group = (RadioGroup) this.findViewById(R.id.rGrp_household_eligibility);
-        final LinearLayout otherSpecifyLayout = (LinearLayout) this.findViewById(R.id.layout_other_specify);
-
-        group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int i) {
-
-                RadioButton radioButton = (RadioButton) radioGroup.findViewById(i);
-                if (radioButton.getText().toString().equalsIgnoreCase(getString(R.string.other))) {
-                    otherSpecifyLayout.setVisibility(View.VISIBLE);
-                    EditText txtOthersSpecify = (EditText) activity.findViewById(R.id.others_specify);
-                    txtOthersSpecify.requestFocus();
-                } else {
-                    otherSpecifyLayout.setVisibility(View.GONE);
-
-                }
-            }
-        });
-
-        View householdEligibilitySaveBtn = findViewById(R.id.action_save_household_eligibility);
-        final View eligibilityQuestions = findViewById(R.id.household_eligibility_questions);
-        final View eligibleMembers = findViewById(R.id.layout_any_eligible_members);
-        // final View addMember = findViewById(R.id.action_add_member);
-
-        householdEligibilitySaveBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                RadioGroup rg = (RadioGroup) activity.findViewById(R.id.rGrp_household_eligibility);
-                String eligibilityRadioBtnValue = ((RadioButton) activity.findViewById(rg.getCheckedRadioButtonId())).getText().toString();
-
-                if (eligibilityRadioBtnValue.equalsIgnoreCase(activity.getString(R.string.consent))) {
-                    view.setVisibility(View.GONE);
-                    eligibilityQuestions.setVisibility(View.GONE);
-                    eligibleMembers.setVisibility(View.VISIBLE);
-                    saveVisit();
-                } else {
-                    saveVisit();
-                    activity.finish();
-                }
-
-
-            }
-        });
-
-        RadioGroup householdEligibilityRadioGroup = (RadioGroup) this.findViewById(R.id.rGrp_household_eligible_members);
-        final Button addChildBtn = (Button) this.findViewById(R.id.action_add_child);
-
-
-        householdEligibilityRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int i) {
-
-                RadioButton radioButton = (RadioButton) radioGroup.findViewById(i);
-                if (radioButton.getText().toString().equalsIgnoreCase(getString(R.string.yes))) {
-                    //show add member button
-                    addChildBtn.setVisibility(View.VISIBLE);
-                } else {
-                    //hide add member button
-                    addChildBtn.setVisibility(View.GONE);
-
-                }
-            }
-        });
-
-        // FIXME to use the household_visits table
-        if (interviewEligibility.equalsIgnoreCase(getString(R.string.consent))) {
-            eligibleMembers.setVisibility(View.VISIBLE);
-
-            eligibilityQuestions.setVisibility(View.GONE);
-            //hide save button
-
-            householdEligibilitySaveBtn.setVisibility(View.GONE);
-
-            //show add member button
-            // addMember.setVisibility(View.VISIBLE);
-
-        }
-    }
-
-    private void saveVisit() {
-
-        try {
-            HouseholdVisit  householdVisit = new HouseholdViewWrapper(activity).getHouseholdVisit(R.id.rGrp_household_eligibility, R.id.others_specify);
-            householdVisit.setHouseholdId(Long.valueOf(household.getId()));
-            householdVisit.save(db);
-
-        } catch (InvalidDataException e) {
-            Log.e("", e.getMessage());
-        }
     }
 
     private void bindMembers() {
@@ -277,7 +176,7 @@ public class HouseholdActivity extends ListActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 Member member = household.findMember(db, id);
-                HouseholdActivityFactory.getMemberItemHandler(HouseholdActivity.this, member).open();
+                HouseholdActivityFactory.getMemberItemHandler(CareGiversActivity.this, member).open();
             }
         };
         getListView().setOnItemClickListener(memberItemListener);
@@ -294,7 +193,7 @@ public class HouseholdActivity extends ListActivity {
     }
 
     private void populateMembers() {
-        MemberAdapter memberAdapter = new MemberAdapter(this, getMembers(), household.getSelectedMemberId(), household, true);
+        MemberAdapter memberAdapter = new MemberAdapter(this, getMembers(), household.getSelectedMemberId(), household,true);
         getListView().setAdapter(memberAdapter);
         new SelectedMemberViewWrapper().populate(household, household.getSelectedMember(db), this);
     }

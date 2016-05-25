@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.onaio.steps.model.Household;
+import com.onaio.steps.model.HouseholdVisit;
 import com.onaio.steps.model.Member;
 import com.onaio.steps.model.Participant;
 import com.onaio.steps.model.ReElectReason;
@@ -28,6 +29,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(Member.TABLE_CREATE_QUERY);
         db.execSQL(Participant.TABLE_CREATE_QUERY);
         db.execSQL(ReElectReason.TABLE_CREATE_QUERY);
+        db.execSQL(HouseholdVisit.TABLE_CREATE_QUERY);
+
     }
 
     @Override

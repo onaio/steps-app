@@ -10,6 +10,7 @@ import com.onaio.steps.R;
 import com.onaio.steps.exceptions.InvalidDataException;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.model.Household;
+import com.onaio.steps.model.HouseholdVisit;
 import com.onaio.steps.model.InterviewStatus;
 
 import java.text.SimpleDateFormat;
@@ -22,7 +23,7 @@ public class HouseholdViewWrapper {
         this.activity = activity;
     }
 
-    public Household getHousehold(int nameViewId, int numberViewId, int commentsViewId,int eligibilityRadioGroup,int otherSpecifyEditText) throws InvalidDataException {
+    public Household getHousehold(int nameViewId, int numberViewId, int commentsViewId, int eligibilityRadioGroup, int otherSpecifyEditText) throws InvalidDataException {
         TextView nameView = (TextView) activity.findViewById(nameViewId);
         TextView numberView = (TextView) activity.findViewById(numberViewId);
         String phoneNumber = numberView.getText().toString();
@@ -30,14 +31,14 @@ public class HouseholdViewWrapper {
         EditText commentsView = (EditText) activity.findViewById(commentsViewId);
         String comments = commentsView.getText().toString();
 
-        RadioGroup rg = (RadioGroup)activity.findViewById(eligibilityRadioGroup);
-        String eligibilityRadioBtnValue = ((RadioButton)activity.findViewById(rg.getCheckedRadioButtonId())).getText().toString();
-        String otherRadioButtonSpecifyValue=null;
-        if(eligibilityRadioBtnValue.equalsIgnoreCase(activity.getString(R.string.other))){
-            otherRadioButtonSpecifyValue=((EditText)activity.findViewById(otherSpecifyEditText)).getText().toString();
+        RadioGroup rg = (RadioGroup) activity.findViewById(eligibilityRadioGroup);
+        String eligibilityRadioBtnValue = ((RadioButton) activity.findViewById(rg.getCheckedRadioButtonId())).getText().toString();
+        String otherRadioButtonSpecifyValue = null;
+        if (eligibilityRadioBtnValue.equalsIgnoreCase(activity.getString(R.string.other))) {
+            otherRadioButtonSpecifyValue = ((EditText) activity.findViewById(otherSpecifyEditText)).getText().toString();
         }
 
-        return new Household(nameView.getText().toString(), phoneNumber, InterviewStatus.NOT_SELECTED, currentDate,comments,eligibilityRadioBtnValue,otherRadioButtonSpecifyValue);
+        return new Household(nameView.getText().toString(), phoneNumber, InterviewStatus.NOT_SELECTED, currentDate, comments, eligibilityRadioBtnValue, otherRadioButtonSpecifyValue);
     }
 
     public Household updateHousehold(Household household, int numberViewId, int commentsViewId) {
@@ -50,5 +51,21 @@ public class HouseholdViewWrapper {
         return household;
     }
 
+    public HouseholdVisit getHouseholdVisit(int eligibilityRadioGroup, int otherSpecifyEditText) throws InvalidDataException {
+        String currentDate = new SimpleDateFormat(Constants.DATE_TIME_FORMAT).format(new Date());
+        HouseholdVisit householdVisit = new HouseholdVisit();
 
+        RadioGroup rg = (RadioGroup) activity.findViewById(eligibilityRadioGroup);
+        String eligibilityRadioBtnValue = ((RadioButton) activity.findViewById(rg.getCheckedRadioButtonId())).getText().toString();
+        String otherRadioButtonSpecifyValue = null;
+        if (eligibilityRadioBtnValue.equalsIgnoreCase(activity.getString(R.string.other))) {
+            otherRadioButtonSpecifyValue = ((EditText) activity.findViewById(otherSpecifyEditText)).getText().toString();
+            householdVisit.setComments(otherRadioButtonSpecifyValue);
+        }
+
+        householdVisit.setStatus(eligibilityRadioBtnValue);
+        householdVisit.setCreatedAt(currentDate);
+
+        return householdVisit;
+    }
 }
