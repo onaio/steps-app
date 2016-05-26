@@ -11,7 +11,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class Household implements Serializable,Comparable<Household> {
-    private static String FIND_BY_ID_QUERY = "SELECT * FROM HOUSEHOLD WHERE id = %s";
+    private static String FIND_BY_ID_QUERY = "SELECT hh.*, (select count(*) from household_visits where household_id=hh.id) as no_of_visits FROM HOUSEHOLD  hh WHERE hh.id = %s";
     public static final String FIND_BY_NAME_QUERY = "SELECT * FROM HOUSEHOLD WHERE %s = '%s'";
     private static String FIND_ALL_QUERY = "SELECT hh.*, (select count(*) from household_visits where household_id=hh.id) as no_of_visits FROM HOUSEHOLD  hh ORDER BY Id desc";
     private static String FIND_ALL_COUNT_QUERY = "SELECT count(*) FROM HOUSEHOLD ORDER BY Id desc";

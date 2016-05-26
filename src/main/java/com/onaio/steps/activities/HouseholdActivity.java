@@ -245,8 +245,12 @@ public class HouseholdActivity extends ListActivity {
             }
         });
 
+
         // FIXME to use the household_visits table
-        if (interviewEligibility.equalsIgnoreCase(getString(R.string.consent))) {
+        //check if consent has been granted
+        HouseholdVisit lastVisit = HouseholdVisit.findByHouseholdId(db, Long.valueOf(household.getId()));
+
+        if (lastVisit.getStatus().equalsIgnoreCase(getString(R.string.consent))) {
             eligibleMembers.setVisibility(View.VISIBLE);
 
             eligibilityQuestions.setVisibility(View.GONE);
