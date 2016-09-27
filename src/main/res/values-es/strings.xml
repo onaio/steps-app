@@ -139,5 +139,6 @@
     <string name="refused_or_unable_to_complete">Rechazo/Imposible completar</string>
     <string name="invalid_settings">Ajustes inválidos. Por favor, complete o corrija los siguientes campos:</string>
     <string name="invalid_member">Inválido Miembro. Por favor, complete o corrija los siguientes campos:</string>
+    <string name="invalid_participant">Invalid Participant, please fill or correct the following fields:</string>
 
 </resources>

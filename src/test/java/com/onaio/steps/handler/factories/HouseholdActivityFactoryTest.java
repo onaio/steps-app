@@ -22,6 +22,7 @@ import com.onaio.steps.activities.HouseholdActivity;
 import com.onaio.steps.handler.actions.BackHomeHandler;
 import com.onaio.steps.handler.actions.CancelParticipantSelectionHandler;
 import com.onaio.steps.handler.actions.DeferredHandler;
+import com.onaio.steps.handler.actions.IncompleteRefusedHandler;
 import com.onaio.steps.handler.activities.EditHouseholdActivityHandler;
 import com.onaio.steps.handler.interfaces.IActivityResultHandler;
 import com.onaio.steps.handler.interfaces.IListItemHandler;
@@ -102,7 +103,7 @@ public class HouseholdActivityFactoryTest extends TestCase {
 
         ArrayList<Class> menuHandlerTypes = getTypes(menuHandlers);
 
-        assertEquals(8, menuHandlers.size());
+        assertEquals(9, menuHandlers.size());
         Assert.assertTrue(menuHandlerTypes.contains(TakeSurveyHandler.class));
         Assert.assertTrue(menuHandlerTypes.contains(DeferredHandler.class));
         Assert.assertTrue(menuHandlerTypes.contains(RefusedHandler.class));
@@ -111,6 +112,7 @@ public class HouseholdActivityFactoryTest extends TestCase {
         Assert.assertTrue(menuHandlerTypes.contains(SelectParticipantHandler.class));
         Assert.assertTrue(menuHandlerTypes.contains(SelectedParticipantContainerHandler.class));
         Assert.assertTrue(menuHandlerTypes.contains(CancelParticipantSelectionHandler.class));
+        Assert.assertTrue(menuHandlerTypes.contains(IncompleteRefusedHandler.class));
 
     }
 
@@ -120,13 +122,14 @@ public class HouseholdActivityFactoryTest extends TestCase {
 
         ArrayList<Class> menuHandlerTypes = getTypes(menuHandlers);
 
-        assertEquals(6, menuHandlers.size());
+        assertEquals(7, menuHandlers.size());
         Assert.assertTrue(menuHandlerTypes.contains(TakeSurveyHandler.class));
         Assert.assertTrue(menuHandlerTypes.contains(DeferredHandler.class));
         Assert.assertTrue(menuHandlerTypes.contains(RefusedHandler.class));
         Assert.assertTrue(menuHandlerTypes.contains(NewMemberActivityHandler.class));
         Assert.assertTrue(menuHandlerTypes.contains(CancelParticipantSelectionHandler.class));
         Assert.assertTrue(menuHandlerTypes.contains(SelectParticipantHandler.class));
+        Assert.assertTrue(menuHandlerTypes.contains(IncompleteRefusedHandler.class));
     }
 
     private <T> ArrayList<Class> getTypes(List<T> menuHandlers) {

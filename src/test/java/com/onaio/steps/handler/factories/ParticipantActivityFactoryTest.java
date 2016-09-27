@@ -23,6 +23,7 @@ import com.onaio.steps.handler.actions.BackHomeHandler;
 import com.onaio.steps.handler.actions.DeferredHandler;
 import com.onaio.steps.handler.actions.RefusedHandler;
 import com.onaio.steps.handler.actions.TakeSurveyHandler;
+import com.onaio.steps.handler.actions.IncompleteRefusedHandler;
 import com.onaio.steps.handler.activities.EditParticipantActivityHandler;
 import com.onaio.steps.handler.interfaces.IActivityResultHandler;
 import com.onaio.steps.handler.interfaces.IMenuHandler;
@@ -101,10 +102,11 @@ public class ParticipantActivityFactoryTest {
         List<IMenuPreparer> customMenuPreparer = ParticipantActivityFactory.getCustomMenuPreparer(participantActivity, participant);
         ArrayList<Class> handlerTypes = getTypes(customMenuPreparer);
 
-        assertEquals(3, customMenuPreparer.size());
+        assertEquals(4, customMenuPreparer.size());
         Assert.assertTrue(handlerTypes.contains(TakeSurveyHandler.class));
         Assert.assertTrue(handlerTypes.contains(DeferredHandler.class));
         Assert.assertTrue(handlerTypes.contains(RefusedHandler.class));
+        Assert.assertTrue(handlerTypes.contains(IncompleteRefusedHandler.class));
     }
 
     @Test
@@ -112,9 +114,10 @@ public class ParticipantActivityFactoryTest {
         List<IMenuHandler> customMenuHandler = ParticipantActivityFactory.getCustomMenuHandler(participantActivity, participant);
         ArrayList<Class> handlerTypes = getTypes(customMenuHandler);
 
-        assertEquals(3, customMenuHandler.size());
+        assertEquals(4, customMenuHandler.size());
         Assert.assertTrue(handlerTypes.contains(TakeSurveyHandler.class));
         Assert.assertTrue(handlerTypes.contains(DeferredHandler.class));
         Assert.assertTrue(handlerTypes.contains(RefusedHandler.class));
+        Assert.assertTrue(handlerTypes.contains(IncompleteRefusedHandler.class));
     }
 }
