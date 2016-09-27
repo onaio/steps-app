@@ -1,0 +1,36 @@
+language: android
+jdk: oraclejdk8
+env:
+  matrix:
+    - ANDROID_TARGET=android-21 ANDROID_ABI=armeabi-v7a
+  global:
+    # wait up to 10 minutes for adb to connect to emulator
+    - ADB_INSTALL_TIMEOUT=10
+    - MALLOC_ARENA_MAX=2
+
+android:
+  components:
+  - build-tools-21.1.2
+  - android-21
+  - extra-android-m2repository
+
+  # Emulator for the tests
+  - sys-img-armeabi-v7a-android-21
+
+addons:
+  apt_packages:
+    - pandoc
+  artifacts:
+    paths:
+      - $(git ls-files -o | grep build/outputs | tr "\n" ":")
+
+script:
+  - ./gradlew test -i --stacktrace
+
+after_failure:
+  - pandoc app/build/reports/androidTests/connected/index.html -t plain
+
+after_script:
+  # print lint results details
+  - for f in app/build/outputs/lint-results.html; do pandoc $f -t plain; done
+  - for f in data/build/outputs/lint-results.html; do pandoc $f -t plain; done
