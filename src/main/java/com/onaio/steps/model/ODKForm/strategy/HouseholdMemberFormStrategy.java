@@ -34,11 +34,13 @@ public class HouseholdMemberFormStrategy implements IFormStrategy{
 
     private Household household;
     private FileUtil fileUtil;
+    private String deviceId;
 
 
-    public HouseholdMemberFormStrategy(Household household){
+    public HouseholdMemberFormStrategy(Household household, String deviceId){
         this.household = household;
         fileUtil = new FileUtil();
+        this.deviceId = deviceId;
     }
 
     @Override
@@ -56,6 +58,7 @@ public class HouseholdMemberFormStrategy implements IFormStrategy{
         row.add(String.valueOf(selectedMember.getGender().getIntValue()));
         row.add(String.valueOf(selectedMember.getAge()));
         row.add(String.valueOf(household.numberOfNonDeletedMembers(databaseHelper)));
+        row.add(deviceId);
         fileUtil.withHeader(Constants.ODK_FORM_FIELDS.split(","))
                 .withData(row.toArray(new String[row.size()]))
                 .writeCSV(pathToSaveDataFile + "/" + Constants.ODK_DATA_FILENAME);

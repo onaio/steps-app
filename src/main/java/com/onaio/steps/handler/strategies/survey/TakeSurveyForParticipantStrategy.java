@@ -24,6 +24,7 @@ import com.onaio.steps.R;
 import com.onaio.steps.handler.strategies.survey.interfaces.ITakeSurveyStrategy;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;
+import com.onaio.steps.helper.KeyValueStoreFactory;
 import com.onaio.steps.model.InterviewStatus;
 import com.onaio.steps.model.ODKForm.ODKForm;
 import com.onaio.steps.model.ODKForm.ODKSavedForm;
@@ -48,7 +49,8 @@ public class TakeSurveyForParticipantStrategy implements ITakeSurveyStrategy {
     public void open(String formId) throws IOException {
         String formName = String.format(formId + "-%s", participant.getParticipantID());
         ODKForm requiredForm = ODKForm.create(activity, formId, formName);
-        requiredForm.open(new ParticipantFormStrategy(participant), activity, RequestCode.SURVEY.getCode());
+        String deviceId = getDeviceId();
+        requiredForm.open(new ParticipantFormStrategy(participant, deviceId), activity, RequestCode.SURVEY.getCode());
     }
 
     @Override
@@ -83,4 +85,7 @@ public class TakeSurveyForParticipantStrategy implements ITakeSurveyStrategy {
             button.setText(R.string.enter_data_now);
     }
 
+    public String getDeviceId() {
+        return KeyValueStoreFactory.instance(activity).getString(Constants.PA_PHONE_ID);
+    }
 }
