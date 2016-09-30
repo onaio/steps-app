@@ -16,11 +16,21 @@
 
 package com.onaio.steps.handler.actions;
 
+import android.content.Context;
+import android.content.Intent;
+import android.telephony.TelephonyManager;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.onaio.steps.R;
 import com.onaio.steps.activities.HouseholdActivity;
+import com.onaio.steps.helper.Constants;
+import com.onaio.steps.helper.DatabaseHelper;
+import com.onaio.steps.helper.FileUtil;
+import com.onaio.steps.model.Gender;
+import com.onaio.steps.model.Household;
+import com.onaio.steps.model.InterviewStatus;
+import com.onaio.steps.model.Member;
 
 import junit.framework.Assert;
 
@@ -28,8 +38,16 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
+import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
+
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Config(emulateSdk = 16,manifest = "src/main/AndroidManifest.xml")
 @RunWith(RobolectricTestRunner.class)
@@ -95,8 +113,77 @@ public class ExportHandlerTest {
         Mockito.verify(menuItemMock).setEnabled(false);
     }
 
+    /**
+     * This method tests that the values saved in the exported file are OK
+     */
+    @Test
+    public void testSavedFileValues() throws IOException {
+        String hhName = "testHhName";
+        String phoneNumber = "00000000";
+        InterviewStatus interviewStatus = InterviewStatus.NOT_DONE;
+        String createdAt = new SimpleDateFormat(Constants.DATE_FORMAT).format(new Date());
+        String comment = "testComment";
+        String deviceIMEI = "123456";
+        Household householdMock = Mockito.mock(Household.class);
+        Mockito.stub(householdMock.getStatus()).toReturn(interviewStatus);
+        Mockito.stub(householdMock.getName()).toReturn(hhName);
+        Mockito.stub(householdMock.getPhoneNumber()).toReturn(phoneNumber);
+        Mockito.stub(householdMock.getCreatedAt()).toReturn(createdAt);
+        Mockito.stub(householdMock.getComments()).toReturn(comment);
+
+        int id = 2;
+        String surname = "testSurname";
+        String firstName = "testFirstName";
+        Gender gender = Gender.Female;
+        int age = 30;
+        String memberId = "testMemberId";
+        Member selectedMember = new Member(id, surname, firstName, gender, age, householdMock, memberId, false);
+        Mockito.stub(householdMock.getSelectedMember(Mockito.any(DatabaseHelper.class))).toReturn(selectedMember);
+
+        Intent intent = new Intent();
+        intent.putExtra(Constants.HH_HOUSEHOLD, householdMock);
 
 
+        TelephonyManager telephonyManager = Mockito.mock(TelephonyManager.class);
+        Mockito.when(telephonyManager.getDeviceId()).thenReturn(deviceIMEI);
+        Mockito.stub(householdActivityMock.getSystemService(Context.TELEPHONY_SERVICE)).toReturn(telephonyManager);
+        HouseholdActivity legitActivity = Robolectric.buildActivity(HouseholdActivity.class).withIntent(intent).create().get();
+        Mockito.stub(householdActivityMock.getApplicationContext()).toReturn(legitActivity.getApplicationContext());
+        Mockito.stub(householdActivityMock.getFilesDir()).toReturn(legitActivity.getFilesDir());
+        ExportHandler exportHandler = new ExportHandler(householdActivityMock);
 
+        List<Household> householdList = new ArrayList<>();
+        householdList.add(householdMock);
+
+        DatabaseHelper dbMock = Mockito.mock(DatabaseHelper.class);//used in exportHandler.saveFile()
+        File exportedFile = exportHandler.with(householdList).saveFile();
+        FileUtil fileUtil = new FileUtil();
+        List<String[]> lines = fileUtil.readFile(exportedFile.getAbsolutePath());
+        String[] expectedValues = new String[]{
+                phoneNumber,
+                hhName,
+                comment,
+                hhName+"-0",
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                "0",
+                null,
+                null,
+                null,
+                "0",
+                deviceIMEI
+        };
+        for(String[] curLine : lines) {
+            for(int i = 0; i < expectedValues.length; i++) {
+                if(expectedValues[i] != null) {
+                    Assert.assertEquals(expectedValues[i], curLine[i]);
+                }
+            }
+        }
+    }
 
 }
