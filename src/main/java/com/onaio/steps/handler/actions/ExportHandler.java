@@ -138,6 +138,7 @@ public class ExportHandler implements IMenuHandler,IMenuPreparer {
                 row.add(KeyValueStoreFactory.instance(activity).getString(HH_SURVEY_ID));
                 row.add(String.valueOf(household.numberOfNonDeletedMembers(databaseHelper)));
                 row.add(uniqueDeviceId);
+                row.add(household.getCreatedAt());
                 fileUtil.withData(row.toArray(new String[row.size()]));
             }
             if (membersPerHousehold.size() == 0) {
@@ -164,6 +165,7 @@ public class ExportHandler implements IMenuHandler,IMenuPreparer {
             row.add(KeyValueStoreFactory.instance(activity).getString(HH_SURVEY_ID));
             row.add(String.valueOf(household.numberOfNonDeletedMembers(databaseHelper)));
             row.add(uniqueDeviceId);
+            row.add(household.getCreatedAt());
             fileUtil.withData(row.toArray(new String[row.size()]));
         }
         //Write the csv to external storage for the user to access.

@@ -19,6 +19,7 @@ package com.onaio.steps.handler.actions;
 import android.content.Context;
 import android.content.Intent;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -175,11 +176,14 @@ public class ExportHandlerTest {
                 null,
                 null,
                 "0",
-                deviceIMEI
+                deviceIMEI,
+                createdAt
         };
         for(String[] curLine : lines) {
             for(int i = 0; i < expectedValues.length; i++) {
                 if(expectedValues[i] != null) {
+                    Log.d("ExportTest", "Expected = "+expectedValues[i]);
+                    Log.d("ExportTest", "Actual = "+curLine[i]);
                     Assert.assertEquals(expectedValues[i], curLine[i]);
                 }
             }
