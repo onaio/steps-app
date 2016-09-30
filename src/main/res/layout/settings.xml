@@ -269,6 +269,16 @@
                 android:hint="@string/import_url_hint"
                 android:inputType="textUri"
                 android:textColor="@android:color/black" />
+
+            <Button
+                android:id="@+id/importButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/action_import"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:onClick="importData"/>
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

@@ -19,6 +19,7 @@ package com.onaio.steps.activities;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -31,6 +32,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.onaio.steps.exceptions.InvalidDataException;
+import com.onaio.steps.handler.actions.ImportHandler;
 import com.onaio.steps.helper.CustomDialog;
 import com.onaio.steps.orchestrators.FlowOrchestrator;
 import com.onaio.steps.orchestrators.flows.FlowType;
@@ -91,6 +93,17 @@ public class SettingsActivity extends Activity {
         flowType = FlowType.Participant;
         setHeader();
         prepareViewWithData();
+    }
+
+    public void importData(View view) {
+        DialogInterface.OnClickListener confirmListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                ImportHandler importHandler = new ImportHandler(SettingsActivity.this);
+                importHandler.open(R.id.deviceId);
+            }
+        };
+        new CustomDialog().confirm(this, confirmListener, CustomDialog.EmptyListener, R.string.warning_merging_data, R.string.warning_title);
     }
 
 }
