@@ -75,7 +75,7 @@ public class HouseholdListActivityFactoryTest{
 
     @Test
     public void ShouldHaveProperCustomMenuHandlers(){
-        List<IMenuHandler> menuHandlers = HouseholdListActivityFactory.getCustomMenuHandler(householdListActivityMock);
+        List<IMenuHandler> menuHandlers = HouseholdListActivityFactory.getCustomMenuHandler(householdListActivityMock, null);
         ArrayList<Class> handlerTypes = getTypes(menuHandlers);
 
         Assert.assertEquals(1,menuHandlers.size());

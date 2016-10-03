@@ -20,6 +20,7 @@ import android.app.Activity;
 import android.os.AsyncTask;
 
 import com.onaio.steps.R;
+import com.onaio.steps.handler.actions.ExportHandler;
 
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
@@ -36,9 +37,15 @@ import static com.onaio.steps.helper.Constants.ENDPOINT_URL;
 
 public class UploadFileTask extends AsyncTask<File, Void, Void> {
     private final Activity activity;
+    private ExportHandler.OnExportListener onExportListener;
 
-    public UploadFileTask(Activity activity) {
+    public UploadFileTask(Activity activity, ExportHandler.OnExportListener onExportListener) {
         this.activity = activity;
+        this.onExportListener = onExportListener;
+    }
+
+    public void setOnExportListener(ExportHandler.OnExportListener onExportListener) {
+        this.onExportListener = onExportListener;
     }
 
     @Override
@@ -56,5 +63,11 @@ public class UploadFileTask extends AsyncTask<File, Void, Void> {
             new CustomNotification().notify(activity, R.string.error_title, R.string.export_failed);
         }
         return null;
+    }
+
+    @Override
+    protected void onPostExecute(Void aVoid) {
+        super.onPostExecute(aVoid);
+        if(onExportListener != null) onExportListener.onFileUploaded();
     }
 }

@@ -28,6 +28,7 @@ import com.onaio.steps.handler.factories.HouseholdListActivityFactory;
 import com.onaio.steps.handler.interfaces.IActivityResultHandler;
 import com.onaio.steps.handler.interfaces.IMenuHandler;
 import com.onaio.steps.handler.interfaces.IMenuPreparer;
+import com.onaio.steps.handler.interfaces.IViewPreparer;
 import com.onaio.steps.model.Household;
 
 import java.util.List;
@@ -48,6 +49,16 @@ public class HouseholdListActivity extends BaseListActivity {
         setTitle(R.string.main_header);
         Button householdButton = (Button) findViewById(R.id.action_add_new_item);
         householdButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_action_new_household, 0, 0, 0);
+        Button submitDataButton = (Button) findViewById(R.id.action_submit_data);
+        submitDataButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_cloud_upload_white_24dp, 0, 0, 0);
+        List<IViewPreparer> viewPreparers = getViewPreparer();
+        for(IViewPreparer curPreparer : viewPreparers) {
+            if(curPreparer.shouldBeDisabled()) {
+                curPreparer.disable();
+            } else {
+                curPreparer.enable();
+            }
+        }
         setTitleColor(Color.parseColor(HEADER_GREEN));
     }
 
@@ -89,6 +100,10 @@ public class HouseholdListActivity extends BaseListActivity {
 
     @Override
     protected List<IMenuHandler> getCustomMenuHandler() {
-        return HouseholdListActivityFactory.getCustomMenuHandler(this);
+        return HouseholdListActivityFactory.getCustomMenuHandler(this, Household.getAllInOrder(db));
+    }
+
+    private List<IViewPreparer> getViewPreparer() {
+        return HouseholdListActivityFactory.getViewPreparer(this, Household.getAllInOrder(db));
     }
 }

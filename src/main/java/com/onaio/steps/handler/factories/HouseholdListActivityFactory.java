@@ -20,6 +20,8 @@ import android.app.ListActivity;
 import android.view.Menu;
 
 import com.onaio.steps.handler.actions.SaveToSDCardHandler;
+import com.onaio.steps.handler.actions.SubmitDataHandler;
+import com.onaio.steps.handler.interfaces.IViewPreparer;
 import com.onaio.steps.orchestrators.flows.FlowType;
 import com.onaio.steps.handler.actions.ExportHandler;
 import com.onaio.steps.handler.actions.FinalisedFormHandler;
@@ -40,9 +42,8 @@ public class HouseholdListActivityFactory {
     public static List<IMenuHandler> getMenuHandlers(ListActivity activity, List<Household> households){
         ArrayList<IMenuHandler> handlers = new ArrayList<IMenuHandler>();
         handlers.add(new SettingActivityHandler(activity).prepareFor(FlowType.Household));
-        handlers.add(new ExportHandler(activity).with(households));
+        handlers.add(new SubmitDataHandler(activity).with(households));
         handlers.add(new ImportHandler(activity));
-        handlers.add(new FinalisedFormHandler(activity));
         handlers.add(new SaveToSDCardHandler(activity).with(households));
         return handlers;
     }
@@ -59,15 +60,22 @@ public class HouseholdListActivityFactory {
         return new HouseholdActivityHandler(activity, household);
     }
 
-    public static List<IMenuHandler> getCustomMenuHandler(ListActivity activity){
+    public static List<IMenuHandler> getCustomMenuHandler(ListActivity activity, List<Household> households){
         ArrayList<IMenuHandler> handlers = new ArrayList<IMenuHandler>();
         handlers.add(new NewHouseholdActivityHandler(activity));
+        handlers.add(new SubmitDataHandler(activity).with(households));
         return handlers;
     }
 
     public static List<IMenuPreparer> getMenuPreparer(ListActivity activity, List<Household> households, Menu menu) {
         ArrayList<IMenuPreparer> handlers = new ArrayList<IMenuPreparer>();
-        handlers.add(new ExportHandler(activity).with(households).withMenu(menu));
+        handlers.add(new SubmitDataHandler(activity).with(households).withMenu(menu));
+        return handlers;
+    }
+
+    public static List<IViewPreparer> getViewPreparer(ListActivity activity, List<Household> households) {
+        ArrayList<IViewPreparer> handlers = new ArrayList<IViewPreparer>();
+        handlers.add(new SubmitDataHandler(activity).with(households));
         return handlers;
     }
 }

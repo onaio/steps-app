@@ -17,4 +17,6 @@
 
 <resources>
     <color name="pink">#ff9999</color>
+    <color name="steps_green">#499F72</color>
+    <color name="button_disabled">#737373</color>
 </resources>
