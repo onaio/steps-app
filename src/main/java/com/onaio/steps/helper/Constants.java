@@ -40,6 +40,8 @@ public class Constants {
     public static final String HEADER_GREEN = "#008148";
     public static final String TEXT_GREEN = "#53B257";
     public static final String SURVEY_NA = "NA";
+    public static final String SURVEY_EMPTY_HH = "EMPTY_HH";
+    public static final String SURVEY_NOT_SELECTED = "NOT_SELECTED";
 
 
     //Export related

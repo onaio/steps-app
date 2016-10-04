@@ -129,7 +129,7 @@ public class MemberActivityTest {
     @Test
     public void ShouldActivateMenuOptionsForNotSelectedStatus() {
         intent.putExtra(Constants.HH_MEMBER, member);
-        Mockito.stub(household.getStatus()).toReturn(InterviewStatus.NOT_SELECTED);
+        Mockito.stub(household.getStatus()).toReturn(InterviewStatus.SELECTION_NOT_DONE);
         memberActivity = memberActivityController.withIntent(intent).create().get();
 
         Menu menu = Mockito.mock(Menu.class);

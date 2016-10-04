@@ -19,7 +19,7 @@ package com.onaio.steps.model;
 import java.util.HashMap;
 
 public enum InterviewStatus {
-    NOT_SELECTED(4),
+    SELECTION_NOT_DONE(4),
     INCOMPLETE(1),
     NOT_DONE(2),
     DONE(5),

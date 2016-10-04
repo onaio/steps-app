@@ -47,7 +47,7 @@ public class ReElectReasonTest {
         db = Mockito.mock(DatabaseHelper.class);
         String date = new SimpleDateFormat(Constants.DATE_FORMAT).format(new Date());
         reason = new String(" ");
-        household = new Household("1", "Any Household", "123456789", "", InterviewStatus.NOT_SELECTED, date, "Dummy comments");
+        household = new Household("1", "Any Household", "123456789", "", InterviewStatus.SELECTION_NOT_DONE, date, "Dummy comments");
         reElectReason = new ReElectReason(reason, household);
     }
 

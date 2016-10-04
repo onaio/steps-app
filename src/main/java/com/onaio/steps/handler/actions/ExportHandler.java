@@ -48,7 +48,8 @@ import java.util.List;
 import static com.onaio.steps.helper.Constants.EXPORT_FIELDS;
 import static com.onaio.steps.helper.Constants.HH_PHONE_ID;
 import static com.onaio.steps.helper.Constants.HH_SURVEY_ID;
-import static com.onaio.steps.helper.Constants.SURVEY_NA;
+import static com.onaio.steps.helper.Constants.SURVEY_EMPTY_HH;
+import static com.onaio.steps.helper.Constants.SURVEY_NOT_SELECTED;
 
 public class ExportHandler implements IMenuHandler,IMenuPreparer {
 
@@ -170,7 +171,7 @@ public class ExportHandler implements IMenuHandler,IMenuPreparer {
             row.add(EMPTY_COLUMN);
             row.add(EMPTY_COLUMN);
             row.add(EMPTY_COLUMN);
-            row.add(SURVEY_NA);
+            row.add(SURVEY_EMPTY_HH);
             row.add(String.valueOf(reasons.size()));
             row.add(replaceCommas(StringUtils.join(reasons.toArray(), ';')));
             row.add(deviceId);
@@ -200,7 +201,7 @@ public class ExportHandler implements IMenuHandler,IMenuPreparer {
         if(household.getSelectedMemberId() == null || household.getSelectedMemberId().equals("") || household.getSelectedMemberId().equals(String.valueOf(member.getId())))
             row.add(household.getStatus().toString());
         else {
-            row.add(SURVEY_NA);
+            row.add(SURVEY_NOT_SELECTED);
         }
     }
 

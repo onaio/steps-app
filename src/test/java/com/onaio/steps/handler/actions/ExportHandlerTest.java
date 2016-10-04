@@ -84,7 +84,7 @@ public class ExportHandlerTest {
 //    @Test
 //    public void ShouldInactivateEditOptionForSelectedMember(){
 //        ArrayList<Household> households = Mockito.mock(ArrayList.class);
-//        Household household = new Household("12", "name", "321", "1", InterviewStatus.NOT_SELECTED, "12-12-2001");
+//        Household household = new Household("12", "name", "321", "1", InterviewStatus.SELECTION_NOT_DONE, "12-12-2001");
 //
 //        households.add(household);
 //        DatabaseHelper dbMock = Mockito.mock(DatabaseHelper.class);

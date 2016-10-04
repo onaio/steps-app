@@ -70,7 +70,7 @@ public class HouseholdViewWrapperTest {
         commentsView.setText("");
         Household household = householdViewWrapper.getHousehold(R.id.generated_household_id, R.id.household_number,R.id.household_comments);
         assertTrue(household.getName().equals("new name"));
-        assertTrue(household.getStatus().equals(InterviewStatus.NOT_SELECTED));
+        assertTrue(household.getStatus().equals(InterviewStatus.SELECTION_NOT_DONE));
     }
 
     @Test
@@ -86,7 +86,7 @@ public class HouseholdViewWrapperTest {
         assertTrue(household.getName().equals("new name"));
         assertTrue(household.getPhoneNumber().equals("123456789"));
         assertEquals("Dummy Comments", household.getComments());
-        assertTrue(household.getStatus().equals(InterviewStatus.NOT_SELECTED));
+        assertTrue(household.getStatus().equals(InterviewStatus.SELECTION_NOT_DONE));
 
     }
 

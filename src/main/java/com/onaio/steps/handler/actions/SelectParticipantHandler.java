@@ -73,7 +73,7 @@ public class SelectParticipantHandler implements IMenuHandler, IMenuPreparer {
     @Override
     public boolean shouldInactivate() {
         boolean noMember = household.numberOfNonSelectedMembers(db) == 0;
-        boolean noSelection = household.getStatus() == InterviewStatus.NOT_SELECTED;
+        boolean noSelection = household.getStatus() == InterviewStatus.SELECTION_NOT_DONE;
         return noMember || !noSelection;
     }
 

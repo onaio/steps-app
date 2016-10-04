@@ -101,7 +101,7 @@ public class EditParticipantActivityHandlerTest {
     @Test
     public void ShouldNotInactivateWhenParticipantIsSelected(){
         Menu menuMock = Mockito.mock(Menu.class);
-        Mockito.stub(participant.getStatus()).toReturn(InterviewStatus.NOT_SELECTED);
+        Mockito.stub(participant.getStatus()).toReturn(InterviewStatus.SELECTION_NOT_DONE);
         Assert.assertFalse(editParticipantActivityHandler.withMenu(menuMock).shouldInactivate());
     }
 

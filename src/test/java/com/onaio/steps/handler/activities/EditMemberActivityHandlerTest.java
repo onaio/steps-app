@@ -108,7 +108,7 @@ public class EditMemberActivityHandlerTest {
     @Test
     public void ShouldInactivateEditOptionForSelectedMember(){
         Menu menuMock = Mockito.mock(Menu.class);
-        Household household = new Household("1234", "any name", "123456789", "1", InterviewStatus.NOT_SELECTED, "","Dummy comments");
+        Household household = new Household("1234", "any name", "123456789", "1", InterviewStatus.SELECTION_NOT_DONE, "","Dummy comments");
         Mockito.stub(memberMock.getHousehold()).toReturn(household);
         Mockito.stub(memberMock.getId()).toReturn(1);
 
