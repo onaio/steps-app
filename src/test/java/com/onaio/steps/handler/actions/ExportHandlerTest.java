@@ -19,7 +19,6 @@ package com.onaio.steps.handler.actions;
 import android.content.Context;
 import android.content.Intent;
 import android.telephony.TelephonyManager;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -188,17 +187,40 @@ public class ExportHandlerTest {
                 null,
                 "0",
                 deviceIMEI,
-                createdAt
+                createdAt,
+                "0"
         };
         for(String[] curLine : lines) {
             for(int i = 0; i < expectedValues.length; i++) {
                 if(expectedValues[i] != null) {
-                    Log.d("ExportTest", "Expected = "+expectedValues[i]);
-                    Log.d("ExportTest", "Actual = "+curLine[i]);
                     Assert.assertEquals(expectedValues[i], curLine[i]);
                 }
             }
         }
+    }
+
+    /**
+     * This method tests whether the setStatus method works correctly with:
+     *  - a member that is not the selected member in the household gets the NOT_SELECTED status
+     *  - a member that is the selected member in the household inherits the household's status
+     */
+    @Test
+    public void testSetStatus() {
+        int selectedMemberId = 1;
+        Household householdMock = Mockito.mock(Household.class);
+        Mockito.stub(householdMock.getSelectedMemberId()).toReturn(String.valueOf(selectedMemberId));
+        Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.REFUSED);
+        Member member1 = Mockito.mock(Member.class);
+        Mockito.stub(member1.getId()).toReturn(1);
+        Member member2 = Mockito.mock(Member.class);
+        Mockito.stub(member2.getId()).toReturn(2);
+
+        ArrayList<String> rows = new ArrayList<>();
+        ExportHandler.setStatus(householdMock, member1, rows);
+        ExportHandler.setStatus(householdMock, member2, rows);
+
+        Assert.assertEquals(rows.get(0), householdMock.getStatus().toString());
+        Assert.assertEquals(rows.get(1), Constants.SURVEY_NOT_SELECTED);
     }
 
 }

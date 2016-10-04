@@ -197,7 +197,7 @@ public class ExportHandler implements IMenuHandler,IMenuPreparer {
     }
 
 
-    private void setStatus(Household household, Member member, ArrayList<String> row) {
+    public static void setStatus(Household household, Member member, ArrayList<String> row) {
         if(household.getSelectedMemberId() == null || household.getSelectedMemberId().equals("") || household.getSelectedMemberId().equals(String.valueOf(member.getId())))
             row.add(household.getStatus().toString());
         else {
