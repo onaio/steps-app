@@ -36,6 +36,7 @@ import com.onaio.steps.model.InterviewStatus;
 import com.onaio.steps.model.Member;
 import com.onaio.steps.model.ReElectReason;
 
+import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -71,7 +72,12 @@ public class ImportHandler implements IMenuHandler {
     public boolean open() {
         String deviceId = KeyValueStoreFactory.instance(activity).getString(HH_PHONE_ID);
         String surveyId = KeyValueStoreFactory.instance(activity).getString(HH_SURVEY_ID);
-        String filename = Environment.getExternalStorageDirectory()+"/"+Constants.APP_DIR+"/"+Constants.EXPORT_FILE_NAME+"_"+
+        String importDirPath = Environment.getExternalStorageDirectory()+"/"+Constants.APP_DIR;
+        File importDir = new File(importDirPath);
+        if(!importDir.exists()) {
+            importDir.mkdirs();
+        }
+        String filename = importDirPath+"/"+Constants.EXPORT_FILE_NAME+"_"+
                 deviceId +".csv";
         DownloadFileTask handler = new DownloadFileTask(this, filename);
         handler.execute(KeyValueStoreFactory.instance(activity).getString(IMPORT_URL)+"/"+deviceId+"/"+surveyId);
