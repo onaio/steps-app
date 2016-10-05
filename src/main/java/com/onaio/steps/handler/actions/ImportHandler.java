@@ -43,6 +43,7 @@ import java.util.List;
 import java.util.Locale;
 
 import static com.onaio.steps.helper.Constants.HH_PHONE_ID;
+import static com.onaio.steps.helper.Constants.HH_SURVEY_ID;
 import static com.onaio.steps.helper.Constants.IMPORT_URL;
 
 public class ImportHandler implements IMenuHandler {
@@ -69,10 +70,11 @@ public class ImportHandler implements IMenuHandler {
     @Override
     public boolean open() {
         String deviceId = KeyValueStoreFactory.instance(activity).getString(HH_PHONE_ID);
+        String surveyId = KeyValueStoreFactory.instance(activity).getString(HH_SURVEY_ID);
         String filename = Environment.getExternalStorageDirectory()+"/"+Constants.APP_DIR+"/"+Constants.EXPORT_FILE_NAME+"_"+
                 deviceId +".csv";
         DownloadFileTask handler = new DownloadFileTask(this, filename);
-        handler.execute(KeyValueStoreFactory.instance(activity).getString(IMPORT_URL)+"/"+deviceId);
+        handler.execute(KeyValueStoreFactory.instance(activity).getString(IMPORT_URL)+"/"+deviceId+"/"+surveyId);
         return true;
     }
 
