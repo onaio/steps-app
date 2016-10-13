@@ -29,7 +29,9 @@ import com.onaio.steps.R;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Calendar;
 
+import static com.onaio.steps.helper.Constants.SETTINGS_AUTH_TIME;
 import static com.onaio.steps.helper.Constants.SETTINGS_PASSWORD_HASH;
 
 /**
@@ -112,10 +114,12 @@ public class AuthDialog extends Dialog {
                 if(storedPWHash == null) {//user is creating a password
                     KeyValueStoreFactory.instance(activity).putString(SETTINGS_PASSWORD_HASH, enteredPWHash);
                     if(onAuthListener != null) {
+                        updateLastAuthTime();
                         onAuthListener.onAuthSuccessful(AuthDialog.this);
                     }
                 } else {
                     if(storedPWHash.equals(enteredPWHash)) {
+                        updateLastAuthTime();
                         if(onAuthListener != null) {
                             onAuthListener.onAuthSuccessful(AuthDialog.this);
                         }
@@ -166,6 +170,42 @@ public class AuthDialog extends Dialog {
             e.printStackTrace();
         }
         return null;
+    }
+
+    /**
+     * This method returns the long value of the timestamp for when last the settings screen was
+     * authenticated
+     *
+     * @return  The long value of the timestamp or -1 if unable to get the last auth time
+     */
+    public long getLastAuthTime() {
+        long lastAuthTime = -1;
+        String lastAuthTimeString = KeyValueStoreFactory.instance(activity).getString(SETTINGS_AUTH_TIME);
+        if(lastAuthTimeString != null) {
+            try {
+                lastAuthTime = Long.parseLong(lastAuthTimeString);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return lastAuthTime;
+    }
+
+    /**
+     * This method updates the last authentication time to now
+     */
+    private void updateLastAuthTime() {
+        long now = Calendar.getInstance().getTimeInMillis();
+        KeyValueStoreFactory.instance(activity).putString(SETTINGS_AUTH_TIME, String.valueOf(now));
+    }
+
+    public boolean needsAuth() {
+        long lastAuthTime = getLastAuthTime();
+        long now = Calendar.getInstance().getTimeInMillis();
+        if(lastAuthTime <= now && (now - 30000) < lastAuthTime) {
+            return false;
+        }
+        return true;
     }
 
     public interface OnAuthListener {

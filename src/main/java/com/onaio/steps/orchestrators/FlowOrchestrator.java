@@ -65,9 +65,7 @@ public class FlowOrchestrator {
             @Override
             public void onAuthSuccessful(AuthDialog authDialog) {
                 authDialog.dismiss();
-                LinearLayout settingsLayout = (LinearLayout) activity.findViewById(R.id.settings);
-                settingsLayout.setVisibility(View.VISIBLE);
-                getFlow(flowType).prepareSettingScreen();
+                FlowOrchestrator.this.onAuthSuccessful(flowType);
             }
 
             @Override
@@ -75,7 +73,18 @@ public class FlowOrchestrator {
                 Toast.makeText(activity, R.string.incorrect_password, Toast.LENGTH_LONG).show();
             }
         });
-        authDialog.show();
+
+        if(authDialog.needsAuth()) {
+            authDialog.show();
+        } else {
+            onAuthSuccessful(flowType);
+        }
+    }
+
+    private void onAuthSuccessful(FlowType flowType) {
+        LinearLayout settingsLayout = (LinearLayout) activity.findViewById(R.id.settings);
+        settingsLayout.setVisibility(View.VISIBLE);
+        getFlow(flowType).prepareSettingScreen();
     }
 
     public void prepareSettingScreen(FlowType flowType){
