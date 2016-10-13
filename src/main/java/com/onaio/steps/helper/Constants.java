@@ -66,4 +66,6 @@ public class Constants {
 
     public static final String PARTICIPANT = "PARTICIPANT";
     public static final String FLOW_TYPE = "flowType";
+
+    public static final String SETTINGS_PASSWORD_HASH = "settings_password_hash";
 }

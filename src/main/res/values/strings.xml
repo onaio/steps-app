@@ -140,4 +140,10 @@
     <string name="invalid_member">Invalid Member, please fill or correct the following fields:</string>
     <string name="invalid_participant">Invalid Participant, please fill or correct the following fields:</string>
     <string name="action_submit_data">Submit Data</string>
+    <string name="create_settings_password">Create a password for the settings screen</string>
+    <string name="settings_password_title">Settings Password</string>
+    <string name="enter_settings_password">Enter the settings screen password</string>
+    <string name="show_password">Show password</string>
+    <string name="hide_password">Hide password</string>
+    <string name="incorrect_password">The password you entered is incorrect</string>
 </resources>

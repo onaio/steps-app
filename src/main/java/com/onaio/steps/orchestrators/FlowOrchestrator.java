@@ -19,8 +19,13 @@ package com.onaio.steps.orchestrators;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
+import com.onaio.steps.R;
 import com.onaio.steps.exceptions.InvalidDataException;
+import com.onaio.steps.helper.AuthDialog;
 import com.onaio.steps.orchestrators.flows.FlowType;
 import com.onaio.steps.orchestrators.flows.HouseholdFlow;
 import com.onaio.steps.orchestrators.flows.IFlow;
@@ -50,8 +55,31 @@ public class FlowOrchestrator {
         return new InitialFlow(activity);
     }
 
+    public void authenticateUser(final FlowType flowType) {
+        AuthDialog authDialog = new AuthDialog(activity, new AuthDialog.OnAuthListener() {
+            @Override
+            public void onAuthCancelled(AuthDialog authDialog) {
+                activity.finish();
+            }
+
+            @Override
+            public void onAuthSuccessful(AuthDialog authDialog) {
+                authDialog.dismiss();
+                LinearLayout settingsLayout = (LinearLayout) activity.findViewById(R.id.settings);
+                settingsLayout.setVisibility(View.VISIBLE);
+                getFlow(flowType).prepareSettingScreen();
+            }
+
+            @Override
+            public void onAuthFailed(AuthDialog authDialog) {
+                Toast.makeText(activity, R.string.incorrect_password, Toast.LENGTH_LONG).show();
+            }
+        });
+        authDialog.show();
+    }
+
     public void prepareSettingScreen(FlowType flowType){
-        getFlow(flowType).prepareSettingScreen();
+        authenticateUser(flowType);
     }
 
     public void start(FlowType flowType){

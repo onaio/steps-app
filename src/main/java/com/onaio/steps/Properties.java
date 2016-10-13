@@ -19,6 +19,7 @@ package com.onaio.steps;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.onaio.steps.helper.Constants.SETTINGS_PASSWORD_HASH;
 import static com.onaio.steps.helper.Constants.ENDPOINT_URL;
 import static com.onaio.steps.helper.Constants.FLOW_TYPE;
 import static com.onaio.steps.helper.Constants.HH_FORM_ID;
@@ -44,6 +45,7 @@ public class Properties {
         props.put(PA_MAX_AGE, "69");
         props.put(FLOW_TYPE, "None");
         props.put(HH_PHONE_ID, null);
+        props.put(SETTINGS_PASSWORD_HASH, null);
     }
 
     public static String get(String key) {
