@@ -283,6 +283,19 @@
                 android:onClick="importData"
                 android:textColor="@android:color/white"
                 android:background="#499F72"/>
+
+            <Button
+                android:id="@+id/eraseDataButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/action_erase_data"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="15dp"
+                android:onClick="eraseData"
+                android:textColor="@android:color/white"
+                android:background="#ce6c60"/>
         </LinearLayout>
     </LinearLayout>
 </ScrollView>
