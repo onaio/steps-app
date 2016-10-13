@@ -278,7 +278,10 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:layout_marginTop="5dp"
-                android:onClick="importData"/>
+                android:layout_marginBottom="15dp"
+                android:onClick="importData"
+                android:textColor="@android:color/white"
+                android:background="#499F72"/>
         </LinearLayout>
     </LinearLayout>
 </ScrollView>
