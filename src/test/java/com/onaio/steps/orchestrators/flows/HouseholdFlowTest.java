@@ -119,7 +119,7 @@ public class HouseholdFlowTest {
         householdseed.setText("");
 
         expectedException.expect(InvalidDataException.class);
-        expectedException.expectMessage(String.format(error_string, "Settings", "Device ID,Form ID,Max age."));
+        expectedException.expectMessage(String.format(error_string, "Settings", "Survey ID,Device ID,Form ID,Max age"));
 
         householdFlow.validateOptions();
     }

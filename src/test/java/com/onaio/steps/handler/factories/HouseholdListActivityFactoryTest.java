@@ -20,6 +20,7 @@ import com.onaio.steps.activities.HouseholdListActivity;
 import com.onaio.steps.handler.actions.ExportHandler;
 import com.onaio.steps.handler.actions.FinalisedFormHandler;
 import com.onaio.steps.handler.actions.ImportHandler;
+import com.onaio.steps.handler.actions.SaveToSDCardHandler;
 import com.onaio.steps.handler.activities.HouseholdActivityHandler;
 import com.onaio.steps.handler.activities.NewHouseholdActivityHandler;
 import com.onaio.steps.handler.activities.SettingActivityHandler;
@@ -54,11 +55,12 @@ public class HouseholdListActivityFactoryTest{
         List<IMenuHandler> menuHandlers = HouseholdListActivityFactory.getMenuHandlers(householdListActivityMock, null);
         ArrayList<Class> handlerTypes = getTypes(menuHandlers);
 
-        Assert.assertEquals(4,menuHandlers.size());
+        Assert.assertEquals(5,menuHandlers.size());
         Assert.assertTrue(handlerTypes.contains(SettingActivityHandler.class));
         Assert.assertTrue(handlerTypes.contains(ExportHandler.class));
         Assert.assertTrue(handlerTypes.contains(ImportHandler.class));
         Assert.assertTrue(handlerTypes.contains(FinalisedFormHandler.class));
+        Assert.assertTrue(handlerTypes.contains(SaveToSDCardHandler.class));
     }
 
     @Test
@@ -66,10 +68,9 @@ public class HouseholdListActivityFactoryTest{
         List<IActivityResultHandler> resultHandlers = HouseholdListActivityFactory.getResultHandlers(householdListActivityMock);
         ArrayList<Class> handlerTypes = getTypes(resultHandlers);
 
-        Assert.assertEquals(3, resultHandlers.size());
+        Assert.assertEquals(2, resultHandlers.size());
         Assert.assertTrue(handlerTypes.contains(SettingActivityHandler.class));
         Assert.assertTrue(handlerTypes.contains(NewHouseholdActivityHandler.class));
-        Assert.assertTrue(handlerTypes.contains(ImportHandler.class));
     }
 
     @Test
