@@ -95,6 +95,26 @@ public class AuthDialog extends Dialog {
         toggleFirstTimeEntry();
     }
 
+    public TextView getInstructions() {
+        return instructions;
+    }
+
+    public EditText getPasswordEditText() {
+        return passwordEditText;
+    }
+
+    public TextView getTogglePasswordVisibility() {
+        return togglePasswordVisibility;
+    }
+
+    public Button getOkButton() {
+        return okButton;
+    }
+
+    public Button getCancelButton() {
+        return cancelButton;
+    }
+
     private void toggleFirstTimeEntry() {
         String storedPWHash = KeyValueStoreFactory.instance(activity).getString(SETTINGS_PASSWORD_HASH);
         if(storedPWHash == null) {
@@ -149,7 +169,7 @@ public class AuthDialog extends Dialog {
      * @param password  The plaintext password to be hashed
      * @return  The MD5 hash for the provided password or NULL if an error occurred
      */
-    private String hashPassword(String password) {
+    public String hashPassword(String password) {
         try {
             // Create MD5 Hash
             MessageDigest digest = java.security.MessageDigest.getInstance("MD5");
