@@ -50,6 +50,8 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.onaio.steps.helper.Constants.HH_PHONE_ID;
+
 @RunWith(RobolectricTestRunner.class)
 @Config(emulateSdk = 16, manifest = "src/main/AndroidManifest.xml",shadows = {ShadowDatabaseHelper.class})
 public class ODKFormTest extends TestCase {
@@ -104,9 +106,9 @@ public class ODKFormTest extends TestCase {
         Mockito.stub(blankFormMock.getPath()).toReturn(blankFormMediaPath);
         Mockito.stub(savedFormMock.getUri()).toReturn(saveFormURI);
         odkForm = new ODKForm(blankFormMock, savedFormMock);
+        String deviceId = getValue(HH_PHONE_ID);
 
-
-        odkForm.open(new HouseholdMemberFormStrategy(householdMock), householdActivity, RequestCode.SURVEY.getCode());
+        odkForm.open(new HouseholdMemberFormStrategy(householdMock, deviceId), householdActivity, RequestCode.SURVEY.getCode());
 
         ShadowActivity.IntentForResult odkActivity = Robolectric.shadowOf(householdActivity).getNextStartedActivityForResult();
 
@@ -148,9 +150,9 @@ public class ODKFormTest extends TestCase {
         Mockito.stub(blankFormMock.getPath()).toReturn(blankFormMediaPath);
         Mockito.stub(blankFormMock.getUri()).toReturn(blankFormURI);
         odkForm = new ODKForm(blankFormMock, null);
+        String deviceId = getValue(HH_PHONE_ID);
 
-
-        odkForm.open(new HouseholdMemberFormStrategy(householdMock), householdActivity, RequestCode.SURVEY.getCode());
+        odkForm.open(new HouseholdMemberFormStrategy(householdMock, deviceId), householdActivity, RequestCode.SURVEY.getCode());
 
         ShadowActivity.IntentForResult odkActivity = Robolectric.shadowOf(householdActivity).getNextStartedActivityForResult();
 

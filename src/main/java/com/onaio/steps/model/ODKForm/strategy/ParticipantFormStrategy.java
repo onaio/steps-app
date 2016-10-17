@@ -32,12 +32,12 @@ public class ParticipantFormStrategy implements IFormStrategy{
     private Participant participant;
     private FileUtil fileUtil;
     private static final String HH_SIZE = "1";
+    private String deviceId;
 
-
-    public ParticipantFormStrategy(Participant participant){
+    public ParticipantFormStrategy(Participant participant, String deviceId){
         this.participant = participant;
         this.fileUtil = new FileUtil();
-
+        this.deviceId = deviceId;
     }
     @Override
     public void saveDataFile(Activity activity, String pathToSaveDataFile) throws IOException {
@@ -52,6 +52,7 @@ public class ParticipantFormStrategy implements IFormStrategy{
         row.add(String.valueOf(participant.getGender().getIntValue()));
         row.add(String.valueOf(participant.getAge()));
         row.add(HH_SIZE);
+        row.add(deviceId);
         fileUtil.withHeader(Constants.PARTICIPANT_ODK_FORM_FIELDS.split(","))
                 .withData(row.toArray(new String[row.size()]))
                 .writeCSV(pathToSaveDataFile + "/" + Constants.ODK_DATA_FILENAME);

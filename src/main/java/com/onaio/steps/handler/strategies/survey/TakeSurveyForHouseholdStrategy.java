@@ -24,6 +24,7 @@ import com.onaio.steps.R;
 import com.onaio.steps.handler.strategies.survey.interfaces.ITakeSurveyStrategy;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;
+import com.onaio.steps.helper.KeyValueStoreFactory;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.InterviewStatus;
 import com.onaio.steps.model.ODKForm.ODKForm;
@@ -32,6 +33,8 @@ import com.onaio.steps.model.ODKForm.strategy.HouseholdMemberFormStrategy;
 import com.onaio.steps.model.RequestCode;
 
 import java.io.IOException;
+
+import static com.onaio.steps.helper.Constants.HH_PHONE_ID;
 
 public class TakeSurveyForHouseholdStrategy  implements ITakeSurveyStrategy {
     private Household household;
@@ -47,7 +50,8 @@ public class TakeSurveyForHouseholdStrategy  implements ITakeSurveyStrategy {
     public void open(String formId) throws IOException {
         String formName = String.format(formId + "-%s", household.getName());
         ODKForm requiredForm = ODKForm.create(activity, formId, formName);
-        requiredForm.open(new HouseholdMemberFormStrategy(household), activity, RequestCode.SURVEY.getCode());
+        String deviceId = getDeviceId();
+        requiredForm.open(new HouseholdMemberFormStrategy(household, deviceId), activity, RequestCode.SURVEY.getCode());
     }
 
     public boolean shouldInactivate(){
@@ -79,5 +83,9 @@ public class TakeSurveyForHouseholdStrategy  implements ITakeSurveyStrategy {
             button.setText(R.string.continue_interview);
         else
             button.setText(R.string.interview_now);
+    }
+
+    public String getDeviceId() {
+        return KeyValueStoreFactory.instance(activity).getString(HH_PHONE_ID);
     }
 }
