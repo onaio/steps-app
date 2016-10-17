@@ -56,11 +56,10 @@ public class HouseholdListActivityFactoryTest{
         List<IMenuHandler> menuHandlers = HouseholdListActivityFactory.getMenuHandlers(householdListActivityMock, null);
         ArrayList<Class> handlerTypes = getTypes(menuHandlers);
 
-        Assert.assertEquals(5,menuHandlers.size());
+        Assert.assertEquals(4,menuHandlers.size());
         Assert.assertTrue(handlerTypes.contains(SettingActivityHandler.class));
         Assert.assertTrue(handlerTypes.contains(SubmitDataHandler.class));
         Assert.assertTrue(handlerTypes.contains(ImportHandler.class));
-        Assert.assertTrue(handlerTypes.contains(FinalisedFormHandler.class));
         Assert.assertTrue(handlerTypes.contains(SaveToSDCardHandler.class));
     }
 
