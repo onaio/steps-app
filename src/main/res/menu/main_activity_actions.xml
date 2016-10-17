@@ -16,14 +16,18 @@
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/action_settings"
-          android:title="@string/action_settings"/>
+        android:title="@string/action_settings"/>
     <item android:id="@+id/action_export"
-          android:title="@string/export_household_list"/>
+        android:title="@string/export_household_list"
+        android:visible="false"/>
+    <item android:id="@+id/action_submit_data"
+        android:title="@string/action_submit_data"/>
     <item android:id="@+id/action_import"
           android:title="@string/action_import"
           android:visible="false"/>
     <item android:id="@+id/action_saved_form"
-          android:title="@string/action_submit_forms"/>
+        android:title="@string/action_submit_forms"
+        android:visible="false"/>
     <item android:id="@+id/action_save_to_sdcard"
         android:title="@string/action_save_to_sdcard"/>
 </menu>

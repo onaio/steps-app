@@ -56,11 +56,16 @@ public class ExportHandler implements IMenuHandler,IMenuPreparer {
     private Menu menu;
     private int MENU_ID = R.id.action_export;
     private static final String EMPTY_COLUMN = "";
+    private OnExportListener onExportListener;
 
     public ExportHandler(ListActivity activity) {
         this.activity = activity;
         databaseHelper = new DatabaseHelper(activity.getApplicationContext());
         households = new ArrayList<Household>();
+    }
+
+    public void setOnExportListener(OnExportListener onExportListener) {
+        this.onExportListener = onExportListener;
     }
 
     @Override
@@ -73,10 +78,13 @@ public class ExportHandler implements IMenuHandler,IMenuPreparer {
         DialogInterface.OnClickListener uploadConfirmListener = new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
+                if(onExportListener != null)  onExportListener.onExportStart();
                 try {
                     File file = saveFile();
+                    if(onExportListener != null) onExportListener.onFileSaved();
                     if (NetworkConnectivity.isNetworkAvailable(activity)) {
-                        new UploadFileTask(activity).execute(file);
+                        new UploadFileTask(activity, onExportListener).execute(file);
+
                     } else {
                         new CustomDialog().notify(activity, CustomDialog.EmptyListener, R.string.error_title, R.string.fail_no_connectivity);
                     }
@@ -86,7 +94,13 @@ public class ExportHandler implements IMenuHandler,IMenuPreparer {
                 }
             }
         };
-        new CustomDialog().confirm(activity, uploadConfirmListener, CustomDialog.EmptyListener, R.string.export_start_message, R.string.action_export);
+        DialogInterface.OnClickListener uploadCancelledListener = new DialogInterface.OnClickListener(){
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                if(onExportListener != null) onExportListener.onExportCancelled();
+            }
+        };
+        new CustomDialog().confirm(activity, uploadConfirmListener, uploadCancelledListener, R.string.export_start_message, R.string.action_export);
         return true;
     }
 
@@ -195,5 +209,12 @@ public class ExportHandler implements IMenuHandler,IMenuPreparer {
 
     public String getDeviceId() {
         return KeyValueStoreFactory.instance(activity).getString(HH_PHONE_ID);
+    }
+
+    public interface OnExportListener {
+        void onExportCancelled();
+        void onExportStart();
+        void onFileSaved();
+        void onFileUploaded();
     }
 }
