@@ -104,6 +104,7 @@ public class ParticipantFlow implements IFlow {
         hide(R.id.endpointUrl_label);
         hide(R.id.importUrl);
         hide(R.id.importUrl_label);
+        hide(R.id.importButton);
     }
 
     private void hide(int viewId) {

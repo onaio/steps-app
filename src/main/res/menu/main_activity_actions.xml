@@ -20,7 +20,8 @@
     <item android:id="@+id/action_export"
           android:title="@string/export_household_list"/>
     <item android:id="@+id/action_import"
-          android:title="@string/action_import"/>
+          android:title="@string/action_import"
+          android:visible="false"/>
     <item android:id="@+id/action_saved_form"
           android:title="@string/action_submit_forms"/>
     <item android:id="@+id/action_save_to_sdcard"

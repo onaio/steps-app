@@ -16,10 +16,13 @@
 
 package com.onaio.steps.handler.actions;
 
+import android.app.Activity;
 import android.app.ListActivity;
 import android.os.Environment;
+import android.widget.TextView;
 
 import com.onaio.steps.R;
+import com.onaio.steps.activities.SettingsActivity;
 import com.onaio.steps.handler.interfaces.IMenuHandler;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.CustomDialog;
@@ -49,15 +52,16 @@ import static com.onaio.steps.helper.Constants.IMPORT_URL;
 
 public class ImportHandler implements IMenuHandler {
     private final DatabaseHelper db;
-    private ListActivity activity;
+    private Activity activity;
     private static final int MENU_ID= R.id.action_import;
     private final FileUtil fileUtil;
+    private String deviceId;
 
-    public ImportHandler(ListActivity activity) {
+    public ImportHandler(Activity activity) {
         this(activity, new DatabaseHelper(activity),new FileUtil());
     }
 
-    ImportHandler(ListActivity activity, DatabaseHelper db, FileUtil fileUtil) {
+    ImportHandler(Activity activity, DatabaseHelper db, FileUtil fileUtil) {
         this.activity = activity;
         this.db = db;
         this.fileUtil = fileUtil;
@@ -70,7 +74,7 @@ public class ImportHandler implements IMenuHandler {
 
     @Override
     public boolean open() {
-        String deviceId = KeyValueStoreFactory.instance(activity).getString(HH_PHONE_ID);
+        if(deviceId == null) deviceId = KeyValueStoreFactory.instance(activity).getString(HH_PHONE_ID);
         String surveyId = KeyValueStoreFactory.instance(activity).getString(HH_SURVEY_ID);
         String importDirPath = Environment.getExternalStorageDirectory()+"/"+Constants.APP_DIR;
         File importDir = new File(importDirPath);
@@ -82,6 +86,11 @@ public class ImportHandler implements IMenuHandler {
         DownloadFileTask handler = new DownloadFileTask(this, filename);
         handler.execute(KeyValueStoreFactory.instance(activity).getString(IMPORT_URL)+"/"+deviceId+"/"+surveyId);
         return true;
+    }
+
+    public boolean open(int deviceIdField) {
+        deviceId = ((TextView)activity.findViewById(deviceIdField)).getText().toString();
+        return open();
     }
 
     public void importDataFromDownloadedFile(String filepath) {
