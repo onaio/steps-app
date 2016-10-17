@@ -5,7 +5,7 @@ build:
     - java -version
     - gradle --version
     - gradle clean
-    - gradle test --info
+    - gradle test
 notify:
   email:
     from: $$FROM
