@@ -32,6 +32,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Calendar;
 
 import static com.onaio.steps.helper.Constants.SETTINGS_AUTH_TIME;
+import static com.onaio.steps.helper.Constants.SETTINGS_AUTH_TIMEOUT;
 import static com.onaio.steps.helper.Constants.SETTINGS_PASSWORD_HASH;
 
 /**
@@ -222,7 +223,7 @@ public class AuthDialog extends Dialog {
     public boolean needsAuth() {
         long lastAuthTime = getLastAuthTime();
         long now = Calendar.getInstance().getTimeInMillis();
-        if(lastAuthTime <= now && (now - 30000) < lastAuthTime) {
+        if(lastAuthTime <= now && (now - SETTINGS_AUTH_TIMEOUT) < lastAuthTime) {
             return false;
         }
         return true;
