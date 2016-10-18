@@ -32,6 +32,7 @@ import com.onaio.steps.model.Gender;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.InterviewStatus;
 import com.onaio.steps.model.Member;
+import com.onaio.steps.model.ReElectReason;
 import com.onaio.steps.model.ShadowDatabaseHelper;
 
 import junit.framework.Assert;
@@ -39,6 +40,7 @@ import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
@@ -57,11 +59,14 @@ public class ExportHandlerTest {
 
     private HouseholdActivity householdActivityMock;
     private ExportHandler exportHandler;
+    @Mock
+    private DatabaseHelper db;
 
     @Before
     public void setup(){
         householdActivityMock = Mockito.mock(HouseholdActivity.class);
         exportHandler = new ExportHandler(householdActivityMock);
+        db = Mockito.mock(DatabaseHelper.class);
     }
 
     @Test
@@ -151,7 +156,11 @@ public class ExportHandlerTest {
         Mockito.stub(householdActivityMock.getSystemService(Context.TELEPHONY_SERVICE)).toReturn(telephonyManager);
         Mockito.stub(householdActivityMock.getApplicationContext()).toReturn(Robolectric.application.getApplicationContext());
         Mockito.stub(householdActivityMock.getFilesDir()).toReturn(Robolectric.application.getApplicationContext().getFilesDir());
-        ExportHandler exportHandler = new ExportHandler(householdActivityMock);
+        householdMock.save(db);
+        selectedMember.save(db);
+        ExportHandler exportHandler = Mockito.spy(new ExportHandler(householdActivityMock));
+        Mockito.when(exportHandler.getReElectReasons(Mockito.any(Household.class))).thenReturn(new ArrayList<ReElectReason>());
+        Mockito.when(exportHandler.getDatabaseHelper()).thenReturn(db);
 
         List<Household> householdList = new ArrayList<>();
         householdList.add(householdMock);
