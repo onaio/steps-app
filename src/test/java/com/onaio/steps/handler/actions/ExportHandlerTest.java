@@ -32,6 +32,7 @@ import com.onaio.steps.model.Gender;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.InterviewStatus;
 import com.onaio.steps.model.Member;
+import com.onaio.steps.model.ShadowDatabaseHelper;
 
 import junit.framework.Assert;
 
@@ -50,7 +51,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@Config(emulateSdk = 16,manifest = "src/main/AndroidManifest.xml")
+@Config(emulateSdk = 16,manifest = "src/main/AndroidManifest.xml", shadows = {ShadowDatabaseHelper.class})
 @RunWith(RobolectricTestRunner.class)
 public class ExportHandlerTest {
 
