@@ -148,9 +148,8 @@ public class ExportHandlerTest {
         TelephonyManager telephonyManager = Mockito.mock(TelephonyManager.class);
         Mockito.when(telephonyManager.getDeviceId()).thenReturn(deviceIMEI);
         Mockito.stub(householdActivityMock.getSystemService(Context.TELEPHONY_SERVICE)).toReturn(telephonyManager);
-        HouseholdActivity legitActivity = Robolectric.buildActivity(HouseholdActivity.class).withIntent(intent).create().get();
-        Mockito.stub(householdActivityMock.getApplicationContext()).toReturn(legitActivity.getApplicationContext());
-        Mockito.stub(householdActivityMock.getFilesDir()).toReturn(legitActivity.getFilesDir());
+        Mockito.stub(householdActivityMock.getApplicationContext()).toReturn(Robolectric.application.getApplicationContext());
+        Mockito.stub(householdActivityMock.getFilesDir()).toReturn(Robolectric.application.getApplicationContext().getFilesDir());
         ExportHandler exportHandler = new ExportHandler(householdActivityMock);
 
         List<Household> householdList = new ArrayList<>();
