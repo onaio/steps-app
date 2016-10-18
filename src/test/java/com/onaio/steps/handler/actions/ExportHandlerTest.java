@@ -155,8 +155,6 @@ public class ExportHandlerTest {
         List<Household> householdList = new ArrayList<>();
         householdList.add(householdMock);
 
-        DatabaseHelper dbMock = Mockito.mock(DatabaseHelper.class);//used in exportHandler.saveFile()
-        Mockito.stub(exportHandler.getDatabaseHelper()).toReturn(dbMock);
         File exportedFile = exportHandler.with(householdList).saveFile();
         FileUtil fileUtil = new FileUtil();
         List<String[]> lines = fileUtil.readFile(exportedFile.getAbsolutePath());
