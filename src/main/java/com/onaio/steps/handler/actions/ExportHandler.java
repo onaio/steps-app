@@ -22,11 +22,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.onaio.steps.R;
+import com.onaio.steps.exceptions.NoUniqueIdException;
 import com.onaio.steps.handler.interfaces.IMenuHandler;
 import com.onaio.steps.handler.interfaces.IMenuPreparer;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.CustomDialog;
 import com.onaio.steps.helper.DatabaseHelper;
+import com.onaio.steps.helper.Device;
 import com.onaio.steps.helper.FileUtil;
 import com.onaio.steps.helper.KeyValueStoreFactory;
 import com.onaio.steps.helper.Logger;
@@ -62,6 +64,10 @@ public class ExportHandler implements IMenuHandler,IMenuPreparer {
         this.activity = activity;
         databaseHelper = new DatabaseHelper(activity.getApplicationContext());
         households = new ArrayList<Household>();
+    }
+
+    public DatabaseHelper getDatabaseHelper() {
+        return databaseHelper;
     }
 
     public void setOnExportListener(OnExportListener onExportListener) {
@@ -104,14 +110,28 @@ public class ExportHandler implements IMenuHandler,IMenuPreparer {
         return true;
     }
 
+    public List<ReElectReason> getReElectReasons(Household household) {
+        if(household != null) {
+            return ReElectReason.getAll(getDatabaseHelper(), household);
+        }
+
+        return null;
+    }
+
     public File saveFile() throws IOException {
         String deviceId = getDeviceId();
 
         FileUtil fileUtil = new FileUtil().withHeader(EXPORT_FIELDS);
         List<Household> emptyHouseholds = new ArrayList<>();
+        String uniqueDeviceId = null;
+        try {
+            uniqueDeviceId = Device.getUniqueDeviceId(activity);
+        } catch (NoUniqueIdException e) {
+            e.printStackTrace();
+        }
         for(Household household: households) {
-            List<ReElectReason> reasons = ReElectReason.getAll(databaseHelper, household);
-            List<Member> membersPerHousehold = household.getAllMembersForExport(databaseHelper);
+            List<ReElectReason> reasons = getReElectReasons(household);
+            List<Member> membersPerHousehold = household.getAllMembersForExport(getDatabaseHelper());
             for(Member member: membersPerHousehold) {
                 ArrayList<String> row = new ArrayList<>();
                 row.add(household.getPhoneNumber());
@@ -128,7 +148,9 @@ public class ExportHandler implements IMenuHandler,IMenuPreparer {
                 row.add(replaceCommas(StringUtils.join(reasons.toArray(), ';')));
                 row.add(deviceId);
                 row.add(KeyValueStoreFactory.instance(activity).getString(HH_SURVEY_ID));
-                row.add(String.valueOf(household.numberOfNonDeletedMembers(databaseHelper)));
+                row.add(String.valueOf(household.numberOfNonDeletedMembers(getDatabaseHelper())));
+                row.add(uniqueDeviceId);
+                row.add(household.getCreatedAt());
                 fileUtil.withData(row.toArray(new String[row.size()]));
             }
             if (membersPerHousehold.size() == 0) {
@@ -137,7 +159,7 @@ public class ExportHandler implements IMenuHandler,IMenuPreparer {
         }
         // Add households with no members
         for (Household household : emptyHouseholds) {
-            List<ReElectReason> reasons = ReElectReason.getAll(databaseHelper, household);
+            List<ReElectReason> reasons = getReElectReasons(household);
             ArrayList<String> row = new ArrayList<>();
             row.add(household.getPhoneNumber());
             row.add(household.getName());
@@ -153,7 +175,9 @@ public class ExportHandler implements IMenuHandler,IMenuPreparer {
             row.add(replaceCommas(StringUtils.join(reasons.toArray(), ';')));
             row.add(deviceId);
             row.add(KeyValueStoreFactory.instance(activity).getString(HH_SURVEY_ID));
-            row.add(String.valueOf(household.numberOfNonDeletedMembers(databaseHelper)));
+            row.add(String.valueOf(household.numberOfNonDeletedMembers(getDatabaseHelper())));
+            row.add(uniqueDeviceId);
+            row.add(household.getCreatedAt());
             fileUtil.withData(row.toArray(new String[row.size()]));
         }
         //Write the csv to external storage for the user to access.
@@ -208,7 +232,11 @@ public class ExportHandler implements IMenuHandler,IMenuPreparer {
     }
 
     public String getDeviceId() {
-        return KeyValueStoreFactory.instance(activity).getString(HH_PHONE_ID);
+        if(activity != null) {
+            return KeyValueStoreFactory.instance(activity).getString(HH_PHONE_ID);
+        }
+        
+        return null;
     }
 
     public interface OnExportListener {
