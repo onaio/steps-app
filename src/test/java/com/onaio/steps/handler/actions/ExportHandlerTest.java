@@ -38,6 +38,7 @@ import com.onaio.steps.model.ShadowDatabaseHelper;
 import junit.framework.Assert;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -123,7 +124,8 @@ public class ExportHandlerTest {
     /**
      * This method tests that the values saved in the exported file are OK
      */
-    /*@Test
+    @Test
+    @Ignore
     public void testSavedFileValues() throws IOException {
         String hhName = "testHhName";
         String phoneNumber = "00000000";
@@ -197,6 +199,6 @@ public class ExportHandlerTest {
                 }
             }
         }
-    }*/
+    }
 
 }
