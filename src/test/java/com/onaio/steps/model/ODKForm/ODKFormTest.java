@@ -176,7 +176,7 @@ public class ODKFormTest extends TestCase {
         householdMock = Mockito.mock(Household.class);
         selectedMember = new Member(1, "surname", "firstName", Gender.Male, 28, householdMock, "householdID-1", false);
         Mockito.stub(householdMock.getSelectedMember(Mockito.any(DatabaseHelper.class))).toReturn(selectedMember);
-        Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.NOT_SELECTED);
+        Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.SELECTION_NOT_DONE);
     }
 
     private String getValue(String key) {

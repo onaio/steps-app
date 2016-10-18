@@ -88,7 +88,7 @@ public class NewMemberActivityHandler implements IMenuHandler, IActivityResultHa
 
     @Override
     public boolean shouldInactivate() {
-        return !(household.getStatus().equals(InterviewStatus.NOT_SELECTED));
+        return !(household.getStatus().equals(InterviewStatus.SELECTION_NOT_DONE));
     }
 
     public void inactivate() {

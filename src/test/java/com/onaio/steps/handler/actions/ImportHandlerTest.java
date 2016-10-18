@@ -109,7 +109,7 @@ public class ImportHandlerTest {
 //        rowData.add("23");
 //        rowData.add(Constants.MALE);
 //        rowData.add(String.valueOf(true));
-//        rowData.add(String.valueOf(InterviewStatus.NOT_SELECTED));
+//        rowData.add(String.valueOf(InterviewStatus.SELECTION_NOT_DONE));
 //        rowData.add("2");
 //        rowData.add("some reason;some other reason");
 //        rows.add(rowData.toArray(new String[]{}));

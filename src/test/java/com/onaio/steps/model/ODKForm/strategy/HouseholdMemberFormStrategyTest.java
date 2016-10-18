@@ -75,7 +75,7 @@ public class HouseholdMemberFormStrategyTest {
         householdMock = Mockito.mock(Household.class);
         selectedMember = new Member(HHID_KEY, SURNAME, FIRST_NAME, GENDER, AGE, householdMock, MEMBER_ID, false);
         Mockito.stub(householdMock.getSelectedMember(Mockito.any(DatabaseHelper.class))).toReturn(selectedMember);
-        Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.NOT_SELECTED);
+        Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.SELECTION_NOT_DONE);
     }
 
     @Test

@@ -29,6 +29,7 @@ import android.widget.AdapterView;
 import android.widget.TextView;
 
 import com.onaio.steps.R;
+import com.onaio.steps.handler.SelectedParticipantContainerHandler;
 import com.onaio.steps.handler.factories.HouseholdActivityFactory;
 import com.onaio.steps.handler.interfaces.IActivityResultHandler;
 import com.onaio.steps.handler.interfaces.IMenuHandler;
@@ -62,6 +63,14 @@ public class HouseholdActivity extends ListActivity {
         handleMembers();
         prepareCustomMenu();
         populateMessage();
+    }
+
+    @Override
+    public void onBackPressed() {
+        SelectedParticipantContainerHandler handler = new SelectedParticipantContainerHandler(this, household);
+        if(handler.shouldInactivate()) {
+            super.onBackPressed();
+        }
     }
 
     private void populateMessage() {

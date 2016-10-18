@@ -16,6 +16,7 @@
 
 package com.onaio.steps.handler;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.view.View;
 
@@ -53,5 +54,13 @@ public class SelectedParticipantContainerHandler implements IMenuPreparer {
     public void activate() {
         View item = activity.findViewById(MENU_ID);
         item.setVisibility(View.VISIBLE);
+        //hide the go up button
+        ActionBar actionBar = activity.getActionBar();
+        if (actionBar != null) {
+            actionBar.setHomeButtonEnabled(false); // disable the button
+            actionBar.setDisplayHomeAsUpEnabled(false); // remove the left caret
+            actionBar.setDisplayShowHomeEnabled(false); // remove the icon
+        }
+        //prevent the user from pressing the back button
     }
 }

@@ -76,7 +76,7 @@ public class TakeSurveyHandlerTest {
 
     @Test
     public void ShouldInactivateWhenMemberIsNotSelected(){
-        Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.NOT_SELECTED);
+        Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.SELECTION_NOT_DONE);
 
         Assert.assertTrue(takeSurveyHandler.shouldInactivate());
     }

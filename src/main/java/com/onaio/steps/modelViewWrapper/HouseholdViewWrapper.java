@@ -42,7 +42,7 @@ public class HouseholdViewWrapper {
         String currentDate = new SimpleDateFormat(Constants.DATE_FORMAT).format(new Date());
         EditText commentsView = (EditText) activity.findViewById(commentsViewId);
         String comments = commentsView.getText().toString();
-        return new Household(nameView.getText().toString(), phoneNumber, InterviewStatus.NOT_SELECTED, currentDate,comments);
+        return new Household(nameView.getText().toString(), phoneNumber, InterviewStatus.SELECTION_NOT_DONE, currentDate,comments);
     }
 
     public Household updateHousehold(Household household, int numberViewId, int commentsViewId) {

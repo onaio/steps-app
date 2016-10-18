@@ -64,7 +64,7 @@ public class SelectParticipantHandlerTest {
     @Before
     public void Setup(){
         householdMock = mock(Household.class);
-        Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.NOT_SELECTED);
+        Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.SELECTION_NOT_DONE);
         Mockito.stub(householdMock.getPhoneNumber()).toReturn("8050342");
         Mockito.stub(householdMock.getComments()).toReturn("dummy comments");
 
@@ -91,7 +91,7 @@ public class SelectParticipantHandlerTest {
 
     @Test
     public void ShouldNotifyUserBeforeSelection(){
-        Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.NOT_SELECTED);
+        Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.SELECTION_NOT_DONE);
         Button buttonMock = Mockito.mock(Button.class);
         stub(androidDialogMock.findViewById(R.id.confirm)).toReturn(buttonMock);
         stub(androidDialogMock.findViewById(R.id.cancel)).toReturn(buttonMock);
@@ -154,7 +154,7 @@ public class SelectParticipantHandlerTest {
     @Test
     public void ShouldActivateWhenHouseholdStatusIsNotSelected(){
         Mockito.stub(householdMock.numberOfNonSelectedMembers(Mockito.any(DatabaseHelper.class))).toReturn(1);
-        Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.NOT_SELECTED);
+        Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.SELECTION_NOT_DONE);
 
         Assert.assertFalse(selectParticipantHandler.shouldInactivate());
     }

@@ -112,7 +112,7 @@ public class ImportHandler implements IMenuHandler {
                 Household household = Household.find_by(db, householdName);
                 if(household == null){
                     String currentDate = new SimpleDateFormat(Constants.DATE_FORMAT, Locale.ENGLISH).format(new Date());
-                    household = new Household(householdName, phoneNumber, InterviewStatus.NOT_SELECTED, currentDate ,comments);
+                    household = new Household(householdName, phoneNumber, InterviewStatus.SELECTION_NOT_DONE, currentDate ,comments);
                     household.save(db);
                 }
                 //validate for members
@@ -121,7 +121,10 @@ public class ImportHandler implements IMenuHandler {
                     member = new Member(surname, firstName, Gender.valueOf(gender), Integer.parseInt(age), household, Boolean.getBoolean(deleted));
                     member.setMemberHouseholdId(memberHouseholdId);
                     member.save(db);
-                    if (!(surveyStatus.equals(Constants.SURVEY_NA) || surveyStatus.equals(InterviewStatus.NOT_SELECTED.toString()))) {
+                    if (!(surveyStatus.equals(Constants.SURVEY_NA)
+                            || surveyStatus.equals(Constants.SURVEY_EMPTY_HH)
+                            || surveyStatus.equals(Constants.SURVEY_NOT_SELECTED)
+                            || surveyStatus.equals(InterviewStatus.SELECTION_NOT_DONE.toString()))) {
                         household.setStatus(InterviewStatus.valueOf(surveyStatus));
                         household.setSelectedMemberId(String.valueOf(member.getId()));
                         household.update(db);

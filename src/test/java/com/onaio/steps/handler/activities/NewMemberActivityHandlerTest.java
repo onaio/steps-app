@@ -86,7 +86,7 @@ public class NewMemberActivityHandlerTest {
 
     @Test
     public void ShouldStartNewMemberActivityIfHouseholdIsNotNullAndHouseholdSurveyIsNotSelected() {
-        Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.NOT_SELECTED);
+        Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.SELECTION_NOT_DONE);
 
         newMemberActivityHandler.open();
 
