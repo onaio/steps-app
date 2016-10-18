@@ -232,7 +232,11 @@ public class ExportHandler implements IMenuHandler,IMenuPreparer {
     }
 
     public String getDeviceId() {
-        return KeyValueStoreFactory.instance(activity).getString(HH_PHONE_ID);
+        if(activity != null) {
+            return KeyValueStoreFactory.instance(activity).getString(HH_PHONE_ID);
+        }
+        
+        return null;
     }
 
     public interface OnExportListener {
