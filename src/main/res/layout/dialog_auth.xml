@@ -32,12 +32,12 @@
         android:layout_margin="10dp"/>
     <TextView
         android:id="@+id/togglePasswordVisibility"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:textColor="#499F72"
         android:text="@string/show_password"
-        android:layout_gravity="center_vertical|right"/>
+        android:gravity="center_vertical|right"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
