@@ -82,7 +82,7 @@ public class FlowOrchestrator {
     }
 
     private void onAuthSuccessful(FlowType flowType) {
-        LinearLayout settingsLayout = (LinearLayout) activity.findViewById(R.id.settings);
+        LinearLayout settingsLayout = (LinearLayout) activity.findViewById(R.id.settings_layout);
         settingsLayout.setVisibility(View.VISIBLE);
         getFlow(flowType).prepareSettingScreen();
     }
