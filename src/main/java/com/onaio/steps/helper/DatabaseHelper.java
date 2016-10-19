@@ -40,19 +40,36 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(Household.TABLE_CREATE_QUERY);
-        db.execSQL(Member.TABLE_CREATE_QUERY);
-        db.execSQL(Participant.TABLE_CREATE_QUERY);
-        db.execSQL(ReElectReason.TABLE_CREATE_QUERY);
+        createTables(db);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i2) {
+        purgeTables(sqLiteDatabase);
+        onCreate(sqLiteDatabase);
+    }
+
+    private void createTables(SQLiteDatabase sqLiteDatabase) {
+        sqLiteDatabase.execSQL(Household.TABLE_CREATE_QUERY);
+        sqLiteDatabase.execSQL(Member.TABLE_CREATE_QUERY);
+        sqLiteDatabase.execSQL(Participant.TABLE_CREATE_QUERY);
+        sqLiteDatabase.execSQL(ReElectReason.TABLE_CREATE_QUERY);
+    }
+
+    private void purgeTables(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS "+Household.TABLE_NAME);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS "+Member.TABLE_NAME);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS "+ ReElectReason.TABLE_NAME);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS "+ Participant.TABLE_NAME);
-        onCreate(sqLiteDatabase);
+    }
+
+    /**
+     * This method erases all the data in the database but leaves the schemas intact
+     */
+    public void truncate() {
+        SQLiteDatabase db = getWritableDatabase();
+        purgeTables(db);
+        createTables(db);
     }
 
     public long save(ContentValues values, String tableName){

@@ -24,13 +24,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/white"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="invisible">
 
         <include layout="@layout/dialog_header" />
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="20dp"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="30dp"
             android:text="@string/select_app_type" />
@@ -282,6 +283,19 @@
                 android:onClick="importData"
                 android:textColor="@android:color/white"
                 android:background="#499F72"/>
+
+            <Button
+                android:id="@+id/eraseDataButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/action_erase_data"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="15dp"
+                android:onClick="eraseData"
+                android:textColor="@android:color/white"
+                android:background="#ce6c60"/>
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

@@ -21,6 +21,9 @@ import android.widget.TextView;
 
 import com.onaio.steps.R;
 import com.onaio.steps.helper.Constants;
+import com.onaio.steps.helper.DatabaseHelper;
+import com.onaio.steps.model.Household;
+import com.onaio.steps.model.InterviewStatus;
 import com.onaio.steps.orchestrators.flows.FlowType;
 
 import org.junit.Before;
@@ -64,6 +67,23 @@ public class SettingsActivityTest {
         assertTrue(settingsActivity.isFinishing());
     }
 
+    /**
+     * This method test whether the wipe data feature works
+     * @throws Exception
+     */
+    @Test
+    public void testWipeData() throws Exception {
+        DatabaseHelper databaseHelper = new DatabaseHelper(settingsActivity);
+        //add data to the database
+        Household household = new Household("householdName", "phoneNumber", InterviewStatus.SELECTION_NOT_DONE, "2016-10-10", "Test comments");
+        household.save(databaseHelper);
 
+        //truncate the data
+        assertEquals(Household.getAllInOrder(databaseHelper).size(), 1);
+        databaseHelper.truncate();
+
+        //check if data still there
+        assertEquals(Household.getAllInOrder(databaseHelper).size(), 0);
+    }
 
 }

@@ -66,4 +66,9 @@ public class Constants {
 
     public static final String PARTICIPANT = "PARTICIPANT";
     public static final String FLOW_TYPE = "flowType";
+
+    public static final String SETTINGS_PASSWORD_HASH = "settings_password_hash";
+    public static final String SETTINGS_AUTH_TIME = "settings_auth_time";
+
+    public static final long SETTINGS_AUTH_TIMEOUT = 30000;//the number of milliseconds after authentication in the settings screen before authentication can be asked
 }
