@@ -45,12 +45,13 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:minHeight="55dp">
             <Button
                 android:id="@+id/action_add_new_item"
                 android:layout_width="match_parent"
                 android:layout_weight="1"
-                android:layout_height="50dp"
+                android:layout_height="match_parent"
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="15dp"
                 android:layout_marginLeft="15dp"
@@ -66,7 +67,7 @@
                 android:id="@+id/action_submit_data"
                 android:layout_width="match_parent"
                 android:layout_weight="1"
-                android:layout_height="50dp"
+                android:layout_height="match_parent"
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="15dp"
                 android:layout_marginLeft="7.5dp"
