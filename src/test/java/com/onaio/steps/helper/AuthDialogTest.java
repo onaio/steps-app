@@ -60,13 +60,13 @@ public class AuthDialogTest {
         //test with no time in SharedPreferences
         assertTrue(authDialog.needsAuth());
 
-        //test with a time that is less than 30sec
-        long lastAuthTime1 = Calendar.getInstance().getTimeInMillis() - 20000;
+        //test with a time that is less than 1 min
+        long lastAuthTime1 = Calendar.getInstance().getTimeInMillis() - 40000;
         KeyValueStoreFactory.instance(settingsActivity).putString(SETTINGS_AUTH_TIME, String.valueOf(lastAuthTime1));
         assertFalse(authDialog.needsAuth());
 
-        //test with a time that is greater than the 30sec timeout
-        long lastAuthTime2 = Calendar.getInstance().getTimeInMillis() - 40000;
+        //test with a time that is greater than the 1 min timeout
+        long lastAuthTime2 = Calendar.getInstance().getTimeInMillis() - 65000;
         KeyValueStoreFactory.instance(settingsActivity).putString(SETTINGS_AUTH_TIME, String.valueOf(lastAuthTime2));
         assertTrue(authDialog.needsAuth());
     }
