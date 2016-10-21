@@ -75,7 +75,7 @@ public class SettingsActivityTest {
     public void testWipeData() throws Exception {
         DatabaseHelper databaseHelper = new DatabaseHelper(settingsActivity);
         //add data to the database
-        Household household = new Household("householdName", "phoneNumber", InterviewStatus.SELECTION_NOT_DONE, "2016-10-10", "Test comments");
+        Household household = new Household("householdName", "phoneNumber", InterviewStatus.SELECTION_NOT_DONE, "2016-10-10", "testDeviceId", "Test comments");
         household.save(databaseHelper);
 
         //truncate the data

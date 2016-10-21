@@ -16,6 +16,8 @@
 
 package com.onaio.steps.modelViewWrapper;
 
+import android.content.Context;
+import android.telephony.TelephonyManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -32,6 +34,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
@@ -51,7 +55,8 @@ public class HouseholdViewWrapperTest {
 
     @Before
     public void Setup(){
-        activity = Robolectric.setupActivity(NewHouseholdActivity.class);
+        NewHouseholdActivity activity = Robolectric.setupActivity(NewHouseholdActivity.class);
+        this.activity = Mockito.spy(activity);
         currentDate = new SimpleDateFormat(Constants.DATE_FORMAT).format(new Date());
 
     }
@@ -61,7 +66,9 @@ public class HouseholdViewWrapperTest {
 
     @Test
     public void ShouldGiveHouseholdWhenPhoneNumberAndCommentsAreEmpty() throws InvalidDataException, NoUniqueIdException {
-
+        TelephonyManager telephonyManager = Mockito.mock(TelephonyManager.class);
+        Mockito.when(telephonyManager.getDeviceId()).thenReturn("testUniqueDevId");
+        Mockito.when(activity.getSystemService(Context.TELEPHONY_SERVICE)).thenReturn(telephonyManager);
         HouseholdViewWrapper householdViewWrapper = new HouseholdViewWrapper(activity);
         TextView nameView = ((TextView) activity.findViewById(R.id.generated_household_id));
         nameView.setText("new name");
@@ -76,6 +83,9 @@ public class HouseholdViewWrapperTest {
 
     @Test
     public void ShouldGiveHousehold() throws InvalidDataException, NoUniqueIdException {
+        TelephonyManager telephonyManager = Mockito.mock(TelephonyManager.class);
+        Mockito.when(telephonyManager.getDeviceId()).thenReturn("testUniqueDevId");
+        Mockito.when(activity.getSystemService(Context.TELEPHONY_SERVICE)).thenReturn(telephonyManager);
         HouseholdViewWrapper householdViewWrapper = new HouseholdViewWrapper(activity);
         TextView nameView = ((TextView) activity.findViewById(R.id.generated_household_id));
         nameView.setText("new name");
