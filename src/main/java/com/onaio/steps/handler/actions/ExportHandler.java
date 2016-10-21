@@ -124,12 +124,6 @@ public class ExportHandler implements IMenuHandler,IMenuPreparer {
 
         FileUtil fileUtil = new FileUtil().withHeader(EXPORT_FIELDS);
         List<Household> emptyHouseholds = new ArrayList<>();
-        String uniqueDeviceId = null;
-        try {
-            uniqueDeviceId = Device.getUniqueDeviceId(activity);
-        } catch (NoUniqueIdException e) {
-            e.printStackTrace();
-        }
         for(Household household: households) {
             List<ReElectReason> reasons = getReElectReasons(household);
             List<Member> membersPerHousehold = household.getAllMembersForExport(getDatabaseHelper());
@@ -150,7 +144,7 @@ public class ExportHandler implements IMenuHandler,IMenuPreparer {
                 row.add(deviceId);
                 row.add(KeyValueStoreFactory.instance(activity).getString(HH_SURVEY_ID));
                 row.add(String.valueOf(household.numberOfNonDeletedMembers(getDatabaseHelper())));
-                row.add(uniqueDeviceId);
+                row.add(household.getUniqueDeviceId());
                 row.add(household.getCreatedAt());
                 fileUtil.withData(row.toArray(new String[row.size()]));
             }
@@ -177,7 +171,7 @@ public class ExportHandler implements IMenuHandler,IMenuPreparer {
             row.add(deviceId);
             row.add(KeyValueStoreFactory.instance(activity).getString(HH_SURVEY_ID));
             row.add(String.valueOf(household.numberOfNonDeletedMembers(getDatabaseHelper())));
-            row.add(uniqueDeviceId);
+            row.add(household.getUniqueDeviceId());
             row.add(household.getCreatedAt());
             fileUtil.withData(row.toArray(new String[row.size()]));
         }

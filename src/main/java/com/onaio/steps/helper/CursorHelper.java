@@ -60,7 +60,8 @@ public class CursorHelper {
                 String status = cursor.getString(cursor.getColumnIndex(Household.STATUS));
                 String createdAt = cursor.getString(cursor.getColumnIndex(Household.CREATED_AT));
                 String comments = cursor.getString(cursor.getColumnIndex(Household.COMMENTS));
-                householdNames.add(new Household(id,household_name, household_number,selectedMemberId, InterviewStatus.valueOf(status),createdAt, comments ));
+                String uniqueDeviceId = cursor.getString(cursor.getColumnIndex(Household.UNIQUE_DEVICE_ID));
+                householdNames.add(new Household(id,household_name, household_number,selectedMemberId, InterviewStatus.valueOf(status),createdAt, uniqueDeviceId, comments ));
             }while (cursor.moveToNext());
         }
         cursor.close();

@@ -22,6 +22,7 @@ import android.widget.TextView;
 import com.onaio.steps.R;
 import com.onaio.steps.activities.NewHouseholdActivity;
 import com.onaio.steps.exceptions.InvalidDataException;
+import com.onaio.steps.exceptions.NoUniqueIdException;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.InterviewStatus;
@@ -59,7 +60,7 @@ public class HouseholdViewWrapperTest {
     public ExpectedException expectedException = ExpectedException.none();
 
     @Test
-    public void ShouldGiveHouseholdWhenPhoneNumberAndCommentsAreEmpty() throws InvalidDataException {
+    public void ShouldGiveHouseholdWhenPhoneNumberAndCommentsAreEmpty() throws InvalidDataException, NoUniqueIdException {
 
         HouseholdViewWrapper householdViewWrapper = new HouseholdViewWrapper(activity);
         TextView nameView = ((TextView) activity.findViewById(R.id.generated_household_id));
@@ -74,7 +75,7 @@ public class HouseholdViewWrapperTest {
     }
 
     @Test
-    public void ShouldGiveHousehold() throws InvalidDataException {
+    public void ShouldGiveHousehold() throws InvalidDataException, NoUniqueIdException {
         HouseholdViewWrapper householdViewWrapper = new HouseholdViewWrapper(activity);
         TextView nameView = ((TextView) activity.findViewById(R.id.generated_household_id));
         nameView.setText("new name");
@@ -92,7 +93,7 @@ public class HouseholdViewWrapperTest {
 
     @Test
     public void ShouldUpdateHouseholdAndShouldNotUpdateGeneratedId() throws InvalidDataException {
-        Household anotherHousehold = new Household("5", "1234-10", "80503456", "", InterviewStatus.NOT_DONE, currentDate, "Some Comments");
+        Household anotherHousehold = new Household("5", "1234-10", "80503456", "", InterviewStatus.NOT_DONE, currentDate, "uniqueDevId", "Some Comments");
         HouseholdViewWrapper householdViewWrapper = new HouseholdViewWrapper(activity);
         TextView nameView = ((TextView) activity.findViewById(R.id.generated_household_id));
         TextView numberView = (TextView) activity.findViewById(R.id.household_number);

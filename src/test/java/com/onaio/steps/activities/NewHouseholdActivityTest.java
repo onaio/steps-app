@@ -24,6 +24,7 @@ import android.widget.TextView;
 
 import com.onaio.steps.R;
 import com.onaio.steps.exceptions.InvalidDataException;
+import com.onaio.steps.exceptions.NoUniqueIdException;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.modelViewWrapper.HouseholdViewWrapper;
@@ -79,7 +80,7 @@ public class NewHouseholdActivityTest {
     }
 
     @Test
-    public void ShouldSaveHouseholdAndFinishActivity() throws InvalidDataException {
+    public void ShouldSaveHouseholdAndFinishActivity() throws InvalidDataException, NoUniqueIdException {
         View viewMock = Mockito.mock(View.class);
         TextView generatedIdMock = Mockito.mock(TextView.class);
         Mockito.stub(viewMock.getId()).toReturn(R.id.household_form);

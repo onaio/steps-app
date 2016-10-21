@@ -21,7 +21,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.onaio.steps.exceptions.InvalidDataException;
+import com.onaio.steps.exceptions.NoUniqueIdException;
 import com.onaio.steps.helper.Constants;
+import com.onaio.steps.helper.Device;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.InterviewStatus;
 
@@ -35,14 +37,15 @@ public class HouseholdViewWrapper {
         this.activity = activity;
     }
 
-    public Household getHousehold(int nameViewId, int numberViewId, int commentsViewId) throws InvalidDataException {
+    public Household getHousehold(int nameViewId, int numberViewId, int commentsViewId) throws InvalidDataException, NoUniqueIdException {
         TextView nameView = (TextView) activity.findViewById(nameViewId);
         TextView numberView = (TextView) activity.findViewById(numberViewId);
         String phoneNumber = numberView.getText().toString();
         String currentDate = new SimpleDateFormat(Constants.DATE_FORMAT).format(new Date());
         EditText commentsView = (EditText) activity.findViewById(commentsViewId);
         String comments = commentsView.getText().toString();
-        return new Household(nameView.getText().toString(), phoneNumber, InterviewStatus.SELECTION_NOT_DONE, currentDate,comments);
+        String uniqueDeviceId = Device.getUniqueDeviceId(activity);
+        return new Household(nameView.getText().toString(), phoneNumber, InterviewStatus.SELECTION_NOT_DONE, currentDate, uniqueDeviceId,comments);
     }
 
     public Household updateHousehold(Household household, int numberViewId, int commentsViewId) {
