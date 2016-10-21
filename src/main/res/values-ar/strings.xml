@@ -94,7 +94,7 @@
     <string name="export_complete">تم الانتهاء من تصديرالبيانات</string>
     <string name="export_complete_message">تم تصدير البيانات بنجاح</string>
     <string name="export_start_message">برجاء تاكيد الرغبه بتصديربيانات الأسرة</string>
-    <string name="import_complete">Import Complete</string>
+    <string name="import_complete">اكتملت عمليه ادخال/ استيراد البيانات</string>
     <string name="import_complete_message">تمت ادخال/ تنزبل البيانات بناجح</string>
     <string name="import_fail_message">فشل عمليه استيراد البيانات، يرجى استخدام ملف "CSV" صالح وحاول مرة أخرى.</string>
     <string name="save_to_sdcard_complete">تم عمل الحفظ الاحتياطى للبيانات على الكارت الرقمى "SD"</string>
