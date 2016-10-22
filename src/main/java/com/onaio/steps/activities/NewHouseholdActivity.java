@@ -24,7 +24,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.onaio.steps.R;
-import com.onaio.steps.exceptions.InvalidDataException;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.CustomDialog;
 import com.onaio.steps.helper.DatabaseHelper;
@@ -79,7 +78,7 @@ public class NewHouseholdActivity extends Activity {
             intent.putExtra(Constants.HH_HOUSEHOLD,household);
             setResult(RESULT_OK, intent);
             finish();
-        } catch (InvalidDataException e) {
+        } catch (Exception e) {
             new CustomDialog().notify(this, CustomDialog.EmptyListener,e.getMessage(),R.string.error_title);
         }
     }

@@ -17,13 +17,16 @@
 package com.onaio.steps.activities;
 
 
+import android.content.Context;
 import android.content.Intent;
+import android.telephony.TelephonyManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.onaio.steps.R;
 import com.onaio.steps.exceptions.InvalidDataException;
+import com.onaio.steps.exceptions.NoUniqueIdException;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.modelViewWrapper.HouseholdViewWrapper;
@@ -32,6 +35,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
+import org.mockito.Spy;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
@@ -56,10 +60,12 @@ public class NewHouseholdActivityTest {
         intent.putExtra(Constants.HH_PHONE_ID, PHONE_ID);
         intent.putExtra(Constants.HH_HOUSEHOLD_SEED, HOUSEHOLD_SEED);
 
-        newHouseholdActivity = Robolectric.buildActivity(NewHouseholdActivity.class)
+        NewHouseholdActivity newHouseholdActivity = Robolectric.buildActivity(NewHouseholdActivity.class)
                 .withIntent(intent)
                 .create()
                 .get();
+
+        this.newHouseholdActivity = Mockito.spy(newHouseholdActivity);
     }
 
     @Test
@@ -79,7 +85,7 @@ public class NewHouseholdActivityTest {
     }
 
     @Test
-    public void ShouldSaveHouseholdAndFinishActivity() throws InvalidDataException {
+    public void ShouldSaveHouseholdAndFinishActivity() throws InvalidDataException, NoUniqueIdException {
         View viewMock = Mockito.mock(View.class);
         TextView generatedIdMock = Mockito.mock(TextView.class);
         Mockito.stub(viewMock.getId()).toReturn(R.id.household_form);
@@ -89,6 +95,9 @@ public class NewHouseholdActivityTest {
         Mockito.stub(generatedIdMock.getText()).toReturn("12345-101");
         numberView.setText("8050342347");
         commentsView.setText("dummy comments");
+        TelephonyManager telephonyManager = Mockito.mock(TelephonyManager.class);
+        Mockito.when(telephonyManager.getDeviceId()).thenReturn("testUniqueDevId");
+        Mockito.when(newHouseholdActivity.getSystemService(Context.TELEPHONY_SERVICE)).thenReturn(telephonyManager);
         Household household = new HouseholdViewWrapper(newHouseholdActivity).getHousehold(R.id.generated_household_id, R.id.household_number, R.id.household_comments);
         newHouseholdActivity.save(viewMock);
 

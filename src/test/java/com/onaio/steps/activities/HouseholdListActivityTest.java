@@ -60,7 +60,7 @@ public class HouseholdListActivityTest{
 
     @Before
     public void Setup(){
-        household = new Household("1", "household Name", "123456789", "1", InterviewStatus.NOT_DONE, "2015-12-13", "Dummy comments");
+        household = new Household("1", "household Name", "123456789", "1", InterviewStatus.NOT_DONE, "2015-12-13", "uniqueDevId", "Dummy comments");
         member = new Member(1, "rana", "manisha", Gender.Female, 28, household, "123-1", false);
         householdListActivityMock = Robolectric.buildActivity(HouseholdListActivity.class)
                 .create()

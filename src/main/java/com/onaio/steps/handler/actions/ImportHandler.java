@@ -109,10 +109,11 @@ public class ImportHandler implements IMenuHandler {
                 String deleted = row[8];
                 String surveyStatus = row[9];
                 String reasons = row[11];
+                String uniqueDeviceId = row[15];
                 Household household = Household.find_by(db, householdName);
                 if(household == null){
                     String currentDate = new SimpleDateFormat(Constants.DATE_FORMAT, Locale.ENGLISH).format(new Date());
-                    household = new Household(householdName, phoneNumber, InterviewStatus.SELECTION_NOT_DONE, currentDate ,comments);
+                    household = new Household(householdName, phoneNumber, InterviewStatus.SELECTION_NOT_DONE, currentDate, uniqueDeviceId,comments);
                     household.save(db);
                 }
                 //validate for members
