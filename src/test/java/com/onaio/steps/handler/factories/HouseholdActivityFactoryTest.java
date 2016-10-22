@@ -19,6 +19,7 @@ package com.onaio.steps.handler.factories;
 import android.content.Intent;
 
 import com.onaio.steps.activities.HouseholdActivity;
+import com.onaio.steps.handler.HouseholdActivityBackButtonPreparer;
 import com.onaio.steps.handler.actions.BackHomeHandler;
 import com.onaio.steps.handler.actions.CancelParticipantSelectionHandler;
 import com.onaio.steps.handler.actions.DeferredHandler;
@@ -103,7 +104,7 @@ public class HouseholdActivityFactoryTest extends TestCase {
 
         ArrayList<Class> menuHandlerTypes = getTypes(menuHandlers);
 
-        assertEquals(9, menuHandlers.size());
+        assertEquals(10, menuHandlers.size());
         Assert.assertTrue(menuHandlerTypes.contains(TakeSurveyHandler.class));
         Assert.assertTrue(menuHandlerTypes.contains(DeferredHandler.class));
         Assert.assertTrue(menuHandlerTypes.contains(RefusedHandler.class));
@@ -113,6 +114,7 @@ public class HouseholdActivityFactoryTest extends TestCase {
         Assert.assertTrue(menuHandlerTypes.contains(SelectedParticipantContainerHandler.class));
         Assert.assertTrue(menuHandlerTypes.contains(CancelParticipantSelectionHandler.class));
         Assert.assertTrue(menuHandlerTypes.contains(IncompleteRefusedHandler.class));
+        Assert.assertTrue(menuHandlerTypes.contains(HouseholdActivityBackButtonPreparer.class));
 
     }
 

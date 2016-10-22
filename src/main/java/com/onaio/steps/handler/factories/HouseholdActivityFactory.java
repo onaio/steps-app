@@ -18,6 +18,7 @@ package com.onaio.steps.handler.factories;
 
 import android.app.ListActivity;
 
+import com.onaio.steps.handler.HouseholdActivityBackButtonPreparer;
 import com.onaio.steps.handler.actions.BackHomeHandler;
 import com.onaio.steps.handler.actions.CancelParticipantSelectionHandler;
 import com.onaio.steps.handler.actions.DeferredHandler;
@@ -76,6 +77,7 @@ public class HouseholdActivityFactory {
         menuItems.add(new NewMemberActivityHandler(activity,household));
         menuItems.add(new SelectParticipantHandler(activity,household));
         menuItems.add(new SelectedParticipantContainerHandler(activity,household));
+        menuItems.add(new HouseholdActivityBackButtonPreparer(activity, household));
         menuItems.add(new CancelParticipantSelectionHandler(activity,household));
         return menuItems;
     }

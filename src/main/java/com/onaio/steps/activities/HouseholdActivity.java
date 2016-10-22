@@ -29,7 +29,7 @@ import android.widget.AdapterView;
 import android.widget.TextView;
 
 import com.onaio.steps.R;
-import com.onaio.steps.handler.SelectedParticipantContainerHandler;
+import com.onaio.steps.handler.HouseholdActivityBackButtonPreparer;
 import com.onaio.steps.handler.factories.HouseholdActivityFactory;
 import com.onaio.steps.handler.interfaces.IActivityResultHandler;
 import com.onaio.steps.handler.interfaces.IMenuHandler;
@@ -67,8 +67,8 @@ public class HouseholdActivity extends ListActivity {
 
     @Override
     public void onBackPressed() {
-        SelectedParticipantContainerHandler handler = new SelectedParticipantContainerHandler(this, household);
-        if(handler.shouldInactivate()) {
+        HouseholdActivityBackButtonPreparer handler = new HouseholdActivityBackButtonPreparer(this, household);
+        if(!handler.shouldInactivate()) {
             super.onBackPressed();
         }
     }
