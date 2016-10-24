@@ -82,12 +82,12 @@ public class TakeSurveyHandler implements IMenuHandler, IMenuPreparer, IActivity
     }
 
     @Override
-    public boolean shouldInactivate() {
+    public boolean shouldDeactivate() {
         return takeSurveyStrategy.shouldInactivate();
     }
 
     @Override
-    public void inactivate() {
+    public void deactivate() {
         View item = activity.findViewById(MENU_ID);
         item.setVisibility(View.INVISIBLE);
     }

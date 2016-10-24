@@ -53,35 +53,35 @@ public class SelectedParticipantContainerHandlerTest {
     public void ShouldNotInactivateWhenSurveyNotDone(){
         Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.NOT_DONE);
 
-        assertFalse(selectedParticipantContainerHandler.shouldInactivate());
+        assertFalse(selectedParticipantContainerHandler.shouldDeactivate());
     }
 
     @Test
     public void ShouldInactivateWhenMemberIsNotSelected(){
         Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.SELECTION_NOT_DONE);
 
-        assertTrue(selectedParticipantContainerHandler.shouldInactivate());
+        assertTrue(selectedParticipantContainerHandler.shouldDeactivate());
     }
 
     @Test
     public void ShouldActivateWhenHouseholdStatusIsIncomplete(){
         Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.INCOMPLETE);
 
-        assertFalse(selectedParticipantContainerHandler.shouldInactivate());
+        assertFalse(selectedParticipantContainerHandler.shouldDeactivate());
     }
 
     @Test
     public void ShouldActivateWhenSurveyIsDeferred(){
         Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.DEFERRED);
 
-        assertFalse(selectedParticipantContainerHandler.shouldInactivate());
+        assertFalse(selectedParticipantContainerHandler.shouldDeactivate());
     }
 
     @Test
     public void ShouldActivateWhenSurveyIsRefused(){
         Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.REFUSED);
 
-        assertTrue(selectedParticipantContainerHandler.shouldInactivate());
+        assertTrue(selectedParticipantContainerHandler.shouldDeactivate());
     }
 
     @Test
@@ -89,7 +89,7 @@ public class SelectedParticipantContainerHandlerTest {
         View viewMock = Mockito.mock(View.class);
         Mockito.stub(householdActivity.findViewById(R.id.selected_participant)).toReturn(viewMock);
 
-        selectedParticipantContainerHandler.inactivate();
+        selectedParticipantContainerHandler.deactivate();
 
         verify(viewMock).setVisibility(View.GONE);
     }

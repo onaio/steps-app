@@ -72,12 +72,12 @@ public class RefusedHandler implements IMenuHandler,IMenuPreparer {
     }
 
     @Override
-    public boolean shouldInactivate() {
+    public boolean shouldDeactivate() {
         return refusedSurveyStrategy.shouldInactivate();
     }
 
     @Override
-    public void inactivate() {
+    public void deactivate() {
         View item = activity.findViewById(MENU_ID);
         item.setVisibility(View.GONE);
     }

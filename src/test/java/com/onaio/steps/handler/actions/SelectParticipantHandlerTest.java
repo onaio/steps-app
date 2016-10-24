@@ -108,7 +108,7 @@ public class SelectParticipantHandlerTest {
     public void ShouldInActivateWhenThereAreNoMembers(){
         Mockito.stub(householdMock.numberOfNonSelectedMembers(Mockito.any(DatabaseHelper.class))).toReturn(0);
 
-        Assert.assertTrue(selectParticipantHandler.shouldInactivate());
+        Assert.assertTrue(selectParticipantHandler.shouldDeactivate());
     }
 
     @Test
@@ -116,7 +116,7 @@ public class SelectParticipantHandlerTest {
         Mockito.stub(householdMock.numberOfNonSelectedMembers(Mockito.any(DatabaseHelper.class))).toReturn(1);
         Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.INCOMPLETE);
 
-        Assert.assertTrue(selectParticipantHandler.shouldInactivate());
+        Assert.assertTrue(selectParticipantHandler.shouldDeactivate());
     }
 
     @Test
@@ -124,7 +124,7 @@ public class SelectParticipantHandlerTest {
         Mockito.stub(householdMock.numberOfNonSelectedMembers(Mockito.any(DatabaseHelper.class))).toReturn(1);
         Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.DONE);
 
-        Assert.assertTrue(selectParticipantHandler.shouldInactivate());
+        Assert.assertTrue(selectParticipantHandler.shouldDeactivate());
     }
 
     @Test
@@ -132,7 +132,7 @@ public class SelectParticipantHandlerTest {
         Mockito.stub(householdMock.numberOfNonSelectedMembers(Mockito.any(DatabaseHelper.class))).toReturn(1);
         Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.DEFERRED);
 
-        Assert.assertTrue(selectParticipantHandler.shouldInactivate());
+        Assert.assertTrue(selectParticipantHandler.shouldDeactivate());
     }
 
     @Test
@@ -140,7 +140,7 @@ public class SelectParticipantHandlerTest {
         Mockito.stub(householdMock.numberOfNonSelectedMembers(Mockito.any(DatabaseHelper.class))).toReturn(1);
         Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.REFUSED);
 
-        Assert.assertTrue(selectParticipantHandler.shouldInactivate());
+        Assert.assertTrue(selectParticipantHandler.shouldDeactivate());
     }
 
     @Test
@@ -148,7 +148,7 @@ public class SelectParticipantHandlerTest {
         Mockito.stub(householdMock.numberOfNonSelectedMembers(Mockito.any(DatabaseHelper.class))).toReturn(1);
         Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.NOT_DONE);
 
-        Assert.assertTrue(selectParticipantHandler.shouldInactivate());
+        Assert.assertTrue(selectParticipantHandler.shouldDeactivate());
     }
 
     @Test
@@ -156,7 +156,7 @@ public class SelectParticipantHandlerTest {
         Mockito.stub(householdMock.numberOfNonSelectedMembers(Mockito.any(DatabaseHelper.class))).toReturn(1);
         Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.SELECTION_NOT_DONE);
 
-        Assert.assertFalse(selectParticipantHandler.shouldInactivate());
+        Assert.assertFalse(selectParticipantHandler.shouldDeactivate());
     }
 
     @Test
@@ -166,7 +166,7 @@ public class SelectParticipantHandlerTest {
         View viewMock = Mockito.mock(View.class);
         Mockito.stub(householdActivityMock.findViewById(R.id.action_select_participant)).toReturn(viewMock);
 
-        handler.inactivate();
+        handler.deactivate();
 
         Mockito.verify(viewMock).setVisibility(View.GONE);
     }

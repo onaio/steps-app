@@ -40,14 +40,14 @@ public class HouseholdActivityBackButtonPreparer implements IMenuPreparer {
     }
 
     @Override
-    public boolean shouldInactivate() {
+    public boolean shouldDeactivate() {
         InterviewStatus status = household.getStatus();
         boolean notDone = status.equals(InterviewStatus.NOT_DONE);
         return notDone;
     }
 
     @Override
-    public void inactivate() {
+    public void deactivate() {
         //hide the go up button
         ActionBar actionBar = activity.getActionBar();
         if (actionBar != null) {

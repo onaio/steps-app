@@ -35,7 +35,7 @@ public class SelectedParticipantContainerHandler implements IMenuPreparer {
     }
 
     @Override
-    public boolean shouldInactivate() {
+    public boolean shouldDeactivate() {
         InterviewStatus status = household.getStatus();
         boolean notDone = status.equals(InterviewStatus.NOT_DONE);
         boolean deferred = status.equals(InterviewStatus.DEFERRED);
@@ -44,7 +44,7 @@ public class SelectedParticipantContainerHandler implements IMenuPreparer {
     }
 
     @Override
-    public void inactivate() {
+    public void deactivate() {
         View item = activity.findViewById(MENU_ID);
         item.setVisibility(View.GONE);
     }

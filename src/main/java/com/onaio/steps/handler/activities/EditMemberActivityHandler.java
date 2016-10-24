@@ -79,7 +79,7 @@ public class EditMemberActivityHandler implements IMenuHandler, IActivityResultH
     }
 
     @Override
-    public boolean shouldInactivate() {
+    public boolean shouldDeactivate() {
         boolean isSelectedMember = String.valueOf(member.getId()).equals(member.getHousehold().getSelectedMemberId());
         boolean refusedHousehold = member.getHousehold().getStatus().equals(InterviewStatus.REFUSED);
         boolean surveyDone = member.getHousehold().getStatus().equals(InterviewStatus.DONE);
@@ -88,7 +88,7 @@ public class EditMemberActivityHandler implements IMenuHandler, IActivityResultH
     }
 
     @Override
-    public void inactivate() {
+    public void deactivate() {
         MenuItem menuItem = menu.findItem(MENU_ID);
         menuItem.setEnabled(false);
     }

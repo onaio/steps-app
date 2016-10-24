@@ -83,7 +83,7 @@ public class DeleteMemberHandlerTest {
         stub(memberMock.getId()).toReturn(1);
         stub(memberMock.getHousehold()).toReturn(new Household("12","name","321","1", InterviewStatus.DEFERRED,"12-12-2001", "uniqueDevId","Dummy comments"));
 
-        assertTrue(deleteMemberHandler.shouldInactivate());
+        assertTrue(deleteMemberHandler.shouldDeactivate());
     }
 
     @Test
@@ -92,14 +92,14 @@ public class DeleteMemberHandlerTest {
         stub(memberMock.getHousehold()).toReturn(new Household("12","name","321","1", InterviewStatus.DEFERRED,"12-12-2001", "uniqueDevId","Dummy comments"));
 
 
-        assertFalse(deleteMemberHandler.shouldInactivate());
+        assertFalse(deleteMemberHandler.shouldDeactivate());
     }
 
     @Test
     public void ShouldInactivateWhenHouseholdIsSurveyed(){
         stub(memberMock.getId()).toReturn(1);
         stub(memberMock.getHousehold()).toReturn(new Household("12","name","321","", InterviewStatus.DONE,"12-12-2001", "uniqueDevId","Dummy comments"));
-        assertTrue(deleteMemberHandler.shouldInactivate());
+        assertTrue(deleteMemberHandler.shouldDeactivate());
     }
 
     @Test
@@ -107,7 +107,7 @@ public class DeleteMemberHandlerTest {
         stub(memberMock.getId()).toReturn(1);
         stub(memberMock.getHousehold()).toReturn(new Household("12","name","321","", InterviewStatus.REFUSED,"12-12-2001", "uniqueDevId","Dummy comments"));
 
-        assertTrue(deleteMemberHandler.shouldInactivate());
+        assertTrue(deleteMemberHandler.shouldDeactivate());
     }
 
     @Test
@@ -117,7 +117,7 @@ public class DeleteMemberHandlerTest {
         MenuItem menuItemMock = mock(MenuItem.class);
         stub(menuMock.findItem(MENU_ID)).toReturn(menuItemMock);
 
-        deleteMemberHandler.inactivate();
+        deleteMemberHandler.deactivate();
 
         verify(menuItemMock).setEnabled(false);
     }

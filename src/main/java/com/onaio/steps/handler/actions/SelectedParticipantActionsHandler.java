@@ -35,7 +35,7 @@ public class SelectedParticipantActionsHandler implements IMenuPreparer {
     }
 
     @Override
-    public boolean shouldInactivate() {
+    public boolean shouldDeactivate() {
         boolean selected = household.getStatus() == InterviewStatus.NOT_DONE;
         boolean deferred = household.getStatus() == InterviewStatus.DEFERRED;
         boolean incomplete = household.getStatus() == InterviewStatus.INCOMPLETE;
@@ -43,7 +43,7 @@ public class SelectedParticipantActionsHandler implements IMenuPreparer {
     }
 
     @Override
-    public void inactivate() {
+    public void deactivate() {
         View item = activity.findViewById(MENU_ID);
         item.setVisibility(View.GONE);
     }

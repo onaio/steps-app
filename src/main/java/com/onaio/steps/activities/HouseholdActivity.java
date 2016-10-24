@@ -68,7 +68,7 @@ public class HouseholdActivity extends ListActivity {
     @Override
     public void onBackPressed() {
         HouseholdActivityBackButtonPreparer handler = new HouseholdActivityBackButtonPreparer(this, household);
-        if(!handler.shouldInactivate()) {
+        if(!handler.shouldDeactivate()) {
             super.onBackPressed();
         }
     }
@@ -169,8 +169,8 @@ public class HouseholdActivity extends ListActivity {
     private void prepareCustomMenu() {
         List<IMenuPreparer> customMenus = HouseholdActivityFactory.getCustomMenuPreparer(this, household);
         for(IMenuPreparer customMenu:customMenus)
-            if(customMenu.shouldInactivate())
-                customMenu.inactivate();
+            if(customMenu.shouldDeactivate())
+                customMenu.deactivate();
             else
                 customMenu.activate();
     }

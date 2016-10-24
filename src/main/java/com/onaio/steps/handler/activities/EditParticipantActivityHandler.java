@@ -75,7 +75,7 @@ public class EditParticipantActivityHandler implements IMenuHandler, IActivityRe
     }
 
     @Override
-    public boolean shouldInactivate() {
+    public boolean shouldDeactivate() {
         boolean doneStatus = participant.getStatus() == InterviewStatus.DONE;
         boolean refusedStatus = participant.getStatus() == InterviewStatus.REFUSED;
         boolean incompleteStatus = participant.getStatus() == InterviewStatus.INCOMPLETE;
@@ -84,7 +84,7 @@ public class EditParticipantActivityHandler implements IMenuHandler, IActivityRe
     }
 
     @Override
-    public void inactivate() {
+    public void deactivate() {
         MenuItem menuItem = menu.findItem(MENU_ID);
         menuItem.setEnabled(false);
     }

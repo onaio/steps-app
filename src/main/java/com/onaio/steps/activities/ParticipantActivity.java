@@ -138,8 +138,8 @@ public class ParticipantActivity extends Activity{
     private void prepareCustomMenu() {
         List<IMenuPreparer> customMenus = ParticipantActivityFactory.getCustomMenuPreparer(this, participant);
         for(IMenuPreparer customMenu:customMenus)
-            if(customMenu.shouldInactivate())
-                customMenu.inactivate();
+            if(customMenu.shouldDeactivate())
+                customMenu.deactivate();
             else
                 customMenu.activate();
     }
@@ -148,8 +148,8 @@ public class ParticipantActivity extends Activity{
     public boolean onPrepareOptionsMenu(Menu menu) {
         List<IMenuPreparer> menuItemHandlers =ParticipantActivityFactory.getMenuPreparer(this, participant, menu);
         for(IMenuPreparer handler:menuItemHandlers)
-            if(handler.shouldInactivate())
-                handler.inactivate();
+            if(handler.shouldDeactivate())
+                handler.deactivate();
         super.onPrepareOptionsMenu(menu);
         return true;
     }

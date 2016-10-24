@@ -2,7 +2,6 @@ package com.onaio.steps.handler.actions;
 
 import android.app.Dialog;
 import android.app.ListActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -92,12 +91,12 @@ public class SubmitDataHandler implements IMenuHandler,IMenuPreparer, IViewPrepa
     }
 
     @Override
-    public boolean shouldInactivate() {
-        return exportHandler.shouldInactivate();
+    public boolean shouldDeactivate() {
+        return exportHandler.shouldDeactivate();
     }
 
     @Override
-    public void inactivate() {
+    public void deactivate() {
         MenuItem item = menu.findItem(MENU_ID);
         item.setEnabled(false);
     }
@@ -121,7 +120,7 @@ public class SubmitDataHandler implements IMenuHandler,IMenuPreparer, IViewPrepa
 
     @Override
     public boolean shouldBeDisabled() {
-        return shouldInactivate();
+        return shouldDeactivate();
     }
 
     @Override

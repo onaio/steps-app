@@ -147,21 +147,21 @@ public class NewMemberActivityHandlerTest {
     public void ShouldInactivateWhenHouseholdIsSurveyed(){
         stub(householdMock.getSelectedMemberId()).toReturn("");
         stub(householdMock.getStatus()).toReturn(InterviewStatus.DONE);
-        Assert.assertTrue(newMemberActivityHandler.shouldInactivate());
+        Assert.assertTrue(newMemberActivityHandler.shouldDeactivate());
     }
 
     @Test
     public void ShouldInactivateWhenHouseholdSurveyIsIncomplete(){
         stub(householdMock.getSelectedMemberId()).toReturn("");
         stub(householdMock.getStatus()).toReturn(InterviewStatus.INCOMPLETE);
-        Assert.assertTrue(newMemberActivityHandler.shouldInactivate());
+        Assert.assertTrue(newMemberActivityHandler.shouldDeactivate());
     }
 
     @Test
     public void ShouldInactivateWhenSurveyIsRefused(){
         stub(householdMock.getSelectedMemberId()).toReturn("");
         stub(householdMock.getStatus()).toReturn(InterviewStatus.REFUSED);
-        Assert.assertTrue(newMemberActivityHandler.shouldInactivate());
+        Assert.assertTrue(newMemberActivityHandler.shouldDeactivate());
     }
 
     @Test
@@ -169,7 +169,7 @@ public class NewMemberActivityHandlerTest {
         View viewMock = Mockito.mock(Button.class);
         stub(householdActivityMock.findViewById(R.id.action_add_member)).toReturn(viewMock);
 
-        newMemberActivityHandler.inactivate();
+        newMemberActivityHandler.deactivate();
 
         verify(viewMock).setVisibility(View.GONE);
     }
