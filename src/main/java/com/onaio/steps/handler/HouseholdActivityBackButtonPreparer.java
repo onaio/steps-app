@@ -16,20 +16,25 @@
 
 package com.onaio.steps.handler;
 
+import android.app.ActionBar;
 import android.app.Activity;
-import android.view.View;
+import android.util.Log;
 
-import com.onaio.steps.R;
 import com.onaio.steps.handler.interfaces.IMenuPreparer;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.InterviewStatus;
 
-public class SelectedParticipantContainerHandler implements IMenuPreparer {
-    private final int MENU_ID = R.id.selected_participant;
+/**
+ * This preparer determines whether the back button in the Household Activity should be shown
+ *
+ * Created by Jason Rogena - jrogena@ona.io on 21/10/2016.
+ */
+
+public class HouseholdActivityBackButtonPreparer implements IMenuPreparer {
     private Activity activity;
     private Household household;
 
-    public SelectedParticipantContainerHandler(Activity activity, Household household) {
+    public HouseholdActivityBackButtonPreparer(Activity activity, Household household) {
         this.activity = activity;
         this.household = household;
     }
@@ -38,20 +43,26 @@ public class SelectedParticipantContainerHandler implements IMenuPreparer {
     public boolean shouldDeactivate() {
         InterviewStatus status = household.getStatus();
         boolean notDone = status.equals(InterviewStatus.NOT_DONE);
-        boolean deferred = status.equals(InterviewStatus.DEFERRED);
-        boolean incomplete = status.equals(InterviewStatus.INCOMPLETE);
-        return !notDone && !deferred && !incomplete;
+        return notDone;
     }
 
     @Override
     public void deactivate() {
-        View item = activity.findViewById(MENU_ID);
-        item.setVisibility(View.GONE);
+        //hide the go up button
+        ActionBar actionBar = activity.getActionBar();
+        if (actionBar != null) {
+            actionBar.setHomeButtonEnabled(false); // disable the button
+            actionBar.setDisplayShowHomeEnabled(false); // remove the icon
+        }
     }
 
     @Override
     public void activate() {
-        View item = activity.findViewById(MENU_ID);
-        item.setVisibility(View.VISIBLE);
+        //show the go up button
+        ActionBar actionBar = activity.getActionBar();
+        if (actionBar != null) {
+            actionBar.setHomeButtonEnabled(true); // enable the button
+            actionBar.setDisplayShowHomeEnabled(true); // add the icon
+        }
     }
 }

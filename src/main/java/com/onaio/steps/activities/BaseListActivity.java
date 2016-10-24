@@ -97,8 +97,8 @@ public abstract class BaseListActivity extends ListActivity{
     public boolean onPrepareOptionsMenu(Menu menu) {
         List<IMenuPreparer> menuItemHandlers = getMenuPreparer(menu);
         for(IMenuPreparer handler:menuItemHandlers)
-            if(handler.shouldInactivate())
-                handler.inactivate();
+            if(handler.shouldDeactivate())
+                handler.deactivate();
             else
                 handler.activate();
         super.onPrepareOptionsMenu(menu);

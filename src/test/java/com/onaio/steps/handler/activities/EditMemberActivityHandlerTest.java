@@ -112,7 +112,7 @@ public class EditMemberActivityHandlerTest {
         Mockito.stub(memberMock.getHousehold()).toReturn(household);
         Mockito.stub(memberMock.getId()).toReturn(1);
 
-        assertTrue(editMemberActivityHandler.withMenu(menuMock).shouldInactivate());
+        assertTrue(editMemberActivityHandler.withMenu(menuMock).shouldDeactivate());
     }
 
     @Test
@@ -120,7 +120,7 @@ public class EditMemberActivityHandlerTest {
         Menu menuMock = Mockito.mock(Menu.class);
         stub(memberMock.getId()).toReturn(1);
         stub(memberMock.getHousehold()).toReturn(new Household("12","name","321","", InterviewStatus.DONE,"12-12-2001", "uniqueDevId","Dummy comments"));
-        Assert.assertTrue(editMemberActivityHandler.withMenu(menuMock).shouldInactivate());
+        Assert.assertTrue(editMemberActivityHandler.withMenu(menuMock).shouldDeactivate());
     }
 
     @Test
@@ -128,7 +128,7 @@ public class EditMemberActivityHandlerTest {
         Menu menuMock = Mockito.mock(Menu.class);
         stub(memberMock.getId()).toReturn(1);
         stub(memberMock.getHousehold()).toReturn(new Household("12","name","321","", InterviewStatus.REFUSED,"12-12-2001", "uniqueDevId","Dummy comments"));
-        Assert.assertTrue(editMemberActivityHandler.withMenu(menuMock).shouldInactivate());
+        Assert.assertTrue(editMemberActivityHandler.withMenu(menuMock).shouldDeactivate());
 
     }
 
@@ -149,7 +149,7 @@ public class EditMemberActivityHandlerTest {
         MenuItem menuItemMock = Mockito.mock(MenuItem.class);
         Mockito.stub(menuMock.findItem(R.id.action_edit)).toReturn(menuItemMock);
 
-        editMemberActivityHandler.withMenu(menuMock).inactivate();
+        editMemberActivityHandler.withMenu(menuMock).deactivate();
 
         Mockito.verify(menuItemMock).setEnabled(false);
     }

@@ -71,14 +71,14 @@ public class SelectParticipantHandler implements IMenuHandler, IMenuPreparer {
     }
 
     @Override
-    public boolean shouldInactivate() {
+    public boolean shouldDeactivate() {
         boolean noMember = household.numberOfNonSelectedMembers(db) == 0;
         boolean noSelection = household.getStatus() == InterviewStatus.SELECTION_NOT_DONE;
         return noMember || !noSelection;
     }
 
     @Override
-    public void inactivate() {
+    public void deactivate() {
         View item = activity.findViewById(MENU_ID);
         item.setVisibility(View.GONE);
     }
@@ -139,8 +139,8 @@ public class SelectParticipantHandler implements IMenuHandler, IMenuPreparer {
     private void prepareCustomMenus() {
         List<IMenuPreparer> bottomMenus = HouseholdActivityFactory.getCustomMenuPreparer(activity, household);
         for(IMenuPreparer menu:bottomMenus)
-            if(menu.shouldInactivate())
-                menu.inactivate();
+            if(menu.shouldDeactivate())
+                menu.deactivate();
             else
                 menu.activate();
     }

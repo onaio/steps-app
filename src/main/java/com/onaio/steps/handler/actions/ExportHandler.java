@@ -205,12 +205,12 @@ public class ExportHandler implements IMenuHandler,IMenuPreparer {
     }
 
     @Override
-    public boolean shouldInactivate() {
+    public boolean shouldDeactivate() {
            return households.isEmpty();
     }
 
     @Override
-    public void inactivate() {
+    public void deactivate() {
         MenuItem item = menu.findItem(MENU_ID);
         item.setEnabled(false);
     }

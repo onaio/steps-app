@@ -88,6 +88,7 @@
             android:layout_margin="10dp"
             android:background="@android:color/white"
             android:shadowColor="@android:color/black"
+            android:paddingLeft="5dp"
             android:textSize="12sp"/>
         <Button android:id="@+id/action_refused"
             android:layout_width="fill_parent"
@@ -98,6 +99,7 @@
             android:onClick="handleCustomMenu"
             android:layout_margin="10dp"
             android:background="@android:color/white"
+            android:paddingLeft="5dp"
             android:textSize="12sp"/>
         <Button
             android:id="@+id/action_cancel_participant"
@@ -109,8 +111,8 @@
             android:layout_margin="10dp"
             android:background="@android:color/white"
             android:textColor="@android:color/black"
-            android:textSize="12sp"
-            />
+            android:paddingLeft="5dp"
+            android:textSize="12sp" />
 
     </LinearLayout>
     <TextView

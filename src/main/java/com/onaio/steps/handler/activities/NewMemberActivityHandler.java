@@ -87,11 +87,11 @@ public class NewMemberActivityHandler implements IMenuHandler, IActivityResultHa
     }
 
     @Override
-    public boolean shouldInactivate() {
+    public boolean shouldDeactivate() {
         return !(household.getStatus().equals(InterviewStatus.SELECTION_NOT_DONE));
     }
 
-    public void inactivate() {
+    public void deactivate() {
         Button button = (Button) activity.findViewById(R.id.action_add_member);
         button.setVisibility(View.GONE);
     }

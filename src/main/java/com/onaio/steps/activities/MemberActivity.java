@@ -95,8 +95,8 @@ public class MemberActivity extends Activity {
     public boolean onPrepareOptionsMenu(Menu menu) {
         List<IMenuPreparer> menuItemHandlers = MemberActivityFactory.getMenuPreparer(this, member,menu);
         for(IMenuPreparer handler:menuItemHandlers)
-            if(handler.shouldInactivate())
-                handler.inactivate();
+            if(handler.shouldDeactivate())
+                handler.deactivate();
         super.onPrepareOptionsMenu(menu);
         return true;
     }

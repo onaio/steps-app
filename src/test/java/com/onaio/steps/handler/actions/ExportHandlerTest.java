@@ -95,7 +95,7 @@ public class ExportHandlerTest {
 //        Mockito.stub( household.numberOfNonDeletedMembers(dbMock)).toReturn(0);
 //
 //        Mockito.stub(dbMock.exec(Mockito.anyString())).toReturn(cursorMock);
-//        assertTrue(exportHandler.shouldInactivate());
+//        assertTrue(exportHandler.shouldDeactivate());
 //    }
 
     @Test
@@ -115,7 +115,7 @@ public class ExportHandlerTest {
         MenuItem menuItemMock = Mockito.mock(MenuItem.class);
         Mockito.stub(menuMock.findItem(R.id.action_export)).toReturn(menuItemMock);
 
-        exportHandler.withMenu(menuMock).inactivate();
+        exportHandler.withMenu(menuMock).deactivate();
 
         Mockito.verify(menuItemMock).setEnabled(false);
     }

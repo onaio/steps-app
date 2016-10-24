@@ -82,35 +82,35 @@ public class DeferredHandlerTest {
     public void ShouldInactivateWhenMemberIsNotSelected(){
         Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.SELECTION_NOT_DONE);
 
-        assertTrue(deferredHandler.shouldInactivate());
+        assertTrue(deferredHandler.shouldDeactivate());
     }
 
     @Test
     public void ShouldNotInactivateWhenSurveyNotDone(){
         Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.NOT_DONE);
 
-        assertFalse(deferredHandler.shouldInactivate());
+        assertFalse(deferredHandler.shouldDeactivate());
     }
 
     @Test
     public void ShouldInactivateWhenSurveyDone(){
         Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.DONE);
 
-        assertTrue(deferredHandler.shouldInactivate());
+        assertTrue(deferredHandler.shouldDeactivate());
     }
 
     @Test
     public void ShouldInactivateWhenSurveyDeferred(){
         Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.DEFERRED);
 
-        assertTrue(deferredHandler.shouldInactivate());
+        assertTrue(deferredHandler.shouldDeactivate());
     }
 
     @Test
     public void ShouldInactivateWhenSurveyRefused(){
         Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.REFUSED);
 
-        assertTrue(deferredHandler.shouldInactivate());
+        assertTrue(deferredHandler.shouldDeactivate());
     }
 
     @Test
@@ -118,7 +118,7 @@ public class DeferredHandlerTest {
         View viewMock = Mockito.mock(View.class);
         Mockito.stub(activityMock.findViewById(MENU_ID)).toReturn(viewMock);
 
-        deferredHandler.inactivate();
+        deferredHandler.deactivate();
 
         verify(viewMock).setVisibility(View.GONE);
     }

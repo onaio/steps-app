@@ -62,42 +62,42 @@ public class SelectedParticipantActionsHandlerTest {
     public void ShouldInactivateWhenMemberIsNotSelected(){
         Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.SELECTION_NOT_DONE);
 
-        assertTrue(selectedParticipantActionsHandler.shouldInactivate());
+        assertTrue(selectedParticipantActionsHandler.shouldDeactivate());
     }
 
     @Test
     public void ShouldNotInactivateWhenSurveyNotDone(){
         Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.NOT_DONE);
 
-        assertFalse(selectedParticipantActionsHandler.shouldInactivate());
+        assertFalse(selectedParticipantActionsHandler.shouldDeactivate());
     }
 
     @Test
     public void ShouldNotInactivateWhenSurveyDone(){
         Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.DONE);
 
-        assertTrue(selectedParticipantActionsHandler.shouldInactivate());
+        assertTrue(selectedParticipantActionsHandler.shouldDeactivate());
     }
 
     @Test
     public void ShouldActivateWhenSurveyIncomplete(){
         Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.INCOMPLETE);
 
-        assertFalse(selectedParticipantActionsHandler.shouldInactivate());
+        assertFalse(selectedParticipantActionsHandler.shouldDeactivate());
     }
 
     @Test
     public void ShouldInactivateWhenSurveyDeferred(){
         Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.DEFERRED);
 
-        assertFalse(selectedParticipantActionsHandler.shouldInactivate());
+        assertFalse(selectedParticipantActionsHandler.shouldDeactivate());
     }
 
     @Test
     public void ShouldInactivateWhenSurveyRefused(){
         Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.REFUSED);
 
-        assertTrue(selectedParticipantActionsHandler.shouldInactivate());
+        assertTrue(selectedParticipantActionsHandler.shouldDeactivate());
     }
 
     @Test
@@ -105,7 +105,7 @@ public class SelectedParticipantActionsHandlerTest {
         View viewMock = Mockito.mock(View.class);
         Mockito.stub(activityMock.findViewById(MENU_ID)).toReturn(viewMock);
 
-        selectedParticipantActionsHandler.inactivate();
+        selectedParticipantActionsHandler.deactivate();
 
         verify(viewMock).setVisibility(View.GONE);
     }

@@ -52,13 +52,13 @@ public class CancelParticipantSelectionHandler implements IMenuPreparer,IMenuHan
     }
 
     @Override
-    public boolean shouldInactivate() {
+    public boolean shouldDeactivate() {
         boolean selectedStatus = household.getStatus() == InterviewStatus.NOT_DONE;
         return !(selectedStatus);
     }
 
     @Override
-    public void inactivate() {
+    public void deactivate() {
         View item = activity.findViewById(MENU_ID);
         item.setVisibility(View.GONE);
     }
@@ -96,8 +96,8 @@ public class CancelParticipantSelectionHandler implements IMenuPreparer,IMenuHan
     private void prepareCustomMenus() {
         List<IMenuPreparer> bottomMenus = HouseholdActivityFactory.getCustomMenuPreparer(activity, household);
         for(IMenuPreparer menu:bottomMenus)
-            if(menu.shouldInactivate())
-                menu.inactivate();
+            if(menu.shouldDeactivate())
+                menu.deactivate();
             else
                 menu.activate();
     }

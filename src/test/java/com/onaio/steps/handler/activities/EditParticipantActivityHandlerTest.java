@@ -81,28 +81,28 @@ public class EditParticipantActivityHandlerTest {
     public void ShouldInactivateWhenParticipantSurveyIsDone(){
         Menu menuMock = Mockito.mock(Menu.class);
         Mockito.stub(participant.getStatus()).toReturn(InterviewStatus.DONE);
-        Assert.assertTrue(editParticipantActivityHandler.withMenu(menuMock).shouldInactivate());
+        Assert.assertTrue(editParticipantActivityHandler.withMenu(menuMock).shouldDeactivate());
     }
 
     @Test
     public void ShouldInactivateWhenParticipantSurveyIsRefused(){
         Menu menuMock = Mockito.mock(Menu.class);
         Mockito.stub(participant.getStatus()).toReturn(InterviewStatus.REFUSED);
-        Assert.assertTrue(editParticipantActivityHandler.withMenu(menuMock).shouldInactivate());
+        Assert.assertTrue(editParticipantActivityHandler.withMenu(menuMock).shouldDeactivate());
     }
 
     @Test
     public void ShouldInactivateWhenParticipantSurveyIsIncomplete(){
         Menu menuMock = Mockito.mock(Menu.class);
         Mockito.stub(participant.getStatus()).toReturn(InterviewStatus.INCOMPLETE);
-        Assert.assertTrue(editParticipantActivityHandler.withMenu(menuMock).shouldInactivate());
+        Assert.assertTrue(editParticipantActivityHandler.withMenu(menuMock).shouldDeactivate());
     }
 
     @Test
     public void ShouldNotInactivateWhenParticipantIsSelected(){
         Menu menuMock = Mockito.mock(Menu.class);
         Mockito.stub(participant.getStatus()).toReturn(InterviewStatus.SELECTION_NOT_DONE);
-        Assert.assertFalse(editParticipantActivityHandler.withMenu(menuMock).shouldInactivate());
+        Assert.assertFalse(editParticipantActivityHandler.withMenu(menuMock).shouldDeactivate());
     }
 
     @Test
@@ -122,7 +122,7 @@ public class EditParticipantActivityHandlerTest {
         MenuItem menuItemMock = Mockito.mock(MenuItem.class);
         Mockito.stub(menuMock.findItem(R.id.action_edit)).toReturn(menuItemMock);
 
-        editParticipantActivityHandler.withMenu(menuMock).inactivate();
+        editParticipantActivityHandler.withMenu(menuMock).deactivate();
 
         Mockito.verify(menuItemMock).setEnabled(false);
     }
