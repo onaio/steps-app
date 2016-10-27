@@ -12,6 +12,7 @@ import com.onaio.steps.R;
 import com.onaio.steps.handler.interfaces.IMenuHandler;
 import com.onaio.steps.handler.interfaces.IMenuPreparer;
 import com.onaio.steps.handler.interfaces.IViewPreparer;
+import com.onaio.steps.helper.CustomDialog;
 import com.onaio.steps.model.Household;
 
 import java.util.List;
@@ -75,8 +76,12 @@ public class SubmitDataHandler implements IMenuHandler,IMenuPreparer, IViewPrepa
                             }
 
                             @Override
-                            public void onFileUploaded() {
-
+                            public void onFileUploaded(boolean successful) {
+                                if(successful) {
+                                    new CustomDialog().notify(activity, CustomDialog.EmptyListener, R.string.export_complete, R.string.export_complete_message);
+                                } else {
+                                    new CustomDialog().notify(activity, CustomDialog.EmptyListener, R.string.error_title, R.string.export_failed);
+                                }
                             }
                         });
                         exportHandler.open();
