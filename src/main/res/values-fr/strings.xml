@@ -88,11 +88,11 @@
     <string name="min_age">"âge minimum"</string>
     <string name="survey_done_message">"L'entretien est terminé!"</string>
     <string name="survey_refused_message">"L'entretien est refusé!"</string>
-    <string name="action_submit_forms">"Soumettre les fiches"</string>
-    <string name="export_failed">"L'exportation a échoué, svp essayez encore une fois plus tard."</string>
-    <string name="export_complete">"Exportation terminée"</string>
-    <string name="export_complete_message">"Les données ont été exportées avec succès."</string>
-    <string name="export_start_message">"SVP confirmez que vous voulez exporter les données des ménages."</string>
+    <string name="action_submit_forms">"Envoyer les formulaires de l'enquête finalisés"</string>
+    <string name="export_failed">"Échec de l'envoi des données, SVP réessayer plus tard."</string>
+    <string name="export_complete">"Transfert terminé"</string>
+    <string name="export_complete_message">"Les données ont été envoyées avec succès"</string>
+    <string name="export_start_message">"SVP confirmer que vous souhaitez envoyer les données des ménages."</string>
     <string name="import_complete">"Importation terminée"</string>
     <string name="import_complete_message">"Les données ont été importées avec succès"</string>
     <string name="import_fail_message">"L'importation a échoué, svp utilisez un fichier csv valide et essayez encore une fois."</string>
@@ -106,7 +106,7 @@
     <string name="cancel_selection">"Annuler la séléction"</string>
     <string name="add">"AJOUTER"</string>
     <string name="pid">"Numéro d'identification du participant:"</string>
-    <string name="export_household_list">"Exporter la liste des ménages"</string>
+    <string name="export_household_list">"Envoyer les données des ménages"</string>
     <string name="hhid">"Code ID du ménage:"</string>
     <string name="age_not_in_range">"Âge (n'est pas dans l'intervalle de"</string>
     <string name="invalid">"Non valide"</string>
@@ -140,7 +140,7 @@
     <string name="invalid_member">Membre non valide, SVP remplissez ou corrigez les champs suivants:</string>
     <string name="invalid_participant">"Participant non valide, Prière remplir ou corriger les champs suivants:"</string>
     <string name="create_settings_password">"Créer un mot de passe pour l'écran Paramètres"</string>
-    <string name="settings_password_title">Mot de passe Reglage</string>
+    <string name="settings_password_title">"Mot de passe Paramètres"</string>
     <string name="enter_settings_password">"Entrer le mot de passe pour l'écran Paramètres"</string>
     <string name="show_password">Afficher le mot de passe</string>
     <string name="hide_password">Cacher le mot de passe</string>

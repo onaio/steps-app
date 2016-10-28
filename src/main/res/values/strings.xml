@@ -89,11 +89,11 @@
     <string name="min_age">Min age</string>
     <string name="survey_done_message">Survey is complete!</string>
     <string name="survey_refused_message">Survey is refused!</string>
-    <string name="action_submit_forms">Submit Records</string>
-    <string name="export_failed">Export failed, please try again later.</string>
-    <string name="export_complete">Export Complete</string>
-    <string name="export_complete_message">The data has been exported successfully.</string>
-    <string name="export_start_message">Please confirm you want to export household data.</string>
+    <string name="action_submit_forms">Send Survey Records</string>
+    <string name="export_failed">Failed to send data, please try again later.</string>
+    <string name="export_complete">Transfer Complete</string>
+    <string name="export_complete_message">The data has been successfully sent</string>
+    <string name="export_start_message">Please confirm you want to send household data.</string>
     <string name="import_complete">Import Complete</string>
     <string name="import_complete_message">The data has been imported successfully.</string>
     <string name="import_fail_message">Import failed, please double check Device ID and try again.</string>
@@ -106,7 +106,7 @@
     <string name="cancel_selection">CANCEL SELECTION</string>
     <string name="add">ADD</string>
     <string name="pid">PID:</string>
-    <string name="export_household_list">Export Household List</string>
+    <string name="export_household_list">Send Household Data</string>
     <string name="hhid">HHID:</string>
     <string name="age_not_in_range">Age (not in the range of</string>
     <string name="invalid">Invalid</string>
@@ -139,7 +139,7 @@
     <string name="invalid_settings">Invalid Settings, please fill or correct the following fields:</string>
     <string name="invalid_member">Invalid Member, please fill or correct the following fields:</string>
     <string name="invalid_participant">Invalid Participant, please fill or correct the following fields:</string>
-    <string name="action_submit_data">Submit Data</string>
+    <string name="action_submit_data">Send Data</string>
     <string name="create_settings_password">Create a password for the settings screen</string>
     <string name="settings_password_title">Settings Password</string>
     <string name="enter_settings_password">Enter the settings screen password</string>
