@@ -35,7 +35,7 @@ import java.nio.charset.Charset;
 
 import static com.onaio.steps.helper.Constants.ENDPOINT_URL;
 
-public class UploadFileTask extends AsyncTask<File, Void, Void> {
+public class UploadFileTask extends AsyncTask<File, Void, Boolean> {
     private final Activity activity;
     private ExportHandler.OnExportListener onExportListener;
 
@@ -49,7 +49,7 @@ public class UploadFileTask extends AsyncTask<File, Void, Void> {
     }
 
     @Override
-    protected Void doInBackground(File... files) {
+    protected Boolean doInBackground(File... files) {
         HttpClient httpClient = new DefaultHttpClient();
         HttpPost httpPost = new HttpPost(KeyValueStoreFactory.instance(activity).getString(ENDPOINT_URL));
         try {
@@ -58,16 +58,17 @@ public class UploadFileTask extends AsyncTask<File, Void, Void> {
             httpPost.setEntity(multipartEntity);
             httpClient.execute(httpPost);
             new CustomNotification().notify(activity, R.string.export_complete, R.string.export_complete_message);
+            return true;
         } catch (IOException e) {
             new Logger().log(e,"Export failed.");
             new CustomNotification().notify(activity, R.string.error_title, R.string.export_failed);
         }
-        return null;
+        return false;
     }
 
     @Override
-    protected void onPostExecute(Void aVoid) {
-        super.onPostExecute(aVoid);
-        if(onExportListener != null) onExportListener.onFileUploaded();
+    protected void onPostExecute(Boolean success) {
+        super.onPostExecute(success);
+        if(onExportListener != null) onExportListener.onFileUploaded(success);
     }
 }
