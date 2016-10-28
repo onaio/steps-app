@@ -89,11 +89,11 @@
     <string name="min_age">"Edad mínima"</string>
     <string name="survey_done_message">"¡La encuesta ha sido completada!"</string>
     <string name="survey_refused_message">"¡La encuesta ha sido rechazada!"</string>
-    <string name="action_submit_forms">"Enviar los formularios"</string>
-    <string name="export_failed">"Error en la exportación. Por favor inténtelo más tarde."</string>
-    <string name="export_complete">"Exportación finalizada"</string>
-    <string name="export_complete_message">"Los datos han sido exportados correctamente."</string>
-    <string name="export_start_message">"Por favor, confirme que desea exportar los datos del hogar?"</string>
+    <string name="action_submit_forms">"Enviar los formularios de la encuesta"</string>
+    <string name="export_failed">"No se pudieron enviar los datos, por favor inténtelo de nuevo más tarde."</string>
+    <string name="export_complete">"Transferencia completada"</string>
+    <string name="export_complete_message">"Los datos se han enviando correctamente"</string>
+    <string name="export_start_message">"Por favor confirme que quiere enviar los datos del hogar"</string>
     <string name="import_complete">"Importación completada"</string>
     <string name="import_complete_message">"Los datos han sido exportados con éxito"</string>
     <string name="import_fail_message">"Fallo en la importación. Por favor utilize un archivo csv válido e inténtelo de nuevo."</string>
@@ -107,7 +107,7 @@
     <string name="cancel_selection">"CANCELAR LA SELECCIÓN"</string>
     <string name="add">"AÑADIR"</string>
     <string name="pid">"Número de identificación del participante:"</string>
-    <string name="export_household_list">"Exportar la lista de hogares"</string>
+    <string name="export_household_list">"Enviar datos de los hogares"</string>
     <string name="hhid">"Número de identificación del hogar:"</string>
     <string name="age_not_in_range">"Edad (no está en el rango de"</string>
     <string name="invalid">"Inválido"</string>
@@ -149,5 +149,5 @@
     <string name="action_erase_data">"Borrar los datos"</string>
     <string name="warning_erasing_data">"Esta operación borrará todos los datos de los hogares y los participantes en este dispositivo. ¿Desea continuar?"</string>
     <string name="data_wipe_successful">"Datos borrados con éxito"</string>
-    <string name="action_submit_data">"Enviar los datos"</string>
+    <string name="action_submit_data">"Enviar datos"</string>
 </resources>

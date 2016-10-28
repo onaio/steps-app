@@ -88,11 +88,11 @@
     <string name="min_age">"Минимальный возраст"</string>
     <string name="survey_done_message">"Интервью завершен!"</string>
     <string name="survey_refused_message">"Отказ от Интервью!"</string>
-    <string name="action_submit_forms">"Отправить формы"</string>
-    <string name="export_failed">"Экспорт не удался, попробуйте еще раз позже."</string>
-    <string name="export_complete">"Экспорт Завершен"</string>
-    <string name="export_complete_message">"Данные успешно экспортированы."</string>
-    <string name="export_start_message">"Пожалуйста, подтвердите, что вы хотите экспортировать данные по домохозяйствам."</string>
+    <string name="action_submit_forms">"Отправить данные исследования"</string>
+    <string name="export_failed">"Не удалось отправить данные, пожалуйста, повторите попытку позже."</string>
+    <string name="export_complete">"Передача завершена"</string>
+    <string name="export_complete_message">"Данные были успешно отправлены"</string>
+    <string name="export_start_message">"Пожалуйста, подтвердите, что вы хотите отправить данные по домохозяйствам."</string>
     <string name="import_complete">"Импорт завершен"</string>
     <string name="import_complete_message">"Данные были успешно импортированы."</string>
     <string name="import_fail_message">"Импорт не удался, пожалуйста, проверьте ID устrойства и попробуйте еще раз"</string>
@@ -105,7 +105,7 @@
     <string name="cancel_selection">"Отменить выбор"</string>
     <string name="add">"ДОБАВИТЬ"</string>
     <string name="pid">"Идентификатор Участника:"</string>
-    <string name="export_household_list">"Экспортировать Список Домохозяйств"</string>
+    <string name="export_household_list">"Отправить данные по домохозяйствам"</string>
     <string name="hhid">"Идентификатор Домохозяйства:"</string>
     <string name="age_not_in_range">"Возраст (не в диапазоне"</string>
     <string name="invalid">"Неверно"</string>
