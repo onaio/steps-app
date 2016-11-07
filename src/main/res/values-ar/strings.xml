@@ -95,11 +95,11 @@
     <string name="export_complete_message">"تم ارسال/ تصدير البيانات بنجاح"</string>
     <string name="export_start_message">برجاء التأكيد في الرغبه بارسال بيانات الاسره</string>
     <string name="import_complete">اكتملت عمليه ادخال/ استيراد البيانات</string>
-    <string name="import_complete_message">تم ادخال/تنزبل البيانات بناجح</string>
-    <string name="import_fail_message">لم تتمعمليه استيراد البيانات، يرجى استخدام ملف CSV صالح وحاول مرة أخرى.</string>
+    <string name="import_complete_message">"تم ادخال/تنزبل البيانات بناجح"</string>
+    <string name="import_fail_message">"لم تتمعمليه استيراد البيانات، يرجى استخدام ملف CSV صالح وحاول مرة أخرى."</string>
     <string name="save_to_sdcard_complete">تم عمل الحفظ الاحتياطى للبيانات على الكارت الرقمى "SD"</string>
     <string name="save_to_sdcard_complete_message">تم حفظ البيانات على الكارت الرقمى "SD" بنجاح</string>
-    <string name="fail_no_connectivity">العملية لم تنجح- برجاء فحص الاتصالبشبكه الانترنت</string>
+    <string name="fail_no_connectivity">"العملية لم تنجح- برجاء فحص الاتصالبشبكه الانترنت"</string>
     <string name="continue_interview">اكمل المقابه</string>
     <string name="household_comments">ملحوظات</string>
     <string name="form_id">الرقم التعريفى للاستمارة</string>
@@ -121,7 +121,7 @@
     <string name="interview_refused_message">تم رفض المقابله!</string>
     <string name="interview_done_message">تمت المقابله!</string>
     <string name="participant_survey_deferred_message">تم تأجيل المسح، يمكنك إكمال المقابله في وقت لاحق لهذا المشارك</string>
-    <string name="participant_survey_refusal_message">انت الان علىوشك تسجيل رفض المشارك. لا يمكن الرجوع مرة أخرى لاستكمال المسح، هل انت متأكد؟</string>
+    <string name="participant_survey_refusal_message">"انت الان علىوشك تسجيل رفض المشارك. لا يمكن الرجوع مرة أخرى لاستكمال المسح، هل انت متأكد؟"</string>
     <string name="select_app_type">اختار نوع التطبيق</string>
     <string name="enter_data_now">ادخل البيانات الآن</string>
     <string name="enter_data_later">ادخل البيانات لاحقا</string>
@@ -137,9 +137,9 @@
     <string name="interview_partially_completed">تمت المقابلة جزئيا .</string>
     <string name="refused_or_unable_to_complete">رفض/ غير قادر علي استكمال المقابله</string>
     <string name="invalid_settings">إعدادات غير صحيحه: املأ أو صحح البيانات في الخانات الآتيه: [قائمه الخانات]</string>
-    <string name="invalid_member">الفردغير صحيح: املأ أو صحح البيانات في الخانات الآتيه: [قائمه الخانات]</string>
+    <string name="invalid_member">"الفردغير صحيح: املأ أو صحح البيانات في الخانات الآتيه: [قائمه الخانات]"</string>
     <string name="invalid_participant">مشارك غيرمؤهل. برجاء ملأ أو تصحيح الخانات الاتية :</string>
-    <string name="create_settings_password">انشئكلمة سر لشاشة الاعداد</string>
+    <string name="create_settings_password">"انشئكلمة سر لشاشة الاعداد"</string>
     <string name="settings_password_title">اعدادات كلمه السر</string>
     <string name="enter_settings_password">ادخل كلمة سر شاشة الاعداد</string>
     <string name="show_password">اظهار كلمة السر</string>
