@@ -20,7 +20,6 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.text.InputType;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -155,11 +154,11 @@ public class AuthDialog extends Dialog {
     }
 
     private void togglePasswordVisibility() {
-        if(passwordEditText.getInputType() == InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD) {//password is showing
+        if(passwordEditText.getInputType() == (InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD)) {//password is showing
             passwordEditText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
             togglePasswordVisibility.setText(R.string.show_password);
         } else {
-            passwordEditText.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+            passwordEditText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
             togglePasswordVisibility.setText(R.string.hide_password);
         }
     }

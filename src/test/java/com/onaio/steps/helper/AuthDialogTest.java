@@ -18,7 +18,10 @@ package com.onaio.steps.helper;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.text.InputType;
+import android.widget.EditText;
 
+import com.onaio.steps.R;
 import com.onaio.steps.activities.SettingsActivity;
 import com.onaio.steps.orchestrators.flows.FlowType;
 
@@ -47,6 +50,16 @@ public class AuthDialogTest {
         Intent intent = new Intent();
         intent.putExtra(Constants.FLOW_TYPE, FlowType.Household.toString());
         settingsActivity = Robolectric.buildActivity(SettingsActivity.class).withIntent(intent).create().get();
+    }
+
+    /**
+     * This method checks whether the password is visible by default
+     */
+    @Test
+    public void testVisiblePasswordByDefault() {
+        AuthDialog authDialog = new AuthDialog(settingsActivity, null);
+        EditText passwordEditText = (EditText)authDialog.findViewById(R.id.passwordEditText);
+        assertTrue(passwordEditText.getInputType() == (InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD));
     }
 
     /**
