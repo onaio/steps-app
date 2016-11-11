@@ -99,8 +99,8 @@
     <string name="import_fail_message">"لم تتمعمليه استيراد البيانات، يرجى استخدام ملف CSV صالح وحاول مرة أخرى."</string>
     <string name="save_to_sdcard_complete">تم عمل الحفظ الاحتياطى للبيانات على الكارت الرقمى "SD"</string>
     <string name="save_to_sdcard_complete_message">تم حفظ البيانات على الكارت الرقمى "SD" بنجاح</string>
-    <string name="fail_no_connectivity">"العملية لم تنجح- برجاء فحص الاتصالبشبكه الانترنت"</string>
-    <string name="continue_interview">اكمل المقابه</string>
+    <string name="fail_no_connectivity">"العملية لم تنجح - برجاء فحص الاتصال  بشبكه الانترنت"</string>
+    <string name="continue_interview">"اكمل المقابله"</string>
     <string name="household_comments">ملحوظات</string>
     <string name="form_id">الرقم التعريفى للاستمارة</string>
     <string name="cancel_selection">الغاء الاختيار</string>
@@ -139,7 +139,7 @@
     <string name="invalid_settings">إعدادات غير صحيحه: املأ أو صحح البيانات في الخانات الآتيه: [قائمه الخانات]</string>
     <string name="invalid_member">"الفردغير صحيح: املأ أو صحح البيانات في الخانات الآتيه: [قائمه الخانات]"</string>
     <string name="invalid_participant">مشارك غيرمؤهل. برجاء ملأ أو تصحيح الخانات الاتية :</string>
-    <string name="create_settings_password">"انشئكلمة سر لشاشة الاعداد"</string>
+    <string name="create_settings_password">"قم بانشاء كلمة سر لشاشة الاعداد"</string>
     <string name="settings_password_title">اعدادات كلمه السر</string>
     <string name="enter_settings_password">ادخل كلمة سر شاشة الاعداد</string>
     <string name="show_password">اظهار كلمة السر</string>
@@ -148,5 +148,5 @@
     <string name="action_erase_data">قم بمسح البيانات</string>
     <string name="warning_erasing_data">هذا سوف يقوم بمسح كل المعلومات و بيانات المشارك من على الجهاز. هل ترغب فى عمل ذلك ؟</string>
     <string name="data_wipe_successful">قد تم مسح البيانات بنجاح</string>
-    <string name="action_submit_data">ارسل البيانات</string>
+    <string name="action_submit_data">" ارسل البيانات"</string>
 </resources>
