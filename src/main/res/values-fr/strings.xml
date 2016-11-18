@@ -140,7 +140,7 @@
     <string name="invalid_member">Membre non valide, SVP remplissez ou corrigez les champs suivants:</string>
     <string name="invalid_participant">"Participant non valide, Prière remplir ou corriger les champs suivants:"</string>
     <string name="create_settings_password">"Créer un mot de passe pour l'écran Paramètres"</string>
-    <string name="settings_password_title">"Transfert terminé"</string>
+    <string name="settings_password_title">"Mot de passe Paramètres"</string>
     <string name="enter_settings_password">"Entrer le mot de passe pour l'écran Paramètres"</string>
     <string name="show_password">Afficher le mot de passe</string>
     <string name="hide_password">Cacher le mot de passe</string>
