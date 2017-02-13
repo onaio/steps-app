@@ -19,6 +19,7 @@ package com.onaio.steps.handler.actions;
 import android.app.Activity;
 import android.app.ListActivity;
 import android.os.Environment;
+import android.text.TextUtils;
 import android.widget.TextView;
 
 import com.onaio.steps.R;
@@ -74,18 +75,24 @@ public class ImportHandler implements IMenuHandler {
 
     @Override
     public boolean open() {
-        if(deviceId == null) deviceId = KeyValueStoreFactory.instance(activity).getString(HH_PHONE_ID);
-        String surveyId = KeyValueStoreFactory.instance(activity).getString(HH_SURVEY_ID);
-        String importDirPath = Environment.getExternalStorageDirectory()+"/"+Constants.APP_DIR;
-        File importDir = new File(importDirPath);
-        if(!importDir.exists()) {
-            importDir.mkdirs();
+        if (!TextUtils.isEmpty(KeyValueStoreFactory.instance(activity).getString(IMPORT_URL))) {
+            if (deviceId == null)
+                deviceId = KeyValueStoreFactory.instance(activity).getString(HH_PHONE_ID);
+            String surveyId = KeyValueStoreFactory.instance(activity).getString(HH_SURVEY_ID);
+            String importDirPath = Environment.getExternalStorageDirectory() + "/" + Constants.APP_DIR;
+            File importDir = new File(importDirPath);
+            if (!importDir.exists()) {
+                importDir.mkdirs();
+            }
+            String filename = importDirPath + "/" + Constants.EXPORT_FILE_NAME + "_" +
+                    deviceId + ".csv";
+            DownloadFileTask handler = new DownloadFileTask(this, filename);
+            handler.execute(KeyValueStoreFactory.instance(activity).getString(IMPORT_URL) + "/" + deviceId + "/" + surveyId);
+            return true;
+        } else {
+            new CustomDialog().notify(activity, CustomDialog.EmptyListener, R.string.error_title, R.string.fail_no_connectivity);
+            return false;
         }
-        String filename = importDirPath+"/"+Constants.EXPORT_FILE_NAME+"_"+
-                deviceId +".csv";
-        DownloadFileTask handler = new DownloadFileTask(this, filename);
-        handler.execute(KeyValueStoreFactory.instance(activity).getString(IMPORT_URL)+"/"+deviceId+"/"+surveyId);
-        return true;
     }
 
     public boolean open(int deviceIdField) {

@@ -89,8 +89,6 @@ public class HouseholdFlow implements IFlow {
         String formIdValue = ((TextView) activity.findViewById(R.id.form_id)).getText().toString();
         String minAgeValue = ((TextView) activity.findViewById(R.id.min_age)).getText().toString();
         String maxAgeValue = ((TextView) activity.findViewById(R.id.max_age)).getText().toString();
-        String endpointUrlValue = ((TextView) activity.findViewById(R.id.endpointUrl)).getText().toString();
-        String importUrlValue = ((TextView) activity.findViewById(R.id.importUrl)).getText().toString();
 
         errorFields = new DataValidator(activity).
                 validate(surveyIdValue, getStringValue(R.string.survey_id_label)).
@@ -98,8 +96,6 @@ public class HouseholdFlow implements IFlow {
                 validate(formIdValue, getStringValue(R.string.form_id)).
                 validate(minAgeValue, getStringValue(R.string.min_age)).
                 validate(maxAgeValue, getStringValue(R.string.max_age)).
-                validate(endpointUrlValue, getStringValue(R.string.endpoint_url_hint)).
-                validate(importUrlValue, getStringValue(R.string.import_url_hint)).
                 finish();
         if (errorFields != null && !errorFields.isEmpty())
             throw new InvalidDataException(activity, getStringValue(R.string.action_settings), errorFields);
