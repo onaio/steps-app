@@ -31,6 +31,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 
 public class ParticipantViewWrapper extends MemberViewWrapper {
@@ -56,7 +57,7 @@ public class ParticipantViewWrapper extends MemberViewWrapper {
         if (!errorFields.isEmpty()) {
             throw new InvalidDataException(activity, getStringValue(R.string.participant), errorFields);
         }
-        String currentDate = new SimpleDateFormat(Constants.DATE_FORMAT).format(new Date());
+        String currentDate = new SimpleDateFormat(Constants.DATE_FORMAT, Locale.ENGLISH).format(new Date());
         return new Participant(participantId, surname, firstName, gender, Integer.parseInt(ageString), InterviewStatus.NOT_DONE, currentDate);
     }
 

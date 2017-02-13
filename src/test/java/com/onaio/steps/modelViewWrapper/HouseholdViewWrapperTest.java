@@ -42,6 +42,7 @@ import org.robolectric.annotation.Config;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
@@ -57,7 +58,7 @@ public class HouseholdViewWrapperTest {
     public void Setup(){
         NewHouseholdActivity activity = Robolectric.setupActivity(NewHouseholdActivity.class);
         this.activity = Mockito.spy(activity);
-        currentDate = new SimpleDateFormat(Constants.DATE_FORMAT).format(new Date());
+        currentDate = new SimpleDateFormat(Constants.DATE_FORMAT, Locale.ENGLISH).format(new Date());
 
     }
 

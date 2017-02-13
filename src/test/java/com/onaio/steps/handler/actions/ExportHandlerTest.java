@@ -52,6 +52,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 @Config(emulateSdk = 16,manifest = "src/main/AndroidManifest.xml", shadows = {ShadowDatabaseHelper.class})
 @RunWith(RobolectricTestRunner.class)
@@ -129,7 +130,7 @@ public class ExportHandlerTest {
         String hhName = "testHhName";
         String phoneNumber = "00000000";
         InterviewStatus interviewStatus = InterviewStatus.NOT_DONE;
-        String createdAt = new SimpleDateFormat(Constants.DATE_FORMAT).format(new Date());
+        String createdAt = new SimpleDateFormat(Constants.DATE_FORMAT, Locale.ENGLISH).format(new Date());
         String comment = "testComment";
         String deviceIMEI = "123456";
         Household householdMock = Mockito.mock(Household.class);

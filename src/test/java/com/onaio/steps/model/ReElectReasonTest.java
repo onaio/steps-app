@@ -28,6 +28,7 @@ import org.robolectric.annotation.Config;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import static org.junit.Assert.assertEquals;
 
@@ -45,7 +46,7 @@ public class ReElectReasonTest {
     @Before
     public void setup(){
         db = Mockito.mock(DatabaseHelper.class);
-        String date = new SimpleDateFormat(Constants.DATE_FORMAT).format(new Date());
+        String date = new SimpleDateFormat(Constants.DATE_FORMAT, Locale.ENGLISH).format(new Date());
         reason = new String(" ");
         household = new Household("1", "Any Household", "123456789", "", InterviewStatus.SELECTION_NOT_DONE, date, "uniqueDevId", "Dummy comments");
         reElectReason = new ReElectReason(reason, household);

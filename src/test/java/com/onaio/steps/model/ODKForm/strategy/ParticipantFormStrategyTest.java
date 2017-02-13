@@ -29,6 +29,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by Jason Rogena - jrogena@ona.io on 29/09/2016.
@@ -49,7 +50,7 @@ public class ParticipantFormStrategyTest {
     private final int AGE = 28;
     private final String DEVICE_ID = "test_dev_id";
     private final InterviewStatus INTERVIEW_STATUS = InterviewStatus.NOT_DONE;
-    private final String CREATED_AT = new SimpleDateFormat(Constants.DATE_FORMAT).format(new Date());
+    private final String CREATED_AT = new SimpleDateFormat(Constants.DATE_FORMAT, Locale.ENGLISH).format(new Date());
 
     @Before
     public void Setup(){

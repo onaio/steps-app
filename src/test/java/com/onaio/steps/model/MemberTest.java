@@ -32,6 +32,7 @@ import org.robolectric.annotation.Config;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import static junit.framework.Assert.assertTrue;
 
@@ -41,7 +42,7 @@ public class MemberTest {
 
     private final int DELTA = 1;
     private final int NOT_DELETED_INT = 0;
-    private String currentDate = new SimpleDateFormat(Constants.DATE_FORMAT).format(new Date());
+    private String currentDate = new SimpleDateFormat(Constants.DATE_FORMAT, Locale.ENGLISH).format(new Date());
     @Mock
     private DatabaseHelper db;
     @Mock

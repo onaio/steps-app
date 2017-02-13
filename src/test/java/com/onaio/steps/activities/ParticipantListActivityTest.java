@@ -34,6 +34,7 @@ import org.robolectric.annotation.Config;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import static junit.framework.Assert.assertEquals;
 
@@ -42,7 +43,7 @@ import static junit.framework.Assert.assertEquals;
 public class ParticipantListActivityTest {
 
     private ParticipantListActivity participantListActivity;
-    private String currentDate = new SimpleDateFormat(Constants.DATE_FORMAT).format(new Date());
+    private String currentDate = new SimpleDateFormat(Constants.DATE_FORMAT, Locale.ENGLISH).format(new Date());
     private Participant participantA;
     private Participant participantB;
 

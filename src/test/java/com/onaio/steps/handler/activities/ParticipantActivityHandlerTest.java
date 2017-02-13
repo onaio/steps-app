@@ -35,6 +35,7 @@ import org.robolectric.shadows.ShadowActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import static org.junit.Assert.assertEquals;
 
@@ -49,7 +50,7 @@ public class ParticipantActivityHandlerTest {
 
     @Before
     public void setup(){
-        date = new SimpleDateFormat(Constants.DATE_FORMAT).format(new Date());
+        date = new SimpleDateFormat(Constants.DATE_FORMAT, Locale.ENGLISH).format(new Date());
         participantListActivity = Robolectric.setupActivity(ParticipantListActivity.class);
         participant = new Participant(1, "123-10", "family surname", "firstName", Gender.Female, 34, InterviewStatus.DONE, date);
         participantActivityHandler = new ParticipantActivityHandler(participantListActivity, participant);

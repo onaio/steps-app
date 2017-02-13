@@ -33,6 +33,7 @@ import org.robolectric.annotation.Config;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import static junit.framework.Assert.assertTrue;
 
@@ -41,7 +42,7 @@ import static junit.framework.Assert.assertTrue;
 
 public class ParticipantTest {
 
-    private String currentDate = new SimpleDateFormat(Constants.DATE_FORMAT).format(new Date());
+    private String currentDate = new SimpleDateFormat(Constants.DATE_FORMAT, Locale.ENGLISH).format(new Date());
     public static final String ID = "Id";
 
     @Mock
