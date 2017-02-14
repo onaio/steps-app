@@ -20,6 +20,7 @@ package com.onaio.steps.handler.factories;
 import android.app.ListActivity;
 
 import com.onaio.steps.handler.actions.FinalisedFormHandler;
+import com.onaio.steps.handler.actions.SubmitDataHandler;
 import com.onaio.steps.handler.interfaces.IActivityResultHandler;
 import com.onaio.steps.handler.interfaces.IListItemHandler;
 import com.onaio.steps.handler.interfaces.IMenuHandler;
@@ -57,6 +58,7 @@ public class ParticipantListActivityFactory {
         ArrayList<IMenuHandler> menuHandlers = new ArrayList<IMenuHandler>();
         menuHandlers.add(new NewParticipantActivityHandler(activity));
         menuHandlers.add(new SettingActivityHandler(activity));
+        menuHandlers.add(new SubmitDataHandler(activity));
         return menuHandlers;
     }
 }

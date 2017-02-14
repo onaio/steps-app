@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 
 import com.onaio.steps.R;
+import com.onaio.steps.activities.ParticipantListActivity;
 import com.onaio.steps.handler.interfaces.IMenuHandler;
 import com.onaio.steps.handler.interfaces.IMenuPreparer;
 import com.onaio.steps.handler.interfaces.IViewPreparer;
@@ -44,54 +45,60 @@ public class SubmitDataHandler implements IMenuHandler,IMenuPreparer, IViewPrepa
 
     @Override
     public boolean open() {
-        final Dialog dialog = new Dialog(activity);
-        dialog.setContentView(R.layout.dialog_submit_data);
-        dialog.setTitle(R.string.action_submit_data);
-        Button okButton = (Button) dialog.findViewById(R.id.okButton);
-        okButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                CheckBox exportHouseholdListCheckBox = (CheckBox) dialog.findViewById(R.id.exportHouseholdListCheckBox);
-                final CheckBox submitRecordsCheckBox = (CheckBox) dialog.findViewById(R.id.submitRecordsCheckBox);
-                if(exportHouseholdListCheckBox.isChecked() || submitRecordsCheckBox.isChecked()) {
-                    if(submitRecordsCheckBox.isChecked() && !exportHouseholdListCheckBox.isChecked()) {
-                        finalisedFormHandler.open();
-                    } else if(exportHouseholdListCheckBox.isChecked()) {
-                        exportHandler.setOnExportListener(new ExportHandler.OnExportListener() {
-                            @Override
-                            public void onExportCancelled() {
+        if (activity instanceof ParticipantListActivity) {
+            // Only submitting ODK Data, just launch ODK
+            finalisedFormHandler.open();
+        } else {
+            final Dialog dialog = new Dialog(activity);
+            dialog.setContentView(R.layout.dialog_submit_data);
+            dialog.setTitle(R.string.action_submit_data);
+            Button okButton = (Button) dialog.findViewById(R.id.okButton);
+            okButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    CheckBox exportHouseholdListCheckBox = (CheckBox) dialog.findViewById(R.id.exportHouseholdListCheckBox);
+                    final CheckBox submitRecordsCheckBox = (CheckBox) dialog.findViewById(R.id.submitRecordsCheckBox);
+                    if (exportHouseholdListCheckBox.isChecked() || submitRecordsCheckBox.isChecked()) {
+                        if (submitRecordsCheckBox.isChecked() && !exportHouseholdListCheckBox.isChecked()) {
+                            finalisedFormHandler.open();
+                        } else if (exportHouseholdListCheckBox.isChecked()) {
+                            exportHandler.setOnExportListener(new ExportHandler.OnExportListener() {
+                                @Override
+                                public void onExportCancelled() {
 
-                            }
-
-                            @Override
-                            public void onExportStart() {
-
-                            }
-
-                            @Override
-                            public void onFileSaved() {
-                                if(submitRecordsCheckBox.isChecked()) {
-                                    finalisedFormHandler.open();
                                 }
-                            }
 
-                            @Override
-                            public void onFileUploaded(boolean successful) {
-                                if(successful) {
-                                    new CustomDialog().notify(activity, CustomDialog.EmptyListener, R.string.export_complete, R.string.export_complete_message);
-                                } else {
-                                    new CustomDialog().notify(activity, CustomDialog.EmptyListener, R.string.error_title, R.string.export_failed);
+                                @Override
+                                public void onExportStart() {
+
                                 }
-                            }
-                        });
-                        exportHandler.open();
+
+                                @Override
+                                public void onFileSaved() {
+                                    if (submitRecordsCheckBox.isChecked()) {
+                                        finalisedFormHandler.open();
+                                    }
+                                }
+
+                                @Override
+                                public void onFileUploaded(boolean successful) {
+                                    if (successful) {
+                                        new CustomDialog().notify(activity, CustomDialog.EmptyListener, R.string.export_complete, R.string.export_complete_message);
+                                    } else {
+                                        new CustomDialog().notify(activity, CustomDialog.EmptyListener, R.string.error_title, R.string.export_failed);
+                                    }
+                                }
+                            });
+                            exportHandler.open();
+                        }
+
+                        dialog.dismiss();
                     }
-
-                    dialog.dismiss();
                 }
-            }
-        });
-        dialog.show();
+            });
+            dialog.show();
+        }
+
         return true;
     }
 
