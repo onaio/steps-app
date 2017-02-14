@@ -40,6 +40,7 @@ import org.robolectric.annotation.Config;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -51,7 +52,7 @@ import static org.robolectric.Robolectric.shadowOf;
 public class NewMemberActivityTest {
 
     private NewMemberActivity newMemberActivity;
-    private String currentDate = new SimpleDateFormat(Constants.DATE_FORMAT).format(new Date());
+    private String currentDate = new SimpleDateFormat(Constants.DATE_FORMAT, Locale.ENGLISH).format(new Date());
     private Household household;
 
     @Before

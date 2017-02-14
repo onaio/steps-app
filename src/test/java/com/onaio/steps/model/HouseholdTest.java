@@ -39,6 +39,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import static junit.framework.Assert.*;
 
@@ -47,7 +48,7 @@ import static junit.framework.Assert.*;
 public class HouseholdTest {
 
     private final InterviewStatus interviewStatus = InterviewStatus.SELECTION_NOT_DONE;
-    private String currentDate = new SimpleDateFormat(Constants.DATE_FORMAT).format(new Date());
+    private String currentDate = new SimpleDateFormat(Constants.DATE_FORMAT, Locale.ENGLISH).format(new Date());
     @Mock
     private DatabaseHelper db;
     @Mock

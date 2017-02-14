@@ -38,6 +38,7 @@ import org.robolectric.util.ActivityController;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -55,7 +56,7 @@ public class ParticipantActivityTest {
     @Before
     public void setup() {
         intent = new Intent();
-        date = new SimpleDateFormat(Constants.DATE_FORMAT).format(new Date());
+        date = new SimpleDateFormat(Constants.DATE_FORMAT, Locale.ENGLISH).format(new Date());
         participantActivityController = Robolectric.buildActivity(ParticipantActivity.class);
 
     }

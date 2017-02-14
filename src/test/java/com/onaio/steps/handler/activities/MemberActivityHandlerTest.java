@@ -39,6 +39,7 @@ import org.robolectric.annotation.Config;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 @Config(emulateSdk = 16,manifest = "src/main/AndroidManifest.xml")
 @RunWith(RobolectricTestRunner.class)
@@ -48,7 +49,7 @@ public class MemberActivityHandlerTest {
     HouseholdActivity householdActivity;
     MemberActivityHandler memberActivityHandler;
     private Member member;
-    private String currentDate = new SimpleDateFormat(Constants.DATE_FORMAT).format(new Date());
+    private String currentDate = new SimpleDateFormat(Constants.DATE_FORMAT, Locale.ENGLISH).format(new Date());
 
     @Before
     public void SetUp() {

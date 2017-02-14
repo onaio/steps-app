@@ -40,6 +40,7 @@ import org.robolectric.annotation.Config;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -58,7 +59,7 @@ public class EditParticipantActivityTest {
 
     @Before
     public void setup(){
-        date = new SimpleDateFormat(Constants.DATE_FORMAT).format(new Date());
+        date = new SimpleDateFormat(Constants.DATE_FORMAT, Locale.ENGLISH).format(new Date());
         participant = new Participant(1, "123-10", "family surname", "firstName", Gender.Female, 34, InterviewStatus.DONE, date);
 
         Intent intent = new Intent();

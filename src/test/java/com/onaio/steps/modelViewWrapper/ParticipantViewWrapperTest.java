@@ -42,6 +42,7 @@ import org.robolectric.annotation.Config;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import static org.junit.Assert.assertEquals;
 
@@ -70,7 +71,7 @@ public class ParticipantViewWrapperTest {
 
         newParticipantActivity = Robolectric.setupActivity(NewParticipantActivity.class);
         participantViewWrapper = new ParticipantViewWrapper(newParticipantActivity);
-        date = new SimpleDateFormat(Constants.DATE_FORMAT).format(new Date());
+        date = new SimpleDateFormat(Constants.DATE_FORMAT, Locale.ENGLISH).format(new Date());
         participant = new Participant(1, "123-10", "family surname", "firstName", Gender.Female, 34, InterviewStatus.DONE, date);
         error_string = getStringValue(R.string.invalid) + " %s, " + getStringValue(R.string.fill_correct_message) + " %s";
         setValue(Constants.PA_MIN_AGE, "18");

@@ -29,6 +29,7 @@ import com.onaio.steps.model.InterviewStatus;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public class HouseholdViewWrapper {
     private Activity activity;
@@ -41,7 +42,7 @@ public class HouseholdViewWrapper {
         TextView nameView = (TextView) activity.findViewById(nameViewId);
         TextView numberView = (TextView) activity.findViewById(numberViewId);
         String phoneNumber = numberView.getText().toString();
-        String currentDate = new SimpleDateFormat(Constants.DATE_FORMAT).format(new Date());
+        String currentDate = new SimpleDateFormat(Constants.DATE_FORMAT, Locale.ENGLISH).format(new Date());
         EditText commentsView = (EditText) activity.findViewById(commentsViewId);
         String comments = commentsView.getText().toString();
         String uniqueDeviceId = Device.getUniqueDeviceId(activity);

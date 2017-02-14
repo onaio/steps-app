@@ -44,6 +44,7 @@ import org.robolectric.annotation.Config;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import static org.junit.Assert.assertEquals;
 
@@ -69,7 +70,7 @@ public class MemberViewWrapperTest {
     public void Setup() {
         newMemberActivity = Robolectric.setupActivity(NewMemberActivity.class);
         memberViewWrapper = new MemberViewWrapper(newMemberActivity);
-        date = new SimpleDateFormat(Constants.DATE_FORMAT).format(new Date());
+        date = new SimpleDateFormat(Constants.DATE_FORMAT, Locale.ENGLISH).format(new Date());
         error_string = getStringValue(R.string.invalid) + " %s, " + getStringValue(R.string.fill_correct_message) + " %s";
         household = new Household("1", "Any Household", "123456789", "", InterviewStatus.SELECTION_NOT_DONE, date, "uniqueDevId", "Dummy comments");
         anotherMember = new Member("some surname","firstName",Gender.Female, 22, household, false);
