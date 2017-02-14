@@ -17,6 +17,7 @@
 package com.onaio.steps.activities;
 
 
+import android.app.ListActivity;
 import android.graphics.Color;
 import android.view.Menu;
 import android.view.View;
@@ -26,10 +27,13 @@ import android.widget.ListView;
 
 import com.onaio.steps.R;
 import com.onaio.steps.adapters.ParticipantAdapter;
+import com.onaio.steps.handler.actions.SubmitDataHandler;
 import com.onaio.steps.handler.factories.ParticipantListActivityFactory;
 import com.onaio.steps.handler.interfaces.IActivityResultHandler;
 import com.onaio.steps.handler.interfaces.IMenuHandler;
 import com.onaio.steps.handler.interfaces.IMenuPreparer;
+import com.onaio.steps.handler.interfaces.IViewPreparer;
+import com.onaio.steps.model.Household;
 import com.onaio.steps.model.Participant;
 
 import java.util.ArrayList;
@@ -52,6 +56,8 @@ public class ParticipantListActivity extends BaseListActivity {
         Button participantHeader = (Button) findViewById(R.id.action_add_new_item);
         participantHeader.setText(R.string.action_add_participant);
         participantHeader.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_action_new_member, 0, 0, 0);
+        Button submitDataButton = (Button) findViewById(R.id.action_submit_data);
+        submitDataButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_cloud_upload_white_24dp, 0, 0, 0);
         setTitle(R.string.participant_header);
         setTitleColor(Color.parseColor(HEADER_GREEN));
     }
@@ -90,6 +96,10 @@ public class ParticipantListActivity extends BaseListActivity {
     @Override
     protected List<IMenuPreparer> getMenuPreparer(Menu menu) {
         return new ArrayList<IMenuPreparer>();
+    }
+
+    public List<IViewPreparer> getViewPreparer() {
+        return ParticipantListActivityFactory.getViewPreparer(this, Participant.getAllParticipants(db));
     }
 
     @Override

@@ -15,7 +15,9 @@ import com.onaio.steps.handler.interfaces.IMenuPreparer;
 import com.onaio.steps.handler.interfaces.IViewPreparer;
 import com.onaio.steps.helper.CustomDialog;
 import com.onaio.steps.model.Household;
+import com.onaio.steps.model.Participant;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -31,11 +33,13 @@ public class SubmitDataHandler implements IMenuHandler,IMenuPreparer, IViewPrepa
     private ExportHandler exportHandler;
     private FinalisedFormHandler finalisedFormHandler;
     private List<Household> households;
+    private List<Participant> participants;
 
     public SubmitDataHandler(ListActivity activity) {
         this.activity = activity;
         exportHandler = new ExportHandler(activity);
         finalisedFormHandler = new FinalisedFormHandler(activity);
+        participants  = new ArrayList<>();
     }
 
     @Override
@@ -104,7 +108,11 @@ public class SubmitDataHandler implements IMenuHandler,IMenuPreparer, IViewPrepa
 
     @Override
     public boolean shouldDeactivate() {
-        return exportHandler.shouldDeactivate();
+        if (activity instanceof ParticipantListActivity) {
+            return participants.size() == 0;
+        } else {
+            return exportHandler.shouldDeactivate();
+        }
     }
 
     @Override
@@ -127,6 +135,11 @@ public class SubmitDataHandler implements IMenuHandler,IMenuPreparer, IViewPrepa
     public SubmitDataHandler with(List<Household> households){
         this.households = households;
         exportHandler.with(households);
+        return this;
+    }
+
+    public SubmitDataHandler withParticipants(List<Participant> participants) {
+        this.participants = participants;
         return this;
     }
 

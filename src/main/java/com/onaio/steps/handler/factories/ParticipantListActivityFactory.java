@@ -27,6 +27,7 @@ import com.onaio.steps.handler.interfaces.IMenuHandler;
 import com.onaio.steps.handler.activities.NewParticipantActivityHandler;
 import com.onaio.steps.handler.activities.ParticipantActivityHandler;
 import com.onaio.steps.handler.activities.SettingActivityHandler;
+import com.onaio.steps.handler.interfaces.IViewPreparer;
 import com.onaio.steps.orchestrators.flows.FlowType;
 import com.onaio.steps.model.Participant;
 
@@ -60,5 +61,11 @@ public class ParticipantListActivityFactory {
         menuHandlers.add(new SettingActivityHandler(activity));
         menuHandlers.add(new SubmitDataHandler(activity));
         return menuHandlers;
+    }
+
+    public static List<IViewPreparer> getViewPreparer(ListActivity activity, List<Participant> participants) {
+        ArrayList<IViewPreparer> handlers = new ArrayList<IViewPreparer>();
+        handlers.add(new SubmitDataHandler(activity).withParticipants(participants));
+        return handlers;
     }
 }
