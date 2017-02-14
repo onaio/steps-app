@@ -84,11 +84,11 @@ public class HouseholdFlow implements IFlow {
 
     @Override
     public void validateOptions() throws InvalidDataException {
-        String surveyIdValue = ((TextView) activity.findViewById(R.id.campaignId)).getText().toString();
-        String deviceIdValue = ((TextView) activity.findViewById(R.id.deviceId)).getText().toString();
-        String formIdValue = ((TextView) activity.findViewById(R.id.form_id)).getText().toString();
-        String minAgeValue = ((TextView) activity.findViewById(R.id.min_age)).getText().toString();
-        String maxAgeValue = ((TextView) activity.findViewById(R.id.max_age)).getText().toString();
+        String surveyIdValue = ((TextView) activity.findViewById(R.id.campaignId)).getText().toString().trim();
+        String deviceIdValue = ((TextView) activity.findViewById(R.id.deviceId)).getText().toString().trim();
+        String formIdValue = ((TextView) activity.findViewById(R.id.form_id)).getText().toString().trim();
+        String minAgeValue = ((TextView) activity.findViewById(R.id.min_age)).getText().toString().trim();
+        String maxAgeValue = ((TextView) activity.findViewById(R.id.max_age)).getText().toString().trim();
 
         errorFields = new DataValidator(activity).
                 validate(surveyIdValue, getStringValue(R.string.survey_id_label)).
@@ -132,7 +132,7 @@ public class HouseholdFlow implements IFlow {
 
     private void saveData(int viewId, String keyId) {
         TextView textView = (TextView) activity.findViewById(viewId);
-        String data = textView.getText().toString();
+        String data = textView.getText().toString().trim();
         saveSafely(activity, keyId, data);
     }
 

@@ -102,6 +102,23 @@ public class ParticipantFlowTest {
     }
 
     @Test
+    public void ShouldTrimSettingsBeforeSaving() {
+        TextView deviceId = (TextView) settingsActivity.findViewById(R.id.deviceId);
+        TextView formId = (TextView) settingsActivity.findViewById(R.id.form_id);
+        TextView maxage = (TextView) settingsActivity.findViewById(R.id.max_age);
+        TextView minage = (TextView) settingsActivity.findViewById(R.id.min_age);
+        deviceId.setText(" 1234567 ");
+        formId.setText(" STEPS_Instrument_V3_1 ");
+        maxage.setText(" 69 ");
+        minage.setText(" 18 ");
+        participantFlow.saveSettings();
+        assertEquals("1234567", getValue(settingsActivity, Constants.PA_PHONE_ID));
+        assertEquals("STEPS_Instrument_V3_1", getValue(settingsActivity, Constants.PA_FORM_ID));
+        assertEquals("69", getValue(settingsActivity, Constants.PA_MAX_AGE));
+        assertEquals("18", getValue(settingsActivity, Constants.PA_MIN_AGE));
+    }
+
+    @Test
     public void ShouldNotSaveDataFromSettingFields() throws InvalidDataException {
         TextView deviceId = (TextView) settingsActivity.findViewById(R.id.deviceId);
         TextView formId = (TextView) settingsActivity.findViewById(R.id.form_id);

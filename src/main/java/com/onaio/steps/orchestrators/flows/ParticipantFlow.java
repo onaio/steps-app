@@ -57,10 +57,10 @@ public class ParticipantFlow implements IFlow {
 
     @Override
     public void validateOptions() throws InvalidDataException {
-        String deviceIdValue = ((TextView) activity.findViewById(R.id.deviceId)).getText().toString();
-        String formIdValue = ((TextView) activity.findViewById(R.id.form_id)).getText().toString();
-        String minAgeValue = ((TextView) activity.findViewById(R.id.min_age)).getText().toString();
-        String maxAgeValue = ((TextView) activity.findViewById(R.id.max_age)).getText().toString();
+        String deviceIdValue = ((TextView) activity.findViewById(R.id.deviceId)).getText().toString().trim();
+        String formIdValue = ((TextView) activity.findViewById(R.id.form_id)).getText().toString().trim();
+        String minAgeValue = ((TextView) activity.findViewById(R.id.min_age)).getText().toString().trim();
+        String maxAgeValue = ((TextView) activity.findViewById(R.id.max_age)).getText().toString().trim();
 
         errorFields = new DataValidator(activity).
                 validate(deviceIdValue, getStringValue(R.string.device_id_label)).
@@ -127,7 +127,7 @@ public class ParticipantFlow implements IFlow {
 
     private void saveData(int viewId, String keyId) {
         TextView textView = (TextView) activity.findViewById(viewId);
-        String data = textView.getText().toString();
+        String data = textView.getText().toString().trim();
         saveSafely(activity, keyId, data);
     }
 
