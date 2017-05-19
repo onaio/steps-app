@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright 2016. World Health Organization
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<ScrollView android:id="@+id/settings" xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/settings_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:orientation="vertical"
+        android:visibility="invisible">
+
+        <include layout="@layout/dialog_header" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="30dp"
+            android:text="@string/select_app_type" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/household_flow"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="1dp"
+                android:layout_height="50dp"
+                android:layout_margin="15dp"
+                android:layout_weight="1"
+                android:background="@android:color/white"
+                android:drawablePadding="-10dp"
+                android:drawableTop="@drawable/ic_household_flow"
+                android:onClick="enableHouseholdFlow"
+                android:paddingLeft="10dp"
+                android:text="@string/action_household"
+                android:textColor="@android:color/black"
+                android:textSize="12sp" />
+
+            <Button
+                android:id="@+id/household_flow_disabled"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="1dp"
+                android:layout_height="50dp"
+                android:layout_margin="15dp"
+                android:layout_weight="1"
+                android:background="#499F72"
+                android:drawablePadding="-10dp"
+                android:drawableTop="@drawable/ic_household_flow_disabled"
+                android:enabled="false"
+                android:onClick="handleCustomMenu"
+                android:paddingLeft="10dp"
+                android:text="@string/action_household"
+                android:textColor="@android:color/white"
+                android:textSize="12sp" />
+
+            <Button
+                android:id="@+id/participant_flow"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_margin="15dp"
+                android:layout_weight="1"
+                android:background="@android:color/white"
+                android:drawablePadding="-10dp"
+                android:drawableTop="@drawable/ic_participant_flow"
+                android:onClick="enableParticipantFlow"
+                android:paddingLeft="10dp"
+                android:text="@string/participant"
+                android:textColor="@android:color/black"
+                android:textSize="12sp" />
+
+            <Button
+                android:id="@+id/participant_flow_disabled"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_margin="15dp"
+                android:layout_weight="1"
+                android:background="#499F72"
+                android:drawablePadding="-10dp"
+                android:drawableTop="@drawable/ic_participant_flow_disabled"
+                android:enabled="false"
+                android:onClick="handleCustomMenu"
+                android:paddingLeft="10dp"
+                android:text="@string/participant"
+                android:textColor="@android:color/white"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/setting_contents"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/campaignId_label"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/survey_id_label" />
+
+            <EditText
+                android:id="@+id/campaignId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:ems="10"
+                android:hint="@string/survey_id_label"
+                android:inputType="text"
+                android:singleLine="false"
+                android:textColor="@android:color/black" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/device_id_label" />
+
+            <EditText
+                android:id="@+id/deviceId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:ems="10"
+                android:hint="@string/device_id_label"
+                android:inputType="text"
+                android:singleLine="false"
+                android:textColor="@android:color/black" />
+
+            <TextView
+                android:id="@+id/household_seed_label"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="20dp"
+                android:text="@string/household_id_seed_label" />
+
+            <EditText
+                android:id="@+id/household_seed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+
+                android:ems="10"
+                android:hint="@string/household_id_default_hint"
+                android:inputType="number"
+                android:textColor="@android:color/black" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="20dp"
+                android:text="@string/form_id" />
+
+            <EditText
+                android:id="@+id/form_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:ems="10"
+                android:hint="@string/form_id"
+                android:textColor="@android:color/black" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="30dp"
+                android:text="@string/age_range" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/min_age"
+                    android:layout_width="1dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="@string/min_age"
+                    android:inputType="number"
+                    android:textColor="@android:color/black" />
+
+                <EditText
+                    android:id="@+id/max_age"
+                    android:layout_width="1dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="@string/max_age"
+                    android:inputType="number"
+                    android:singleLine="false"
+                    android:textColor="@android:color/black" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/endpointUrl_label"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="20dp"
+                android:text="@string/endpoint_url_hint" />
+
+            <EditText
+                android:id="@+id/endpointUrl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:ems="10"
+                android:hint="@string/endpoint_url_hint"
+                android:inputType="textUri"
+                android:textColor="@android:color/black" />
+
+            <TextView
+                android:id="@+id/importUrl_label"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="20dp"
+                android:text="@string/import_url_hint" />
+
+            <EditText
+                android:id="@+id/importUrl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:ems="10"
+                android:hint="@string/import_url_hint"
+                android:inputType="textUri"
+                android:textColor="@android:color/black" />
+
+            <Button
+                android:id="@+id/importButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/action_import"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="15dp"
+                android:onClick="importData"
+                android:textColor="@android:color/white"
+                android:background="#499F72"/>
+
+            <Button
+                android:id="@+id/eraseDataButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/action_erase_data"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="15dp"
+                android:onClick="eraseData"
+                android:textColor="@android:color/white"
+                android:background="#ce6c60"/>
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

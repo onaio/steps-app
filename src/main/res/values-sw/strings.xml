@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright 2016. World Health Organization
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<resources>
+    <string name="app_name">Hatua</string>
+    <string name="action_settings">Mipangilio</string>
+    <string name="action_export">Tuma</string>
+    <string name="action_add">Ongeza</string>
+    <string name="action_done">Maliza</string>
+    <string name="action_new_household">Nyumba Mpya</string>
+    <string name="action_household">Nyumba</string>
+    <string name="save_button">Hifadhi</string>
+    <string name="survey_id_label">"Nambari ya Utafiti"</string>
+    <string name="device_id_label">Nambari ya Kifaa</string>
+    <string name="phone_id_message">Eka nambari ya kifaa kwanza!</string>
+    <string name="phone_id_message_title">Tahadhari</string>
+    <string name="phone_number">Namba ya Simu:</string>
+    <string name="phone_number_hint">Namba ya Simu</string>
+    <string name="household_id_label">Nambari ya Nyumba</string>
+    <string name="household_id_hint">Nambari ya Nyumba</string>
+    <string name="member_family_surname_hint">Jina la ukoo</string>
+    <string name="member_first_name_hint">Jina la kwanza</string>
+    <string name="member_gender_hint">Jinsia</string>
+    <string name="member_age_hint">Umri</string>
+    <string name="male_label">Mwanaume</string>
+    <string name="female_label">Mwanamke</string>
+    <string name="action_select_participant">Chagua Mshiriki</string>
+    <string name="action_member">Mkaazi</string>
+    <string name="action_edit">Hariri</string>
+    <string name="action_delete">Futa</string>
+    <string name="refused">KATAA</string>
+    <string name="reason">Sababu</string>
+    <string name="confirm_ok">Thibitisha</string>
+    <string name="ok">SAWA</string>
+    <string name="cancel">Futa</string>
+    <string name="select_participant_message">Tafadhali hakikisha kwamba wakaazi wote wanaofaa wame ongezwa na uko
+        tayari kuendelea na uchaguzi.
+    </string>
+    <string name="survey_refusal_title">Thibitisha Umekataa</string>
+    <string name="survey_refusal_message">Unatayarisha nyumba hii kufutwa. Hii hatua hai wezi kubadilishwa. Una
+        uhakika?
+    </string>
+    <string name="survey_deferred_title">Utafiti Umehahirishwa</string>
+    <string name="survey_deferred_message">Utafiti umehahirishwa, unaweza kumaliza utafiti badaaye kwa hii nyumba.
+    </string>
+    <string name="odk_app_not_installed">Programu ya ODK Collect haijawekwa kwenye kifaa, tafadhali weka kabla ya
+        kuendelea
+    </string>
+    <string name="form_not_present">Fomu inayo hitajika haiko. Jaribu kuvuta fomu na kujaribu tena.</string>
+    <string name="form_not_present_title">Fomu Lina Kosa</string>
+    <string name="something_went_wrong_try_again">Tatizo ilitokea, tafadhali jaribu tena.</string>
+    <string name="error_title">Kosa</string>
+    <string name="warning_title">Ilani</string>
+    <string name="warning_merging_data">Hatua hii ita unganisha orodha ya nyumba kwa kifaa chako na orodha iliyoko
+        kwenye server.
+        Unataka ku endelea?
+    </string>
+    <string name="household_id_seed_label">Starting Household ID</string>
+    <string name="household_id_default_hint">chaguo msingi ni 1</string>
+    <string name="member_delete_confirm">Una uhakika unataka kufuta mkaazi?</string>
+    <string name="enter_a_value">Tafadhali weka jibu</string>
+    <string name="endpoint_url_hint">URL ya kutuma</string>
+    <string name="import_url_hint">URL ya kuingiza</string>
+    <string name="main_header">Nyumba</string>
+    <string name="household_members_header">Wakaazi</string>
+    <string name="go_to_settings">ANZA</string>
+    <string name="welcome_message">Karibu! Anza kutumua programu ya WHO STEPS kwa kuweka nambari ya kifaa chako kwenye
+        ukurasa wa mipangilio
+    </string>
+    <string name="household_edit_header">Hariri Nyumba</string>
+    <string name="household_new_header">Ongeza Nyumba Mpya</string>
+    <string name="member_edit_header">Hariri Mwanachama</string>
+    <string name="member_new_header">Ongeza Mwanacham Mpya</string>
+    <string name="action_import">Import</string>
+    <string name="proceed_with_selection">ENDELEA NA UCHAGUZI</string>
+    <string name="return_to_household_member_list">RUDI KWA ORODHA YA WENYE NYUMBA</string>
+    <string name="select_participant_title">CHAGUA MSHIRIKI</string>
+    <string name="add_new_household">Ongeza Nyumba Mpya</string>
+    <string name="add_new_member">Ongeza Mkaazi Mpya</string>
+    <string name="phone_id_name">"NAMBARI YA KIFAA"</string>
+    <string name="age_hint">Umri (kwa miaka)</string>
+    <string name="interview_now">HOJI SASA</string>
+    <string name="interview_later">HOJI BADAAYE</string>
+    <string name="selected_participant">Mkaazi Aliyechaguliwa</string>
+    <string name="age_range">Umri wa chini na wa juu</string>
+    <string name="max_age">Umri wa juu</string>
+    <string name="min_age">Umri wa chini</string>
+    <string name="survey_done_message">Utafiti umekamilika!</string>
+    <string name="survey_refused_message">Utafiti umekataliwa!</string>
+    <string name="action_submit_forms">Tuma Matokeo ya Utafiti</string>
+    <string name="export_failed">Data haikutumwa, jaribu badaaye.</string>
+    <string name="export_complete">Umemaliza Kutuma</string>
+    <string name="export_complete_message">Umefanikiwa kutuma data</string>
+    <string name="export_start_message">Tafadhali hakikisha kwamba unataka kutuma data ya nyumba.</string>
+    <string name="import_complete">Umemaliza kuingiza</string>
+    <string name="import_complete_message">Umefanikiwa kuingiza data.</string>
+    <string name="import_fail_message">Import failed, please double check Device ID and try again.</string>
+    <string name="save_to_sdcard_complete">Umemaliza kuhifadhi data kwenye kadi ya SD</string>
+    <string name="save_to_sdcard_complete_message">Umefanikiwa ku hifadhi data kwenye kadi ya SD.</string>
+    <string name="fail_no_connectivity">Hatua imefeli, angalia muunganisho wa mtandao.</string>
+    <string name="continue_interview">Endelea Kuhoji</string>
+    <string name="household_comments">Maoni</string>
+    <string name="form_id">Nambari ya Fomu</string>
+    <string name="cancel_selection">FUTA CHAGUO</string>
+    <string name="add">ONGEZA</string>
+    <string name="pid">PID:</string>
+    <string name="export_household_list">Tuma Data ya Nyumba</string>
+    <string name="hhid">HHID:</string>
+    <string name="age_not_in_range">Umri (not in the range of</string>
+    <string name="invalid">Sio sawa</string>
+    <string name="fill_correct_message">tafadhali jaza au hahirisha jibu zifuatazo:</string>
+    <string name="household_id">Nambari ya Nyumba:</string>
+    <string name="members">wakaazi</string>
+    <string name="participant_id">Nambari ya Mshiriki</string>
+    <string name="undefined_label">undefined</string>
+    <string name="participant_header">Washiriki</string>
+    <string name="action_add_participant">Ongeza Mshiriki Mpya</string>
+    <string name="participant">Mshiriki</string>
+    <string name="interview_refused_message">Mahojiano yamekataliwa!</string>
+    <string name="interview_done_message">Mahojiano yamekwisha!</string>
+    <string name="participant_survey_deferred_message">Utafiti umehahirishwa, unaweza kumaliza utafiti badaaye.</string>
+    <string name="participant_survey_refusal_message">You are going to mark this participant for refusal. This action
+        can not be reversed. Are you sure?
+    </string>
+    <string name="select_app_type">Chagua aina ya programu</string>
+    <string name="enter_data_now">EKA DATA SASA</string>
+    <string name="enter_data_later">EKA DATA BADAAYE</string>
+    <string name="edit_participant_header">Hariri Mshiriki</string>
+    <string name="error_no_sdcard">Ulijaribu kuhifadhi data kwenye kadi ya SD, lakini kifaa chako hakina kadi ya SD.
+        Tafadhali weka moja ili kuendelea na kuhifadhi
+    </string>
+    <string name="action_save_to_sdcard">Hifadhi kwenye kadi ya SD</string>
+    <string name="error_cannot_write_sdcard">Hatua ya kuhifadhi kwenye kadi ya SD haiku kamilika sababu ya ruhusa;
+        Tafadhali wasiliana na msimamizi wako ili kupata msaada.
+    </string>
+    <string name="select_backup_label">Gusa kifungo ili kuchagua eneo la kuhifadhi.</string>
+    <string name="backup_location">Eneo ka kuhifadhi</string>
+    <string name="select_backup_location">Chagua Eneo la Kuhifadhi</string>
+    <string name="refused_or_unable">IMEKATALIWA / MAHOJIANO HAYAWEZI KUENDELEA</string>
+    <string name="survey_partially_completed">Kiasi cha Utafiti Umekamilika!</string>
+    <string name="interview_partially_completed">Kiasi cha Mahojiano Yamekamilika!</string>
+    <string name="refused_or_unable_to_complete">Imakataliwa / Haiwezi Kamilika</string>
+    <string name="invalid_settings">Mipangilio sio sawa, tafadhali weka ama hahirisha jibu zifuatazo:</string>
+    <string name="invalid_member">Mkaazi sio sawa, tafadhali weka ama hahirisha jibu zifuatazo:</string>
+    <string name="invalid_participant">Mshiriki sio sawa, tafadhali weka ama hahirisha jibu zifuatazo:</string>
+    <string name="action_submit_data">Tuma Data</string>
+    <string name="create_settings_password">Unda neno fiche itakayo tumikwa kwa ukurasa wa mipangilio</string>
+    <string name="settings_password_title">Neno Fiche Itakayo Tumikwa Kwa Ukurasa wa Mipangilio</string>
+    <string name="enter_settings_password">Eka neno fiche la ukurasa wa mipangilio</string>
+    <string name="show_password">Onesha</string>
+    <string name="hide_password">Ficha</string>
+    <string name="incorrect_password">Neno Fiche Sio Sawa</string>
+    <string name="action_erase_data">Futa Data</string>
+    <string name="warning_erasing_data">Hii hatua itafuta data ya nyumba na washiriki wote kwenye hiki kifaa. Unataka
+        kuendelea?
+    </string>
+    <string name="data_wipe_successful">Umenfanikiwa kufuta Data</string>
+</resources>

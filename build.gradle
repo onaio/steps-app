@@ -1,0 +1,86 @@
+apply plugin: 'com.android.application'
+
+buildscript {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:1.1.0'
+        classpath 'org.robolectric.gradle:gradle-android-test-plugin:0.10.0'
+        classpath 'org.robolectric:robolectric-gradle-plugin:1.0.1'
+    }
+}
+
+apply plugin: 'android'
+apply plugin: 'org.robolectric'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion '25'
+    defaultConfig {
+        applicationId "com.onaio.steps"
+        minSdkVersion 16
+        targetSdkVersion 25
+        versionCode 10
+        versionName "2.9"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    signingConfigs {
+        release {
+            if (project.rootProject.file("local.properties").exists()) {
+                Properties properties = new Properties()
+                properties.load(project.rootProject.file("local.properties").newDataInputStream())
+                if (properties != null &&
+                        properties.containsKey("store_file") &&
+                        properties.containsKey("store_password") &&
+                        properties.containsKey("key_alias") &&
+                        properties.containsKey("key_password")) {
+                    storeFile file(new File(properties["store_file"]));
+                    storePassword properties["store_password"];
+                    keyAlias properties["key_alias"];
+                    keyPassword properties["key_password"];
+                } else {
+                    println("One of the following properties not set: store_file, store_password, key_alias or key_password");
+                }
+            } else {
+                println("local.properties does not exist");
+            }
+        }
+    }
+    buildTypes {
+        release {
+            signingConfig signingConfigs.release
+        }
+    }
+    android {
+        packagingOptions {
+            exclude 'META-INF/LICENSE.txt'
+            exclude 'META-INF/NOTICE.txt'
+        }
+    }
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    testCompile 'junit:junit:4.10'
+    testCompile 'org.robolectric:robolectric:2.4'
+    testCompile 'com.squareup:fest-android:1.0.+'
+    testCompile 'org.mockito:mockito-core:1.9.5'
+    compile 'com.opencsv:opencsv:3.3'
+    compile 'com.squareup.okhttp:okhttp:2.5.0'
+    /*
+    compile 'org.apache.httpcomponents:httpcore:4.2.4'
+    compile 'org.apache.httpcomponents:httpclient:4.2.5'*/
+    compile 'org.apache.httpcomponents:httpmime:4.2.5'
+    compile 'com.android.support:support-v4:25.0.+'
+}
+
+tasks.withType(Test) {
+    systemProperty "robolectric.logging", "stdout"
+}

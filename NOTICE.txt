@@ -1,0 +1,5 @@
+STEPS
+Copyright [2014-2016] World Health Organization
+
+This product includes software developed at
+The World Health Organization (http://www.who.int/).

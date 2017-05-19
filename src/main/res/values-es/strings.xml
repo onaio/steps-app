@@ -1,0 +1,153 @@
+<!--
+  ~ Copyright 2016. World Health Organization
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<resources>
+    <string name="app_name">"STEPS"</string>
+    <string name="action_settings">"Ajustes"</string>
+    <string name="action_export">"Exportar"</string>
+    <string name="action_add">"Añadir"</string>
+    <string name="action_done">"Terminado"</string>
+    <string name="action_new_household">"Nuevo Hogar"</string>
+    <string name="action_household">"Hogar"</string>
+    <string name="save_button">"Guardar"</string>
+    <string name="survey_id_label">"Número de identificación de la encuesta"</string>
+    <string name="device_id_label">"Número de identificación del aparato"</string>
+    <string name="phone_id_message">"¡Establezca primero el número de identificación del aparato!"</string>
+    <string name="phone_id_message_title">"Alerta"</string>
+    <string name="household_id_hint">"Número de identificación del hogar"</string>
+    <string name="phone_number">"Número de teléfono:"</string>
+    <string name="phone_number_hint">"Número de teléfono"</string>
+    <string name="household_id_label">"Número de identificación del hogar:"</string>
+    <string name="member_family_surname_hint">"Apellido"</string>
+    <string name="member_first_name_hint">"Nombre"</string>
+    <string name="member_gender_hint">"Sexo"</string>
+    <string name="member_age_hint">"Edad"</string>
+    <string name="male_label">"Masculino"</string>
+    <string name="female_label">"Femenino"</string>
+    <string name="action_select_participant">"Seleccionar al participante"</string>
+    <string name="action_member">"Miembro"</string>
+    <string name="action_edit">"Editar"</string>
+    <string name="action_delete">"Borrar"</string>
+    <string name="refused">"RECHAZADO"</string>
+    <string name="reason">"Indicar la razón para cancelar la selección"</string>
+    <string name="confirm_ok">"Confirmar"</string>
+    <string name="ok">"OK"</string>
+    <string name="cancel">"Cancelar"</string>
+    <string name="select_participant_message">"Por favor, confirme que todos los miembros elegibles del hogar han sido introducidos, y que está listo para proceder con la selección."</string>
+    <string name="survey_refusal_title">"Confirme el rechazo"</string>
+    <string name="survey_refusal_message">"Va a marcar el hogar como rechazo. Esta acción no se puede deshacer. ¿Está seguro de que desea proceder?"</string>
+    <string name="survey_deferred_title">"Encuesta diferida"</string>
+    <string name="survey_deferred_message">"Esta encuesta ha sido diferida. Puede completar la encuesta para este hogar más tarde."</string>
+    <string name="odk_app_not_installed">"La aplicación ODK Collect no está instalada, por favor, instálela antes de continuar"</string>
+    <string name="form_not_present">"El formulario solicitado no está disponible. Por favor descarge el formulario e inténtelo de nuevo."</string>
+    <string name="form_not_present_title">"Formulario no disponible"</string>
+    <string name="something_went_wrong_try_again">"Algo ha salido mal. Por favor, inténtelo de nuevo."</string>
+    <string name="error_title">"Error"</string>
+    <string name="warning_title">"Aviso"</string>
+    <string name="warning_merging_data">"Esta operación descargará todas las listas de hogares del servidor que no están en su dispositivo. Desea continuar?"</string>
+    <string name="household_id_seed_label">"Valor de inicio para el número de identificación del hogar"</string>
+    <string name="household_id_default_hint">"El valor por defecto es 1"</string>
+    <string name="member_delete_confirm">"¿Está seguro de que quiere eliminar este miembro del hogar?"</string>
+    <string name="enter_a_value">"Por favor, introduzca un valor"</string>
+    <string name="endpoint_url_hint">"URL para exportar"</string>
+    <string name="import_url_hint">"URL para importar"</string>
+    <!--<string name="invalid_member">"Son insuficientes, por favor rellene todos los valores."</string>-->
+    <string name="main_header">"Hogares"</string>
+    <string name="household_members_header">"Miembros del hogar"</string>
+    <string name="go_to_settings">"COMENZAR"</string>
+    <string name="welcome_message">"¡Bienvenido! Para comenzar a utilizar la aplicación STEPS de la OMS, introduzca el número de identificacióin de su aparato en los ajustes de la aplicación."</string>
+    <string name="household_edit_header">"Edite el hogar"</string>
+    <string name="household_new_header">"Añadir un nuevo hogar"</string>
+    <string name="member_edit_header">"Edite al miembro"</string>
+    <string name="member_new_header">"Añadir un nuevo miembro"</string>
+    <string name="action_import">"Importar"</string>
+    <string name="proceed_with_selection">"PROCEDER CON LA SELECCIÓN"</string>
+    <string name="return_to_household_member_list">"VOLVER AL LISTADO DE MIEMBROS DEL HOGAR"</string>
+    <string name="select_participant_title">"SELECCIONAR AL PARTICIPANTE"</string>
+    <string name="add_new_household">"Añadir un nuevo hogar"</string>
+    <string name="add_new_member">"Añadir un nuevo miembro"</string>
+    <string name="phone_id_name">"Número de identificación del aparato"</string>
+    <string name="age_hint">"Edad (en años)"</string>
+    <string name="interview_now">"ENCUESTAR AHORA"</string>
+    <string name="interview_later">"ENCUESTAR MÁS TARDE"</string>
+    <string name="selected_participant">"Miembro Seleccionado"</string>
+    <string name="age_range">"Edad mínima y máxima"</string>
+    <string name="max_age">"Edad máxima"</string>
+    <string name="min_age">"Edad mínima"</string>
+    <string name="survey_done_message">"¡La encuesta ha sido completada!"</string>
+    <string name="survey_refused_message">"¡La encuesta ha sido rechazada!"</string>
+    <string name="action_submit_forms">"Enviar los formularios de la encuesta"</string>
+    <string name="export_failed">"No se pudieron enviar los datos, por favor inténtelo de nuevo más tarde."</string>
+    <string name="export_complete">"Transferencia completada"</string>
+    <string name="export_complete_message">"Los datos se han enviando correctamente"</string>
+    <string name="export_start_message">"Por favor confirme que quiere enviar los datos del hogar"</string>
+    <string name="import_complete">"Importación completada"</string>
+    <string name="import_complete_message">"Los datos han sido exportados con éxito"</string>
+    <string name="import_fail_message">"Fallo en la importación. Por favor utilize un archivo csv válido e inténtelo de nuevo."</string>
+    <string name="save_to_sdcard_complete">"La copia de seguridad a la tarjeta SD se ha completado"</string>
+    <string name="save_to_sdcard_complete_message">"Datos copiados a la tarjeta SD con éxito"</string>
+    <string name="fail_no_connectivity">"Error en la operación. Por favor verifique su conexión a internet"</string>
+    <string name="continue_interview">"Continúe la encuesta"</string>
+    <!--<string name="member_add_confirm">"¿Seguro que quieres añadir un miembro, esta acción borrará la selección que hizo antes."</string>-->
+    <string name="household_comments">"Comentarios"</string>
+    <string name="form_id">"Número de identificación del formulario"</string>
+    <string name="cancel_selection">"CANCELAR LA SELECCIÓN"</string>
+    <string name="add">"AÑADIR"</string>
+    <string name="pid">"Número de identificación del participante:"</string>
+    <string name="export_household_list">"Enviar datos de los hogares"</string>
+    <string name="hhid">"Número de identificación del hogar:"</string>
+    <string name="age_not_in_range">"Edad (no está en el rango de"</string>
+    <string name="invalid">"Inválido"</string>
+    <string name="fill_correct_message">"Por favor, complete o corrija los siguientes campos:"</string>
+    <string name="household_id">"Número de identificación del hogar:"</string>
+    <string name="members">"miembros"</string>
+    <string name="participant_id">"Número de identificación del participante"</string>
+    <string name="undefined_label">"indefinido"</string>
+    <string name="participant_header">"Participantes"</string>
+    <string name="action_add_participant">"Añada un nuevo participante"</string>
+    <string name="participant">"Participante"</string>
+    <string name="interview_refused_message">"¡La encuesta ha sido rechazada!"</string>
+    <string name="interview_done_message">"¡La encuesta ha sido completada!"</string>
+    <string name="participant_survey_deferred_message">"La encuesta ha sido diferida, puede completar la encuesta para esta persona más tarde."</string>
+    <string name="participant_survey_refusal_message">"Va a marcar a este participante como un rechazo. Esta acción no se puede deshacer. ¿Está seguro de que desea proceder?"</string>
+    <string name="select_app_type">"Seleccione el tipo de aplicación"</string>
+    <string name="enter_data_now">"INTRODUZCA LOS DATOS AHORA"</string>
+    <string name="enter_data_later">"INTRODUZCA LOS DATOS MÁS TARDE"</string>
+    <string name="error_no_sdcard">"Usted ha intentado hacer una copia de seguridad en la tarjeta SD, sin embargo su dispositivo no dispone de una tarjeta SD. Por favor inserte una tarjeta SD para proceder a hacer la copia de seguridad."</string>
+    <string name="edit_participant_header">Editar participante</string>
+    <string name="action_save_to_sdcard">"Hacer una copia de seguridad en la tarjeta SD"</string>
+    <string name="error_cannot_write_sdcard">"La copia de seguridad a la tarjeta SD no se ha podido realizar debido a un permiso de escritura. Por favor contacte con su supervisor para asistencia"</string>
+    <string name="select_backup_label">Pulse sobre el botón para seleccionar dónde hacer la copia de seguridad.</string>
+    <string name="backup_location">Sitio para hacer copia de seguridad</string>
+    <string name="select_backup_location">Seleccione dónde quiere hacer la copia de seguridad</string>
+    <string name="refused_or_unable">RECHAZO/NO HA SIDO POSSIBLE REALIZAR LA ENCUESTA</string>
+    <string name="survey_partially_completed">¡La encuesta ha sido completada parcialmente!</string>
+    <string name="interview_partially_completed">"¡Encuesta parcialmente completada!"</string>
+    <string name="refused_or_unable_to_complete">Rechazo/Imposible completar</string>
+    <string name="invalid_settings">Ajustes inválidos. Por favor, complete o corrija los siguientes campos:</string>
+    <string name="invalid_member">"Miembro inválido. Por favor completar o corregir los siguientes campos:"</string>
+    <string name="invalid_participant">"Participante inválido, por favor complete o corrija los siguientes campos:"</string>
+    <string name="create_settings_password">"Crear una contraseña para los ajustes"</string>
+    <string name="settings_password_title">"Configuración de contraseña"</string>
+    <string name="enter_settings_password">"Introduce la contraseña de ajustes"</string>
+    <string name="show_password">"Mostrar la contraseña"</string>
+    <string name="hide_password">"Ocultar la contraseña"</string>
+    <string name="incorrect_password">"La contraseña introducida es incorrecta"</string>
+    <string name="action_erase_data">"Borrar los datos"</string>
+    <string name="warning_erasing_data">"Esta operación borrará todos los datos de los hogares y los participantes en este dispositivo. ¿Desea continuar?"</string>
+    <string name="data_wipe_successful">"Datos borrados con éxito"</string>
+    <string name="action_submit_data">"Enviar datos"</string>
+</resources>
