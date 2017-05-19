@@ -73,19 +73,12 @@ dependencies {
     testCompile 'com.squareup:fest-android:1.0.+'
     testCompile 'org.mockito:mockito-core:1.9.5'
     compile 'com.opencsv:opencsv:3.3'
-<<<<<<< HEAD
     compile 'com.squareup.okhttp:okhttp:2.5.0'
     /*
     compile 'org.apache.httpcomponents:httpcore:4.2.4'
     compile 'org.apache.httpcomponents:httpclient:4.2.5'*/
     compile 'org.apache.httpcomponents:httpmime:4.2.5'
     compile 'com.android.support:support-v4:25.0.+'
-=======
-    compile 'org.apache.httpcomponents:httpcore:4.2.4'
-    compile 'org.apache.httpcomponents:httpclient:4.2.5'
-    compile 'org.apache.httpcomponents:httpmime:4.2.5'
-    compile 'com.android.support:support-v4:21.0.+'
->>>>>>> 31fc51c016fc5078471a2cdb2a02caeb0228d088
 }
 
 tasks.withType(Test) {
