@@ -22,19 +22,19 @@ import android.text.TextUtils;
 
 import com.onaio.steps.R;
 import com.onaio.steps.handler.actions.ExportHandler;
-
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.mime.HttpMultipartMode;
-import org.apache.http.entity.mime.MultipartEntity;
-import org.apache.http.entity.mime.content.FileBody;
-import org.apache.http.impl.client.DefaultHttpClient;
+import com.squareup.okhttp.MediaType;
+import com.squareup.okhttp.MultipartBuilder;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.RequestBody;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.Charset;
 
 import static com.onaio.steps.helper.Constants.ENDPOINT_URL;
+
+//import org.apache.http.client.HttpClient;
+//import org.apache.http.client.methods.HttpPost;
 
 public class UploadFileTask extends AsyncTask<File, Void, Boolean> {
     private final Activity activity;
@@ -52,13 +52,21 @@ public class UploadFileTask extends AsyncTask<File, Void, Boolean> {
     @Override
     protected Boolean doInBackground(File... files) {
         if (!TextUtils.isEmpty(KeyValueStoreFactory.instance(activity).getString(ENDPOINT_URL))) {
-            HttpClient httpClient = new DefaultHttpClient();
-            HttpPost httpPost = new HttpPost(KeyValueStoreFactory.instance(activity).getString(ENDPOINT_URL));
             try {
-                MultipartEntity multipartEntity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE, null, Charset.forName("UTF-8"));
-                multipartEntity.addPart("file", new FileBody(files[0]));
-                httpPost.setEntity(multipartEntity);
-                httpClient.execute(httpPost);
+                OkHttpClient client = new OkHttpClient();
+
+                final MediaType MEDIA_TYPE = MediaType.parse("text/csv");
+
+                RequestBody requestBody = new MultipartBuilder()
+                        .type(MultipartBuilder.FORM)
+                        .addFormDataPart("file", files[0].getName(), RequestBody.create(MEDIA_TYPE, files[0]))
+                        .build();
+
+                Request request = new Request.Builder()
+                        .url(KeyValueStoreFactory.instance(activity).getString(ENDPOINT_URL))
+                        .post(requestBody)
+                        .build();
+                client.newCall(request).execute();
                 new CustomNotification().notify(activity, R.string.export_complete, R.string.export_complete_message);
                 return true;
             } catch (IOException e) {
@@ -75,6 +83,6 @@ public class UploadFileTask extends AsyncTask<File, Void, Boolean> {
     @Override
     protected void onPostExecute(Boolean success) {
         super.onPostExecute(success);
-        if(onExportListener != null) onExportListener.onFileUploaded(success);
+        if (onExportListener != null) onExportListener.onFileUploaded(success);
     }
 }
