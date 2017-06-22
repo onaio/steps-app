@@ -16,7 +16,7 @@
   -->
 
 <resources>
-    <string name="app_name">Hatua</string>
+    <string name="app_name">STEPS</string>
     <string name="action_settings">Mipangilio</string>
     <string name="action_export">Tuma</string>
     <string name="action_add">Ongeza</string>
