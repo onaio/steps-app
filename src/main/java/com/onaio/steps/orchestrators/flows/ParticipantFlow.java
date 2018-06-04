@@ -62,19 +62,23 @@ public class ParticipantFlow implements IFlow {
         String minAgeValue = ((TextView) activity.findViewById(R.id.min_age)).getText().toString().trim();
         String maxAgeValue = ((TextView) activity.findViewById(R.id.max_age)).getText().toString().trim();
 
-        errorFields = new DataValidator(activity).
-                validate(deviceIdValue, getStringValue(R.string.device_id_label)).
-                validate(formIdValue, getStringValue(R.string.form_id)).
-                validate(minAgeValue, getStringValue(R.string.min_age)).
-                validate(maxAgeValue, getStringValue(R.string.max_age)).
-                finish();
+        errorFields = validateParticipantsSettings(deviceIdValue, formIdValue, minAgeValue, maxAgeValue);
         if (errorFields != null && !errorFields.isEmpty())
             throw new InvalidDataException(activity, getStringValue(R.string.action_settings), errorFields);
 
     }
 
+    public List<String> validateParticipantsSettings(String deviceId, String formId, String minAge, String maxAge) {
+        return new DataValidator(activity).
+                validate(deviceId, getStringValue(R.string.device_id_label)).
+                validate(formId, getStringValue(R.string.form_id)).
+                validate(minAge, getStringValue(R.string.min_age)).
+                validate(maxAge, getStringValue(R.string.max_age)).
+                finish();
+    }
+
     @Override
-    public void  prepareSettingScreen() {
+    public void prepareSettingScreen() {
         prepareView();
         populateData();
     }
@@ -142,7 +146,7 @@ public class ParticipantFlow implements IFlow {
         //TODO: toast message for save phone id failure
     }
 
-    private String getValue(Activity activity, String key) {
+    public String getValue(Activity activity, String key) {
         return KeyValueStoreFactory.instance(activity).getString(key);
     }
 
