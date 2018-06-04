@@ -151,4 +151,6 @@
     <string name="data_wipe_successful">Data successfully wiped</string>
     <string name="households">Households</string>
     <string name="participants">Participants</string>
+    <string name="incomplete_settings">Incomplete Settings for %1$s</string>
+    <string name="invalid_settings_switching_activity">Settings for %1$s are incomplete/invalid. Do you want to complete the settings?</string>
 </resources>
