@@ -21,6 +21,7 @@ import android.app.ListActivity;
 
 import com.onaio.steps.handler.actions.FinalisedFormHandler;
 import com.onaio.steps.handler.actions.SubmitDataHandler;
+import com.onaio.steps.handler.activities.HouseHoldActivityMenuItemHandler;
 import com.onaio.steps.handler.interfaces.IActivityResultHandler;
 import com.onaio.steps.handler.interfaces.IListItemHandler;
 import com.onaio.steps.handler.interfaces.IMenuHandler;
@@ -38,6 +39,7 @@ public class ParticipantListActivityFactory {
     public static List<IMenuHandler> getMenuHandlers(ListActivity activity) {
 
         ArrayList<IMenuHandler> menuHandlers = new ArrayList<IMenuHandler>();
+        menuHandlers.add(new HouseHoldActivityMenuItemHandler(activity));
         menuHandlers.add(new SettingActivityHandler(activity).prepareFor(FlowType.Participant));
         menuHandlers.add(new FinalisedFormHandler(activity));
         return menuHandlers;

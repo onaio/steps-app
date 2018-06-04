@@ -136,7 +136,7 @@ public class HouseholdFlow implements IFlow {
         saveSafely(activity, keyId, data);
     }
 
-    private void saveSafely(Activity activity, String key, String value) {
+    public void saveSafely(Activity activity, String key, String value) {
         KeyValueStore keyValueStore = KeyValueStoreFactory.instance(activity);
         if (!keyValueStore.putString(key, value))
             saveSettingsErrorHandler(key);
