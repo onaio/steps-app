@@ -54,7 +54,7 @@ public class ParticipantListActivityFactoryTest {
         List<IMenuHandler> menuHandlers = ParticipantListActivityFactory.getMenuHandlers(participantListActivityMock);
         ArrayList<Class> handlerTypes = getTypes(menuHandlers);
 
-        Assert.assertEquals(2, menuHandlers.size());
+        Assert.assertEquals(3, menuHandlers.size());
         Assert.assertTrue(handlerTypes.contains(SettingActivityHandler.class));
         Assert.assertTrue(handlerTypes.contains(FinalisedFormHandler.class));
     }
