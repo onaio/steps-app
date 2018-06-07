@@ -13,7 +13,10 @@ import com.onaio.steps.orchestrators.flows.FlowType;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
+import org.robolectric.RobolectricTestRunner;
+import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowDialog;
 
 import static org.junit.Assert.*;
@@ -21,6 +24,8 @@ import static org.junit.Assert.*;
 /**
  * Created by Ephraim Kigamba - ekigamba@ona.io on 05/06/2018.
  */
+@RunWith(RobolectricTestRunner.class)
+@Config(emulateSdk = 16,manifest = "src/main/AndroidManifest.xml")
 public class ParticipantActivityMenuItemHandlerTest {
 
     private ParticipantActivityMenuItemHandler participantActivityMenuItemHandler;
