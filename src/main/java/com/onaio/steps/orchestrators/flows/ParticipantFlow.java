@@ -44,7 +44,6 @@ public class ParticipantFlow implements IFlow {
     private Activity activity;
     protected List<String> errorFields;
 
-
     public ParticipantFlow(Activity activity) {
         errorFields = new ArrayList<String>();
         this.activity = activity;
@@ -57,15 +56,14 @@ public class ParticipantFlow implements IFlow {
 
     @Override
     public void validateOptions() throws InvalidDataException {
-        String deviceIdValue = ((TextView) activity.findViewById(R.id.deviceId)).getText().toString().trim();
-        String formIdValue = ((TextView) activity.findViewById(R.id.form_id)).getText().toString().trim();
-        String minAgeValue = ((TextView) activity.findViewById(R.id.min_age)).getText().toString().trim();
-        String maxAgeValue = ((TextView) activity.findViewById(R.id.max_age)).getText().toString().trim();
+        String deviceIdValue = ((TextView) activity.findViewById(R.id.deviceId_participant)).getText().toString().trim();
+        String formIdValue = ((TextView) activity.findViewById(R.id.form_id_participant)).getText().toString().trim();
+        String minAgeValue = ((TextView) activity.findViewById(R.id.min_age_participant)).getText().toString().trim();
+        String maxAgeValue = ((TextView) activity.findViewById(R.id.max_age_participant)).getText().toString().trim();
 
         errorFields = validateParticipantsSettings(deviceIdValue, formIdValue, minAgeValue, maxAgeValue);
         if (errorFields != null && !errorFields.isEmpty())
             throw new InvalidDataException(activity, getStringValue(R.string.action_settings), errorFields);
-
     }
 
     public List<String> validateParticipantsSettings(String deviceId, String formId, String minAge, String maxAge) {
@@ -85,10 +83,10 @@ public class ParticipantFlow implements IFlow {
 
     @Override
     public void saveSettings() {
-        saveData(R.id.deviceId, PA_PHONE_ID);
-        saveData(R.id.form_id, PA_FORM_ID);
-        saveData(R.id.min_age, PA_MIN_AGE);
-        saveData(R.id.max_age, PA_MAX_AGE);
+        saveData(R.id.deviceId_participant, PA_PHONE_ID);
+        saveData(R.id.form_id_participant, PA_FORM_ID);
+        saveData(R.id.min_age_participant, PA_MIN_AGE);
+        saveData(R.id.max_age_participant, PA_MAX_AGE);
         saveSafely(activity, FLOW_TYPE, FlowType.Participant.toString());
     }
 
@@ -98,17 +96,12 @@ public class ParticipantFlow implements IFlow {
     }
 
     private void prepareView() {
-        hide(R.id.campaignId_label);
-        hide(R.id.campaignId);
         hide(R.id.household_flow_disabled);
+        show(R.id.household_flow);
         hide(R.id.participant_flow);
-        hide(R.id.household_seed);
-        hide(R.id.household_seed_label);
-        hide(R.id.endpointUrl);
-        hide(R.id.endpointUrl_label);
-        hide(R.id.importUrl);
-        hide(R.id.importUrl_label);
-        hide(R.id.importButton);
+        show(R.id.participant_flow_disabled);
+        hide(R.id.householdSettingsContent);
+        show(R.id.participantSettingsContent);
     }
 
     private void hide(int viewId) {
@@ -116,11 +109,16 @@ public class ParticipantFlow implements IFlow {
         viewElement.setVisibility(View.GONE);
     }
 
+    private void show(int viewId) {
+        View viewElement = activity.findViewById(viewId);
+        viewElement.setVisibility(View.VISIBLE);
+    }
+
     private void populateData() {
-        setData(R.id.deviceId, Constants.PA_PHONE_ID);
-        setData(R.id.form_id, Constants.PA_FORM_ID);
-        setData(R.id.min_age, Constants.PA_MIN_AGE);
-        setData(R.id.max_age, Constants.PA_MAX_AGE);
+        setData(R.id.deviceId_participant, Constants.PA_PHONE_ID);
+        setData(R.id.form_id_participant, Constants.PA_FORM_ID);
+        setData(R.id.min_age_participant, Constants.PA_MIN_AGE);
+        setData(R.id.max_age_participant, Constants.PA_MAX_AGE);
     }
 
     private void setData(int viewId, String keyId) {
