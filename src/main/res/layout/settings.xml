@@ -276,6 +276,19 @@
                     android:hint="@string/import_url_hint"
                     android:inputType="textUri"
                     android:textColor="@android:color/black" />
+
+                <Button
+                    android:id="@+id/importButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/action_import"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="15dp"
+                    android:onClick="importData"
+                    android:textColor="@android:color/white"
+                    android:background="#499F72"/>
                 
             </LinearLayout>
 
@@ -364,19 +377,6 @@
                 </LinearLayout>
 
             </LinearLayout>
-
-            <Button
-                android:id="@+id/importButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/action_import"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="15dp"
-                android:onClick="importData"
-                android:textColor="@android:color/white"
-                android:background="#499F72"/>
 
             <Button
                 android:id="@+id/eraseDataButton"
