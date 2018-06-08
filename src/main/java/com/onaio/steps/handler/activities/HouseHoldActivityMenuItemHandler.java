@@ -8,11 +8,8 @@ import com.onaio.steps.activities.MainActivityOrchestrator;
 import com.onaio.steps.activities.ParticipantListActivity;
 import com.onaio.steps.handler.interfaces.IMenuHandler;
 import com.onaio.steps.helper.Constants;
-import com.onaio.steps.helper.IncompleteSettingsActivitySwitchDialog;
 import com.onaio.steps.orchestrators.flows.FlowType;
 import com.onaio.steps.orchestrators.flows.HouseholdFlow;
-
-import java.util.List;
 
 /**
  * Created by Ephraim Kigamba - ekigamba@ona.io on 04/06/2018.
@@ -37,23 +34,9 @@ public class HouseHoldActivityMenuItemHandler implements IMenuHandler {
     @Override
     public boolean open() {
         HouseholdFlow householdFlow = new HouseholdFlow(activity);
-
-        List<String> errors = householdFlow.validateHouseHoldSettings(
-                householdFlow.getValue(activity, Constants.HH_SURVEY_ID),
-                householdFlow.getValue(activity, Constants.HH_PHONE_ID),
-                householdFlow.getValue(activity, Constants.HH_FORM_ID),
-                householdFlow.getValue(activity, Constants.HH_MIN_AGE),
-                householdFlow.getValue(activity, Constants.HH_MAX_AGE)
-        );
-
-        if (errors != null && !errors.isEmpty()) {
-            IncompleteSettingsActivitySwitchDialog dialog = new IncompleteSettingsActivitySwitchDialog(activity);
-            dialog.show();
-        } else {
-            householdFlow.saveSafely(activity, Constants.FLOW_TYPE, FlowType.Household.toString());
-            activity.startActivity(new Intent(activity, MainActivityOrchestrator.class));
-            activity.finish();
-        }
+        householdFlow.saveSafely(activity, Constants.FLOW_TYPE, FlowType.Household.toString());
+        activity.startActivity(new Intent(activity, MainActivityOrchestrator.class));
+        activity.finish();
 
         return true;
     }

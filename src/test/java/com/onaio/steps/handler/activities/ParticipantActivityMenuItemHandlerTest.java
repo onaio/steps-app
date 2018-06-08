@@ -1,12 +1,10 @@
 package com.onaio.steps.handler.activities;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.onaio.steps.activities.HouseholdListActivity;
 import com.onaio.steps.helper.Constants;
-import com.onaio.steps.helper.IncompleteSettingsActivitySwitchDialog;
 import com.onaio.steps.helper.KeyValueStore;
 import com.onaio.steps.helper.KeyValueStoreFactory;
 import com.onaio.steps.orchestrators.flows.FlowType;
@@ -17,9 +15,9 @@ import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
-import org.robolectric.shadows.ShadowDialog;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by Ephraim Kigamba - ekigamba@ona.io on 05/06/2018.
@@ -37,17 +35,6 @@ public class ParticipantActivityMenuItemHandlerTest {
                 .create().start().resume().visible()
                 .get();
         participantActivityMenuItemHandler = new ParticipantActivityMenuItemHandler(householdListActivity);
-    }
-
-
-    @Test
-    public void openShouldShowDialogWithIncompleteParticipantsSettings() {
-        participantActivityMenuItemHandler.open();
-
-        Dialog lastDialog = ShadowDialog.getLatestDialog();
-
-        assertNotNull(lastDialog);
-        assertTrue(lastDialog instanceof IncompleteSettingsActivitySwitchDialog);
     }
 
     @Test

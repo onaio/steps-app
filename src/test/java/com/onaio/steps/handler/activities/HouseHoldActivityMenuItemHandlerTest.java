@@ -1,13 +1,10 @@
 package com.onaio.steps.handler.activities;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.onaio.steps.R;
 import com.onaio.steps.activities.ParticipantListActivity;
 import com.onaio.steps.helper.Constants;
-import com.onaio.steps.helper.IncompleteSettingsActivitySwitchDialog;
 import com.onaio.steps.helper.KeyValueStore;
 import com.onaio.steps.helper.KeyValueStoreFactory;
 import com.onaio.steps.orchestrators.flows.FlowType;
@@ -15,14 +12,12 @@ import com.onaio.steps.orchestrators.flows.FlowType;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
-import org.robolectric.shadows.ShadowActivity;
-import org.robolectric.shadows.ShadowDialog;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by Ephraim Kigamba - ekigamba@ona.io on 05/06/2018.
@@ -43,16 +38,6 @@ public class HouseHoldActivityMenuItemHandlerTest {
     }
 
     @Test
-    public void openShouldShowDialogWithIncompleteHouseholdsSettings() {
-        houseHoldActivityMenuItemHandler.open();
-
-        Dialog dialog =ShadowDialog.getLatestDialog();
-
-        assertNotNull(dialog);
-        assertTrue(dialog instanceof IncompleteSettingsActivitySwitchDialog);
-    }
-
-    @Test
     public void openShouldSaveFlowTypeWithCompleteParticipantsSettings() {
         SharedPreferences sharedPreferences = participantListActivity.getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -61,7 +46,6 @@ public class HouseHoldActivityMenuItemHandlerTest {
         editor.commit();
 
         houseHoldActivityMenuItemHandler.open();
-
 
         String expectedValue = FlowType.Household.toString();
         KeyValueStore keyValueStore = KeyValueStoreFactory.instance(participantListActivity);
