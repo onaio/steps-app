@@ -76,21 +76,21 @@ public class HouseholdFlowTest {
         householdFlow.prepareSettingScreen();
         assertNotNull(settingsActivity.findViewById(R.id.household_flow_disabled));
         assertNotNull(settingsActivity.findViewById(R.id.participant_flow));
-        assertNotNull(settingsActivity.findViewById(R.id.household_seed));
-        assertNotNull(settingsActivity.findViewById(R.id.household_seed_label));
-        assertNotNull(settingsActivity.findViewById(R.id.endpointUrl));
-        assertNotNull(settingsActivity.findViewById(R.id.endpointUrl_label));
-        assertNotNull(settingsActivity.findViewById(R.id.min_age));
-        assertNotNull(settingsActivity.findViewById(R.id.max_age));
+        assertNotNull(settingsActivity.findViewById(R.id.household_seed_household));
+        assertNotNull(settingsActivity.findViewById(R.id.household_seed_label_household));
+        assertNotNull(settingsActivity.findViewById(R.id.endpointUrl_household));
+        assertNotNull(settingsActivity.findViewById(R.id.endpointUrl_label_household));
+        assertNotNull(settingsActivity.findViewById(R.id.min_age_household));
+        assertNotNull(settingsActivity.findViewById(R.id.max_age_household));
     }
 
     @Test
     public void ShouldSaveDataFromSettingFields(){
-        TextView deviceId = (TextView) settingsActivity.findViewById(R.id.deviceId);
-        TextView formId = (TextView) settingsActivity.findViewById(R.id.form_id);
-        TextView maxage = (TextView) settingsActivity.findViewById(R.id.max_age);
-        TextView minage = (TextView) settingsActivity.findViewById(R.id.min_age);
-        TextView endPointUrl = (TextView) settingsActivity.findViewById(R.id.endpointUrl);
+        TextView deviceId = (TextView) settingsActivity.findViewById(R.id.deviceId_household);
+        TextView formId = (TextView) settingsActivity.findViewById(R.id.form_id_household);
+        TextView maxage = (TextView) settingsActivity.findViewById(R.id.max_age_household);
+        TextView minage = (TextView) settingsActivity.findViewById(R.id.min_age_household);
+        TextView endPointUrl = (TextView) settingsActivity.findViewById(R.id.endpointUrl_household);
         deviceId.setText("1234567");
         formId.setText("STEPS_Instrument_V3_1");
         maxage.setText("69");
@@ -105,11 +105,11 @@ public class HouseholdFlowTest {
 
     @Test
     public void ShouldTrimSettingsBeforeSaving() {
-        TextView deviceId = (TextView) settingsActivity.findViewById(R.id.deviceId);
-        TextView formId = (TextView) settingsActivity.findViewById(R.id.form_id);
-        TextView maxage = (TextView) settingsActivity.findViewById(R.id.max_age);
-        TextView minage = (TextView) settingsActivity.findViewById(R.id.min_age);
-        TextView endPointUrl = (TextView) settingsActivity.findViewById(R.id.endpointUrl);
+        TextView deviceId = (TextView) settingsActivity.findViewById(R.id.deviceId_household);
+        TextView formId = (TextView) settingsActivity.findViewById(R.id.form_id_household);
+        TextView maxage = (TextView) settingsActivity.findViewById(R.id.max_age_household);
+        TextView minage = (TextView) settingsActivity.findViewById(R.id.min_age_household);
+        TextView endPointUrl = (TextView) settingsActivity.findViewById(R.id.endpointUrl_household);
         deviceId.setText(" 1234567 ");
         formId.setText(" STEPS_Instrument_V3_1 ");
         maxage.setText(" 69 ");
@@ -124,12 +124,12 @@ public class HouseholdFlowTest {
 
     @Test
     public void ShouldNotSaveDataFromSettingFields() throws InvalidDataException {
-        TextView deviceId = (TextView) settingsActivity.findViewById(R.id.deviceId);
-        TextView formId = (TextView) settingsActivity.findViewById(R.id.form_id);
-        TextView maxage = (TextView) settingsActivity.findViewById(R.id.max_age);
-        TextView minage = (TextView) settingsActivity.findViewById(R.id.min_age);
-        TextView endPointUrl = (TextView) settingsActivity.findViewById(R.id.endpointUrl);
-        TextView householdseed = (TextView) settingsActivity.findViewById(R.id.household_seed);
+        TextView deviceId = (TextView) settingsActivity.findViewById(R.id.deviceId_household);
+        TextView formId = (TextView) settingsActivity.findViewById(R.id.form_id_household);
+        TextView maxage = (TextView) settingsActivity.findViewById(R.id.max_age_household);
+        TextView minage = (TextView) settingsActivity.findViewById(R.id.min_age_household);
+        TextView endPointUrl = (TextView) settingsActivity.findViewById(R.id.endpointUrl_household);
+        TextView householdseed = (TextView) settingsActivity.findViewById(R.id.household_seed_household);
         deviceId.setText("");
         formId.setText("");
         maxage.setText("");
