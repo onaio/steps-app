@@ -151,4 +151,6 @@
     <string name="data_wipe_successful">Data successfully wiped</string>
     <string name="households">Households</string>
     <string name="participants">Participants</string>
+
+    <string name="export_settings">Import/Export Settings</string>
 </resources>

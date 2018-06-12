@@ -139,4 +139,8 @@ public class SettingsActivity extends Activity {
         new CustomDialog().confirm(this, confirmListener, CustomDialog.EmptyListener, R.string.warning_erasing_data, R.string.warning_title);
     }
 
+    public void exportSettings(View view) {
+
+    }
+
 }
