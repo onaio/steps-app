@@ -132,6 +132,19 @@ public class ParticipantFlowTest {
 
     }
 
+    @Test
+    public void validateParticipantsSettingsShouldPass() {
+        participantFlow.validateParticipantsSettings("did", "fid", "20", "35");
+    }
+
+    @Test
+    public void validateParticipantsSettingsShouldFail() {
+        assertEquals(1, participantFlow.validateParticipantsSettings("", "fid", "20", "35").size());
+        assertEquals(1, participantFlow.validateParticipantsSettings("did", null, "20", "35").size());
+        assertEquals(1, participantFlow.validateParticipantsSettings("did", "fid", "", "35").size());
+        assertEquals(1, participantFlow.validateParticipantsSettings("did", "fid", "20", "").size());
+    }
+
 
     private String getValue(Activity activity, String key) {
         return KeyValueStoreFactory.instance(activity).getString(key);

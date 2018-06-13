@@ -35,6 +35,8 @@ import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
+import java.util.List;
+
 import static junit.framework.Assert.assertNotNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -141,6 +143,20 @@ public class HouseholdFlowTest {
         expectedException.expectMessage(String.format(error_string, "Settings", "Survey ID,Device ID,Form ID,Max age"));
 
         householdFlow.validateOptions();
+    }
+
+    @Test
+    public void validateHouseHoldSettingsShouldFail() {
+        assertEquals(1, householdFlow.validateHouseHoldSettings("sid", "deid", null, "56", "89").size());
+        assertEquals(1, householdFlow.validateHouseHoldSettings("", "deid", "fid", "56", "89").size());
+        assertEquals(1, householdFlow.validateHouseHoldSettings("sid", null, "fid", "56", "89").size());
+        assertEquals(1, householdFlow.validateHouseHoldSettings("sid", "deid", "fid", "", "89").size());
+        assertEquals(1, householdFlow.validateHouseHoldSettings("sid", "deid", "fid", "56", "").size());
+    }
+
+    @Test
+    public void validateHouseHoldSettingsShouldPass() {
+        assertEquals(0, householdFlow.validateHouseHoldSettings("sid", "deid", "fid", "56", "89").size());
     }
 
 
