@@ -118,7 +118,9 @@ public class HouseholdFlow implements IFlow {
     private void setData(int viewId, String keyId) {
         String data = getValue(activity, keyId);
         TextView textView = (TextView) activity.findViewById(viewId);
-        textView.setText(data);
+        if (textView.getText().toString().trim().isEmpty()) {
+            textView.setText(data);
+        }
     }
 
     private void prepareView() {
