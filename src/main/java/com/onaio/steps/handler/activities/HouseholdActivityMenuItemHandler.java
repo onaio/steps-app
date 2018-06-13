@@ -1,3 +1,18 @@
+/*
+ * Copyright 2016. World Health Organization
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.onaio.steps.handler.activities;
 
 import android.app.Activity;
@@ -15,12 +30,12 @@ import com.onaio.steps.orchestrators.flows.HouseholdFlow;
  * Created by Ephraim Kigamba - ekigamba@ona.io on 04/06/2018.
  */
 
-public class HouseHoldActivityMenuItemHandler implements IMenuHandler {
+public class HouseholdActivityMenuItemHandler implements IMenuHandler {
 
     private static final int MENU_ID= R.id.action_open_households;
     private ParticipantListActivity activity;
 
-    public HouseHoldActivityMenuItemHandler(Activity activity) {
+    public HouseholdActivityMenuItemHandler(Activity activity) {
         if (activity instanceof ParticipantListActivity) {
             this.activity = (ParticipantListActivity) activity;
         }
