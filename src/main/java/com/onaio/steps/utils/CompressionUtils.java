@@ -14,9 +14,8 @@
 
 package com.onaio.steps.utils;
 
+import android.util.Base64;
 import android.util.Log;
-
-import org.apache.commons.codec.binary.Base64;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -51,6 +50,7 @@ public class CompressionUtils {
         // Compress the bytes
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream(data.length());
         deflater.finish();
+
         byte[] buffer = new byte[1024];
         while (!deflater.finished()) {
             int count = deflater.deflate(buffer); // returns the generated code... index
@@ -60,10 +60,9 @@ public class CompressionUtils {
         byte[] output = outputStream.toByteArray();
 
         // Encode to base64
-        String base64String = Base64.encodeBase64String(output);
+        String base64String = Base64.encodeToString(output, Base64.NO_WRAP);
         logInfo("Original : %d", data.length());
         logInfo("Compressed : %d", base64String.length());
-        logInfo("Compression ratio : %2f", ((data.length() * 1.0) / base64String.length()) * 100);
         return base64String;
     }
 
@@ -73,7 +72,7 @@ public class CompressionUtils {
         }
 
         // Decode from base64
-        byte[] output = Base64.decodeBase64(compressedString);
+        byte[] output = Base64.decode(compressedString, Base64.NO_WRAP);
 
         Inflater inflater = new Inflater();
         inflater.setInput(output);
