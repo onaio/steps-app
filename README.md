@@ -45,7 +45,7 @@ gradle assembleRelease
 
 The signed APK (`build/outputs/apk/steps-app-release.apk`) should be available for distribution if the build was successful.
 
-## Creating the Docker Image on you Drone-CI server
+## Creating the Docker Image on Your Drone-CI Server
 
 Use these commands to create a Docker image that can be used to run Drone-CI tests for this project:
 
