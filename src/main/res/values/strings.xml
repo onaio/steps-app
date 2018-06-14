@@ -154,4 +154,5 @@
 
     <string name="export_settings">Import/Export Settings</string>
     <string name="encoding_max_limit">Maximum characters limit reached: QR code can\'t be generated for all settings</string>
+    <string name="import_qr_code_error_msg">Oops! An error occured importing the QR Code Settings</string>
 </resources>

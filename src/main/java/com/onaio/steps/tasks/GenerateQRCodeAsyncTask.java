@@ -14,7 +14,7 @@
 
 package com.onaio.steps.tasks;
 
-import android.content.Context;
+import android.app.Activity;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
@@ -23,6 +23,8 @@ import android.util.Log;
 import com.google.zxing.WriterException;
 import com.onaio.steps.listeners.QRBitmapGeneratorListener;
 import com.onaio.steps.utils.QRCodeUtils;
+
+import org.json.JSONException;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
@@ -35,9 +37,9 @@ public class GenerateQRCodeAsyncTask extends AsyncTask<Void, Void, Object> {
 
     private static final String TAG = GenerateQRCodeAsyncTask.class.getName();
     private QRBitmapGeneratorListener qrBitmapGeneratorListener;
-    private Context context;
+    private Activity context;
 
-    public GenerateQRCodeAsyncTask(@NonNull Context context, QRBitmapGeneratorListener qrBitmapGeneratorListener) {
+    public GenerateQRCodeAsyncTask(@NonNull Activity context, QRBitmapGeneratorListener qrBitmapGeneratorListener) {
         this.qrBitmapGeneratorListener = qrBitmapGeneratorListener;
         this.context = context;
     }
@@ -46,7 +48,7 @@ public class GenerateQRCodeAsyncTask extends AsyncTask<Void, Void, Object> {
     protected Object doInBackground(Void... voids) {
         try {
             return QRCodeUtils.generateSettingQRCodeAndSaveToDisk(context);
-        } catch (NoSuchAlgorithmException | WriterException | IOException e) {
+        } catch (NoSuchAlgorithmException | WriterException | IOException | JSONException e) {
             Log.e(TAG, Log.getStackTraceString(e));
             return e;
         }
