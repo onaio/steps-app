@@ -15,14 +15,12 @@
   ~ limitations under the License.
   -->
 
-<resources>
-    <color name="pink">#ff9999</color>
-    <color name="steps_green">#499F72</color>
-    <color name="button_disabled">#737373</color>
+<shape android:shape="rectangle"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <color name="dark_green">#3b825d</color>
-    <color name="steps_red">#ce6c60</color>
-    <color name="steps_dark_red">#c1675b</color>
+    <corners
+        android:radius="5dp"/>
 
-    <color name="toast_bg_color">#323232</color>
-</resources>
+    <solid
+        android:color="@color/toast_bg_color"/>
+</shape>

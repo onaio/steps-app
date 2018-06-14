@@ -25,7 +25,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.google.zxing.ChecksumException;
 import com.google.zxing.FormatException;
@@ -36,6 +35,7 @@ import com.onaio.steps.R;
 import com.onaio.steps.listeners.QRBitmapGeneratorListener;
 import com.onaio.steps.utils.CompressionUtils;
 import com.onaio.steps.utils.QRCodeUtils;
+import com.onaio.steps.utils.ViewUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -62,8 +62,9 @@ public class SettingsImportExportActivity extends Activity {
 
             @Override
             public void onError(Exception e) {
-                Toast.makeText(SettingsImportExportActivity.this, "An error occured generating the settings", Toast.LENGTH_LONG)
-                        .show();
+                /*Toast.makeText(SettingsImportExportActivity.this, "An error occured generating the settings", Toast.LENGTH_LONG)
+                        .show();*/
+                ViewUtils.showCustomToast(SettingsImportExportActivity.this, getString(R.string.error_generating_qr_code));
             }
         });
     }
@@ -91,12 +92,17 @@ public class SettingsImportExportActivity extends Activity {
             IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
             if (result != null) {
                 if (result.getContents() == null) {
-                    Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
+                    /*Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();*/
+                    ViewUtils.showCustomToast(SettingsImportExportActivity.this, getString(R.string.cancelled));
+
                 } else {
                     try {
                         String decompressedSettings = CompressionUtils.decompress(result.getContents());
                         importSettings(decompressedSettings);
                         Log.i(TAG, "Import text: " + result.getContents());
+
+                        setResult(RESULT_OK);
+                        finish();
                     } catch (IOException | DataFormatException e) {
                         Log.e(TAG, Log.getStackTraceString(e));
                     }
@@ -116,12 +122,12 @@ public class SettingsImportExportActivity extends Activity {
                 importSettings(response);
             } catch (DataFormatException | IOException | FormatException | ChecksumException | NotFoundException e) {
                 Log.e(TAG, Log.getStackTraceString(e));
-                Toast.makeText(this, R.string.import_qr_code_error_msg, Toast.LENGTH_LONG)
-                        .show();
+                /*Toast.makeText(this, R.string.import_qr_code_error_msg, Toast.LENGTH_LONG)
+                        .show();*/
+                ViewUtils.showCustomToast(this, getString(R.string.import_qr_code_error_msg));
             }
         }
     }
-
 
     private void importSettings(String compressedSettings) {
         try {

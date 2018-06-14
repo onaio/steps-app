@@ -56,13 +56,12 @@
                 android:layout_marginBottom="15dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="7.5dp"
-                android:background="#499F72"
                 android:drawablePadding="-10dp"
                 android:onClick="handleCustomMenu"
                 android:paddingLeft="10dp"
                 android:text="@string/add_new_household"
                 android:textSize="14dp"
-                android:textColor="@android:color/white" />
+                style="@style/GreenButtonStyle"/>
             <Button
                 android:id="@+id/action_submit_data"
                 android:layout_width="match_parent"
@@ -72,13 +71,12 @@
                 android:layout_marginBottom="15dp"
                 android:layout_marginLeft="7.5dp"
                 android:layout_marginRight="15dp"
-                android:background="#499F72"
                 android:drawablePadding="-20dp"
                 android:onClick="handleCustomMenu"
                 android:paddingLeft="10dp"
                 android:text="@string/action_submit_data"
                 android:textSize="14dp"
-                android:textColor="@android:color/white" />
+                style="@style/GreenButtonStyle" />
         </LinearLayout>
 
         <ListView

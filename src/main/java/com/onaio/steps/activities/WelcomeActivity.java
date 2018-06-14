@@ -24,6 +24,7 @@ import android.view.View;
 import com.onaio.steps.orchestrators.flows.FlowType;
 import com.onaio.steps.R;
 import com.onaio.steps.handler.activities.SettingActivityHandler;
+import com.onaio.steps.utils.ViewUtils;
 
 public class WelcomeActivity extends Activity {
     @Override
