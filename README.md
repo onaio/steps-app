@@ -1,4 +1,4 @@
-# WHO STEPS App [![Build Status](http://drone.onalabs.org/api/badges/onaio/steps-app/status.svg)](http://drone.onalabs.org/onaio/steps-app)
+# WHO STEPS App [![Build Status](http://cicd.onalabs.org/api/badges/onaio/steps-app/status.svg)](http://cicd.onalabs.org/onaio/steps-app)
 
 STEPS is an Android application developed for the World Health Organization's STEPwise approach to noncommunicable disease risk factor surveillance. The application is used to register households and household members during survey rounds and then randomly select a household member to interview. Once a household member is randomly selected for interview, the survey is launched in the [ODK Collect](https://opendatakit.org/use/collect/) application. Supported languages are English, French, Spanish, Russian, and Arabic.
 
@@ -44,3 +44,13 @@ gradle assembleRelease
 ```
 
 The signed APK (`build/outputs/apk/steps-app-release.apk`) should be available for distribution if the build was successful.
+
+## Creating the Docker Image on you Drone-CI server
+
+Use these commands to create a Docker image that can be used to run Drone-CI tests for this project:
+
+```sh
+git clone https://github.com/onaio/docker-builds.git
+cd docker-builds/android
+docker build -t onaio/android:steps-app --build-arg "androidComponents=platform-tools,android-21,extra-android-support,extra-android-m2repository,extra-google-m2repository" --build-arg "buildToolsVersion=27.0.3" .
+```
