@@ -14,6 +14,7 @@
 
 package com.onaio.steps.utils;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -41,8 +42,13 @@ import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import com.onaio.steps.R;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.FileUtil;
+import com.onaio.steps.helper.KeyValueStore;
+import com.onaio.steps.helper.KeyValueStoreFactory;
 import com.onaio.steps.listeners.QRBitmapGeneratorListener;
 import com.onaio.steps.tasks.GenerateQRCodeAsyncTask;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
@@ -63,9 +69,6 @@ public class QRCodeUtils {
     private static final int QR_CODE_SIDE_LENGTH = 400; // in pixels
     private static final String SETTINGS_MD5_FILE = ".steps-settings-hash";
     static final String MD5_CACHE_PATH = Constants.SETTINGS + File.separator + SETTINGS_MD5_FILE;
-
-    private QRCodeUtils() {
-    }
 
     public static String decodeFromBitmap(Bitmap bitmap) throws DataFormatException, IOException, FormatException, ChecksumException, NotFoundException {
         Map<DecodeHintType, Object> tmpHintsMap = new EnumMap<>(DecodeHintType.class);
@@ -109,20 +112,21 @@ public class QRCodeUtils {
                 bmp.setPixel(x, y, bitMatrix.get(x, y) ? Color.BLACK : Color.WHITE);
             }
         }
-        logInfo("QR Code generation took : %d ms", (System.currentTimeMillis() - time));
+        logInfo("QR Code generation took : %d ms", (int) (System.currentTimeMillis() - time));
         return bmp;
     }
 
-    public static void generateSettingQRCode(@NonNull Context context, QRBitmapGeneratorListener qrBitmapGeneratorListener) {
+    public static void generateSettingQRCode(@NonNull Activity context, QRBitmapGeneratorListener qrBitmapGeneratorListener) {
         GenerateQRCodeAsyncTask generateQRCodeAsyncTask = new GenerateQRCodeAsyncTask(context, qrBitmapGeneratorListener);
         generateQRCodeAsyncTask.execute();
     }
 
-    public static Bitmap generateSettingQRCodeAndSaveToDisk(Context context) throws NoSuchAlgorithmException, WriterException, IOException {
-        String preferencesString = getSettingsAsJSON(null);
+    public static Bitmap generateSettingQRCodeAndSaveToDisk(Activity context) throws NoSuchAlgorithmException
+            , WriterException, IOException, JSONException {
+        String settingsJSON = exportSettingsToJSON(context);
 
         MessageDigest md = MessageDigest.getInstance("MD5");
-        md.update(preferencesString.getBytes());
+        md.update(settingsJSON.getBytes());
         byte[] messageDigest = md.digest();
 
         boolean shouldWriteToDisk = true;
@@ -156,7 +160,7 @@ public class QRCodeUtils {
         // If the file is not found in the disk or md5Hash not matched
         if (bitmap == null) {
             logInfo("Generating QRCode...");
-            bitmap = generateQRBitMap(context, preferencesString, QR_CODE_SIDE_LENGTH);
+            bitmap = generateQRBitMap(context, settingsJSON, QR_CODE_SIDE_LENGTH);
             shouldWriteToDisk = true;
         }
 
@@ -174,9 +178,69 @@ public class QRCodeUtils {
         return bitmap;
     }
 
-    private static String getSettingsAsJSON(Context context) {
-        // todo: finish this
-        return "";
+    public static String exportSettingsToJSON(Activity activity) throws JSONException {
+        KeyValueStore keyValueStore = KeyValueStoreFactory.instance(activity);
+
+        JSONObject jsonObject = new JSONObject();
+
+        JSONObject houseHoldSettings = new JSONObject();
+        houseHoldSettings.put(Constants.HH_SURVEY_ID,
+                keyValueStore.getString(Constants.HH_SURVEY_ID)
+        );
+        houseHoldSettings.put(Constants.HH_HOUSEHOLD_SEED, keyValueStore.getString(Constants.HH_HOUSEHOLD_SEED));
+        houseHoldSettings.put(Constants.HH_FORM_ID, keyValueStore.getString(Constants.HH_FORM_ID));
+        houseHoldSettings.put(Constants.HH_MIN_AGE, keyValueStore.getString(Constants.HH_MIN_AGE));
+        houseHoldSettings.put(Constants.HH_MAX_AGE, keyValueStore.getString(Constants.HH_MAX_AGE));
+        houseHoldSettings.put(Constants.IMPORT_URL, keyValueStore.getString(Constants.IMPORT_URL));
+        houseHoldSettings.put(Constants.ENDPOINT_URL, keyValueStore.getString(Constants.ENDPOINT_URL));
+
+        jsonObject.put("householdSettings", houseHoldSettings);
+
+        JSONObject participantSettings = new JSONObject();
+        participantSettings.put(Constants.PA_FORM_ID, keyValueStore.getString(Constants.PA_FORM_ID));
+        participantSettings.put(Constants.PA_MIN_AGE, keyValueStore.getString(Constants.PA_MIN_AGE));
+        participantSettings.put(Constants.PA_MAX_AGE, keyValueStore.getString(Constants.PA_MAX_AGE));
+
+        jsonObject.put("participantSettings", participantSettings);
+
+        return jsonObject.toString();
+    }
+
+    public static boolean importSettingsFromJSON(Activity activity, @NonNull String jsonString) {
+        try {
+            JSONObject jsonObject = new JSONObject(jsonString);
+
+            KeyValueStore keyValueStore = KeyValueStoreFactory.instance(activity);
+
+            //Todo: REMOVE PHONE IDs
+            keyValueStore.putString(Constants.PA_PHONE_ID, "");
+            keyValueStore.putString(Constants.HH_PHONE_ID, "");
+
+            if (jsonObject.has("participantSettings")) {
+                JSONObject participantSettings = jsonObject.getJSONObject("participantSettings");
+                keyValueStore.putString(Constants.PA_FORM_ID, participantSettings.getString(Constants.PA_FORM_ID));
+                keyValueStore.putString(Constants.PA_MAX_AGE, participantSettings.getString(Constants.PA_MAX_AGE));
+                keyValueStore.putString(Constants.PA_MIN_AGE, participantSettings.getString(Constants.PA_MIN_AGE));
+            }
+
+            if (jsonObject.has("householdSettings")) {
+                JSONObject householdSettings = jsonObject.getJSONObject("householdSettings");
+
+                keyValueStore.putString(Constants.HH_FORM_ID, householdSettings.getString(Constants.HH_FORM_ID));
+                keyValueStore.putString(Constants.HH_SURVEY_ID, householdSettings.getString(Constants.HH_SURVEY_ID));
+                keyValueStore.putString(Constants.HH_HOUSEHOLD_SEED, householdSettings.getString(Constants.HH_HOUSEHOLD_SEED));
+                keyValueStore.putString(Constants.HH_MIN_AGE, householdSettings.getString(Constants.HH_MIN_AGE));
+                keyValueStore.putString(Constants.HH_MAX_AGE, householdSettings.getString(Constants.HH_MAX_AGE));
+
+                keyValueStore.putString(Constants.ENDPOINT_URL, householdSettings.getString(Constants.ENDPOINT_URL));
+                keyValueStore.putString(Constants.IMPORT_URL, householdSettings.getString(Constants.IMPORT_URL));
+            }
+        } catch (JSONException e) {
+            Log.e(TAG, Log.getStackTraceString(e));
+            return false;
+        }
+
+        return true;
     }
 
     private static void logInfo(String format, String toReplace) {
@@ -188,6 +252,10 @@ public class QRCodeUtils {
     }
 
     private static void logInfo(String format, double toReplace) {
+        Log.i(TAG, String.format(format, toReplace));
+    }
+
+    private static void logInfo(String format, long toReplace) {
         Log.i(TAG, String.format(format, toReplace));
     }
 

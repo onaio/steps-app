@@ -140,7 +140,7 @@ public class SettingsActivity extends Activity {
     }
 
     public void exportSettings(View view) {
-
+        startActivity(new Intent(this, SettingsImportExportActivity.class));
     }
 
 }
