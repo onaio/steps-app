@@ -149,4 +149,6 @@
     <string name="action_erase_data">Wipe Data</string>
     <string name="warning_erasing_data">This will wipe all household and participant data on this device. Do you want to proceed?</string>
     <string name="data_wipe_successful">Data successfully wiped</string>
+    <string name="households">Households</string>
+    <string name="participants">Participants</string>
 </resources>

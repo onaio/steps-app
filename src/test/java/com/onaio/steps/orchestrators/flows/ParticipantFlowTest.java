@@ -76,20 +76,16 @@ public class ParticipantFlowTest {
         participantFlow.prepareSettingScreen();
         assertNotNull(settingsActivity.findViewById(R.id.household_flow_disabled));
         assertNotNull(settingsActivity.findViewById(R.id.participant_flow));
-        assertNotNull(settingsActivity.findViewById(R.id.household_seed));
-        assertNotNull(settingsActivity.findViewById(R.id.household_seed_label));
-        assertNotNull(settingsActivity.findViewById(R.id.endpointUrl));
-        assertNotNull(settingsActivity.findViewById(R.id.endpointUrl_label));
-        assertNotNull(settingsActivity.findViewById(R.id.min_age));
-        assertNotNull(settingsActivity.findViewById(R.id.max_age));
+        assertNotNull(settingsActivity.findViewById(R.id.min_age_participant));
+        assertNotNull(settingsActivity.findViewById(R.id.max_age_participant));
    }
 
     @Test
     public void ShouldSaveDataFromSettingFields(){
-        TextView deviceId = (TextView) settingsActivity.findViewById(R.id.deviceId);
-        TextView formId = (TextView) settingsActivity.findViewById(R.id.form_id);
-        TextView maxage = (TextView) settingsActivity.findViewById(R.id.max_age);
-        TextView minage = (TextView) settingsActivity.findViewById(R.id.min_age);
+        TextView deviceId = (TextView) settingsActivity.findViewById(R.id.deviceId_participant);
+        TextView formId = (TextView) settingsActivity.findViewById(R.id.form_id_participant);
+        TextView maxage = (TextView) settingsActivity.findViewById(R.id.max_age_participant);
+        TextView minage = (TextView) settingsActivity.findViewById(R.id.min_age_participant);
         deviceId.setText("1234567");
         formId.setText("STEPS_Instrument_V3_1");
         maxage.setText("69");
@@ -103,10 +99,10 @@ public class ParticipantFlowTest {
 
     @Test
     public void ShouldTrimSettingsBeforeSaving() {
-        TextView deviceId = (TextView) settingsActivity.findViewById(R.id.deviceId);
-        TextView formId = (TextView) settingsActivity.findViewById(R.id.form_id);
-        TextView maxage = (TextView) settingsActivity.findViewById(R.id.max_age);
-        TextView minage = (TextView) settingsActivity.findViewById(R.id.min_age);
+        TextView deviceId = (TextView) settingsActivity.findViewById(R.id.deviceId_participant);
+        TextView formId = (TextView) settingsActivity.findViewById(R.id.form_id_participant);
+        TextView maxage = (TextView) settingsActivity.findViewById(R.id.max_age_participant);
+        TextView minage = (TextView) settingsActivity.findViewById(R.id.min_age_participant);
         deviceId.setText(" 1234567 ");
         formId.setText(" STEPS_Instrument_V3_1 ");
         maxage.setText(" 69 ");
@@ -120,10 +116,10 @@ public class ParticipantFlowTest {
 
     @Test
     public void ShouldNotSaveDataFromSettingFields() throws InvalidDataException {
-        TextView deviceId = (TextView) settingsActivity.findViewById(R.id.deviceId);
-        TextView formId = (TextView) settingsActivity.findViewById(R.id.form_id);
-        TextView maxage = (TextView) settingsActivity.findViewById(R.id.max_age);
-        TextView minage = (TextView) settingsActivity.findViewById(R.id.min_age);
+        TextView deviceId = (TextView) settingsActivity.findViewById(R.id.deviceId_participant);
+        TextView formId = (TextView) settingsActivity.findViewById(R.id.form_id_participant);
+        TextView maxage = (TextView) settingsActivity.findViewById(R.id.max_age_participant);
+        TextView minage = (TextView) settingsActivity.findViewById(R.id.min_age_participant);
         deviceId.setText("");
         formId.setText("STEPS_Instrument_V3_1");
         maxage.setText("");
@@ -134,6 +130,19 @@ public class ParticipantFlowTest {
 
         participantFlow.validateOptions();
 
+    }
+
+    @Test
+    public void validateParticipantsSettingsShouldPass() {
+        participantFlow.validateParticipantsSettings("did", "fid", "20", "35");
+    }
+
+    @Test
+    public void validateParticipantsSettingsShouldFail() {
+        assertEquals(1, participantFlow.validateParticipantsSettings("", "fid", "20", "35").size());
+        assertEquals(1, participantFlow.validateParticipantsSettings("did", null, "20", "35").size());
+        assertEquals(1, participantFlow.validateParticipantsSettings("did", "fid", "", "35").size());
+        assertEquals(1, participantFlow.validateParticipantsSettings("did", "fid", "20", "").size());
     }
 
 

@@ -21,10 +21,9 @@ import android.view.Menu;
 
 import com.onaio.steps.handler.actions.SaveToSDCardHandler;
 import com.onaio.steps.handler.actions.SubmitDataHandler;
+import com.onaio.steps.handler.activities.ParticipantActivityMenuItemHandler;
 import com.onaio.steps.handler.interfaces.IViewPreparer;
 import com.onaio.steps.orchestrators.flows.FlowType;
-import com.onaio.steps.handler.actions.ExportHandler;
-import com.onaio.steps.handler.actions.FinalisedFormHandler;
 import com.onaio.steps.handler.activities.HouseholdActivityHandler;
 import com.onaio.steps.handler.actions.ImportHandler;
 import com.onaio.steps.handler.interfaces.IActivityResultHandler;
@@ -41,6 +40,7 @@ import java.util.List;
 public class HouseholdListActivityFactory {
     public static List<IMenuHandler> getMenuHandlers(ListActivity activity, List<Household> households){
         ArrayList<IMenuHandler> handlers = new ArrayList<IMenuHandler>();
+        handlers.add(new ParticipantActivityMenuItemHandler(activity));
         handlers.add(new SettingActivityHandler(activity).prepareFor(FlowType.Household));
         handlers.add(new SubmitDataHandler(activity).with(households));
         handlers.add(new ImportHandler(activity));

@@ -47,12 +47,12 @@ public class SettingsActivity extends Activity {
         Intent intent = getIntent();
         flowType = FlowType.valueOf(intent.getStringExtra(Constants.FLOW_TYPE));
         flowOrchestrator = new FlowOrchestrator(this);
+        setContentView(R.layout.settings);
         setHeader();
         prepareViewWithData();
     }
 
     private void setHeader() {
-        setContentView(R.layout.settings);
         TextView header = (TextView) findViewById(R.id.form_header);
         header.setText(R.string.action_settings);
     }
@@ -62,12 +62,33 @@ public class SettingsActivity extends Activity {
     }
 
     public void save(View view) {
+        DialogInterface.OnClickListener onClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if (flowType == FlowType.Household) {
+                    enableParticipantFlow(null);
+                } else {
+                    enableHouseholdFlow(null);
+                }
+            }
+        };
+
         try {
                 flowOrchestrator.saveSettings(flowType);
-                setResult(RESULT_OK, this.getIntent());
-                finish();
         } catch (InvalidDataException e) {
             new CustomDialog().notify(this, CustomDialog.EmptyListener, e.getMessage(), R.string.error_title);
+            return;
+        }
+
+        try {
+            if (flowType != FlowType.None) {
+                flowOrchestrator.saveSettings(flowType == FlowType.Household ? FlowType.Participant : FlowType.Household);
+            }
+
+            setResult(RESULT_OK, this.getIntent());
+            finish();
+        } catch (InvalidDataException e) {
+            new CustomDialog().notify(this, onClickListener, e.getMessage(), R.string.error_title);
         }
     }
 
@@ -77,12 +98,20 @@ public class SettingsActivity extends Activity {
 
 
     public void enableHouseholdFlow(View view) {
+        if (flowType == FlowType.None) {
+            findViewById(R.id.setting_contents)
+                    .setVisibility(View.VISIBLE);
+        }
         flowType = FlowType.Household;
         setHeader();
         prepareViewWithData();
     }
 
     public void enableParticipantFlow(View view) {
+        if (flowType == FlowType.None) {
+            findViewById(R.id.setting_contents)
+                    .setVisibility(View.VISIBLE);
+        }
         flowType = FlowType.Participant;
         setHeader();
         prepareViewWithData();
@@ -93,7 +122,7 @@ public class SettingsActivity extends Activity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 ImportHandler importHandler = new ImportHandler(SettingsActivity.this);
-                importHandler.open(R.id.deviceId);
+                importHandler.open(R.id.deviceId_household);
             }
         };
         new CustomDialog().confirm(this, confirmListener, CustomDialog.EmptyListener, R.string.warning_merging_data, R.string.warning_title);

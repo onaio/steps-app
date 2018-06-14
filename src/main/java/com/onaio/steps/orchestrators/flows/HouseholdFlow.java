@@ -50,7 +50,6 @@ public class HouseholdFlow implements IFlow {
     public HouseholdFlow(Activity activity) {
         this.activity = activity;
         errorFields = new ArrayList<String>();
-
     }
 
     @Override
@@ -66,14 +65,14 @@ public class HouseholdFlow implements IFlow {
 
     @Override
     public void saveSettings() {
-        saveData(R.id.campaignId, HH_SURVEY_ID);
-        saveData(R.id.deviceId, HH_PHONE_ID);
-        saveData(R.id.form_id, HH_FORM_ID);
-        saveData(R.id.min_age, HH_MIN_AGE);
-        saveData(R.id.max_age, HH_MAX_AGE);
-        saveData(R.id.endpointUrl, ENDPOINT_URL);
-        saveData(R.id.importUrl, IMPORT_URL);
-        saveData(R.id.household_seed, HH_HOUSEHOLD_SEED);
+        saveData(R.id.campaignId_household, HH_SURVEY_ID);
+        saveData(R.id.deviceId_household, HH_PHONE_ID);
+        saveData(R.id.form_id_household, HH_FORM_ID);
+        saveData(R.id.min_age_household, HH_MIN_AGE);
+        saveData(R.id.max_age_household, HH_MAX_AGE);
+        saveData(R.id.endpointUrl_household, ENDPOINT_URL);
+        saveData(R.id.importUrl_household, IMPORT_URL);
+        saveData(R.id.household_seed_household, HH_HOUSEHOLD_SEED);
         saveSafely(activity, FLOW_TYPE, FlowType.Household.toString());
     }
 
@@ -84,49 +83,63 @@ public class HouseholdFlow implements IFlow {
 
     @Override
     public void validateOptions() throws InvalidDataException {
-        String surveyIdValue = ((TextView) activity.findViewById(R.id.campaignId)).getText().toString().trim();
-        String deviceIdValue = ((TextView) activity.findViewById(R.id.deviceId)).getText().toString().trim();
-        String formIdValue = ((TextView) activity.findViewById(R.id.form_id)).getText().toString().trim();
-        String minAgeValue = ((TextView) activity.findViewById(R.id.min_age)).getText().toString().trim();
-        String maxAgeValue = ((TextView) activity.findViewById(R.id.max_age)).getText().toString().trim();
+        String surveyIdValue = ((TextView) activity.findViewById(R.id.campaignId_household)).getText().toString().trim();
+        String deviceIdValue = ((TextView) activity.findViewById(R.id.deviceId_household)).getText().toString().trim();
+        String formIdValue = ((TextView) activity.findViewById(R.id.form_id_household)).getText().toString().trim();
+        String minAgeValue = ((TextView) activity.findViewById(R.id.min_age_household)).getText().toString().trim();
+        String maxAgeValue = ((TextView) activity.findViewById(R.id.max_age_household)).getText().toString().trim();
 
-        errorFields = new DataValidator(activity).
-                validate(surveyIdValue, getStringValue(R.string.survey_id_label)).
-                validate(deviceIdValue, getStringValue(R.string.device_id_label)).
-                validate(formIdValue, getStringValue(R.string.form_id)).
-                validate(minAgeValue, getStringValue(R.string.min_age)).
-                validate(maxAgeValue, getStringValue(R.string.max_age)).
-                finish();
+        errorFields = validateHouseHoldSettings(surveyIdValue, deviceIdValue, formIdValue, minAgeValue, maxAgeValue);
         if (errorFields != null && !errorFields.isEmpty())
             throw new InvalidDataException(activity, getStringValue(R.string.action_settings), errorFields);
+    }
 
+    public List<String> validateHouseHoldSettings(String surveyId, String deviceId, String formId, String minAge, String maxAge) {
+        return new DataValidator(activity).
+                validate(surveyId, getStringValue(R.string.survey_id_label)).
+                validate(deviceId, getStringValue(R.string.device_id_label)).
+                validate(formId, getStringValue(R.string.form_id)).
+                validate(minAge, getStringValue(R.string.min_age)).
+                validate(maxAge, getStringValue(R.string.max_age)).
+                finish();
     }
 
     private void populateData() {
-        setData(R.id.campaignId, Constants.HH_SURVEY_ID);
-        setData(R.id.deviceId, Constants.HH_PHONE_ID);
-        setData(R.id.form_id, Constants.HH_FORM_ID);
-        setData(R.id.min_age, Constants.HH_MIN_AGE);
-        setData(R.id.max_age, Constants.HH_MAX_AGE);
-        setData(R.id.household_seed, Constants.HH_HOUSEHOLD_SEED);
-        setData(R.id.endpointUrl, Constants.ENDPOINT_URL);
-        setData(R.id.importUrl, Constants.IMPORT_URL);
+        setData(R.id.campaignId_household, Constants.HH_SURVEY_ID);
+        setData(R.id.deviceId_household, Constants.HH_PHONE_ID);
+        setData(R.id.form_id_household, Constants.HH_FORM_ID);
+        setData(R.id.min_age_household, Constants.HH_MIN_AGE);
+        setData(R.id.max_age_household, Constants.HH_MAX_AGE);
+        setData(R.id.household_seed_household, Constants.HH_HOUSEHOLD_SEED);
+        setData(R.id.endpointUrl_household, Constants.ENDPOINT_URL);
+        setData(R.id.importUrl_household, Constants.IMPORT_URL);
     }
 
     private void setData(int viewId, String keyId) {
         String data = getValue(activity, keyId);
         TextView textView = (TextView) activity.findViewById(viewId);
-        textView.setText(data);
+        if (textView.getText().toString().trim().isEmpty()) {
+            textView.setText(data);
+        }
     }
 
     private void prepareView() {
         hide(R.id.participant_flow_disabled);
+        show(R.id.participant_flow);
         hide(R.id.household_flow);
+        hide(R.id.participantSettingsContent);
+        show(R.id.household_flow_disabled);
+        show(R.id.householdSettingsContent);
     }
 
     private void hide(int viewId) {
         View viewElement = activity.findViewById(viewId);
         viewElement.setVisibility(View.GONE);
+    }
+
+    private void show(int viewId) {
+        View viewElement = activity.findViewById(viewId);
+        viewElement.setVisibility(View.VISIBLE);
     }
 
 
@@ -136,7 +149,7 @@ public class HouseholdFlow implements IFlow {
         saveSafely(activity, keyId, data);
     }
 
-    private void saveSafely(Activity activity, String key, String value) {
+    public void saveSafely(Activity activity, String key, String value) {
         KeyValueStore keyValueStore = KeyValueStoreFactory.instance(activity);
         if (!keyValueStore.putString(key, value))
             saveSettingsErrorHandler(key);
@@ -146,7 +159,7 @@ public class HouseholdFlow implements IFlow {
         //TODO: toast message for save phone id failure
     }
 
-    private String getValue(Activity activity, String key) {
+    public String getValue(Activity activity, String key) {
         return KeyValueStoreFactory.instance(activity).getString(key);
     }
 
