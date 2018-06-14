@@ -33,6 +33,7 @@ import com.onaio.steps.orchestrators.FlowOrchestrator;
 import com.onaio.steps.orchestrators.flows.FlowType;
 import com.onaio.steps.R;
 import com.onaio.steps.helper.Constants;
+import com.onaio.steps.utils.ViewUtils;
 
 public class SettingsActivity extends Activity {
 
@@ -140,7 +141,18 @@ public class SettingsActivity extends Activity {
     }
 
     public void exportSettings(View view) {
-        startActivity(new Intent(this, SettingsImportExportActivity.class));
+        startActivityForResult(new Intent(this, SettingsImportExportActivity.class), Constants.EXPORT_IMPORT_SETTINGS_PAGE_REQUEST_CODE);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == Constants.EXPORT_IMPORT_SETTINGS_PAGE_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                ViewUtils.showCustomToast(this, getString(R.string.import_qr_code_success_msg));
+            }
+
+            enableHouseholdFlow(null);
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 }

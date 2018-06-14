@@ -80,4 +80,7 @@ public class Constants {
             + File.separator + "steps";
 
     public static final String SETTINGS = STEPS_ROOT_FOLDER + File.separator + "settings";
+
+    public static final int EXPORT_IMPORT_SETTINGS_PAGE_REQUEST_CODE = 8723;
+    public static final int FAILURE_RESULT_CODE = 2;
 }

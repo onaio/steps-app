@@ -36,17 +36,16 @@
             android:text="@string/export_settings"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="15dp"
             android:layout_marginBottom="15dp"
             android:onClick="exportSettings"
-            android:textColor="@android:color/white"
-            android:background="#499F72"/>
+            style="@style/GreenButtonStyle"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="15dp"
             android:text="@string/select_app_type" />
 
         <LinearLayout
@@ -357,8 +356,6 @@
                     android:layout_marginTop="30dp"
                     android:text="@string/age_range" />
 
-
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -392,6 +389,18 @@
             </LinearLayout>
 
             <Button
+                android:id="@+id/importButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/action_import"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="15dp"
+                android:onClick="importData"
+                style="@style/GreenButtonStyle"/>
+
+            <Button
                 android:id="@+id/eraseDataButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -401,8 +410,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="15dp"
                 android:onClick="eraseData"
-                android:textColor="@android:color/white"
-                android:background="#ce6c60"/>
+                style="@style/RedButtonStyle"/>
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

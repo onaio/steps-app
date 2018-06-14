@@ -156,7 +156,7 @@ public class SubmitDataHandler implements IMenuHandler,IMenuPreparer, IViewPrepa
 
     @Override
     public void enable() {
-        activity.findViewById(MENU_ID).setBackgroundColor(activity.getResources().getColor(R.color.steps_green));
+        activity.findViewById(MENU_ID).setBackground(activity.getResources().getDrawable(R.drawable.button_selector));
         activity.findViewById(MENU_ID).setEnabled(true);
     }
 }

@@ -152,7 +152,11 @@
     <string name="households">Households</string>
     <string name="participants">Participants</string>
 
-    <string name="export_settings">Import/Export Settings</string>
+    <string name="export_settings">Import Settings via QR Code</string>
     <string name="encoding_max_limit">Maximum characters limit reached: QR code can\'t be generated for all settings</string>
-    <string name="import_qr_code_error_msg">Oops! An error occured importing the QR Code Settings</string>
+    <string name="import_qr_code_error_msg">Import settings via QR code failed</string>
+    <string name="import_export_settings_title">Import/Export Settings</string>
+    <string name="error_generating_qr_code">An error occurred generating the settings QR Code</string>
+    <string name="cancelled">Cancelled</string>
+    <string name="import_qr_code_success_msg">Settings have been updated via QR code</string>
 </resources>

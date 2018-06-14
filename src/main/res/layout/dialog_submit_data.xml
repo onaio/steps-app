@@ -38,6 +38,5 @@
         android:layout_marginBottom="20dp"
         android:layout_marginRight="20dp"
         android:layout_alignParentRight="true"
-        android:background="#499F72"
-        android:textColor="@android:color/white" />
+        style="@style/GreenButtonStyle" />
 </RelativeLayout>

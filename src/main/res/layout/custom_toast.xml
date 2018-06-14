@@ -15,14 +15,17 @@
   ~ limitations under the License.
   -->
 
-<resources>
-    <color name="pink">#ff9999</color>
-    <color name="steps_green">#499F72</color>
-    <color name="button_disabled">#737373</color>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/toast_layout_root"
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:padding="12dp"
+    android:background="@drawable/custom_toast_bg">
 
-    <color name="dark_green">#3b825d</color>
-    <color name="steps_red">#ce6c60</color>
-    <color name="steps_dark_red">#c1675b</color>
+    <TextView android:id="@+id/text"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:textColor="@android:color/white" />
 
-    <color name="toast_bg_color">#323232</color>
-</resources>
+</LinearLayout>

@@ -16,13 +16,14 @@
   -->
 
 <resources>
-    <color name="pink">#ff9999</color>
-    <color name="steps_green">#499F72</color>
-    <color name="button_disabled">#737373</color>
 
-    <color name="dark_green">#3b825d</color>
-    <color name="steps_red">#ce6c60</color>
-    <color name="steps_dark_red">#c1675b</color>
+    <style name="GreenButtonStyle">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:background">@drawable/button_selector</item>
+    </style>
 
-    <color name="toast_bg_color">#323232</color>
+    <style name="RedButtonStyle">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:background">@drawable/red_button_selector</item>
+    </style>
 </resources>

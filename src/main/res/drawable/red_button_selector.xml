@@ -15,14 +15,7 @@
   ~ limitations under the License.
   -->
 
-<resources>
-    <color name="pink">#ff9999</color>
-    <color name="steps_green">#499F72</color>
-    <color name="button_disabled">#737373</color>
-
-    <color name="dark_green">#3b825d</color>
-    <color name="steps_red">#ce6c60</color>
-    <color name="steps_dark_red">#c1675b</color>
-
-    <color name="toast_bg_color">#323232</color>
-</resources>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true" android:drawable="@color/steps_dark_red"/>
+    <item android:drawable="@color/steps_red" android:state_enabled="true" />
+</selector>

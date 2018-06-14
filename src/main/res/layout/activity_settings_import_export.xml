@@ -16,11 +16,19 @@
   -->
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/settingsImportExport_contentLayout"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     tools:context="com.onaio.steps.activities.SettingsImportExportActivity">
+
+    <View
+        android:id="@+id/action_bar_divider"
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentTop="true"
+        android:background="@android:color/darker_gray" />
 
 
     <ImageView
@@ -28,7 +36,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="18dp"
-        android:layout_alignParentTop="true"
+        android:layout_below="@id/action_bar_divider"
         android:layout_above="@+id/scanCodeBtn"/>
 
     <Button
@@ -40,6 +48,7 @@
         android:text="Scan code from another device"
         android:layout_marginBottom="18dp"
         android:layout_marginLeft="18dp"
+        style="@style/GreenButtonStyle"
         android:layout_marginRight="18dp"/>
 
     <Button
@@ -51,5 +60,6 @@
         android:text="Select code from SD Card"
         android:layout_marginBottom="18dp"
         android:layout_marginLeft="18dp"
+        style="@style/GreenButtonStyle"
         android:layout_marginRight="18dp" />
 </RelativeLayout>
