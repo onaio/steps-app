@@ -23,8 +23,12 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ShareActionProvider;
 
 import com.google.zxing.ChecksumException;
 import com.google.zxing.FormatException;
@@ -127,6 +131,29 @@ public class SettingsImportExportActivity extends Activity {
                 ViewUtils.showCustomToast(this, getString(R.string.import_qr_code_error_msg));
             }
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.export_import_settings, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.menu_item_settings_share) {
+            Intent intent = new Intent(Intent.ACTION_SEND);
+            intent.setType("image/*");
+            intent.putExtra(Intent.EXTRA_STREAM, "file://" + QRCodeUtils.QR_CODE_FILEPATH);
+
+            startActivity(Intent.createChooser(intent, getString(R.string.share_qr_code_title)));
+
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     private void importSettings(String compressedSettings) {
