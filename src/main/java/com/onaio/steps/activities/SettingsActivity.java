@@ -67,7 +67,15 @@ public class SettingsActivity extends Activity {
         }
     }
 
-    public void save(View view) {
+    public void saveBtnClicked(View view) {
+        save(false);
+    }
+
+    public void doneBtnClicked(View view) {
+        save(true);
+    }
+
+    private void save(boolean finishAfterSaving) {
         DialogInterface.OnClickListener onClickListener = new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -90,9 +98,13 @@ public class SettingsActivity extends Activity {
 
         try {
             flowOrchestrator.saveSettings(flowType);
-
             setResult(RESULT_OK, this.getIntent());
-            finish();
+
+            if (finishAfterSaving) {
+                finish();
+            } else {
+                ViewUtils.showCustomToast(this, getString(R.string.settings_saved_successfully));
+            }
         } catch (InvalidDataException e) {
             new CustomDialog().notify(this, CustomDialog.EmptyListener, e.getMessage(), R.string.error_title);
         }
