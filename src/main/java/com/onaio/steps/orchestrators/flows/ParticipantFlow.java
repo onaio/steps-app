@@ -114,7 +114,8 @@ public class ParticipantFlow implements IFlow {
         viewElement.setVisibility(View.VISIBLE);
     }
 
-    private void populateData() {
+    @Override
+    public void populateData() {
         setData(R.id.deviceId_participant, Constants.PA_PHONE_ID);
         setData(R.id.form_id_participant, Constants.PA_FORM_ID);
         setData(R.id.min_age_participant, Constants.PA_MIN_AGE);

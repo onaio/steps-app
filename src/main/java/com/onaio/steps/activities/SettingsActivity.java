@@ -40,6 +40,7 @@ public class SettingsActivity extends Activity {
     private FlowType flowType;
     private FlowOrchestrator flowOrchestrator;
     private DatabaseHelper db;
+    private boolean justOpened = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +61,10 @@ public class SettingsActivity extends Activity {
 
     private void prepareViewWithData() {
         flowOrchestrator.prepareSettingScreen(flowType);
+        if (justOpened) {
+            flowOrchestrator.prepareOtherScreenData(flowType);
+            justOpened = false;
+        }
     }
 
     public void save(View view) {
@@ -75,21 +80,21 @@ public class SettingsActivity extends Activity {
         };
 
         try {
-                flowOrchestrator.saveSettings(flowType);
+            if (flowType != FlowType.None) {
+                flowOrchestrator.saveSettings(flowType == FlowType.Household ? FlowType.Participant : FlowType.Household);
+            }
         } catch (InvalidDataException e) {
-            new CustomDialog().notify(this, CustomDialog.EmptyListener, e.getMessage(), R.string.error_title);
+            new CustomDialog().notify(this, onClickListener, e.getMessage(), R.string.error_title);
             return;
         }
 
         try {
-            if (flowType != FlowType.None) {
-                flowOrchestrator.saveSettings(flowType == FlowType.Household ? FlowType.Participant : FlowType.Household);
-            }
+            flowOrchestrator.saveSettings(flowType);
 
             setResult(RESULT_OK, this.getIntent());
             finish();
         } catch (InvalidDataException e) {
-            new CustomDialog().notify(this, onClickListener, e.getMessage(), R.string.error_title);
+            new CustomDialog().notify(this, CustomDialog.EmptyListener, e.getMessage(), R.string.error_title);
         }
     }
 

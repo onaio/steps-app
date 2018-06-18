@@ -28,5 +28,7 @@ public interface IFlow {
 
     void saveSettings();
 
+    void populateData();
+
     Intent getIntent();
 }

@@ -91,6 +91,12 @@ public class FlowOrchestrator {
         authenticateUser(flowType);
     }
 
+    public void prepareOtherScreenData(FlowType flowType) {
+        if (flowType != FlowType.None) {
+            getFlow(flowType == FlowType.Household ? FlowType.Participant : FlowType.Household).populateData();
+        }
+    }
+
     public void start(FlowType flowType){
         Intent intent = getFlow(flowType).getIntent();
         activity.startActivity(intent);

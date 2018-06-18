@@ -160,5 +160,5 @@
     <string name="cancelled">Cancelled</string>
     <string name="import_qr_code_success_msg">Settings have been updated via QR code</string>
     <string name="share_qr_code_title">Share Settings QR Code</string>
-    <string name="qr_code_share_error">Sorry! QR Code cannot be shared! An error occured</string>
+    <string name="qr_code_share_error">Sorry! QR Code cannot be shared! An error occurred</string>
 </resources>

@@ -51,6 +51,11 @@ public class InitialFlow implements IFlow {
     }
 
     @Override
+    public void populateData() {
+        // Do nothing since there are no settings in preferences
+    }
+
+    @Override
     public Intent getIntent() {
         return new Intent(activity, WelcomeActivity.class);
     }

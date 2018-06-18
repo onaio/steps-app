@@ -104,7 +104,8 @@ public class HouseholdFlow implements IFlow {
                 finish();
     }
 
-    private void populateData() {
+    @Override
+    public void populateData() {
         setData(R.id.campaignId_household, Constants.HH_SURVEY_ID);
         setData(R.id.deviceId_household, Constants.HH_PHONE_ID);
         setData(R.id.form_id_household, Constants.HH_FORM_ID);
