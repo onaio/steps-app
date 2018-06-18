@@ -15,40 +15,53 @@
   ~ limitations under the License.
   -->
 
-<RelativeLayout
-    android:orientation="horizontal"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="50dp"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-        <Button
-            android:layout_width="85dp"
-            android:layout_height="fill_parent"
-            android:text = "@string/action_done"
-            android:background="@android:color/holo_blue_dark"
-            android:textColor="@android:color/white"
-            android:onClick="save"
-            android:id="@+id/ic_done"
-            android:textSize="14sp"
-            android:layout_alignParentRight="true"/>
-        <ImageButton
-            android:layout_width="50dp"
-            android:layout_height="fill_parent"
-            android:src="@drawable/ic_action_cancel"
-            android:background="@android:color/transparent"
-            android:onClick="cancel"
-            android:id="@+id/ic_cancel"
-            android:layout_alignParentLeft="true"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:id="@+id/form_header"
-            android:gravity="center_vertical"
-            android:textColor="#008148"
-            android:layout_centerInParent="true"/>
-    <View android:layout_height="1dp"
+    android:layout_height="50dp">
+
+    <Button
+        android:id="@+id/ic_done"
+        android:layout_width="85dp"
+        android:layout_height="fill_parent"
+        android:layout_alignParentRight="true"
+        android:background="@android:color/holo_blue_dark"
+        android:onClick="doneBtnClicked"
+        android:text="@string/action_done"
+        android:textColor="@android:color/white"
+        android:textSize="14sp" />
+
+    <ImageButton
+        android:layout_toLeftOf="@id/ic_done"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:onClick="saveBtnClicked"
+        android:src="@drawable/baseline_save_black_24"
+        android:background="@drawable/save_button_bg"
+        android:tint="@android:color/holo_blue_dark" />
+
+    <ImageButton
+        android:id="@+id/ic_cancel"
+        android:layout_width="50dp"
+        android:layout_height="fill_parent"
+        android:layout_alignParentLeft="true"
+        android:background="@android:color/transparent"
+        android:onClick="cancel"
+        android:src="@drawable/ic_action_cancel" />
+
+    <TextView
+        android:id="@+id/form_header"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_centerInParent="true"
+        android:gravity="center_vertical"
+        android:textColor="#008148" />
+
+    <View
         android:layout_width="fill_parent"
-        android:background="@android:color/darker_gray"
+        android:layout_height="1dp"
         android:layout_below="@id/ic_done"
         android:layout_marginTop="-1dp"
-        />
+        android:background="@android:color/darker_gray" />
 </RelativeLayout>
