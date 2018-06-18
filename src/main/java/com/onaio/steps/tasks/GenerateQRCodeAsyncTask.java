@@ -47,7 +47,7 @@ public class GenerateQRCodeAsyncTask extends AsyncTask<Void, Void, Object> {
     @Override
     protected Object doInBackground(Void... voids) {
         try {
-            return QRCodeUtils.generateSettingQRCodeAndSaveToDisk(context);
+            return QRCodeUtils.generateSettingQRCode(context);
         } catch (NoSuchAlgorithmException | WriterException | IOException | JSONException e) {
             Log.e(TAG, Log.getStackTraceString(e));
             return e;

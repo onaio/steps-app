@@ -28,7 +28,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.ShareActionProvider;
 
 import com.google.zxing.ChecksumException;
 import com.google.zxing.FormatException;
@@ -37,6 +36,8 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.onaio.steps.R;
 import com.onaio.steps.listeners.QRBitmapGeneratorListener;
+import com.onaio.steps.listeners.QRBitmapSaveListener;
+import com.onaio.steps.tasks.SaveQRCodeAsyncTask;
 import com.onaio.steps.utils.CompressionUtils;
 import com.onaio.steps.utils.QRCodeUtils;
 import com.onaio.steps.utils.ViewUtils;
@@ -51,6 +52,8 @@ public class SettingsImportExportActivity extends Activity {
     public static final int PICK_IMAGE_REQUEST_CODE = 89;
     public static final int SCAN_REQUEST_CODE = IntentIntegrator.REQUEST_CODE;
 
+    private Bitmap qrCodeBitmap = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,12 +65,12 @@ public class SettingsImportExportActivity extends Activity {
             public void onBitmapGenerated(Bitmap bitmap) {
                 ImageView qrCodeImg = (ImageView) findViewById(R.id.qrCodeImg);
                 qrCodeImg.setImageBitmap(bitmap);
+
+                qrCodeBitmap = bitmap;
             }
 
             @Override
             public void onError(Exception e) {
-                /*Toast.makeText(SettingsImportExportActivity.this, "An error occured generating the settings", Toast.LENGTH_LONG)
-                        .show();*/
                 ViewUtils.showCustomToast(SettingsImportExportActivity.this, getString(R.string.error_generating_qr_code));
             }
         });
@@ -96,7 +99,6 @@ public class SettingsImportExportActivity extends Activity {
             IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
             if (result != null) {
                 if (result.getContents() == null) {
-                    /*Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();*/
                     ViewUtils.showCustomToast(SettingsImportExportActivity.this, getString(R.string.cancelled));
 
                 } else {
@@ -126,8 +128,6 @@ public class SettingsImportExportActivity extends Activity {
                 importSettings(response);
             } catch (DataFormatException | IOException | FormatException | ChecksumException | NotFoundException e) {
                 Log.e(TAG, Log.getStackTraceString(e));
-                /*Toast.makeText(this, R.string.import_qr_code_error_msg, Toast.LENGTH_LONG)
-                        .show();*/
                 ViewUtils.showCustomToast(this, getString(R.string.import_qr_code_error_msg));
             }
         }
@@ -144,11 +144,24 @@ public class SettingsImportExportActivity extends Activity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.menu_item_settings_share) {
-            Intent intent = new Intent(Intent.ACTION_SEND);
-            intent.setType("image/*");
-            intent.putExtra(Intent.EXTRA_STREAM, "file://" + QRCodeUtils.QR_CODE_FILEPATH);
 
-            startActivity(Intent.createChooser(intent, getString(R.string.share_qr_code_title)));
+            SaveQRCodeAsyncTask saveQRCodeAsyncTask = new SaveQRCodeAsyncTask(this, qrCodeBitmap, new QRBitmapSaveListener() {
+                @Override
+                public void onSuccessfulSave() {
+                    Intent intent = new Intent(Intent.ACTION_SEND);
+                    intent.setType("image/*");
+                    intent.putExtra(Intent.EXTRA_STREAM, Uri.parse("file://" + QRCodeUtils.QR_CODE_FILEPATH));
+
+                    startActivity(Intent.createChooser(intent, getString(R.string.share_qr_code_title)));
+                }
+
+                @Override
+                public void onError(Exception e) {
+                    ViewUtils.showCustomToast(SettingsImportExportActivity.this, getString(R.string.qr_code_share_error));
+                }
+            });
+
+            saveQRCodeAsyncTask.execute();
 
             return true;
         }

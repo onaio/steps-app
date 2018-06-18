@@ -19,6 +19,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
@@ -65,7 +66,7 @@ public class QRCodeUtils {
 
     private static final String TAG = QRCodeUtils.class.getName();
 
-    public static final String QR_CODE_FILEPATH = Constants.SETTINGS + File.separator + "steps-settings.png";
+    public static final String QR_CODE_FILEPATH = Environment.getExternalStorageDirectory() + File.separator + Environment.DIRECTORY_PICTURES + File.separator + "my-steps-settings.png";
     private static final int QR_CODE_SIDE_LENGTH = 400; // in pixels
     private static final String SETTINGS_MD5_FILE = ".steps-settings-hash";
     static final String MD5_CACHE_PATH = Constants.SETTINGS + File.separator + SETTINGS_MD5_FILE;
@@ -121,15 +122,13 @@ public class QRCodeUtils {
         generateQRCodeAsyncTask.execute();
     }
 
-    public static Bitmap generateSettingQRCodeAndSaveToDisk(Activity context) throws NoSuchAlgorithmException
-            , WriterException, IOException, JSONException {
-        String settingsJSON = exportSettingsToJSON(context);
+    public static Bitmap generateSettingQRCode(Activity activity) throws JSONException, NoSuchAlgorithmException, IOException, WriterException {
+        String settingsJSON = exportSettingsToJSON(activity);
 
         MessageDigest md = MessageDigest.getInstance("MD5");
         md.update(settingsJSON.getBytes());
         byte[] messageDigest = md.digest();
 
-        boolean shouldWriteToDisk = true;
         Bitmap bitmap = null;
 
         // check if settings directory exists, if not then create one
@@ -144,38 +143,45 @@ public class QRCodeUtils {
         if (mdCacheFile.exists()) {
             byte[] cachedMessageDigest = FileUtil.read(mdCacheFile);
 
-                /*
-                 * If the messageDigest generated from the preferences is equal to cachedMessageDigest
-                 * then don't generate QRCode and read the one saved in disk
-                 */
+            /*
+             * If the messageDigest generated from the settings JSON is equal to cachedMessageDigest
+             * then don't generate QRCode and read the one saved in disk
+             */
             if (Arrays.equals(messageDigest, cachedMessageDigest)) {
                 logInfo("Loading QRCode from the disk...");
                 BitmapFactory.Options options = new BitmapFactory.Options();
                 options.inPreferredConfig = Bitmap.Config.ARGB_8888;
                 bitmap = FileUtil.getBitmap(QR_CODE_FILEPATH, options);
-                shouldWriteToDisk = false;
             }
         }
 
         // If the file is not found in the disk or md5Hash not matched
         if (bitmap == null) {
             logInfo("Generating QRCode...");
-            bitmap = generateQRBitMap(context, settingsJSON, QR_CODE_SIDE_LENGTH);
-            shouldWriteToDisk = true;
+            bitmap = generateQRBitMap(activity, settingsJSON, QR_CODE_SIDE_LENGTH);
         }
+
+        return bitmap;
+    }
+
+    public static void saveToDisk(Activity activity, Bitmap bitmap) throws JSONException, NoSuchAlgorithmException {
+
+        String settingsJSON = exportSettingsToJSON(activity);
+
+        MessageDigest md = MessageDigest.getInstance("MD5");
+        md.update(settingsJSON.getBytes());
+        byte[] messageDigest = md.digest();
+
+        File mdCacheFile = new File(MD5_CACHE_PATH);
 
         if (bitmap != null) {
             // Save the QRCode to disk
-            if (shouldWriteToDisk) {
                 logInfo("Saving QR Code to disk... : " + QR_CODE_FILEPATH);
                 FileUtil.saveBitmapToFile(bitmap, QR_CODE_FILEPATH);
 
                 FileUtil.write(mdCacheFile, messageDigest);
                 logInfo("Updated %s file contents", SETTINGS_MD5_FILE);
-            }
         }
-
-        return bitmap;
     }
 
     public static String exportSettingsToJSON(Activity activity) throws JSONException {
