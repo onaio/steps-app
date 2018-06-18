@@ -97,7 +97,7 @@ public class QRCodeUtils {
         String compressedData = CompressionUtils.compress(data);
 
         // Maximum capacity for QR Codes is 4,296 characters (Alphanumeric)
-        if (compressedData.length() > 4000) {
+        if (compressedData.length() > 4296) {
             throw new IOException(context.getString(R.string.encoding_max_limit));
         }
 
