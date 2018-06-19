@@ -8,10 +8,13 @@ For more information, see http://www.who.int/chp/steps/en/.
 
 ## Building the app
 
-Make sure the Gradle daemon (version 2.2.1) is installed on your build machine. Build the app by running:
+Make sure the Gradle daemon (version 4.4) is installed on your build machine. 
+
+Android gradle plugin 3.1.2 with Android Studio 3.1.2 is required.
+Build the app by running:
 
 ```
-gradle assembleDebug
+gradle assembleDebug --rerun-tasks
 ```
 
 It's good practice to sign the app before you release the app. If you don't already have a certificate for signing the APK, you can create one by running:
