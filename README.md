@@ -4,6 +4,8 @@ STEPS is an Android application developed for the World Health Organization's ST
 
 ![screenshot 1](screenshots/screen1.png) ![screenshot 2](screenshots/screen2.png) ![screenshot 3](screenshots/screen3.png)
 
+![screenshot_4](screenshots/screen4.png) ![screenshot_5](screenshots/screen5.png) ![screenshot_6](screenshots/screen6.png)
+
 For more information, see http://www.who.int/chp/steps/en/.
 
 ## Building the app
