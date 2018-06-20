@@ -76,9 +76,9 @@ public class ParticipantFlow implements IFlow {
     }
 
     @Override
-    public void prepareSettingScreen() {
+    public void prepareSettingScreen(boolean forceRefreshValues) {
         prepareView();
-        populateData();
+        populateData(forceRefreshValues);
     }
 
     @Override
@@ -115,17 +115,17 @@ public class ParticipantFlow implements IFlow {
     }
 
     @Override
-    public void populateData() {
-        setData(R.id.deviceId_participant, Constants.PA_PHONE_ID);
-        setData(R.id.form_id_participant, Constants.PA_FORM_ID);
-        setData(R.id.min_age_participant, Constants.PA_MIN_AGE);
-        setData(R.id.max_age_participant, Constants.PA_MAX_AGE);
+    public void populateData(boolean forceRefreshValues) {
+        setData(R.id.deviceId_participant, Constants.PA_PHONE_ID, forceRefreshValues);
+        setData(R.id.form_id_participant, Constants.PA_FORM_ID, forceRefreshValues);
+        setData(R.id.min_age_participant, Constants.PA_MIN_AGE, forceRefreshValues);
+        setData(R.id.max_age_participant, Constants.PA_MAX_AGE, forceRefreshValues);
     }
 
-    private void setData(int viewId, String keyId) {
+    private void setData(int viewId, String keyId, boolean forceRefreshValues) {
         String data = getValue(activity, keyId);
         TextView textView = (TextView) activity.findViewById(viewId);
-        if (textView.getText().toString().trim().isEmpty()) {
+        if (forceRefreshValues || (!forceRefreshValues && textView.getText().toString().trim().isEmpty())) {
             textView.setText(data);
         }
     }

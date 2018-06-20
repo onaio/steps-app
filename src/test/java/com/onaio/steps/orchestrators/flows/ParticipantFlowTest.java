@@ -73,7 +73,7 @@ public class ParticipantFlowTest {
 
     @Test
     public void ShouldBeAbleToPopulateViewWithProperTextFields(){
-        participantFlow.prepareSettingScreen();
+        participantFlow.prepareSettingScreen(false);
         assertNotNull(settingsActivity.findViewById(R.id.household_flow_disabled));
         assertNotNull(settingsActivity.findViewById(R.id.participant_flow));
         assertNotNull(settingsActivity.findViewById(R.id.min_age_participant));
@@ -145,11 +145,7 @@ public class ParticipantFlowTest {
         assertEquals(1, participantFlow.validateParticipantsSettings("did", "fid", "20", "").size());
     }
 
-
     private String getValue(Activity activity, String key) {
         return KeyValueStoreFactory.instance(activity).getString(key);
     }
-
-
-
 }

@@ -23,12 +23,13 @@ import com.onaio.steps.exceptions.InvalidDataException;
 public interface IFlow {
     boolean canHandle(FlowType flowType);
 
-    void prepareSettingScreen();
+    void prepareSettingScreen(boolean forceRefreshValues);
+
     void validateOptions() throws InvalidDataException;
 
     void saveSettings();
 
-    void populateData();
+    void populateData(boolean forceRefreshValues);
 
     Intent getIntent();
 }
