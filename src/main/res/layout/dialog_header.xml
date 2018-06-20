@@ -38,6 +38,7 @@
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
         android:onClick="saveBtnClicked"
+        android:visibility="gone"
         android:src="@drawable/baseline_save_black_36"
         android:background="@drawable/save_button_bg"
         android:tint="@android:color/holo_blue_dark" />

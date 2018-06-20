@@ -54,8 +54,7 @@ public class NewMemberActivity extends Activity {
         doneButton.setText(R.string.add);
     }
 
-
-    public void save(View view) {
+    public void doneBtnClicked(View view) {
         try{
             Member member = new MemberViewWrapper(this)
                     .getFromView(household);

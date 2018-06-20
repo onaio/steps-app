@@ -70,7 +70,7 @@ public class NewHouseholdActivity extends Activity {
         householdSeed = Integer.parseInt(householdSeedString);
     }
 
-    public void save(View view) {
+    public void doneBtnClicked(View view) {
         try {
             Intent intent = this.getIntent();
             Household household = new HouseholdViewWrapper(this).getHousehold(R.id.generated_household_id, R.id.household_number,R.id.household_comments);
