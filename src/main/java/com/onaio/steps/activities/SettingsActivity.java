@@ -59,12 +59,16 @@ public class SettingsActivity extends Activity {
         header.setText(R.string.action_settings);
     }
 
-    private void prepareViewWithData() {
-        flowOrchestrator.prepareSettingScreen(flowType);
+    private void prepareViewWithData(boolean forceRefreshValues) {
+        flowOrchestrator.prepareSettingScreen(flowType, forceRefreshValues);
         if (justOpened) {
-            flowOrchestrator.prepareOtherScreenData(flowType);
+            flowOrchestrator.prepareOtherScreenData(flowType, forceRefreshValues);
             justOpened = false;
         }
+    }
+
+    private void prepareViewWithData() {
+        prepareViewWithData(false);
     }
 
     public void saveBtnClicked(View view) {
@@ -115,14 +119,18 @@ public class SettingsActivity extends Activity {
     }
 
 
-    public void enableHouseholdFlow(View view) {
+    public void enableHouseholdFlow(View view, boolean forceRefreshValues) {
         if (flowType == FlowType.None) {
             findViewById(R.id.setting_contents)
                     .setVisibility(View.VISIBLE);
         }
         flowType = FlowType.Household;
         setHeader();
-        prepareViewWithData();
+        prepareViewWithData(forceRefreshValues);
+    }
+
+    public void enableHouseholdFlow(View view) {
+        enableHouseholdFlow(view, false);
     }
 
     public void enableParticipantFlow(View view) {
@@ -168,7 +176,9 @@ public class SettingsActivity extends Activity {
                 ViewUtils.showCustomToast(this, getString(R.string.import_qr_code_success_msg));
             }
 
-            enableHouseholdFlow(null);
+            // This assures that the other tab data is also refreshed
+            justOpened = true;
+            enableHouseholdFlow(null, true);
         }
         super.onActivityResult(requestCode, resultCode, data);
     }

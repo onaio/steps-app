@@ -55,7 +55,7 @@ public class FlowOrchestrator {
         return new InitialFlow(activity);
     }
 
-    public void authenticateUser(final FlowType flowType) {
+    public void authenticateUser(final FlowType flowType, final boolean forceRefreshValues) {
         AuthDialog authDialog = new AuthDialog(activity, new AuthDialog.OnAuthListener() {
             @Override
             public void onAuthCancelled(AuthDialog authDialog) {
@@ -65,7 +65,7 @@ public class FlowOrchestrator {
             @Override
             public void onAuthSuccessful(AuthDialog authDialog) {
                 authDialog.dismiss();
-                FlowOrchestrator.this.onAuthSuccessful(flowType);
+                FlowOrchestrator.this.onAuthSuccessful(flowType, forceRefreshValues);
             }
 
             @Override
@@ -77,23 +77,23 @@ public class FlowOrchestrator {
         if(authDialog.needsAuth()) {
             authDialog.show();
         } else {
-            onAuthSuccessful(flowType);
+            onAuthSuccessful(flowType, forceRefreshValues);
         }
     }
 
-    private void onAuthSuccessful(FlowType flowType) {
+    private void onAuthSuccessful(FlowType flowType, boolean forceRefreshValues) {
         LinearLayout settingsLayout = (LinearLayout) activity.findViewById(R.id.settings_layout);
         settingsLayout.setVisibility(View.VISIBLE);
-        getFlow(flowType).prepareSettingScreen();
+        getFlow(flowType).prepareSettingScreen(forceRefreshValues);
     }
 
-    public void prepareSettingScreen(FlowType flowType){
-        authenticateUser(flowType);
+    public void prepareSettingScreen(FlowType flowType, boolean forceRefreshValues){
+        authenticateUser(flowType, forceRefreshValues);
     }
 
-    public void prepareOtherScreenData(FlowType flowType) {
+    public void prepareOtherScreenData(FlowType flowType, boolean forceRefreshValues) {
         if (flowType != FlowType.None) {
-            getFlow(flowType == FlowType.Household ? FlowType.Participant : FlowType.Household).populateData();
+            getFlow(flowType == FlowType.Household ? FlowType.Participant : FlowType.Household).populateData(forceRefreshValues);
         }
     }
 

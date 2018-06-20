@@ -75,7 +75,7 @@ public class HouseholdFlowTest {
 
     @Test
     public void ShouldBeAbleToPopulateViewWithProperTextFields(){
-        householdFlow.prepareSettingScreen();
+        householdFlow.prepareSettingScreen(false);
         assertNotNull(settingsActivity.findViewById(R.id.household_flow_disabled));
         assertNotNull(settingsActivity.findViewById(R.id.participant_flow));
         assertNotNull(settingsActivity.findViewById(R.id.household_seed_household));
