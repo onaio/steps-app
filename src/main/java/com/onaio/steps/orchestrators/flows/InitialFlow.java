@@ -37,7 +37,7 @@ public class InitialFlow implements IFlow {
     }
 
     @Override
-    public void prepareSettingScreen() {
+    public void prepareSettingScreen(boolean forceRefreshValues) {
         prepareView();
     }
 
@@ -51,7 +51,7 @@ public class InitialFlow implements IFlow {
     }
 
     @Override
-    public void populateData() {
+    public void populateData(boolean forceRefreshValues) {
         // Do nothing since there are no settings in preferences
     }
 
