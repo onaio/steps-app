@@ -50,6 +50,7 @@ public class SettingsActivity extends Activity {
         flowType = FlowType.valueOf(intent.getStringExtra(Constants.FLOW_TYPE));
         flowOrchestrator = new FlowOrchestrator(this);
         setContentView(R.layout.settings);
+        findViewById(R.id.ic_save).setVisibility(View.VISIBLE);
         setHeader();
         prepareViewWithData();
     }

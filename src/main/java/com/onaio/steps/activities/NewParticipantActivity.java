@@ -49,7 +49,7 @@ public class NewParticipantActivity  extends Activity{
         doneButton.setText(R.string.add);
     }
 
-    public void save(View view) {
+    public void doneBtnClicked(View view) {
         Intent intent =new Intent();
         try{
 
