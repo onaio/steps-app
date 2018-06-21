@@ -5,7 +5,7 @@ pipeline:
       - id
       - java -version
       - ./gradlew --version
-      - ./gradlew clean build
+      - ./gradlew clean
       - ./gradlew test
   notify:
     image: plugins/slack
