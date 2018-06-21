@@ -99,7 +99,7 @@ public class NewMemberActivityTest {
         View view = Mockito.mock(View.class);
         Mockito.stub(view.getId()).toReturn(R.id.member_form);
 
-        newMemberActivity.save(view);
+        newMemberActivity.doneBtnClicked(view);
 
         Intent intent = newMemberActivity.getIntent();
 
@@ -122,7 +122,7 @@ public class NewMemberActivityTest {
         View view = Mockito.mock(View.class);
         Mockito.stub(view.getId()).toReturn(R.id.member_form);
 
-        newMemberActivity.save(view);
+        newMemberActivity.doneBtnClicked(view);
 
         Intent intent = newMemberActivity.getIntent();
 
