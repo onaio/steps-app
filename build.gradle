@@ -66,6 +66,7 @@ repositories {
     mavenLocal()
     mavenCentral()
     jcenter()
+    google()
 }
 
 dependencies {
