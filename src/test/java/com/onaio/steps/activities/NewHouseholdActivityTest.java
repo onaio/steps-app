@@ -99,7 +99,7 @@ public class NewHouseholdActivityTest {
         Mockito.when(telephonyManager.getDeviceId()).thenReturn("testUniqueDevId");
         Mockito.when(newHouseholdActivity.getSystemService(Context.TELEPHONY_SERVICE)).thenReturn(telephonyManager);
         Household household = new HouseholdViewWrapper(newHouseholdActivity).getHousehold(R.id.generated_household_id, R.id.household_number, R.id.household_comments);
-        newHouseholdActivity.save(viewMock);
+        newHouseholdActivity.doneBtnClicked(viewMock);
 
         Intent intent = newHouseholdActivity.getIntent();
         assertEquals(household, intent.getSerializableExtra(Constants.HH_HOUSEHOLD));
