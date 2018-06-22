@@ -33,26 +33,31 @@ import com.google.zxing.ChecksumException;
 import com.google.zxing.FormatException;
 import com.google.zxing.NotFoundException;
 import com.google.zxing.integration.android.IntentIntegrator;
-import com.google.zxing.integration.android.IntentResult;
 import com.onaio.steps.R;
+import com.onaio.steps.handler.actions.QRCodeScanHandler;
+import com.onaio.steps.handler.factories.SettingsImportExportActivityFactory;
+import com.onaio.steps.handler.interfaces.IActivityResultHandler;
+import com.onaio.steps.handler.interfaces.IMenuHandler;
 import com.onaio.steps.listeners.QRBitmapGeneratorListener;
 import com.onaio.steps.listeners.QRBitmapSaveListener;
 import com.onaio.steps.tasks.SaveQRCodeAsyncTask;
-import com.onaio.steps.utils.CompressionUtils;
 import com.onaio.steps.utils.QRCodeUtils;
 import com.onaio.steps.utils.ViewUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 import java.util.zip.DataFormatException;
 
 public class SettingsImportExportActivity extends Activity {
 
     public static final String TAG = SettingsImportExportActivity.class.getName();
-    public static final int PICK_IMAGE_REQUEST_CODE = 89;
-    public static final int SCAN_REQUEST_CODE = IntentIntegrator.REQUEST_CODE;
 
     private Bitmap qrCodeBitmap = null;
+
+    private List<IMenuHandler> iMenuHandlers;
+    private List<IActivityResultHandler> iActivityResultHandlers;
+    private List<IMenuHandler> iCustomMenuHandlers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,63 +79,40 @@ public class SettingsImportExportActivity extends Activity {
                 ViewUtils.showCustomToast(SettingsImportExportActivity.this, getString(R.string.error_generating_qr_code));
             }
         });
+
+        iMenuHandlers = SettingsImportExportActivityFactory.getMenuHandlers(this);
+        iCustomMenuHandlers = SettingsImportExportActivityFactory.getCustomMenuHandler(this);
+        iActivityResultHandlers = SettingsImportExportActivityFactory.getResultHandlers(this);
     }
 
     public void scanCode(View view) {
-        new IntentIntegrator(this)
-                .setBeepEnabled(true)
-                .setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES)
-                .setOrientationLocked(false)
-                .initiateScan();
+        for(IMenuHandler iCustomMenuHandler: iCustomMenuHandlers) {
+            if (iCustomMenuHandler.shouldOpen(view.getId())) {
+                iCustomMenuHandler.open();
+            }
+        }
     }
 
     public void importCodeFromSDCard(View view) {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select QR Code"), PICK_IMAGE_REQUEST_CODE);
+        for(IMenuHandler iCustomMenuHandler: iCustomMenuHandlers) {
+            if (iCustomMenuHandler.shouldOpen(view.getId())) {
+                iCustomMenuHandler.open();
+            }
+        }
     }
 
     // Get the results:
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-        if (requestCode == SCAN_REQUEST_CODE) {
-            IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-            if (result != null) {
-                if (result.getContents() == null) {
-                    ViewUtils.showCustomToast(SettingsImportExportActivity.this, getString(R.string.cancelled));
-
-                } else {
-                    try {
-                        String decompressedSettings = CompressionUtils.decompress(result.getContents());
-                        importSettings(decompressedSettings);
-                        Log.i(TAG, "Import text: " + result.getContents());
-
-                        setResult(RESULT_OK);
-                        finish();
-                    } catch (IOException | DataFormatException e) {
-                        Log.e(TAG, Log.getStackTraceString(e));
-                    }
-                }
-            }
-        } else if (requestCode == PICK_IMAGE_REQUEST_CODE && resultCode == RESULT_OK) {
-            try {
-                // Process the image
-                final Uri imageUri = data.getData();
-                final InputStream imageStream = getContentResolver()
-                        .openInputStream(imageUri);
-
-                final Bitmap bitmap = BitmapFactory.decodeStream(imageStream);
-                String response = QRCodeUtils.decodeFromBitmap(bitmap);
-                Log.i(TAG, "Import text: " + response);
-
-                importSettings(response);
-            } catch (DataFormatException | IOException | FormatException | ChecksumException | NotFoundException e) {
-                Log.e(TAG, Log.getStackTraceString(e));
-                ViewUtils.showCustomToast(this, getString(R.string.import_qr_code_error_msg));
+        for (IActivityResultHandler iActivityResultHandler: iActivityResultHandlers) {
+            if (iActivityResultHandler.canHandleResult(requestCode)) {
+                iActivityResultHandler.handleResult(data, resultCode);
             }
         }
+    }
+
+    public Bitmap getQrCodeBitmap() {
+        return qrCodeBitmap;
     }
 
     @Override
@@ -143,33 +125,16 @@ public class SettingsImportExportActivity extends Activity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.menu_item_settings_share) {
-
-            SaveQRCodeAsyncTask saveQRCodeAsyncTask = new SaveQRCodeAsyncTask(this, qrCodeBitmap, new QRBitmapSaveListener() {
-                @Override
-                public void onSuccessfulSave() {
-                    Intent intent = new Intent(Intent.ACTION_SEND);
-                    intent.setType("image/*");
-                    intent.putExtra(Intent.EXTRA_STREAM, Uri.parse("file://" + QRCodeUtils.QR_CODE_FILEPATH));
-
-                    startActivity(Intent.createChooser(intent, getString(R.string.share_qr_code_title)));
-                }
-
-                @Override
-                public void onError(Exception e) {
-                    ViewUtils.showCustomToast(SettingsImportExportActivity.this, getString(R.string.qr_code_share_error));
-                }
-            });
-
-            saveQRCodeAsyncTask.execute();
-
-            return true;
+        for (IMenuHandler iMenuHandler: iMenuHandlers) {
+            if (iMenuHandler.shouldOpen(item.getItemId())) {
+                return iMenuHandler.open();
+            }
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    private void importSettings(String compressedSettings) {
+    public void importSettings(String compressedSettings) {
         try {
             if (!QRCodeUtils.importSettingsFromJSON(SettingsImportExportActivity.this, compressedSettings)) {
                 throw new DataFormatException("JSON Format is Incorrect");
