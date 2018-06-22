@@ -16,6 +16,8 @@
 
 package com.onaio.steps.model;
 
+import com.google.zxing.integration.android.IntentIntegrator;
+
 public enum RequestCode {
     SETTINGS(1),
     NEW_HOUSEHOLD(2),
@@ -26,7 +28,9 @@ public enum RequestCode {
     SURVEY(7),
     NEW_PARTICIPANT(8),
     EDIT_PARTICIPANT(9),
-    IMPORT_EXPORT_SETTINGS(10);
+    IMPORT_EXPORT_SETTINGS(10),
+    PICK_IMAGE(11),
+    QR_CODE_SCAN(IntentIntegrator.REQUEST_CODE);
 
     private final int code;
     RequestCode(int code){
