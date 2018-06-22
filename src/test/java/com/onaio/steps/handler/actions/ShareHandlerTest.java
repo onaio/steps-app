@@ -16,9 +16,16 @@
 
 package com.onaio.steps.handler.actions;
 
+import android.view.Menu;
+import android.view.MenuItem;
+
+import com.onaio.steps.R;
+import com.onaio.steps.shadows.TestSettingsImportExportActivity;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
@@ -28,27 +35,31 @@ import static org.junit.Assert.*;
 @RunWith(RobolectricTestRunner.class)
 public class ShareHandlerTest {
 
+    private TestSettingsImportExportActivity settingsImportExportActivity;
+    private ShareHandler shareHandler;
+
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
+        settingsImportExportActivity = Robolectric.buildActivity(TestSettingsImportExportActivity.class)
+                .create()
+                .visible()
+                .get();
+        shareHandler = new ShareHandler(settingsImportExportActivity, false);
     }
 
     @Test
     public void shouldOpen() {
+        assertTrue(shareHandler.shouldOpen(R.id.menu_item_settings_share));
     }
 
     @Test
-    public void open() {
+    public void shouldNotOpen() {
+        assertFalse(shareHandler.shouldOpen(R.id.importCodeImageBtn));
     }
+
 
     @Test
     public void shouldDeactivate() {
-    }
-
-    @Test
-    public void deactivate() {
-    }
-
-    @Test
-    public void activate() {
+        assertTrue(shareHandler.shouldDeactivate());
     }
 }
