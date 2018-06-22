@@ -29,6 +29,7 @@ import com.onaio.steps.utils.ViewUtils;
 
 public class ImportExportActivityHandler implements IMenuHandler, IActivityResultHandler {
 
+    private static final int MENU_ID = R.id.exportSettings;
     private SettingsActivity activity;
 
     public ImportExportActivityHandler(SettingsActivity activity) {
@@ -37,7 +38,7 @@ public class ImportExportActivityHandler implements IMenuHandler, IActivityResul
 
     @Override
     public boolean shouldOpen(int menu_id) {
-        return menu_id == R.id.exportSettings;
+        return menu_id == MENU_ID;
     }
 
     @Override
