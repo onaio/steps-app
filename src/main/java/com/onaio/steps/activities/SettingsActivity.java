@@ -27,6 +27,7 @@ import android.widget.Toast;
 
 import com.onaio.steps.exceptions.InvalidDataException;
 import com.onaio.steps.handler.actions.ImportHandler;
+import com.onaio.steps.handler.activities.ExportImportActivityHandler;
 import com.onaio.steps.helper.CustomDialog;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.orchestrators.FlowOrchestrator;
@@ -167,20 +168,25 @@ public class SettingsActivity extends Activity {
     }
 
     public void exportSettings(View view) {
-        startActivityForResult(new Intent(this, SettingsImportExportActivity.class), Constants.EXPORT_IMPORT_SETTINGS_PAGE_REQUEST_CODE);
+        ExportImportActivityHandler exportImportActivityHandler = new ExportImportActivityHandler(this);
+        exportImportActivityHandler.open();
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == Constants.EXPORT_IMPORT_SETTINGS_PAGE_REQUEST_CODE) {
-            if (resultCode == RESULT_OK) {
-                ViewUtils.showCustomToast(this, getString(R.string.import_qr_code_success_msg));
-            }
-
-            // This assures that the other tab data is also refreshed
-            justOpened = true;
-            enableHouseholdFlow(null, true);
+        ExportImportActivityHandler exportImportActivityHandler = new ExportImportActivityHandler(this);
+        if (exportImportActivityHandler.canHandleResult(requestCode)) {
+            exportImportActivityHandler.handleResult(data, resultCode);
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
         }
-        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    public boolean isJustOpened() {
+        return justOpened;
+    }
+
+    public void setJustOpened(boolean justOpened) {
+        this.justOpened = justOpened;
     }
 }
