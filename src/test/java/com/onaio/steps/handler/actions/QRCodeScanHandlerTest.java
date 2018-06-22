@@ -17,8 +17,8 @@
 package com.onaio.steps.handler.actions;
 
 import com.onaio.steps.R;
-import com.onaio.steps.activities.SettingsImportExportActivity;
 import com.onaio.steps.model.RequestCode;
+import com.onaio.steps.shadows.TestSettingsImportExportActivity;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -34,11 +34,11 @@ import static org.junit.Assert.*;
 public class QRCodeScanHandlerTest {
 
     private QRCodeScanHandler qrCodeScanHandler;
-    private SettingsImportExportActivity activity;
+    private TestSettingsImportExportActivity activity;
 
     @Before
     public void setUp() {
-        activity = Robolectric.setupActivity(SettingsImportExportActivity.class);
+        activity = Robolectric.setupActivity(TestSettingsImportExportActivity.class);
         qrCodeScanHandler = new QRCodeScanHandler(activity);
     }
 

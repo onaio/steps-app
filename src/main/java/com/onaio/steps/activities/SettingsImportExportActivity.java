@@ -66,6 +66,14 @@ public class SettingsImportExportActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings_import_export);
 
+        generateSettingsQRCode();
+
+        iMenuHandlers = SettingsImportExportActivityFactory.getMenuHandlers(this);
+        iCustomMenuHandlers = SettingsImportExportActivityFactory.getCustomMenuHandler(this);
+        iActivityResultHandlers = SettingsImportExportActivityFactory.getResultHandlers(this);
+    }
+
+    protected void generateSettingsQRCode() {
         // Should generate the QR Code and display it
         QRCodeUtils.generateSettingQRCode(this, new QRBitmapGeneratorListener() {
             @Override
@@ -83,10 +91,6 @@ public class SettingsImportExportActivity extends Activity {
                 SettingsImportExportActivity.this.invalidateOptionsMenu();
             }
         });
-
-        iMenuHandlers = SettingsImportExportActivityFactory.getMenuHandlers(this);
-        iCustomMenuHandlers = SettingsImportExportActivityFactory.getCustomMenuHandler(this);
-        iActivityResultHandlers = SettingsImportExportActivityFactory.getResultHandlers(this);
     }
 
     public void scanCode(View view) {
@@ -140,7 +144,7 @@ public class SettingsImportExportActivity extends Activity {
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        List<IMenuPreparer> iMenuPreparers = SettingsImportExportActivityFactory.getCustomMenuPreparer(this);
+        List<IMenuPreparer> iMenuPreparers = SettingsImportExportActivityFactory.getCustomMenuPreparer(this, menu);
         for (IMenuPreparer iMenuPreparer: iMenuPreparers) {
             if (iMenuPreparer.shouldDeactivate()) {
                 iMenuPreparer.deactivate();

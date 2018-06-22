@@ -16,6 +16,8 @@
 
 package com.onaio.steps.handler.factories;
 
+import android.view.Menu;
+
 import com.onaio.steps.activities.SettingsImportExportActivity;
 import com.onaio.steps.handler.actions.PickImageHandler;
 import com.onaio.steps.handler.actions.QRCodeScanHandler;
@@ -29,29 +31,29 @@ import java.util.List;
 
 public class SettingsImportExportActivityFactory {
 
-    public static List<IMenuHandler> getMenuHandlers(SettingsImportExportActivity activity){
+    public static List<IMenuHandler> getMenuHandlers(SettingsImportExportActivity activity) {
         ArrayList<IMenuHandler> handlers = new ArrayList<IMenuHandler>();
         handlers.add(new ShareHandler(activity, activity.getQrCodeBitmap() != null));
         return handlers;
     }
 
-    public static List<IActivityResultHandler> getResultHandlers(SettingsImportExportActivity activity){
+    public static List<IActivityResultHandler> getResultHandlers(SettingsImportExportActivity activity) {
         ArrayList<IActivityResultHandler> handlers = new ArrayList<IActivityResultHandler>();
         handlers.add(new PickImageHandler(activity));
         handlers.add(new QRCodeScanHandler(activity));
         return handlers;
     }
 
-    public static List<IMenuHandler> getCustomMenuHandler(SettingsImportExportActivity activity){
+    public static List<IMenuHandler> getCustomMenuHandler(SettingsImportExportActivity activity) {
         ArrayList<IMenuHandler> handlers = new ArrayList<IMenuHandler>();
         handlers.add(new PickImageHandler(activity));
         handlers.add(new QRCodeScanHandler(activity));
         return handlers;
     }
 
-    public static List<IMenuPreparer> getCustomMenuPreparer(SettingsImportExportActivity activity){
+    public static List<IMenuPreparer> getCustomMenuPreparer(SettingsImportExportActivity activity, Menu menu) {
         ArrayList<IMenuPreparer> menuItems = new ArrayList<IMenuPreparer>();
-        menuItems.add(new ShareHandler(activity, activity.getQrCodeBitmap() != null));
+        menuItems.add(new ShareHandler(activity, activity.getQrCodeBitmap() != null).withMenu(menu));
         return menuItems;
     }
 }

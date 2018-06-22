@@ -16,14 +16,12 @@
 
 package com.onaio.steps.handler.factories;
 
-import com.onaio.steps.activities.SettingsImportExportActivity;
 import com.onaio.steps.handler.actions.PickImageHandler;
 import com.onaio.steps.handler.actions.QRCodeScanHandler;
 import com.onaio.steps.handler.actions.ShareHandler;
 import com.onaio.steps.handler.interfaces.IActivityResultHandler;
 import com.onaio.steps.handler.interfaces.IMenuHandler;
-
-import junit.framework.Assert;
+import com.onaio.steps.shadows.TestSettingsImportExportActivity;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -40,11 +38,11 @@ import static org.junit.Assert.*;
 @RunWith(RobolectricTestRunner.class)
 public class SettingsImportExportActivityFactoryTest {
 
-    private SettingsImportExportActivity activity;
+    private TestSettingsImportExportActivity activity;
 
     @Before
     public void setUp() throws Exception {
-        activity = Robolectric.setupActivity(SettingsImportExportActivity.class);
+        activity = Robolectric.setupActivity(TestSettingsImportExportActivity.class);
     }
 
     @Test
