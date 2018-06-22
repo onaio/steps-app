@@ -17,8 +17,8 @@
 package com.onaio.steps.handler.actions;
 
 import com.onaio.steps.R;
-import com.onaio.steps.activities.SettingsImportExportActivity;
 import com.onaio.steps.model.RequestCode;
+import com.onaio.steps.shadows.TestSettingsImportExportActivity;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -29,16 +29,18 @@ import org.robolectric.annotation.Config;
 
 import static org.junit.Assert.*;
 
-@Config(emulateSdk = 16,manifest = "src/main/AndroidManifest.xml")
 @RunWith(RobolectricTestRunner.class)
+@Config(emulateSdk = 16,manifest = "src/main/AndroidManifest.xml")
 public class PickImageHandlerTest {
 
-    private SettingsImportExportActivity activity;
+    private TestSettingsImportExportActivity activity;
     private PickImageHandler pickImageHandler;
 
     @Before
     public void setUp() {
-        activity = Robolectric.setupActivity(SettingsImportExportActivity.class);
+        activity = Robolectric.buildActivity(TestSettingsImportExportActivity.class)
+                .create()
+                .get();
         pickImageHandler = new PickImageHandler(activity);
     }
 

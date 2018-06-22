@@ -17,11 +17,15 @@
 package com.onaio.steps.handler.activities;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.onaio.steps.R;
 import com.onaio.steps.activities.SettingsActivity;
+import com.onaio.steps.helper.Constants;
 import com.onaio.steps.model.RequestCode;
+import com.onaio.steps.orchestrators.flows.FlowType;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -42,7 +46,13 @@ public class ImportExportActivityHandlerTest {
 
     @Before
     public void setUp() {
-        settingsActivity = Robolectric.setupActivity(SettingsActivity.class);
+        Intent intent = new Intent();
+        intent.putExtra(Constants.FLOW_TYPE, FlowType.Household.toString());
+
+        settingsActivity = Robolectric.buildActivity(SettingsActivity.class)
+                .withIntent(intent)
+                .create()
+                .get();
         importExportActivityHandler = new ImportExportActivityHandler(settingsActivity);
     }
 
@@ -63,7 +73,9 @@ public class ImportExportActivityHandlerTest {
 
         Toast latestToast = ShadowToast.getLatestToast();
         assertNotNull(latestToast);
-        assertEquals(settingsActivity.getString(R.string.import_qr_code_success_msg), ShadowToast.getTextOfLatestToast());
+        String toastText = ((TextView) latestToast.getView()
+                .findViewById(R.id.text)).getText().toString();
+        assertEquals(settingsActivity.getString(R.string.import_qr_code_success_msg), toastText);
     }
 
     @Test

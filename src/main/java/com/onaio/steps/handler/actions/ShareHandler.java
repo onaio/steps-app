@@ -18,6 +18,8 @@ package com.onaio.steps.handler.actions;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.onaio.steps.R;
@@ -34,6 +36,7 @@ public class ShareHandler implements IMenuHandler, IMenuPreparer {
     private SettingsImportExportActivity settingsImportExportActivity;
     private boolean qrDisplayed;
     private static final int MENU_ID = R.id.menu_item_settings_share;
+    private Menu menu;
 
     public ShareHandler(SettingsImportExportActivity settingsImportExportActivity, boolean qrDisplayed) {
         this.settingsImportExportActivity = settingsImportExportActivity;
@@ -67,6 +70,11 @@ public class ShareHandler implements IMenuHandler, IMenuPreparer {
         return true;
     }
 
+    public IMenuPreparer withMenu(Menu menu) {
+        this.menu = menu;
+        return this;
+    }
+
     @Override
     public boolean shouldDeactivate() {
         return !qrDisplayed;
@@ -74,13 +82,15 @@ public class ShareHandler implements IMenuHandler, IMenuPreparer {
 
     @Override
     public void deactivate() {
-        View item = settingsImportExportActivity.findViewById(MENU_ID);
-        item.setVisibility(View.INVISIBLE);
+        MenuItem item = menu.findItem(MENU_ID);
+        item.setVisible(false);
+        item.setEnabled(false);
     }
 
     @Override
     public void activate() {
-        View item = settingsImportExportActivity.findViewById(MENU_ID);
-        item.setVisibility(View.VISIBLE);
+        MenuItem item = menu.findItem(MENU_ID);
+        item.setVisible(true);
+        item.setEnabled(true);
     }
 }
