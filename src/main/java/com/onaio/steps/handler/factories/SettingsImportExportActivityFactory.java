@@ -6,6 +6,7 @@ import com.onaio.steps.handler.actions.QRCodeScanHandler;
 import com.onaio.steps.handler.actions.ShareHandler;
 import com.onaio.steps.handler.interfaces.IActivityResultHandler;
 import com.onaio.steps.handler.interfaces.IMenuHandler;
+import com.onaio.steps.handler.interfaces.IMenuPreparer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +15,7 @@ public class SettingsImportExportActivityFactory {
 
     public static List<IMenuHandler> getMenuHandlers(SettingsImportExportActivity activity){
         ArrayList<IMenuHandler> handlers = new ArrayList<IMenuHandler>();
-        handlers.add(new ShareHandler(activity));
+        handlers.add(new ShareHandler(activity, activity.getQrCodeBitmap() != null));
         return handlers;
     }
 
@@ -30,5 +31,11 @@ public class SettingsImportExportActivityFactory {
         handlers.add(new PickImageHandler(activity));
         handlers.add(new QRCodeScanHandler(activity));
         return handlers;
+    }
+
+    public static List<IMenuPreparer> getCustomMenuPreparer(SettingsImportExportActivity activity){
+        ArrayList<IMenuPreparer> menuItems = new ArrayList<IMenuPreparer>();
+        menuItems.add(new ShareHandler(activity, activity.getQrCodeBitmap() != null));
+        return menuItems;
     }
 }

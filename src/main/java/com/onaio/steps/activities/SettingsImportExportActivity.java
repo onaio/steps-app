@@ -34,10 +34,12 @@ import com.google.zxing.FormatException;
 import com.google.zxing.NotFoundException;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.onaio.steps.R;
+import com.onaio.steps.handler.actions.PickImageHandler;
 import com.onaio.steps.handler.actions.QRCodeScanHandler;
 import com.onaio.steps.handler.factories.SettingsImportExportActivityFactory;
 import com.onaio.steps.handler.interfaces.IActivityResultHandler;
 import com.onaio.steps.handler.interfaces.IMenuHandler;
+import com.onaio.steps.handler.interfaces.IMenuPreparer;
 import com.onaio.steps.listeners.QRBitmapGeneratorListener;
 import com.onaio.steps.listeners.QRBitmapSaveListener;
 import com.onaio.steps.tasks.SaveQRCodeAsyncTask;
@@ -72,11 +74,13 @@ public class SettingsImportExportActivity extends Activity {
                 qrCodeImg.setImageBitmap(bitmap);
 
                 qrCodeBitmap = bitmap;
+                SettingsImportExportActivity.this.invalidateOptionsMenu();
             }
 
             @Override
             public void onError(Exception e) {
                 ViewUtils.showCustomToast(SettingsImportExportActivity.this, getString(R.string.error_generating_qr_code));
+                SettingsImportExportActivity.this.invalidateOptionsMenu();
             }
         });
 
@@ -132,6 +136,20 @@ public class SettingsImportExportActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        List<IMenuPreparer> iMenuPreparers = SettingsImportExportActivityFactory.getCustomMenuPreparer(this);
+        for (IMenuPreparer iMenuPreparer: iMenuPreparers) {
+            if (iMenuPreparer.shouldDeactivate()) {
+                iMenuPreparer.deactivate();
+            } else {
+                iMenuPreparer.activate();
+            }
+        }
+
+        return true;
     }
 
     public void importSettings(String compressedSettings) {

@@ -2,26 +2,31 @@ package com.onaio.steps.handler.actions;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.view.View;
 
 import com.onaio.steps.R;
 import com.onaio.steps.activities.SettingsImportExportActivity;
 import com.onaio.steps.handler.interfaces.IMenuHandler;
+import com.onaio.steps.handler.interfaces.IMenuPreparer;
 import com.onaio.steps.listeners.QRBitmapSaveListener;
 import com.onaio.steps.tasks.SaveQRCodeAsyncTask;
 import com.onaio.steps.utils.QRCodeUtils;
 import com.onaio.steps.utils.ViewUtils;
 
-public class ShareHandler implements IMenuHandler {
+public class ShareHandler implements IMenuHandler, IMenuPreparer {
 
     private SettingsImportExportActivity settingsImportExportActivity;
+    private boolean qrDisplayed;
+    private static final int MENU_ID = R.id.menu_item_settings_share;
 
-    public ShareHandler(SettingsImportExportActivity settingsImportExportActivity) {
+    public ShareHandler(SettingsImportExportActivity settingsImportExportActivity, boolean qrDisplayed) {
         this.settingsImportExportActivity = settingsImportExportActivity;
+        this.qrDisplayed = qrDisplayed;
     }
 
     @Override
     public boolean shouldOpen(int menu_id) {
-        return menu_id == R.id.menu_item_settings_share;
+        return menu_id == MENU_ID;
     }
 
     @Override
@@ -43,7 +48,23 @@ public class ShareHandler implements IMenuHandler {
         });
 
         saveQRCodeAsyncTask.execute();
-
         return true;
+    }
+
+    @Override
+    public boolean shouldDeactivate() {
+        return !qrDisplayed;
+    }
+
+    @Override
+    public void deactivate() {
+        View item = settingsImportExportActivity.findViewById(MENU_ID);
+        item.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    public void activate() {
+        View item = settingsImportExportActivity.findViewById(MENU_ID);
+        item.setVisibility(View.VISIBLE);
     }
 }
