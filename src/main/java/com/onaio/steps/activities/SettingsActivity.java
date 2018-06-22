@@ -27,7 +27,7 @@ import android.widget.Toast;
 
 import com.onaio.steps.exceptions.InvalidDataException;
 import com.onaio.steps.handler.actions.ImportHandler;
-import com.onaio.steps.handler.activities.ExportImportActivityHandler;
+import com.onaio.steps.handler.activities.ImportExportActivityHandler;
 import com.onaio.steps.helper.CustomDialog;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.orchestrators.FlowOrchestrator;
@@ -168,15 +168,15 @@ public class SettingsActivity extends Activity {
     }
 
     public void exportSettings(View view) {
-        ExportImportActivityHandler exportImportActivityHandler = new ExportImportActivityHandler(this);
-        exportImportActivityHandler.open();
+        ImportExportActivityHandler importExportActivityHandler = new ImportExportActivityHandler(this);
+        importExportActivityHandler.open();
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        ExportImportActivityHandler exportImportActivityHandler = new ExportImportActivityHandler(this);
-        if (exportImportActivityHandler.canHandleResult(requestCode)) {
-            exportImportActivityHandler.handleResult(data, resultCode);
+        ImportExportActivityHandler importExportActivityHandler = new ImportExportActivityHandler(this);
+        if (importExportActivityHandler.canHandleResult(requestCode)) {
+            importExportActivityHandler.handleResult(data, resultCode);
         } else {
             super.onActivityResult(requestCode, resultCode, data);
         }

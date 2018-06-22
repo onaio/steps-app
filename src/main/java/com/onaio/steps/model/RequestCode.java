@@ -24,7 +24,9 @@ public enum RequestCode {
     EDIT_MEMBER(5),
     IMPORT(6),
     SURVEY(7),
-    NEW_PARTICIPANT(8), EDIT_PARTICIPANT(9);
+    NEW_PARTICIPANT(8),
+    EDIT_PARTICIPANT(9),
+    IMPORT_EXPORT_SETTINGS(10);
 
     private final int code;
     RequestCode(int code){

@@ -24,14 +24,14 @@ import com.onaio.steps.activities.SettingsActivity;
 import com.onaio.steps.activities.SettingsImportExportActivity;
 import com.onaio.steps.handler.interfaces.IActivityResultHandler;
 import com.onaio.steps.handler.interfaces.IMenuHandler;
-import com.onaio.steps.helper.Constants;
+import com.onaio.steps.model.RequestCode;
 import com.onaio.steps.utils.ViewUtils;
 
-public class ExportImportActivityHandler implements IMenuHandler, IActivityResultHandler {
+public class ImportExportActivityHandler implements IMenuHandler, IActivityResultHandler {
 
     private SettingsActivity activity;
 
-    public ExportImportActivityHandler(SettingsActivity activity) {
+    public ImportExportActivityHandler(SettingsActivity activity) {
         this.activity = activity;
     }
 
@@ -42,7 +42,7 @@ public class ExportImportActivityHandler implements IMenuHandler, IActivityResul
 
     @Override
     public boolean open() {
-        activity.startActivityForResult(new Intent(activity, SettingsImportExportActivity.class), Constants.EXPORT_IMPORT_SETTINGS_PAGE_REQUEST_CODE);
+        activity.startActivityForResult(new Intent(activity, SettingsImportExportActivity.class), RequestCode.IMPORT_EXPORT_SETTINGS.getCode());
         return true;
     }
 
@@ -59,6 +59,6 @@ public class ExportImportActivityHandler implements IMenuHandler, IActivityResul
 
     @Override
     public boolean canHandleResult(int requestCode) {
-        return requestCode == Constants.EXPORT_IMPORT_SETTINGS_PAGE_REQUEST_CODE;
+        return requestCode == RequestCode.IMPORT_EXPORT_SETTINGS.getCode();
     }
 }
