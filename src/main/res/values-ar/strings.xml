@@ -149,4 +149,19 @@
     <string name="warning_erasing_data">هذا سوف يقوم بمسح كل المعلومات و بيانات المشارك من على الجهاز. هل ترغب فى عمل ذلك ؟</string>
     <string name="data_wipe_successful">قد تم مسح البيانات بنجاح</string>
     <string name="action_submit_data">" ارسل البيانات"</string>
+
+    <string name="households">الاسر</string>
+    <string name="participants">المشاركون</string>
+
+    <string name="export_settings">استيراد الإعدادات من خلال الباركود</string>
+    <string name="encoding_max_limit">تم الوصول إلي الحد الأقصى لعدد الأحرف: لا يمكن إنشاء الباركود لجميع الإعدادات</string>
+    <string name="import_qr_code_error_msg">فشل استيراد الإعدادات عن طريق الباركود</string>
+    <string name="import_export_settings_title">استيراد/ تصدير الإعدادات</string>
+    <string name="error_generating_qr_code">لقد حدث خطأ في إنشاء إعدادات الباركود</string>
+    <string name="cancelled">تم الإلغاء</string>
+    <string name="import_qr_code_success_msg">تم تحديث الإعدادات من خلال الباركود</string>
+    <string name="share_qr_code_title">تم مشاركه إعدادات الباركود</string>
+    <string name="qr_code_share_error">عفوا: حدث خطأ، لا يمكن مشاركه إعدادات الباركود</string>
+    <string name="settings_saved_successfully">تم حفظ الإعدادات الخاصة بك!</string>
+    <string name="select_qr_code">الباركود اختر</string>
 </resources>

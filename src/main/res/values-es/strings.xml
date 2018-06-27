@@ -150,4 +150,19 @@
     <string name="warning_erasing_data">"Esta operación borrará todos los datos de los hogares y los participantes en este dispositivo. ¿Desea continuar?"</string>
     <string name="data_wipe_successful">"Datos borrados con éxito"</string>
     <string name="action_submit_data">"Enviar datos"</string>
+
+    <string name="households">"Hogares"</string>
+    <string name="participants">"Participantes"</string>
+
+    <string name="export_settings">"Importar Ajustes por código QR"</string>
+    <string name="encoding_max_limit">"Límite máximo de caracteres alcanzado: el código QR no se puede generar para todos los ajustes"</string>
+    <string name="import_qr_code_error_msg">"L\'importación de los ajustes a través del código QR falló"</string>
+    <string name="import_export_settings_title">"Importar / Exportar Ajustes"</string>
+    <string name="error_generating_qr_code">"Se produjo un error al generar el código QR que contiene los Ajustes"</string>
+    <string name="cancelled">"Cancelado"</string>
+    <string name="import_qr_code_success_msg">"Los Ajustes se han actualizados a través del código QR"</string>
+    <string name="share_qr_code_title">"Compartir el código QR que contiene los Ajustes"</string>
+    <string name="qr_code_share_error">"El código QR no puede ser compartido. Ocurrió un error."</string>
+    <string name="settings_saved_successfully">"Los ajustes fueron guardados ."</string>
+    <string name="select_qr_code">"Seleccionar el código QR"</string>
 </resources>
