@@ -148,4 +148,19 @@
     <string name="warning_erasing_data">"Это позволит удалить все данные домохозяйств и их членов на этом устройстве. Вы хотите продолжить?"</string>
     <string name="data_wipe_successful">"Данные успешно удалены"</string>
     <string name="action_submit_data">"Отправить данные"</string>
+
+    <string name="households">"Домохозяйства"</string>
+    <string name="participants">"Участники"</string>
+
+    <string name="export_settings">"Импорт настроек с помощью QR-кода"</string>
+    <string name="encoding_max_limit">"Достигнуто максимальное количество символов: QR-код не может быть сгенерирован для всех настроек"</string>
+    <string name="import_qr_code_error_msg">"Не удалось импортировать настройки с помощью QR-кода"</string>
+    <string name="import_export_settings_title">"Настройки импорта / экспорта"</string>
+    <string name="error_generating_qr_code">"Произошла ошибка при генерировании QR-кода настроек"</string>
+    <string name="cancelled">"Отменено"</string>
+    <string name="import_qr_code_success_msg">"Настройки обновлены с помощью QR-кода"</string>
+    <string name="share_qr_code_title">"Поделиться QR-кодом настоек"</string>
+    <string name="qr_code_share_error">"К сожалению QR-код нельзя экспортировать! Произошла ошибка"</string>
+    <string name="settings_saved_successfully">"Ваши настройки сохранены!"</string>
+    <string name="select_qr_code">"Выбрать QR-код"</string>
 </resources>

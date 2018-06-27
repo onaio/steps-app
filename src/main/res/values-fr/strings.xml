@@ -149,4 +149,19 @@
     <string name="warning_erasing_data">"Cette opération va effacer toutes les données sur les ménages et les participants de cet appareil. Voulez-vous poursuivre?"</string>
     <string name="data_wipe_successful">"Données effacées avec succès"</string>
     <string name="action_submit_data">"Envoyer les données"</string>
+
+    <string name="households">Ménages</string>
+    <string name="participants">Participants</string>
+
+    <string name="export_settings">Importer Paramètres par code QR</string>
+    <string name="encoding_max_limit">Limite maximale de caractères atteinte: le code QR ne peut pas être généré pour tous les paramètres</string>
+    <string name="import_qr_code_error_msg">Echec de l’importation des paramètres via le code QR</string>
+    <string name="import_export_settings_title">Paramètres d\'import / export</string>
+    <string name="error_generating_qr_code">Une erreur s\'est produite lors de la génération du code QR qui contient les paramètres</string>
+    <string name="cancelled">Annulé</string>
+    <string name="import_qr_code_success_msg">Les paramètres ont été mis à jour via le code QR</string>
+    <string name="share_qr_code_title">Partager un code QR qui contient les paramètres</string>
+    <string name="qr_code_share_error">Malheureusement, le code QR ne peut pas être partagé! Une erreur s\'est produite.</string>
+    <string name="settings_saved_successfully">Les paramètres ont été enregistrés.</string>
+    <string name="select_qr_code">Sélectionner le code QR</string>
 </resources>
