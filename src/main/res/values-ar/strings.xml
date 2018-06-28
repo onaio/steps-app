@@ -163,5 +163,5 @@
     <string name="share_qr_code_title">تم مشاركه إعدادات الباركود</string>
     <string name="qr_code_share_error">عفوا: حدث خطأ، لا يمكن مشاركه إعدادات الباركود</string>
     <string name="settings_saved_successfully">تم حفظ الإعدادات الخاصة بك!</string>
-    <string name="select_qr_code">الباركود اختر</string>
+    <string name="select_qr_code">اختر الباركود</string>
 </resources>
