@@ -57,7 +57,7 @@ public class EditHouseholdActivity extends Activity {
         commentsView.setText(household.getComments());
     }
 
-    public void save(View view) {
+    public void doneBtnClicked(View view) {
             Intent intent = this.getIntent();
             household = new HouseholdViewWrapper(this).updateHousehold(household, R.id.household_number,R.id.household_comments);
             DatabaseHelper db = new DatabaseHelper(getApplicationContext());

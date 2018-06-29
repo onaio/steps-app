@@ -62,7 +62,7 @@ public class EditMemberActivity extends Activity {
     }
 
 
-    public void save(View view) {
+    public void doneBtnClicked(View view) {
         try{
             member = memberViewWrapper.updateFromView(member);
             member.update(db);

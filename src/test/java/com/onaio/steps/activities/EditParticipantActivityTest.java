@@ -115,7 +115,7 @@ public class EditParticipantActivityTest {
         genderView.check(R.id.female_selection);
 
 
-        editParticipantActivity.save(viewMock);
+        editParticipantActivity.doneBtnClicked(viewMock);
 
         Intent intent = editParticipantActivity.getIntent();
         assertEquals(participant, intent.getSerializableExtra(Constants.PARTICIPANT));
@@ -131,7 +131,7 @@ public class EditParticipantActivityTest {
         View viewMock = Mockito.mock(View.class);
         Mockito.stub(viewMock.getId()).toReturn(R.id.member_form);
 
-        editParticipantActivity.save(viewMock);
+        editParticipantActivity.doneBtnClicked(viewMock);
 
         Intent intent = editParticipantActivity.getIntent();
         assertEquals(participant, intent.getSerializableExtra(Constants.PARTICIPANT));

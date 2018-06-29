@@ -60,7 +60,7 @@ public class EditParticipantActivity extends Activity{
     }
 
 
-    public void save(View view) {
+    public void doneBtnClicked(View view) {
         try{
             participant = participantViewWrapper.updateFromView(participant);
             participant.update(new DatabaseHelper(this));
