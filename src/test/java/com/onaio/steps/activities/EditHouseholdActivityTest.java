@@ -84,7 +84,7 @@ public class EditHouseholdActivityTest {
         TextView textView = Mockito.mock(TextView.class);
         Mockito.stub(textView.getId()).toReturn(R.id.household_comments);
         Mockito.stub(textView.getText()).toReturn("dummy");
-        editHouseholdActivity.save(viewMock);
+        editHouseholdActivity.doneBtnClicked(viewMock);
 
         Intent editHouseholdActivityIntent = editHouseholdActivity.getIntent();
 
