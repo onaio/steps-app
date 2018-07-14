@@ -41,6 +41,7 @@ import static com.onaio.steps.helper.Constants.HH_MIN_AGE;
 import static com.onaio.steps.helper.Constants.HH_PHONE_ID;
 import static com.onaio.steps.helper.Constants.HH_SURVEY_ID;
 import static com.onaio.steps.helper.Constants.IMPORT_URL;
+import static com.onaio.steps.helper.Constants.PA_PHONE_ID;
 
 
 public class HouseholdFlow implements IFlow {
@@ -64,9 +65,14 @@ public class HouseholdFlow implements IFlow {
     }
 
     @Override
-    public void saveSettings() {
+    public void saveSettings(boolean saveDeviceID) {
         saveData(R.id.campaignId_household, HH_SURVEY_ID);
-        saveData(R.id.deviceId_household, HH_PHONE_ID);
+
+        if (saveDeviceID) {
+            saveData(R.id.deviceId_household, HH_PHONE_ID);
+            saveData(R.id.deviceId_household, PA_PHONE_ID);
+        }
+
         saveData(R.id.form_id_household, HH_FORM_ID);
         saveData(R.id.min_age_household, HH_MIN_AGE);
         saveData(R.id.max_age_household, HH_MAX_AGE);
@@ -82,26 +88,30 @@ public class HouseholdFlow implements IFlow {
     }
 
     @Override
-    public void validateOptions() throws InvalidDataException {
+    public void validateOptions(boolean checkDeviceID) throws InvalidDataException {
         String surveyIdValue = ((TextView) activity.findViewById(R.id.campaignId_household)).getText().toString().trim();
         String deviceIdValue = ((TextView) activity.findViewById(R.id.deviceId_household)).getText().toString().trim();
         String formIdValue = ((TextView) activity.findViewById(R.id.form_id_household)).getText().toString().trim();
         String minAgeValue = ((TextView) activity.findViewById(R.id.min_age_household)).getText().toString().trim();
         String maxAgeValue = ((TextView) activity.findViewById(R.id.max_age_household)).getText().toString().trim();
 
-        errorFields = validateHouseHoldSettings(surveyIdValue, deviceIdValue, formIdValue, minAgeValue, maxAgeValue);
+        errorFields = validateHouseHoldSettings(surveyIdValue, deviceIdValue, formIdValue, minAgeValue, maxAgeValue, checkDeviceID);
         if (errorFields != null && !errorFields.isEmpty())
             throw new InvalidDataException(activity, getStringValue(R.string.action_settings), errorFields);
     }
 
-    public List<String> validateHouseHoldSettings(String surveyId, String deviceId, String formId, String minAge, String maxAge) {
-        return new DataValidator(activity).
+    public List<String> validateHouseHoldSettings(String surveyId, String deviceId, String formId, String minAge, String maxAge, boolean checkDeviceID) {
+        DataValidator dataValidator = new DataValidator(activity).
                 validate(surveyId, getStringValue(R.string.survey_id_label)).
-                validate(deviceId, getStringValue(R.string.device_id_label)).
                 validate(formId, getStringValue(R.string.form_id)).
                 validate(minAge, getStringValue(R.string.min_age)).
-                validate(maxAge, getStringValue(R.string.max_age)).
-                finish();
+                validate(maxAge, getStringValue(R.string.max_age));
+
+        if (checkDeviceID) {
+            dataValidator.validate(deviceId, getStringValue(R.string.device_id_label));
+        }
+
+        return dataValidator.finish();
     }
 
     @Override

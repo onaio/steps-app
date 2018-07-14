@@ -42,12 +42,12 @@ public class InitialFlow implements IFlow {
     }
 
     @Override
-    public void validateOptions() throws InvalidDataException {
+    public void validateOptions(boolean checkDeviceID) throws InvalidDataException {
 
     }
 
     @Override
-    public void saveSettings() {
+    public void saveSettings(boolean saveDeviceID) {
     }
 
     @Override

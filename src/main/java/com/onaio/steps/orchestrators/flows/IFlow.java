@@ -25,9 +25,9 @@ public interface IFlow {
 
     void prepareSettingScreen(boolean forceRefreshValues);
 
-    void validateOptions() throws InvalidDataException;
+    void validateOptions(boolean checkDeviceID) throws InvalidDataException;
 
-    void saveSettings();
+    void saveSettings(boolean saveDeviceID);
 
     void populateData(boolean forceRefreshValues);
 
