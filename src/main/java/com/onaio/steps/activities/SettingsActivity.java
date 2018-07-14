@@ -111,6 +111,8 @@ public class SettingsActivity extends Activity {
             } else {
                 ViewUtils.showCustomToast(this, getString(R.string.settings_saved_successfully));
             }
+
+            flowOrchestrator.prepareOtherScreenData(flowType, true);
         } catch (InvalidDataException e) {
             new CustomDialog().notify(this, CustomDialog.EmptyListener, e.getMessage(), R.string.error_title);
         }
