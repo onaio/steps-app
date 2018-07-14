@@ -102,9 +102,9 @@ public class FlowOrchestrator {
         activity.startActivity(intent);
     }
 
-    public void saveSettings(FlowType flowType) throws InvalidDataException{
-        getFlow(flowType).validateOptions();
-        getFlow(flowType).saveSettings();
+    public void saveSettings(FlowType flowType, boolean checkDeviceID) throws InvalidDataException{
+        getFlow(flowType).validateOptions(checkDeviceID);
+        getFlow(flowType).saveSettings(checkDeviceID);
     }
 
 

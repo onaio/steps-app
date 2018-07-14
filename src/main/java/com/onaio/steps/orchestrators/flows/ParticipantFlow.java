@@ -34,6 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.onaio.steps.helper.Constants.FLOW_TYPE;
+import static com.onaio.steps.helper.Constants.HH_PHONE_ID;
 import static com.onaio.steps.helper.Constants.PA_FORM_ID;
 import static com.onaio.steps.helper.Constants.PA_MAX_AGE;
 import static com.onaio.steps.helper.Constants.PA_MIN_AGE;
@@ -55,24 +56,28 @@ public class ParticipantFlow implements IFlow {
     }
 
     @Override
-    public void validateOptions() throws InvalidDataException {
+    public void validateOptions(boolean checkDeviceID) throws InvalidDataException {
         String deviceIdValue = ((TextView) activity.findViewById(R.id.deviceId_participant)).getText().toString().trim();
         String formIdValue = ((TextView) activity.findViewById(R.id.form_id_participant)).getText().toString().trim();
         String minAgeValue = ((TextView) activity.findViewById(R.id.min_age_participant)).getText().toString().trim();
         String maxAgeValue = ((TextView) activity.findViewById(R.id.max_age_participant)).getText().toString().trim();
 
-        errorFields = validateParticipantsSettings(deviceIdValue, formIdValue, minAgeValue, maxAgeValue);
+        errorFields = validateParticipantsSettings(deviceIdValue, formIdValue, minAgeValue, maxAgeValue, checkDeviceID);
         if (errorFields != null && !errorFields.isEmpty())
             throw new InvalidDataException(activity, getStringValue(R.string.action_settings), errorFields);
     }
 
-    public List<String> validateParticipantsSettings(String deviceId, String formId, String minAge, String maxAge) {
-        return new DataValidator(activity).
-                validate(deviceId, getStringValue(R.string.device_id_label)).
+    public List<String> validateParticipantsSettings(String deviceId, String formId, String minAge, String maxAge, boolean checkDeviceID) {
+        DataValidator dataValidator = new DataValidator(activity).
                 validate(formId, getStringValue(R.string.form_id)).
                 validate(minAge, getStringValue(R.string.min_age)).
-                validate(maxAge, getStringValue(R.string.max_age)).
-                finish();
+                validate(maxAge, getStringValue(R.string.max_age));
+
+        if (checkDeviceID) {
+            dataValidator.validate(deviceId, getStringValue(R.string.device_id_label));
+        }
+
+        return dataValidator.finish();
     }
 
     @Override
@@ -82,8 +87,12 @@ public class ParticipantFlow implements IFlow {
     }
 
     @Override
-    public void saveSettings() {
-        saveData(R.id.deviceId_participant, PA_PHONE_ID);
+    public void saveSettings(boolean saveDeviceID) {
+        if (saveDeviceID) {
+            saveData(R.id.deviceId_participant, PA_PHONE_ID);
+            saveData(R.id.deviceId_participant, HH_PHONE_ID);
+        }
+
         saveData(R.id.form_id_participant, PA_FORM_ID);
         saveData(R.id.min_age_participant, PA_MIN_AGE);
         saveData(R.id.max_age_participant, PA_MAX_AGE);

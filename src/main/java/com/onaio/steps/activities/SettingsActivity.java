@@ -95,7 +95,7 @@ public class SettingsActivity extends Activity {
 
         try {
             if (flowType != FlowType.None) {
-                flowOrchestrator.saveSettings(flowType == FlowType.Household ? FlowType.Participant : FlowType.Household);
+                flowOrchestrator.saveSettings(flowType == FlowType.Household ? FlowType.Participant : FlowType.Household, false);
             }
         } catch (InvalidDataException e) {
             new CustomDialog().notify(this, onClickListener, e.getMessage(), R.string.error_title);
@@ -103,7 +103,7 @@ public class SettingsActivity extends Activity {
         }
 
         try {
-            flowOrchestrator.saveSettings(flowType);
+            flowOrchestrator.saveSettings(flowType, true);
             setResult(RESULT_OK, this.getIntent());
 
             if (finishAfterSaving) {
