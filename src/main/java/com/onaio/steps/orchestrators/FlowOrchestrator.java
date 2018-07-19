@@ -94,6 +94,8 @@ public class FlowOrchestrator {
     public void prepareOtherScreenData(FlowType flowType, boolean forceRefreshValues) {
         if (flowType != FlowType.None) {
             getFlow(flowType == FlowType.Household ? FlowType.Participant : FlowType.Household).populateData(forceRefreshValues);
+        } else {
+            getFlow(FlowType.Participant).populateData(forceRefreshValues);
         }
     }
 
