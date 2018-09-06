@@ -38,6 +38,7 @@ import org.robolectric.annotation.Config;
 import java.util.List;
 
 import static junit.framework.Assert.assertNotNull;
+import static junit.framework.Assert.assertNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -98,8 +99,27 @@ public class HouseholdFlowTest {
         maxage.setText("69");
         minage.setText("18");
         endPointUrl.setText("http://192.168.1.20:8000");
-        householdFlow.saveSettings();
+        householdFlow.saveSettings(true);
         assertEquals("1234567", getValue(settingsActivity, Constants.HH_PHONE_ID));
+        assertEquals("STEPS_Instrument_V3_1", getValue(settingsActivity, Constants.HH_FORM_ID));
+        assertEquals("69", getValue(settingsActivity, Constants.HH_MAX_AGE));
+        assertEquals("18",getValue(settingsActivity,Constants.HH_MIN_AGE));
+    }
+
+    @Test
+    public void ShouldNotSaveDeviceIdFromSettingFields(){
+        TextView deviceId = (TextView) settingsActivity.findViewById(R.id.deviceId_household);
+        TextView formId = (TextView) settingsActivity.findViewById(R.id.form_id_household);
+        TextView maxage = (TextView) settingsActivity.findViewById(R.id.max_age_household);
+        TextView minage = (TextView) settingsActivity.findViewById(R.id.min_age_household);
+        TextView endPointUrl = (TextView) settingsActivity.findViewById(R.id.endpointUrl_household);
+        deviceId.setText("1234567");
+        formId.setText("STEPS_Instrument_V3_1");
+        maxage.setText("69");
+        minage.setText("18");
+        endPointUrl.setText("http://192.168.1.20:8000");
+        householdFlow.saveSettings(false);
+        assertNull(getValue(settingsActivity, Constants.HH_PHONE_ID));
         assertEquals("STEPS_Instrument_V3_1", getValue(settingsActivity, Constants.HH_FORM_ID));
         assertEquals("69", getValue(settingsActivity, Constants.HH_MAX_AGE));
         assertEquals("18",getValue(settingsActivity,Constants.HH_MIN_AGE));
@@ -117,7 +137,7 @@ public class HouseholdFlowTest {
         maxage.setText(" 69 ");
         minage.setText(" 18 ");
         endPointUrl.setText(" http://192.168.1.20:8000 ");
-        householdFlow.saveSettings();
+        householdFlow.saveSettings(true);
         assertEquals("1234567", getValue(settingsActivity, Constants.HH_PHONE_ID));
         assertEquals("STEPS_Instrument_V3_1", getValue(settingsActivity, Constants.HH_FORM_ID));
         assertEquals("69", getValue(settingsActivity, Constants.HH_MAX_AGE));
@@ -142,21 +162,25 @@ public class HouseholdFlowTest {
         expectedException.expect(InvalidDataException.class);
         expectedException.expectMessage(String.format(error_string, "Settings", "Survey ID,Device ID,Form ID,Max age"));
 
-        householdFlow.validateOptions();
+        householdFlow.validateOptions(true);
     }
 
     @Test
     public void validateHouseHoldSettingsShouldFail() {
-        assertEquals(1, householdFlow.validateHouseHoldSettings("sid", "deid", null, "56", "89").size());
-        assertEquals(1, householdFlow.validateHouseHoldSettings("", "deid", "fid", "56", "89").size());
-        assertEquals(1, householdFlow.validateHouseHoldSettings("sid", null, "fid", "56", "89").size());
-        assertEquals(1, householdFlow.validateHouseHoldSettings("sid", "deid", "fid", "", "89").size());
-        assertEquals(1, householdFlow.validateHouseHoldSettings("sid", "deid", "fid", "56", "").size());
+        assertEquals(1, householdFlow.validateHouseHoldSettings("sid", "deid", null, "56", "89", true).size());
+        assertEquals(1, householdFlow.validateHouseHoldSettings("", "deid", "fid", "56", "89", true).size());
+        assertEquals(1, householdFlow.validateHouseHoldSettings("sid", null, "fid", "56", "89", true).size());
+        assertEquals(1, householdFlow.validateHouseHoldSettings("sid", "deid", "fid", "", "89", true).size());
+        assertEquals(1, householdFlow.validateHouseHoldSettings("sid", "deid", "fid", "56", "", true).size());
+        assertEquals(2, householdFlow.validateHouseHoldSettings("", "deid", "fid", "56", "", true).size());
+        assertEquals(3, householdFlow.validateHouseHoldSettings("", "", "fid", "56", "", true).size());
+        assertEquals(4, householdFlow.validateHouseHoldSettings("", "", "", "56", "", true).size());
+        assertEquals(5, householdFlow.validateHouseHoldSettings("", "", "", "", "", true).size());
     }
 
     @Test
     public void validateHouseHoldSettingsShouldPass() {
-        assertEquals(0, householdFlow.validateHouseHoldSettings("sid", "deid", "fid", "56", "89").size());
+        assertEquals(0, householdFlow.validateHouseHoldSettings("sid", "deid", "fid", "56", "89", true).size());
     }
 
 

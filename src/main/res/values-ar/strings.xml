@@ -164,4 +164,6 @@
     <string name="qr_code_share_error">عفوا: حدث خطأ، لا يمكن مشاركه إعدادات الباركود</string>
     <string name="settings_saved_successfully">تم حفظ الإعدادات الخاصة بك!</string>
     <string name="select_qr_code">اختر الباركود</string>
+    <string name="select_code_from_sd_card">اخترالكود من الكارت الرقمى "SD"</string>
+    <string name="scan_code_from_another_device">امسح الكود من جهاز آخر</string>
 </resources>
