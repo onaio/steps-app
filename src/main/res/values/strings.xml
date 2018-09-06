@@ -163,4 +163,6 @@
     <string name="qr_code_share_error">Sorry! QR Code cannot be shared! An error occurred</string>
     <string name="settings_saved_successfully">Your settings were saved!</string>
     <string name="select_qr_code">Select QR Code</string>
+    <string name="select_code_from_sd_card">Select code from SD Card</string>
+    <string name="scan_code_from_another_device">Scan code from another device</string>
 </resources>

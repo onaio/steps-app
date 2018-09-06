@@ -164,4 +164,6 @@
     <string name="qr_code_share_error">Malheureusement, le code QR ne peut pas être partagé! Une erreur s\'est produite.</string>
     <string name="settings_saved_successfully">Les paramètres ont été enregistrés.</string>
     <string name="select_qr_code">Sélectionner le code QR</string>
+    <string name="select_code_from_sd_card">Sélectionner le code à partir de la carte SD</string>
+    <string name="scan_code_from_another_device">Scanner le code depuis un autre appareil</string>
 </resources>

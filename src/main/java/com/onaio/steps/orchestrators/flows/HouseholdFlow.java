@@ -101,15 +101,16 @@ public class HouseholdFlow implements IFlow {
     }
 
     public List<String> validateHouseHoldSettings(String surveyId, String deviceId, String formId, String minAge, String maxAge, boolean checkDeviceID) {
-        DataValidator dataValidator = new DataValidator(activity).
-                validate(surveyId, getStringValue(R.string.survey_id_label)).
-                validate(formId, getStringValue(R.string.form_id)).
-                validate(minAge, getStringValue(R.string.min_age)).
-                validate(maxAge, getStringValue(R.string.max_age));
+        DataValidator dataValidator = new DataValidator(activity)
+                .validate(surveyId, getStringValue(R.string.survey_id_label));
 
         if (checkDeviceID) {
             dataValidator.validate(deviceId, getStringValue(R.string.device_id_label));
         }
+        dataValidator.validate(formId, getStringValue(R.string.form_id)).
+                validate(minAge, getStringValue(R.string.min_age)).
+                validate(maxAge, getStringValue(R.string.max_age));
+
 
         return dataValidator.finish();
     }

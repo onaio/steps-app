@@ -68,14 +68,15 @@ public class ParticipantFlow implements IFlow {
     }
 
     public List<String> validateParticipantsSettings(String deviceId, String formId, String minAge, String maxAge, boolean checkDeviceID) {
-        DataValidator dataValidator = new DataValidator(activity).
-                validate(formId, getStringValue(R.string.form_id)).
-                validate(minAge, getStringValue(R.string.min_age)).
-                validate(maxAge, getStringValue(R.string.max_age));
-
+        DataValidator dataValidator = new DataValidator(activity);
         if (checkDeviceID) {
             dataValidator.validate(deviceId, getStringValue(R.string.device_id_label));
         }
+
+        dataValidator.validate(formId, getStringValue(R.string.form_id)).
+                validate(minAge, getStringValue(R.string.min_age)).
+                validate(maxAge, getStringValue(R.string.max_age));
+
 
         return dataValidator.finish();
     }

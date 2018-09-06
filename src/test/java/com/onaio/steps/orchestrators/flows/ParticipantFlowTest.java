@@ -36,6 +36,7 @@ import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
 import static junit.framework.Assert.assertNotNull;
+import static junit.framework.Assert.assertNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -90,8 +91,25 @@ public class ParticipantFlowTest {
         formId.setText("STEPS_Instrument_V3_1");
         maxage.setText("69");
         minage.setText("18");
-        participantFlow.saveSettings();
+        participantFlow.saveSettings(true);
         assertEquals("1234567", getValue(settingsActivity, Constants.PA_PHONE_ID));
+        assertEquals("STEPS_Instrument_V3_1", getValue(settingsActivity, Constants.PA_FORM_ID));
+        assertEquals("69", getValue(settingsActivity, Constants.PA_MAX_AGE));
+        assertEquals("18",getValue(settingsActivity,Constants.PA_MIN_AGE));
+    }
+
+    @Test
+    public void ShouldNotSaveDeviceIdFromSettingFields(){
+        TextView deviceId = (TextView) settingsActivity.findViewById(R.id.deviceId_participant);
+        TextView formId = (TextView) settingsActivity.findViewById(R.id.form_id_participant);
+        TextView maxage = (TextView) settingsActivity.findViewById(R.id.max_age_participant);
+        TextView minage = (TextView) settingsActivity.findViewById(R.id.min_age_participant);
+        deviceId.setText("1234567");
+        formId.setText("STEPS_Instrument_V3_1");
+        maxage.setText("69");
+        minage.setText("18");
+        participantFlow.saveSettings(false);
+        assertNull(getValue(settingsActivity, Constants.PA_PHONE_ID));
         assertEquals("STEPS_Instrument_V3_1", getValue(settingsActivity, Constants.PA_FORM_ID));
         assertEquals("69", getValue(settingsActivity, Constants.PA_MAX_AGE));
         assertEquals("18",getValue(settingsActivity,Constants.PA_MIN_AGE));
@@ -107,7 +125,7 @@ public class ParticipantFlowTest {
         formId.setText(" STEPS_Instrument_V3_1 ");
         maxage.setText(" 69 ");
         minage.setText(" 18 ");
-        participantFlow.saveSettings();
+        participantFlow.saveSettings(true);
         assertEquals("1234567", getValue(settingsActivity, Constants.PA_PHONE_ID));
         assertEquals("STEPS_Instrument_V3_1", getValue(settingsActivity, Constants.PA_FORM_ID));
         assertEquals("69", getValue(settingsActivity, Constants.PA_MAX_AGE));
@@ -128,21 +146,21 @@ public class ParticipantFlowTest {
         expectedException.expect(InvalidDataException.class);
         expectedException.expectMessage(String.format(error_string, "Settings", "Device ID", "Max Age"));
 
-        participantFlow.validateOptions();
+        participantFlow.validateOptions(true);
 
     }
 
     @Test
     public void validateParticipantsSettingsShouldPass() {
-        participantFlow.validateParticipantsSettings("did", "fid", "20", "35");
+        participantFlow.validateParticipantsSettings("did", "fid", "20", "35", true);
     }
 
     @Test
     public void validateParticipantsSettingsShouldFail() {
-        assertEquals(1, participantFlow.validateParticipantsSettings("", "fid", "20", "35").size());
-        assertEquals(1, participantFlow.validateParticipantsSettings("did", null, "20", "35").size());
-        assertEquals(1, participantFlow.validateParticipantsSettings("did", "fid", "", "35").size());
-        assertEquals(1, participantFlow.validateParticipantsSettings("did", "fid", "20", "").size());
+        assertEquals(1, participantFlow.validateParticipantsSettings("", "fid", "20", "35", true).size());
+        assertEquals(1, participantFlow.validateParticipantsSettings("did", null, "20", "35", true).size());
+        assertEquals(1, participantFlow.validateParticipantsSettings("did", "fid", "", "35", true).size());
+        assertEquals(1, participantFlow.validateParticipantsSettings("did", "fid", "20", "", true).size());
     }
 
     private String getValue(Activity activity, String key) {
