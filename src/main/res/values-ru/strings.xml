@@ -152,7 +152,7 @@
     <string name="households">"Домохозяйства"</string>
     <string name="participants">"Участники"</string>
 
-    <string name="export_settings">"Импорт настроек с помощью QR-кода"</string>
+    <string name="import_export_settings">"импорт / экспорт настроек с помощью QR-кода"</string>
     <string name="encoding_max_limit">"Достигнуто максимальное количество символов: QR-код не может быть сгенерирован для всех настроек"</string>
     <string name="import_qr_code_error_msg">"Не удалось импортировать настройки с помощью QR-кода"</string>
     <string name="import_export_settings_title">"Настройки импорта / экспорта"</string>
@@ -163,6 +163,6 @@
     <string name="qr_code_share_error">"К сожалению QR-код нельзя экспортировать! Произошла ошибка"</string>
     <string name="settings_saved_successfully">"Ваши настройки сохранены!"</string>
     <string name="select_qr_code">"Выбрать QR-код"</string>
-    <string name="select_code_from_sd_card">Выбрать код с SD-карты</string>
-    <string name="scan_code_from_another_device">Сканировать код с другого устройства</string>
+    <string name="select_code_from_sd_card">"Выбрать код с SD-карты"</string>
+    <string name="scan_code_from_another_device">"Сканировать код с другого устройства"</string>
 </resources>

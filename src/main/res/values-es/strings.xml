@@ -154,7 +154,7 @@
     <string name="households">"Hogares"</string>
     <string name="participants">"Participantes"</string>
 
-    <string name="export_settings">"Importar Ajustes por código QR"</string>
+    <string name="import_export_settings">"Importar Ajustes por código QR"</string>
     <string name="encoding_max_limit">"Límite máximo de caracteres alcanzado: el código QR no se puede generar para todos los ajustes"</string>
     <string name="import_qr_code_error_msg">"L\'importación de los ajustes a través del código QR falló"</string>
     <string name="import_export_settings_title">"Importar / Exportar Ajustes"</string>
@@ -165,6 +165,6 @@
     <string name="qr_code_share_error">"El código QR no puede ser compartido. Ocurrió un error."</string>
     <string name="settings_saved_successfully">"Los ajustes fueron guardados ."</string>
     <string name="select_qr_code">"Seleccionar el código QR"</string>
-    <string name="select_code_from_sd_card">Seleccionar código desde la tarjeta SD</string>
-    <string name="scan_code_from_another_device">Escanear código desde otro aparato</string>
+    <string name="select_code_from_sd_card">"Seleccionar código desde la tarjeta SD"</string>
+    <string name="scan_code_from_another_device">"Escanear código desde otro aparato"</string>
 </resources>
