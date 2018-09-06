@@ -139,7 +139,7 @@
     <string name="invalid_member">"Недействительный член домохозяйства, пожалуйста, заполните или исправьте следующие поля: [list of fields]"</string>
     <string name="invalid_participant">"Недействительный Участник, пожалуйста, заполните или исправить следующие поля:"</string>
     <string name="create_settings_password">"Создание пароля на страницу настроек"</string>
-    <string name="settings_password_title">"Настройка пароля"</string>
+    <string name="settings_password_title">"Пароль"</string>
     <string name="enter_settings_password">"Введите пароль на страницу настроек"</string>
     <string name="show_password">"Показать пароль"</string>
     <string name="hide_password">"Скрыть пароль"</string>
