@@ -153,7 +153,7 @@
     <string name="households">الاسر</string>
     <string name="participants">المشاركون</string>
 
-    <string name="export_settings">استيراد الإعدادات من خلال الباركود</string>
+    <string name="import_export_settings">استيراد/ تصدير الإعدادات من خلال الباركود</string>
     <string name="encoding_max_limit">تم الوصول إلي الحد الأقصى لعدد الأحرف: لا يمكن إنشاء الباركود لجميع الإعدادات</string>
     <string name="import_qr_code_error_msg">فشل استيراد الإعدادات عن طريق الباركود</string>
     <string name="import_export_settings_title">استيراد/ تصدير الإعدادات</string>
