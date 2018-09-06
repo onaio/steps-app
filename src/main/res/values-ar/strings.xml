@@ -140,7 +140,7 @@
     <string name="invalid_member">"الفردغير صحيح: املأ أو صحح البيانات في الخانات الآتيه: [قائمه الخانات]"</string>
     <string name="invalid_participant">مشارك غيرمؤهل. برجاء ملأ أو تصحيح الخانات الاتية :</string>
     <string name="create_settings_password">"قم بانشاء كلمة سر لشاشة الاعداد"</string>
-    <string name="settings_password_title">اعدادات كلمه السر</string>
+    <string name="settings_password_title">كلمه السر</string>
     <string name="enter_settings_password">ادخل كلمة سر شاشة الاعداد</string>
     <string name="show_password">اظهار كلمة السر</string>
     <string name="hide_password">اخفاء كلمة السر</string>

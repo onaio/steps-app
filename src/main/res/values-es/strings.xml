@@ -141,8 +141,8 @@
     <string name="invalid_member">"Miembro inválido. Por favor completar o corregir los siguientes campos:"</string>
     <string name="invalid_participant">"Participante inválido, por favor complete o corrija los siguientes campos:"</string>
     <string name="create_settings_password">"Crear una contraseña para los ajustes"</string>
-    <string name="settings_password_title">"Configuración de contraseña"</string>
-    <string name="enter_settings_password">"Introduce la contraseña de ajustes"</string>
+    <string name="settings_password_title">"Contraseña"</string>
+    <string name="enter_settings_password">"Introduce la contraseña para los ajustes"</string>
     <string name="show_password">"Mostrar la contraseña"</string>
     <string name="hide_password">"Ocultar la contraseña"</string>
     <string name="incorrect_password">"La contraseña introducida es incorrecta"</string>
