@@ -80,4 +80,6 @@ public class Constants {
             + File.separator + "steps";
 
     public static final String SETTINGS = STEPS_ROOT_FOLDER + File.separator + "settings";
+
+    public static final String UNIQUE_DEVICE_ID = "unique_device_id";
 }

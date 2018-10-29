@@ -17,8 +17,11 @@
 package com.onaio.steps.activities;
 
 import android.app.Activity;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
+import com.onaio.steps.helper.Device;
+import com.onaio.steps.helper.RegisterUniqueDeviceIdTask;
 import com.onaio.steps.orchestrators.FlowOrchestrator;
 import com.onaio.steps.orchestrators.flows.FlowType;
 import com.onaio.steps.helper.Constants;
@@ -28,6 +31,10 @@ public class MainActivityOrchestrator extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        RegisterUniqueDeviceIdTask registerUniqueDeviceIdTask = new RegisterUniqueDeviceIdTask(getApplicationContext());
+        registerUniqueDeviceIdTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
         FlowType flowType = FlowType.valueOf(getValue(Constants.FLOW_TYPE));
         new FlowOrchestrator(this).start(flowType);
         finish();
