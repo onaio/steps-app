@@ -55,6 +55,8 @@ public class Member implements Serializable {
     private String memberHouseholdId;
     private Boolean deleted;
 
+    public Member() {}
+
     public Member(int id, String familySurname, String firstName, Gender gender, int age, Household household, String memberHouseholdId, Boolean deleted) {
         this.familySurname = familySurname;
         this.firstName = firstName;
@@ -121,6 +123,14 @@ public class Member implements Serializable {
 
     public int getId() {
         return id;
+    }
+
+    public void setFamilySurname(String familySurname) {
+        this.familySurname = familySurname;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     public long save(DatabaseHelper db) {
