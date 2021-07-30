@@ -61,7 +61,20 @@ public class CursorHelper {
                 String createdAt = cursor.getString(cursor.getColumnIndex(Household.CREATED_AT));
                 String comments = cursor.getString(cursor.getColumnIndex(Household.COMMENTS));
                 String uniqueDeviceId = cursor.getString(cursor.getColumnIndex(Household.UNIQUE_DEVICE_ID));
-                householdNames.add(new Household(id,household_name, household_number,selectedMemberId, InterviewStatus.valueOf(status),createdAt, uniqueDeviceId, comments ));
+
+                String memberFamilySurname = cursor.getColumnIndex(Member.FAMILY_SURNAME) != -1 ? cursor.getString(cursor.getColumnIndex(Member.FAMILY_SURNAME)) : null;
+                String memberFirstName = cursor.getColumnIndex(Member.FIRST_NAME) != -1 ? cursor.getString(cursor.getColumnIndex(Member.FIRST_NAME)) : null;
+
+                Household hh = new Household(id,household_name, household_number,selectedMemberId, InterviewStatus.valueOf(status),createdAt, uniqueDeviceId, comments );
+
+                if (memberFamilySurname != null && memberFirstName != null) {
+                    Member member = new Member();
+                    member.setFamilySurname(memberFamilySurname);
+                    member.setFirstName(memberFirstName);
+                    hh.setSelectedMember(member);
+                }
+
+                householdNames.add(hh);
             }while (cursor.moveToNext());
         }
         cursor.close();

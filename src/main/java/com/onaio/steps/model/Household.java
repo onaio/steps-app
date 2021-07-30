@@ -29,7 +29,7 @@ import java.util.List;
 public class Household implements Serializable,Comparable<Household> {
     private static String FIND_BY_ID_QUERY = "SELECT * FROM HOUSEHOLD WHERE id = %s";
     public static final String FIND_BY_NAME_QUERY = "SELECT * FROM HOUSEHOLD WHERE %s = '%s'";
-    private static String FIND_ALL_QUERY = "SELECT * FROM HOUSEHOLD ORDER BY Id desc";
+    private static String FIND_ALL_QUERY = "SELECT hh.*, m.family_surname, m.first_name FROM household AS hh LEFT JOIN member AS m ON m.id = hh.selected_member_id ORDER BY hh.Id DESC";
     private static String FIND_ALL_COUNT_QUERY = "SELECT count(*) FROM HOUSEHOLD ORDER BY Id desc";
     public static final String TABLE_NAME = "household";
     public static final String ID = "Id";
@@ -50,6 +50,7 @@ public class Household implements Serializable,Comparable<Household> {
     String createdAt;
     String comments;
     String uniqueDeviceId;
+    Member selectedMember;
     
     public Household(String id, String name, String phoneNumber, String selectedMemberId, InterviewStatus status, String createdAt, String uniqueDeviceId, String comments) {
         this.id = id;
@@ -127,6 +128,14 @@ public class Household implements Serializable,Comparable<Household> {
 
     public String getUniqueDeviceId() {
         return this.uniqueDeviceId;
+    }
+
+    public Member getSelectedMember() {
+        return selectedMember;
+    }
+
+    public void setSelectedMember(Member member) {
+        this.selectedMember = member;
     }
 
     public long save(DatabaseHelper db){
