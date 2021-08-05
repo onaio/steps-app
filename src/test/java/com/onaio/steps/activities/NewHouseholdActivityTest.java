@@ -17,9 +17,9 @@
 package com.onaio.steps.activities;
 
 
-import android.content.Context;
 import android.content.Intent;
-import android.telephony.TelephonyManager;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -66,6 +66,8 @@ public class NewHouseholdActivityTest {
                 .get();
 
         this.newHouseholdActivity = Mockito.spy(newHouseholdActivity);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(newHouseholdActivity);
+        sharedPreferences.edit().putString(Constants.UNIQUE_DEVICE_ID, "testUniqueDevId").apply();
     }
 
     @Test
@@ -95,9 +97,6 @@ public class NewHouseholdActivityTest {
         Mockito.stub(generatedIdMock.getText()).toReturn("12345-101");
         numberView.setText("8050342347");
         commentsView.setText("dummy comments");
-        TelephonyManager telephonyManager = Mockito.mock(TelephonyManager.class);
-        Mockito.when(telephonyManager.getDeviceId()).thenReturn("testUniqueDevId");
-        Mockito.when(newHouseholdActivity.getSystemService(Context.TELEPHONY_SERVICE)).thenReturn(telephonyManager);
         Household household = new HouseholdViewWrapper(newHouseholdActivity).getHousehold(R.id.generated_household_id, R.id.household_number, R.id.household_comments);
         newHouseholdActivity.doneBtnClicked(viewMock);
 
