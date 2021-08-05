@@ -26,8 +26,6 @@ jobs:
         run: chmod +x gradlew
       - name: Run unit tests with Gradle
         run: ./gradlew jacocoTestReport --stacktrace
-      - name: Generate Javadoc with Gradle
-        run: ./gradlew javadoc
       - name: Upload coverage to Coveralls with Gradle
         run: ./gradlew coveralls --stacktrace
         env:
