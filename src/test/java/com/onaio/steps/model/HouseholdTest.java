@@ -127,7 +127,7 @@ public class HouseholdTest {
     @Test
     public void ShouldGetAllHouseholds(){
         stubDbForHousehold();
-        String FIND_ALL_QUERY = "SELECT * FROM HOUSEHOLD ORDER BY Id desc";
+        String FIND_ALL_QUERY = "SELECT hh.*, m.family_surname, m.first_name FROM household AS hh LEFT JOIN member AS m ON m.id = hh.selected_member_id ORDER BY hh.Id DESC";
         household.setId(String.valueOf(householdId));
         household.setSelectedMemberId("");
         new CursorStub(cursor).stubCursorForHousehold(household);
