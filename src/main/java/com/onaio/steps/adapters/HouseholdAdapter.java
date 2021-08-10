@@ -28,6 +28,7 @@ import android.widget.TextView;
 import com.onaio.steps.R;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.model.Household;
+import com.onaio.steps.model.InterviewStatus;
 import com.onaio.steps.model.Member;
 
 import java.util.List;
@@ -87,11 +88,15 @@ public class HouseholdAdapter extends BaseAdapter{
 
         householdName.setTextColor(Color.BLACK);
         String householdRow = context.getString(R.string.hhid)+ householdAtPosition.getName();
+
         Member selectedMember = householdAtPosition.getSelectedMember();
-        if (selectedMember != null) {
+        if (householdAtPosition.getStatus() == InterviewStatus.REFUSED) {
+            householdRow += " Not reachable";
+        } else if (selectedMember != null){
             householdRow += " " + selectedMember.getFamilySurname() + " " + selectedMember.getFirstName();
         }
         householdName.setText(householdRow);
+
         int numberOfMembers = householdAtPosition.numberOfNonDeletedMembers(new DatabaseHelper(context));
         membersCount.setText(String.format("%s, %s "+context.getString(R.string.members), householdAtPosition.getCreatedAt(), String.valueOf(numberOfMembers)));
         this.notifyDataSetChanged();
