@@ -29,6 +29,7 @@ import java.util.List;
 public class Household implements Serializable,Comparable<Household> {
     private static String FIND_BY_ID_QUERY = "SELECT * FROM HOUSEHOLD WHERE id = %s";
     public static final String FIND_BY_NAME_QUERY = "SELECT * FROM HOUSEHOLD WHERE %s = '%s'";
+    public static final String FIND_BY_STATUS_QUERY = "SELECT * FROM HOUSEHOLD WHERE %s = '%s'";
     private static String FIND_ALL_QUERY = "SELECT hh.*, m.family_surname, m.first_name FROM household AS hh LEFT JOIN member AS m ON m.id = hh.selected_member_id ORDER BY hh.Id DESC";
     private static String FIND_ALL_COUNT_QUERY = "SELECT count(*) FROM HOUSEHOLD ORDER BY Id desc";
     public static final String TABLE_NAME = "household";
@@ -178,6 +179,13 @@ public class Household implements Serializable,Comparable<Household> {
         if(households.isEmpty())
             return null;
         return households.get(0);
+    }
+
+    public static List<Household> findByStatus(DatabaseHelper db, InterviewStatus status) {
+        Cursor cursor = db.exec(String.format(FIND_BY_STATUS_QUERY, STATUS, status));
+        List<Household> households = new CursorHelper().getHouseholds(cursor);
+        db.close();
+        return  households;
     }
 
     public static List<Household> getAllInOrder(DatabaseHelper db){

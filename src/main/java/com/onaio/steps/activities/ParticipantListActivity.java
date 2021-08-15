@@ -106,6 +106,12 @@ public class ParticipantListActivity extends BaseListActivity {
     protected List<IMenuHandler> getCustomMenuHandler() {
         return ParticipantListActivityFactory.getCustomMenuHandler(this);
     }
+
+    @Override
+    public void refreshList() {
+        populateParticipants();
+        bindParticipantItem();
+    }
 }
 
 

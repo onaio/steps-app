@@ -134,5 +134,6 @@ public abstract class BaseListActivity extends ListActivity{
     protected abstract List<IMenuPreparer> getMenuPreparer(Menu menu);
     protected abstract List<IMenuHandler> getCustomMenuHandler();
     protected abstract void prepareScreen();
+    public abstract void refreshList();
 
 }
