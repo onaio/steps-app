@@ -20,6 +20,7 @@ import android.content.ComponentName;
 import android.content.Intent;
 import com.onaio.steps.R;
 import com.onaio.steps.activities.HouseholdListActivity;
+import com.onaio.steps.model.RequestCode;
 
 import junit.framework.Assert;
 import junit.framework.TestCase;
@@ -58,7 +59,7 @@ public class FinalisedFormHandlerTest extends TestCase {
     public void ShouldOpenTheProperIntentForSavedForms(){
         finalisedFormHandler.open();
 
-        Mockito.verify(householdListActivity).startActivity(Mockito.argThat(intentMatcher()));
+        Mockito.verify(householdListActivity).startActivityForResult(Mockito.argThat(intentMatcher()), Mockito.eq(RequestCode.DATA_SUBMISSION.getCode()));
     }
 
     private ArgumentMatcher<Intent> intentMatcher() {
