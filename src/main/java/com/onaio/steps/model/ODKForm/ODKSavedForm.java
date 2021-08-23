@@ -41,7 +41,7 @@ public class ODKSavedForm implements IForm{
     String jrVersion;
 
 
-    protected ODKSavedForm(String id, String jrFormId, String displayName, String jrVersion, String instanceFilePath, String status) {
+    public ODKSavedForm(String id, String jrFormId, String displayName, String jrVersion, String instanceFilePath, String status) {
         _id = id;
         this.jrFormId = jrFormId;
         this.displayName = displayName;
