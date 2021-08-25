@@ -7,11 +7,11 @@ import com.onaio.steps.R;
 import com.onaio.steps.activities.HouseholdSummaryActivity;
 import com.onaio.steps.handler.interfaces.IMenuHandler;
 
-public class ViewHouseholdSummaryActivityMenuHandler implements IMenuHandler {
+public class HouseholdSummaryActivityMenuHandler implements IMenuHandler {
 
     private final ListActivity activity;
 
-    public ViewHouseholdSummaryActivityMenuHandler(ListActivity activity) {
+    public HouseholdSummaryActivityMenuHandler(ListActivity activity) {
         this.activity = activity;
     }
 
