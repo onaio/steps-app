@@ -22,6 +22,7 @@ import android.view.Menu;
 import com.onaio.steps.handler.actions.SaveToSDCardHandler;
 import com.onaio.steps.handler.actions.SubmitDataHandler;
 import com.onaio.steps.handler.activities.ParticipantActivityMenuItemHandler;
+import com.onaio.steps.handler.activities.ViewHouseholdSummaryActivityMenuHandler;
 import com.onaio.steps.handler.interfaces.IViewPreparer;
 import com.onaio.steps.orchestrators.flows.FlowType;
 import com.onaio.steps.handler.activities.HouseholdActivityHandler;
@@ -45,6 +46,7 @@ public class HouseholdListActivityFactory {
         handlers.add(new SubmitDataHandler(activity).with(households));
         handlers.add(new ImportHandler(activity));
         handlers.add(new SaveToSDCardHandler(activity).with(households));
+        handlers.add(new ViewHouseholdSummaryActivityMenuHandler(activity));
         return handlers;
     }
 

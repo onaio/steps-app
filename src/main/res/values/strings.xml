@@ -165,4 +165,10 @@
     <string name="select_qr_code">Select QR Code</string>
     <string name="select_code_from_sd_card">Select code from SD Card</string>
     <string name="scan_code_from_another_device">Scan code from another device</string>
+    <string name="view_totals">View Totals</string>
+    <string name="interview_done">Interview Done</string>
+    <string name="interview_not_done">Interview Not Done</string>
+    <string name="interview_deffered">Interview Later</string>
+    <string name="interview_refused">Interview Refused</string>
+    <string name="interview_incomplete">Interview Incomplete</string>
 </resources>
