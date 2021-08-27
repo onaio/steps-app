@@ -23,6 +23,7 @@ import android.content.ContentResolver;
 import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.RemoteException;
 import android.test.mock.MockContentProvider;
 
@@ -43,10 +44,14 @@ import org.mockito.Mockito;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
+import org.robolectric.annotation.Implementation;
+import org.robolectric.annotation.Implements;
+import org.robolectric.shadows.ShadowAsyncTask;
 
 import java.util.HashMap;
+import java.util.concurrent.Executor;
 
-@Config(emulateSdk = 16,manifest = "src/main/AndroidManifest.xml")
+@Config(emulateSdk = 16,manifest = "src/main/AndroidManifest.xml", shadows = {DataSubmissionResultHandlerTest.ShadowLoadingDoneHouseHold.class})
 @RunWith(RobolectricTestRunner.class)
 public class DataSubmissionResultHandlerTest {
 
@@ -103,6 +108,16 @@ public class DataSubmissionResultHandlerTest {
         @Override
         public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder){
             return expectedResults.get(uri);
+        }
+    }
+
+    @Implements(AsyncTask.class)
+    public static class ShadowLoadingDoneHouseHold<Params, Progress, Result> extends ShadowAsyncTask<Params, Progress, Result> {
+
+        @Override
+        @Implementation
+        public AsyncTask<Params, Progress, Result> executeOnExecutor(Executor executor, Params... params) {
+            return super.execute(params);
         }
     }
 }
