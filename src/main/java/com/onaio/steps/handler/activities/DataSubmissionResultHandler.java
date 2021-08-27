@@ -1,11 +1,14 @@
 package com.onaio.steps.handler.activities;
 
+import android.app.Activity;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.util.Log;
 
+import com.onaio.steps.R;
 import com.onaio.steps.activities.BaseListActivity;
 import com.onaio.steps.exceptions.AppNotInstalledException;
 import com.onaio.steps.handler.interfaces.IActivityResultHandler;
@@ -14,12 +17,10 @@ import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.helper.KeyValueStoreFactory;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.InterviewStatus;
-import com.onaio.steps.model.ODKForm.IForm;
 import com.onaio.steps.model.ODKForm.ODKSavedForm;
 import com.onaio.steps.model.Participant;
 import com.onaio.steps.model.RequestCode;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class DataSubmissionResultHandler implements IActivityResultHandler {
@@ -32,7 +33,7 @@ public class DataSubmissionResultHandler implements IActivityResultHandler {
     public DataSubmissionResultHandler(ListActivity activity) {
         this.activity = activity;
         pd = new ProgressDialog(activity);
-        pd.setMessage("Please wait");
+        pd.setMessage(activity.getString(R.string.please_wait));
         pd.setIndeterminate(true);
         pd.setCancelable(false);
         pd.setCanceledOnTouchOutside(false);
@@ -40,7 +41,8 @@ public class DataSubmissionResultHandler implements IActivityResultHandler {
 
     @Override
     public void handleResult(Intent data, int resultCode) {
-        new LoadingDoneHouseHold().execute();
+        LoadingDoneHouseHold asyncTask = new LoadingDoneHouseHold();
+        asyncTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     @Override
@@ -80,11 +82,11 @@ public class DataSubmissionResultHandler implements IActivityResultHandler {
                 // process households
                 for (int i = 0; i < households.size(); i++) {
                     Household hh = households.get(i);
-                    String displayName = String.format(hhFormId + "-%s", hh.getName());
+                    String displayName = String.format("%s-%s", hhFormId, hh.getName());
                     List<ODKSavedForm> forms = ODKSavedForm.findAll(activity, displayName);
 
                     if (!forms.isEmpty() && Constants.ODK_FORM_SUBMITTED_STATUS.equals(forms.get(0).getStatus())) {
-                        hh.setStatus(InterviewStatus.COMPLETED);
+                        hh.setStatus(InterviewStatus.SUBMITTED);
                         hh.update(db);
                         needToRefresh = true;
                     }
@@ -93,11 +95,11 @@ public class DataSubmissionResultHandler implements IActivityResultHandler {
                 // process participants
                 for (int i = 0; i < participants.size(); i++) {
                     Participant participant = participants.get(i);
-                    String displayName = String.format(paFormId + "-%s", participant.getParticipantID());
+                    String displayName = String.format("%s-%s", paFormId, participant.getParticipantID());
                     List<ODKSavedForm> forms = ODKSavedForm.findAll(activity, displayName);
 
                     if (!forms.isEmpty() && Constants.ODK_FORM_SUBMITTED_STATUS.equals(forms.get(0).getStatus())) {
-                        participant.setStatus(InterviewStatus.COMPLETED);
+                        participant.setStatus(InterviewStatus.SUBMITTED);
                         participant.update(db);
                         needToRefresh = true;
                     }
@@ -105,7 +107,7 @@ public class DataSubmissionResultHandler implements IActivityResultHandler {
 
             }
             catch (AppNotInstalledException ex) {
-                Log.e(TAG, "AppNotInstalledException", ex);
+                Log.e(TAG, Log.getStackTraceString(ex));
             }
 
             return needToRefresh;

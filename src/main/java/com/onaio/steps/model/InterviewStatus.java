@@ -26,7 +26,7 @@ public enum InterviewStatus {
     DEFERRED(3),
     REFUSED(7),
     INCOMPLETE_REFUSED(8),
-    COMPLETED(6);
+    SUBMITTED(6);
     private int orderWeight;
     private static HashMap<Integer, Integer> statusToWeight;
 

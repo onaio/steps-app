@@ -80,7 +80,7 @@ public class ParticipantAdapter extends BaseAdapter {
     private int getImage(Participant participantAtPosition) {
         switch (participantAtPosition.getStatus()) {
             case DONE:
-            case COMPLETED:
+            case SUBMITTED:
                 return R.mipmap.ic_household_list_done;
             case NOT_DONE:
                 return R.mipmap.ic_participant_not_selected;
