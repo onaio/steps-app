@@ -76,6 +76,7 @@ public class HouseholdAdapter extends BaseAdapter{
 
     private void setTextInView(View householdListItem, Household householdAtPosition) {
         TextView householdName = (TextView) householdListItem.findViewById(R.id.main_text);
+        ImageView cloudIcon = (ImageView) householdListItem.findViewById(R.id.cloud_icon);
         TextView membersCount = (TextView) householdListItem.findViewById(R.id.sub_text);
         ImageView image = (ImageView) householdListItem.findViewById(R.id.main_image);
         ImageView commentImage = (ImageView) householdListItem.findViewById(R.id.comment_view);
@@ -96,6 +97,7 @@ public class HouseholdAdapter extends BaseAdapter{
             householdRow += " " + selectedMember.getFamilySurname() + " " + selectedMember.getFirstName();
         }
         householdName.setText(householdRow);
+        cloudIcon.setVisibility(InterviewStatus.SUBMITTED.equals(householdAtPosition.getStatus()) ? View.VISIBLE : View.GONE);
 
         int numberOfMembers = householdAtPosition.numberOfNonDeletedMembers(new DatabaseHelper(context));
         membersCount.setText(String.format("%s, %s "+context.getString(R.string.members), householdAtPosition.getCreatedAt(), String.valueOf(numberOfMembers)));
