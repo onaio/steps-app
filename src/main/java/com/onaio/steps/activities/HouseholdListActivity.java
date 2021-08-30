@@ -106,4 +106,10 @@ public class HouseholdListActivity extends BaseListActivity {
     private List<IViewPreparer> getViewPreparer() {
         return HouseholdListActivityFactory.getViewPreparer(this, Household.getAllInOrder(db));
     }
+
+    @Override
+    public void refreshList() {
+        populateHouseholds();
+        bindHouseholdItem();
+    }
 }

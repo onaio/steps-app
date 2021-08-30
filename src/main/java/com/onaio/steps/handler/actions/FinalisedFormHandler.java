@@ -20,11 +20,19 @@ import android.app.ListActivity;
 import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Intent;
+import android.os.AsyncTask;
 
 import com.onaio.steps.R;
 import com.onaio.steps.handler.interfaces.IMenuHandler;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.CustomDialog;
+import com.onaio.steps.helper.DatabaseHelper;
+import com.onaio.steps.helper.KeyValueStoreFactory;
+import com.onaio.steps.model.Household;
+import com.onaio.steps.model.InterviewStatus;
+import com.onaio.steps.model.RequestCode;
+
+import java.util.List;
 
 public class FinalisedFormHandler implements IMenuHandler{
    private ListActivity activity;
@@ -51,10 +59,9 @@ public class FinalisedFormHandler implements IMenuHandler{
             Intent surveyIntent = new Intent();
             surveyIntent.setComponent(new ComponentName(Constants.ODK_COLLECT_PACKAGE, Constants.ODK_COLLECT_UPLOADER_CLASS));
             surveyIntent.setAction(Intent.ACTION_EDIT);
-            activity.startActivity(surveyIntent);
+            activity.startActivityForResult(surveyIntent, RequestCode.DATA_SUBMISSION.getCode());
         } catch (ActivityNotFoundException e) {
             new CustomDialog().notify(activity, CustomDialog.EmptyListener, R.string.error_title, R.string.odk_app_not_installed);
-
         }
     }
 }

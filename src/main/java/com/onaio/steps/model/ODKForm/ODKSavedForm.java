@@ -59,9 +59,9 @@ public class ODKSavedForm implements IForm{
         return instanceFilePath;
     }
 
-    public static List<IForm> findAll(Activity activity, String displayName) throws AppNotInstalledException {
+    public static <T extends IForm> List<T> findAll(Activity activity, String displayName) throws AppNotInstalledException {
         ContentProviderClient formsContentProvider = activity.getContentResolver().acquireContentProviderClient(ODKSavedForm.URI);
-        ArrayList<IForm> forms = new ArrayList<IForm>();
+        List<ODKSavedForm> forms = new ArrayList<>();
         try {
             if(formsContentProvider==null) throw new AppNotInstalledException();
             Cursor cursor = formsContentProvider.query(ODKSavedForm.URI, null, "displayName = ?", new String[]{displayName}, null);
@@ -79,7 +79,7 @@ public class ODKSavedForm implements IForm{
         } catch (RemoteException e) {
             throw new AppNotInstalledException();
         }
-        return forms;
+        return (List<T>) forms;
     }
 
     public String getStatus() {

@@ -30,7 +30,8 @@ public enum RequestCode {
     EDIT_PARTICIPANT(9),
     IMPORT_EXPORT_SETTINGS(10),
     PICK_IMAGE(11),
-    QR_CODE_SCAN(IntentIntegrator.REQUEST_CODE);
+    QR_CODE_SCAN(IntentIntegrator.REQUEST_CODE),
+    DATA_SUBMISSION(13);
 
     private final int code;
     RequestCode(int code){

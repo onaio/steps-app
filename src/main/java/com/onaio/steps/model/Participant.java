@@ -43,6 +43,7 @@ public class Participant implements Serializable {
     public static final String TABLE_CREATE_QUERY = String.format("CREATE TABLE %s(%s INTEGER PRIMARY KEY,%s TEXT,%s Text, %s TEXT, %s INTEGER, %s TEXT, %s TEXT, %s TEXT)", TABLE_NAME, ID,PARTICIPANT_ID, FAMILY_SURNAME, FIRST_NAME, AGE, GENDER, STATUS, CREATED_AT);
     public static final String FIND_ALL_QUERY = "SELECT * FROM PARTICIPANT ORDER BY Id asc";
     public static final String FIND_BY_ID_QUERY = "SELECT * FROM PARTICIPANT WHERE " + ID + " = '%s'";
+    public static final String FIND_BY_STATUS_QUERY = "SELECT * FROM PARTICIPANT WHERE " + STATUS + " = '%s'";
 
     private String familySurname;
     private String firstName;
@@ -168,6 +169,13 @@ public class Participant implements Serializable {
         Participant participant = new CursorHelper().getParticipants(cursor).get(0);
         db.close();
         return participant;
+    }
+
+    public static List<Participant> findByStatus(DatabaseHelper db, InterviewStatus status) {
+        Cursor cursor = db.exec(String.format(FIND_BY_STATUS_QUERY, status));
+        List<Participant> participants = new CursorHelper().getParticipants(cursor);
+        db.close();
+        return participants;
     }
 
     // for testing purpose

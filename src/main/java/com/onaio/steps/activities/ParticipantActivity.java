@@ -83,6 +83,7 @@ public class ParticipantActivity extends Activity{
     private void populateMessage() {
         TextView viewById = (TextView) findViewById(R.id.survey_message);
         switch (participant.getStatus()){
+            case SUBMITTED:
             case DONE: viewById.setText(R.string.interview_done_message);
                 viewById.setTextColor(Color.parseColor(Constants.TEXT_GREEN));
                 break;
