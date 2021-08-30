@@ -97,7 +97,7 @@ public class MemberAdapter extends BaseAdapter{
     private void setText(TextView memberName, String text, boolean isSelectedMember, int defaultTextColor) {
         memberName.setText(text);
         if(isSelectedMember)
-            if(household.getStatus().equals(InterviewStatus.DONE))
+            if(household.getStatus().equals(InterviewStatus.DONE) || household.getStatus().equals(InterviewStatus.SUBMITTED))
                 memberName.setTextColor(Color.parseColor(Constants.TEXT_GREEN));
             else
                 memberName.setTextColor(Color.RED);
@@ -108,7 +108,7 @@ public class MemberAdapter extends BaseAdapter{
     private void setImage(View memberListItem, Boolean isSelectedMember) {
         ImageView image = (ImageView) memberListItem.findViewById(R.id.main_image);
         if(isSelectedMember) {
-            if (household.getStatus().equals(InterviewStatus.DONE)) {
+            if (household.getStatus().equals(InterviewStatus.DONE) || household.getStatus().equals(InterviewStatus.SUBMITTED)) {
                 image.setImageResource(R.mipmap.ic_household_list_done);
             } else if (household.getStatus().equals(InterviewStatus.INCOMPLETE_REFUSED)) {
                 image.setImageResource(R.mipmap.ic_household_list_refused);

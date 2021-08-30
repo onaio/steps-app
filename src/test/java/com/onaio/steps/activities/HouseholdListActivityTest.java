@@ -119,7 +119,7 @@ public class HouseholdListActivityTest{
     @Test
     public void ShouldGetProperResultHandlers(){
         List<IActivityResultHandler> resultHandlers = householdListActivityMock.getResultHandlers();
-        assertEquals(2,resultHandlers.size());
+        assertEquals(3,resultHandlers.size());
     }
     @Test
     public void ShouldGetProperMenuPreparer(){
