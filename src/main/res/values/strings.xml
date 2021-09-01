@@ -172,4 +172,5 @@
     <string name="interview_deffered">Interview Later</string>
     <string name="interview_refused">Interview Refused</string>
     <string name="interview_incomplete">Interview Incomplete</string>
+    <string name="total_households">Total Households</string>
 </resources>

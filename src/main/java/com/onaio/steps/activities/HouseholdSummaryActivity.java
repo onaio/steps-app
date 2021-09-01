@@ -1,6 +1,7 @@
 package com.onaio.steps.activities;
 
 import android.app.Activity;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -24,6 +25,8 @@ public class HouseholdSummaryActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_household_summary);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setIcon(new ColorDrawable(getResources().getColor(android.R.color.transparent)));
         buildSummary();
     }
 
@@ -34,7 +37,7 @@ public class HouseholdSummaryActivity extends Activity {
         summaryItemList.add(new SummaryItem(R.mipmap.ic_household_list_deferred, getString(R.string.interview_deffered), InterviewStatus.DEFERRED));
         summaryItemList.add(new SummaryItem(R.mipmap.ic_household_list_refused, getString(R.string.interview_refused), InterviewStatus.REFUSED));
         summaryItemList.add(new SummaryItem(R.mipmap.ic_household_list_incomplete, getString(R.string.interview_incomplete), InterviewStatus.INCOMPLETE, InterviewStatus.INCOMPLETE_REFUSED));
-        summaryItemList.add(new SummaryItem(R.mipmap.ic_household_list_not_selected, "Total Households"));
+        summaryItemList.add(new SummaryItem(R.mipmap.ic_household_list_not_selected, getString(R.string.total_households)));
 
         LinearLayout container = (LinearLayout) findViewById(R.id.summary_list);
         DatabaseHelper db = new DatabaseHelper(this);
@@ -45,8 +48,7 @@ public class HouseholdSummaryActivity extends Activity {
 
             if (item.statusList.isEmpty()) {
                 total = Household.getAllCount(db);
-            }
-            else {
+            } else {
                 for (InterviewStatus status : item.statusList) {
                     total += Household.getCountByStatus(db, status);
                 }
