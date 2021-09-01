@@ -16,6 +16,10 @@
 
 package com.onaio.steps.adapter;
 
+import android.view.View;
+import android.widget.TextView;
+
+import com.onaio.steps.R;
 import com.onaio.steps.activities.HouseholdListActivity;
 import com.onaio.steps.adapters.HouseholdAdapter;
 import com.onaio.steps.model.Household;
@@ -64,6 +68,15 @@ public class HouseholdAdapterTest {
     @Test
     public void testGetItemIdShouldReturnOneAsLong() {
         Assert.assertEquals(1, adapter.getItemId(0));
+    }
+
+    @Test
+    public void testGetViewShouldVerifyViewData() {
+        View itemView = adapter.getView(0, null, null);
+
+        TextView householdName = (TextView) itemView.findViewById(R.id.main_text);
+
+        Assert.assertEquals("HHID:" + NAME, householdName.getText().toString());
     }
 
     private void verify(Household household) {
