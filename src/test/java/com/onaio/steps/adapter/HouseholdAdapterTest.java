@@ -42,6 +42,15 @@ import java.util.List;
 @RunWith(RobolectricTestRunner.class)
 public class HouseholdAdapterTest {
 
+    private final String ID = "1";
+    private final String NAME = "Bill Gates";
+    private final String PHONE_NUMBER = "12345";
+    private final String SELECTED_MEMBER_ID = "4";
+    private final String CREATED_AT = "";
+    private final String UNIQUE_DEVICE_ID = "2";
+    private final String COMMENTS = "no comments";
+    private final InterviewStatus STATUS = InterviewStatus.DONE;
+
     private HouseholdAdapter adapter;
     private List<Household> householdList;
 
@@ -56,13 +65,21 @@ public class HouseholdAdapterTest {
 
     @Test
     public void testGetCountShouldReturnOne() {
-        Assert.assertEquals(1, householdList.size());
+        Assert.assertEquals(1, adapter.getCount());
     }
 
     @Test
     public void testGetItemShouldVerifyTheData() {
         Household household = (Household) adapter.getItem(0);
-        verify(household);
+
+        Assert.assertEquals(ID, household.getId());
+        Assert.assertEquals(NAME, household.getName());
+        Assert.assertEquals(PHONE_NUMBER, household.getPhoneNumber());
+        Assert.assertEquals(SELECTED_MEMBER_ID, household.getSelectedMemberId());
+        Assert.assertEquals(CREATED_AT, household.getCreatedAt());
+        Assert.assertEquals(UNIQUE_DEVICE_ID, household.getUniqueDeviceId());
+        Assert.assertEquals(COMMENTS, household.getComments());
+        Assert.assertEquals(STATUS, household.getStatus());
     }
 
     @Test
@@ -79,27 +96,7 @@ public class HouseholdAdapterTest {
         Assert.assertEquals("HHID:" + NAME, householdName.getText().toString());
     }
 
-    private void verify(Household household) {
-        Assert.assertEquals(ID, household.getId());
-        Assert.assertEquals(NAME, household.getName());
-        Assert.assertEquals(PHONE_NUMBER, household.getPhoneNumber());
-        Assert.assertEquals(SELECTED_MEMBER_ID, household.getSelectedMemberId());
-        Assert.assertEquals(CREATED_AT, household.getCreatedAt());
-        Assert.assertEquals(UNIQUE_DEVICE_ID, household.getUniqueDeviceId());
-        Assert.assertEquals(COMMENTS, household.getComments());
-        Assert.assertEquals(STATUS, household.getStatus());
-    }
-
     private Household getHousehold() {
         return new Household(ID, NAME, PHONE_NUMBER, SELECTED_MEMBER_ID, STATUS, CREATED_AT, UNIQUE_DEVICE_ID, COMMENTS);
     }
-
-    private final String ID = "1";
-    private final String NAME = "Bill Gates";
-    private final String PHONE_NUMBER = "12345";
-    private final String SELECTED_MEMBER_ID = "4";
-    private final String CREATED_AT = "";
-    private final String UNIQUE_DEVICE_ID = "2";
-    private final String COMMENTS = "no comments";
-    private final InterviewStatus STATUS = InterviewStatus.DONE;
 }
