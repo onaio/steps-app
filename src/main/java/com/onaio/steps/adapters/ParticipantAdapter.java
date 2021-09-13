@@ -26,6 +26,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.onaio.steps.R;
+import com.onaio.steps.model.InterviewStatus;
 import com.onaio.steps.model.Participant;
 
 import java.util.List;
@@ -67,6 +68,7 @@ public class ParticipantAdapter extends BaseAdapter {
 
     private void setTextInView(View view, Participant participantAtPosition) {
         TextView participantPidView = (TextView) view.findViewById(R.id.main_text);
+        ImageView cloudIcon = (ImageView) view.findViewById(R.id.cloud_icon);
         TextView createdAtView = (TextView) view.findViewById(R.id.sub_text);
         ImageView image = (ImageView) view.findViewById(R.id.main_image);
         image.setImageResource(getImage(participantAtPosition));
@@ -74,6 +76,7 @@ public class ParticipantAdapter extends BaseAdapter {
         participantPidView.setTextColor(Color.BLACK);
         String householdRow = participantAtPosition.getFormattedName()+" ("+context.getString(R.string.pid) + participantAtPosition.getParticipantID()+")";
         participantPidView.setText(householdRow);
+        cloudIcon.setVisibility(InterviewStatus.SUBMITTED.equals(participantAtPosition.getStatus()) ? View.VISIBLE : View.GONE);
         createdAtView.setText(String.format("%s", participantAtPosition.getCreatedAt()));
     }
 
