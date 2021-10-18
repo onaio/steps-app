@@ -36,16 +36,16 @@ public class HouseholdSummaryActivityTest {
         LinearLayout container = (LinearLayout) activity.findViewById(R.id.summary_list);
         Assert.assertEquals(6, container.getChildCount());
 
-        Assert.assertEquals("1", getTotal(container, 0));
-        Assert.assertEquals("1", getTotal(container, 1));
-        Assert.assertEquals("1", getTotal(container, 2));
-        Assert.assertEquals("1", getTotal(container, 3));
-        Assert.assertEquals("1", getTotal(container, 4));
-        Assert.assertEquals("5", getTotal(container, 5));
+        Assert.assertEquals("1", getTotal(container, R.integer.item_done));
+        Assert.assertEquals("1", getTotal(container, R.integer.item_not_done));
+        Assert.assertEquals("1", getTotal(container, R.integer.item_deferred));
+        Assert.assertEquals("1", getTotal(container, R.integer.item_refused));
+        Assert.assertEquals("1", getTotal(container, R.integer.item_partially_complete));
+        Assert.assertEquals("5", getTotal(container, R.integer.item_total));
     }
 
-    private String getTotal(LinearLayout container, int index) {
-        return ((TextView) container.getChildAt(index).findViewById(R.id.tv_total)).getText().toString();
+    private String getTotal(LinearLayout container, int viewIdRef) {
+        return ((TextView) container.findViewById(activity.getResources().getInteger(viewIdRef)).findViewById(R.id.tv_total)).getText().toString();
     }
 
     private void insertHouseholds() {

@@ -25,19 +25,19 @@ public class HouseholdSummaryActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_household_summary);
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setDisplayShowHomeEnabled(false);
         getActionBar().setIcon(new ColorDrawable(getResources().getColor(android.R.color.transparent)));
         buildSummary();
     }
 
     private void buildSummary() {
         summaryItemList = new ArrayList<>();
-        summaryItemList.add(new SummaryItem(R.mipmap.ic_household_list_done, getString(R.string.interview_done), InterviewStatus.DONE));
-        summaryItemList.add(new SummaryItem(R.mipmap.ic_household_list_not_done, getString(R.string.interview_not_done), InterviewStatus.NOT_DONE, InterviewStatus.SELECTION_NOT_DONE));
-        summaryItemList.add(new SummaryItem(R.mipmap.ic_household_list_deferred, getString(R.string.interview_deffered), InterviewStatus.DEFERRED));
-        summaryItemList.add(new SummaryItem(R.mipmap.ic_household_list_refused, getString(R.string.interview_refused), InterviewStatus.REFUSED));
-        summaryItemList.add(new SummaryItem(R.mipmap.ic_household_list_incomplete, getString(R.string.interview_incomplete), InterviewStatus.INCOMPLETE, InterviewStatus.INCOMPLETE_REFUSED));
-        summaryItemList.add(new SummaryItem(R.mipmap.ic_household_list_not_selected, getString(R.string.total_households)));
+        summaryItemList.add(new SummaryItem(getId(R.integer.item_not_done), R.mipmap.ic_household_list_not_done, getString(R.string.interview_not_done), InterviewStatus.NOT_DONE, InterviewStatus.SELECTION_NOT_DONE));
+        summaryItemList.add(new SummaryItem(getId(R.integer.item_deferred), R.mipmap.ic_household_list_deferred, getString(R.string.interview_deffered), InterviewStatus.DEFERRED));
+        summaryItemList.add(new SummaryItem(getId(R.integer.item_partially_complete), R.mipmap.ic_household_list_incomplete, getString(R.string.interview_incomplete), InterviewStatus.INCOMPLETE, InterviewStatus.INCOMPLETE_REFUSED));
+        summaryItemList.add(new SummaryItem(getId(R.integer.item_done), R.mipmap.ic_household_list_done, getString(R.string.interview_done), InterviewStatus.DONE));
+        summaryItemList.add(new SummaryItem(getId(R.integer.item_refused), R.mipmap.ic_household_list_refused, getString(R.string.interview_refused), InterviewStatus.REFUSED));
+        summaryItemList.add(new SummaryItem(getId(R.integer.item_total), R.mipmap.ic_household_list_not_selected, getString(R.string.total_households)));
 
         LinearLayout container = (LinearLayout) findViewById(R.id.summary_list);
         DatabaseHelper db = new DatabaseHelper(this);
@@ -55,6 +55,7 @@ public class HouseholdSummaryActivity extends Activity {
             }
 
             View itemView = getLayoutInflater().inflate(R.layout.household_summary_item, null);
+            itemView.setId(item.viewId);
             ((ImageView) itemView.findViewById(R.id.ic_status)).setImageResource(item.icon);
             ((TextView) itemView.findViewById(R.id.tv_title)).setText(item.title);
             ((TextView) itemView.findViewById(R.id.tv_total)).setText(String.valueOf(total));
@@ -63,13 +64,19 @@ public class HouseholdSummaryActivity extends Activity {
 
     }
 
+    private int getId(int ref) {
+        return getResources().getInteger(ref);
+    }
+
     private static class SummaryItem {
 
+        public int viewId;
         public int icon;
         public String title;
         public List<InterviewStatus> statusList = new ArrayList<>();
 
-        public SummaryItem(int icon, String title, InterviewStatus... status) {
+        public SummaryItem(int viewId, int icon, String title, InterviewStatus... status) {
+            this.viewId = viewId;
             this.icon = icon;
             this.title = title;
             statusList.addAll(Arrays.asList(status));

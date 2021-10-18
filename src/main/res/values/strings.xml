@@ -167,10 +167,10 @@
     <string name="scan_code_from_another_device">Scan code from another device</string>
     <string name="please_wait">Please wait</string>
     <string name="view_totals">View Totals</string>
-    <string name="interview_done">Interview Done</string>
+    <string name="interview_done">Interview Complete</string>
     <string name="interview_not_done">Interview Not Done</string>
-    <string name="interview_deffered">Interview Later</string>
+    <string name="interview_deffered">Interview Postponed</string>
     <string name="interview_refused">Interview Refused</string>
-    <string name="interview_incomplete">Interview Incomplete</string>
+    <string name="interview_incomplete">Interview partially complete</string>
     <string name="total_households">Total Households</string>
 </resources>
