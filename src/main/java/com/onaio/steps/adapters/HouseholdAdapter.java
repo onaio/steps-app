@@ -91,7 +91,7 @@ public class HouseholdAdapter extends BaseAdapter{
         String householdRow = context.getString(R.string.hhid)+ householdAtPosition.getName();
 
         Member selectedMember = householdAtPosition.getSelectedMember();
-        if (householdAtPosition.getStatus() == InterviewStatus.REFUSED) {
+        if (householdAtPosition.getStatus() == InterviewStatus.NOT_REACHABLE) {
             householdRow += " Not reachable";
         } else if (selectedMember != null){
             householdRow += " " + selectedMember.getFamilySurname() + " " + selectedMember.getFirstName();
@@ -114,6 +114,7 @@ public class HouseholdAdapter extends BaseAdapter{
             case DEFERRED: return R.mipmap.ic_household_list_deferred;
             case INCOMPLETE: return R.mipmap.ic_household_list_incomplete;
             case INCOMPLETE_REFUSED: return R.mipmap.ic_household_list_refused;
+            case NOT_REACHABLE: return R.mipmap.ic_household_list_not_reachable;
             default: return R.mipmap.ic_household_list_refused;
         }
     }

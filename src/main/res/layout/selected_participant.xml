@@ -101,6 +101,17 @@
             android:background="@android:color/white"
             android:paddingLeft="5dp"
             android:textSize="12sp"/>
+        <Button android:id="@+id/action_not_reachable"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textAllCaps="false"
+            android:text="@string/not_reachable"
+            android:drawableLeft="@drawable/ic_action_refused"
+            android:onClick="handleCustomMenu"
+            android:layout_margin="10dp"
+            android:background="@android:color/white"
+            android:paddingLeft="5dp"
+            android:textSize="12sp"/>
         <Button
             android:id="@+id/action_cancel_participant"
             android:layout_width="fill_parent"

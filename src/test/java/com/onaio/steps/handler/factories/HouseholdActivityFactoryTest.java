@@ -20,22 +20,23 @@ import android.content.Intent;
 
 import com.onaio.steps.activities.HouseholdActivity;
 import com.onaio.steps.handler.HouseholdActivityBackButtonPreparer;
+import com.onaio.steps.handler.SelectedParticipantContainerHandler;
 import com.onaio.steps.handler.actions.BackHomeHandler;
 import com.onaio.steps.handler.actions.CancelParticipantSelectionHandler;
 import com.onaio.steps.handler.actions.DeferredHandler;
 import com.onaio.steps.handler.actions.IncompleteRefusedHandler;
+import com.onaio.steps.handler.actions.NotReachableHandler;
+import com.onaio.steps.handler.actions.RefusedHandler;
+import com.onaio.steps.handler.actions.SelectParticipantHandler;
+import com.onaio.steps.handler.actions.SelectedParticipantActionsHandler;
+import com.onaio.steps.handler.actions.TakeSurveyHandler;
 import com.onaio.steps.handler.activities.EditHouseholdActivityHandler;
+import com.onaio.steps.handler.activities.MemberActivityHandler;
+import com.onaio.steps.handler.activities.NewMemberActivityHandler;
 import com.onaio.steps.handler.interfaces.IActivityResultHandler;
 import com.onaio.steps.handler.interfaces.IListItemHandler;
 import com.onaio.steps.handler.interfaces.IMenuHandler;
 import com.onaio.steps.handler.interfaces.IMenuPreparer;
-import com.onaio.steps.handler.activities.MemberActivityHandler;
-import com.onaio.steps.handler.activities.NewMemberActivityHandler;
-import com.onaio.steps.handler.actions.RefusedHandler;
-import com.onaio.steps.handler.actions.SelectParticipantHandler;
-import com.onaio.steps.handler.actions.SelectedParticipantActionsHandler;
-import com.onaio.steps.handler.SelectedParticipantContainerHandler;
-import com.onaio.steps.handler.actions.TakeSurveyHandler;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.InterviewStatus;
@@ -104,7 +105,7 @@ public class HouseholdActivityFactoryTest extends TestCase {
 
         ArrayList<Class> menuHandlerTypes = getTypes(menuHandlers);
 
-        assertEquals(10, menuHandlers.size());
+        assertEquals(12, menuHandlers.size());
         Assert.assertTrue(menuHandlerTypes.contains(TakeSurveyHandler.class));
         Assert.assertTrue(menuHandlerTypes.contains(DeferredHandler.class));
         Assert.assertTrue(menuHandlerTypes.contains(RefusedHandler.class));
@@ -115,6 +116,7 @@ public class HouseholdActivityFactoryTest extends TestCase {
         Assert.assertTrue(menuHandlerTypes.contains(CancelParticipantSelectionHandler.class));
         Assert.assertTrue(menuHandlerTypes.contains(IncompleteRefusedHandler.class));
         Assert.assertTrue(menuHandlerTypes.contains(HouseholdActivityBackButtonPreparer.class));
+        Assert.assertTrue(menuHandlerTypes.contains(NotReachableHandler.class));
 
     }
 
@@ -124,7 +126,7 @@ public class HouseholdActivityFactoryTest extends TestCase {
 
         ArrayList<Class> menuHandlerTypes = getTypes(menuHandlers);
 
-        assertEquals(7, menuHandlers.size());
+        assertEquals(8, menuHandlers.size());
         Assert.assertTrue(menuHandlerTypes.contains(TakeSurveyHandler.class));
         Assert.assertTrue(menuHandlerTypes.contains(DeferredHandler.class));
         Assert.assertTrue(menuHandlerTypes.contains(RefusedHandler.class));
@@ -132,6 +134,7 @@ public class HouseholdActivityFactoryTest extends TestCase {
         Assert.assertTrue(menuHandlerTypes.contains(CancelParticipantSelectionHandler.class));
         Assert.assertTrue(menuHandlerTypes.contains(SelectParticipantHandler.class));
         Assert.assertTrue(menuHandlerTypes.contains(IncompleteRefusedHandler.class));
+        Assert.assertTrue(menuHandlerTypes.contains(NotReachableHandler.class));
     }
 
     private <T> ArrayList<Class> getTypes(List<T> menuHandlers) {

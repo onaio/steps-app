@@ -21,6 +21,7 @@ import android.content.Intent;
 import com.onaio.steps.activities.ParticipantActivity;
 import com.onaio.steps.handler.actions.BackHomeHandler;
 import com.onaio.steps.handler.actions.DeferredHandler;
+import com.onaio.steps.handler.actions.NotReachableHandler;
 import com.onaio.steps.handler.actions.RefusedHandler;
 import com.onaio.steps.handler.actions.TakeSurveyHandler;
 import com.onaio.steps.handler.actions.IncompleteRefusedHandler;
@@ -102,11 +103,12 @@ public class ParticipantActivityFactoryTest {
         List<IMenuPreparer> customMenuPreparer = ParticipantActivityFactory.getCustomMenuPreparer(participantActivity, participant);
         ArrayList<Class> handlerTypes = getTypes(customMenuPreparer);
 
-        assertEquals(4, customMenuPreparer.size());
+        assertEquals(5, customMenuPreparer.size());
         Assert.assertTrue(handlerTypes.contains(TakeSurveyHandler.class));
         Assert.assertTrue(handlerTypes.contains(DeferredHandler.class));
         Assert.assertTrue(handlerTypes.contains(RefusedHandler.class));
         Assert.assertTrue(handlerTypes.contains(IncompleteRefusedHandler.class));
+        Assert.assertTrue(handlerTypes.contains(NotReachableHandler.class));
     }
 
     @Test
@@ -114,10 +116,11 @@ public class ParticipantActivityFactoryTest {
         List<IMenuHandler> customMenuHandler = ParticipantActivityFactory.getCustomMenuHandler(participantActivity, participant);
         ArrayList<Class> handlerTypes = getTypes(customMenuHandler);
 
-        assertEquals(4, customMenuHandler.size());
+        assertEquals(5, customMenuHandler.size());
         Assert.assertTrue(handlerTypes.contains(TakeSurveyHandler.class));
         Assert.assertTrue(handlerTypes.contains(DeferredHandler.class));
         Assert.assertTrue(handlerTypes.contains(RefusedHandler.class));
         Assert.assertTrue(handlerTypes.contains(IncompleteRefusedHandler.class));
+        Assert.assertTrue(handlerTypes.contains(NotReachableHandler.class));
     }
 }
