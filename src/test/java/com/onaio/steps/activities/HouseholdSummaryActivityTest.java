@@ -37,7 +37,7 @@ public class HouseholdSummaryActivityTest {
         Assert.assertEquals(6, container.getChildCount());
 
         Assert.assertEquals("1", getTotal(container, R.integer.item_done));
-        Assert.assertEquals("1", getTotal(container, R.integer.item_not_done));
+        Assert.assertEquals("1", getTotal(container, R.integer.item_empty_household));
         Assert.assertEquals("1", getTotal(container, R.integer.item_deferred));
         Assert.assertEquals("1", getTotal(container, R.integer.item_refused));
         Assert.assertEquals("1", getTotal(container, R.integer.item_partially_complete));
@@ -51,7 +51,7 @@ public class HouseholdSummaryActivityTest {
     private void insertHouseholds() {
         DatabaseHelper db = new DatabaseHelper(activity);
         new Household("1", "1-1", "", "", InterviewStatus.DONE, "", "", "").save(db);
-        new Household("2", "1-2", "", "", InterviewStatus.NOT_DONE, "", "", "").save(db);
+        new Household("2", "1-2", "", "", InterviewStatus.EMPTY_HOUSEHOLD, "", "", "").save(db);
         new Household("3", "1-3", "", "", InterviewStatus.DEFERRED, "", "", "").save(db);
         new Household("4", "1-4", "", "", InterviewStatus.REFUSED, "", "", "").save(db);
         new Household("5", "1-5", "", "", InterviewStatus.INCOMPLETE, "", "", "").save(db);

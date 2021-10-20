@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <integer name="item_done">0</integer>
-    <integer name="item_not_done">1</integer>
+    <integer name="item_empty_household">1</integer>
     <integer name="item_deferred">2</integer>
     <integer name="item_refused">3</integer>
     <integer name="item_partially_complete">4</integer>

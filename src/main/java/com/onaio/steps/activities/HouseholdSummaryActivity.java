@@ -32,7 +32,7 @@ public class HouseholdSummaryActivity extends Activity {
 
     private void buildSummary() {
         summaryItemList = new ArrayList<>();
-        summaryItemList.add(new SummaryItem(getId(R.integer.item_not_done), R.mipmap.ic_household_list_not_done, getString(R.string.interview_not_done), InterviewStatus.NOT_DONE, InterviewStatus.SELECTION_NOT_DONE));
+        summaryItemList.add(new SummaryItem(getId(R.integer.item_empty_household), R.mipmap.ic_household_list_not_selected, getString(R.string.empty_household), InterviewStatus.EMPTY_HOUSEHOLD));
         summaryItemList.add(new SummaryItem(getId(R.integer.item_deferred), R.mipmap.ic_household_list_deferred, getString(R.string.interview_deffered), InterviewStatus.DEFERRED));
         summaryItemList.add(new SummaryItem(getId(R.integer.item_partially_complete), R.mipmap.ic_household_list_incomplete, getString(R.string.interview_incomplete), InterviewStatus.INCOMPLETE, InterviewStatus.INCOMPLETE_REFUSED));
         summaryItemList.add(new SummaryItem(getId(R.integer.item_done), R.mipmap.ic_household_list_done, getString(R.string.interview_done), InterviewStatus.DONE));

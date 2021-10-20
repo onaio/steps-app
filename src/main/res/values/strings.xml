@@ -168,7 +168,7 @@
     <string name="please_wait">Please wait</string>
     <string name="view_totals">View Totals</string>
     <string name="interview_done">Interview Complete</string>
-    <string name="interview_not_done">Interview Not Done</string>
+    <string name="empty_household">Empty Household</string>
     <string name="interview_deffered">Interview Postponed</string>
     <string name="interview_refused">Interview Refused</string>
     <string name="interview_incomplete">Interview partially complete</string>

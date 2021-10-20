@@ -108,7 +108,7 @@ public class HouseholdAdapter extends BaseAdapter{
             case DONE:
                 return R.mipmap.ic_household_list_done;
             case NOT_DONE: return R.mipmap.ic_household_list_not_done;
-            case SELECTION_NOT_DONE: return R.mipmap.ic_household_list_not_selected;
+            case SELECTION_NOT_DONE: case EMPTY_HOUSEHOLD: return R.mipmap.ic_household_list_not_selected;
             case DEFERRED: return R.mipmap.ic_household_list_deferred;
             case INCOMPLETE: return R.mipmap.ic_household_list_incomplete;
             case INCOMPLETE_REFUSED: return R.mipmap.ic_household_list_refused;

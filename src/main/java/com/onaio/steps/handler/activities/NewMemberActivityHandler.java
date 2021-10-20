@@ -78,6 +78,9 @@ public class NewMemberActivityHandler implements IMenuHandler, IActivityResultHa
 
     private void updateHousehold() {
         household.setSelectedMemberId(null);
+        if (household.getStatus() == InterviewStatus.EMPTY_HOUSEHOLD) {
+            household.setStatus(InterviewStatus.SELECTION_NOT_DONE);
+        }
         household.update(db);
     }
 
@@ -88,7 +91,7 @@ public class NewMemberActivityHandler implements IMenuHandler, IActivityResultHa
 
     @Override
     public boolean shouldDeactivate() {
-        return !(household.getStatus().equals(InterviewStatus.SELECTION_NOT_DONE));
+        return !(household.getStatus().equals(InterviewStatus.SELECTION_NOT_DONE)) && !(household.getStatus().equals(InterviewStatus.EMPTY_HOUSEHOLD));
     }
 
     public void deactivate() {
