@@ -146,6 +146,6 @@ public class ParticipantActivityTest {
         assertNotNull(participantDetails);
         assertEquals(participantFormattedName, participantName.getText().toString());
         assertEquals(participant.getFormattedDetail(participantActivity), participantDetails.getText().toString());
-        assertEquals("Interview is not reachable!",viewById.getText());
+        assertEquals(participantActivity.getString(R.string.interview_not_reachable_message),viewById.getText());
     }
 }

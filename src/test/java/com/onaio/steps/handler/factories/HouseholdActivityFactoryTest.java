@@ -105,7 +105,7 @@ public class HouseholdActivityFactoryTest extends TestCase {
 
         ArrayList<Class> menuHandlerTypes = getTypes(menuHandlers);
 
-        assertEquals(12, menuHandlers.size());
+        assertEquals(11, menuHandlers.size());
         Assert.assertTrue(menuHandlerTypes.contains(TakeSurveyHandler.class));
         Assert.assertTrue(menuHandlerTypes.contains(DeferredHandler.class));
         Assert.assertTrue(menuHandlerTypes.contains(RefusedHandler.class));

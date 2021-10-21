@@ -44,9 +44,9 @@ public class NotReachableSurveyForHouseholdStrategy implements IDoNotTakeSurveyS
 
     @Override
     public boolean shouldInactivate(){
-        boolean memberSelected = household.getStatus() == InterviewStatus.NOT_DONE;
-        boolean memberDeferred = household.getStatus() == InterviewStatus.DEFERRED;
-        return !(memberSelected || memberDeferred);
+        boolean interviewNotDone = household.getStatus() == InterviewStatus.NOT_DONE;
+        boolean interviewDeferred = household.getStatus() == InterviewStatus.DEFERRED;
+        return !(interviewNotDone || interviewDeferred);
     }
 
 

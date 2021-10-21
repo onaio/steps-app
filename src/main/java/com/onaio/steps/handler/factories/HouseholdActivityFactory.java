@@ -81,7 +81,6 @@ public class HouseholdActivityFactory {
         menuItems.add(new SelectedParticipantContainerHandler(activity,household));
         menuItems.add(new HouseholdActivityBackButtonPreparer(activity, household));
         menuItems.add(new CancelParticipantSelectionHandler(activity,household));
-        menuItems.add(new CancelParticipantSelectionHandler(activity,household));
         menuItems.add(new NotReachableHandler(activity,new NotReachableSurveyForHouseholdStrategy(household,activity)));
         return menuItems;
     }
