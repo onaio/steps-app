@@ -58,7 +58,8 @@ public class TakeSurveyForParticipantStrategy implements ITakeSurveyStrategy {
         InterviewStatus status = participant.getStatus();
         boolean doneStatus = status == InterviewStatus.DONE;
         boolean refusedStatus = status == InterviewStatus.REFUSED;
-        return doneStatus || refusedStatus;
+        boolean notReachableStatus = status == InterviewStatus.NOT_REACHABLE;
+        return doneStatus || refusedStatus || notReachableStatus;
     }
 
     @Override

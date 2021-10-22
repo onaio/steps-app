@@ -92,7 +92,7 @@ public class ParticipantActivityTest {
         assertNotNull(participantDetails);
         assertEquals(participantFormattedName, participantName.getText().toString());
         assertEquals(participant.getFormattedDetail(participantActivity), participantDetails.getText().toString());
-        assertEquals("Interview is complete!",viewById.getText());
+        assertEquals(participantActivity.getString(R.string.interview_done_message),viewById.getText());
     }
 
     @Test
@@ -110,7 +110,7 @@ public class ParticipantActivityTest {
         assertNotNull(participantDetails);
         assertEquals(participantFormattedName, participantName.getText().toString());
         assertEquals(participant.getFormattedDetail(participantActivity), participantDetails.getText().toString());
-        assertEquals("Interview is refused!",viewById.getText());
+        assertEquals(participantActivity.getString(R.string.interview_refused_message),viewById.getText());
     }
 
     @Test
@@ -131,6 +131,21 @@ public class ParticipantActivityTest {
         assertEquals("",viewById.getText());
     }
 
+    @Test
+    public void ShouldBeAbleToPopulateViewWithParticipantWithNotReachable() {
+        participant = new Participant(1, "123-10", "family surname", "firstName", Gender.Female, 34, InterviewStatus.NOT_REACHABLE, date);
+        intent.putExtra(Constants.PARTICIPANT, participant);
+        participantActivity=participantActivityController.withIntent(intent).create().get();
 
+        TextView participantName = (TextView) participantActivity.findViewById(R.id.selected_participant_name);
+        TextView participantDetails = (TextView) participantActivity.findViewById(R.id.selected_participant_details);
+        String participantFormattedName = participant.getFormattedName() + " (" + participantActivity.getString(R.string.pid) + " " + participant.getParticipantID() + " )";
+        TextView viewById = (TextView) participantActivity.findViewById(R.id.survey_message);
 
+        assertNotNull(participantName);
+        assertNotNull(participantDetails);
+        assertEquals(participantFormattedName, participantName.getText().toString());
+        assertEquals(participant.getFormattedDetail(participantActivity), participantDetails.getText().toString());
+        assertEquals(participantActivity.getString(R.string.interviewee_not_reachable_message),viewById.getText());
+    }
 }

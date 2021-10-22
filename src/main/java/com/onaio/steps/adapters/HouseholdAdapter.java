@@ -31,6 +31,8 @@ import com.onaio.steps.model.Household;
 import com.onaio.steps.model.InterviewStatus;
 import com.onaio.steps.model.Member;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.List;
 
 public class HouseholdAdapter extends BaseAdapter{
@@ -91,8 +93,8 @@ public class HouseholdAdapter extends BaseAdapter{
         String householdRow = context.getString(R.string.hhid)+ householdAtPosition.getName();
 
         Member selectedMember = householdAtPosition.getSelectedMember();
-        if (householdAtPosition.getStatus() == InterviewStatus.REFUSED) {
-            householdRow += " Not reachable";
+        if (householdAtPosition.getStatus() == InterviewStatus.NOT_REACHABLE) {
+            householdRow += " " + StringUtils.capitalize(householdListItem.getContext().getString(R.string.not_reachable).toLowerCase());
         } else if (selectedMember != null){
             householdRow += " " + selectedMember.getFamilySurname() + " " + selectedMember.getFirstName();
         }
@@ -113,7 +115,10 @@ public class HouseholdAdapter extends BaseAdapter{
             case SELECTION_NOT_DONE: return R.mipmap.ic_household_list_not_selected;
             case DEFERRED: return R.mipmap.ic_household_list_deferred;
             case INCOMPLETE: return R.mipmap.ic_household_list_incomplete;
-            case INCOMPLETE_REFUSED: return R.mipmap.ic_household_list_refused;
+            case INCOMPLETE_REFUSED:
+            case REFUSED:
+                return R.mipmap.ic_household_list_refused;
+            case NOT_REACHABLE: return R.mipmap.ic_household_list_not_reachable;
             default: return R.mipmap.ic_household_list_refused;
         }
     }

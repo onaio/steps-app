@@ -93,6 +93,9 @@ public class ParticipantActivity extends Activity{
             case REFUSED: viewById.setText(R.string.interview_refused_message);
                 viewById.setTextColor(Color.RED);
                 break;
+            case NOT_REACHABLE: viewById.setText(R.string.interviewee_not_reachable_message);
+                viewById.setTextColor(Color.RED);
+                break;
             default: viewById.setVisibility(View.GONE);
         }
     }

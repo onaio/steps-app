@@ -93,6 +93,8 @@ public class ParticipantAdapter extends BaseAdapter {
                 return R.mipmap.ic_household_list_incomplete;
             case INCOMPLETE_REFUSED:
                 return R.mipmap.ic_household_list_refused;
+            case NOT_REACHABLE:
+                return R.mipmap.ic_household_list_not_reachable;
             default:
                 return R.mipmap.ic_household_list_refused;
         }
