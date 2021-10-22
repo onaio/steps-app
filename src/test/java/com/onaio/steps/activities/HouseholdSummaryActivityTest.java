@@ -34,14 +34,15 @@ public class HouseholdSummaryActivityTest {
         activity.onCreate(null);
 
         LinearLayout container = (LinearLayout) activity.findViewById(R.id.summary_list);
-        Assert.assertEquals(6, container.getChildCount());
+        Assert.assertEquals(7, container.getChildCount());
 
         Assert.assertEquals("1", getTotal(container, R.integer.item_done));
         Assert.assertEquals("1", getTotal(container, R.integer.item_empty_household));
         Assert.assertEquals("1", getTotal(container, R.integer.item_deferred));
         Assert.assertEquals("1", getTotal(container, R.integer.item_refused));
         Assert.assertEquals("1", getTotal(container, R.integer.item_partially_complete));
-        Assert.assertEquals("5", getTotal(container, R.integer.item_total));
+        Assert.assertEquals("1", getTotal(container, R.integer.item_not_reachable));
+        Assert.assertEquals("6", getTotal(container, R.integer.item_total));
     }
 
     private String getTotal(LinearLayout container, int viewIdRef) {
@@ -55,5 +56,6 @@ public class HouseholdSummaryActivityTest {
         new Household("3", "1-3", "", "", InterviewStatus.DEFERRED, "", "", "").save(db);
         new Household("4", "1-4", "", "", InterviewStatus.REFUSED, "", "", "").save(db);
         new Household("5", "1-5", "", "", InterviewStatus.INCOMPLETE, "", "", "").save(db);
+        new Household("6", "1-6", "", "", InterviewStatus.NOT_REACHABLE, "", "", "").save(db);
     }
 }

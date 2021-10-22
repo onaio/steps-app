@@ -172,10 +172,11 @@
     <string name="participant_survey_not_reachable_message">You are going to mark this participant for not reachable. This action can not be reversed. Are you sure?</string>
     <string name="interviewee_not_reachable_message">Interviewee is not reachable!</string>
     <string name="view_totals">View Totals</string>
-    <string name="interview_done">Interview Complete</string>
-    <string name="empty_household">Empty Household</string>
-    <string name="interview_deffered">Interview Postponed</string>
-    <string name="interview_refused">Interview Refused</string>
+    <string name="interview_done">Interview complete</string>
+    <string name="empty_household">Empty household</string>
+    <string name="interview_deffered">Interview postponed</string>
+    <string name="interview_refused">Interview refused</string>
     <string name="interview_incomplete">Interview partially complete</string>
-    <string name="total_households">Total Households</string>
+    <string name="not_reachable_household">Not reachable household</string>
+    <string name="total_households">Total households</string>
 </resources>
