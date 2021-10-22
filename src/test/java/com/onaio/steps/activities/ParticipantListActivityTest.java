@@ -16,6 +16,8 @@
 
 package com.onaio.steps.activities;
 
+import static junit.framework.Assert.assertEquals;
+
 import android.widget.Button;
 
 import com.onaio.steps.R;
@@ -35,8 +37,6 @@ import org.robolectric.annotation.Config;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-
-import static junit.framework.Assert.assertEquals;
 
 @Config(emulateSdk = 16, manifest = "src/main/AndroidManifest.xml")
 @RunWith(RobolectricTestRunner.class)

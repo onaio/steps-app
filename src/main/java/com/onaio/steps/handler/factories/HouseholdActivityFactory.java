@@ -19,23 +19,25 @@ package com.onaio.steps.handler.factories;
 import android.app.ListActivity;
 
 import com.onaio.steps.handler.HouseholdActivityBackButtonPreparer;
+import com.onaio.steps.handler.SelectedParticipantContainerHandler;
 import com.onaio.steps.handler.actions.BackHomeHandler;
 import com.onaio.steps.handler.actions.CancelParticipantSelectionHandler;
 import com.onaio.steps.handler.actions.DeferredHandler;
 import com.onaio.steps.handler.actions.IncompleteRefusedHandler;
+import com.onaio.steps.handler.actions.NotReachableHandler;
+import com.onaio.steps.handler.actions.RefusedHandler;
+import com.onaio.steps.handler.actions.SelectParticipantHandler;
+import com.onaio.steps.handler.actions.SelectedParticipantActionsHandler;
+import com.onaio.steps.handler.actions.TakeSurveyHandler;
 import com.onaio.steps.handler.activities.EditHouseholdActivityHandler;
+import com.onaio.steps.handler.activities.MemberActivityHandler;
+import com.onaio.steps.handler.activities.NewMemberActivityHandler;
 import com.onaio.steps.handler.interfaces.IActivityResultHandler;
 import com.onaio.steps.handler.interfaces.IListItemHandler;
 import com.onaio.steps.handler.interfaces.IMenuHandler;
 import com.onaio.steps.handler.interfaces.IMenuPreparer;
-import com.onaio.steps.handler.activities.MemberActivityHandler;
-import com.onaio.steps.handler.activities.NewMemberActivityHandler;
-import com.onaio.steps.handler.actions.RefusedHandler;
-import com.onaio.steps.handler.actions.SelectParticipantHandler;
-import com.onaio.steps.handler.actions.SelectedParticipantActionsHandler;
-import com.onaio.steps.handler.SelectedParticipantContainerHandler;
-import com.onaio.steps.handler.actions.TakeSurveyHandler;
 import com.onaio.steps.handler.strategies.survey.DeferSurveyForHouseholdStrategy;
+import com.onaio.steps.handler.strategies.survey.NotReachableSurveyForHouseholdStrategy;
 import com.onaio.steps.handler.strategies.survey.RefuseIncompleteSurveyForHouseholdStrategy;
 import com.onaio.steps.handler.strategies.survey.RefuseSurveyForHouseholdStrategy;
 import com.onaio.steps.handler.strategies.survey.TakeSurveyForHouseholdStrategy;
@@ -79,6 +81,7 @@ public class HouseholdActivityFactory {
         menuItems.add(new SelectedParticipantContainerHandler(activity,household));
         menuItems.add(new HouseholdActivityBackButtonPreparer(activity, household));
         menuItems.add(new CancelParticipantSelectionHandler(activity,household));
+        menuItems.add(new NotReachableHandler(activity,new NotReachableSurveyForHouseholdStrategy(household,activity)));
         return menuItems;
     }
 
@@ -91,6 +94,7 @@ public class HouseholdActivityFactory {
         handlers.add(new NewMemberActivityHandler(activity,household));
         handlers.add(new SelectParticipantHandler(activity,household));
         handlers.add(new CancelParticipantSelectionHandler(activity,household));
+        handlers.add(new NotReachableHandler(activity,new NotReachableSurveyForHouseholdStrategy(household,activity)));
 
         return handlers;
     }

@@ -31,6 +31,8 @@ import com.onaio.steps.model.Household;
 import com.onaio.steps.model.InterviewStatus;
 import com.onaio.steps.model.Member;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.List;
 
 public class HouseholdAdapter extends BaseAdapter{
@@ -76,6 +78,7 @@ public class HouseholdAdapter extends BaseAdapter{
 
     private void setTextInView(View householdListItem, Household householdAtPosition) {
         TextView householdName = (TextView) householdListItem.findViewById(R.id.main_text);
+        ImageView cloudIcon = (ImageView) householdListItem.findViewById(R.id.cloud_icon);
         TextView membersCount = (TextView) householdListItem.findViewById(R.id.sub_text);
         ImageView image = (ImageView) householdListItem.findViewById(R.id.main_image);
         ImageView commentImage = (ImageView) householdListItem.findViewById(R.id.comment_view);
@@ -90,12 +93,13 @@ public class HouseholdAdapter extends BaseAdapter{
         String householdRow = context.getString(R.string.hhid)+ householdAtPosition.getName();
 
         Member selectedMember = householdAtPosition.getSelectedMember();
-        if (householdAtPosition.getStatus() == InterviewStatus.REFUSED) {
-            householdRow += " Not reachable";
+        if (householdAtPosition.getStatus() == InterviewStatus.NOT_REACHABLE) {
+            householdRow += " " + StringUtils.capitalize(householdListItem.getContext().getString(R.string.not_reachable).toLowerCase());
         } else if (selectedMember != null){
             householdRow += " " + selectedMember.getFamilySurname() + " " + selectedMember.getFirstName();
         }
         householdName.setText(householdRow);
+        cloudIcon.setVisibility(InterviewStatus.SUBMITTED.equals(householdAtPosition.getStatus()) ? View.VISIBLE : View.GONE);
 
         int numberOfMembers = householdAtPosition.numberOfNonDeletedMembers(new DatabaseHelper(context));
         membersCount.setText(String.format("%s, %s "+context.getString(R.string.members), householdAtPosition.getCreatedAt(), String.valueOf(numberOfMembers)));
@@ -111,7 +115,10 @@ public class HouseholdAdapter extends BaseAdapter{
             case SELECTION_NOT_DONE: case EMPTY_HOUSEHOLD: return R.mipmap.ic_household_list_not_selected;
             case DEFERRED: return R.mipmap.ic_household_list_deferred;
             case INCOMPLETE: return R.mipmap.ic_household_list_incomplete;
-            case INCOMPLETE_REFUSED: return R.mipmap.ic_household_list_refused;
+            case INCOMPLETE_REFUSED:
+            case REFUSED:
+                return R.mipmap.ic_household_list_refused;
+            case NOT_REACHABLE: return R.mipmap.ic_household_list_not_reachable;
             default: return R.mipmap.ic_household_list_refused;
         }
     }

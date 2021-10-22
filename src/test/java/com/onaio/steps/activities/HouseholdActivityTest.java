@@ -96,7 +96,7 @@ public class HouseholdActivityTest {
         assertEquals(member1, listAdapter.getItem(0));
         assertEquals(member2, listAdapter.getItem(1));
         TextView viewById = (TextView) householdActivity.findViewById(R.id.survey_message);
-        assertEquals("Survey is complete!", viewById.getText().toString());
+        assertEquals(householdActivity.getString(R.string.survey_done_message), viewById.getText().toString());
     }
 
     @Test
@@ -111,7 +111,7 @@ public class HouseholdActivityTest {
         assertEquals(member1, listAdapter.getItem(0));
         assertEquals(member2, listAdapter.getItem(1));
         TextView viewById = (TextView) householdActivity.findViewById(R.id.survey_message);
-        assertEquals("Survey is refused!", viewById.getText().toString());
+        assertEquals(householdActivity.getString(R.string.survey_refused_message), viewById.getText().toString());
     }
 
 
