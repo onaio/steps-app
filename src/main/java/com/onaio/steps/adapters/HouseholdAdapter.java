@@ -31,6 +31,8 @@ import com.onaio.steps.model.Household;
 import com.onaio.steps.model.InterviewStatus;
 import com.onaio.steps.model.Member;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.List;
 
 public class HouseholdAdapter extends BaseAdapter{
@@ -92,7 +94,7 @@ public class HouseholdAdapter extends BaseAdapter{
 
         Member selectedMember = householdAtPosition.getSelectedMember();
         if (householdAtPosition.getStatus() == InterviewStatus.NOT_REACHABLE) {
-            householdRow += " Not reachable";
+            householdRow += " " + StringUtils.capitalize(householdListItem.getContext().getString(R.string.not_reachable).toLowerCase());
         } else if (selectedMember != null){
             householdRow += " " + selectedMember.getFamilySurname() + " " + selectedMember.getFirstName();
         }
