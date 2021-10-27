@@ -21,7 +21,6 @@ import android.app.ListActivity;
 import com.onaio.steps.handler.HouseholdActivityBackButtonPreparer;
 import com.onaio.steps.handler.SelectedParticipantContainerHandler;
 import com.onaio.steps.handler.actions.BackHomeHandler;
-import com.onaio.steps.handler.actions.CancelParticipantSelectionHandler;
 import com.onaio.steps.handler.actions.DeferredHandler;
 import com.onaio.steps.handler.actions.IncompleteRefusedHandler;
 import com.onaio.steps.handler.actions.NotReachableHandler;
@@ -80,7 +79,6 @@ public class HouseholdActivityFactory {
         menuItems.add(new SelectParticipantHandler(activity,household));
         menuItems.add(new SelectedParticipantContainerHandler(activity,household));
         menuItems.add(new HouseholdActivityBackButtonPreparer(activity, household));
-        menuItems.add(new CancelParticipantSelectionHandler(activity,household));
         menuItems.add(new NotReachableHandler(activity,new NotReachableSurveyForHouseholdStrategy(household,activity)));
         return menuItems;
     }
@@ -93,7 +91,6 @@ public class HouseholdActivityFactory {
         handlers.add(new IncompleteRefusedHandler(activity,new RefuseIncompleteSurveyForHouseholdStrategy(household,activity)));
         handlers.add(new NewMemberActivityHandler(activity,household));
         handlers.add(new SelectParticipantHandler(activity,household));
-        handlers.add(new CancelParticipantSelectionHandler(activity,household));
         handlers.add(new NotReachableHandler(activity,new NotReachableSurveyForHouseholdStrategy(household,activity)));
 
         return handlers;

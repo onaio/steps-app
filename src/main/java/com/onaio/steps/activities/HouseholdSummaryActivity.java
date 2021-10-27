@@ -26,7 +26,6 @@ public class HouseholdSummaryActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_household_summary);
         getActionBar().setDisplayShowHomeEnabled(false);
-        getActionBar().setIcon(new ColorDrawable(getResources().getColor(android.R.color.transparent)));
         buildSummary();
     }
 
@@ -35,7 +34,7 @@ public class HouseholdSummaryActivity extends Activity {
         summaryItemList.add(new SummaryItem(getId(R.integer.item_empty_household), R.mipmap.ic_household_list_not_selected, getString(R.string.empty_household), InterviewStatus.EMPTY_HOUSEHOLD));
         summaryItemList.add(new SummaryItem(getId(R.integer.item_deferred), R.mipmap.ic_household_list_deferred, getString(R.string.interview_deffered), InterviewStatus.DEFERRED));
         summaryItemList.add(new SummaryItem(getId(R.integer.item_partially_complete), R.mipmap.ic_household_list_incomplete, getString(R.string.interview_incomplete), InterviewStatus.INCOMPLETE, InterviewStatus.INCOMPLETE_REFUSED));
-        summaryItemList.add(new SummaryItem(getId(R.integer.item_done), R.mipmap.ic_household_list_done, getString(R.string.interview_done), InterviewStatus.DONE));
+        summaryItemList.add(new SummaryItem(getId(R.integer.item_done), R.mipmap.ic_household_list_done, getString(R.string.interview_done), InterviewStatus.DONE, InterviewStatus.SUBMITTED));
         summaryItemList.add(new SummaryItem(getId(R.integer.item_refused), R.mipmap.ic_household_list_refused, getString(R.string.interview_refused), InterviewStatus.REFUSED));
         summaryItemList.add(new SummaryItem(getId(R.integer.item_not_reachable), R.mipmap.ic_household_list_not_reachable, getString(R.string.not_reachable_household), InterviewStatus.NOT_REACHABLE));
         summaryItemList.add(new SummaryItem(getId(R.integer.item_total), R.mipmap.ic_household_list_not_selected, getString(R.string.total_households)));

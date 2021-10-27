@@ -17,8 +17,10 @@
 package com.onaio.steps.activities;
 
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import android.content.Intent;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -39,9 +41,6 @@ import org.robolectric.util.ActivityController;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 @Config(emulateSdk = 16, manifest = "src/main/AndroidManifest.xml")
 @RunWith(RobolectricTestRunner.class)
@@ -67,14 +66,12 @@ public class ParticipantActivityTest {
         intent.putExtra(Constants.PARTICIPANT, participant);
         participantActivity=participantActivityController.withIntent(intent).create().get();
 
-        Button cancelButton = (Button) participantActivity.findViewById(R.id.action_cancel_participant);
         Button takeSurveyButton = (Button) participantActivity.findViewById(R.id.action_take_survey);
         Button deferredButton = (Button) participantActivity.findViewById(R.id.action_deferred);
 
         assertEquals(participant.getFormattedName(), participantActivity.getActionBar().getTitle());
         assertEquals("ENTER DATA NOW", takeSurveyButton.getText().toString());
         assertEquals("ENTER DATA LATER", deferredButton.getText().toString());
-        assertEquals(View.GONE, cancelButton.getVisibility());
     }
 
     @Test
