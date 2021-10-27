@@ -16,19 +16,23 @@
 
 package com.onaio.steps.handler.actions;
 
+import static com.onaio.steps.helper.Constants.EXPORT_FIELDS;
+import static com.onaio.steps.helper.Constants.HH_PHONE_ID;
+import static com.onaio.steps.helper.Constants.HH_SURVEY_ID;
+import static com.onaio.steps.helper.Constants.SURVEY_EMPTY_HH;
+import static com.onaio.steps.helper.Constants.SURVEY_NOT_SELECTED;
+
 import android.app.ListActivity;
 import android.content.DialogInterface;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.onaio.steps.R;
-import com.onaio.steps.exceptions.NoUniqueIdException;
 import com.onaio.steps.handler.interfaces.IMenuHandler;
 import com.onaio.steps.handler.interfaces.IMenuPreparer;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.CustomDialog;
 import com.onaio.steps.helper.DatabaseHelper;
-import com.onaio.steps.helper.Device;
 import com.onaio.steps.helper.FileUtil;
 import com.onaio.steps.helper.KeyValueStoreFactory;
 import com.onaio.steps.helper.Logger;
@@ -44,12 +48,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.onaio.steps.helper.Constants.EXPORT_FIELDS;
-import static com.onaio.steps.helper.Constants.HH_PHONE_ID;
-import static com.onaio.steps.helper.Constants.HH_SURVEY_ID;
-import static com.onaio.steps.helper.Constants.SURVEY_EMPTY_HH;
-import static com.onaio.steps.helper.Constants.SURVEY_NOT_SELECTED;
 
 public class ExportHandler implements IMenuHandler,IMenuPreparer {
 
@@ -238,6 +236,7 @@ public class ExportHandler implements IMenuHandler,IMenuPreparer {
         void onExportCancelled();
         void onExportStart();
         void onFileSaved();
-        void onFileUploaded(boolean successful);
+        void onFileUploaded();
+        void onFileFailedToUpload(String error);
     }
 }

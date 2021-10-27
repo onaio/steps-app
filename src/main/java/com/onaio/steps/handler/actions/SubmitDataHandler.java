@@ -85,12 +85,13 @@ public class SubmitDataHandler implements IMenuHandler,IMenuPreparer, IViewPrepa
                                 }
 
                                 @Override
-                                public void onFileUploaded(boolean successful) {
-                                    if (successful) {
-                                        new CustomDialog().notify(activity, CustomDialog.EmptyListener, R.string.export_complete, R.string.export_complete_message);
-                                    } else {
-                                        new CustomDialog().notify(activity, CustomDialog.EmptyListener, R.string.error_title, R.string.export_failed);
-                                    }
+                                public void onFileUploaded() {
+                                    new CustomDialog().notify(activity, CustomDialog.EmptyListener, R.string.export_complete, R.string.export_complete_message);
+                                }
+
+                                @Override
+                                public void onFileFailedToUpload(String error) {
+                                    new CustomDialog().notify(activity, CustomDialog.EmptyListener, error, R.string.error_title);
                                 }
                             });
                             exportHandler.open();
