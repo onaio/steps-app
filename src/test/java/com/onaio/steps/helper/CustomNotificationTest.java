@@ -19,7 +19,7 @@ import org.robolectric.annotation.Config;
 public class CustomNotificationTest {
 
     @Test
-    public void testNotifyShouldNotificationManagerNotify() {
+    public void testNotifyShouldCallNotificationManagerNotify() {
 
         int titleId = R.string.error_title;
         int messageId = R.string.export_failed;
