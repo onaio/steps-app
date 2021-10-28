@@ -17,6 +17,9 @@ import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Config(emulateSdk = 16,manifest = "src/main/AndroidManifest.xml")
 @RunWith(RobolectricTestRunner.class)
 public class HouseholdSummaryActivityTest {
@@ -36,13 +39,13 @@ public class HouseholdSummaryActivityTest {
         LinearLayout container = (LinearLayout) activity.findViewById(R.id.summary_list);
         Assert.assertEquals(7, container.getChildCount());
 
-        Assert.assertEquals("1", getTotal(container, R.integer.item_done));
-        Assert.assertEquals("1", getTotal(container, R.integer.item_empty_household));
-        Assert.assertEquals("1", getTotal(container, R.integer.item_deferred));
-        Assert.assertEquals("1", getTotal(container, R.integer.item_refused));
-        Assert.assertEquals("1", getTotal(container, R.integer.item_partially_complete));
+        Assert.assertEquals("3", getTotal(container, R.integer.item_done));
+        Assert.assertEquals("4", getTotal(container, R.integer.item_empty_household));
+        Assert.assertEquals("2", getTotal(container, R.integer.item_deferred));
+        Assert.assertEquals("4", getTotal(container, R.integer.item_refused));
+        Assert.assertEquals("5", getTotal(container, R.integer.item_partially_complete));
         Assert.assertEquals("1", getTotal(container, R.integer.item_not_reachable));
-        Assert.assertEquals("6", getTotal(container, R.integer.item_total));
+        Assert.assertEquals("19", getTotal(container, R.integer.item_total));
     }
 
     private String getTotal(LinearLayout container, int viewIdRef) {
@@ -51,11 +54,19 @@ public class HouseholdSummaryActivityTest {
 
     private void insertHouseholds() {
         DatabaseHelper db = new DatabaseHelper(activity);
-        new Household("1", "1-1", "", "", InterviewStatus.DONE, "", "", "").save(db);
-        new Household("2", "1-2", "", "", InterviewStatus.EMPTY_HOUSEHOLD, "", "", "").save(db);
-        new Household("3", "1-3", "", "", InterviewStatus.DEFERRED, "", "", "").save(db);
-        new Household("4", "1-4", "", "", InterviewStatus.REFUSED, "", "", "").save(db);
-        new Household("5", "1-5", "", "", InterviewStatus.INCOMPLETE, "", "", "").save(db);
-        new Household("6", "1-6", "", "", InterviewStatus.NOT_REACHABLE, "", "", "").save(db);
+        Map<InterviewStatus, Integer> statusCountMap = new HashMap<>();
+        statusCountMap.put(InterviewStatus.DONE, 3);
+        statusCountMap.put(InterviewStatus.EMPTY_HOUSEHOLD, 4);
+        statusCountMap.put(InterviewStatus.DEFERRED, 2);
+        statusCountMap.put(InterviewStatus.REFUSED, 4);
+        statusCountMap.put(InterviewStatus.INCOMPLETE, 5);
+        statusCountMap.put(InterviewStatus.NOT_REACHABLE, 1);
+
+        int index = 1;
+        for (Map.Entry<InterviewStatus, Integer> entry : statusCountMap.entrySet()) {
+            for (int i = 0; i < entry.getValue(); i++) {
+                new Household(String.valueOf(index++), "1-" + index, "", "", entry.getKey(), "", "", "").save(db);
+            }
+        }
     }
 }
