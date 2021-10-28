@@ -150,7 +150,6 @@
                     android:ems="10"
                     android:hint="@string/survey_id_label"
                     android:inputType="text"
-                    android:singleLine="false"
                     android:textColor="@android:color/black" />
 
                 <TextView
@@ -170,7 +169,6 @@
                     android:ems="10"
                     android:hint="@string/user_id_label"
                     android:inputType="text"
-                    android:singleLine="false"
                     android:textColor="@android:color/black" />
 
                 <TextView
@@ -190,7 +188,6 @@
                     android:ems="10"
                     android:hint="@string/device_id_label"
                     android:inputType="text"
-                    android:singleLine="false"
                     android:textColor="@android:color/black" />
 
                 <TextView
@@ -208,7 +205,6 @@
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
                     android:layout_marginTop="5dp"
-
                     android:ems="10"
                     android:hint="@string/household_id_default_hint"
                     android:inputType="number"
@@ -265,7 +261,6 @@
                         android:ems="10"
                         android:hint="@string/max_age"
                         android:inputType="number"
-                        android:singleLine="false"
                         android:textColor="@android:color/black" />
                 </LinearLayout>
 
@@ -335,7 +330,6 @@
                     android:ems="10"
                     android:hint="@string/device_id_label"
                     android:inputType="text"
-                    android:singleLine="false"
                     android:textColor="@android:color/black" />
 
                 <TextView
@@ -389,7 +383,6 @@
                         android:ems="10"
                         android:hint="@string/max_age"
                         android:inputType="number"
-                        android:singleLine="false"
                         android:textColor="@android:color/black" />
                 </LinearLayout>
 

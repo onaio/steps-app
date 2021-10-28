@@ -236,7 +236,6 @@ public class ExportHandler implements IMenuHandler,IMenuPreparer {
         void onExportCancelled();
         void onExportStart();
         void onFileSaved();
-        void onFileUploaded();
-        void onFileFailedToUpload(String error);
+        void onFileUploaded(boolean successful);
     }
 }

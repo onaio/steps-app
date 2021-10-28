@@ -35,9 +35,6 @@ import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EntityUtils;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
@@ -46,12 +43,10 @@ import java.nio.charset.Charset;
 public class UploadFileTask extends AsyncTask<File, Void, Boolean> {
     private final Activity activity;
     private ExportHandler.OnExportListener onExportListener;
-    private String error = null;
 
     public UploadFileTask(Activity activity, ExportHandler.OnExportListener onExportListener) {
         this.activity = activity;
         this.onExportListener = onExportListener;
-        this.error = activity.getString(R.string.export_failed);
     }
 
     public void setOnExportListener(ExportHandler.OnExportListener onExportListener) {
@@ -79,14 +74,6 @@ public class UploadFileTask extends AsyncTask<File, Void, Boolean> {
                     new CustomNotification().notify(activity, R.string.export_complete, R.string.export_complete_message);
                     return true;
                 }
-                else {
-                    String responseBody = EntityUtils.toString(response.getEntity(), "UTF-8");
-                    try {
-                        error = new JSONObject(responseBody).optString("error", error);
-                    } catch (JSONException ex) {
-                        new Logger().log(ex, "Json parse failed");
-                    }
-                }
             } catch (IOException e) {
                 new Logger().log(e, "Export failed.");
                 new CustomNotification().notify(activity, R.string.error_title, R.string.export_failed);
@@ -101,13 +88,6 @@ public class UploadFileTask extends AsyncTask<File, Void, Boolean> {
     @Override
     protected void onPostExecute(Boolean success) {
         super.onPostExecute(success);
-        if(onExportListener != null) {
-            if (success) {
-                onExportListener.onFileUploaded();
-            }
-            else {
-                onExportListener.onFileFailedToUpload(error);
-            }
-        }
+        if(onExportListener != null) onExportListener.onFileUploaded(success);
     }
 }
