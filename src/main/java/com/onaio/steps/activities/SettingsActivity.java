@@ -21,19 +21,18 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.onaio.steps.R;
 import com.onaio.steps.exceptions.InvalidDataException;
 import com.onaio.steps.handler.actions.ImportHandler;
 import com.onaio.steps.handler.activities.ImportExportActivityHandler;
+import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.CustomDialog;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.orchestrators.FlowOrchestrator;
 import com.onaio.steps.orchestrators.flows.FlowType;
-import com.onaio.steps.R;
-import com.onaio.steps.helper.Constants;
 import com.onaio.steps.utils.ViewUtils;
 
 public class SettingsActivity extends Activity {

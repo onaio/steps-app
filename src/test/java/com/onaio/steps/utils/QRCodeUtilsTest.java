@@ -40,6 +40,7 @@ public class QRCodeUtilsTest {
         keyValueStore.putString(Constants.HH_MAX_AGE, "78");
         keyValueStore.putString(Constants.HH_MIN_AGE, "17");
         keyValueStore.putString(Constants.HH_SURVEY_ID, "some survey id here");
+        keyValueStore.putString(Constants.HH_USER_ID, "some user id here");
         keyValueStore.putString(Constants.HH_PHONE_ID, "some device id here");
         keyValueStore.putString(Constants.HH_HOUSEHOLD_SEED, "1");
         keyValueStore.putString(Constants.HH_FORM_ID, "some form id here");
@@ -73,6 +74,7 @@ public class QRCodeUtilsTest {
 
         // Household settings
         assertEquals("some survey id here", keyValueStore.getString(Constants.HH_SURVEY_ID));
+        assertEquals("some user id here", keyValueStore.getString(Constants.HH_USER_ID));
         assertEquals("", keyValueStore.getString(Constants.HH_PHONE_ID));
         assertEquals("1", keyValueStore.getString(Constants.HH_HOUSEHOLD_SEED));
         assertEquals("some form id here", keyValueStore.getString(Constants.HH_FORM_ID));
@@ -88,6 +90,7 @@ public class QRCodeUtilsTest {
         keyValueStore.putString(Constants.HH_MAX_AGE, null);
         keyValueStore.putString(Constants.HH_MIN_AGE, null);
         keyValueStore.putString(Constants.HH_SURVEY_ID, null);
+        keyValueStore.putString(Constants.HH_USER_ID, null);
         keyValueStore.putString(Constants.HH_PHONE_ID, null);
         keyValueStore.putString(Constants.HH_HOUSEHOLD_SEED, null);
         keyValueStore.putString(Constants.HH_FORM_ID, null);
@@ -108,6 +111,7 @@ public class QRCodeUtilsTest {
             "  },\n" +
             "  \"householdSettings\": {\n" +
             "    \"hhSurveyId\": \"some survey id here\",\n" +
+            "    \"hhUserId\": \"some user id here\",\n" +
             "    \"hhHouseholdSeedId\": \"1\",\n" +
             "    \"hhFormId\": \"some form id here\", \n" +
             "    \"hhMinAge\": \"17\",\n" +

@@ -16,6 +16,10 @@
 
 package com.onaio.steps.helper;
 
+import static com.onaio.steps.helper.Constants.ENDPOINT_URL;
+import static com.onaio.steps.helper.Constants.HH_SURVEY_ID;
+import static com.onaio.steps.helper.Constants.HH_USER_ID;
+
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.text.TextUtils;
@@ -23,18 +27,18 @@ import android.text.TextUtils;
 import com.onaio.steps.R;
 import com.onaio.steps.handler.actions.ExportHandler;
 
+import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
-
-import static com.onaio.steps.helper.Constants.ENDPOINT_URL;
 
 public class UploadFileTask extends AsyncTask<File, Void, Boolean> {
     private final Activity activity;
@@ -55,12 +59,21 @@ public class UploadFileTask extends AsyncTask<File, Void, Boolean> {
             HttpClient httpClient = new DefaultHttpClient();
             HttpPost httpPost = new HttpPost(KeyValueStoreFactory.instance(activity).getString(ENDPOINT_URL));
             try {
+
+                KeyValueStore store = KeyValueStoreFactory.instance(activity);
+                String surveyId = store.getString(HH_SURVEY_ID);
+                String userId = store.getString(HH_USER_ID);
+
                 MultipartEntity multipartEntity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE, null, Charset.forName("UTF-8"));
                 multipartEntity.addPart("file", new FileBody(files[0]));
+                multipartEntity.addPart("survey_id", new StringBody(surveyId));
+                multipartEntity.addPart("username", new StringBody(userId));
                 httpPost.setEntity(multipartEntity);
-                httpClient.execute(httpPost);
-                new CustomNotification().notify(activity, R.string.export_complete, R.string.export_complete_message);
-                return true;
+                HttpResponse response = httpClient.execute(httpPost);
+                if (response.getStatusLine().getStatusCode() == 201) {
+                    new CustomNotification().notify(activity, R.string.export_complete, R.string.export_complete_message);
+                    return true;
+                }
             } catch (IOException e) {
                 new Logger().log(e, "Export failed.");
                 new CustomNotification().notify(activity, R.string.error_title, R.string.export_failed);

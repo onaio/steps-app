@@ -28,6 +28,7 @@ public class Constants {
 
 //strings passed as parameter to intent
     public static final String HH_SURVEY_ID = "hhSurveyId";
+    public static final String HH_USER_ID = "hhUserId";
     public static final String HH_PHONE_ID = "hhPhoneId";
     public static final String HH_HOUSEHOLD_SEED = "hhHouseholdSeedId";
     public static final String HH_MIN_AGE = "hhMinAge";
