@@ -193,6 +193,7 @@ public class QRCodeUtils {
         houseHoldSettings.put(Constants.HH_SURVEY_ID,
                 keyValueStore.getString(Constants.HH_SURVEY_ID)
         );
+        houseHoldSettings.put(Constants.HH_USER_ID, keyValueStore.getString(Constants.HH_USER_ID));
         houseHoldSettings.put(Constants.HH_HOUSEHOLD_SEED, keyValueStore.getString(Constants.HH_HOUSEHOLD_SEED));
         houseHoldSettings.put(Constants.HH_FORM_ID, keyValueStore.getString(Constants.HH_FORM_ID));
         houseHoldSettings.put(Constants.HH_MIN_AGE, keyValueStore.getString(Constants.HH_MIN_AGE));
@@ -234,6 +235,7 @@ public class QRCodeUtils {
 
                 keyValueStore.putString(Constants.HH_FORM_ID, householdSettings.getString(Constants.HH_FORM_ID));
                 keyValueStore.putString(Constants.HH_SURVEY_ID, householdSettings.getString(Constants.HH_SURVEY_ID));
+                keyValueStore.putString(Constants.HH_USER_ID, householdSettings.getString(Constants.HH_USER_ID));
                 keyValueStore.putString(Constants.HH_HOUSEHOLD_SEED, householdSettings.getString(Constants.HH_HOUSEHOLD_SEED));
                 keyValueStore.putString(Constants.HH_MIN_AGE, householdSettings.getString(Constants.HH_MIN_AGE));
                 keyValueStore.putString(Constants.HH_MAX_AGE, householdSettings.getString(Constants.HH_MAX_AGE));

@@ -170,6 +170,7 @@
     <string name="survey_not_reachable_title">Confirm Not Reachable</string>
     <string name="participant_survey_not_reachable_message">You are going to mark this participant for not reachable. This action can not be reversed. Are you sure?</string>
     <string name="interviewee_not_reachable_message">Interviewee is not reachable!</string>
+    <string name="user_id_label">Username</string>
     <string name="view_totals">View Totals</string>
     <string name="interview_done">Interview complete</string>
     <string name="empty_household">Empty household</string>
