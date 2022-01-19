@@ -178,7 +178,7 @@ public class HouseholdFlowTest {
         assertEquals(1, householdFlow.validateHouseHoldSettings("sid", "uid", "pwd", null, "fid", "56", "89", true).size());
         assertEquals(1, householdFlow.validateHouseHoldSettings("sid", "uid", "pwd", "deid", "fid", "", "89", true).size());
         assertEquals(1, householdFlow.validateHouseHoldSettings("sid", "uid", "pwd","deid", "fid", "56", "", true).size());
-        assertEquals(1, householdFlow.validateHouseHoldSettings("sid", null, null, "deid", "fid", "56", "89", true).size());
+        assertEquals(1, householdFlow.validateHouseHoldSettings("sid", null, "pwd", "deid", "fid", "56", "89", true).size());
         assertEquals(2, householdFlow.validateHouseHoldSettings("", "uid", "pwd", "deid", "fid", "56", "", true).size());
         assertEquals(3, householdFlow.validateHouseHoldSettings("", "uid", "pwd", "", "fid", "56", "", true).size());
         assertEquals(4, householdFlow.validateHouseHoldSettings("", "uid", "pwd","", "", "56", "", true).size());
