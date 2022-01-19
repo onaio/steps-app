@@ -172,4 +172,6 @@
     <string name="participant_survey_not_reachable_message">You are going to mark this participant for not reachable. This action can not be reversed. Are you sure?</string>
     <string name="interviewee_not_reachable_message">Interviewee is not reachable!</string>
     <string name="user_id_label">Username</string>
+    <string name="user_password_label">ODK Password</string>
+    <string name="invalid_fields_error">Survey Id or Username or Password should not empty</string>
 </resources>
