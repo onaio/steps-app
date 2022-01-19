@@ -27,11 +27,13 @@ import android.content.Intent;
 import android.widget.TextView;
 
 import com.onaio.steps.R;
+import com.onaio.steps.activities.HouseholdListActivity;
 import com.onaio.steps.activities.SettingsActivity;
 import com.onaio.steps.exceptions.InvalidDataException;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.KeyValueStoreFactory;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -190,6 +192,10 @@ public class HouseholdFlowTest {
         assertEquals(0, householdFlow.validateHouseHoldSettings("sid", "uid", "pwd", "deid", "fid", "56", "89", true).size());
     }
 
+    @Test
+    public void testGetIntentShouldReturnHouseholdListActivityIntent() {
+        Assert.assertEquals(HouseholdListActivity.class.getName(), householdFlow.getIntent().getComponent().getClassName());
+    }
 
     private String getValue(Activity activity, String key) {
         return KeyValueStoreFactory.instance(activity).getString(key);

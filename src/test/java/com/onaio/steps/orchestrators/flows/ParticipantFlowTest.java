@@ -21,11 +21,14 @@ import android.content.Intent;
 import android.widget.TextView;
 
 import com.onaio.steps.R;
+import com.onaio.steps.activities.HouseholdListActivity;
+import com.onaio.steps.activities.ParticipantListActivity;
 import com.onaio.steps.activities.SettingsActivity;
 import com.onaio.steps.exceptions.InvalidDataException;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.KeyValueStoreFactory;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -161,6 +164,11 @@ public class ParticipantFlowTest {
         assertEquals(1, participantFlow.validateParticipantsSettings("did", null, "20", "35", true).size());
         assertEquals(1, participantFlow.validateParticipantsSettings("did", "fid", "", "35", true).size());
         assertEquals(1, participantFlow.validateParticipantsSettings("did", "fid", "20", "", true).size());
+    }
+
+    @Test
+    public void testGetIntentShouldReturnHouseholdListActivityIntent() {
+        Assert.assertEquals(ParticipantListActivity.class.getName(), participantFlow.getIntent().getComponent().getClassName());
     }
 
     private String getValue(Activity activity, String key) {
