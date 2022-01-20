@@ -20,7 +20,7 @@ import com.onaio.steps.activities.HouseholdListActivity;
 import com.onaio.steps.handler.actions.ImportHandler;
 import com.onaio.steps.handler.actions.SaveToSDCardHandler;
 import com.onaio.steps.handler.actions.SubmitDataHandler;
-import com.onaio.steps.handler.activities.DataSubmissionResultHandler;
+import com.onaio.steps.handler.activities.HouseholdServerStatusUpdater;
 import com.onaio.steps.handler.activities.HouseholdActivityHandler;
 import com.onaio.steps.handler.activities.NewHouseholdActivityHandler;
 import com.onaio.steps.handler.activities.ParticipantActivityMenuItemHandler;
@@ -72,7 +72,7 @@ public class HouseholdListActivityFactoryTest{
         Assert.assertEquals(3, resultHandlers.size());
         Assert.assertTrue(handlerTypes.contains(SettingActivityHandler.class));
         Assert.assertTrue(handlerTypes.contains(NewHouseholdActivityHandler.class));
-        Assert.assertTrue(handlerTypes.contains(DataSubmissionResultHandler.class));
+        Assert.assertTrue(handlerTypes.contains(HouseholdServerStatusUpdater.class));
     }
 
     @Test

@@ -30,6 +30,7 @@ import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.InterviewStatus;
 import com.onaio.steps.model.Member;
+import com.onaio.steps.model.ServerStatus;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -75,7 +76,6 @@ public class HouseholdAdapter extends BaseAdapter{
         return householdItemView;
     }
 
-
     private void setTextInView(View householdListItem, Household householdAtPosition) {
         TextView householdName = (TextView) householdListItem.findViewById(R.id.main_text);
         ImageView cloudIcon = (ImageView) householdListItem.findViewById(R.id.cloud_icon);
@@ -99,7 +99,7 @@ public class HouseholdAdapter extends BaseAdapter{
             householdRow += " " + selectedMember.getFamilySurname() + " " + selectedMember.getFirstName();
         }
         householdName.setText(householdRow);
-        cloudIcon.setVisibility(InterviewStatus.SUBMITTED.equals(householdAtPosition.getStatus()) ? View.VISIBLE : View.GONE);
+        cloudIcon.setVisibility(ServerStatus.SENT.equals(householdAtPosition.getServerStatus()) ? View.VISIBLE : View.GONE);
 
         int numberOfMembers = householdAtPosition.numberOfNonDeletedMembers(new DatabaseHelper(context));
         membersCount.setText(String.format("%s, %s "+context.getString(R.string.members), householdAtPosition.getCreatedAt(), String.valueOf(numberOfMembers)));
@@ -108,7 +108,6 @@ public class HouseholdAdapter extends BaseAdapter{
 
     private int getImage(Household householdAtPosition) {
         switch (householdAtPosition.getStatus()){
-            case SUBMITTED:
             case DONE:
                 return R.mipmap.ic_household_list_done;
             case NOT_DONE: return R.mipmap.ic_household_list_not_done;

@@ -39,6 +39,7 @@ import com.onaio.steps.model.Household;
 import com.onaio.steps.model.InterviewStatus;
 import com.onaio.steps.model.Member;
 import com.onaio.steps.model.ReElectReason;
+import com.onaio.steps.model.ServerStatus;
 
 import java.io.File;
 import java.io.IOException;
@@ -121,6 +122,7 @@ public class ImportHandler implements IMenuHandler {
                 if(household == null){
                     String currentDate = new SimpleDateFormat(Constants.DATE_FORMAT, Locale.ENGLISH).format(new Date());
                     household = new Household(householdName, phoneNumber, InterviewStatus.SELECTION_NOT_DONE, currentDate, uniqueDeviceId,comments);
+                    household.setServerStatus(ServerStatus.NOT_SENT);
                     household.save(db);
                 }
                 //validate for members
