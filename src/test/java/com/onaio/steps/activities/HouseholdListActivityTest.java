@@ -16,6 +16,10 @@
 
 package com.onaio.steps.activities;
 
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+
 import android.graphics.Color;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -32,8 +36,7 @@ import com.onaio.steps.model.Gender;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.InterviewStatus;
 import com.onaio.steps.model.Member;
-
-
+import com.onaio.steps.model.ServerStatus;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -46,10 +49,6 @@ import org.robolectric.tester.android.view.TestMenu;
 
 import java.util.List;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-
 @Config(emulateSdk = 16,manifest = "src/main/AndroidManifest.xml")
 @RunWith(RobolectricTestRunner.class)
 public class HouseholdListActivityTest{
@@ -61,6 +60,7 @@ public class HouseholdListActivityTest{
     @Before
     public void Setup(){
         household = new Household("1", "household Name", "123456789", "1", InterviewStatus.NOT_DONE, "2015-12-13", "uniqueDevId", "Dummy comments");
+        household.setServerStatus(ServerStatus.NOT_SENT);
         member = new Member(1, "rana", "manisha", Gender.Female, 28, household, "123-1", false);
         householdListActivityMock = Robolectric.buildActivity(HouseholdListActivity.class)
                 .create()
@@ -69,7 +69,6 @@ public class HouseholdListActivityTest{
         member.save(new DatabaseHelper(householdListActivityMock));
 
     }
-
 
     @Test
     public void ShouldSetMainLayoutProperlyOnCreateWhenPhoneIdIsSet(){
@@ -119,20 +118,19 @@ public class HouseholdListActivityTest{
     @Test
     public void ShouldGetProperResultHandlers(){
         List<IActivityResultHandler> resultHandlers = householdListActivityMock.getResultHandlers();
-        assertEquals(3,resultHandlers.size());
+        assertEquals(2,resultHandlers.size());
     }
+
     @Test
     public void ShouldGetProperMenuPreparer(){
         Menu mock = Mockito.mock(Menu.class);
         List<IMenuPreparer> menuHandlers = householdListActivityMock.getMenuPreparer(mock);
         assertEquals(1,menuHandlers.size());
     }
+
     @Test
     public void ShouldGetProperCustomMenuHandlers(){
         List<IMenuHandler> menuHandlers = householdListActivityMock.getCustomMenuHandler();
         assertEquals(2,menuHandlers.size());
     }
-
-
-
 }

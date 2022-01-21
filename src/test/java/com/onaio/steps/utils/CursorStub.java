@@ -40,6 +40,7 @@ public class CursorStub {
         Mockito.stub(cursor.getColumnIndex(Household.SELECTED_MEMBER_ID)).toReturn(4);
         Mockito.stub(cursor.getColumnIndex(Household.STATUS)).toReturn(5);
         Mockito.stub(cursor.getColumnIndex(Household.CREATED_AT)).toReturn(6);
+        Mockito.stub(cursor.getColumnIndex(Household.SERVER_STATUS)).toReturn(7);
 
         Mockito.stub(cursor.getString(1)).toReturn(household.getName());
         Mockito.stub(cursor.getString(2)).toReturn(household.getPhoneNumber());
@@ -47,6 +48,7 @@ public class CursorStub {
         Mockito.stub(cursor.getString(4)).toReturn(household.getSelectedMemberId());
         Mockito.stub(cursor.getString(5)).toReturn(household.getStatus().toString());
         Mockito.stub(cursor.getString(6)).toReturn(household.getCreatedAt());
+        Mockito.stub(cursor.getString(7)).toReturn(household.getServerStatus().toString());
     }
 
     public void stubCursorForMember(long id, String memberFamilyName, String memberFirstName, Gender memberGender, String memberAge, String householdId, int isDeleted, String memberHouseholdId) {
