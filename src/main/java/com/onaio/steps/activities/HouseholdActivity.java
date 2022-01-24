@@ -44,6 +44,7 @@ import com.onaio.steps.modelViewWrapper.SelectedMemberViewWrapper;
 
 import java.util.List;
 
+import static com.onaio.steps.model.InterviewStatus.CANCEL_SELECTION;
 import static com.onaio.steps.model.InterviewStatus.DEFERRED;
 import static com.onaio.steps.model.InterviewStatus.INCOMPLETE;
 import static com.onaio.steps.model.InterviewStatus.NOT_DONE;
@@ -183,7 +184,7 @@ public class HouseholdActivity extends ListActivity {
 
     private List<Member> getMembers() {
         InterviewStatus status = household.getStatus();
-        if(status.equals(NOT_DONE) || status.equals(DEFERRED) || status.equals(INCOMPLETE))
+        if(status.equals(NOT_DONE) || status.equals(DEFERRED) || status.equals(INCOMPLETE) || status.equals(CANCEL_SELECTION))
             return household.getAllUnselectedMembers(db);
         return household.getAllNonDeletedMembers(db);
     }

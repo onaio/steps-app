@@ -28,7 +28,8 @@ public enum InterviewStatus {
     REFUSED(8),
     INCOMPLETE_REFUSED(9),
     SUBMITTED(6),
-    NOT_REACHABLE(7);
+    NOT_REACHABLE(7),
+    CANCEL_SELECTION(10);
     private int orderWeight;
     private static HashMap<Integer, Integer> statusToWeight;
 
@@ -53,6 +54,7 @@ public enum InterviewStatus {
             statusToWeight.put(7, 7);
             statusToWeight.put(8, 9);
             statusToWeight.put(9, 8);
+            statusToWeight.put(10, 10);
         }
         return statusToWeight.get(orderWeight);
     }

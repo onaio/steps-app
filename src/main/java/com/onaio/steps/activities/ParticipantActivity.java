@@ -58,6 +58,8 @@ public class ParticipantActivity extends Activity{
     }
 
     private void customizeOptions() {
+        Button cancelButton = (Button) findViewById(R.id.action_cancel_participant);
+        cancelButton.setVisibility(View.GONE);
         Button takeSurveyButton = (Button) findViewById(R.id.action_take_survey);
         takeSurveyButton.setText(R.string.enter_data_now);
         Button deferredButton = (Button) findViewById(R.id.action_deferred);

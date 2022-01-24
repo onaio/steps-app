@@ -92,7 +92,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public void close(){
-        if(readableDb!=null && readableDb.isOpen())
-            readableDb.close();
+        /*if(readableDb!=null && readableDb.isOpen())
+            readableDb.close();*/
     }
 }
