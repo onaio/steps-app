@@ -36,6 +36,7 @@ import com.onaio.steps.model.ReElectReason;
 
 import java.util.List;
 
+import static com.onaio.steps.model.InterviewStatus.CANCEL_SELECTION;
 import static com.onaio.steps.model.InterviewStatus.SELECTION_NOT_DONE;
 
 public class CancelParticipantSelectionHandler implements IMenuPreparer,IMenuHandler {
@@ -111,10 +112,9 @@ public class CancelParticipantSelectionHandler implements IMenuPreparer,IMenuHan
 
     private void updateHousehold() {
         household.setSelectedMemberId(null);
-        household.setStatus(SELECTION_NOT_DONE);
+        household.setStatus(CANCEL_SELECTION);
         household.update(new DatabaseHelper(activity));
     }
-
 
     private void saveReason(View confirmation) {
         TextView reasonView = (TextView) confirmation.findViewById(R.id.reason);

@@ -84,6 +84,14 @@
             android:name=".activities.ParticipantActivity"
             android:label="Participant" />
         <activity
+            android:name=".activities.HouseholdSummaryActivity"
+            android:parentActivityName=".activities.HouseholdListActivity"
+            android:label="View Totals" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.HouseholdListActivity" />
+        </activity>
+        <activity
             android:name=".activities.BackupLocationActivity"
             android:label="@string/select_backup_location"></activity>
         <activity

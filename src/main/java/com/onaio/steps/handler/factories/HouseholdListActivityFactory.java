@@ -25,6 +25,7 @@ import com.onaio.steps.handler.actions.SubmitDataHandler;
 import com.onaio.steps.handler.activities.HouseholdActivityHandler;
 import com.onaio.steps.handler.activities.NewHouseholdActivityHandler;
 import com.onaio.steps.handler.activities.ParticipantActivityMenuItemHandler;
+import com.onaio.steps.handler.activities.HouseholdSummaryActivityMenuHandler;
 import com.onaio.steps.handler.activities.SettingActivityHandler;
 import com.onaio.steps.handler.interfaces.IActivityResultHandler;
 import com.onaio.steps.handler.interfaces.IListItemHandler;
@@ -45,6 +46,7 @@ public class HouseholdListActivityFactory {
         handlers.add(new SubmitDataHandler(activity).with(households));
         handlers.add(new ImportHandler(activity));
         handlers.add(new SaveToSDCardHandler(activity).with(households));
+        handlers.add(new HouseholdSummaryActivityMenuHandler(activity));
         return handlers;
     }
 

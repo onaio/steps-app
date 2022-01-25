@@ -33,6 +33,7 @@ public class Household implements Serializable,Comparable<Household> {
     public static final String FIND_BY_SERVER_STATUS_NOT_EQUAL_QUERY = "SELECT * FROM HOUSEHOLD WHERE %s != '%s'";
     private static String FIND_ALL_QUERY = "SELECT hh.*, m.family_surname, m.first_name FROM household AS hh LEFT JOIN member AS m ON m.id = hh.selected_member_id ORDER BY hh.Id DESC";
     private static String FIND_ALL_COUNT_QUERY = "SELECT count(*) FROM HOUSEHOLD ORDER BY Id desc";
+    private static String FIND_BY_STATUS_COUNT_QUERY = "SELECT count(*) FROM HOUSEHOLD WHERE Status = '%s'";
     public static final String TABLE_NAME = "household";
     public static final String ID = "Id";
     public static final String NAME = "Name";
@@ -217,6 +218,14 @@ public class Household implements Serializable,Comparable<Household> {
 
     public static int getAllCount(DatabaseHelper db){
         Cursor cursor = db.exec(FIND_ALL_COUNT_QUERY);
+        cursor.moveToFirst();
+        int householdCounts = cursor.getInt(0);
+        db.close();
+        return householdCounts;
+    }
+
+    public static int getCountByStatus(DatabaseHelper db, InterviewStatus status){
+        Cursor cursor = db.exec(String.format(FIND_BY_STATUS_COUNT_QUERY, status));
         cursor.moveToFirst();
         int householdCounts = cursor.getInt(0);
         db.close();

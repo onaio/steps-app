@@ -67,7 +67,7 @@ public class CancelParticipantSelectionHandlerTest {
 
     @Test
     public void ShouldInactivateWhenMemberIsNotSelected(){
-        Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.SELECTION_NOT_DONE);
+        Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.CANCEL_SELECTION);
 
         assertTrue(selectionHandler.shouldDeactivate());
     }
