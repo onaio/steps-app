@@ -17,6 +17,9 @@
 package com.onaio.steps.activities;
 
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
@@ -39,9 +42,6 @@ import org.robolectric.util.ActivityController;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 @Config(emulateSdk = 16, manifest = "src/main/AndroidManifest.xml")
 @RunWith(RobolectricTestRunner.class)

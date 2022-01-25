@@ -46,7 +46,7 @@ public class HouseholdViewWrapper {
         EditText commentsView = (EditText) activity.findViewById(commentsViewId);
         String comments = commentsView.getText().toString();
         String uniqueDeviceId = Device.getUniqueDeviceId(activity);
-        return new Household(nameView.getText().toString(), phoneNumber, InterviewStatus.SELECTION_NOT_DONE, currentDate, uniqueDeviceId,comments);
+        return new Household(nameView.getText().toString(), phoneNumber, InterviewStatus.EMPTY_HOUSEHOLD, currentDate, uniqueDeviceId,comments);
     }
 
     public Household updateHousehold(Household household, int numberViewId, int commentsViewId) {

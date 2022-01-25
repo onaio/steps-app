@@ -19,6 +19,7 @@ package com.onaio.steps.model;
 import java.util.HashMap;
 
 public enum InterviewStatus {
+    EMPTY_HOUSEHOLD(0),
     SELECTION_NOT_DONE(4),
     INCOMPLETE(1),
     NOT_DONE(2),
@@ -27,7 +28,8 @@ public enum InterviewStatus {
     REFUSED(8),
     INCOMPLETE_REFUSED(9),
     SUBMITTED(6),
-    NOT_REACHABLE(7);
+    NOT_REACHABLE(7),
+    CANCEL_SELECTION(10);
     private int orderWeight;
     private static HashMap<Integer, Integer> statusToWeight;
 
@@ -42,6 +44,7 @@ public enum InterviewStatus {
     public Integer getStatusToOrderWeight() {
         if (statusToWeight == null) {
             statusToWeight = new HashMap<>();
+            statusToWeight.put(0, 0);
             statusToWeight.put(1, 1);
             statusToWeight.put(2, 2);
             statusToWeight.put(3, 3);
@@ -51,6 +54,7 @@ public enum InterviewStatus {
             statusToWeight.put(7, 7);
             statusToWeight.put(8, 9);
             statusToWeight.put(9, 8);
+            statusToWeight.put(10, 10);
         }
         return statusToWeight.get(orderWeight);
     }

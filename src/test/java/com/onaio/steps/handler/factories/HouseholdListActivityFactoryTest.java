@@ -25,6 +25,7 @@ import com.onaio.steps.handler.activities.HouseholdActivityHandler;
 import com.onaio.steps.handler.activities.NewHouseholdActivityHandler;
 import com.onaio.steps.handler.activities.ParticipantActivityMenuItemHandler;
 import com.onaio.steps.handler.activities.SettingActivityHandler;
+import com.onaio.steps.handler.activities.HouseholdSummaryActivityMenuHandler;
 import com.onaio.steps.handler.interfaces.IActivityResultHandler;
 import com.onaio.steps.handler.interfaces.IListItemHandler;
 import com.onaio.steps.handler.interfaces.IMenuHandler;
@@ -56,12 +57,13 @@ public class HouseholdListActivityFactoryTest{
         List<IMenuHandler> menuHandlers = HouseholdListActivityFactory.getMenuHandlers(householdListActivityMock, null);
         ArrayList<Class> handlerTypes = getTypes(menuHandlers);
 
-        Assert.assertEquals(5,menuHandlers.size());
+        Assert.assertEquals(6,menuHandlers.size());
         Assert.assertTrue(handlerTypes.contains(ParticipantActivityMenuItemHandler.class));
         Assert.assertTrue(handlerTypes.contains(SettingActivityHandler.class));
         Assert.assertTrue(handlerTypes.contains(SubmitDataHandler.class));
         Assert.assertTrue(handlerTypes.contains(ImportHandler.class));
         Assert.assertTrue(handlerTypes.contains(SaveToSDCardHandler.class));
+        Assert.assertTrue(handlerTypes.contains(HouseholdSummaryActivityMenuHandler.class));
     }
 
     @Test
