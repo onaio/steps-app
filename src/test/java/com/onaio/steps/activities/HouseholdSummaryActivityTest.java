@@ -7,6 +7,7 @@ import com.onaio.steps.R;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.InterviewStatus;
+import com.onaio.steps.model.ServerStatus;
 
 import junit.framework.Assert;
 
@@ -65,7 +66,9 @@ public class HouseholdSummaryActivityTest {
         int index = 1;
         for (Map.Entry<InterviewStatus, Integer> entry : statusCountMap.entrySet()) {
             for (int i = 0; i < entry.getValue(); i++) {
-                new Household(String.valueOf(index++), "1-" + index, "", "", entry.getKey(), "", "", "").save(db);
+                Household household = new Household(String.valueOf(index++), "1-" + index, "", "", entry.getKey(), "", "", "");
+                household.setServerStatus(ServerStatus.NOT_SENT);
+                household.save(db);
             }
         }
     }
