@@ -53,7 +53,7 @@ public class HouseholdServerStatusUpdaterTest {
     }
 
     @Test
-    public void ShouldBeAbleToQueryTheCollectAppAndUpdateTheStatus() {
+    public void ShouldVerifyAllTheServerStatusBeforeAndAfterSent() {
         DatabaseHelper db = new DatabaseHelper(householdListActivity);
 
         Household household = new Household("", "1-1", "", "", InterviewStatus.DONE, "", "", "");

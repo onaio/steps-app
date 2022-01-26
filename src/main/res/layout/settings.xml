@@ -25,7 +25,7 @@
         android:layout_height="match_parent"
         android:background="@android:color/white"
         android:orientation="vertical"
-        android:visibility="visible">
+        android:visibility="invisible">
 
         <include layout="@layout/dialog_header" />
 

@@ -19,7 +19,6 @@ package com.onaio.steps.handler.actions;
 import static com.onaio.steps.helper.Constants.IMPORT_URL;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 
 import com.onaio.steps.R;
 import com.onaio.steps.activities.SettingsActivity;
@@ -39,13 +38,11 @@ import org.mockito.Mockito;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
-import org.robolectric.annotation.Implementation;
-import org.robolectric.annotation.Implements;
 import org.robolectric.shadows.ShadowAsyncTask;
 
 import java.io.IOException;
 
-@Config(emulateSdk = 16,manifest = "src/main/AndroidManifest.xml", shadows = {ImportHandlerTest.ShadowDownloadFileTask.class})
+@Config(emulateSdk = 16,manifest = "src/main/AndroidManifest.xml", shadows = {ShadowAsyncTask.class})
 @RunWith(RobolectricTestRunner.class)
 public class ImportHandlerTest {
 
@@ -79,7 +76,7 @@ public class ImportHandlerTest {
     }
 
     @Test
-    public void ShouldOpenActivityWithRightIntentAndRequestCode(){
+    public void ShouldExecuteDownloadFileTaskAndReturnTrue(){
         KeyValueStoreFactory.instance(activity).putString(IMPORT_URL, "https://preview.steps.ona.io/upload-file");
         Assert.assertTrue(importHandler.open());
     }
@@ -137,15 +134,4 @@ public class ImportHandlerTest {
             }
         };
     }
-
-    @Implements(AsyncTask.class)
-    public static class ShadowDownloadFileTask<Params, Progress, Result> extends ShadowAsyncTask<Params, Progress, Result> {
-
-        @Override
-        @Implementation
-        public AsyncTask<Params, Progress, Result> execute(Params... params) {
-            return super.execute(params);
-        }
-    }
-
 }
