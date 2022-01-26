@@ -55,7 +55,7 @@ public class HouseholdServerStatusUpdater {
 
             boolean needToRefresh = false;
 
-            List<Household> households = Household.findByStatusNotEqual(new DatabaseHelper(activity), ServerStatus.SENT);
+            List<Household> households = Household.findByServerStatusNotEqual(new DatabaseHelper(activity), ServerStatus.SENT);
 
             // process households
             for (int i = 0; i < households.size(); i++) {

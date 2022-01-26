@@ -201,7 +201,7 @@ public class Household implements Serializable,Comparable<Household> {
         return  households;
     }
 
-    public static List<Household> findByStatusNotEqual(DatabaseHelper db, ServerStatus status) {
+    public static List<Household> findByServerStatusNotEqual(DatabaseHelper db, ServerStatus status) {
         Cursor cursor = db.exec(String.format(FIND_BY_SERVER_STATUS_NOT_EQUAL_QUERY, SERVER_STATUS, status));
         List<Household> households = new CursorHelper().getHouseholds(cursor);
         db.close();
