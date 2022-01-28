@@ -23,6 +23,7 @@ import com.onaio.steps.model.Household;
 import com.onaio.steps.model.InterviewStatus;
 import com.onaio.steps.model.Member;
 import com.onaio.steps.model.Participant;
+import com.onaio.steps.model.ServerStatus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,11 +62,13 @@ public class CursorHelper {
                 String createdAt = cursor.getString(cursor.getColumnIndex(Household.CREATED_AT));
                 String comments = cursor.getString(cursor.getColumnIndex(Household.COMMENTS));
                 String uniqueDeviceId = cursor.getString(cursor.getColumnIndex(Household.UNIQUE_DEVICE_ID));
+                String serverStatus = cursor.getString(cursor.getColumnIndex(Household.SERVER_STATUS));
 
                 String memberFamilySurname = cursor.getColumnIndex(Member.FAMILY_SURNAME) != -1 ? cursor.getString(cursor.getColumnIndex(Member.FAMILY_SURNAME)) : null;
                 String memberFirstName = cursor.getColumnIndex(Member.FIRST_NAME) != -1 ? cursor.getString(cursor.getColumnIndex(Member.FIRST_NAME)) : null;
 
                 Household hh = new Household(id,household_name, household_number,selectedMemberId, InterviewStatus.valueOf(status),createdAt, uniqueDeviceId, comments );
+                hh.setServerStatus(ServerStatus.valueOf(serverStatus));
 
                 if (memberFamilySurname != null && memberFirstName != null) {
                     Member member = new Member();

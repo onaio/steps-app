@@ -180,4 +180,6 @@
     <string name="interview_incomplete">Interview partially complete</string>
     <string name="not_reachable_household">Not reachable household</string>
     <string name="total_households">Total households</string>
+    <string name="user_password_label">ODK Password</string>
+    <string name="invalid_fields_error">Survey Id or Username or Password should not empty</string>
 </resources>

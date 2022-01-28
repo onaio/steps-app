@@ -16,12 +16,15 @@
 
 package com.onaio.steps.model;
 
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertTrue;
+
 import android.content.ContentValues;
 import android.database.Cursor;
 
 import com.onaio.steps.helper.Constants;
-import com.onaio.steps.utils.CursorStub;
 import com.onaio.steps.helper.DatabaseHelper;
+import com.onaio.steps.utils.CursorStub;
 
 import junit.framework.Assert;
 
@@ -40,8 +43,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-
-import static junit.framework.Assert.*;
 
 @RunWith(RobolectricTestRunner.class)
 @Config(emulateSdk = 16, manifest = "src/main/AndroidManifest.xml",shadows = {ShadowDatabaseHelper.class})
@@ -75,6 +76,7 @@ public class HouseholdTest {
         db = Mockito.mock(DatabaseHelper.class);
         cursor = Mockito.mock(Cursor.class);
         household = new Household(householdName, phoneNumber, interviewStatus, currentDate, uniqueDeviceId, comments);
+        household.setServerStatus(ServerStatus.NOT_SENT);
     }
 
     @Test
@@ -105,6 +107,7 @@ public class HouseholdTest {
     public void ShouldBeAbleToUpdateTheHousehold(){
         String selectedMember = "3";
         household = new Household(String.valueOf(householdId),householdName, phoneNumber, selectedMember, interviewStatus, currentDate, "uniqueDevId",comments);
+        household.setServerStatus(ServerStatus.NOT_SENT);
         stubDbForHousehold();
 
         household.update(db);

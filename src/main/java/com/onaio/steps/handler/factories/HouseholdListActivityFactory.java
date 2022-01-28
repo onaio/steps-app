@@ -19,22 +19,21 @@ package com.onaio.steps.handler.factories;
 import android.app.ListActivity;
 import android.view.Menu;
 
+import com.onaio.steps.handler.actions.ImportHandler;
 import com.onaio.steps.handler.actions.SaveToSDCardHandler;
 import com.onaio.steps.handler.actions.SubmitDataHandler;
-import com.onaio.steps.handler.activities.DataSubmissionResultHandler;
+import com.onaio.steps.handler.activities.HouseholdActivityHandler;
+import com.onaio.steps.handler.activities.NewHouseholdActivityHandler;
 import com.onaio.steps.handler.activities.ParticipantActivityMenuItemHandler;
 import com.onaio.steps.handler.activities.HouseholdSummaryActivityMenuHandler;
-import com.onaio.steps.handler.interfaces.IViewPreparer;
-import com.onaio.steps.orchestrators.flows.FlowType;
-import com.onaio.steps.handler.activities.HouseholdActivityHandler;
-import com.onaio.steps.handler.actions.ImportHandler;
+import com.onaio.steps.handler.activities.SettingActivityHandler;
 import com.onaio.steps.handler.interfaces.IActivityResultHandler;
 import com.onaio.steps.handler.interfaces.IListItemHandler;
 import com.onaio.steps.handler.interfaces.IMenuHandler;
 import com.onaio.steps.handler.interfaces.IMenuPreparer;
-import com.onaio.steps.handler.activities.NewHouseholdActivityHandler;
-import com.onaio.steps.handler.activities.SettingActivityHandler;
+import com.onaio.steps.handler.interfaces.IViewPreparer;
 import com.onaio.steps.model.Household;
+import com.onaio.steps.orchestrators.flows.FlowType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,7 +55,6 @@ public class HouseholdListActivityFactory {
         ArrayList<IActivityResultHandler> handlers = new ArrayList<IActivityResultHandler>();
         handlers.add(new NewHouseholdActivityHandler(activity));
         handlers.add(new SettingActivityHandler(activity));
-        handlers.add(new DataSubmissionResultHandler(activity));
         return handlers;
     }
 

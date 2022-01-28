@@ -16,6 +16,11 @@
 
 package com.onaio.steps.activities;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.robolectric.Robolectric.shadowOf;
+
 import android.content.Intent;
 import android.view.View;
 import android.widget.TextView;
@@ -24,6 +29,7 @@ import com.onaio.steps.R;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.InterviewStatus;
+import com.onaio.steps.model.ServerStatus;
 
 import junit.framework.Assert;
 
@@ -35,11 +41,6 @@ import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.robolectric.Robolectric.shadowOf;
-
 @Config(emulateSdk = 16, manifest = "src/main/AndroidManifest.xml")
 @RunWith(RobolectricTestRunner.class)
 public class EditHouseholdActivityTest {
@@ -50,6 +51,7 @@ public class EditHouseholdActivityTest {
     @Before
     public void setup() {
         household = new Household("1", "household Name", "123456789", "2", InterviewStatus.NOT_DONE, "2015-12-13", "uniquedevid", "Dummy comments");
+        household.setServerStatus(ServerStatus.NOT_SENT);
         Intent intent = new Intent();
         intent.putExtra(Constants.HH_HOUSEHOLD, household);
 

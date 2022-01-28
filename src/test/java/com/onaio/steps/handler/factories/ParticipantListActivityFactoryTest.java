@@ -19,7 +19,6 @@ package com.onaio.steps.handler.factories;
 import com.onaio.steps.activities.ParticipantListActivity;
 import com.onaio.steps.handler.actions.FinalisedFormHandler;
 import com.onaio.steps.handler.actions.SubmitDataHandler;
-import com.onaio.steps.handler.activities.DataSubmissionResultHandler;
 import com.onaio.steps.handler.activities.NewParticipantActivityHandler;
 import com.onaio.steps.handler.activities.ParticipantActivityHandler;
 import com.onaio.steps.handler.activities.SettingActivityHandler;
@@ -65,10 +64,9 @@ public class ParticipantListActivityFactoryTest {
         List<IActivityResultHandler> resultHandlers = ParticipantListActivityFactory.getResultHandlers(participantListActivityMock);
         ArrayList<Class> handlerTypes = getTypes(resultHandlers);
 
-        Assert.assertEquals(3, resultHandlers.size());
+        Assert.assertEquals(2, resultHandlers.size());
         Assert.assertTrue(handlerTypes.contains(SettingActivityHandler.class));
         Assert.assertTrue(handlerTypes.contains(NewParticipantActivityHandler.class));
-        Assert.assertTrue(handlerTypes.contains(DataSubmissionResultHandler.class));
     }
 
     @Test

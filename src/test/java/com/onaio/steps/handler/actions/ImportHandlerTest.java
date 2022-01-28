@@ -16,42 +16,55 @@
 
 package com.onaio.steps.handler.actions;
 
-import android.app.Activity;
+import static com.onaio.steps.helper.Constants.HH_PHONE_ID;
+import static com.onaio.steps.helper.Constants.HH_SURVEY_ID;
+import static com.onaio.steps.helper.Constants.IMPORT_URL;
+
 import android.content.Intent;
+import android.os.AsyncTask;
 
 import com.onaio.steps.R;
-import com.onaio.steps.activities.HouseholdListActivity;
+import com.onaio.steps.activities.SettingsActivity;
+import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.helper.FileUtil;
-import com.onaio.steps.model.RequestCode;
+import com.onaio.steps.helper.KeyValueStore;
+import com.onaio.steps.helper.KeyValueStoreFactory;
+import com.onaio.steps.orchestrators.flows.FlowType;
 
 import junit.framework.Assert;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.Ignore;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentMatcher;
 import org.mockito.Mockito;
+import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
+import org.robolectric.annotation.Implementation;
+import org.robolectric.annotation.Implements;
+import org.robolectric.shadows.ShadowAsyncTask;
 
 import java.io.IOException;
 
-@Config(emulateSdk = 16,manifest = "src/main/AndroidManifest.xml")
+@Config(emulateSdk = 16,manifest = "src/main/AndroidManifest.xml", shadows = {ImportHandlerTest.ShadowDownloadFileTask.class})
 @RunWith(RobolectricTestRunner.class)
 public class ImportHandlerTest {
 
-    private HouseholdListActivity activityMock;
+    private SettingsActivity activity;
     private ImportHandler importHandler;
     private FileUtil fileUtilMock;
 
     @Before
     public void Setup(){
-        activityMock = Mockito.mock(HouseholdListActivity.class);
+        Intent intent = new Intent();
+        intent.putExtra(Constants.FLOW_TYPE, FlowType.Household.toString());
+
+        activity = Robolectric.buildActivity(SettingsActivity.class).withIntent(intent).create().get();
         DatabaseHelper dbMock = Mockito.mock(DatabaseHelper.class);
         fileUtilMock = Mockito.mock(FileUtil.class);
-        importHandler = new ImportHandler(activityMock, dbMock, fileUtilMock);
+        importHandler = new ImportHandler(activity, dbMock, fileUtilMock);
     }
 
     @Test
@@ -69,12 +82,16 @@ public class ImportHandlerTest {
     }
 
     @Test
-    @Ignore
-    public void ShouldOpenActivityWithRightIntentAndRequestCode(){
-        importHandler.open();
+    public void ShouldExecuteDownloadFileTaskAndReturnTrue(){
+        KeyValueStore keyValueStore = KeyValueStoreFactory.instance(activity);
+        keyValueStore.putString(IMPORT_URL, "https://preview.steps.ona.io/upload-file");
+        keyValueStore.putString(HH_PHONE_ID, "1");
+        keyValueStore.putString(HH_SURVEY_ID, "1");
 
-        Mockito.verify(activityMock).startActivityForResult(Mockito.argThat(intentMatcher()),Mockito.eq(RequestCode.IMPORT.getCode()));
-
+        Assert.assertNull(ShadowDownloadFileTask.URL);
+        Assert.assertTrue(importHandler.open());
+        Assert.assertEquals("https://preview.steps.ona.io/upload-file/1/1", ShadowDownloadFileTask.URL);
+        ShadowDownloadFileTask.URL = null;
     }
 
     @Test
@@ -131,4 +148,16 @@ public class ImportHandlerTest {
         };
     }
 
+    @Implements(AsyncTask.class)
+    public static class ShadowDownloadFileTask<Params, Progress, Result> extends ShadowAsyncTask<Params, Progress, Result> {
+
+        private static String URL = null;
+
+        @Override
+        @Implementation
+        public AsyncTask<Params, Progress, Result> execute(Params... params) {
+            ShadowDownloadFileTask.URL = (String) params[0];
+            return super.execute(params);
+        }
+    }
 }

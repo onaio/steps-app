@@ -19,6 +19,7 @@ package com.onaio.steps.helper;
 import static com.onaio.steps.helper.Constants.ENDPOINT_URL;
 import static com.onaio.steps.helper.Constants.HH_SURVEY_ID;
 import static com.onaio.steps.helper.Constants.HH_USER_ID;
+import static com.onaio.steps.helper.Constants.HH_USER_PASSWORD;
 
 import android.app.Activity;
 import android.os.AsyncTask;
@@ -63,16 +64,23 @@ public class UploadFileTask extends AsyncTask<File, Void, Boolean> {
                 KeyValueStore store = KeyValueStoreFactory.instance(activity);
                 String surveyId = store.getString(HH_SURVEY_ID);
                 String userId = store.getString(HH_USER_ID);
+                String userPassword = store.getString(HH_USER_PASSWORD);
 
-                MultipartEntity multipartEntity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE, null, Charset.forName("UTF-8"));
-                multipartEntity.addPart("file", new FileBody(files[0]));
-                multipartEntity.addPart("survey_id", new StringBody(surveyId));
-                multipartEntity.addPart("username", new StringBody(userId));
-                httpPost.setEntity(multipartEntity);
-                HttpResponse response = httpClient.execute(httpPost);
-                if (response.getStatusLine().getStatusCode() == 201) {
-                    new CustomNotification().notify(activity, R.string.export_complete, R.string.export_complete_message);
-                    return true;
+                if (surveyId.isEmpty() || userId.isEmpty() || userPassword.isEmpty()) {
+                    new CustomNotification().notify(activity, R.string.error_title, R.string.invalid_fields_error);
+                }
+                else {
+                    MultipartEntity multipartEntity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE, null, Charset.forName("UTF-8"));
+                    multipartEntity.addPart("file", new FileBody(files[0]));
+                    multipartEntity.addPart("survey_id", new StringBody(surveyId));
+                    multipartEntity.addPart("username", new StringBody(userId));
+                    multipartEntity.addPart("password", new StringBody(userPassword));
+                    httpPost.setEntity(multipartEntity);
+                    HttpResponse response = httpClient.execute(httpPost);
+                    if (response.getStatusLine().getStatusCode() == 201) {
+                        new CustomNotification().notify(activity, R.string.export_complete, R.string.export_complete_message);
+                        return true;
+                    }
                 }
             } catch (IOException e) {
                 new Logger().log(e, "Export failed.");

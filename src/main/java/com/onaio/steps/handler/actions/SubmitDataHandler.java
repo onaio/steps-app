@@ -10,6 +10,7 @@ import android.widget.CheckBox;
 
 import com.onaio.steps.R;
 import com.onaio.steps.activities.ParticipantListActivity;
+import com.onaio.steps.handler.activities.HouseholdServerStatusUpdater;
 import com.onaio.steps.handler.interfaces.IMenuHandler;
 import com.onaio.steps.handler.interfaces.IMenuPreparer;
 import com.onaio.steps.handler.interfaces.IViewPreparer;
@@ -34,12 +35,14 @@ public class SubmitDataHandler implements IMenuHandler,IMenuPreparer, IViewPrepa
     private FinalisedFormHandler finalisedFormHandler;
     private List<Household> households;
     private List<Participant> participants;
+    private HouseholdServerStatusUpdater householdServerStatusUpdater;
 
     public SubmitDataHandler(ListActivity activity) {
         this.activity = activity;
         exportHandler = new ExportHandler(activity);
         finalisedFormHandler = new FinalisedFormHandler(activity);
         participants  = new ArrayList<>();
+        householdServerStatusUpdater = new HouseholdServerStatusUpdater(activity);
     }
 
     @Override
@@ -88,6 +91,7 @@ public class SubmitDataHandler implements IMenuHandler,IMenuPreparer, IViewPrepa
                                 public void onFileUploaded(boolean successful) {
                                     if (successful) {
                                         new CustomDialog().notify(activity, CustomDialog.EmptyListener, R.string.export_complete, R.string.export_complete_message);
+                                        householdServerStatusUpdater.markAllSent();
                                     } else {
                                         new CustomDialog().notify(activity, CustomDialog.EmptyListener, R.string.error_title, R.string.export_failed);
                                     }

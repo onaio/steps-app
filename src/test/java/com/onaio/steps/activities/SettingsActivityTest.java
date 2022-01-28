@@ -16,6 +16,10 @@
 
 package com.onaio.steps.activities;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.robolectric.Robolectric.shadowOf;
+
 import android.content.Intent;
 import android.widget.TextView;
 
@@ -24,6 +28,7 @@ import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.InterviewStatus;
+import com.onaio.steps.model.ServerStatus;
 import com.onaio.steps.orchestrators.flows.FlowType;
 
 import org.junit.Before;
@@ -32,10 +37,6 @@ import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.robolectric.Robolectric.shadowOf;
 
 @Config(emulateSdk = 16, manifest = "src/main/AndroidManifest.xml")
 @RunWith(RobolectricTestRunner.class)
@@ -76,6 +77,7 @@ public class SettingsActivityTest {
         DatabaseHelper databaseHelper = new DatabaseHelper(settingsActivity);
         //add data to the database
         Household household = new Household("householdName", "phoneNumber", InterviewStatus.SELECTION_NOT_DONE, "2016-10-10", "testDeviceId", "Test comments");
+        household.setServerStatus(ServerStatus.NOT_SENT);
         household.save(databaseHelper);
 
         //truncate the data

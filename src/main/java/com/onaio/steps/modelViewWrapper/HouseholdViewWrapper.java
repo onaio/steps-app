@@ -26,6 +26,7 @@ import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.Device;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.InterviewStatus;
+import com.onaio.steps.model.ServerStatus;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -46,7 +47,9 @@ public class HouseholdViewWrapper {
         EditText commentsView = (EditText) activity.findViewById(commentsViewId);
         String comments = commentsView.getText().toString();
         String uniqueDeviceId = Device.getUniqueDeviceId(activity);
-        return new Household(nameView.getText().toString(), phoneNumber, InterviewStatus.EMPTY_HOUSEHOLD, currentDate, uniqueDeviceId,comments);
+        Household household = new Household(nameView.getText().toString(), phoneNumber, InterviewStatus.EMPTY_HOUSEHOLD, currentDate, uniqueDeviceId,comments);
+        household.setServerStatus(ServerStatus.NOT_SENT);
+        return household;
     }
 
     public Household updateHousehold(Household household, int numberViewId, int commentsViewId) {

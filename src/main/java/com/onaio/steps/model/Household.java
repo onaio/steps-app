@@ -30,6 +30,7 @@ public class Household implements Serializable,Comparable<Household> {
     private static String FIND_BY_ID_QUERY = "SELECT * FROM HOUSEHOLD WHERE id = %s";
     public static final String FIND_BY_NAME_QUERY = "SELECT * FROM HOUSEHOLD WHERE %s = '%s'";
     public static final String FIND_BY_STATUS_QUERY = "SELECT * FROM HOUSEHOLD WHERE %s = '%s'";
+    public static final String FIND_BY_SERVER_STATUS_NOT_EQUAL_QUERY = "SELECT * FROM HOUSEHOLD WHERE %s != '%s'";
     private static String FIND_ALL_QUERY = "SELECT hh.*, m.family_surname, m.first_name FROM household AS hh LEFT JOIN member AS m ON m.id = hh.selected_member_id ORDER BY hh.Id DESC";
     private static String FIND_ALL_COUNT_QUERY = "SELECT count(*) FROM HOUSEHOLD ORDER BY Id desc";
     private static String FIND_BY_STATUS_COUNT_QUERY = "SELECT count(*) FROM HOUSEHOLD WHERE Status = '%s'";
@@ -41,8 +42,9 @@ public class Household implements Serializable,Comparable<Household> {
     public static final String SELECTED_MEMBER_ID = "selected_member_id";
     public static final String CREATED_AT = "Created_At";
     public static final String COMMENTS = "Comments";
+    public static final String SERVER_STATUS = "Server_Status";
     public static final String UNIQUE_DEVICE_ID = "unique_device_id";
-    public static final String TABLE_CREATE_QUERY = String.format("CREATE TABLE %s(%s INTEGER PRIMARY KEY, %s TEXT, %s TEXT, %s INTEGER, %s TEXT, %s TEXT, %s TEXT, %s TEXT)", TABLE_NAME, ID, NAME, PHONE_NUMBER, SELECTED_MEMBER_ID,STATUS, CREATED_AT ,COMMENTS, UNIQUE_DEVICE_ID);
+    public static final String TABLE_CREATE_QUERY = String.format("CREATE TABLE %s(%s INTEGER PRIMARY KEY, %s TEXT, %s TEXT, %s INTEGER, %s TEXT, %s TEXT, %s TEXT, %s TEXT, %s TEXT)", TABLE_NAME, ID, NAME, PHONE_NUMBER, SELECTED_MEMBER_ID,STATUS, CREATED_AT ,COMMENTS, UNIQUE_DEVICE_ID, SERVER_STATUS);
 
     String id;
     String name;
@@ -53,6 +55,7 @@ public class Household implements Serializable,Comparable<Household> {
     String comments;
     String uniqueDeviceId;
     Member selectedMember;
+    ServerStatus serverStatus;
     
     public Household(String id, String name, String phoneNumber, String selectedMemberId, InterviewStatus status, String createdAt, String uniqueDeviceId, String comments) {
         this.id = id;
@@ -140,6 +143,14 @@ public class Household implements Serializable,Comparable<Household> {
         this.selectedMember = member;
     }
 
+    public ServerStatus getServerStatus() {
+        return serverStatus;
+    }
+
+    public void setServerStatus(ServerStatus serverStatus) {
+        this.serverStatus = serverStatus;
+    }
+
     public long save(DatabaseHelper db){
         ContentValues householdValues = populateWithBasicDetails();
         householdValues.put(CREATED_AT, createdAt);
@@ -163,6 +174,7 @@ public class Household implements Serializable,Comparable<Household> {
         values.put(COMMENTS,comments);
         values.put(STATUS,status.toString());
         values.put(UNIQUE_DEVICE_ID, getUniqueDeviceId());
+        values.put(SERVER_STATUS, getServerStatus().toString());
         return values;
     }
 
@@ -184,6 +196,13 @@ public class Household implements Serializable,Comparable<Household> {
 
     public static List<Household> findByStatus(DatabaseHelper db, InterviewStatus status) {
         Cursor cursor = db.exec(String.format(FIND_BY_STATUS_QUERY, STATUS, status));
+        List<Household> households = new CursorHelper().getHouseholds(cursor);
+        db.close();
+        return  households;
+    }
+
+    public static List<Household> findByServerStatusNotEqual(DatabaseHelper db, ServerStatus status) {
+        Cursor cursor = db.exec(String.format(FIND_BY_SERVER_STATUS_NOT_EQUAL_QUERY, SERVER_STATUS, status));
         List<Household> households = new CursorHelper().getHouseholds(cursor);
         db.close();
         return  households;

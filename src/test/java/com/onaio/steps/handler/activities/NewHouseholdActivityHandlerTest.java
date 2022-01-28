@@ -16,13 +16,17 @@
 
 package com.onaio.steps.handler.activities;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import android.app.Activity;
 import android.content.Intent;
 
 import com.onaio.steps.R;
 import com.onaio.steps.activities.HouseholdActivity;
-import com.onaio.steps.activities.NewHouseholdActivity;
 import com.onaio.steps.activities.HouseholdListActivity;
+import com.onaio.steps.activities.NewHouseholdActivity;
 import com.onaio.steps.adapters.HouseholdAdapter;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.CustomDialog;
@@ -32,6 +36,7 @@ import com.onaio.steps.helper.KeyValueStoreFactory;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.InterviewStatus;
 import com.onaio.steps.model.RequestCode;
+import com.onaio.steps.model.ServerStatus;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -41,10 +46,6 @@ import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowActivity;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 @Config(emulateSdk = 16,manifest = "src/main/AndroidManifest.xml")
 @RunWith(RobolectricTestRunner.class)
@@ -129,6 +130,7 @@ public class NewHouseholdActivityHandlerTest {
     public void ShouldHandleResultAndStartHouseholdActivityForResultCodeOk(){
         Intent intent = new Intent();
         Household name = new Household("name", "123321412312", InterviewStatus.SELECTION_NOT_DONE, "123", "testDeviceId","Dummy comments");
+        name.setServerStatus(ServerStatus.NOT_SENT);
         name.save(new DatabaseHelper(householdListActivity));
         intent.putExtra(Constants.HH_HOUSEHOLD,name);
         HouseholdAdapter householdAdapterMock = Mockito.mock(HouseholdAdapter.class);

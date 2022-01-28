@@ -176,6 +176,25 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="10dp"
+                    android:text="@string/user_password_label" />
+
+                <EditText
+                    android:id="@+id/user_password_household"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="5dp"
+                    android:ems="10"
+                    android:hint="@string/user_password_label"
+                    android:inputType="textPassword"
+                    android:textColor="@android:color/black" />
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
                     android:text="@string/device_id_label" />
 
                 <EditText
@@ -270,7 +289,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="20dp"
-                    android:text="@string/endpoint_url_hint" />
+                    android:text="@string/import_url_hint" />
 
                 <EditText
                     android:id="@+id/endpointUrl_household"
@@ -280,7 +299,7 @@
                     android:layout_marginRight="5dp"
                     android:layout_marginTop="5dp"
                     android:ems="10"
-                    android:hint="@string/endpoint_url_hint"
+                    android:hint="@string/import_url_hint"
                     android:inputType="textUri"
                     android:textColor="@android:color/black" />
 
@@ -290,7 +309,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="20dp"
-                    android:text="@string/import_url_hint" />
+                    android:text="@string/endpoint_url_hint" />
 
                 <EditText
                     android:id="@+id/importUrl_household"
@@ -300,7 +319,7 @@
                     android:layout_marginRight="5dp"
                     android:layout_marginTop="5dp"
                     android:ems="10"
-                    android:hint="@string/import_url_hint"
+                    android:hint="@string/endpoint_url_hint"
                     android:inputType="textUri"
                     android:textColor="@android:color/black" />
                 

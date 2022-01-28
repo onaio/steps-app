@@ -41,6 +41,7 @@ import static com.onaio.steps.helper.Constants.HH_MIN_AGE;
 import static com.onaio.steps.helper.Constants.HH_PHONE_ID;
 import static com.onaio.steps.helper.Constants.HH_SURVEY_ID;
 import static com.onaio.steps.helper.Constants.HH_USER_ID;
+import static com.onaio.steps.helper.Constants.HH_USER_PASSWORD;
 import static com.onaio.steps.helper.Constants.IMPORT_URL;
 import static com.onaio.steps.helper.Constants.PA_PHONE_ID;
 
@@ -69,6 +70,7 @@ public class HouseholdFlow implements IFlow {
     public void saveSettings(boolean saveDeviceID) {
         saveData(R.id.campaignId_household, HH_SURVEY_ID);
         saveData(R.id.user_id_household, HH_USER_ID);
+        saveData(R.id.user_password_household, HH_USER_PASSWORD);
 
         if (saveDeviceID) {
             saveData(R.id.deviceId_household, HH_PHONE_ID);
@@ -93,20 +95,22 @@ public class HouseholdFlow implements IFlow {
     public void validateOptions(boolean checkDeviceID) throws InvalidDataException {
         String surveyIdValue = ((TextView) activity.findViewById(R.id.campaignId_household)).getText().toString().trim();
         String userIdValue = ((TextView) activity.findViewById(R.id.user_id_household)).getText().toString().trim();
+        String userPasswordValue = ((TextView) activity.findViewById(R.id.user_password_household)).getText().toString().trim();
         String deviceIdValue = ((TextView) activity.findViewById(R.id.deviceId_household)).getText().toString().trim();
         String formIdValue = ((TextView) activity.findViewById(R.id.form_id_household)).getText().toString().trim();
         String minAgeValue = ((TextView) activity.findViewById(R.id.min_age_household)).getText().toString().trim();
         String maxAgeValue = ((TextView) activity.findViewById(R.id.max_age_household)).getText().toString().trim();
 
-        errorFields = validateHouseHoldSettings(surveyIdValue, userIdValue, deviceIdValue, formIdValue, minAgeValue, maxAgeValue, checkDeviceID);
+        errorFields = validateHouseHoldSettings(surveyIdValue, userIdValue, userPasswordValue, deviceIdValue, formIdValue, minAgeValue, maxAgeValue, checkDeviceID);
         if (errorFields != null && !errorFields.isEmpty())
             throw new InvalidDataException(activity, getStringValue(R.string.action_settings), errorFields);
     }
 
-    public List<String> validateHouseHoldSettings(String surveyId, String userId, String deviceId, String formId, String minAge, String maxAge, boolean checkDeviceID) {
+    public List<String> validateHouseHoldSettings(String surveyId, String userId, String userPassword, String deviceId, String formId, String minAge, String maxAge, boolean checkDeviceID) {
         DataValidator dataValidator = new DataValidator(activity)
                 .validate(surveyId, getStringValue(R.string.survey_id_label))
-                .validate(userId, getStringValue(R.string.user_id_label));
+                .validate(userId, getStringValue(R.string.user_id_label))
+                .validate(userPassword, getStringValue(R.string.user_password_label));
 
         if (checkDeviceID) {
             dataValidator.validate(deviceId, getStringValue(R.string.device_id_label));
@@ -123,6 +127,7 @@ public class HouseholdFlow implements IFlow {
     public void populateData(boolean forceRefreshValues) {
         setData(R.id.campaignId_household, Constants.HH_SURVEY_ID, forceRefreshValues);
         setData(R.id.user_id_household, Constants.HH_USER_ID, forceRefreshValues);
+        setData(R.id.user_password_household, HH_USER_PASSWORD, forceRefreshValues);
         setData(R.id.deviceId_household, Constants.HH_PHONE_ID, forceRefreshValues);
         setData(R.id.form_id_household, Constants.HH_FORM_ID, forceRefreshValues);
         setData(R.id.min_age_household, Constants.HH_MIN_AGE, forceRefreshValues);
