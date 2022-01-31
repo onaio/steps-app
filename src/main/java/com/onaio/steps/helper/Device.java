@@ -20,11 +20,12 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.wifi.WifiManager;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.annotation.WorkerThread;
 import android.telephony.TelephonyManager;
 import android.util.Log;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.WorkerThread;
 
 import com.onaio.steps.exceptions.NoUniqueIdException;
 
@@ -45,7 +46,8 @@ public class Device {
      *
      * @return
      */
-    @Nullable @WorkerThread
+    @Nullable
+    @WorkerThread
     public static final String generateUniqueDeviceId(Context context) {
         String uniqueId = null;
         if(context != null) {

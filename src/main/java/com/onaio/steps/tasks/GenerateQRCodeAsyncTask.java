@@ -17,8 +17,9 @@ package com.onaio.steps.tasks;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
-import android.support.annotation.NonNull;
 import android.util.Log;
+
+import androidx.annotation.NonNull;
 
 import com.google.zxing.WriterException;
 import com.onaio.steps.listeners.QRBitmapGeneratorListener;

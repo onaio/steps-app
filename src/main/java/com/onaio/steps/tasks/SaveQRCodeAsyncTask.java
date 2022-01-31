@@ -3,8 +3,9 @@ package com.onaio.steps.tasks;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
-import android.support.annotation.NonNull;
 import android.util.Log;
+
+import androidx.annotation.NonNull;
 
 import com.onaio.steps.listeners.QRBitmapSaveListener;
 import com.onaio.steps.utils.QRCodeUtils;
