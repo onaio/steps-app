@@ -32,6 +32,7 @@ import com.onaio.steps.activities.ParticipantListActivity;
 import com.onaio.steps.activities.SettingsActivity;
 import com.onaio.steps.exceptions.InvalidDataException;
 import com.onaio.steps.helper.Constants;
+import com.onaio.steps.helper.KeyValueStore;
 import com.onaio.steps.helper.KeyValueStoreFactory;
 
 import org.junit.Assert;
@@ -98,6 +99,7 @@ public class ParticipantFlowTest extends StepsTestRunner {
 
     @Test
     public void ShouldNotSaveDeviceIdFromSettingFields(){
+        setValue(Constants.PA_PHONE_ID, "1234567");
         TextView deviceId = settingsActivity.findViewById(R.id.deviceId_participant);
         TextView formId = settingsActivity.findViewById(R.id.form_id_participant);
         TextView maxage = settingsActivity.findViewById(R.id.max_age_participant);
@@ -168,5 +170,10 @@ public class ParticipantFlowTest extends StepsTestRunner {
 
     private String getValue(AppCompatActivity activity, String key) {
         return KeyValueStoreFactory.instance(activity).getString(key);
+    }
+
+    private void setValue(String key, String value) {
+        KeyValueStore keyValueStore = KeyValueStoreFactory.instance(settingsActivity);
+        keyValueStore.putString(key, value);
     }
 }
