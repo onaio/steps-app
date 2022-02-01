@@ -16,7 +16,6 @@
 
 package com.onaio.steps.handler.activities;
 
-
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.verify;
@@ -29,16 +28,15 @@ import android.view.View;
 import android.widget.Button;
 
 import com.onaio.steps.R;
+import com.onaio.steps.StepsTestRunner;
 import com.onaio.steps.activities.HouseholdActivity;
 import com.onaio.steps.activities.NewMemberActivity;
 import com.onaio.steps.adapters.MemberAdapter;
 import com.onaio.steps.helper.Constants;
-import com.onaio.steps.helper.CustomDialog;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.InterviewStatus;
 import com.onaio.steps.model.RequestCode;
-
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -47,14 +45,14 @@ import org.mockito.ArgumentMatcher;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 
-public class NewMemberActivityHandlerTest {
+public class NewMemberActivityHandlerTest extends StepsTestRunner {
+
     private DatabaseHelper dbMock;
     HouseholdActivity householdActivityMock;
     Household householdMock;
     NewMemberActivityHandler newMemberActivityHandler;
     @Mock
     private MemberAdapter memberAdapterMock;
-    private CustomDialog customDialogMock;
 
 
     @Before
@@ -63,7 +61,6 @@ public class NewMemberActivityHandlerTest {
         householdActivityMock = Mockito.mock(HouseholdActivity.class);
         householdMock = Mockito.mock(Household.class);
         memberAdapterMock = Mockito.mock(MemberAdapter.class);
-        customDialogMock = Mockito.mock(CustomDialog.class);
         newMemberActivityHandler = new NewMemberActivityHandler(householdMock,householdActivityMock, memberAdapterMock, dbMock);
     }
 
@@ -187,7 +184,4 @@ public class NewMemberActivityHandlerTest {
             return true;
         };
     }
-
-
-
 }

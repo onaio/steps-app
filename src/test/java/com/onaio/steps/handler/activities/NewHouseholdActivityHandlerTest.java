@@ -53,12 +53,12 @@ public class NewHouseholdActivityHandlerTest extends StepsTestRunner {
     private HouseholdListActivity householdListActivity;
     private NewHouseholdActivityHandler handler;
     private CustomDialog dialogMock;
-    private String PHONE_ID = "123";
-    private String HOUSEHOLD_SEED = "100";
+    private final String PHONE_ID = "123";
+    private final String HOUSEHOLD_SEED = "100";
 
     @Before
     public void Setup(){
-        householdListActivity = Robolectric.setupActivity(HouseholdListActivity.class);
+        householdListActivity = Robolectric.buildActivity(HouseholdListActivity.class).create().get();
         dialogMock = Mockito.mock(CustomDialog.class);
         handler = new NewHouseholdActivityHandler(householdListActivity, dialogMock);
     }
@@ -75,8 +75,7 @@ public class NewHouseholdActivityHandlerTest extends StepsTestRunner {
 
     @Test
     public void ShouldNotifyUserWhenPhoneIdIsNotSet(){
-        KeyValueStore keyValueStoreMock = Mockito.mock(KeyValueStore.class);
-        Mockito.when(keyValueStoreMock.getString(PHONE_ID)).thenReturn("");
+        setValue(Constants.HH_PHONE_ID, "");
         handler.open();
 
         Mockito.verify(dialogMock).notify(householdListActivity, CustomDialog.EmptyListener, R.string.phone_id_message_title, R.string.phone_id_message);
@@ -111,8 +110,8 @@ public class NewHouseholdActivityHandlerTest extends StepsTestRunner {
         handler.open();
 
         Intent newIntent = stepsActivityShadow.getNextStartedActivityForResult().intent;
-        assertTrue(newIntent.getComponent().getClassName().equals(NewHouseholdActivity.class.getName()));
-        assertTrue(newIntent.getStringExtra(Constants.HH_PHONE_ID).equals(PHONE_ID));
+        assertEquals(newIntent.getComponent().getClassName(), NewHouseholdActivity.class.getName());
+        assertEquals(newIntent.getStringExtra(Constants.HH_PHONE_ID), PHONE_ID);
     }
 
     @Test

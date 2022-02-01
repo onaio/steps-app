@@ -46,6 +46,9 @@ public class DataValidatorTest extends StepsTestRunner {
     @Test
     public void validateAgeRangeShouldFailValidation() {
 
+        setValue(Constants.HH_MIN_AGE, "20");
+        setValue(Constants.HH_MAX_AGE, "65");
+
         dataValidator.validateAgeRange("17", activity.getString(R.string.age_not_in_range) + " %s-%s)", Constants.HH_MIN_AGE, Constants.HH_MAX_AGE);
         dataValidator.validateAgeRange("70", activity.getString(R.string.age_not_in_range) + " %s-%s)", Constants.HH_MIN_AGE, Constants.HH_MAX_AGE);
         dataValidator.validateAgeRange("3", activity.getString(R.string.age_not_in_range) + " %s-%s)", Constants.HH_MIN_AGE, Constants.HH_MAX_AGE);
@@ -57,6 +60,9 @@ public class DataValidatorTest extends StepsTestRunner {
 
     @Test
     public void validateAgeRangeShouldPassValidation() {
+
+        setValue(Constants.HH_MIN_AGE, "18");
+        setValue(Constants.HH_MAX_AGE, "70");
 
         dataValidator.validateAgeRange("18", activity.getString(R.string.age_not_in_range) + " %s-%s)", Constants.HH_MIN_AGE, Constants.HH_MAX_AGE);
         dataValidator.validateAgeRange("69", activity.getString(R.string.age_not_in_range) + " %s-%s)", Constants.HH_MIN_AGE, Constants.HH_MAX_AGE);
@@ -101,5 +107,10 @@ public class DataValidatorTest extends StepsTestRunner {
 
         List<String> errors = dataValidator.finish();
         assertEquals(0, errors.size());
+    }
+
+    private void setValue(String key, String value) {
+        KeyValueStore keyValueStore = KeyValueStoreFactory.instance(activity);
+        keyValueStore.putString(key, value);
     }
 }

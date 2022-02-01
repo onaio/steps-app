@@ -42,6 +42,7 @@ import java.util.Calendar;
  * Created by Jason Rogena - jrogena@ona.io on 13/10/2016.
  */
 public class AuthDialogTest extends StepsTestRunner {
+
     AppCompatActivity settingsActivity;
 
     @Before
@@ -57,8 +58,8 @@ public class AuthDialogTest extends StepsTestRunner {
     @Test
     public void testVisiblePasswordByDefault() {
         AuthDialog authDialog = new AuthDialog(settingsActivity, null);
-        EditText passwordEditText = (EditText)authDialog.findViewById(R.id.passwordEditText);
-        assertTrue(passwordEditText.getInputType() == (InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD));
+        EditText passwordEditText = authDialog.findViewById(R.id.passwordEditText);
+        assertEquals((InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD), passwordEditText.getInputType());
     }
 
     /**
@@ -70,6 +71,7 @@ public class AuthDialogTest extends StepsTestRunner {
     public void testNeedsAuth() throws Exception {
         AuthDialog authDialog = new AuthDialog(settingsActivity, null);
         //test with no time in SharedPreferences
+        KeyValueStoreFactory.instance(settingsActivity).putString(SETTINGS_AUTH_TIME, null);
         assertTrue(authDialog.needsAuth());
 
         //test with a time that is less than 1 min

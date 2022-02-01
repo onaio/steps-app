@@ -98,7 +98,7 @@ public class ParticipantTest extends StepsTestRunner {
     public void ShouldBeAbleToUpdateParticipant(){
         participant.update(db);
         String id=String.valueOf(participant.getId());
-        Mockito.verify(db).update(Mockito.argThat(updateMemberMatcher()),Mockito.eq(Participant.TABLE_NAME),Mockito.eq(ID + " ="+ id),Mockito.any(String[].class));
+        Mockito.verify(db).update(Mockito.argThat(updateMemberMatcher()),Mockito.eq(Participant.TABLE_NAME),Mockito.eq(ID + " ="+ id),Mockito.nullable(String[].class));
     }
 
 }

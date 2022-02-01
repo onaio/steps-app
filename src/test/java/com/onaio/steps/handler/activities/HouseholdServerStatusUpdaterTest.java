@@ -18,24 +18,29 @@ package com.onaio.steps.handler.activities;
 
 import android.os.AsyncTask;
 
+import com.onaio.steps.StepsTestRunner;
 import com.onaio.steps.activities.HouseholdListActivity;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.InterviewStatus;
 import com.onaio.steps.model.ServerStatus;
 
-import junit.framework.Assert;
-
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.robolectric.Robolectric;
 import org.robolectric.annotation.Config;
+import org.robolectric.annotation.Implementation;
 import org.robolectric.annotation.Implements;
-import org.robolectric.shadows.ShadowAsyncTask;
+import org.robolectric.annotation.LooperMode;
+import org.robolectric.shadows.ShadowLegacyAsyncTask;
 
+import java.util.concurrent.Executor;
+
+@LooperMode(LooperMode.Mode.LEGACY)
 @Config(shadows = {HouseholdServerStatusUpdaterTest.ShadowLoadingDoneHouseHold.class})
-public class HouseholdServerStatusUpdaterTest {
+public class HouseholdServerStatusUpdaterTest extends StepsTestRunner {
 
     private HouseholdListActivity householdListActivity;
     private HouseholdServerStatusUpdater householdServerStatusUpdater;
@@ -63,12 +68,11 @@ public class HouseholdServerStatusUpdaterTest {
     }
 
     @Implements(AsyncTask.class)
-    public static class ShadowLoadingDoneHouseHold<Params, Progress, Result> extends ShadowAsyncTask<Params, Progress, Result> {
+    public static class ShadowLoadingDoneHouseHold<Params, Progress, Result> extends ShadowLegacyAsyncTask<Params, Progress, Result> {
 
-        /*@Override
         @Implementation
         public AsyncTask<Params, Progress, Result> executeOnExecutor(Executor executor, Params... params) {
             return super.execute(params);
-        }*/
+        }
     }
 }

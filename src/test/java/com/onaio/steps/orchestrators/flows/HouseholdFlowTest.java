@@ -17,9 +17,9 @@
 package com.onaio.steps.orchestrators.flows;
 
 import static junit.framework.Assert.assertNotNull;
-import static junit.framework.Assert.assertNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import android.content.Intent;
@@ -33,6 +33,7 @@ import com.onaio.steps.activities.HouseholdListActivity;
 import com.onaio.steps.activities.SettingsActivity;
 import com.onaio.steps.exceptions.InvalidDataException;
 import com.onaio.steps.helper.Constants;
+import com.onaio.steps.helper.KeyValueStore;
 import com.onaio.steps.helper.KeyValueStoreFactory;
 
 import org.junit.Assert;
@@ -105,6 +106,7 @@ public class HouseholdFlowTest extends StepsTestRunner {
 
     @Test
     public void ShouldNotSaveDeviceIdFromSettingFields(){
+        setValue(Constants.HH_PHONE_ID, null);
         TextView deviceId = settingsActivity.findViewById(R.id.deviceId_household);
         TextView formId = settingsActivity.findViewById(R.id.form_id_household);
         TextView maxage = settingsActivity.findViewById(R.id.max_age_household);
@@ -196,5 +198,10 @@ public class HouseholdFlowTest extends StepsTestRunner {
 
     private String getValue(AppCompatActivity activity, String key) {
         return KeyValueStoreFactory.instance(activity).getString(key);
+    }
+
+    private void setValue(String key, String value) {
+        KeyValueStore keyValueStore = KeyValueStoreFactory.instance(settingsActivity);
+        keyValueStore.putString(key, value);
     }
 }

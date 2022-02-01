@@ -84,7 +84,7 @@ public class MemberTest extends StepsTestRunner {
 
         member.update(db);
 
-        Mockito.verify(db).update(Mockito.argThat(updateMemberMatcher(NOT_DELETED_INT)), Mockito.eq(Member.TABLE_NAME), Mockito.eq(Member.ID + " = "+memberId),Mockito.any(String[].class));
+        Mockito.verify(db).update(Mockito.argThat(updateMemberMatcher(NOT_DELETED_INT)), Mockito.eq(Member.TABLE_NAME), Mockito.eq(Member.ID + " = "+memberId),Mockito.nullable(String[].class));
     }
 
     @Test
@@ -96,7 +96,7 @@ public class MemberTest extends StepsTestRunner {
 
         member.delete(db);
 
-        Mockito.verify(db).update(Mockito.argThat(updateMemberMatcher(Member.DELETED_INT)), Mockito.eq(Member.TABLE_NAME), Mockito.eq(Member.ID + " = "+memberId),Mockito.any(String[].class));
+        Mockito.verify(db).update(Mockito.argThat(updateMemberMatcher(Member.DELETED_INT)), Mockito.eq(Member.TABLE_NAME), Mockito.eq(Member.ID + " = "+memberId),Mockito.nullable(String[].class));
     }
 
 
@@ -132,11 +132,7 @@ public class MemberTest extends StepsTestRunner {
     }
 
     private void stubDb(int numberOfMembers) {
-
         Mockito.when(cursor.getCount()).thenReturn(numberOfMembers);
         Mockito.when(db.exec(Mockito.anyString())).thenReturn(cursor);
     }
-
-
-
 }

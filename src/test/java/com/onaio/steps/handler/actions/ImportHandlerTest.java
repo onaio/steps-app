@@ -33,18 +33,22 @@ import com.onaio.steps.helper.KeyValueStore;
 import com.onaio.steps.helper.KeyValueStoreFactory;
 import com.onaio.steps.orchestrators.flows.FlowType;
 
-import junit.framework.Assert;
-
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentMatcher;
 import org.mockito.Mockito;
 import org.robolectric.Robolectric;
+import org.robolectric.annotation.Config;
+import org.robolectric.annotation.Implementation;
 import org.robolectric.annotation.Implements;
-import org.robolectric.shadows.ShadowAsyncTask;
+import org.robolectric.annotation.LooperMode;
+import org.robolectric.shadows.ShadowLegacyAsyncTask;
 
 import java.io.IOException;
 
+@LooperMode(LooperMode.Mode.LEGACY)
+@Config(shadows = {ImportHandlerTest.ShadowDownloadFileTask.class})
 public class ImportHandlerTest extends StepsTestRunner {
 
     private SettingsActivity activity;
@@ -140,15 +144,14 @@ public class ImportHandlerTest extends StepsTestRunner {
     }
 
     @Implements(AsyncTask.class)
-    public static class ShadowDownloadFileTask<Params, Progress, Result> extends ShadowAsyncTask<Params, Progress, Result> {
+    public static class ShadowDownloadFileTask<Params, Progress, Result> extends ShadowLegacyAsyncTask<Params, Progress, Result> {
 
         private static String URL = null;
 
-        /*@Override
         @Implementation
         public AsyncTask<Params, Progress, Result> execute(Params... params) {
             ShadowDownloadFileTask.URL = (String) params[0];
             return super.execute(params);
-        }*/
+        }
     }
 }

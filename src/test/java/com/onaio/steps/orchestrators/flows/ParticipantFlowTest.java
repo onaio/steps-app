@@ -17,7 +17,6 @@
 package com.onaio.steps.orchestrators.flows;
 
 import static junit.framework.Assert.assertNotNull;
-import static junit.framework.Assert.assertNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -108,7 +107,7 @@ public class ParticipantFlowTest extends StepsTestRunner {
         maxage.setText("69");
         minage.setText("18");
         participantFlow.saveSettings(false);
-        assertNull(getValue(settingsActivity, Constants.PA_PHONE_ID));
+        assertEquals("1234567", getValue(settingsActivity, Constants.PA_PHONE_ID));
         assertEquals("STEPS_Instrument_V3_1", getValue(settingsActivity, Constants.PA_FORM_ID));
         assertEquals("69", getValue(settingsActivity, Constants.PA_MAX_AGE));
         assertEquals("18",getValue(settingsActivity,Constants.PA_MIN_AGE));
