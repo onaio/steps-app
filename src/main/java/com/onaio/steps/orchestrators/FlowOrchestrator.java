@@ -17,11 +17,12 @@
 package com.onaio.steps.orchestrators;
 
 
-import android.app.Activity;
 import android.content.Intent;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.onaio.steps.R;
 import com.onaio.steps.exceptions.InvalidDataException;
@@ -37,9 +38,9 @@ import java.util.List;
 
 public class FlowOrchestrator {
     private List<IFlow> flows;
-    private Activity activity;
+    private AppCompatActivity activity;
 
-    public FlowOrchestrator(Activity activity) {
+    public FlowOrchestrator(AppCompatActivity activity) {
         this.activity = activity;
         flows = new ArrayList<IFlow>();
         flows.add(new InitialFlow(activity));

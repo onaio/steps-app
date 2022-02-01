@@ -16,15 +16,17 @@
 
 package com.onaio.steps.adapters;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.onaio.steps.R;
 import com.onaio.steps.helper.Constants;
@@ -34,27 +36,39 @@ import com.onaio.steps.model.Member;
 
 import java.util.List;
 
-public class MemberAdapter extends BaseAdapter{
+public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.ViewHolder> {
     private Context context;
     private List<Member> members;
     private String selectedMemberId;
     private Household household;
+    private final ItemClickListener itemClickListener;
 
-    public MemberAdapter(Context context, List members, String selectedMemberId, Household household) {
+    public MemberAdapter(Context context, List members, String selectedMemberId, Household household, ItemClickListener itemClickListener) {
         this.context = context;
         this.members = members;
         this.selectedMemberId = selectedMemberId;
         this.household = household;
+        this.itemClickListener = itemClickListener;
+    }
+
+    @NonNull
+    @Override
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.list_item, parent, false), itemClickListener, context, selectedMemberId, household);
     }
 
     @Override
-    public int getCount() {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        holder.bind(position, members.get(position));
+    }
+
+    @Override
+    public int getItemCount() {
         return members.size();
     }
 
-    @Override
-    public Object getItem(int i) {
-        return members.get(i);
+    public Member getItem(int position) {
+        return members.get(position);
     }
 
     public void reinitialize(List members){
@@ -70,67 +84,69 @@ public class MemberAdapter extends BaseAdapter{
         return members.get(position).getId();
     }
 
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        View memberItemView;
-        Member memberAtPosition = members.get(position);
-        memberItemView = getViewItem(convertView);
-        setTextInView(memberItemView, memberAtPosition);
-        return memberItemView;
-    }
+    public static class ViewHolder extends RecyclerView.ViewHolder {
 
-    private void setTextInView(View memberListItem, Member memberAtPosition) {
-        populateText(memberListItem, memberAtPosition);
-    }
+        private final View itemView;
+        private final ItemClickListener itemClickListener;
+        private final Context context;
+        private final String selectedMemberId;
+        private final Household household;
 
-    private void populateText(View memberListItem, Member memberAtPosition) {
-        boolean isSelectedMember = String.valueOf(memberAtPosition.getId()).equals(selectedMemberId);
-        TextView memberNameView = (TextView) memberListItem.findViewById(R.id.main_text);
-        setText(memberNameView, memberAtPosition.getFormattedName(), isSelectedMember, Color.BLACK);
-        TextView memberDetailView = (TextView)memberListItem.findViewById(R.id.sub_text);
-        setText(memberDetailView, memberAtPosition.getFormattedDetail((Activity)context), isSelectedMember, Color.GRAY);
-        setImage(memberListItem,isSelectedMember);
-        View divider = memberListItem.findViewById(R.id.divider);
-        divider.setVisibility(View.GONE);
-    }
+        public ViewHolder(View itemView, ItemClickListener itemClickListener, Context context, String selectedMemberId, Household household) {
+            super(itemView);
+            this.itemView = itemView;
+            this.itemClickListener = itemClickListener;
+            this.context = context;
+            this.selectedMemberId = selectedMemberId;
+            this.household = household;
+        }
 
-    private void setText(TextView memberName, String text, boolean isSelectedMember, int defaultTextColor) {
-        memberName.setText(text);
-        if(isSelectedMember)
-            if(household.getStatus().equals(InterviewStatus.DONE))
-                memberName.setTextColor(Color.parseColor(Constants.TEXT_GREEN));
+        public void bind(int position, Member member) {
+            itemView.setOnClickListener(v -> itemClickListener.onItemClick(position, member));
+            setTextInView(itemView, member);
+        }
+
+        private void setTextInView(View memberListItem, Member memberAtPosition) {
+            boolean isSelectedMember = String.valueOf(memberAtPosition.getId()).equals(selectedMemberId);
+            TextView memberNameView = memberListItem.findViewById(R.id.main_text);
+            setText(memberNameView, memberAtPosition.getFormattedName(), isSelectedMember, Color.BLACK);
+            TextView memberDetailView = memberListItem.findViewById(R.id.sub_text);
+            setText(memberDetailView, memberAtPosition.getFormattedDetail((AppCompatActivity)context), isSelectedMember, Color.GRAY);
+            setImage(memberListItem,isSelectedMember);
+            View divider = memberListItem.findViewById(R.id.divider);
+            divider.setVisibility(View.GONE);
+        }
+
+        private void setText(TextView memberName, String text, boolean isSelectedMember, int defaultTextColor) {
+            memberName.setText(text);
+            if(isSelectedMember)
+                if(household.getStatus().equals(InterviewStatus.DONE))
+                    memberName.setTextColor(Color.parseColor(Constants.TEXT_GREEN));
+                else
+                    memberName.setTextColor(Color.RED);
             else
-                memberName.setTextColor(Color.RED);
-        else
-            memberName.setTextColor(defaultTextColor);
-    }
+                memberName.setTextColor(defaultTextColor);
+        }
 
-    private void setImage(View memberListItem, Boolean isSelectedMember) {
-        ImageView image = (ImageView) memberListItem.findViewById(R.id.main_image);
-        if(isSelectedMember) {
-            if (household.getStatus().equals(InterviewStatus.DONE)) {
-                image.setImageResource(R.mipmap.ic_household_list_done);
-            } else if (household.getStatus().equals(InterviewStatus.INCOMPLETE_REFUSED)) {
-                image.setImageResource(R.mipmap.ic_household_list_refused);
-            } else if (household.getStatus().equals(InterviewStatus.NOT_REACHABLE)) {
-                image.setImageResource(R.mipmap.ic_household_list_not_reachable);
+        private void setImage(View memberListItem, Boolean isSelectedMember) {
+            ImageView image = memberListItem.findViewById(R.id.main_image);
+            if(isSelectedMember) {
+                if (household.getStatus().equals(InterviewStatus.DONE)) {
+                    image.setImageResource(R.mipmap.ic_household_list_done);
+                } else if (household.getStatus().equals(InterviewStatus.INCOMPLETE_REFUSED)) {
+                    image.setImageResource(R.mipmap.ic_household_list_refused);
+                } else if (household.getStatus().equals(InterviewStatus.NOT_REACHABLE)) {
+                    image.setImageResource(R.mipmap.ic_household_list_not_reachable);
+                } else {
+                    image.setImageResource(R.mipmap.ic_household_list_refused);
+                }
             } else {
-                image.setImageResource(R.mipmap.ic_household_list_refused);
+                image.setImageResource(R.mipmap.ic_contact_list);
             }
-        } else {
-            image.setImageResource(R.mipmap.ic_contact_list);
         }
     }
 
-    private View getViewItem(View convertView) {
-        View view;
-        if (convertView == null) {
-                LayoutInflater inflater = (LayoutInflater) context
-                        .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                view = inflater.inflate(R.layout.list_item, null);
-        } else
-            view = convertView;
-        view.setBackgroundColor(Color.TRANSPARENT);
-        return view;
+    public interface ItemClickListener {
+        void onItemClick(int position, Member member);
     }
 }

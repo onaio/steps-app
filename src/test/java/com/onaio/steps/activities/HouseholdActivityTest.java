@@ -17,12 +17,16 @@
 package com.onaio.steps.activities;
 
 
+import static org.junit.Assert.assertEquals;
+
 import android.content.Intent;
 import android.graphics.Color;
-import android.widget.ListAdapter;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.onaio.steps.R;
+import com.onaio.steps.adapters.HouseholdAdapter;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.model.Gender;
@@ -40,8 +44,6 @@ import org.robolectric.annotation.Config;
 import org.robolectric.util.ActivityController;
 
 import java.util.ArrayList;
-
-import static org.junit.Assert.assertEquals;
 
 @Config(emulateSdk = 16, manifest = "src/main/AndroidManifest.xml")
 @RunWith(RobolectricTestRunner.class)
@@ -90,9 +92,10 @@ public class HouseholdActivityTest {
         Mockito.stub(household.getStatus()).toReturn(InterviewStatus.DONE);
         intent.putExtra(Constants.HH_HOUSEHOLD,household);
         HouseholdActivity householdActivity = householdActivityController.withIntent(intent).create().get();
+        RecyclerView list = householdActivity.findViewById(R.id.list);
 
-        ListAdapter listAdapter = householdActivity.getListView().getAdapter();
-        assertEquals(2, listAdapter.getCount());
+        HouseholdAdapter listAdapter = (HouseholdAdapter) list.getAdapter();
+        assertEquals(2, listAdapter.getItemCount());
         assertEquals(member1, listAdapter.getItem(0));
         assertEquals(member2, listAdapter.getItem(1));
         TextView viewById = (TextView) householdActivity.findViewById(R.id.survey_message);
@@ -105,9 +108,10 @@ public class HouseholdActivityTest {
         Mockito.stub(household.getStatus()).toReturn(InterviewStatus.REFUSED);
         intent.putExtra(Constants.HH_HOUSEHOLD,household);
         HouseholdActivity householdActivity = householdActivityController.withIntent(intent).create().get();
+        RecyclerView list = householdActivity.findViewById(R.id.list);
 
-        ListAdapter listAdapter = householdActivity.getListView().getAdapter();
-        assertEquals(2, listAdapter.getCount());
+        HouseholdAdapter listAdapter = (HouseholdAdapter) list.getAdapter();
+        assertEquals(2, listAdapter.getItemCount());
         assertEquals(member1, listAdapter.getItem(0));
         assertEquals(member2, listAdapter.getItem(1));
         TextView viewById = (TextView) householdActivity.findViewById(R.id.survey_message);

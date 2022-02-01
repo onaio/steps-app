@@ -1,12 +1,13 @@
 package com.onaio.steps.handler.actions;
 
 import android.app.Dialog;
-import android.app.ListActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.onaio.steps.R;
 import com.onaio.steps.activities.ParticipantListActivity;
@@ -29,7 +30,7 @@ import java.util.List;
 
 public class SubmitDataHandler implements IMenuHandler,IMenuPreparer, IViewPreparer {
     private final int MENU_ID = R.id.action_submit_data;
-    private final ListActivity activity;
+    private final AppCompatActivity activity;
     private Menu menu;
     private ExportHandler exportHandler;
     private FinalisedFormHandler finalisedFormHandler;
@@ -37,7 +38,7 @@ public class SubmitDataHandler implements IMenuHandler,IMenuPreparer, IViewPrepa
     private List<Participant> participants;
     private HouseholdServerStatusUpdater householdServerStatusUpdater;
 
-    public SubmitDataHandler(ListActivity activity) {
+    public SubmitDataHandler(AppCompatActivity activity) {
         this.activity = activity;
         exportHandler = new ExportHandler(activity);
         finalisedFormHandler = new FinalisedFormHandler(activity);

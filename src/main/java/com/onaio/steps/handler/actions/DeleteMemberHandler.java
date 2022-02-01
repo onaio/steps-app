@@ -16,10 +16,11 @@
 
 package com.onaio.steps.handler.actions;
 
-import android.app.Activity;
 import android.content.DialogInterface;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.onaio.steps.R;
 import com.onaio.steps.handler.interfaces.IMenuHandler;
@@ -31,16 +32,16 @@ import com.onaio.steps.model.Member;
 
 public class DeleteMemberHandler implements IMenuHandler,IMenuPreparer {
     private final CustomDialog dialog;
-    private Activity activity;
+    private AppCompatActivity activity;
     private Member member;
     private static final int MENU_ID= R.id.action_member_delete;
     private Menu menu;
 
-    public DeleteMemberHandler(Activity activity, Member member) {
+    public DeleteMemberHandler(AppCompatActivity activity, Member member) {
         this(activity, member, new CustomDialog());
     }
 
-    DeleteMemberHandler(Activity activity, Member member, CustomDialog dialog) {
+    DeleteMemberHandler(AppCompatActivity activity, Member member, CustomDialog dialog) {
         this.activity = activity;
         this.member = member;
         this.dialog = dialog;

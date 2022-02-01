@@ -1,9 +1,10 @@
 package com.onaio.steps.helper;
 
-import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.Context;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.onaio.steps.R;
 
@@ -24,7 +25,7 @@ public class CustomNotificationTest {
         int titleId = R.string.error_title;
         int messageId = R.string.export_failed;
 
-        Activity spyActivity = Mockito.spy(Robolectric.buildActivity(Activity.class).create().get());
+        AppCompatActivity spyActivity = Mockito.spy(Robolectric.buildActivity(AppCompatActivity.class).create().get());
         NotificationManager notificationManager = Mockito.mock(NotificationManager.class);
 
         Mockito.when(spyActivity.getText(titleId)).thenReturn("Title");

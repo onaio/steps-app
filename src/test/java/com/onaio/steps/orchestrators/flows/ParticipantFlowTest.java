@@ -16,12 +16,18 @@
 
 package com.onaio.steps.orchestrators.flows;
 
-import android.app.Activity;
+import static junit.framework.Assert.assertNotNull;
+import static junit.framework.Assert.assertNull;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import android.content.Intent;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.onaio.steps.R;
-import com.onaio.steps.activities.HouseholdListActivity;
 import com.onaio.steps.activities.ParticipantListActivity;
 import com.onaio.steps.activities.SettingsActivity;
 import com.onaio.steps.exceptions.InvalidDataException;
@@ -37,12 +43,6 @@ import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
-
-import static junit.framework.Assert.assertNotNull;
-import static junit.framework.Assert.assertNull;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 @Config(emulateSdk = 16, manifest = "src/main/AndroidManifest.xml")
 @RunWith(RobolectricTestRunner.class)
@@ -171,7 +171,7 @@ public class ParticipantFlowTest {
         Assert.assertEquals(ParticipantListActivity.class.getName(), participantFlow.getIntent().getComponent().getClassName());
     }
 
-    private String getValue(Activity activity, String key) {
+    private String getValue(AppCompatActivity activity, String key) {
         return KeyValueStoreFactory.instance(activity).getString(key);
     }
 }

@@ -17,26 +17,26 @@
 package com.onaio.steps.handler.factories;
 
 
-import android.app.ListActivity;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.onaio.steps.handler.actions.FinalisedFormHandler;
 import com.onaio.steps.handler.actions.SubmitDataHandler;
 import com.onaio.steps.handler.activities.HouseholdActivityMenuItemHandler;
-import com.onaio.steps.handler.interfaces.IActivityResultHandler;
-import com.onaio.steps.handler.interfaces.IListItemHandler;
-import com.onaio.steps.handler.interfaces.IMenuHandler;
 import com.onaio.steps.handler.activities.NewParticipantActivityHandler;
 import com.onaio.steps.handler.activities.ParticipantActivityHandler;
 import com.onaio.steps.handler.activities.SettingActivityHandler;
+import com.onaio.steps.handler.interfaces.IActivityResultHandler;
+import com.onaio.steps.handler.interfaces.IListItemHandler;
+import com.onaio.steps.handler.interfaces.IMenuHandler;
 import com.onaio.steps.handler.interfaces.IViewPreparer;
-import com.onaio.steps.orchestrators.flows.FlowType;
 import com.onaio.steps.model.Participant;
+import com.onaio.steps.orchestrators.flows.FlowType;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ParticipantListActivityFactory {
-    public static List<IMenuHandler> getMenuHandlers(ListActivity activity) {
+    public static List<IMenuHandler> getMenuHandlers(AppCompatActivity activity) {
 
         ArrayList<IMenuHandler> menuHandlers = new ArrayList<IMenuHandler>();
         menuHandlers.add(new HouseholdActivityMenuItemHandler(activity));
@@ -45,19 +45,19 @@ public class ParticipantListActivityFactory {
         return menuHandlers;
     }
 
-    public static List<IActivityResultHandler> getResultHandlers(ListActivity activity) {
+    public static List<IActivityResultHandler> getResultHandlers(AppCompatActivity activity) {
         ArrayList<IActivityResultHandler> resultHandlers = new ArrayList<IActivityResultHandler>();
         resultHandlers.add(new NewParticipantActivityHandler(activity));
         resultHandlers.add(new SettingActivityHandler(activity));
         return resultHandlers;
     }
 
-    public static IListItemHandler getParticipantItemHandler(ListActivity activity, Participant participant) {
+    public static IListItemHandler getParticipantItemHandler(AppCompatActivity activity, Participant participant) {
         return new ParticipantActivityHandler(activity,participant);
 
     }
 
-    public static List<IMenuHandler> getCustomMenuHandler(ListActivity activity) {
+    public static List<IMenuHandler> getCustomMenuHandler(AppCompatActivity activity) {
         ArrayList<IMenuHandler> menuHandlers = new ArrayList<IMenuHandler>();
         menuHandlers.add(new NewParticipantActivityHandler(activity));
         menuHandlers.add(new SettingActivityHandler(activity));
@@ -65,7 +65,7 @@ public class ParticipantListActivityFactory {
         return menuHandlers;
     }
 
-    public static List<IViewPreparer> getViewPreparer(ListActivity activity, List<Participant> participants) {
+    public static List<IViewPreparer> getViewPreparer(AppCompatActivity activity, List<Participant> participants) {
         ArrayList<IViewPreparer> handlers = new ArrayList<IViewPreparer>();
         handlers.add(new SubmitDataHandler(activity).withParticipants(participants));
         return handlers;

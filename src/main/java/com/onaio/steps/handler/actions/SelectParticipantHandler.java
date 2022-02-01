@@ -16,18 +16,21 @@
 
 package com.onaio.steps.handler.actions;
 
-import android.app.ListActivity;
+import static com.onaio.steps.model.InterviewStatus.NOT_DONE;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.ListView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.onaio.steps.R;
+import com.onaio.steps.adapters.MemberAdapter;
 import com.onaio.steps.handler.factories.HouseholdActivityFactory;
 import com.onaio.steps.handler.interfaces.IMenuHandler;
 import com.onaio.steps.handler.interfaces.IMenuPreparer;
-import com.onaio.steps.adapters.MemberAdapter;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.InterviewStatus;
@@ -37,22 +40,20 @@ import com.onaio.steps.modelViewWrapper.SelectedMemberViewWrapper;
 import java.util.List;
 import java.util.Random;
 
-import static com.onaio.steps.model.InterviewStatus.NOT_DONE;
-
 public class SelectParticipantHandler implements IMenuHandler, IMenuPreparer {
 
     private final int MENU_ID = R.id.action_select_participant;
 
-    private ListActivity activity;
+    private AppCompatActivity activity;
     private Household household;
     private DatabaseHelper db;
     private android.app.Dialog selection_dialog;
 
-    public SelectParticipantHandler(ListActivity activity, Household household) {
+    public SelectParticipantHandler(AppCompatActivity activity, Household household) {
         this(activity, household, new DatabaseHelper(activity), new android.app.Dialog(activity));
     }
 
-    SelectParticipantHandler(ListActivity activity, Household household, DatabaseHelper db, android.app.Dialog androidDialog) {
+    SelectParticipantHandler(AppCompatActivity activity, Household household, DatabaseHelper db, android.app.Dialog androidDialog) {
         this.activity = activity;
         this.household = household;
         this.db = db;
@@ -117,13 +118,13 @@ public class SelectParticipantHandler implements IMenuHandler, IMenuPreparer {
 
 
     private void selectParticipant() {
-        ListView membersView = activity.getListView();
+        RecyclerView membersView = activity.findViewById(R.id.list);
         Member selectedMember = getSelectedMember(membersView);
         updateHousehold(selectedMember);
         updateView(membersView,selectedMember);
     }
 
-    private void updateView(ListView membersView, Member selectedMember) {
+    private void updateView(RecyclerView membersView, Member selectedMember) {
         MemberAdapter membersAdapter = (MemberAdapter) membersView.getAdapter();
         membersAdapter.reinitialize(household.getAllUnselectedMembers(db),String.valueOf(selectedMember.getId()));
         membersAdapter.notifyDataSetChanged();
@@ -152,7 +153,7 @@ public class SelectParticipantHandler implements IMenuHandler, IMenuPreparer {
         household.update(new DatabaseHelper(activity));
     }
 
-    private Member getSelectedMember(ListView listView) {
+    private Member getSelectedMember(RecyclerView listView) {
         Member randomMember = getRandomMember(listView);
         while(household.getSelectedMemberId() != null && household.getSelectedMemberId().equals(String.valueOf(randomMember.getId()))){
             randomMember = getRandomMember(listView);
@@ -160,11 +161,12 @@ public class SelectParticipantHandler implements IMenuHandler, IMenuPreparer {
         return randomMember;
     }
 
-    private Member getRandomMember(ListView listView) {
+    private Member getRandomMember(RecyclerView listView) {
         int totalMembers = household.numberOfNonSelectedMembers(db);
         Random random = new Random();
         int selectedParticipant = random.nextInt(totalMembers);
-        return (Member) listView.getItemAtPosition(selectedParticipant);
+        MemberAdapter memberAdapter = (MemberAdapter) listView.getAdapter();
+        return memberAdapter.getItem(selectedParticipant);
     }
 
     protected View getView() {

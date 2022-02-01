@@ -16,10 +16,13 @@
 
 package com.onaio.steps.handler.activities;
 
-import android.app.Activity;
+import static android.app.Activity.RESULT_OK;
+
 import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.onaio.steps.R;
 import com.onaio.steps.activities.EditParticipantActivity;
@@ -31,17 +34,15 @@ import com.onaio.steps.model.InterviewStatus;
 import com.onaio.steps.model.Participant;
 import com.onaio.steps.model.RequestCode;
 
-import static android.app.Activity.RESULT_OK;
-
 
 public class EditParticipantActivityHandler implements IMenuHandler, IActivityResultHandler, IMenuPreparer {
 
     private final int MENU_ID = R.id.action_edit;
-    private  Activity activity;
+    private AppCompatActivity activity;
     private Participant participant;
     private Menu menu;
 
-    public EditParticipantActivityHandler(Activity activity, Participant participant) {
+    public EditParticipantActivityHandler(AppCompatActivity activity, Participant participant) {
         this.activity=activity;
         this.participant=participant;
     }

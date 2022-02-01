@@ -49,6 +49,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 @Config(emulateSdk = 16,manifest = "src/main/AndroidManifest.xml")
 @RunWith(RobolectricTestRunner.class)
 public class NewParticipantActivityHandlerTest {
@@ -98,8 +100,8 @@ public class NewParticipantActivityHandlerTest {
         participant.save(new DatabaseHelper(participantListActivity));
         intent.putExtra(Constants.PARTICIPANT,participant);
         ParticipantAdapter participantAdapter = Mockito.mock(ParticipantAdapter.class);
-        Mockito.stub(participantAdapter.getViewTypeCount()).toReturn(1);
-        participantListActivity.getListView().setAdapter(participantAdapter);
+        //Mockito.stub(participantAdapter.getViewTypeCount()).toReturn(1);
+        ((RecyclerView) participantListActivity.findViewById(R.id.list)).setAdapter(participantAdapter);
         ShadowActivity stepsActivityShadow = Robolectric.shadowOf(participantListActivity);
 
         newParticipantActivityHandler.handleResult(intent, Activity.RESULT_OK);

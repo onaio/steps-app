@@ -1,7 +1,9 @@
 package com.onaio.steps.utils;
 
-import android.app.Activity;
-import android.content.Context;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.onaio.steps.activities.HouseholdListActivity;
 import com.onaio.steps.helper.Constants;
@@ -17,13 +19,11 @@ import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
-import static org.junit.Assert.*;
-
 @RunWith(RobolectricTestRunner.class)
 @Config(emulateSdk = 16,manifest = "src/main/AndroidManifest.xml")
 public class QRCodeUtilsTest {
 
-    private Activity activity;
+    private AppCompatActivity activity;
     private KeyValueStore keyValueStore;
 
     @Before

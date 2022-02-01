@@ -16,41 +16,43 @@
 
 package com.onaio.steps.handler.activities;
 
-import android.app.ListActivity;
+import static android.app.Activity.RESULT_OK;
+
 import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.onaio.steps.R;
 import com.onaio.steps.activities.NewMemberActivity;
+import com.onaio.steps.adapters.MemberAdapter;
 import com.onaio.steps.handler.interfaces.IActivityResultHandler;
 import com.onaio.steps.handler.interfaces.IMenuHandler;
 import com.onaio.steps.handler.interfaces.IMenuPreparer;
-import com.onaio.steps.adapters.MemberAdapter;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.InterviewStatus;
 import com.onaio.steps.model.RequestCode;
 
-import static android.app.Activity.RESULT_OK;
-
 public class NewMemberActivityHandler implements IMenuHandler, IActivityResultHandler,IMenuPreparer {
 
     private Household household;
-    private ListActivity activity;
+    private AppCompatActivity activity;
     private MemberAdapter memberAdapter;
     private DatabaseHelper db;
 
-    NewMemberActivityHandler(Household household, ListActivity activity, MemberAdapter memberAdapter, DatabaseHelper db) {
+    NewMemberActivityHandler(Household household, AppCompatActivity activity, MemberAdapter memberAdapter, DatabaseHelper db) {
         this.household = household;
         this.activity = activity;
         this.memberAdapter = memberAdapter;
         this.db = db;
     }
 
-    public NewMemberActivityHandler(ListActivity activity, Household household) {
-        this(household,activity,(MemberAdapter) activity.getListView().getAdapter(),new DatabaseHelper(activity.getApplicationContext()));
+    public NewMemberActivityHandler(AppCompatActivity activity, Household household) {
+        this(household,activity,(MemberAdapter) ((RecyclerView) activity.findViewById(R.id.list)).getAdapter(),new DatabaseHelper(activity.getApplicationContext()));
     }
 
     @Override

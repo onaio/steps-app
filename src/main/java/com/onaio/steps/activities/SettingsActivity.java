@@ -16,13 +16,14 @@
 
 package com.onaio.steps.activities;
 
-import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.onaio.steps.R;
 import com.onaio.steps.exceptions.InvalidDataException;
@@ -35,7 +36,7 @@ import com.onaio.steps.orchestrators.FlowOrchestrator;
 import com.onaio.steps.orchestrators.flows.FlowType;
 import com.onaio.steps.utils.ViewUtils;
 
-public class SettingsActivity extends Activity {
+public class SettingsActivity extends AppCompatActivity {
 
     private FlowType flowType;
     private FlowOrchestrator flowOrchestrator;

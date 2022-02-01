@@ -29,6 +29,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.documentfile.provider.DocumentFile;
 
 import com.onaio.steps.R;
@@ -41,7 +42,7 @@ import java.io.OutputStream;
 /**
  * Created by onamacuser on 12/11/2015.
  */
-public class BackupLocationActivity extends Activity {
+public class BackupLocationActivity extends AppCompatActivity {
     /**
      * The requestCode with which the storage access framework is triggered for input folder.
      */
@@ -76,6 +77,7 @@ public class BackupLocationActivity extends Activity {
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     public final void onActivityResult(final int requestCode, final int resultCode, final Intent resultData) {
+        super.onActivityResult(requestCode, resultCode, resultData);
         if (requestCode == REQUEST_CODE_STORAGE_ACCESS_INPUT) {
             Uri treeUri = null;
             if (resultCode == Activity.RESULT_OK) {

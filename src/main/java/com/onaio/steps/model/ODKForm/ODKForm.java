@@ -16,14 +16,15 @@
 
 package com.onaio.steps.model.ODKForm;
 
-import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.onaio.steps.exceptions.AppNotInstalledException;
 import com.onaio.steps.exceptions.FormNotPresentException;
-import com.onaio.steps.model.ODKForm.strategy.interfaces.IFormStrategy;
 import com.onaio.steps.helper.Constants;
+import com.onaio.steps.model.ODKForm.strategy.interfaces.IFormStrategy;
 
 import java.io.IOException;
 import java.util.List;
@@ -44,13 +45,13 @@ public class ODKForm {
         return blankForm;
     }
 
-    public void open(IFormStrategy formStrategy, Activity activity, int requestCode) throws IOException{
+    public void open(IFormStrategy formStrategy, AppCompatActivity activity, int requestCode) throws IOException{
         String pathToSaveDataFile = blankForm.getPath();
         formStrategy.saveDataFile(activity,pathToSaveDataFile);
         launchODKCollect(activity, requestCode);
     }
 
-    public static ODKForm create(Activity activity, String formId, String formName) throws FormNotPresentException, AppNotInstalledException {
+    public static ODKForm create(AppCompatActivity activity, String formId, String formName) throws FormNotPresentException, AppNotInstalledException {
         List<IForm> savedForms = ODKSavedForm.findAll(activity, formName);
         IForm blankForm = ODKBlankForm.find(activity, formId);
         if(savedForms != null && !savedForms.isEmpty())
@@ -58,7 +59,7 @@ public class ODKForm {
         return new ODKForm(blankForm,null);
     }
 
-    private void launchODKCollect(Activity activity, int requestCode) {
+    private void launchODKCollect(AppCompatActivity activity, int requestCode) {
         Intent surveyIntent = new Intent();
         surveyIntent.setComponent(new ComponentName(Constants.ODK_COLLECT_PACKAGE,Constants.ODK_COLLECT_FORM_CLASS));
         surveyIntent.setAction(Intent.ACTION_EDIT);

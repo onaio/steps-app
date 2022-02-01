@@ -16,8 +16,9 @@
 
 package com.onaio.steps.handler;
 
-import android.app.Activity;
 import android.view.View;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.onaio.steps.R;
 import com.onaio.steps.handler.interfaces.IMenuPreparer;
@@ -26,10 +27,10 @@ import com.onaio.steps.model.InterviewStatus;
 
 public class SelectedParticipantContainerHandler implements IMenuPreparer {
     private final int MENU_ID = R.id.selected_participant;
-    private Activity activity;
+    private AppCompatActivity activity;
     private Household household;
 
-    public SelectedParticipantContainerHandler(Activity activity, Household household) {
+    public SelectedParticipantContainerHandler(AppCompatActivity activity, Household household) {
         this.activity = activity;
         this.household = household;
     }

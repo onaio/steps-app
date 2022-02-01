@@ -22,9 +22,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.onaio.steps.R;
 import com.onaio.steps.activities.HouseholdListActivity;
@@ -197,7 +198,7 @@ public class HouseholdFlowTest {
         Assert.assertEquals(HouseholdListActivity.class.getName(), householdFlow.getIntent().getComponent().getClassName());
     }
 
-    private String getValue(Activity activity, String key) {
+    private String getValue(AppCompatActivity activity, String key) {
         return KeyValueStoreFactory.instance(activity).getString(key);
     }
 

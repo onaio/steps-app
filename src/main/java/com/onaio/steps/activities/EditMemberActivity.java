@@ -16,7 +16,6 @@
 
 package com.onaio.steps.activities;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -32,7 +31,9 @@ import com.onaio.steps.modelViewWrapper.MemberViewWrapper;
 
 import static com.onaio.steps.helper.Constants.HH_MEMBER;
 
-public class EditMemberActivity extends Activity {
+import androidx.appcompat.app.AppCompatActivity;
+
+public class EditMemberActivity extends AppCompatActivity {
 
 
     private MemberViewWrapper memberViewWrapper;

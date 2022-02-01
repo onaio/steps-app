@@ -16,12 +16,12 @@
 
 package com.onaio.steps.activities;
 
-import android.graphics.Color;
+import android.text.Html;
 import android.view.Menu;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.ListView;
+
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.onaio.steps.R;
 import com.onaio.steps.adapters.HouseholdAdapter;
 import com.onaio.steps.handler.factories.HouseholdListActivityFactory;
@@ -33,20 +33,20 @@ import com.onaio.steps.model.Household;
 
 import java.util.List;
 
-import static com.onaio.steps.helper.Constants.HEADER_GREEN;
-
 public class HouseholdListActivity extends BaseListActivity {
+
+    private RecyclerView list;
 
     @Override
     protected void prepareScreen() {
         setLayout();
         populateHouseholds();
-        bindHouseholdItem();
     }
 
     protected void setLayout() {
         setContentView(R.layout.main);
-        setTitle(R.string.main_header);
+        String title = "<font color='#008148'>&nbsp;" + getString(R.string.main_header) + "</font>";
+        setTitle(Html.fromHtml(title));
         Button householdButton = (Button) findViewById(R.id.action_add_new_item);
         householdButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_action_new_household, 0, 0, 0);
         Button submitDataButton = (Button) findViewById(R.id.action_submit_data);
@@ -59,23 +59,12 @@ public class HouseholdListActivity extends BaseListActivity {
                 curPreparer.enable();
             }
         }
-        setTitleColor(Color.parseColor(HEADER_GREEN));
+        list = findViewById(R.id.list);
     }
 
     protected void populateHouseholds() {
         List<Household> households = Household.getAllInOrder(db);
-        getListView().setAdapter(new HouseholdAdapter(this, households));
-    }
-
-    protected void bindHouseholdItem() {
-        ListView households = getListView();
-        households.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                Household household = Household.find_by(db, id);
-                HouseholdListActivityFactory.getHouseholdItemHandler(HouseholdListActivity.this, household).open();
-            }
-        });
+        list.setAdapter(new HouseholdAdapter(this, households, (position, household) -> HouseholdListActivityFactory.getHouseholdItemHandler(HouseholdListActivity.this, household).open()));
     }
 
     @Override
@@ -110,6 +99,5 @@ public class HouseholdListActivity extends BaseListActivity {
     @Override
     public void refreshList() {
         populateHouseholds();
-        bindHouseholdItem();
     }
 }

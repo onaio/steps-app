@@ -16,11 +16,12 @@
 
 package com.onaio.steps.model.ODKForm;
 
-import android.app.Activity;
 import android.content.ContentProviderClient;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.RemoteException;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.onaio.steps.exceptions.AppNotInstalledException;
 
@@ -59,7 +60,7 @@ public class ODKSavedForm implements IForm{
         return instanceFilePath;
     }
 
-    public static <T extends IForm> List<T> findAll(Activity activity, String displayName) throws AppNotInstalledException {
+    public static <T extends IForm> List<T> findAll(AppCompatActivity activity, String displayName) throws AppNotInstalledException {
         ContentProviderClient formsContentProvider = activity.getContentResolver().acquireContentProviderClient(ODKSavedForm.URI);
         List<ODKSavedForm> forms = new ArrayList<>();
         try {

@@ -17,7 +17,7 @@
 package com.onaio.steps.handler.strategies.survey;
 
 
-import android.app.Activity;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.onaio.steps.R;
 import com.onaio.steps.handler.strategies.survey.interfaces.IDoNotTakeSurveyStrategy;
@@ -27,9 +27,9 @@ import com.onaio.steps.model.Participant;
 
 public class DeferSurveyForParticipantStrategy implements IDoNotTakeSurveyStrategy {
     private Participant participant;
-    private Activity activity;
+    private AppCompatActivity activity;
 
-    public DeferSurveyForParticipantStrategy(Participant participant, Activity activity){
+    public DeferSurveyForParticipantStrategy(Participant participant, AppCompatActivity activity){
 
         this.participant = participant;
         this.activity = activity;

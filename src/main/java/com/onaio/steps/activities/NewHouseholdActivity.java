@@ -16,12 +16,16 @@
 
 package com.onaio.steps.activities;
 
-import android.app.Activity;
+import static com.onaio.steps.helper.Constants.HH_HOUSEHOLD_SEED;
+import static com.onaio.steps.helper.Constants.HH_PHONE_ID;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.onaio.steps.R;
 import com.onaio.steps.helper.Constants;
@@ -30,10 +34,7 @@ import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.modelViewWrapper.HouseholdViewWrapper;
 
-import static com.onaio.steps.helper.Constants.HH_HOUSEHOLD_SEED;
-import static com.onaio.steps.helper.Constants.HH_PHONE_ID;
-
-public class NewHouseholdActivity extends Activity {
+public class NewHouseholdActivity extends AppCompatActivity {
 
     private final DatabaseHelper db = new DatabaseHelper(this);
     private String phoneId;

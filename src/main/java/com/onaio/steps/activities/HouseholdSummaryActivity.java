@@ -1,12 +1,12 @@
 package com.onaio.steps.activities;
 
-import android.app.Activity;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.onaio.steps.R;
 import com.onaio.steps.helper.DatabaseHelper;
@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class HouseholdSummaryActivity extends Activity {
+public class HouseholdSummaryActivity extends AppCompatActivity {
 
     private List<SummaryItem> summaryItemList;
 
@@ -25,7 +25,7 @@ public class HouseholdSummaryActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_household_summary);
-        getActionBar().setDisplayShowHomeEnabled(false);
+        getSupportActionBar().setDisplayShowHomeEnabled(false);
         buildSummary();
     }
 

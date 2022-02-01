@@ -16,10 +16,16 @@
 
 package com.onaio.steps.helper;
 
-import android.app.Activity;
+import static com.onaio.steps.helper.Constants.SETTINGS_AUTH_TIME;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import android.content.Intent;
 import android.text.InputType;
 import android.widget.EditText;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.onaio.steps.R;
 import com.onaio.steps.activities.SettingsActivity;
@@ -34,16 +40,13 @@ import org.robolectric.annotation.Config;
 
 import java.util.Calendar;
 
-import static com.onaio.steps.helper.Constants.SETTINGS_AUTH_TIME;
-import static org.junit.Assert.*;
-
 /**
  * Created by Jason Rogena - jrogena@ona.io on 13/10/2016.
  */
 @Config(emulateSdk = 16, manifest = "src/main/AndroidManifest.xml")
 @RunWith(RobolectricTestRunner.class)
 public class AuthDialogTest {
-    Activity settingsActivity;
+    AppCompatActivity settingsActivity;
 
     @Before
     public void setup() {

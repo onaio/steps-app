@@ -16,9 +16,10 @@
 
 package com.onaio.steps.modelViewWrapper;
 
-import android.app.Activity;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.onaio.steps.R;
 import com.onaio.steps.exceptions.InvalidDataException;
@@ -39,9 +40,9 @@ public class MemberViewWrapper {
     private final int GENDER_VIEW_ID = R.id.member_gender;
     private final int AGE_VIEW_ID = R.id.member_age;
     protected List<String> errorFields;
-    protected Activity activity;
+    protected AppCompatActivity activity;
 
-    public MemberViewWrapper(Activity activity){
+    public MemberViewWrapper(AppCompatActivity activity){
         this.activity = activity;
         errorFields = new ArrayList<String>();
         dataValidator = new DataValidator(activity);

@@ -16,14 +16,17 @@
 
 package com.onaio.steps.handler.actions;
 
-import android.app.Activity;
-import android.app.ListActivity;
+import static com.onaio.steps.helper.Constants.HH_PHONE_ID;
+import static com.onaio.steps.helper.Constants.HH_SURVEY_ID;
+import static com.onaio.steps.helper.Constants.IMPORT_URL;
+
 import android.os.Environment;
 import android.text.TextUtils;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.onaio.steps.R;
-import com.onaio.steps.activities.SettingsActivity;
 import com.onaio.steps.handler.interfaces.IMenuHandler;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.CustomDialog;
@@ -48,22 +51,18 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import static com.onaio.steps.helper.Constants.HH_PHONE_ID;
-import static com.onaio.steps.helper.Constants.HH_SURVEY_ID;
-import static com.onaio.steps.helper.Constants.IMPORT_URL;
-
 public class ImportHandler implements IMenuHandler {
     private final DatabaseHelper db;
-    private Activity activity;
+    private AppCompatActivity activity;
     private static final int MENU_ID= R.id.action_import;
     private final FileUtil fileUtil;
     private String deviceId;
 
-    public ImportHandler(Activity activity) {
+    public ImportHandler(AppCompatActivity activity) {
         this(activity, new DatabaseHelper(activity),new FileUtil());
     }
 
-    ImportHandler(Activity activity, DatabaseHelper db, FileUtil fileUtil) {
+    ImportHandler(AppCompatActivity activity, DatabaseHelper db, FileUtil fileUtil) {
         this.activity = activity;
         this.db = db;
         this.fileUtil = fileUtil;

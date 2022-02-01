@@ -17,8 +17,11 @@
 package com.onaio.steps.handler.strategies.survey;
 
 
-import android.app.Activity;
+import static com.onaio.steps.helper.Constants.HH_PHONE_ID;
+
 import android.widget.Button;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.onaio.steps.R;
 import com.onaio.steps.handler.strategies.survey.interfaces.ITakeSurveyStrategy;
@@ -34,14 +37,12 @@ import com.onaio.steps.model.RequestCode;
 
 import java.io.IOException;
 
-import static com.onaio.steps.helper.Constants.HH_PHONE_ID;
-
 public class TakeSurveyForHouseholdStrategy  implements ITakeSurveyStrategy {
     private Household household;
-    private Activity activity;
+    private AppCompatActivity activity;
     private static final int MENU_ID = R.id.action_take_survey;
 
-    public TakeSurveyForHouseholdStrategy(Household household,Activity activity){
+    public TakeSurveyForHouseholdStrategy(Household household,AppCompatActivity activity){
         this.household = household;
         this.activity = activity;
     }

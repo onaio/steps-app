@@ -17,12 +17,13 @@
 package com.onaio.steps.activities;
 
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.onaio.steps.R;
 import com.onaio.steps.exceptions.InvalidDataException;
@@ -32,7 +33,7 @@ import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.model.Participant;
 import com.onaio.steps.modelViewWrapper.ParticipantViewWrapper;
 
-public class NewParticipantActivity  extends Activity{
+public class NewParticipantActivity extends AppCompatActivity {
 
 
     @Override

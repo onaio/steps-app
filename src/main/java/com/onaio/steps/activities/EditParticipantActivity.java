@@ -16,11 +16,14 @@
 
 package com.onaio.steps.activities;
 
-import android.app.Activity;
+import static com.onaio.steps.helper.Constants.PARTICIPANT;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.onaio.steps.R;
 import com.onaio.steps.exceptions.InvalidDataException;
@@ -30,9 +33,7 @@ import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.model.Participant;
 import com.onaio.steps.modelViewWrapper.ParticipantViewWrapper;
 
-import static com.onaio.steps.helper.Constants.PARTICIPANT;
-
-public class EditParticipantActivity extends Activity{
+public class EditParticipantActivity extends AppCompatActivity {
 
 
     private ParticipantViewWrapper participantViewWrapper;

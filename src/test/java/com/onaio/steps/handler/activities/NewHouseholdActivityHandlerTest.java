@@ -23,6 +23,8 @@ import static org.junit.Assert.assertTrue;
 import android.app.Activity;
 import android.content.Intent;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.onaio.steps.R;
 import com.onaio.steps.activities.HouseholdActivity;
 import com.onaio.steps.activities.HouseholdListActivity;
@@ -134,8 +136,8 @@ public class NewHouseholdActivityHandlerTest {
         name.save(new DatabaseHelper(householdListActivity));
         intent.putExtra(Constants.HH_HOUSEHOLD,name);
         HouseholdAdapter householdAdapterMock = Mockito.mock(HouseholdAdapter.class);
-        Mockito.stub(householdAdapterMock.getViewTypeCount()).toReturn(1);
-        householdListActivity.getListView().setAdapter(householdAdapterMock);
+        //Mockito.stub(householdAdapterMock.getViewTypeCount()).toReturn(1);
+        ((RecyclerView) householdListActivity.findViewById(R.id.list)).setAdapter(householdAdapterMock);
         ShadowActivity stepsActivityShadow = Robolectric.shadowOf(householdListActivity);
 
         handler.handleResult(intent, Activity.RESULT_OK);
@@ -152,8 +154,8 @@ public class NewHouseholdActivityHandlerTest {
     @Test
     public void ShouldNotHandleResultForOtherResultCode(){
         HouseholdAdapter householdAdapterMock = Mockito.mock(HouseholdAdapter.class);
-        Mockito.stub(householdAdapterMock.getViewTypeCount()).toReturn(1);
-        householdListActivity.getListView().setAdapter(householdAdapterMock);
+        //Mockito.stub(householdAdapterMock.getViewTypeCount()).toReturn(1);
+        ((RecyclerView) householdListActivity.findViewById(R.id.list)).setAdapter(householdAdapterMock);
         handler.handleResult(null, Activity.RESULT_CANCELED);
 
         Mockito.verify(householdAdapterMock,Mockito.never()).reinitialize(Mockito.anyList());

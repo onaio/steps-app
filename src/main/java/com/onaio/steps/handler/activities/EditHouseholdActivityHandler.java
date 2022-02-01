@@ -16,8 +16,12 @@
 
 package com.onaio.steps.handler.activities;
 
-import android.app.ListActivity;
+import static android.app.Activity.RESULT_OK;
+import static com.onaio.steps.helper.Constants.HH_HOUSEHOLD;
+
 import android.content.Intent;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.onaio.steps.R;
 import com.onaio.steps.activities.EditHouseholdActivity;
@@ -26,16 +30,13 @@ import com.onaio.steps.handler.interfaces.IMenuHandler;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.RequestCode;
 
-import static android.app.Activity.*;
-import static com.onaio.steps.helper.Constants.HH_HOUSEHOLD;
-
 public class EditHouseholdActivityHandler implements IMenuHandler, IActivityResultHandler {
 
     private final int MENU_ID = R.id.action_household_edit;
-    private ListActivity activity;
+    private AppCompatActivity activity;
     private Household household;
 
-    public EditHouseholdActivityHandler(ListActivity activity, Household household) {
+    public EditHouseholdActivityHandler(AppCompatActivity activity, Household household) {
         this.activity = activity;
         this.household = household;
     }

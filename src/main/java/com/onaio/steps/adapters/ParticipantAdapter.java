@@ -21,9 +21,11 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.onaio.steps.R;
 import com.onaio.steps.model.Participant;
@@ -31,23 +33,31 @@ import com.onaio.steps.model.Participant;
 import java.util.List;
 
 
-public class ParticipantAdapter extends BaseAdapter {
-    private Context context;
+public class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.ViewHolder> {
+    private final Context context;
     private List<Participant> participants;
+    private final ItemClickListener itemClickListener;
 
-    public ParticipantAdapter(Context context, List<Participant> participants) {
+    public ParticipantAdapter(Context context, List<Participant> participants, ItemClickListener itemClickListener) {
         this.context = context;
         this.participants = participants;
+        this.itemClickListener = itemClickListener;
+    }
+
+    @NonNull
+    @Override
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.list_item, parent, false), itemClickListener);
     }
 
     @Override
-    public int getCount() {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        holder.bind(position, participants.get(position));
+    }
+
+    @Override
+    public int getItemCount() {
         return participants.size();
-    }
-
-    @Override
-    public Object getItem(int position) {
-        return participants.get(position);
     }
 
     @Override
@@ -55,62 +65,64 @@ public class ParticipantAdapter extends BaseAdapter {
         return participants.get(position).getId();
     }
 
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        View participantItemView;
-        Participant participantAtPosition = participants.get(position);
-
-        participantItemView = getViewItem(convertView);
-        setTextInView(participantItemView, participantAtPosition);
-        return participantItemView;
+    public Participant getItem(int position) {
+        return participants.get(position);
     }
-
-    private void setTextInView(View view, Participant participantAtPosition) {
-        TextView participantPidView = (TextView) view.findViewById(R.id.main_text);
-        TextView createdAtView = (TextView) view.findViewById(R.id.sub_text);
-        ImageView image = (ImageView) view.findViewById(R.id.main_image);
-        image.setImageResource(getImage(participantAtPosition));
-
-        participantPidView.setTextColor(Color.BLACK);
-        String householdRow = participantAtPosition.getFormattedName()+" ("+context.getString(R.string.pid) + participantAtPosition.getParticipantID()+")";
-        participantPidView.setText(householdRow);
-        createdAtView.setText(String.format("%s", participantAtPosition.getCreatedAt()));
-    }
-
-    private int getImage(Participant participantAtPosition) {
-        switch (participantAtPosition.getStatus()) {
-            case DONE:
-                return R.mipmap.ic_household_list_done;
-            case NOT_DONE:
-                return R.mipmap.ic_participant_not_selected;
-            case DEFERRED:
-                return R.mipmap.ic_household_list_deferred;
-            case INCOMPLETE:
-                return R.mipmap.ic_household_list_incomplete;
-            case INCOMPLETE_REFUSED:
-                return R.mipmap.ic_household_list_refused;
-            case NOT_REACHABLE:
-                return R.mipmap.ic_household_list_not_reachable;
-            default:
-                return R.mipmap.ic_household_list_refused;
-        }
-    }
-
-
-    private View getViewItem(View convertView) {
-        View view;
-        if (convertView == null) {
-            LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = layoutInflater.inflate(R.layout.list_item, null);
-        } else
-            view = convertView;
-
-        view.setBackgroundColor(Color.WHITE);
-        return view;
-    }
-
 
     public void reinitialize(List<Participant> participants) {
         this.participants = participants;
+    }
+
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+
+        private final View itemView;
+        private final ItemClickListener itemClickListener;
+
+        public ViewHolder(View itemView, ItemClickListener itemClickListener) {
+            super(itemView);
+            this.itemView = itemView;
+            this.itemClickListener = itemClickListener;
+        }
+
+        public void bind(int position, Participant participant) {
+            itemView.setOnClickListener(v -> itemClickListener.onItemClick(position, participant));
+
+            setTextInView(itemView, participant);
+        }
+
+        private void setTextInView(View view, Participant participantAtPosition) {
+            TextView participantPidView = view.findViewById(R.id.main_text);
+            TextView createdAtView = view.findViewById(R.id.sub_text);
+            ImageView image = view.findViewById(R.id.main_image);
+            image.setImageResource(getImage(participantAtPosition));
+
+            participantPidView.setTextColor(Color.BLACK);
+            String householdRow = participantAtPosition.getFormattedName()+" ("+view.getContext().getString(R.string.pid) + participantAtPosition.getParticipantID()+")";
+            participantPidView.setText(householdRow);
+            createdAtView.setText(String.format("%s", participantAtPosition.getCreatedAt()));
+        }
+
+        private int getImage(Participant participantAtPosition) {
+            switch (participantAtPosition.getStatus()) {
+                case DONE:
+                    return R.mipmap.ic_household_list_done;
+                case NOT_DONE:
+                    return R.mipmap.ic_participant_not_selected;
+                case DEFERRED:
+                    return R.mipmap.ic_household_list_deferred;
+                case INCOMPLETE:
+                    return R.mipmap.ic_household_list_incomplete;
+                case INCOMPLETE_REFUSED:
+                    return R.mipmap.ic_household_list_refused;
+                case NOT_REACHABLE:
+                    return R.mipmap.ic_household_list_not_reachable;
+                default:
+                    return R.mipmap.ic_household_list_not_selected;
+            }
+        }
+    }
+
+    public interface ItemClickListener {
+        void onItemClick(int position, Participant participant);
     }
 }

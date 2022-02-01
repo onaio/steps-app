@@ -20,7 +20,10 @@ import static junit.framework.Assert.assertEquals;
 
 import android.widget.Button;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.onaio.steps.R;
+import com.onaio.steps.adapters.ParticipantAdapter;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.model.Gender;
@@ -58,14 +61,15 @@ public class ParticipantListActivityTest {
 
     @Test
     public void ShouldBeAbleToSetLayoutAndPopulateParticipants(){
-        Button participantHeader = (Button) participantListActivity.findViewById(R.id.action_add_new_item);
+        Button participantHeader = participantListActivity.findViewById(R.id.action_add_new_item);
+        RecyclerView list = participantListActivity.findViewById(R.id.list);
 
         participantListActivity.prepareScreen();
         assertEquals(R.id.main_layout, Robolectric.shadowOf(participantListActivity).getContentView().getId());
         assertEquals(participantListActivity.getString(R.string.action_add_participant), participantHeader.getText());
         assertEquals(participantListActivity.getString(R.string.participant_header),participantListActivity.getTitle());
-        assertEquals(participantA,participantListActivity.getListView().getAdapter().getItem(0));
-        assertEquals(participantB,participantListActivity.getListView().getAdapter().getItem(1));
+        assertEquals(participantA,((ParticipantAdapter) list.getAdapter()).getItem(0));
+        assertEquals(participantB,((ParticipantAdapter) list.getAdapter()).getItem(1));
     }
 
     @Test

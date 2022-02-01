@@ -16,11 +16,12 @@
 
 package com.onaio.steps.handler.actions;
 
-import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Environment;
 import android.util.Log;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.onaio.steps.R;
 import com.onaio.steps.activities.BackupLocationActivity;
@@ -49,11 +50,11 @@ import java.util.List;
  */
 public class SaveToSDCardHandler implements IMenuHandler {
     private List<Household> households;
-    private ListActivity activity;
+    private AppCompatActivity activity;
     private static final int MENU_ID = R.id.action_save_to_sdcard;
     private boolean canWriteSDCard = true;
 
-    public SaveToSDCardHandler(ListActivity activity) {
+    public SaveToSDCardHandler(AppCompatActivity activity) {
         this.activity = activity;
     }
 

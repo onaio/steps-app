@@ -16,18 +16,19 @@
 
 package com.onaio.steps.orchestrators.flows;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.view.View;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.onaio.steps.R;
 import com.onaio.steps.activities.WelcomeActivity;
 import com.onaio.steps.exceptions.InvalidDataException;
 
 public class InitialFlow implements IFlow {
-    private Activity activity;
+    private AppCompatActivity activity;
 
-    public InitialFlow(Activity activity) {
+    public InitialFlow(AppCompatActivity activity) {
         this.activity = activity;
     }
 

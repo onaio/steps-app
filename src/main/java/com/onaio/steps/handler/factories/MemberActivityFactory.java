@@ -16,8 +16,9 @@
 
 package com.onaio.steps.handler.factories;
 
-import android.app.Activity;
 import android.view.Menu;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.onaio.steps.handler.actions.BackHomeHandler;
 import com.onaio.steps.handler.actions.DeleteMemberHandler;
@@ -31,7 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MemberActivityFactory {
-    public static List<IMenuHandler> getMenuHandlers(Activity activity, Member member){
+    public static List<IMenuHandler> getMenuHandlers(AppCompatActivity activity, Member member){
         ArrayList<IMenuHandler> handlers = new ArrayList<IMenuHandler>();
         handlers.add(new DeleteMemberHandler(activity,member));
         handlers.add(new EditMemberActivityHandler(activity,member));
@@ -39,14 +40,14 @@ public class MemberActivityFactory {
         return handlers;
     }
 
-    public static List<IMenuPreparer> getMenuPreparer(Activity activity, Member member, Menu menu){
+    public static List<IMenuPreparer> getMenuPreparer(AppCompatActivity activity, Member member, Menu menu){
         ArrayList<IMenuPreparer> handlers = new ArrayList<IMenuPreparer>();
         handlers.add(new DeleteMemberHandler(activity, member).withMenu(menu));
         handlers.add(new EditMemberActivityHandler(activity,member).withMenu(menu));
         return handlers;
     }
 
-    public static List<IActivityResultHandler> getMenuResultHandlers(Activity activity, Member member) {
+    public static List<IActivityResultHandler> getMenuResultHandlers(AppCompatActivity activity, Member member) {
         ArrayList<IActivityResultHandler> handlers = new ArrayList<IActivityResultHandler>();
         handlers.add(new EditMemberActivityHandler(activity,member));
         return handlers;

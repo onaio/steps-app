@@ -16,7 +16,9 @@
 
 package com.onaio.steps.helper;
 
-import android.app.Activity;
+import static org.junit.Assert.assertEquals;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.onaio.steps.R;
 import com.onaio.steps.activities.ParticipantListActivity;
@@ -31,12 +33,10 @@ import org.robolectric.annotation.Config;
 
 import java.util.List;
 
-import static org.junit.Assert.*;
-
 @RunWith(RobolectricTestRunner.class)
 @Config(emulateSdk = 16,manifest = "src/main/AndroidManifest.xml")
 public class DataValidatorTest {
-    private Activity activity;
+    private AppCompatActivity activity;
     private DataValidator dataValidator;
 
     @Before

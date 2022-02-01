@@ -17,7 +17,6 @@
 package com.onaio.steps.handler.actions;
 
 import android.app.Activity;
-import android.app.ListActivity;
 import android.view.View;
 import android.widget.Button;
 
@@ -46,6 +45,8 @@ import java.util.List;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 @Config(emulateSdk = 16,manifest = "src/main/AndroidManifest.xml")
 @RunWith(RobolectricTestRunner.class)
@@ -210,7 +211,7 @@ public class TakeSurveyHandlerTest {
 
         private List<IForm> savedForms;
 
-        public TakeSurveyHandlerStub(ListActivity activity, Household household,List<IForm> savedForms) {
+        public TakeSurveyHandlerStub(AppCompatActivity activity, Household household, List<IForm> savedForms) {
             super(activity, new TakeSurveyForHouseholdStrategy(household,activity));
             this.savedForms = savedForms;
         }

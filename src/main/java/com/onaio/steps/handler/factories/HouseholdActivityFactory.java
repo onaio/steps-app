@@ -16,7 +16,8 @@
 
 package com.onaio.steps.handler.factories;
 
-import android.app.ListActivity;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.onaio.steps.handler.HouseholdActivityBackButtonPreparer;
 import com.onaio.steps.handler.SelectedParticipantContainerHandler;
@@ -49,7 +50,7 @@ import java.util.List;
 
 public class HouseholdActivityFactory {
 
-    public static List<IMenuHandler> getMenuHandlers(ListActivity activity, Household household){
+    public static List<IMenuHandler> getMenuHandlers(AppCompatActivity activity, Household household){
         ArrayList<IMenuHandler> handlers = new ArrayList<IMenuHandler>();
         handlers.add(new SelectParticipantHandler(activity,household));
         handlers.add(new BackHomeHandler(activity));
@@ -57,7 +58,7 @@ public class HouseholdActivityFactory {
         return handlers;
     }
 
-    public static List<IActivityResultHandler> getResultHandlers(ListActivity activity, Household household){
+    public static List<IActivityResultHandler> getResultHandlers(AppCompatActivity activity, Household household){
         ArrayList<IActivityResultHandler> handlers = new ArrayList<IActivityResultHandler>();
         handlers.add(new NewMemberActivityHandler(activity, household));
         handlers.add(new EditHouseholdActivityHandler(activity, household));
@@ -65,11 +66,11 @@ public class HouseholdActivityFactory {
         return handlers;
     }
 
-    public static IListItemHandler getMemberItemHandler(ListActivity activity, Member member){
+    public static IListItemHandler getMemberItemHandler(AppCompatActivity activity, Member member){
         return new MemberActivityHandler(activity, member);
     }
 
-    public static List<IMenuPreparer> getCustomMenuPreparer(ListActivity activity, Household household){
+    public static List<IMenuPreparer> getCustomMenuPreparer(AppCompatActivity activity, Household household){
         ArrayList<IMenuPreparer> menuItems = new ArrayList<IMenuPreparer>();
         menuItems.add(new TakeSurveyHandler(activity,new TakeSurveyForHouseholdStrategy(household,activity)));
         menuItems.add(new DeferredHandler(activity, new DeferSurveyForHouseholdStrategy(household,activity)));
@@ -85,7 +86,7 @@ public class HouseholdActivityFactory {
         return menuItems;
     }
 
-    public static List<IMenuHandler> getCustomMenuHandler(ListActivity activity, Household household){
+    public static List<IMenuHandler> getCustomMenuHandler(AppCompatActivity activity, Household household){
         ArrayList<IMenuHandler> handlers = new ArrayList<IMenuHandler>();
         handlers.add(new TakeSurveyHandler(activity, new TakeSurveyForHouseholdStrategy(household,activity)));
         handlers.add(new DeferredHandler(activity, new DeferSurveyForHouseholdStrategy(household,activity)));

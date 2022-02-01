@@ -16,25 +16,32 @@
 
 package com.onaio.steps.activities;
 
-import android.app.ActionBar;
-import android.app.ListActivity;
+import static com.onaio.steps.model.InterviewStatus.CANCEL_SELECTION;
+import static com.onaio.steps.model.InterviewStatus.DEFERRED;
+import static com.onaio.steps.model.InterviewStatus.INCOMPLETE;
+import static com.onaio.steps.model.InterviewStatus.NOT_DONE;
+
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.onaio.steps.R;
+import com.onaio.steps.adapters.MemberAdapter;
 import com.onaio.steps.handler.HouseholdActivityBackButtonPreparer;
 import com.onaio.steps.handler.factories.HouseholdActivityFactory;
 import com.onaio.steps.handler.interfaces.IActivityResultHandler;
 import com.onaio.steps.handler.interfaces.IMenuHandler;
 import com.onaio.steps.handler.interfaces.IMenuPreparer;
-import com.onaio.steps.adapters.MemberAdapter;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.model.Household;
@@ -44,20 +51,17 @@ import com.onaio.steps.modelViewWrapper.SelectedMemberViewWrapper;
 
 import java.util.List;
 
-import static com.onaio.steps.model.InterviewStatus.CANCEL_SELECTION;
-import static com.onaio.steps.model.InterviewStatus.DEFERRED;
-import static com.onaio.steps.model.InterviewStatus.INCOMPLETE;
-import static com.onaio.steps.model.InterviewStatus.NOT_DONE;
-
-public class HouseholdActivity extends ListActivity {
+public class HouseholdActivity extends AppCompatActivity {
 
     private Household household;
     private DatabaseHelper db;
+    private RecyclerView list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.household);
+        list = findViewById(R.id.list);
         household = (Household) getIntent().getSerializableExtra(Constants.HH_HOUSEHOLD);
         db = new DatabaseHelper(this);
         styleActionBar();
@@ -115,6 +119,7 @@ public class HouseholdActivity extends ListActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         List<IActivityResultHandler> menuHandlers = HouseholdActivityFactory.getResultHandlers(this, household);
         for(IActivityResultHandler menuHandler:menuHandlers)
             if(menuHandler.canHandleResult(requestCode))
@@ -129,13 +134,16 @@ public class HouseholdActivity extends ListActivity {
     }
 
     private void styleActionBar() {
-        ActionBar actionBar = getActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(false);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeButtonEnabled(true);
         actionBar.setIcon(R.drawable.ic_action_back);
-        TextView idHeader = (TextView) findViewById(R.id.household_id_header);
-        TextView numberHeader = (TextView) findViewById(R.id.household_number_header);
-        TextView commentView = (TextView) findViewById(R.id.text_view_comment);
+        actionBar.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
+        actionBar.setElevation(0);
+
+        TextView idHeader = findViewById(R.id.household_id_header);
+        TextView numberHeader = findViewById(R.id.household_number_header);
+        TextView commentView = findViewById(R.id.text_view_comment);
 
         idHeader.setText(String.format(getString(R.string.household_id_hint)+": %s",household.getName()));
         idHeader.setTextColor(Color.parseColor(Constants.HEADER_GREEN));
@@ -153,18 +161,6 @@ public class HouseholdActivity extends ListActivity {
 
     private void handleMembers() {
         populateMembers();
-        bindMembers();
-    }
-
-    private void bindMembers() {
-        AdapterView.OnItemClickListener memberItemListener = new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                Member member = household.findMember(db, id);
-                HouseholdActivityFactory.getMemberItemHandler(HouseholdActivity.this, member).open();
-            }
-        };
-        getListView().setOnItemClickListener(memberItemListener);
     }
 
     private void prepareCustomMenu() {
@@ -177,8 +173,13 @@ public class HouseholdActivity extends ListActivity {
     }
 
     private void populateMembers() {
-        MemberAdapter memberAdapter = new MemberAdapter(this, getMembers(),household.getSelectedMemberId(),household);
-        getListView().setAdapter(memberAdapter);
+        MemberAdapter memberAdapter = new MemberAdapter(this, getMembers(), household.getSelectedMemberId(), household, new MemberAdapter.ItemClickListener() {
+            @Override
+            public void onItemClick(int position, Member member) {
+                HouseholdActivityFactory.getMemberItemHandler(HouseholdActivity.this, member).open();
+            }
+        });
+        list.setAdapter(memberAdapter);
         new SelectedMemberViewWrapper().populate(household,household.getSelectedMember(db), this);
     }
 

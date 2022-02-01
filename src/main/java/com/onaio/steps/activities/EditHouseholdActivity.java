@@ -16,7 +16,6 @@
 
 package com.onaio.steps.activities;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -29,7 +28,9 @@ import com.onaio.steps.modelViewWrapper.HouseholdViewWrapper;
 
 import static com.onaio.steps.helper.Constants.HH_HOUSEHOLD;
 
-public class EditHouseholdActivity extends Activity {
+import androidx.appcompat.app.AppCompatActivity;
+
+public class EditHouseholdActivity extends AppCompatActivity {
 
     private Household household;
 

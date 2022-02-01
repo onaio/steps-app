@@ -17,7 +17,7 @@
 package com.onaio.steps.handler.strategies.survey;
 
 
-import android.app.Activity;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.onaio.steps.R;
 import com.onaio.steps.handler.strategies.survey.interfaces.IDoNotTakeSurveyStrategy;
@@ -27,9 +27,9 @@ import com.onaio.steps.model.InterviewStatus;
 
 public class DeferSurveyForHouseholdStrategy implements IDoNotTakeSurveyStrategy {
     private Household household;
-    private Activity activity;
+    private AppCompatActivity activity;
 
-    public DeferSurveyForHouseholdStrategy(Household household, Activity activity){
+    public DeferSurveyForHouseholdStrategy(Household household, AppCompatActivity activity){
 
         this.household = household;
         this.activity = activity;

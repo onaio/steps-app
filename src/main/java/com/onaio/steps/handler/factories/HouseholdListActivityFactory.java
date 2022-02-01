@@ -16,16 +16,17 @@
 
 package com.onaio.steps.handler.factories;
 
-import android.app.ListActivity;
 import android.view.Menu;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.onaio.steps.handler.actions.ImportHandler;
 import com.onaio.steps.handler.actions.SaveToSDCardHandler;
 import com.onaio.steps.handler.actions.SubmitDataHandler;
 import com.onaio.steps.handler.activities.HouseholdActivityHandler;
+import com.onaio.steps.handler.activities.HouseholdSummaryActivityMenuHandler;
 import com.onaio.steps.handler.activities.NewHouseholdActivityHandler;
 import com.onaio.steps.handler.activities.ParticipantActivityMenuItemHandler;
-import com.onaio.steps.handler.activities.HouseholdSummaryActivityMenuHandler;
 import com.onaio.steps.handler.activities.SettingActivityHandler;
 import com.onaio.steps.handler.interfaces.IActivityResultHandler;
 import com.onaio.steps.handler.interfaces.IListItemHandler;
@@ -39,7 +40,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HouseholdListActivityFactory {
-    public static List<IMenuHandler> getMenuHandlers(ListActivity activity, List<Household> households){
+    public static List<IMenuHandler> getMenuHandlers(AppCompatActivity activity, List<Household> households){
         ArrayList<IMenuHandler> handlers = new ArrayList<IMenuHandler>();
         handlers.add(new ParticipantActivityMenuItemHandler(activity));
         handlers.add(new SettingActivityHandler(activity).prepareFor(FlowType.Household));
@@ -51,31 +52,31 @@ public class HouseholdListActivityFactory {
     }
 
 
-    public static List<IActivityResultHandler> getResultHandlers(ListActivity activity){
+    public static List<IActivityResultHandler> getResultHandlers(AppCompatActivity activity){
         ArrayList<IActivityResultHandler> handlers = new ArrayList<IActivityResultHandler>();
         handlers.add(new NewHouseholdActivityHandler(activity));
         handlers.add(new SettingActivityHandler(activity));
         return handlers;
     }
 
-    public static IListItemHandler getHouseholdItemHandler(ListActivity activity, Household household){
+    public static IListItemHandler getHouseholdItemHandler(AppCompatActivity activity, Household household){
         return new HouseholdActivityHandler(activity, household);
     }
 
-    public static List<IMenuHandler> getCustomMenuHandler(ListActivity activity, List<Household> households){
+    public static List<IMenuHandler> getCustomMenuHandler(AppCompatActivity activity, List<Household> households){
         ArrayList<IMenuHandler> handlers = new ArrayList<IMenuHandler>();
         handlers.add(new NewHouseholdActivityHandler(activity));
         handlers.add(new SubmitDataHandler(activity).with(households));
         return handlers;
     }
 
-    public static List<IMenuPreparer> getMenuPreparer(ListActivity activity, List<Household> households, Menu menu) {
+    public static List<IMenuPreparer> getMenuPreparer(AppCompatActivity activity, List<Household> households, Menu menu) {
         ArrayList<IMenuPreparer> handlers = new ArrayList<IMenuPreparer>();
         handlers.add(new SubmitDataHandler(activity).with(households).withMenu(menu));
         return handlers;
     }
 
-    public static List<IViewPreparer> getViewPreparer(ListActivity activity, List<Household> households) {
+    public static List<IViewPreparer> getViewPreparer(AppCompatActivity activity, List<Household> households) {
         ArrayList<IViewPreparer> handlers = new ArrayList<IViewPreparer>();
         handlers.add(new SubmitDataHandler(activity).with(households));
         return handlers;

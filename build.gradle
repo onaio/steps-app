@@ -109,13 +109,15 @@ repositories {
 dependencies {
     testImplementation 'junit:junit:4.10'
     testImplementation 'org.robolectric:robolectric:2.4'
-    testImplementation 'com.squareup:fest-android:1.0.+'
+    testImplementation 'com.squareup:fest-android:1.0.8'
     testImplementation 'org.mockito:mockito-core:1.9.5'
     implementation 'com.opencsv:opencsv:3.3'
-    implementation 'org.apache.httpcomponents:httpcore:4.2.4'
+    /*implementation 'org.apache.httpcomponents:httpcore:4.2.4'
     implementation 'org.apache.httpcomponents:httpclient:4.2.5'
-    implementation 'org.apache.httpcomponents:httpmime:4.2.5'
+    implementation 'org.apache.httpcomponents:httpmime:4.2.5'*/
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'androidx.appcompat:appcompat:1.4.1'
+    implementation 'androidx.recyclerview:recyclerview:1.2.1'
 
     // ZXING
     implementation "com.google.zxing:core:3.3.0"

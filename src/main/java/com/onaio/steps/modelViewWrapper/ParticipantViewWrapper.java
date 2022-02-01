@@ -16,8 +16,9 @@
 
 package com.onaio.steps.modelViewWrapper;
 
-import android.app.Activity;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.onaio.steps.R;
 import com.onaio.steps.exceptions.InvalidDataException;
@@ -40,7 +41,7 @@ public class ParticipantViewWrapper extends MemberViewWrapper {
     private List<String> errorFields;
     private final int PARTICIPANT_VIEW_ID = R.id.participant_id_value;
 
-    public ParticipantViewWrapper(Activity activity) {
+    public ParticipantViewWrapper(AppCompatActivity activity) {
         super(activity);
         errorFields = new ArrayList<String>();
         dataValidator = new DataValidator(activity);

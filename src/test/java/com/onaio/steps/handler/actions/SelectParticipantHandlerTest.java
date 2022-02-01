@@ -16,11 +16,18 @@
 
 package com.onaio.steps.handler.actions;
 
-import android.app.ListActivity;
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.stub;
+import static org.mockito.Mockito.verify;
+
 import android.content.Intent;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.onaio.steps.R;
 import com.onaio.steps.activities.HouseholdActivity;
@@ -40,12 +47,6 @@ import org.mockito.Mockito;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
-
-import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.stub;
-import static org.mockito.Mockito.verify;
 
 
 @Config(emulateSdk = 16,manifest = "src/main/AndroidManifest.xml")
@@ -187,7 +188,7 @@ public class SelectParticipantHandlerTest {
     private class SelectParticipantHandlerStub extends SelectParticipantHandler{
         private View view;
 
-        public SelectParticipantHandlerStub(ListActivity activity, Household household, CustomDialog dialog, DatabaseHelper db, android.app.Dialog androidDialog, View view) {
+        public SelectParticipantHandlerStub(AppCompatActivity activity, Household household, CustomDialog dialog, DatabaseHelper db, android.app.Dialog androidDialog, View view) {
             super(activity, household, db, androidDialog);
             this.view = view;
         }

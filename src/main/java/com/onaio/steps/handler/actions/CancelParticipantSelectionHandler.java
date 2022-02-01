@@ -16,12 +16,15 @@
 
 package com.onaio.steps.handler.actions;
 
-import android.app.ListActivity;
+import static com.onaio.steps.model.InterviewStatus.CANCEL_SELECTION;
+
 import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ListView;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.onaio.steps.R;
 import com.onaio.steps.adapters.MemberAdapter;
@@ -36,17 +39,14 @@ import com.onaio.steps.model.ReElectReason;
 
 import java.util.List;
 
-import static com.onaio.steps.model.InterviewStatus.CANCEL_SELECTION;
-import static com.onaio.steps.model.InterviewStatus.SELECTION_NOT_DONE;
-
 public class CancelParticipantSelectionHandler implements IMenuPreparer,IMenuHandler {
 
     private final int MENU_ID = R.id.action_cancel_participant;
     private Household household;
-    private ListActivity activity;
+    private AppCompatActivity activity;
     private DatabaseHelper databaseHelper;
 
-    public CancelParticipantSelectionHandler(ListActivity activity, Household household) {
+    public CancelParticipantSelectionHandler(AppCompatActivity activity, Household household) {
         this.activity=activity;
         this.household=household;
         this.databaseHelper=new DatabaseHelper(activity);
@@ -77,18 +77,15 @@ public class CancelParticipantSelectionHandler implements IMenuPreparer,IMenuHan
 
     @Override
     public boolean open() {
-        final ListView membersView = activity.getListView();
+        final RecyclerView membersView = activity.findViewById(R.id.list);
         final View confirmation = getView();
         CustomDialog customDialog = new CustomDialog();
 
-        DialogInterface.OnClickListener confirmationDialogListener = new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                saveReason(confirmation);
-                updateHousehold();
-                updateView(membersView);
+        DialogInterface.OnClickListener confirmationDialogListener = (dialog, which) -> {
+            saveReason(confirmation);
+            updateHousehold();
+            updateView(membersView);
 
-            }
         };
         customDialog.confirm(activity, confirmationDialogListener, CustomDialog.EmptyListener, confirmation, R.string.confirm_ok);
         return true;
@@ -103,7 +100,7 @@ public class CancelParticipantSelectionHandler implements IMenuPreparer,IMenuHan
                 menu.activate();
     }
 
-    private void updateView(ListView membersView) {
+    private void updateView(RecyclerView membersView) {
         MemberAdapter membersAdapter = (MemberAdapter) membersView.getAdapter();
         membersAdapter.reinitialize(household.getAllNonDeletedMembers(databaseHelper),null);
         membersAdapter.notifyDataSetChanged();

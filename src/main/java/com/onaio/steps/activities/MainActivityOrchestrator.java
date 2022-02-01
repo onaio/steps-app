@@ -16,18 +16,18 @@
 
 package com.onaio.steps.activities;
 
-import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
-import com.onaio.steps.helper.Device;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.onaio.steps.helper.Constants;
+import com.onaio.steps.helper.KeyValueStoreFactory;
 import com.onaio.steps.helper.RegisterUniqueDeviceIdTask;
 import com.onaio.steps.orchestrators.FlowOrchestrator;
 import com.onaio.steps.orchestrators.flows.FlowType;
-import com.onaio.steps.helper.Constants;
-import com.onaio.steps.helper.KeyValueStoreFactory;
 
-public class MainActivityOrchestrator extends Activity {
+public class MainActivityOrchestrator extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

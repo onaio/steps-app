@@ -16,7 +16,10 @@
 
 package com.onaio.steps.helper;
 
-import android.app.Activity;
+import static com.onaio.steps.helper.Constants.SETTINGS_AUTH_TIME;
+import static com.onaio.steps.helper.Constants.SETTINGS_AUTH_TIMEOUT;
+import static com.onaio.steps.helper.Constants.SETTINGS_PASSWORD_HASH;
+
 import android.app.Dialog;
 import android.text.InputType;
 import android.view.View;
@@ -24,22 +27,20 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.onaio.steps.R;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Calendar;
 
-import static com.onaio.steps.helper.Constants.SETTINGS_AUTH_TIME;
-import static com.onaio.steps.helper.Constants.SETTINGS_AUTH_TIMEOUT;
-import static com.onaio.steps.helper.Constants.SETTINGS_PASSWORD_HASH;
-
 /**
  * Created by Jason Rogena - jrogena@ona.io on 13/10/2016.
  */
 
 public class AuthDialog extends Dialog {
-    private final Activity activity;
+    private final AppCompatActivity activity;
     private OnAuthListener onAuthListener;
     private TextView instructions;
     private EditText passwordEditText;
@@ -47,7 +48,7 @@ public class AuthDialog extends Dialog {
     private Button okButton;
     private Button cancelButton;
 
-    public AuthDialog(Activity activity, OnAuthListener onAuthListener) {
+    public AuthDialog(AppCompatActivity activity, OnAuthListener onAuthListener) {
         super(activity);
         this.activity = activity;
         setContentView(R.layout.dialog_auth);
@@ -55,7 +56,7 @@ public class AuthDialog extends Dialog {
         initViews();
     }
 
-    public AuthDialog(Activity activity, int theme, OnAuthListener onAuthListener) {
+    public AuthDialog(AppCompatActivity activity, int theme, OnAuthListener onAuthListener) {
         super(activity, theme);
         this.activity = activity;
         setContentView(R.layout.dialog_auth);

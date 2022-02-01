@@ -22,10 +22,11 @@ import static com.onaio.steps.helper.Constants.HH_SURVEY_ID;
 import static com.onaio.steps.helper.Constants.SURVEY_EMPTY_HH;
 import static com.onaio.steps.helper.Constants.SURVEY_NOT_SELECTED;
 
-import android.app.ListActivity;
 import android.content.DialogInterface;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.onaio.steps.R;
 import com.onaio.steps.handler.interfaces.IMenuHandler;
@@ -52,17 +53,17 @@ import java.util.List;
 public class ExportHandler implements IMenuHandler,IMenuPreparer {
 
     private List<Household> households;
-    private ListActivity activity;
+    private AppCompatActivity activity;
     private DatabaseHelper databaseHelper;
     private Menu menu;
     private int MENU_ID = R.id.action_export;
     private static final String EMPTY_COLUMN = "";
     private OnExportListener onExportListener;
 
-    public ExportHandler(ListActivity activity) {
+    public ExportHandler(AppCompatActivity activity) {
         this.activity = activity;
         databaseHelper = new DatabaseHelper(activity.getApplicationContext());
-        households = new ArrayList<Household>();
+        households = new ArrayList<>();
     }
 
     public DatabaseHelper getDatabaseHelper() {
@@ -88,7 +89,7 @@ public class ExportHandler implements IMenuHandler,IMenuPreparer {
                     File file = saveFile();
                     if(onExportListener != null) onExportListener.onFileSaved();
                     if (NetworkConnectivity.isNetworkAvailable(activity)) {
-                        new UploadFileTask(activity, onExportListener).execute(file);
+                        new UploadFileTask(activity, onExportListener).upload(file);
 
                     } else {
                         new CustomDialog().notify(activity, CustomDialog.EmptyListener, R.string.error_title, R.string.fail_no_connectivity);

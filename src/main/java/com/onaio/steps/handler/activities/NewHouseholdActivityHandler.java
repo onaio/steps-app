@@ -16,15 +16,20 @@
 
 package com.onaio.steps.handler.activities;
 
-import android.app.ListActivity;
+import static android.app.Activity.RESULT_OK;
+
 import android.content.Intent;
+import android.view.View;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.onaio.steps.R;
 import com.onaio.steps.activities.HouseholdActivity;
 import com.onaio.steps.activities.NewHouseholdActivity;
+import com.onaio.steps.adapters.HouseholdAdapter;
 import com.onaio.steps.handler.interfaces.IActivityResultHandler;
 import com.onaio.steps.handler.interfaces.IMenuHandler;
-import com.onaio.steps.adapters.HouseholdAdapter;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.CustomDialog;
 import com.onaio.steps.helper.DatabaseHelper;
@@ -32,18 +37,16 @@ import com.onaio.steps.helper.KeyValueStoreFactory;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.RequestCode;
 
-import static android.app.Activity.RESULT_OK;
-
 public class NewHouseholdActivityHandler implements IMenuHandler, IActivityResultHandler {
 
-    private ListActivity activity;
+    private AppCompatActivity activity;
     private CustomDialog dialog = new CustomDialog();
 
-    public NewHouseholdActivityHandler(ListActivity activity) {
+    public NewHouseholdActivityHandler(AppCompatActivity activity) {
         this(activity,new CustomDialog());
     }
 
-    NewHouseholdActivityHandler(ListActivity activity, CustomDialog dialog) {
+    NewHouseholdActivityHandler(AppCompatActivity activity, CustomDialog dialog) {
         this.activity = activity;
         this.dialog = dialog;
     }
@@ -69,7 +72,9 @@ public class NewHouseholdActivityHandler implements IMenuHandler, IActivityResul
     @Override
     public void handleResult(Intent data, int resultCode) {
         if (resultCode == RESULT_OK) {
-            HouseholdAdapter householdAdapter = (HouseholdAdapter) activity.getListView().getAdapter();
+            View list = activity.findViewById(R.id.list);
+            if (list == null) return;
+            HouseholdAdapter householdAdapter = (HouseholdAdapter) ((RecyclerView) list).getAdapter();
             if (householdAdapter == null)
                 return;
             householdAdapter.reinitialize(Household.getAllInOrder(new DatabaseHelper(activity.getApplicationContext())));
@@ -86,7 +91,7 @@ public class NewHouseholdActivityHandler implements IMenuHandler, IActivityResul
         return requestCode == RequestCode.NEW_HOUSEHOLD.getCode();
     }
 
-    private void notifyUserToSetPhoneId(ListActivity activity) {
+    private void notifyUserToSetPhoneId(AppCompatActivity activity) {
         dialog.notify(activity, CustomDialog.EmptyListener, R.string.phone_id_message_title, R.string.phone_id_message);
     }
 

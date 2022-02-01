@@ -16,15 +16,15 @@
 
 package com.onaio.steps.handler.actions;
 
-import android.app.Activity;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.onaio.steps.handler.interfaces.IMenuHandler;
 
 public class BackHomeHandler implements IMenuHandler {
 
-    private Activity activity;
+    private AppCompatActivity activity;
 
-    public BackHomeHandler(Activity activity) {
+    public BackHomeHandler(AppCompatActivity activity) {
         this.activity = activity;
     }
 

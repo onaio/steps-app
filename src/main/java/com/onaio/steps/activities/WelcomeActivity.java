@@ -16,17 +16,17 @@
 
 package com.onaio.steps.activities;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import com.onaio.steps.orchestrators.flows.FlowType;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.onaio.steps.R;
 import com.onaio.steps.handler.activities.SettingActivityHandler;
-import com.onaio.steps.utils.ViewUtils;
+import com.onaio.steps.orchestrators.flows.FlowType;
 
-public class WelcomeActivity extends Activity {
+public class WelcomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

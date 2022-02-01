@@ -17,7 +17,6 @@
 package com.onaio.steps.activities;
 
 import android.app.ActionBar;
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -36,7 +35,9 @@ import java.util.List;
 
 import static com.onaio.steps.helper.Constants.HH_MEMBER;
 
-public class MemberActivity extends Activity {
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MemberActivity extends AppCompatActivity {
 
     private Member member;
 

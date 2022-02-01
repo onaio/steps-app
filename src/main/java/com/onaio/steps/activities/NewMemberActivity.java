@@ -16,12 +16,13 @@
 
 package com.onaio.steps.activities;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.onaio.steps.R;
 import com.onaio.steps.exceptions.InvalidDataException;
@@ -32,7 +33,7 @@ import com.onaio.steps.model.Household;
 import com.onaio.steps.model.Member;
 import com.onaio.steps.modelViewWrapper.MemberViewWrapper;
 
-public class NewMemberActivity extends Activity {
+public class NewMemberActivity extends AppCompatActivity {
 
 
     private Household household;

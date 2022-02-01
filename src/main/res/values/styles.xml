@@ -20,10 +20,12 @@
     <style name="GreenButtonStyle">
         <item name="android:textColor">@android:color/white</item>
         <item name="android:background">@drawable/button_selector</item>
+        <item name="android:textAllCaps">false</item>
     </style>
 
     <style name="RedButtonStyle">
         <item name="android:textColor">@android:color/white</item>
         <item name="android:background">@drawable/red_button_selector</item>
+        <item name="android:textAllCaps">false</item>
     </style>
 </resources>

@@ -17,10 +17,10 @@
 package com.onaio.steps.model.ODKForm.strategy.interfaces;
 
 
-import android.app.Activity;
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.IOException;
 
 public interface IFormStrategy {
-    void saveDataFile(Activity activity, String path) throws IOException;
+    void saveDataFile(AppCompatActivity activity, String path) throws IOException;
 }
