@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.onaio.steps.StepsTestRunner;
 import com.onaio.steps.activities.HouseholdListActivity;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.KeyValueStore;
@@ -14,14 +15,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
-import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
 
-@RunWith(RobolectricTestRunner.class)
-@Config(emulateSdk = 16,manifest = "src/main/AndroidManifest.xml")
-public class QRCodeUtilsTest {
+public class QRCodeUtilsTest extends StepsTestRunner {
 
     private AppCompatActivity activity;
     private KeyValueStore keyValueStore;
@@ -103,7 +99,7 @@ public class QRCodeUtilsTest {
         keyValueStore.putString(Constants.PA_MAX_AGE, null);
     }
 
-    private String settingsJSONString = "{\n" +
+    private final String settingsJSONString = "{\n" +
             "  \"participantSettings\": {\n" +
             "    \"paFormId\": \"some form id here\",\n" +
             "    \"paMinAge\": \"12\",\n" +

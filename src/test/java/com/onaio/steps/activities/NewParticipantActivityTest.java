@@ -16,6 +16,11 @@
 
 package com.onaio.steps.activities;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.robolectric.Shadows.shadowOf;
+
 import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
@@ -23,6 +28,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.onaio.steps.R;
+import com.onaio.steps.StepsTestRunner;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.KeyValueStore;
 import com.onaio.steps.helper.KeyValueStoreFactory;
@@ -33,24 +39,14 @@ import com.onaio.steps.model.Participant;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.robolectric.Robolectric;
-import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.robolectric.Robolectric.shadowOf;
-
-@Config(emulateSdk = 16, manifest = "src/main/AndroidManifest.xml")
-@RunWith(RobolectricTestRunner.class)
-public class NewParticipantActivityTest {
+public class NewParticipantActivityTest extends StepsTestRunner {
 
     private Participant participant;
     private String date;
@@ -62,7 +58,7 @@ public class NewParticipantActivityTest {
         date = new SimpleDateFormat(Constants.DATE_FORMAT, Locale.ENGLISH).format(new Date());
         participant = new Participant(1, "123-10", "family surname", "firstName", Gender.Female, 34, InterviewStatus.DONE, date);
         intent.putExtra(Constants.PARTICIPANT, participant);
-        newParticipantActivity = Robolectric.buildActivity(NewParticipantActivity.class).withIntent(intent)
+        newParticipantActivity = Robolectric.buildActivity(NewParticipantActivity.class, intent)
                 .create()
                 .get();
     }
@@ -101,7 +97,7 @@ public class NewParticipantActivityTest {
         age.setText("34");
         participantId.setText("123-10");
         View view = Mockito.mock(View.class);
-        Mockito.stub(view.getId()).toReturn(R.id.member_form);
+        Mockito.when(view.getId()).thenReturn(R.id.member_form);
 
         newParticipantActivity.doneBtnClicked(view);
 
@@ -126,7 +122,7 @@ public class NewParticipantActivityTest {
         age.setText("");
         participantId.setText("");
         View view = Mockito.mock(View.class);
-        Mockito.stub(view.getId()).toReturn(R.id.member_form);
+        Mockito.when(view.getId()).thenReturn(R.id.member_form);
 
         newParticipantActivity.doneBtnClicked(view);
 

@@ -16,10 +16,13 @@
 
 package com.onaio.steps.modelViewWrapper;
 
+import static org.junit.Assert.assertEquals;
+
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.onaio.steps.R;
+import com.onaio.steps.StepsTestRunner;
 import com.onaio.steps.activities.NewParticipantActivity;
 import com.onaio.steps.exceptions.InvalidDataException;
 import com.onaio.steps.helper.Constants;
@@ -29,26 +32,17 @@ import com.onaio.steps.model.Gender;
 import com.onaio.steps.model.InterviewStatus;
 import com.onaio.steps.model.Participant;
 
-import junit.framework.Assert;
-
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
-import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import static org.junit.Assert.assertEquals;
-
-@Config(emulateSdk = 16, manifest = "src/main/AndroidManifest.xml")
-@RunWith(RobolectricTestRunner.class)
-public class ParticipantViewWrapperTest {
+public class ParticipantViewWrapperTest extends StepsTestRunner {
 
 
     private final int PARTICIPANT_VIEW_ID = R.id.participant_id_value;
@@ -56,7 +50,6 @@ public class ParticipantViewWrapperTest {
     private final int FIRST_NAME_VIEW_ID = R.id.member_first_name;
     private final int GENDER_VIEW_ID = R.id.member_gender;
     private final int AGE_VIEW_ID = R.id.member_age;
-    private String date;
 
 
     @Rule
@@ -71,7 +64,7 @@ public class ParticipantViewWrapperTest {
 
         newParticipantActivity = Robolectric.setupActivity(NewParticipantActivity.class);
         participantViewWrapper = new ParticipantViewWrapper(newParticipantActivity);
-        date = new SimpleDateFormat(Constants.DATE_FORMAT, Locale.ENGLISH).format(new Date());
+        String date = new SimpleDateFormat(Constants.DATE_FORMAT, Locale.ENGLISH).format(new Date());
         participant = new Participant(1, "123-10", "family surname", "firstName", Gender.Female, 34, InterviewStatus.DONE, date);
         error_string = getStringValue(R.string.invalid) + " %s, " + getStringValue(R.string.fill_correct_message) + " %s";
         setValue(Constants.PA_MIN_AGE, "18");
@@ -185,11 +178,11 @@ public class ParticipantViewWrapperTest {
 
         Participant participant1 = participantViewWrapper.getFromView();
 
-        Assert.assertTrue(participant1.getParticipantID().equals("123-100-1"));
-        Assert.assertTrue(participant1.getFamilySurname().equals("Bansal"));
-        Assert.assertTrue(participant1.getFirstName().equals("Rohit"));
-        Assert.assertTrue(participant1.getGender().toString().equals("Male"));
-        Assert.assertTrue(participant1.getAge() == 20);
+        assertEquals("123-100-1", participant1.getParticipantID());
+        assertEquals("Bansal", participant1.getFamilySurname());
+        assertEquals("Rohit", participant1.getFirstName());
+        assertEquals("Male", participant1.getGender().toString());
+        assertEquals(20, participant1.getAge());
     }
 
 
@@ -203,20 +196,20 @@ public class ParticipantViewWrapperTest {
 
         Participant participant1 = participantViewWrapper.updateFromView(participant);
 
-        Assert.assertTrue(participant1.getParticipantID().equals("123-100-1"));
-        Assert.assertTrue(participant1.getFamilySurname().equals("Bansal"));
-        Assert.assertTrue(participant1.getFirstName().equals("Rohit"));
-        Assert.assertTrue(participant1.getGender().toString().equals("Male"));
-        Assert.assertTrue(participant1.getAge() == 20);
+        assertEquals("123-100-1", participant1.getParticipantID());
+        assertEquals("Bansal", participant1.getFamilySurname());
+        assertEquals("Rohit", participant1.getFirstName());
+        assertEquals("Male", participant1.getGender().toString());
+        assertEquals(20, participant1.getAge());
     }
 
     @Test
     public void ShouldBeAbleToPopulateViewFromIntentData() {
-        TextView participantId = (TextView) newParticipantActivity.findViewById(R.id.participant_id_value);
-        TextView surname = (TextView) newParticipantActivity.findViewById(R.id.member_family_surname);
-        TextView firstName = (TextView) newParticipantActivity.findViewById(R.id.member_first_name);
-        RadioGroup gender = (RadioGroup) newParticipantActivity.findViewById(R.id.member_gender);
-        TextView age = (TextView) newParticipantActivity.findViewById(R.id.member_age);
+        TextView participantId = newParticipantActivity.findViewById(R.id.participant_id_value);
+        TextView surname = newParticipantActivity.findViewById(R.id.member_family_surname);
+        TextView firstName = newParticipantActivity.findViewById(R.id.member_first_name);
+        RadioGroup gender = newParticipantActivity.findViewById(R.id.member_gender);
+        TextView age = newParticipantActivity.findViewById(R.id.member_age);
 
         participantViewWrapper.updateView(participant);
 

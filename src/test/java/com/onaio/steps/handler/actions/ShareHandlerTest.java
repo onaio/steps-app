@@ -16,24 +16,18 @@
 
 package com.onaio.steps.handler.actions;
 
-import android.view.Menu;
-import android.view.MenuItem;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import com.onaio.steps.R;
+import com.onaio.steps.StepsTestRunner;
 import com.onaio.steps.shadows.TestSettingsImportExportActivity;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
-import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
 
-import static org.junit.Assert.*;
-
-@Config(emulateSdk = 16,manifest = "src/main/AndroidManifest.xml")
-@RunWith(RobolectricTestRunner.class)
-public class ShareHandlerTest {
+public class ShareHandlerTest extends StepsTestRunner {
 
     private TestSettingsImportExportActivity settingsImportExportActivity;
     private ShareHandler shareHandler;

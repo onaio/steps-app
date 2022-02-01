@@ -16,14 +16,16 @@
 
 package com.onaio.steps.modelViewWrapper;
 
-import android.content.Context;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertTrue;
+
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.telephony.TelephonyManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.onaio.steps.R;
+import com.onaio.steps.StepsTestRunner;
 import com.onaio.steps.activities.NewHouseholdActivity;
 import com.onaio.steps.exceptions.InvalidDataException;
 import com.onaio.steps.exceptions.NoUniqueIdException;
@@ -35,30 +37,21 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.robolectric.Robolectric;
-import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
-
-@Config(emulateSdk = 16,manifest = "src/main/AndroidManifest.xml")
-@RunWith(RobolectricTestRunner.class)
-public class HouseholdViewWrapperTest {
+public class HouseholdViewWrapperTest extends StepsTestRunner {
 
     private NewHouseholdActivity activity;
     private String currentDate;
 
     @Before
     public void Setup(){
-        NewHouseholdActivity activity = Robolectric.setupActivity(NewHouseholdActivity.class);
+        NewHouseholdActivity activity = Robolectric.buildActivity(NewHouseholdActivity.class).create().get();
         this.activity = Mockito.spy(activity);
         currentDate = new SimpleDateFormat(Constants.DATE_FORMAT, Locale.ENGLISH).format(new Date());
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);

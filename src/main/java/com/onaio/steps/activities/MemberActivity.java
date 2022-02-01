@@ -16,7 +16,6 @@
 
 package com.onaio.steps.activities;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -35,6 +34,7 @@ import java.util.List;
 
 import static com.onaio.steps.helper.Constants.HH_MEMBER;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MemberActivity extends AppCompatActivity {
@@ -51,7 +51,7 @@ public class MemberActivity extends AppCompatActivity {
     }
 
     private void styleActionBar() {
-        ActionBar actionBar = getActionBar();
+        ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(false);
         actionBar.setHomeButtonEnabled(true);
         actionBar.setIcon(R.drawable.ic_action_back);

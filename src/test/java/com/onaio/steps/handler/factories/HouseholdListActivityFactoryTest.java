@@ -16,15 +16,16 @@
 
 package com.onaio.steps.handler.factories;
 
+import com.onaio.steps.StepsTestRunner;
 import com.onaio.steps.activities.HouseholdListActivity;
 import com.onaio.steps.handler.actions.ImportHandler;
 import com.onaio.steps.handler.actions.SaveToSDCardHandler;
 import com.onaio.steps.handler.actions.SubmitDataHandler;
 import com.onaio.steps.handler.activities.HouseholdActivityHandler;
+import com.onaio.steps.handler.activities.HouseholdSummaryActivityMenuHandler;
 import com.onaio.steps.handler.activities.NewHouseholdActivityHandler;
 import com.onaio.steps.handler.activities.ParticipantActivityMenuItemHandler;
 import com.onaio.steps.handler.activities.SettingActivityHandler;
-import com.onaio.steps.handler.activities.HouseholdSummaryActivityMenuHandler;
 import com.onaio.steps.handler.interfaces.IActivityResultHandler;
 import com.onaio.steps.handler.interfaces.IListItemHandler;
 import com.onaio.steps.handler.interfaces.IMenuHandler;
@@ -33,17 +34,12 @@ import junit.framework.Assert;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
-import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Config(emulateSdk = 16,manifest = "src/main/AndroidManifest.xml")
-@RunWith(RobolectricTestRunner.class)
-public class HouseholdListActivityFactoryTest{
+public class HouseholdListActivityFactoryTest extends StepsTestRunner {
 
     private HouseholdListActivity householdListActivityMock;
     @Before

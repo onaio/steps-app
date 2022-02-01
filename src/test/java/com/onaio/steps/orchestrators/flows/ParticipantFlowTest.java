@@ -28,6 +28,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.onaio.steps.R;
+import com.onaio.steps.StepsTestRunner;
 import com.onaio.steps.activities.ParticipantListActivity;
 import com.onaio.steps.activities.SettingsActivity;
 import com.onaio.steps.exceptions.InvalidDataException;
@@ -39,14 +40,9 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
-import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
 
-@Config(emulateSdk = 16, manifest = "src/main/AndroidManifest.xml")
-@RunWith(RobolectricTestRunner.class)
-public class ParticipantFlowTest {
+public class ParticipantFlowTest extends StepsTestRunner {
 
     public String error_string;
     private SettingsActivity settingsActivity;
@@ -59,7 +55,7 @@ public class ParticipantFlowTest {
         Intent intent = new Intent();
         error_string = "Invalid %s, please fill or correct the following fields: %s";
         intent =intent.putExtra(Constants.FLOW_TYPE, FlowType.Participant.toString());
-        settingsActivity = Robolectric.buildActivity(SettingsActivity.class).withIntent(intent).create().get();
+        settingsActivity = Robolectric.buildActivity(SettingsActivity.class, intent).create().get();
         participantFlow = new ParticipantFlow(settingsActivity);
     }
 
@@ -86,10 +82,10 @@ public class ParticipantFlowTest {
 
     @Test
     public void ShouldSaveDataFromSettingFields(){
-        TextView deviceId = (TextView) settingsActivity.findViewById(R.id.deviceId_participant);
-        TextView formId = (TextView) settingsActivity.findViewById(R.id.form_id_participant);
-        TextView maxage = (TextView) settingsActivity.findViewById(R.id.max_age_participant);
-        TextView minage = (TextView) settingsActivity.findViewById(R.id.min_age_participant);
+        TextView deviceId = settingsActivity.findViewById(R.id.deviceId_participant);
+        TextView formId = settingsActivity.findViewById(R.id.form_id_participant);
+        TextView maxage = settingsActivity.findViewById(R.id.max_age_participant);
+        TextView minage = settingsActivity.findViewById(R.id.min_age_participant);
         deviceId.setText("1234567");
         formId.setText("STEPS_Instrument_V3_1");
         maxage.setText("69");
@@ -103,10 +99,10 @@ public class ParticipantFlowTest {
 
     @Test
     public void ShouldNotSaveDeviceIdFromSettingFields(){
-        TextView deviceId = (TextView) settingsActivity.findViewById(R.id.deviceId_participant);
-        TextView formId = (TextView) settingsActivity.findViewById(R.id.form_id_participant);
-        TextView maxage = (TextView) settingsActivity.findViewById(R.id.max_age_participant);
-        TextView minage = (TextView) settingsActivity.findViewById(R.id.min_age_participant);
+        TextView deviceId = settingsActivity.findViewById(R.id.deviceId_participant);
+        TextView formId = settingsActivity.findViewById(R.id.form_id_participant);
+        TextView maxage = settingsActivity.findViewById(R.id.max_age_participant);
+        TextView minage = settingsActivity.findViewById(R.id.min_age_participant);
         deviceId.setText("1234567");
         formId.setText("STEPS_Instrument_V3_1");
         maxage.setText("69");
@@ -120,10 +116,10 @@ public class ParticipantFlowTest {
 
     @Test
     public void ShouldTrimSettingsBeforeSaving() {
-        TextView deviceId = (TextView) settingsActivity.findViewById(R.id.deviceId_participant);
-        TextView formId = (TextView) settingsActivity.findViewById(R.id.form_id_participant);
-        TextView maxage = (TextView) settingsActivity.findViewById(R.id.max_age_participant);
-        TextView minage = (TextView) settingsActivity.findViewById(R.id.min_age_participant);
+        TextView deviceId = settingsActivity.findViewById(R.id.deviceId_participant);
+        TextView formId = settingsActivity.findViewById(R.id.form_id_participant);
+        TextView maxage = settingsActivity.findViewById(R.id.max_age_participant);
+        TextView minage = settingsActivity.findViewById(R.id.min_age_participant);
         deviceId.setText(" 1234567 ");
         formId.setText(" STEPS_Instrument_V3_1 ");
         maxage.setText(" 69 ");
@@ -137,10 +133,10 @@ public class ParticipantFlowTest {
 
     @Test
     public void ShouldNotSaveDataFromSettingFields() throws InvalidDataException {
-        TextView deviceId = (TextView) settingsActivity.findViewById(R.id.deviceId_participant);
-        TextView formId = (TextView) settingsActivity.findViewById(R.id.form_id_participant);
-        TextView maxage = (TextView) settingsActivity.findViewById(R.id.max_age_participant);
-        TextView minage = (TextView) settingsActivity.findViewById(R.id.min_age_participant);
+        TextView deviceId = settingsActivity.findViewById(R.id.deviceId_participant);
+        TextView formId = settingsActivity.findViewById(R.id.form_id_participant);
+        TextView maxage = settingsActivity.findViewById(R.id.max_age_participant);
+        TextView minage = settingsActivity.findViewById(R.id.min_age_participant);
         deviceId.setText("");
         formId.setText("STEPS_Instrument_V3_1");
         maxage.setText("");

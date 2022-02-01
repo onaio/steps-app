@@ -16,33 +16,33 @@
 
 package com.onaio.steps.model;
 
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertTrue;
+
 import android.content.ContentValues;
 import android.database.Cursor;
 
+import com.onaio.steps.StepsTestRunner;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;
+
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.ArgumentMatcher;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import static junit.framework.Assert.assertTrue;
-
-@RunWith(RobolectricTestRunner.class)
-@Config(emulateSdk = 16, manifest = "src/main/AndroidManifest.xml",shadows = {ShadowDatabaseHelper.class})
-public class MemberTest {
+@Config(shadows = {ShadowDatabaseHelper.class})
+public class MemberTest extends StepsTestRunner {
 
     private final int DELTA = 1;
     private final int NOT_DELETED_INT = 0;
-    private String currentDate = new SimpleDateFormat(Constants.DATE_FORMAT, Locale.ENGLISH).format(new Date());
+    private final String currentDate = new SimpleDateFormat(Constants.DATE_FORMAT, Locale.ENGLISH).format(new Date());
     @Mock
     private DatabaseHelper db;
     @Mock
@@ -101,48 +101,40 @@ public class MemberTest {
 
 
     private ArgumentMatcher<ContentValues> saveMemberMatcher(final int memberCount) {
-        return new ArgumentMatcher<ContentValues>() {
-            @Override
-            public boolean matches(Object argument) {
-                ContentValues contentValues = (ContentValues) argument;
-                assertBasicDetails(contentValues, NOT_DELETED_INT);
-                assertTrue(contentValues.containsKey(Member.MEMBER_HOUSEHOLD_ID));
-                assertTrue(contentValues.getAsString(Member.MEMBER_HOUSEHOLD_ID).equals(String.format("%s-%d", householdName, memberCount + DELTA)));
-                return true;
-            }
+        return contentValues -> {
+            assertBasicDetails(contentValues, NOT_DELETED_INT);
+            assertTrue(contentValues.containsKey(Member.MEMBER_HOUSEHOLD_ID));
+            assertTrue(contentValues.getAsString(Member.MEMBER_HOUSEHOLD_ID).equals(String.format("%s-%d", householdName, memberCount + DELTA)));
+            return true;
         };
     }
 
     private ArgumentMatcher<ContentValues> updateMemberMatcher(final int deleted) {
-        return new ArgumentMatcher<ContentValues>() {
-            @Override
-            public boolean matches(Object argument) {
-                ContentValues contentValues = (ContentValues) argument;
-                assertBasicDetails(contentValues, deleted);
-                return true;
-            }
+        return contentValues -> {
+            assertBasicDetails(contentValues, deleted);
+            return true;
         };
     }
 
     private void assertBasicDetails(ContentValues contentValues, int deleted) {
         assertTrue(contentValues.containsKey(Member.FAMILY_SURNAME));
-        assertTrue(contentValues.getAsString(Member.FAMILY_SURNAME).equals(memberFamilyName));
+        assertEquals(contentValues.getAsString(Member.FAMILY_SURNAME), memberFamilyName);
         assertTrue(contentValues.containsKey(Member.FIRST_NAME));
-        assertTrue(contentValues.getAsString(Member.FIRST_NAME).equals(memberFirstName));
+        assertEquals(contentValues.getAsString(Member.FIRST_NAME), memberFirstName);
         assertTrue(contentValues.containsKey(Member.GENDER));
-        assertTrue(contentValues.getAsString(Member.GENDER).equals(memberGender.toString()));
+        assertEquals(contentValues.getAsString(Member.GENDER), memberGender.toString());
         assertTrue(contentValues.containsKey(Member.AGE));
-        assertTrue(contentValues.getAsInteger(Member.AGE) == memberAge);
+        assertEquals((int) contentValues.getAsInteger(Member.AGE), memberAge);
         assertTrue(contentValues.containsKey(Member.HOUSEHOLD_ID));
-        assertTrue(contentValues.getAsString(Member.HOUSEHOLD_ID).equals(householdId));
+        assertEquals(contentValues.getAsString(Member.HOUSEHOLD_ID), householdId);
         assertTrue(contentValues.containsKey(Member.DELETED));
-        assertTrue(contentValues.getAsInteger(Member.DELETED) == deleted);
+        assertEquals((int) contentValues.getAsInteger(Member.DELETED), deleted);
     }
 
     private void stubDb(int numberOfMembers) {
 
-        Mockito.stub(cursor.getCount()).toReturn(numberOfMembers);
-        Mockito.stub(db.exec(Mockito.anyString())).toReturn(cursor);
+        Mockito.when(cursor.getCount()).thenReturn(numberOfMembers);
+        Mockito.when(db.exec(Mockito.anyString())).thenReturn(cursor);
     }
 
 

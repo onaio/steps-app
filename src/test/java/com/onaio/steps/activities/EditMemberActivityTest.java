@@ -17,12 +17,19 @@
 package com.onaio.steps.activities;
 
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.robolectric.Shadows.shadowOf;
+
 import android.content.Intent;
 import android.view.View;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.onaio.steps.R;
+import com.onaio.steps.StepsTestRunner;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.KeyValueStore;
 import com.onaio.steps.helper.KeyValueStoreFactory;
@@ -33,21 +40,10 @@ import com.onaio.steps.model.Member;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.robolectric.Robolectric;
-import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.robolectric.Robolectric.shadowOf;
-
-@Config(emulateSdk = 16,manifest = "src/main/AndroidManifest.xml")
-@RunWith(RobolectricTestRunner.class)
-public class EditMemberActivityTest {
+public class EditMemberActivityTest extends StepsTestRunner {
 
     private EditMemberActivity editMemberActivity;
     private Member member;
@@ -59,8 +55,7 @@ public class EditMemberActivityTest {
         household = new Household("1","123","987654321","1", InterviewStatus.DEFERRED,"2015-12-13", "uniqueDevId", "Dummy comments");
         member = new Member(1,"rana","manisha", Gender.Female,28, household,"123-1",false);
         intent.putExtra(Constants.HH_MEMBER, member);
-        editMemberActivity = Robolectric.buildActivity(EditMemberActivity.class)
-                            .withIntent(intent)
+        editMemberActivity = Robolectric.buildActivity(EditMemberActivity.class, intent)
                             .create()
                             .get();
     }
@@ -92,7 +87,7 @@ public class EditMemberActivityTest {
         setValue(Constants.HH_MIN_AGE,"12");
         setValue(Constants.HH_MAX_AGE,"60");
         View viewMock = Mockito.mock(View.class);
-        Mockito.stub(viewMock.getId()).toReturn(R.id.member_form);
+        Mockito.when(viewMock.getId()).thenReturn(R.id.member_form);
 
         editMemberActivity.doneBtnClicked(viewMock);
 
@@ -106,7 +101,7 @@ public class EditMemberActivityTest {
         setValue(Constants.HH_MIN_AGE,"12");
         setValue(Constants.HH_MAX_AGE,"60");
         View viewMock = Mockito.mock(View.class);
-        Mockito.stub(viewMock.getId()).toReturn(R.id.member_form);
+        Mockito.when(viewMock.getId()).thenReturn(R.id.member_form);
         TextView surnameView = (TextView) editMemberActivity.findViewById(R.id.member_family_surname);
         TextView firstNameView = (TextView) editMemberActivity.findViewById(R.id.member_first_name);
         TextView ageView = (TextView) editMemberActivity.findViewById(R.id.member_age);

@@ -45,8 +45,7 @@ public class HouseholdListActivity extends BaseListActivity {
 
     protected void setLayout() {
         setContentView(R.layout.main);
-        String title = "<font color='#008148'>&nbsp;" + getString(R.string.main_header) + "</font>";
-        setTitle(Html.fromHtml(title));
+        setTitle(getString(R.string.main_header));
         Button householdButton = (Button) findViewById(R.id.action_add_new_item);
         householdButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_action_new_household, 0, 0, 0);
         Button submitDataButton = (Button) findViewById(R.id.action_submit_data);

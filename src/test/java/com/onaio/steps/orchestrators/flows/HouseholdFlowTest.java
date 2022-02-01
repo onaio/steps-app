@@ -28,6 +28,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.onaio.steps.R;
+import com.onaio.steps.StepsTestRunner;
 import com.onaio.steps.activities.HouseholdListActivity;
 import com.onaio.steps.activities.SettingsActivity;
 import com.onaio.steps.exceptions.InvalidDataException;
@@ -39,14 +40,9 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
-import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
 
-@Config(emulateSdk = 16, manifest = "src/main/AndroidManifest.xml")
-@RunWith(RobolectricTestRunner.class)
-public class HouseholdFlowTest {
+public class HouseholdFlowTest extends StepsTestRunner {
 
     public String error_string;
     private SettingsActivity settingsActivity;
@@ -59,7 +55,7 @@ public class HouseholdFlowTest {
         Intent intent = new Intent();
         error_string = "Invalid %s, please fill or correct the following fields: %s";
         intent =intent.putExtra(Constants.FLOW_TYPE, FlowType.Household.toString());
-        settingsActivity = Robolectric.buildActivity(SettingsActivity.class).withIntent(intent).create().get();
+        settingsActivity = Robolectric.buildActivity(SettingsActivity.class, intent).create().get();
         householdFlow = new HouseholdFlow(settingsActivity);
     }
 
@@ -90,11 +86,11 @@ public class HouseholdFlowTest {
 
     @Test
     public void ShouldSaveDataFromSettingFields(){
-        TextView deviceId = (TextView) settingsActivity.findViewById(R.id.deviceId_household);
-        TextView formId = (TextView) settingsActivity.findViewById(R.id.form_id_household);
-        TextView maxage = (TextView) settingsActivity.findViewById(R.id.max_age_household);
-        TextView minage = (TextView) settingsActivity.findViewById(R.id.min_age_household);
-        TextView endPointUrl = (TextView) settingsActivity.findViewById(R.id.endpointUrl_household);
+        TextView deviceId = settingsActivity.findViewById(R.id.deviceId_household);
+        TextView formId = settingsActivity.findViewById(R.id.form_id_household);
+        TextView maxage = settingsActivity.findViewById(R.id.max_age_household);
+        TextView minage = settingsActivity.findViewById(R.id.min_age_household);
+        TextView endPointUrl = settingsActivity.findViewById(R.id.endpointUrl_household);
         deviceId.setText("1234567");
         formId.setText("STEPS_Instrument_V3_1");
         maxage.setText("69");
@@ -109,11 +105,11 @@ public class HouseholdFlowTest {
 
     @Test
     public void ShouldNotSaveDeviceIdFromSettingFields(){
-        TextView deviceId = (TextView) settingsActivity.findViewById(R.id.deviceId_household);
-        TextView formId = (TextView) settingsActivity.findViewById(R.id.form_id_household);
-        TextView maxage = (TextView) settingsActivity.findViewById(R.id.max_age_household);
-        TextView minage = (TextView) settingsActivity.findViewById(R.id.min_age_household);
-        TextView endPointUrl = (TextView) settingsActivity.findViewById(R.id.endpointUrl_household);
+        TextView deviceId = settingsActivity.findViewById(R.id.deviceId_household);
+        TextView formId = settingsActivity.findViewById(R.id.form_id_household);
+        TextView maxage = settingsActivity.findViewById(R.id.max_age_household);
+        TextView minage = settingsActivity.findViewById(R.id.min_age_household);
+        TextView endPointUrl = settingsActivity.findViewById(R.id.endpointUrl_household);
         deviceId.setText("1234567");
         formId.setText("STEPS_Instrument_V3_1");
         maxage.setText("69");
@@ -128,13 +124,13 @@ public class HouseholdFlowTest {
 
     @Test
     public void ShouldTrimSettingsBeforeSaving() {
-        TextView userId = (TextView) settingsActivity.findViewById(R.id.user_id_household);
-        TextView userPwd = (TextView) settingsActivity.findViewById(R.id.user_password_household);
-        TextView deviceId = (TextView) settingsActivity.findViewById(R.id.deviceId_household);
-        TextView formId = (TextView) settingsActivity.findViewById(R.id.form_id_household);
-        TextView maxage = (TextView) settingsActivity.findViewById(R.id.max_age_household);
-        TextView minage = (TextView) settingsActivity.findViewById(R.id.min_age_household);
-        TextView endPointUrl = (TextView) settingsActivity.findViewById(R.id.endpointUrl_household);
+        TextView userId = settingsActivity.findViewById(R.id.user_id_household);
+        TextView userPwd = settingsActivity.findViewById(R.id.user_password_household);
+        TextView deviceId = settingsActivity.findViewById(R.id.deviceId_household);
+        TextView formId = settingsActivity.findViewById(R.id.form_id_household);
+        TextView maxage = settingsActivity.findViewById(R.id.max_age_household);
+        TextView minage = settingsActivity.findViewById(R.id.min_age_household);
+        TextView endPointUrl = settingsActivity.findViewById(R.id.endpointUrl_household);
         userId.setText(" user_id ");
         userPwd.setText(" user_pwd ");
         deviceId.setText(" 1234567 ");
@@ -151,14 +147,14 @@ public class HouseholdFlowTest {
 
     @Test
     public void ShouldNotSaveDataFromSettingFields() throws InvalidDataException {
-        TextView userId = (TextView) settingsActivity.findViewById(R.id.user_id_household);
-        TextView userPwd = (TextView) settingsActivity.findViewById(R.id.user_password_household);
-        TextView deviceId = (TextView) settingsActivity.findViewById(R.id.deviceId_household);
-        TextView formId = (TextView) settingsActivity.findViewById(R.id.form_id_household);
-        TextView maxage = (TextView) settingsActivity.findViewById(R.id.max_age_household);
-        TextView minage = (TextView) settingsActivity.findViewById(R.id.min_age_household);
-        TextView endPointUrl = (TextView) settingsActivity.findViewById(R.id.endpointUrl_household);
-        TextView householdseed = (TextView) settingsActivity.findViewById(R.id.household_seed_household);
+        TextView userId = settingsActivity.findViewById(R.id.user_id_household);
+        TextView userPwd = settingsActivity.findViewById(R.id.user_password_household);
+        TextView deviceId = settingsActivity.findViewById(R.id.deviceId_household);
+        TextView formId = settingsActivity.findViewById(R.id.form_id_household);
+        TextView maxage = settingsActivity.findViewById(R.id.max_age_household);
+        TextView minage = settingsActivity.findViewById(R.id.min_age_household);
+        TextView endPointUrl = settingsActivity.findViewById(R.id.endpointUrl_household);
+        TextView householdseed = settingsActivity.findViewById(R.id.household_seed_household);
         userId.setText("");
         userPwd.setText("");
         deviceId.setText("");
@@ -201,11 +197,4 @@ public class HouseholdFlowTest {
     private String getValue(AppCompatActivity activity, String key) {
         return KeyValueStoreFactory.instance(activity).getString(key);
     }
-
-    private String getStringValue(int value) {
-        return settingsActivity.getString(value);
-    }
-
-
-
 }

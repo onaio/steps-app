@@ -1,8 +1,11 @@
 package com.onaio.steps.model.ODKForm.strategy;
 
+import static org.robolectric.Shadows.shadowOf;
+
 import android.content.Intent;
 import android.net.Uri;
 
+import com.onaio.steps.StepsTestRunner;
 import com.onaio.steps.activities.ParticipantActivity;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.FileUtil;
@@ -14,14 +17,11 @@ import com.onaio.steps.model.Participant;
 import com.onaio.steps.model.RequestCode;
 import com.onaio.steps.model.ShadowDatabaseHelper;
 
-import junit.framework.Assert;
-
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.robolectric.Robolectric;
-import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
 import java.io.File;
@@ -34,13 +34,11 @@ import java.util.Locale;
 /**
  * Created by Jason Rogena - jrogena@ona.io on 29/09/2016.
  */
-@RunWith(RobolectricTestRunner.class)
-@Config(emulateSdk = 16, manifest = "src/main/AndroidManifest.xml",shadows = {ShadowDatabaseHelper.class})
-public class ParticipantFormStrategyTest {
-    private FileUtil fileUtilMock;
+
+@Config(shadows = {ShadowDatabaseHelper.class})
+public class ParticipantFormStrategyTest extends StepsTestRunner {
     private ParticipantActivity participantActivity;
     private Participant participant;
-    private ODKForm odkForm;
     private IForm blankFormMock;
 
     private final String PARTICIPANT_ID = "participantID-1";
@@ -60,14 +58,14 @@ public class ParticipantFormStrategyTest {
         Intent intent = new Intent();
         intent.putExtra(Constants.PARTICIPANT, participant);
 
-        participantActivity = Robolectric.buildActivity(ParticipantActivity.class).withIntent(intent).create().get();
+        participantActivity = Robolectric.buildActivity(ParticipantActivity.class, intent).create().get();
         blankFormMock = Mockito.mock(IForm.class);
     }
 
     private void stubFileUtil() {
-        fileUtilMock = Mockito.mock(FileUtil.class);
-        Mockito.stub(fileUtilMock.withData(Mockito.any(String[].class))).toReturn(fileUtilMock);
-        Mockito.stub(fileUtilMock.withHeader(Mockito.any(String[].class))).toReturn(fileUtilMock);
+        FileUtil fileUtilMock = Mockito.mock(FileUtil.class);
+        Mockito.when(fileUtilMock.withData(Mockito.any(String[].class))).thenReturn(fileUtilMock);
+        Mockito.when(fileUtilMock.withHeader(Mockito.any(String[].class))).thenReturn(fileUtilMock);
     }
 
     @Test
@@ -75,13 +73,13 @@ public class ParticipantFormStrategyTest {
         //mock launch ODK with the participant
         String blankFormMediaPath = participantActivity.getFilesDir().getPath();
         Uri blankFormURI = Uri.parse("uri");
-        Mockito.stub(blankFormMock.getPath()).toReturn(blankFormMediaPath);
-        Mockito.stub(blankFormMock.getUri()).toReturn(blankFormURI);
-        odkForm = new ODKForm(blankFormMock, null);
+        Mockito.when(blankFormMock.getPath()).thenReturn(blankFormMediaPath);
+        Mockito.when(blankFormMock.getUri()).thenReturn(blankFormURI);
+        ODKForm odkForm = new ODKForm(blankFormMock, null);
 
         odkForm.open(new ParticipantFormStrategy(participant, DEVICE_ID), participantActivity, RequestCode.SURVEY.getCode());
 
-        Robolectric.shadowOf(participantActivity).getNextStartedActivityForResult();
+        shadowOf(participantActivity).getNextStartedActivityForResult();
 
         //see if generated csv file has the required columns
         File formMediaDir = new File(blankFormMediaPath);

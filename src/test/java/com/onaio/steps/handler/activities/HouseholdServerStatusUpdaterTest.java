@@ -28,19 +28,13 @@ import junit.framework.Assert;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.robolectric.Robolectric;
-import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
-import org.robolectric.annotation.Implementation;
 import org.robolectric.annotation.Implements;
 import org.robolectric.shadows.ShadowAsyncTask;
 
-import java.util.concurrent.Executor;
-
-@Config(emulateSdk = 16,manifest = "src/main/AndroidManifest.xml", shadows = {HouseholdServerStatusUpdaterTest.ShadowLoadingDoneHouseHold.class})
-@RunWith(RobolectricTestRunner.class)
+@Config(shadows = {HouseholdServerStatusUpdaterTest.ShadowLoadingDoneHouseHold.class})
 public class HouseholdServerStatusUpdaterTest {
 
     private HouseholdListActivity householdListActivity;
@@ -71,10 +65,10 @@ public class HouseholdServerStatusUpdaterTest {
     @Implements(AsyncTask.class)
     public static class ShadowLoadingDoneHouseHold<Params, Progress, Result> extends ShadowAsyncTask<Params, Progress, Result> {
 
-        @Override
+        /*@Override
         @Implementation
         public AsyncTask<Params, Progress, Result> executeOnExecutor(Executor executor, Params... params) {
             return super.execute(params);
-        }
+        }*/
     }
 }

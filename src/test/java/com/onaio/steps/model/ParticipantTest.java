@@ -16,33 +16,31 @@
 
 package com.onaio.steps.model;
 
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertTrue;
+
 import android.content.ContentValues;
 import android.database.Cursor;
 
+import com.onaio.steps.StepsTestRunner;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.ArgumentMatcher;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import static junit.framework.Assert.assertTrue;
+@Config(shadows = {ShadowDatabaseHelper.class})
+public class ParticipantTest extends StepsTestRunner {
 
-@RunWith(RobolectricTestRunner.class)
-@Config(emulateSdk = 16, manifest = "src/main/AndroidManifest.xml",shadows = {ShadowDatabaseHelper.class})
-
-public class ParticipantTest {
-
-    private String currentDate = new SimpleDateFormat(Constants.DATE_FORMAT, Locale.ENGLISH).format(new Date());
+    private final String currentDate = new SimpleDateFormat(Constants.DATE_FORMAT, Locale.ENGLISH).format(new Date());
     public static final String ID = "Id";
 
     @Mock
@@ -67,25 +65,17 @@ public class ParticipantTest {
     }
 
     private ArgumentMatcher<ContentValues> saveMemberMatcher() {
-        return new ArgumentMatcher<ContentValues>() {
-            @Override
-            public boolean matches(Object argument) {
-                ContentValues contentValues = (ContentValues) argument;
-                assertTrue(contentValues.containsKey(Participant.CREATED_AT));
-                assertTrue(contentValues.getAsString(Participant.CREATED_AT).equals(participant.getCreatedAt()));
-                assertBasicDetails(contentValues);
-                 return true;
-            }
+        return contentValues -> {
+            assertTrue(contentValues.containsKey(Participant.CREATED_AT));
+            assertEquals(contentValues.getAsString(Participant.CREATED_AT), participant.getCreatedAt());
+            assertBasicDetails(contentValues);
+             return true;
         };
     }
     private ArgumentMatcher<ContentValues> updateMemberMatcher() {
-        return new ArgumentMatcher<ContentValues>() {
-            @Override
-            public boolean matches(Object argument) {
-                ContentValues contentValues = (ContentValues) argument;
-                assertBasicDetails(contentValues);
-                return true;
-            }
+        return contentValues -> {
+            assertBasicDetails(contentValues);
+            return true;
         };
     }
 
@@ -96,12 +86,12 @@ public class ParticipantTest {
         assertTrue(contentValues.containsKey(Participant.AGE));
         assertTrue(contentValues.containsKey(Participant.GENDER));
         assertTrue(contentValues.containsKey(Participant.STATUS));
-        assertTrue(contentValues.getAsString(Participant.FAMILY_SURNAME).equals(participant.getFamilySurname()));
-        assertTrue(contentValues.getAsString(Participant.PARTICIPANT_ID).equals(participant.getParticipantID()));
-        assertTrue(contentValues.getAsString(Participant.FIRST_NAME).equals(participant.getFirstName()));
-        assertTrue(contentValues.getAsString(Participant.GENDER).equals(participant.getGender().toString()));
-        assertTrue(contentValues.getAsInteger(Participant.AGE).equals(participant.getAge()));
-        assertTrue(contentValues.getAsString(Participant.STATUS).equals(participant.getStatus().toString()));
+        assertEquals(contentValues.getAsString(Participant.FAMILY_SURNAME), participant.getFamilySurname());
+        assertEquals(contentValues.getAsString(Participant.PARTICIPANT_ID), participant.getParticipantID());
+        assertEquals(contentValues.getAsString(Participant.FIRST_NAME), participant.getFirstName());
+        assertEquals(contentValues.getAsString(Participant.GENDER), participant.getGender().toString());
+        assertEquals((int) contentValues.getAsInteger(Participant.AGE), participant.getAge());
+        assertEquals(contentValues.getAsString(Participant.STATUS), participant.getStatus().toString());
 
     }
         @Test

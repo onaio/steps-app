@@ -16,6 +16,11 @@
 
 package com.onaio.steps.activities;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.robolectric.Shadows.shadowOf;
+
 import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
@@ -23,6 +28,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.onaio.steps.R;
+import com.onaio.steps.StepsTestRunner;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.KeyValueStore;
 import com.onaio.steps.helper.KeyValueStoreFactory;
@@ -32,24 +38,14 @@ import com.onaio.steps.model.InterviewStatus;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.robolectric.Robolectric;
-import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.robolectric.Robolectric.shadowOf;
-
-@Config(emulateSdk = 16, manifest = "src/main/AndroidManifest.xml")
-@RunWith(RobolectricTestRunner.class)
-public class NewMemberActivityTest {
+public class NewMemberActivityTest extends StepsTestRunner {
 
     private NewMemberActivity newMemberActivity;
     private String currentDate = new SimpleDateFormat(Constants.DATE_FORMAT, Locale.ENGLISH).format(new Date());
@@ -60,7 +56,7 @@ public class NewMemberActivityTest {
         household = new Household("2", "Any HouseholdName", "123456789", "", InterviewStatus.SELECTION_NOT_DONE, currentDate, "uniqueDevId", "Dummy comments");
         Intent intent = new Intent();
         intent.putExtra(Constants.HH_HOUSEHOLD, household);
-        newMemberActivity = Robolectric.buildActivity(NewMemberActivity.class).withIntent(intent)
+        newMemberActivity = Robolectric.buildActivity(NewMemberActivity.class, intent)
                 .create()
                 .get();
     }
@@ -97,7 +93,7 @@ public class NewMemberActivityTest {
         gender.check(R.id.male_selection);
         age.setText("28");
         View view = Mockito.mock(View.class);
-        Mockito.stub(view.getId()).toReturn(R.id.member_form);
+        Mockito.when(view.getId()).thenReturn(R.id.member_form);
 
         newMemberActivity.doneBtnClicked(view);
 
@@ -120,7 +116,7 @@ public class NewMemberActivityTest {
         gender.check(R.id.male_selection);
         age.setText("");
         View view = Mockito.mock(View.class);
-        Mockito.stub(view.getId()).toReturn(R.id.member_form);
+        Mockito.when(view.getId()).thenReturn(R.id.member_form);
 
         newMemberActivity.doneBtnClicked(view);
 

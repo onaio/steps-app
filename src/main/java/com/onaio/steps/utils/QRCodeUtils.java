@@ -190,6 +190,13 @@ public class QRCodeUtils {
 
         JSONObject jsonObject = new JSONObject();
 
+        JSONObject participantSettings = new JSONObject();
+        participantSettings.put(Constants.PA_FORM_ID, keyValueStore.getString(Constants.PA_FORM_ID));
+        participantSettings.put(Constants.PA_MIN_AGE, keyValueStore.getString(Constants.PA_MIN_AGE));
+        participantSettings.put(Constants.PA_MAX_AGE, keyValueStore.getString(Constants.PA_MAX_AGE));
+
+        jsonObject.put("participantSettings", participantSettings);
+
         JSONObject houseHoldSettings = new JSONObject();
         houseHoldSettings.put(Constants.HH_SURVEY_ID,
                 keyValueStore.getString(Constants.HH_SURVEY_ID)
@@ -203,13 +210,6 @@ public class QRCodeUtils {
         houseHoldSettings.put(Constants.ENDPOINT_URL, keyValueStore.getString(Constants.ENDPOINT_URL));
 
         jsonObject.put("householdSettings", houseHoldSettings);
-
-        JSONObject participantSettings = new JSONObject();
-        participantSettings.put(Constants.PA_FORM_ID, keyValueStore.getString(Constants.PA_FORM_ID));
-        participantSettings.put(Constants.PA_MIN_AGE, keyValueStore.getString(Constants.PA_MIN_AGE));
-        participantSettings.put(Constants.PA_MAX_AGE, keyValueStore.getString(Constants.PA_MAX_AGE));
-
-        jsonObject.put("participantSettings", participantSettings);
 
         return jsonObject.toString();
     }

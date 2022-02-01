@@ -16,28 +16,25 @@
 
 package com.onaio.steps.handler.activities;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.robolectric.Shadows.shadowOf;
+
 import android.content.Intent;
 
 import com.onaio.steps.R;
+import com.onaio.steps.StepsTestRunner;
 import com.onaio.steps.activities.MainActivityOrchestrator;
 import com.onaio.steps.activities.WelcomeActivity;
 import com.onaio.steps.model.RequestCode;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
-import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowActivity;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
-@Config(emulateSdk = 16,manifest = "src/main/AndroidManifest.xml")
-@RunWith(RobolectricTestRunner.class)
-public class SettingActivityHandlerTest {
+public class SettingActivityHandlerTest extends StepsTestRunner {
 
 
     private WelcomeActivity welcomeActivity;
@@ -73,7 +70,7 @@ public class SettingActivityHandlerTest {
     @Test
     public void ShouldBeAbleToHandleResultAndStartMainOrchestraActivity(){
         settingActivityHandler.handleResult(null, WelcomeActivity.RESULT_OK);
-        ShadowActivity shadowActivity = Robolectric.shadowOf(welcomeActivity);
+        ShadowActivity shadowActivity = shadowOf(welcomeActivity);
         Intent nextStartedActivity = shadowActivity.getNextStartedActivity();
         assertEquals(MainActivityOrchestrator.class.getName(),nextStartedActivity.getComponent().getClassName());
         assertTrue(welcomeActivity.isFinishing());

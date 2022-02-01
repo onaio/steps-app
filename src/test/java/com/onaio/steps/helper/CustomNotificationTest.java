@@ -7,17 +7,13 @@ import android.content.Context;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.onaio.steps.R;
+import com.onaio.steps.StepsTestRunner;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.robolectric.Robolectric;
-import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
 
-@Config(emulateSdk = 16, manifest = "src/main/AndroidManifest.xml")
-@RunWith(RobolectricTestRunner.class)
-public class CustomNotificationTest {
+public class CustomNotificationTest extends StepsTestRunner {
 
     @Test
     public void testNotifyShouldCallNotificationManagerNotify() {

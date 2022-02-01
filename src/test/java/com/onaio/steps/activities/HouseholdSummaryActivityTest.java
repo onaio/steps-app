@@ -3,7 +3,10 @@ package com.onaio.steps.activities;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.test.core.app.ApplicationProvider;
+
 import com.onaio.steps.R;
+import com.onaio.steps.StepsTestRunner;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.InterviewStatus;
@@ -13,31 +16,25 @@ import junit.framework.Assert;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
-import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
 
 import java.util.HashMap;
 import java.util.Map;
 
-@Config(emulateSdk = 16,manifest = "src/main/AndroidManifest.xml")
-@RunWith(RobolectricTestRunner.class)
-public class HouseholdSummaryActivityTest {
+public class HouseholdSummaryActivityTest extends StepsTestRunner {
 
     private HouseholdSummaryActivity activity;
 
     @Before
     public void setUp() {
-        activity = Robolectric.buildActivity(HouseholdSummaryActivity.class).create().get();
         insertHouseholds();
+        activity = Robolectric.buildActivity(HouseholdSummaryActivity.class).create().get();
     }
 
     @Test
     public void testVerifyAllStatusCount() {
-        activity.onCreate(null);
 
-        LinearLayout container = (LinearLayout) activity.findViewById(R.id.summary_list);
+        LinearLayout container = activity.findViewById(R.id.summary_list);
         Assert.assertEquals(7, container.getChildCount());
 
         Assert.assertEquals("3", getTotal(container, R.integer.item_done));
@@ -54,7 +51,7 @@ public class HouseholdSummaryActivityTest {
     }
 
     private void insertHouseholds() {
-        DatabaseHelper db = new DatabaseHelper(activity);
+        DatabaseHelper db = new DatabaseHelper(ApplicationProvider.getApplicationContext());
         Map<InterviewStatus, Integer> statusCountMap = new HashMap<>();
         statusCountMap.put(InterviewStatus.DONE, 3);
         statusCountMap.put(InterviewStatus.EMPTY_HOUSEHOLD, 4);

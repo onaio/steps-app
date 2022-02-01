@@ -28,31 +28,27 @@ import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.onaio.steps.R;
+import com.onaio.steps.StepsTestRunner;
 import com.onaio.steps.activities.SettingsActivity;
 import com.onaio.steps.orchestrators.flows.FlowType;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
-import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
 
 import java.util.Calendar;
 
 /**
  * Created by Jason Rogena - jrogena@ona.io on 13/10/2016.
  */
-@Config(emulateSdk = 16, manifest = "src/main/AndroidManifest.xml")
-@RunWith(RobolectricTestRunner.class)
-public class AuthDialogTest {
+public class AuthDialogTest extends StepsTestRunner {
     AppCompatActivity settingsActivity;
 
     @Before
     public void setup() {
         Intent intent = new Intent();
         intent.putExtra(Constants.FLOW_TYPE, FlowType.Household.toString());
-        settingsActivity = Robolectric.buildActivity(SettingsActivity.class).withIntent(intent).create().get();
+        settingsActivity = Robolectric.buildActivity(SettingsActivity.class, intent).create().get();
     }
 
     /**

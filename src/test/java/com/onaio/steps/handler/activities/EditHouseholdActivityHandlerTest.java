@@ -16,24 +16,6 @@
 
 package com.onaio.steps.handler.activities;
 
-import android.app.Activity;
-import android.content.Intent;
-
-import com.onaio.steps.R;
-import com.onaio.steps.activities.HouseholdActivity;
-import com.onaio.steps.helper.Constants;
-import com.onaio.steps.model.Household;
-import com.onaio.steps.model.RequestCode;
-
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.ArgumentMatcher;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
-
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
@@ -41,9 +23,23 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
-@Config(emulateSdk = 16,manifest = "src/main/AndroidManifest.xml")
-@RunWith(RobolectricTestRunner.class)
-public class EditHouseholdActivityHandlerTest {
+import android.app.Activity;
+import android.content.Intent;
+
+import com.onaio.steps.R;
+import com.onaio.steps.StepsTestRunner;
+import com.onaio.steps.activities.HouseholdActivity;
+import com.onaio.steps.helper.Constants;
+import com.onaio.steps.model.Household;
+import com.onaio.steps.model.RequestCode;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.ArgumentMatcher;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+
+public class EditHouseholdActivityHandlerTest extends StepsTestRunner {
 
     private final int MENU_ID = R.id.action_household_edit;
     @Mock
@@ -77,14 +73,10 @@ public class EditHouseholdActivityHandlerTest {
     }
 
     private ArgumentMatcher<Intent> householdIntentMatcher() {
-        return new ArgumentMatcher<Intent>() {
-            @Override
-            public boolean matches(Object argument) {
-                Intent intent = (Intent) argument;
-                Household householdActual = (Household) intent.getSerializableExtra(Constants.HH_HOUSEHOLD);
-                assertEquals(householdMock,householdActual);
-                return true;
-            }
+        return intent -> {
+            Household householdActual = (Household) intent.getSerializableExtra(Constants.HH_HOUSEHOLD);
+            assertEquals(householdMock,householdActual);
+            return true;
         };
     }
 

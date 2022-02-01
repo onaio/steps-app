@@ -22,7 +22,10 @@ import android.telephony.TelephonyManager;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import androidx.test.core.app.ApplicationProvider;
+
 import com.onaio.steps.R;
+import com.onaio.steps.StepsTestRunner;
 import com.onaio.steps.activities.HouseholdActivity;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;
@@ -32,19 +35,14 @@ import com.onaio.steps.model.Household;
 import com.onaio.steps.model.InterviewStatus;
 import com.onaio.steps.model.Member;
 import com.onaio.steps.model.ReElectReason;
-import com.onaio.steps.model.ShadowDatabaseHelper;
 
 import junit.framework.Assert;
 
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.robolectric.Robolectric;
-import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
 
 import java.io.File;
 import java.io.IOException;
@@ -54,9 +52,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-@Config(emulateSdk = 16,manifest = "src/main/AndroidManifest.xml", shadows = {ShadowDatabaseHelper.class})
-@RunWith(RobolectricTestRunner.class)
-public class ExportHandlerTest {
+public class ExportHandlerTest extends StepsTestRunner {
 
     private HouseholdActivity householdActivityMock;
     private ExportHandler exportHandler;
@@ -90,12 +86,12 @@ public class ExportHandlerTest {
 //        DatabaseHelper dbMock = Mockito.mock(DatabaseHelper.class);
 //        exportHandler.with(households);
 //
-//        Mockito.stub(households.get(0)).toReturn(household);
+//        Mockito.when(households.get(0)).thenReturn(household);
 //        Cursor cursorMock = Mockito.mock(Cursor.class);
-//        Mockito.stub(dbMock.exec(Mockito.anyString())).toReturn(cursorMock);
-//        Mockito.stub( household.numberOfNonDeletedMembers(dbMock)).toReturn(0);
+//        Mockito.when(dbMock.exec(Mockito.anyString())).thenReturn(cursorMock);
+//        Mockito.when( household.numberOfNonDeletedMembers(dbMock)).thenReturn(0);
 //
-//        Mockito.stub(dbMock.exec(Mockito.anyString())).toReturn(cursorMock);
+//        Mockito.when(dbMock.exec(Mockito.anyString())).thenReturn(cursorMock);
 //        assertTrue(exportHandler.shouldDeactivate());
 //    }
 
@@ -103,7 +99,7 @@ public class ExportHandlerTest {
     public void ShouldBeAbleToActivateEditOptionInMenuItem(){
         Menu menuMock = Mockito.mock(Menu.class);
         MenuItem menuItemMock = Mockito.mock(MenuItem.class);
-        Mockito.stub(menuMock.findItem(R.id.action_export)).toReturn(menuItemMock);
+        Mockito.when(menuMock.findItem(R.id.action_export)).thenReturn(menuItemMock);
 
         exportHandler.withMenu(menuMock).activate();
 
@@ -114,7 +110,7 @@ public class ExportHandlerTest {
     public void ShouldBeAbleToInactivateEditOptionInMenuItem(){
         Menu menuMock = Mockito.mock(Menu.class);
         MenuItem menuItemMock = Mockito.mock(MenuItem.class);
-        Mockito.stub(menuMock.findItem(R.id.action_export)).toReturn(menuItemMock);
+        Mockito.when(menuMock.findItem(R.id.action_export)).thenReturn(menuItemMock);
 
         exportHandler.withMenu(menuMock).deactivate();
 
@@ -134,11 +130,11 @@ public class ExportHandlerTest {
         String comment = "testComment";
         String deviceIMEI = "123456";
         Household householdMock = Mockito.mock(Household.class);
-        Mockito.stub(householdMock.getStatus()).toReturn(interviewStatus);
-        Mockito.stub(householdMock.getName()).toReturn(hhName);
-        Mockito.stub(householdMock.getPhoneNumber()).toReturn(phoneNumber);
-        Mockito.stub(householdMock.getCreatedAt()).toReturn(createdAt);
-        Mockito.stub(householdMock.getComments()).toReturn(comment);
+        Mockito.when(householdMock.getStatus()).thenReturn(interviewStatus);
+        Mockito.when(householdMock.getName()).thenReturn(hhName);
+        Mockito.when(householdMock.getPhoneNumber()).thenReturn(phoneNumber);
+        Mockito.when(householdMock.getCreatedAt()).thenReturn(createdAt);
+        Mockito.when(householdMock.getComments()).thenReturn(comment);
 
         int id = 2;
         String surname = "testSurname";
@@ -147,7 +143,7 @@ public class ExportHandlerTest {
         int age = 30;
         String memberId = "testMemberId";
         Member selectedMember = new Member(id, surname, firstName, gender, age, householdMock, memberId, false);
-        Mockito.stub(householdMock.getSelectedMember(Mockito.any(DatabaseHelper.class))).toReturn(selectedMember);
+        Mockito.when(householdMock.getSelectedMember(Mockito.any(DatabaseHelper.class))).thenReturn(selectedMember);
 
         Intent intent = new Intent();
         intent.putExtra(Constants.HH_HOUSEHOLD, householdMock);
@@ -155,9 +151,9 @@ public class ExportHandlerTest {
 
         TelephonyManager telephonyManager = Mockito.mock(TelephonyManager.class);
         Mockito.when(telephonyManager.getDeviceId()).thenReturn(deviceIMEI);
-        Mockito.stub(householdActivityMock.getSystemService(Context.TELEPHONY_SERVICE)).toReturn(telephonyManager);
-        Mockito.stub(householdActivityMock.getApplicationContext()).toReturn(Robolectric.application.getApplicationContext());
-        Mockito.stub(householdActivityMock.getFilesDir()).toReturn(Robolectric.application.getApplicationContext().getFilesDir());
+        Mockito.when(householdActivityMock.getSystemService(Context.TELEPHONY_SERVICE)).thenReturn(telephonyManager);
+        Mockito.when(householdActivityMock.getApplicationContext()).thenReturn(ApplicationProvider.getApplicationContext());
+        Mockito.when(householdActivityMock.getFilesDir()).thenReturn(ApplicationProvider.getApplicationContext().getFilesDir());
         householdMock.save(db);
         selectedMember.save(db);
         ExportHandler exportHandler = Mockito.spy(new ExportHandler(householdActivityMock));
@@ -209,12 +205,12 @@ public class ExportHandlerTest {
     public void testSetStatus() {
         int selectedMemberId = 1;
         Household householdMock = Mockito.mock(Household.class);
-        Mockito.stub(householdMock.getSelectedMemberId()).toReturn(String.valueOf(selectedMemberId));
-        Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.REFUSED);
+        Mockito.when(householdMock.getSelectedMemberId()).thenReturn(String.valueOf(selectedMemberId));
+        Mockito.when(householdMock.getStatus()).thenReturn(InterviewStatus.REFUSED);
         Member member1 = Mockito.mock(Member.class);
-        Mockito.stub(member1.getId()).toReturn(1);
+        Mockito.when(member1.getId()).thenReturn(1);
         Member member2 = Mockito.mock(Member.class);
-        Mockito.stub(member2.getId()).toReturn(2);
+        Mockito.when(member2.getId()).thenReturn(2);
 
         ArrayList<String> rows = new ArrayList<>();
         ExportHandler.setStatus(householdMock, member1, rows);

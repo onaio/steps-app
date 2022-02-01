@@ -52,8 +52,7 @@ public class ParticipantListActivity extends BaseListActivity {
         participantHeader.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_action_new_member, 0, 0, 0);
         Button submitDataButton = (Button) findViewById(R.id.action_submit_data);
         submitDataButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_cloud_upload_white_24dp, 0, 0, 0);
-        String title = "<font color='#008148'>&nbsp;" + getString(R.string.participant_header) + "</font>";
-        setTitle(Html.fromHtml(title));
+        setTitle(getString(R.string.participant_header));
         list = findViewById(R.id.list);
     }
 

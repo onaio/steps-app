@@ -16,8 +16,11 @@
 
 package com.onaio.steps.handler.factories;
 
+import static junit.framework.TestCase.assertEquals;
+
 import android.content.Intent;
 
+import com.onaio.steps.StepsTestRunner;
 import com.onaio.steps.activities.HouseholdActivity;
 import com.onaio.steps.handler.HouseholdActivityBackButtonPreparer;
 import com.onaio.steps.handler.SelectedParticipantContainerHandler;
@@ -41,22 +44,15 @@ import com.onaio.steps.helper.Constants;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.InterviewStatus;
 
-import junit.framework.Assert;
-import junit.framework.TestCase;
-
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
-import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Config(emulateSdk = 16,manifest = "src/main/AndroidManifest.xml")
-@RunWith(RobolectricTestRunner.class)
-public class HouseholdActivityFactoryTest extends TestCase {
+public class HouseholdActivityFactoryTest extends StepsTestRunner {
 
     private Household household;
     private HouseholdActivity activity;
@@ -65,7 +61,7 @@ public class HouseholdActivityFactoryTest extends TestCase {
     public void Setup(){
         household = new Household("name", "123", InterviewStatus.SELECTION_NOT_DONE, "12-12-2015", "testDeviceId","Dummy comments");
         Intent intent = new Intent().putExtra(Constants.HH_HOUSEHOLD, household);
-        activity = Robolectric.buildActivity(HouseholdActivity.class).withIntent(intent).create().get();
+        activity = Robolectric.buildActivity(HouseholdActivity.class, intent).create().get();
     }
 
     @Test

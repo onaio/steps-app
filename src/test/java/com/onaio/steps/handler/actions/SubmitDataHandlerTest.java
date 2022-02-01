@@ -16,28 +16,23 @@
 
 package com.onaio.steps.handler.actions;
 
+import static org.junit.Assert.assertTrue;
+
 import android.app.Dialog;
 import android.widget.CheckBox;
 
 import com.onaio.steps.R;
+import com.onaio.steps.StepsTestRunner;
 import com.onaio.steps.activities.HouseholdListActivity;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.robolectric.Robolectric;
-import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
-
-import static org.junit.Assert.*;
 
 /**
  * Created by Jason Rogena - jrogena@ona.io on 27/10/2016.
  */
-@Config(emulateSdk = 16,manifest = "src/main/AndroidManifest.xml")
-@RunWith(RobolectricTestRunner.class)
-public class SubmitDataHandlerTest {
+public class SubmitDataHandlerTest extends StepsTestRunner {
     private HouseholdListActivity householdListActivity;
 
     @Before

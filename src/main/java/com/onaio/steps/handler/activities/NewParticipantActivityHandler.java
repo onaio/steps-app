@@ -48,11 +48,11 @@ public class NewParticipantActivityHandler implements IActivityResultHandler, IM
     public void handleResult(Intent data, int resultCode) {
 
         if (resultCode == RESULT_OK) {
-            View list = activity.findViewById(R.id.list);
-            if (list == null) return;
-            ParticipantAdapter participantAdapter = (ParticipantAdapter) ((RecyclerView) list).getAdapter();
-            if (participantAdapter == null)
+            RecyclerView list = activity.findViewById(R.id.list);
+            if (list.getAdapter() == null)
                 return;
+
+            ParticipantAdapter participantAdapter = (ParticipantAdapter) list.getAdapter();
             participantAdapter.reinitialize(Participant.getAllParticipants(new DatabaseHelper(activity.getApplicationContext())));
             participantAdapter.notifyDataSetChanged();
 

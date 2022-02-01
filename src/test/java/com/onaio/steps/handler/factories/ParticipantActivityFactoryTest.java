@@ -16,15 +16,18 @@
 
 package com.onaio.steps.handler.factories;
 
+import static junit.framework.Assert.assertEquals;
+
 import android.content.Intent;
 
+import com.onaio.steps.StepsTestRunner;
 import com.onaio.steps.activities.ParticipantActivity;
 import com.onaio.steps.handler.actions.BackHomeHandler;
 import com.onaio.steps.handler.actions.DeferredHandler;
+import com.onaio.steps.handler.actions.IncompleteRefusedHandler;
 import com.onaio.steps.handler.actions.NotReachableHandler;
 import com.onaio.steps.handler.actions.RefusedHandler;
 import com.onaio.steps.handler.actions.TakeSurveyHandler;
-import com.onaio.steps.handler.actions.IncompleteRefusedHandler;
 import com.onaio.steps.handler.activities.EditParticipantActivityHandler;
 import com.onaio.steps.handler.interfaces.IActivityResultHandler;
 import com.onaio.steps.handler.interfaces.IMenuHandler;
@@ -34,23 +37,15 @@ import com.onaio.steps.model.Gender;
 import com.onaio.steps.model.InterviewStatus;
 import com.onaio.steps.model.Participant;
 
-import junit.framework.Assert;
-
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
-import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static junit.framework.Assert.assertEquals;
-
-@Config(emulateSdk = 16, manifest = "src/main/AndroidManifest.xml")
-@RunWith(RobolectricTestRunner.class)
-public class ParticipantActivityFactoryTest {
+public class ParticipantActivityFactoryTest extends StepsTestRunner {
 
     private Participant participant;
     private ParticipantActivity participantActivity;
@@ -59,7 +54,7 @@ public class ParticipantActivityFactoryTest {
     public void Setup() {
         participant = new Participant("123-100", "surname", "firstName", Gender.Female, 33, InterviewStatus.NOT_DONE, "2015-10-10");
         Intent intent = new Intent().putExtra(Constants.PARTICIPANT, participant);
-        participantActivity = Robolectric.buildActivity(ParticipantActivity.class).withIntent(intent).create().get();
+        participantActivity = Robolectric.buildActivity(ParticipantActivity.class, intent).create().get();
     }
 
     @Test

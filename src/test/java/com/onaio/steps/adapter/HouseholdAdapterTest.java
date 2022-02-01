@@ -16,10 +16,7 @@
 
 package com.onaio.steps.adapter;
 
-import android.view.View;
-import android.widget.TextView;
-
-import com.onaio.steps.R;
+import com.onaio.steps.StepsTestRunner;
 import com.onaio.steps.activities.HouseholdListActivity;
 import com.onaio.steps.adapters.HouseholdAdapter;
 import com.onaio.steps.model.Household;
@@ -29,18 +26,13 @@ import junit.framework.Assert;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.robolectric.Robolectric;
-import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Config(emulateSdk = 16, manifest = "src/main/AndroidManifest.xml")
-@RunWith(RobolectricTestRunner.class)
-public class HouseholdAdapterTest {
+public class HouseholdAdapterTest extends StepsTestRunner {
 
     private final String ID = "1";
     private final String NAME = "Bill Gates";

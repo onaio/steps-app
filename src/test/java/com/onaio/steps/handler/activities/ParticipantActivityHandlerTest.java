@@ -16,8 +16,12 @@
 
 package com.onaio.steps.handler.activities;
 
+import static org.junit.Assert.assertEquals;
+import static org.robolectric.Shadows.shadowOf;
+
 import android.content.Intent;
 
+import com.onaio.steps.StepsTestRunner;
 import com.onaio.steps.activities.ParticipantActivity;
 import com.onaio.steps.activities.ParticipantListActivity;
 import com.onaio.steps.helper.Constants;
@@ -27,21 +31,14 @@ import com.onaio.steps.model.Participant;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
-import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import static org.junit.Assert.assertEquals;
-
-@Config(emulateSdk = 16,manifest = "src/main/AndroidManifest.xml")
-@RunWith(RobolectricTestRunner.class)
-public class ParticipantActivityHandlerTest {
+public class ParticipantActivityHandlerTest extends StepsTestRunner {
 
     private ParticipantListActivity participantListActivity;
     private Participant participant;
@@ -60,7 +57,7 @@ public class ParticipantActivityHandlerTest {
     public void ShouldOpenParticipantActivity(){
         participantActivityHandler.open();
 
-        ShadowActivity shadowActivity = Robolectric.shadowOf(participantListActivity);
+        ShadowActivity shadowActivity = shadowOf(participantListActivity);
         Intent nextStartedActivity = shadowActivity.getNextStartedActivity();
         assertEquals(ParticipantActivity.class.getName(),nextStartedActivity.getComponent().getClassName());
         assertEquals(participant,nextStartedActivity.getSerializableExtra(Constants.PARTICIPANT));

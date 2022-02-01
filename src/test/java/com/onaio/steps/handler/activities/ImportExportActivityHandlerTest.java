@@ -16,12 +16,19 @@
 
 package com.onaio.steps.handler.activities;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.onaio.steps.R;
+import com.onaio.steps.StepsTestRunner;
 import com.onaio.steps.activities.SettingsActivity;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.model.RequestCode;
@@ -29,17 +36,10 @@ import com.onaio.steps.orchestrators.flows.FlowType;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
-import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowToast;
 
-import static org.junit.Assert.*;
-
-@Config(emulateSdk = 16,manifest = "src/main/AndroidManifest.xml")
-@RunWith(RobolectricTestRunner.class)
-public class ImportExportActivityHandlerTest {
+public class ImportExportActivityHandlerTest extends StepsTestRunner {
 
     private ImportExportActivityHandler importExportActivityHandler;
     private SettingsActivity settingsActivity;
@@ -49,8 +49,7 @@ public class ImportExportActivityHandlerTest {
         Intent intent = new Intent();
         intent.putExtra(Constants.FLOW_TYPE, FlowType.Household.toString());
 
-        settingsActivity = Robolectric.buildActivity(SettingsActivity.class)
-                .withIntent(intent)
+        settingsActivity = Robolectric.buildActivity(SettingsActivity.class, intent)
                 .create()
                 .get();
         importExportActivityHandler = new ImportExportActivityHandler(settingsActivity);

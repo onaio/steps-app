@@ -22,6 +22,7 @@ import static junit.framework.Assert.assertTrue;
 import android.content.ContentValues;
 import android.database.Cursor;
 
+import com.onaio.steps.StepsTestRunner;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.utils.CursorStub;
@@ -30,11 +31,9 @@ import junit.framework.Assert;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.ArgumentMatcher;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
 import java.text.SimpleDateFormat;
@@ -44,12 +43,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-@RunWith(RobolectricTestRunner.class)
-@Config(emulateSdk = 16, manifest = "src/main/AndroidManifest.xml",shadows = {ShadowDatabaseHelper.class})
-public class HouseholdTest {
+@Config(shadows = {ShadowDatabaseHelper.class})
+public class HouseholdTest extends StepsTestRunner {
 
     private final InterviewStatus interviewStatus = InterviewStatus.SELECTION_NOT_DONE;
-    private String currentDate = new SimpleDateFormat(Constants.DATE_FORMAT, Locale.ENGLISH).format(new Date());
+    private final String currentDate = new SimpleDateFormat(Constants.DATE_FORMAT, Locale.ENGLISH).format(new Date());
     @Mock
     private DatabaseHelper db;
     @Mock
@@ -83,7 +81,7 @@ public class HouseholdTest {
     public void ShouldBeAbleToSaveTheHouseholdAndPopulateId(){
         stubDbForHousehold();
         long householdId = 2L;
-        Mockito.stub(db.save(Mockito.any(ContentValues.class),Mockito.eq(Household.TABLE_NAME))).toReturn(householdId);
+        Mockito.when(db.save(Mockito.any(ContentValues.class),Mockito.eq(Household.TABLE_NAME))).thenReturn(householdId);
 
         household.save(db);
 
@@ -95,7 +93,7 @@ public class HouseholdTest {
     public void ShouldTryToSaveTheHouseholdButNotPopulateIdWhenFailed(){
         stubDbForHousehold();
         long householdId = -1;
-        Mockito.stub(db.save(Mockito.any(ContentValues.class),Mockito.eq(Household.TABLE_NAME))).toReturn(householdId);
+        Mockito.when(db.save(Mockito.any(ContentValues.class),Mockito.eq(Household.TABLE_NAME))).thenReturn(householdId);
 
         household.save(db);
 
@@ -119,7 +117,7 @@ public class HouseholdTest {
     public void ShouldGetAllNumberOfHouseholdFromDatabase(){
         stubDbForHousehold();
         int householdCount = 5;
-        Mockito.stub(cursor.getInt(0)).toReturn(householdCount);
+        Mockito.when(cursor.getInt(0)).thenReturn(householdCount);
         String FIND_ALL_COUNT_QUERY = "SELECT count(*) FROM HOUSEHOLD ORDER BY Id desc";
 
         assertEquals(5, Household.getAllCount(db));
@@ -317,49 +315,41 @@ public class HouseholdTest {
     }
 
     private ArgumentMatcher<ContentValues> saveHouseholdMatcher(final String created_at) {
-        return new ArgumentMatcher<ContentValues>() {
-            @Override
-            public boolean matches(Object argument) {
-                ContentValues contentValues = (ContentValues) argument;
-                assertBasicDetails(contentValues);
-                assertTrue(contentValues.containsKey(CREATED_AT));
-                assertTrue(contentValues.getAsString(CREATED_AT).equals(created_at));
-                return true;
-            }
+        return contentValues -> {
+            assertBasicDetails(contentValues);
+            assertTrue(contentValues.containsKey(CREATED_AT));
+            assertEquals(contentValues.getAsString(CREATED_AT), created_at);
+            return true;
         };
     }
 
     private ArgumentMatcher<ContentValues> updateHouseholdMatcher(final String selectedMember) {
-        return new ArgumentMatcher<ContentValues>() {
-            @Override
-            public boolean matches(Object argument) {
-                ContentValues contentValues = (ContentValues) argument;
-                assertBasicDetails(contentValues);
-                assertTrue(contentValues.containsKey(SELECTED_MEMBER_ID));
-                assertTrue(contentValues.getAsString(SELECTED_MEMBER_ID).equals(selectedMember));
-                return true;
-            }
+        return contentValues -> {
+            assertBasicDetails(contentValues);
+            assertTrue(contentValues.containsKey(SELECTED_MEMBER_ID));
+            assertEquals(contentValues.getAsString(SELECTED_MEMBER_ID), selectedMember);
+            return true;
         };
     }
 
     private void assertBasicDetails(ContentValues contentValues) {
         assertTrue(contentValues.containsKey(NAME));
-        assertTrue(contentValues.getAsString(NAME).equals(householdName));
+        assertEquals(contentValues.getAsString(NAME), householdName);
         assertTrue(contentValues.containsKey(PHONE_NUMBER));
-        assertTrue(contentValues.getAsString(PHONE_NUMBER).equals(phoneNumber));
+        assertEquals(contentValues.getAsString(PHONE_NUMBER), phoneNumber);
         assertTrue(contentValues.containsKey(STATUS));
-        assertTrue(contentValues.getAsString(STATUS).equals(interviewStatus.toString()));
+        assertEquals(contentValues.getAsString(STATUS), interviewStatus.toString());
 
     }
 
     private void stubDbForHousehold() {
-        Mockito.stub(db.exec(Mockito.anyString())).toReturn(cursor);
+        Mockito.when(db.exec(Mockito.anyString())).thenReturn(cursor);
     }
 
     private void stubDbForMember(int numberOfMembers) {
 
-        Mockito.stub(cursor.getCount()).toReturn(numberOfMembers);
-        Mockito.stub(db.exec(Mockito.anyString())).toReturn(cursor);
+        Mockito.when(cursor.getCount()).thenReturn(numberOfMembers);
+        Mockito.when(db.exec(Mockito.anyString())).thenReturn(cursor);
     }
 
     private void validateMember(Member member,boolean isDeleted){

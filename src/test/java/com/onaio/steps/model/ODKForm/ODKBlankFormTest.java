@@ -16,20 +16,18 @@
 
 package com.onaio.steps.model.ODKForm;
 
+import static org.junit.Assert.assertNotEquals;
+
+import com.onaio.steps.StepsTestRunner;
 import com.onaio.steps.model.ShadowDatabaseHelper;
 
-import junit.framework.Assert;
-import junit.framework.TestCase;
-
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
-@RunWith(RobolectricTestRunner.class)
-@Config(emulateSdk = 16, manifest = "src/main/AndroidManifest.xml",shadows = {ShadowDatabaseHelper.class})
-public class ODKBlankFormTest extends TestCase {
+@Config(shadows = {ShadowDatabaseHelper.class})
+public class ODKBlankFormTest extends StepsTestRunner {
 
     private ODKBlankForm form;
 
@@ -48,7 +46,7 @@ public class ODKBlankFormTest extends TestCase {
         String uriWithoutID = "content://org.odk.collect.android.provider.odk.forms/forms";
 
         Assert.assertTrue(form.getUri().toString().contains(uriWithoutID));
-        assertFalse(form.getUri().toString().equals(uriWithoutID));
+        assertNotEquals(form.getUri().toString(), uriWithoutID);
     }
 
     @Test

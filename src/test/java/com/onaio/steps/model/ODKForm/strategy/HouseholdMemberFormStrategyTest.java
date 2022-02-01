@@ -1,8 +1,11 @@
 package com.onaio.steps.model.ODKForm.strategy;
 
+import static org.robolectric.Shadows.shadowOf;
+
 import android.content.Intent;
 import android.net.Uri;
 
+import com.onaio.steps.StepsTestRunner;
 import com.onaio.steps.activities.HouseholdActivity;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;
@@ -20,10 +23,8 @@ import junit.framework.Assert;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.robolectric.Robolectric;
-import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
 import java.io.File;
@@ -33,9 +34,9 @@ import java.util.List;
 /**
  * Created by Jason Rogena - jrogena@ona.io on 29/09/2016.
  */
-@RunWith(RobolectricTestRunner.class)
-@Config(emulateSdk = 16, manifest = "src/main/AndroidManifest.xml",shadows = {ShadowDatabaseHelper.class})
-public class HouseholdMemberFormStrategyTest {
+
+@Config(shadows = {ShadowDatabaseHelper.class})
+public class HouseholdMemberFormStrategyTest extends StepsTestRunner {
     private FileUtil fileUtilMock;
     private HouseholdActivity householdActivity;
     private Member selectedMember;
@@ -57,25 +58,25 @@ public class HouseholdMemberFormStrategyTest {
         stubFileUtil();
 
         Intent intent = new Intent();
-        Mockito.stub(householdMock.getPhoneNumber()).toReturn("8050342");
-        Mockito.stub(householdMock.getComments()).toReturn("dummy comments");
+        Mockito.when(householdMock.getPhoneNumber()).thenReturn("8050342");
+        Mockito.when(householdMock.getComments()).thenReturn("dummy comments");
         intent.putExtra(Constants.HH_HOUSEHOLD,householdMock);
 
-        householdActivity = Robolectric.buildActivity(HouseholdActivity.class).withIntent(intent).create().get();
+        householdActivity = Robolectric.buildActivity(HouseholdActivity.class, intent).create().get();
         blankFormMock = Mockito.mock(IForm.class);
     }
 
     private void stubFileUtil() {
         fileUtilMock = Mockito.mock(FileUtil.class);
-        Mockito.stub(fileUtilMock.withData(Mockito.any(String[].class))).toReturn(fileUtilMock);
-        Mockito.stub(fileUtilMock.withHeader(Mockito.any(String[].class))).toReturn(fileUtilMock);
+        Mockito.when(fileUtilMock.withData(Mockito.any(String[].class))).thenReturn(fileUtilMock);
+        Mockito.when(fileUtilMock.withHeader(Mockito.any(String[].class))).thenReturn(fileUtilMock);
     }
 
     private void stubHousehold() {
         householdMock = Mockito.mock(Household.class);
         selectedMember = new Member(HHID_KEY, SURNAME, FIRST_NAME, GENDER, AGE, householdMock, MEMBER_ID, false);
-        Mockito.stub(householdMock.getSelectedMember(Mockito.any(DatabaseHelper.class))).toReturn(selectedMember);
-        Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.SELECTION_NOT_DONE);
+        Mockito.when(householdMock.getSelectedMember(Mockito.any(DatabaseHelper.class))).thenReturn(selectedMember);
+        Mockito.when(householdMock.getStatus()).thenReturn(InterviewStatus.SELECTION_NOT_DONE);
     }
 
     @Test
@@ -84,14 +85,14 @@ public class HouseholdMemberFormStrategyTest {
         String blankFormMediaPath = householdActivity.getFilesDir().getPath();
         String householdName = "household name";
         Uri blankFormURI = Uri.parse("uri");
-        Mockito.stub(householdMock.getName()).toReturn(householdName);
-        Mockito.stub(blankFormMock.getPath()).toReturn(blankFormMediaPath);
-        Mockito.stub(blankFormMock.getUri()).toReturn(blankFormURI);
+        Mockito.when(householdMock.getName()).thenReturn(householdName);
+        Mockito.when(blankFormMock.getPath()).thenReturn(blankFormMediaPath);
+        Mockito.when(blankFormMock.getUri()).thenReturn(blankFormURI);
         odkForm = new ODKForm(blankFormMock, null);
 
         odkForm.open(new HouseholdMemberFormStrategy(householdMock, DEVICE_ID), householdActivity, RequestCode.SURVEY.getCode());
 
-        Robolectric.shadowOf(householdActivity).getNextStartedActivityForResult();
+        shadowOf(householdActivity).getNextStartedActivityForResult();
 
         //see if generated csv file has the required columns
         File formMediaDir = new File(blankFormMediaPath);

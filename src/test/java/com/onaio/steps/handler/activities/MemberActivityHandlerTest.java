@@ -18,6 +18,7 @@ package com.onaio.steps.handler.activities;
 
 import android.content.Intent;
 
+import com.onaio.steps.StepsTestRunner;
 import com.onaio.steps.activities.HouseholdActivity;
 import com.onaio.steps.activities.MemberActivity;
 import com.onaio.steps.helper.Constants;
@@ -26,24 +27,18 @@ import com.onaio.steps.model.Household;
 import com.onaio.steps.model.InterviewStatus;
 import com.onaio.steps.model.Member;
 
-import junit.framework.Assert;
-
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.ArgumentMatcher;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-@Config(emulateSdk = 16,manifest = "src/main/AndroidManifest.xml")
-@RunWith(RobolectricTestRunner.class)
-public class MemberActivityHandlerTest {
+public class MemberActivityHandlerTest extends StepsTestRunner {
 
     @Mock
     HouseholdActivity householdActivity;
@@ -68,15 +63,11 @@ public class MemberActivityHandlerTest {
     }
 
     private ArgumentMatcher<Intent> matchIntent() {
-        return new ArgumentMatcher<Intent>() {
-            @Override
-            public boolean matches(Object argument) {
-                Intent intent = (Intent) argument;
-                Member actualMember = (Member) intent.getSerializableExtra(Constants.HH_MEMBER);
-                Assert.assertEquals(member,actualMember);
-                Assert.assertEquals(MemberActivity.class.getName(),intent.getComponent().getClassName());
-                return true;
-            }
+        return intent -> {
+            Member actualMember = (Member) intent.getSerializableExtra(Constants.HH_MEMBER);
+            Assert.assertEquals(member,actualMember);
+            Assert.assertEquals(MemberActivity.class.getName(),intent.getComponent().getClassName());
+            return true;
         };
     }
 

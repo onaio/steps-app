@@ -21,21 +21,17 @@ import static org.junit.Assert.assertEquals;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.onaio.steps.R;
+import com.onaio.steps.StepsTestRunner;
 import com.onaio.steps.activities.ParticipantListActivity;
 import com.onaio.steps.model.Gender;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
-import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
 
 import java.util.List;
 
-@RunWith(RobolectricTestRunner.class)
-@Config(emulateSdk = 16,manifest = "src/main/AndroidManifest.xml")
-public class DataValidatorTest {
+public class DataValidatorTest extends StepsTestRunner {
     private AppCompatActivity activity;
     private DataValidator dataValidator;
 
