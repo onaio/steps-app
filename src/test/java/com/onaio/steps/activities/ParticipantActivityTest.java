@@ -21,30 +21,48 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import android.content.Intent;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.onaio.steps.R;
 import com.onaio.steps.StepsTestRunner;
+import com.onaio.steps.handler.actions.DeferredHandler;
+import com.onaio.steps.handler.factories.ParticipantActivityFactory;
+import com.onaio.steps.handler.interfaces.IActivityResultHandler;
+import com.onaio.steps.handler.interfaces.IMenuHandler;
+import com.onaio.steps.handler.interfaces.IMenuPreparer;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.model.Gender;
 import com.onaio.steps.model.InterviewStatus;
 import com.onaio.steps.model.Participant;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
 import org.robolectric.Robolectric;
+import org.robolectric.fakes.RoboMenu;
+import org.robolectric.fakes.RoboMenuItem;
+import org.robolectric.util.ReflectionHelpers;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 public class ParticipantActivityTest extends StepsTestRunner {
 
     private String date;
     private Participant participant;
-    private ParticipantActivity participantActivity;
     private Intent intent;
 
     @Before
@@ -57,7 +75,7 @@ public class ParticipantActivityTest extends StepsTestRunner {
     public void ShouldBeAbleToStyleActionBarAndCustomizeOptionStrings() {
         participant = new Participant(1, "123-10", "family surname", "firstName", Gender.Female, 34, InterviewStatus.DONE, date);
         intent.putExtra(Constants.PARTICIPANT, participant);
-        participantActivity = getParticipantActivity(intent);
+        ParticipantActivity participantActivity = getParticipantActivity(intent);
 
         Button cancelButton = participantActivity.findViewById(R.id.action_cancel_participant);
         Button takeSurveyButton = participantActivity.findViewById(R.id.action_take_survey);
@@ -73,7 +91,7 @@ public class ParticipantActivityTest extends StepsTestRunner {
     public void ShouldBeAbleToPopulateViewWithParticipantWithDoneStatus() {
         participant = new Participant(1, "123-10", "family surname", "firstName", Gender.Female, 34, InterviewStatus.DONE, date);
         intent.putExtra(Constants.PARTICIPANT, participant);
-        participantActivity = getParticipantActivity(intent);
+        ParticipantActivity participantActivity = getParticipantActivity(intent);
 
         TextView participantName = participantActivity.findViewById(R.id.selected_participant_name);
         TextView participantDetails = participantActivity.findViewById(R.id.selected_participant_details);
@@ -91,7 +109,7 @@ public class ParticipantActivityTest extends StepsTestRunner {
     public void ShouldBeAbleToPopulateViewWithParticipantWithRefused() {
         participant = new Participant(1, "123-10", "family surname", "firstName", Gender.Female, 34, InterviewStatus.REFUSED, date);
         intent.putExtra(Constants.PARTICIPANT, participant);
-        participantActivity = getParticipantActivity(intent);
+        ParticipantActivity participantActivity = getParticipantActivity(intent);
 
         TextView participantName = participantActivity.findViewById(R.id.selected_participant_name);
         TextView participantDetails = participantActivity.findViewById(R.id.selected_participant_details);
@@ -109,7 +127,7 @@ public class ParticipantActivityTest extends StepsTestRunner {
     public void ShouldBeAbleToPopulateViewWithParticipantWithIncomplete() {
         participant = new Participant(1, "123-10", "family surname", "firstName", Gender.Female, 34, InterviewStatus.INCOMPLETE, date);
         intent.putExtra(Constants.PARTICIPANT, participant);
-        participantActivity = getParticipantActivity(intent);
+        ParticipantActivity participantActivity = getParticipantActivity(intent);
 
         TextView participantName = participantActivity.findViewById(R.id.selected_participant_name);
         TextView participantDetails = participantActivity.findViewById(R.id.selected_participant_details);
@@ -127,7 +145,7 @@ public class ParticipantActivityTest extends StepsTestRunner {
     public void ShouldBeAbleToPopulateViewWithParticipantWithNotReachable() {
         participant = new Participant(1, "123-10", "family surname", "firstName", Gender.Female, 34, InterviewStatus.NOT_REACHABLE, date);
         intent.putExtra(Constants.PARTICIPANT, participant);
-        participantActivity = getParticipantActivity(intent);
+        ParticipantActivity participantActivity = getParticipantActivity(intent);
 
         TextView participantName = participantActivity.findViewById(R.id.selected_participant_name);
         TextView participantDetails = participantActivity.findViewById(R.id.selected_participant_details);
@@ -141,7 +159,105 @@ public class ParticipantActivityTest extends StepsTestRunner {
         assertEquals(participantActivity.getString(R.string.interviewee_not_reachable_message),viewById.getText());
     }
 
+    @Test
+    public void testOnOptionsItemSelectedShouldOpenExpectedMenuItem() {
+
+        MockedStatic<ParticipantActivityFactory> participantActivityFactory = Mockito.mockStatic(ParticipantActivityFactory.class);
+        IMenuHandler handler = Mockito.mock(IMenuHandler.class);
+
+        List<IMenuHandler> handlers = new ArrayList<>();
+        handlers.add(handler);
+
+        participantActivityFactory.when(() -> ParticipantActivityFactory.getMenuHandlers(Mockito.any(), Mockito.any())).thenReturn(handlers);
+        Mockito.when(handler.shouldOpen(Mockito.any(Integer.class))).thenReturn(true);
+
+        participant = new Participant(1, "123-10", "family surname", "firstName", Gender.Female, 34, InterviewStatus.REFUSED, date);
+        intent.putExtra(Constants.PARTICIPANT, participant);
+        ParticipantActivity participantActivity = getParticipantActivity(intent);
+        participantActivity.onOptionsItemSelected(Mockito.mock(MenuItem.class));
+
+        Mockito.verify(handler).open();
+        participantActivityFactory.close();
+    }
+
+    @Test
+    public void testOnCreateOptionsMenuShouldVerifyMenuInflate() {
+        participant = new Participant(1, "123-10", "family surname", "firstName", Gender.Female, 34, InterviewStatus.REFUSED, date);
+        intent.putExtra(Constants.PARTICIPANT, participant);
+        ParticipantActivity participantActivity = Mockito.spy(getParticipantActivity(intent));
+
+        MenuInflater menuInflater = Mockito.mock(MenuInflater.class);
+        Mockito.when(participantActivity.getMenuInflater()).thenReturn(menuInflater);
+
+        participantActivity.onCreateOptionsMenu(new RoboMenu());
+
+        Mockito.verify(menuInflater).inflate(Mockito.anyInt(), Mockito.any());
+    }
+
+    @Test
+    public void testOnActivityResultShouldHandleResult() {
+
+        MockedStatic<ParticipantActivityFactory> participantActivityFactory = Mockito.mockStatic(ParticipantActivityFactory.class);
+        IActivityResultHandler handler = Mockito.mock(IActivityResultHandler.class);
+
+        List<IActivityResultHandler> handlers = new ArrayList<>();
+        handlers.add(handler);
+
+        participantActivityFactory.when(() -> ParticipantActivityFactory.getResultHandlers(Mockito.any(), Mockito.any())).thenReturn(handlers);
+        Mockito.when(handler.canHandleResult(Mockito.any(Integer.class))).thenReturn(true);
+
+        participant = new Participant(1, "123-10", "family surname", "firstName", Gender.Female, 34, InterviewStatus.REFUSED, date);
+        intent.putExtra(Constants.PARTICIPANT, participant);
+        ParticipantActivity participantActivity = getParticipantActivity(intent);
+        participantActivity.onActivityResult(1, -1, new Intent());
+
+        Mockito.verify(handler).handleResult(Mockito.any(), Mockito.any(Integer.class));
+        participantActivityFactory.close();
+    }
+
+    @Test
+    public void testHandleCustomMenuShouldOpenExpectedMenuItem() {
+
+        MockedStatic<ParticipantActivityFactory> participantActivityFactory = Mockito.mockStatic(ParticipantActivityFactory.class);
+        IMenuHandler handler = Mockito.mock(IMenuHandler.class);
+
+        List<IMenuHandler> handlers = new ArrayList<>();
+        handlers.add(handler);
+
+        participantActivityFactory.when(() -> ParticipantActivityFactory.getCustomMenuHandler(Mockito.any(), Mockito.any())).thenReturn(handlers);
+        Mockito.when(handler.shouldOpen(Mockito.any(Integer.class))).thenReturn(true);
+
+        participant = new Participant(1, "123-10", "family surname", "firstName", Gender.Female, 34, InterviewStatus.REFUSED, date);
+        intent.putExtra(Constants.PARTICIPANT, participant);
+        ParticipantActivity participantActivity = getParticipantActivity(intent);
+        participantActivity.handleCustomMenu(Mockito.mock(View.class));
+
+        Mockito.verify(handler).open();
+        participantActivityFactory.close();
+    }
+
+    @Test
+    public void testOnPrepareOptionsMenuShouldDisableMenu() {
+
+        MockedStatic<ParticipantActivityFactory> participantActivityFactory = Mockito.mockStatic(ParticipantActivityFactory.class);
+        IMenuPreparer handler = Mockito.mock(IMenuPreparer.class);
+
+        List<IMenuPreparer> handlers = new ArrayList<>();
+        handlers.add(handler);
+
+        participantActivityFactory.when(() -> ParticipantActivityFactory.getMenuPreparer(Mockito.any(), Mockito.any(), Mockito.any())).thenReturn(handlers);
+        Mockito.when(handler.shouldDeactivate()).thenReturn(true);
+
+        participant = new Participant(1, "123-10", "family surname", "firstName", Gender.Female, 34, InterviewStatus.REFUSED, date);
+        intent.putExtra(Constants.PARTICIPANT, participant);
+        ParticipantActivity participantActivity = getParticipantActivity(intent);
+        participantActivity.onPrepareOptionsMenu(Mockito.mock(Menu.class));
+
+        Mockito.verify(handler).deactivate();
+        participantActivityFactory.close();
+    }
+
     private ParticipantActivity getParticipantActivity(Intent intent) {
-        return Robolectric.buildActivity(ParticipantActivity.class, intent).create().get();
+        return Robolectric.buildActivity(ParticipantActivity.class, intent).create().resume().get();
     }
 }
