@@ -29,7 +29,6 @@ import com.onaio.steps.handler.interfaces.IMenuHandler;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.CustomDialog;
 import com.onaio.steps.helper.CustomNotification;
-import com.onaio.steps.helper.FileUtil;
 import com.onaio.steps.helper.KeyValueStoreFactory;
 import com.onaio.steps.model.Household;
 
@@ -74,24 +73,7 @@ public class SaveToSDCardHandler implements IMenuHandler {
         return true;
     }
 
-    //Saves the csv file the phone external file system.
-    public void saveToExternalStorage(FileUtil fileUtil) throws IOException {
-        if (createAppDir()) {
-            fileUtil.writeCSV(Environment.getExternalStorageDirectory() + "/"
-                    + Constants.APP_DIR + "/" + Constants.EXPORT_FILE_NAME + "_" + getDeviceId() + ".csv");
-        }
-    }
-
-    /**
-     * Create a steps directory in external storage if it does not exist.
-     *
-     * @return true if directory successfully created.
-     */
-    public static boolean createAppDir() {
-        return createDir(Environment.getExternalStorageDirectory() + "/" + Constants.APP_DIR);
-    }
-
-    public static boolean createDir(String dirName) {
+    public boolean createDir(String dirName) {
         File folder = new File(dirName);
         boolean createStatus = true;
         if (!folder.exists()) {
