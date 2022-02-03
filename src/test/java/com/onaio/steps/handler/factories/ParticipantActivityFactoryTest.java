@@ -16,7 +16,7 @@
 
 package com.onaio.steps.handler.factories;
 
-import static junit.framework.Assert.assertEquals;
+import static org.junit.Assert.assertEquals;
 
 import android.content.Intent;
 

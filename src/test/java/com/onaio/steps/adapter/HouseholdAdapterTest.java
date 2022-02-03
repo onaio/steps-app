@@ -22,8 +22,7 @@ import com.onaio.steps.adapters.HouseholdAdapter;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.InterviewStatus;
 
-import junit.framework.Assert;
-
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;

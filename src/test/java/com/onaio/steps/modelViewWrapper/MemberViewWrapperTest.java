@@ -16,7 +16,6 @@
 
 package com.onaio.steps.modelViewWrapper;
 
-
 import static org.junit.Assert.assertEquals;
 
 import android.widget.RadioGroup;
@@ -33,8 +32,6 @@ import com.onaio.steps.model.Gender;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.InterviewStatus;
 import com.onaio.steps.model.Member;
-
-import junit.framework.Assert;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -146,10 +143,10 @@ public class MemberViewWrapperTest extends StepsTestRunner {
 
         Member member = memberViewWrapper.getFromView(household);
 
-        Assert.assertTrue(member.getFamilySurname().equals("Bansal"));
-        Assert.assertTrue(member.getFirstName().equals("Rohit"));
-        Assert.assertTrue(member.getGender().toString().equals("Male"));
-        Assert.assertTrue(member.getAge() == 20);
+        assertEquals("Bansal", member.getFamilySurname());
+        assertEquals("Rohit", member.getFirstName());
+        assertEquals("Male", member.getGender().toString());
+        assertEquals(20, member.getAge());
     }
 
     @Test
@@ -162,10 +159,10 @@ public class MemberViewWrapperTest extends StepsTestRunner {
 
         Member member = memberViewWrapper.updateFromView(anotherMember);
 
-        Assert.assertTrue(member.getFamilySurname().equals("Bansal"));
-        Assert.assertTrue(member.getFirstName().equals("Rohit"));
-        Assert.assertTrue(member.getGender().toString().equals("Male"));
-        Assert.assertTrue(member.getAge() == 20);
+        assertEquals("Bansal", member.getFamilySurname());
+        assertEquals("Rohit", member.getFirstName());
+        assertEquals("Male", member.getGender().toString());
+        assertEquals(20, member.getAge());
     }
 
     @Test
