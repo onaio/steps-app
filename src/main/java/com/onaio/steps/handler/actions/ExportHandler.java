@@ -23,7 +23,6 @@ import static com.onaio.steps.helper.Constants.SURVEY_EMPTY_HH;
 import static com.onaio.steps.helper.Constants.SURVEY_NOT_SELECTED;
 
 import android.content.DialogInterface;
-import android.os.Build;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -40,7 +39,6 @@ import com.onaio.steps.helper.KeyValueStoreFactory;
 import com.onaio.steps.helper.Logger;
 import com.onaio.steps.helper.NetworkConnectivity;
 import com.onaio.steps.helper.UploadFileTask;
-import com.onaio.steps.helper.UploadFileTaskLegacy;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.Member;
 import com.onaio.steps.model.ReElectReason;
@@ -91,12 +89,7 @@ public class ExportHandler implements IMenuHandler,IMenuPreparer {
                     File file = saveFile();
                     if(onExportListener != null) onExportListener.onFileSaved();
                     if (NetworkConnectivity.isNetworkAvailable(activity)) {
-                        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                            new UploadFileTask(activity, onExportListener).upload(file);
-                        }
-                        else {
-                            new UploadFileTaskLegacy(activity, onExportListener).execute(file);
-                        }
+                        new UploadFileTask(activity, onExportListener).upload(file);
                     } else {
                         new CustomDialog().notify(activity, CustomDialog.EmptyListener, R.string.error_title, R.string.fail_no_connectivity);
                     }
