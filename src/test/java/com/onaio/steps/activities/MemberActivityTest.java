@@ -27,6 +27,9 @@ import android.widget.TextView;
 
 import com.onaio.steps.R;
 import com.onaio.steps.StepsTestRunner;
+import com.onaio.steps.handler.factories.MemberActivityFactory;
+import com.onaio.steps.handler.interfaces.IActivityResultHandler;
+import com.onaio.steps.handler.interfaces.IMenuHandler;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.model.Gender;
@@ -36,10 +39,12 @@ import com.onaio.steps.model.Member;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import org.robolectric.Robolectric;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class MemberActivityTest extends StepsTestRunner {
@@ -135,8 +140,46 @@ public class MemberActivityTest extends StepsTestRunner {
         assertNotNull(deleteMemberItem);
     }
 
+    @Test
+    public void testOnOptionsItemSelectedShouldOpenMenuHandler() {
+        MockedStatic<MemberActivityFactory> memberActivityFactoryMockedStatic = Mockito.mockStatic(MemberActivityFactory.class);
+        IMenuHandler handler = Mockito.mock(IMenuHandler.class);
+
+        List<IMenuHandler> handlers = new ArrayList<>();
+        handlers.add(handler);
+
+        memberActivityFactoryMockedStatic.when(() -> MemberActivityFactory.getMenuHandlers(Mockito.any(), Mockito.any())).thenReturn(handlers);
+        Mockito.when(handler.shouldOpen(Mockito.any(Integer.class))).thenReturn(true);
+
+        intent.putExtra(Constants.HH_MEMBER, member);
+        memberActivity = getMemberActivity(intent);
+        memberActivity.onOptionsItemSelected(Mockito.mock(MenuItem.class));
+
+        Mockito.verify(handler).open();
+        memberActivityFactoryMockedStatic.close();
+    }
+
+    @Test
+    public void testOnActivityResultShouldHandleResult() {
+
+        MockedStatic<MemberActivityFactory> memberActivityFactoryMockedStatic = Mockito.mockStatic(MemberActivityFactory.class);
+        IActivityResultHandler handler = Mockito.mock(IActivityResultHandler.class);
+
+        List<IActivityResultHandler> handlers = new ArrayList<>();
+        handlers.add(handler);
+
+        memberActivityFactoryMockedStatic.when(() -> MemberActivityFactory.getMenuResultHandlers(Mockito.any(), Mockito.any())).thenReturn(handlers);
+        Mockito.when(handler.canHandleResult(Mockito.any(Integer.class))).thenReturn(true);
+
+        intent.putExtra(Constants.HH_MEMBER, member);
+        memberActivity = getMemberActivity(intent);
+        memberActivity.onActivityResult(1, -1, new Intent());
+
+        Mockito.verify(handler).handleResult(Mockito.any(), Mockito.any(Integer.class));
+        memberActivityFactoryMockedStatic.close();
+    }
+
     private MemberActivity getMemberActivity(Intent intent) {
         return Robolectric.buildActivity(MemberActivity.class, intent).create().get();
     }
-
 }
