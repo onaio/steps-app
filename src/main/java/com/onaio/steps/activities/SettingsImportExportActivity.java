@@ -101,6 +101,7 @@ public class SettingsImportExportActivity extends AppCompatActivity {
     // Get the results:
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         for (IActivityResultHandler iActivityResultHandler: iActivityResultHandlers) {
             if (iActivityResultHandler.canHandleResult(requestCode)) {
                 iActivityResultHandler.handleResult(data, resultCode);

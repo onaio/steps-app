@@ -86,6 +86,7 @@ public class MemberActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         List<IActivityResultHandler> menuHandlers = MemberActivityFactory.getMenuResultHandlers(this, member);
         for(IActivityResultHandler menuHandler:menuHandlers)
             if(menuHandler.canHandleResult(requestCode))
