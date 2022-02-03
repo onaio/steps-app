@@ -16,8 +16,9 @@
 
 package com.onaio.steps.handler.activities;
 
-import android.app.Activity;
 import android.content.Intent;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.onaio.steps.activities.MemberActivity;
 import com.onaio.steps.handler.interfaces.IListItemHandler;
@@ -27,9 +28,9 @@ import com.onaio.steps.model.Member;
 public class MemberActivityHandler implements IListItemHandler {
 
     private Member member;
-    private Activity activity;
+    private AppCompatActivity activity;
 
-    public MemberActivityHandler(Activity activity, Member member) {
+    public MemberActivityHandler(AppCompatActivity activity, Member member) {
         this.activity = activity;
         this.member = member;
     }

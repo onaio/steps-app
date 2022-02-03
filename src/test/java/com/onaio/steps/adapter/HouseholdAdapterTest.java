@@ -16,31 +16,22 @@
 
 package com.onaio.steps.adapter;
 
-import android.view.View;
-import android.widget.TextView;
-
-import com.onaio.steps.R;
+import com.onaio.steps.StepsTestRunner;
 import com.onaio.steps.activities.HouseholdListActivity;
 import com.onaio.steps.adapters.HouseholdAdapter;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.InterviewStatus;
 
-import junit.framework.Assert;
-
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.robolectric.Robolectric;
-import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Config(emulateSdk = 16, manifest = "src/main/AndroidManifest.xml")
-@RunWith(RobolectricTestRunner.class)
-public class HouseholdAdapterTest {
+public class HouseholdAdapterTest extends StepsTestRunner {
 
     private final String ID = "1";
     private final String NAME = "Bill Gates";
@@ -60,17 +51,17 @@ public class HouseholdAdapterTest {
         householdList.add(getHousehold());
 
         HouseholdListActivity householdListActivity = Mockito.spy(Robolectric.buildActivity(HouseholdListActivity.class).create().resume().get());
-        adapter = new HouseholdAdapter(householdListActivity, householdList);
+        adapter = new HouseholdAdapter(householdListActivity, householdList, null);
     }
 
     @Test
     public void testGetCountShouldReturnOne() {
-        Assert.assertEquals(1, adapter.getCount());
+        Assert.assertEquals(1, adapter.getItemCount());
     }
 
     @Test
     public void testGetItemShouldVerifyTheData() {
-        Household household = (Household) adapter.getItem(0);
+        Household household = adapter.getItem(0);
 
         Assert.assertEquals(ID, household.getId());
         Assert.assertEquals(NAME, household.getName());
@@ -87,14 +78,14 @@ public class HouseholdAdapterTest {
         Assert.assertEquals(1, adapter.getItemId(0));
     }
 
-    @Test
+    /*@Test
     public void testGetViewShouldVerifyViewData() {
         View itemView = adapter.getView(0, null, null);
 
         TextView householdName = (TextView) itemView.findViewById(R.id.main_text);
 
         Assert.assertEquals("HHID:" + NAME, householdName.getText().toString());
-    }
+    }*/
 
     private Household getHousehold() {
         return new Household(ID, NAME, PHONE_NUMBER, SELECTED_MEMBER_ID, STATUS, CREATED_AT, UNIQUE_DEVICE_ID, COMMENTS);

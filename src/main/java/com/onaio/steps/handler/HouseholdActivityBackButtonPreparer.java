@@ -17,8 +17,8 @@
 package com.onaio.steps.handler;
 
 import android.app.ActionBar;
-import android.app.Activity;
-import android.util.Log;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.onaio.steps.handler.interfaces.IMenuPreparer;
 import com.onaio.steps.model.Household;
@@ -31,10 +31,10 @@ import com.onaio.steps.model.InterviewStatus;
  */
 
 public class HouseholdActivityBackButtonPreparer implements IMenuPreparer {
-    private Activity activity;
+    private AppCompatActivity activity;
     private Household household;
 
-    public HouseholdActivityBackButtonPreparer(Activity activity, Household household) {
+    public HouseholdActivityBackButtonPreparer(AppCompatActivity activity, Household household) {
         this.activity = activity;
         this.household = household;
     }

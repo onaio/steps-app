@@ -4,17 +4,13 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
-import junit.framework.Assert;
+import com.onaio.steps.StepsTestRunner;
 
+import org.junit.Assert;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mockito;
-import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
 
-@Config(emulateSdk = 16, manifest = "src/main/AndroidManifest.xml")
-@RunWith(RobolectricTestRunner.class)
-public class NetworkConnectivityTest {
+public class NetworkConnectivityTest extends StepsTestRunner {
 
     @Test
     public void testIsNetworkAvailableShouldReturnTrue() {

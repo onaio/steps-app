@@ -16,12 +16,15 @@
 
 package com.onaio.steps.model.ODKForm;
 
+import static com.onaio.steps.helper.Constants.HH_PHONE_ID;
+import static org.robolectric.Shadows.shadowOf;
+
 import android.content.ComponentName;
 import android.content.Intent;
 import android.net.Uri;
 
+import com.onaio.steps.StepsTestRunner;
 import com.onaio.steps.activities.HouseholdActivity;
-import com.onaio.steps.model.ODKForm.strategy.HouseholdMemberFormStrategy;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.helper.FileUtil;
@@ -30,19 +33,16 @@ import com.onaio.steps.model.Gender;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.InterviewStatus;
 import com.onaio.steps.model.Member;
+import com.onaio.steps.model.ODKForm.strategy.HouseholdMemberFormStrategy;
 import com.onaio.steps.model.RequestCode;
 import com.onaio.steps.model.ShadowDatabaseHelper;
 
-import junit.framework.Assert;
-import junit.framework.TestCase;
-
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.ArgumentMatcher;
 import org.mockito.Mockito;
 import org.robolectric.Robolectric;
-import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowActivity;
 
@@ -50,12 +50,8 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.onaio.steps.helper.Constants.HH_PHONE_ID;
-
-@RunWith(RobolectricTestRunner.class)
-@Config(emulateSdk = 16, manifest = "src/main/AndroidManifest.xml",shadows = {ShadowDatabaseHelper.class})
-public class ODKFormTest extends TestCase {
-    private FileUtil fileUtilMock;
+@Config(shadows = {ShadowDatabaseHelper.class})
+public class ODKFormTest extends StepsTestRunner {
     private HouseholdActivity householdActivity;
     private Member selectedMember;
     private Household householdMock;
@@ -69,11 +65,11 @@ public class ODKFormTest extends TestCase {
         stubFileUtil();
 
         Intent intent = new Intent();
-        Mockito.stub(householdMock.getPhoneNumber()).toReturn("8050342");
-        Mockito.stub(householdMock.getComments()).toReturn("dummy comments");
+        Mockito.when(householdMock.getPhoneNumber()).thenReturn("8050342");
+        Mockito.when(householdMock.getComments()).thenReturn("dummy comments");
         intent.putExtra(Constants.HH_HOUSEHOLD,householdMock);
 
-        householdActivity = Robolectric.buildActivity(HouseholdActivity.class).withIntent(intent).create().get();
+        householdActivity = Robolectric.buildActivity(HouseholdActivity.class, intent).create().get();
         blankFormMock = Mockito.mock(IForm.class);
         savedFormMock = Mockito.mock(IForm.class);
     }
@@ -82,8 +78,8 @@ public class ODKFormTest extends TestCase {
     public void ShouldSaveFileWhenOpeningSavedForm() throws IOException {
         String blankFormMediaPath = householdActivity.getFilesDir().getPath();
         String householdName = "household name";
-        Mockito.stub(householdMock.getName()).toReturn(householdName);
-        Mockito.stub(blankFormMock.getPath()).toReturn(blankFormMediaPath);
+        Mockito.when(householdMock.getName()).thenReturn(householdName);
+        Mockito.when(blankFormMock.getPath()).thenReturn(blankFormMediaPath);
         odkForm = new ODKForm(blankFormMock, savedFormMock);
 
 
@@ -102,15 +98,15 @@ public class ODKFormTest extends TestCase {
         String blankFormMediaPath = householdActivity.getFilesDir().getPath();
         String householdName = "household name";
         Uri saveFormURI = Uri.parse("uri");
-        Mockito.stub(householdMock.getName()).toReturn(householdName);
-        Mockito.stub(blankFormMock.getPath()).toReturn(blankFormMediaPath);
-        Mockito.stub(savedFormMock.getUri()).toReturn(saveFormURI);
+        Mockito.when(householdMock.getName()).thenReturn(householdName);
+        Mockito.when(blankFormMock.getPath()).thenReturn(blankFormMediaPath);
+        Mockito.when(savedFormMock.getUri()).thenReturn(saveFormURI);
         odkForm = new ODKForm(blankFormMock, savedFormMock);
         String deviceId = getValue(HH_PHONE_ID);
 
         odkForm.open(new HouseholdMemberFormStrategy(householdMock, deviceId), householdActivity, RequestCode.SURVEY.getCode());
 
-        ShadowActivity.IntentForResult odkActivity = Robolectric.shadowOf(householdActivity).getNextStartedActivityForResult();
+        ShadowActivity.IntentForResult odkActivity = shadowOf(householdActivity).getNextStartedActivityForResult();
 
         Intent intent = odkActivity.intent;
         ComponentName component = intent.getComponent();
@@ -126,8 +122,8 @@ public class ODKFormTest extends TestCase {
     public void ShouldSaveFileWhenOpeningBlankForm() throws IOException {
         String blankFormMediaPath = householdActivity.getFilesDir().getPath();
         String householdName = "household name";
-        Mockito.stub(householdMock.getName()).toReturn(householdName);
-        Mockito.stub(blankFormMock.getPath()).toReturn(blankFormMediaPath);
+        Mockito.when(householdMock.getName()).thenReturn(householdName);
+        Mockito.when(blankFormMock.getPath()).thenReturn(blankFormMediaPath);
         odkForm = new ODKForm(blankFormMock, null);
 
 
@@ -146,15 +142,15 @@ public class ODKFormTest extends TestCase {
         String blankFormMediaPath = householdActivity.getFilesDir().getPath();
         String householdName = "household name";
         Uri blankFormURI = Uri.parse("uri");
-        Mockito.stub(householdMock.getName()).toReturn(householdName);
-        Mockito.stub(blankFormMock.getPath()).toReturn(blankFormMediaPath);
-        Mockito.stub(blankFormMock.getUri()).toReturn(blankFormURI);
+        Mockito.when(householdMock.getName()).thenReturn(householdName);
+        Mockito.when(blankFormMock.getPath()).thenReturn(blankFormMediaPath);
+        Mockito.when(blankFormMock.getUri()).thenReturn(blankFormURI);
         odkForm = new ODKForm(blankFormMock, null);
         String deviceId = getValue(HH_PHONE_ID);
 
         odkForm.open(new HouseholdMemberFormStrategy(householdMock, deviceId), householdActivity, RequestCode.SURVEY.getCode());
 
-        ShadowActivity.IntentForResult odkActivity = Robolectric.shadowOf(householdActivity).getNextStartedActivityForResult();
+        ShadowActivity.IntentForResult odkActivity = shadowOf(householdActivity).getNextStartedActivityForResult();
 
         Intent intent = odkActivity.intent;
         ComponentName component = intent.getComponent();
@@ -167,16 +163,16 @@ public class ODKFormTest extends TestCase {
     }
 
     private void stubFileUtil() {
-        fileUtilMock = Mockito.mock(FileUtil.class);
-        Mockito.stub(fileUtilMock.withData(Mockito.any(String[].class))).toReturn(fileUtilMock);
-        Mockito.stub(fileUtilMock.withHeader(Mockito.any(String[].class))).toReturn(fileUtilMock);
+        FileUtil fileUtilMock = Mockito.mock(FileUtil.class);
+        Mockito.when(fileUtilMock.withData(Mockito.any(String[].class))).thenReturn(fileUtilMock);
+        Mockito.when(fileUtilMock.withHeader(Mockito.any(String[].class))).thenReturn(fileUtilMock);
     }
 
     private void stubHousehold() {
         householdMock = Mockito.mock(Household.class);
         selectedMember = new Member(1, "surname", "firstName", Gender.Male, 28, householdMock, "householdID-1", false);
-        Mockito.stub(householdMock.getSelectedMember(Mockito.any(DatabaseHelper.class))).toReturn(selectedMember);
-        Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.SELECTION_NOT_DONE);
+        Mockito.when(householdMock.getSelectedMember(Mockito.any(DatabaseHelper.class))).thenReturn(selectedMember);
+        Mockito.when(householdMock.getStatus()).thenReturn(InterviewStatus.SELECTION_NOT_DONE);
     }
 
     private String getValue(String key) {
@@ -184,20 +180,16 @@ public class ODKFormTest extends TestCase {
     }
 
     private ArgumentMatcher<String[]> formDataValidator(final String formName) {
-        return new ArgumentMatcher<String[]>() {
-            @Override
-            public boolean matches(Object o) {
-                String[] formData = (String[]) o;
-                List<String> formDataList = Arrays.asList(formData);
-                Assert.assertTrue(formDataList.contains(Constants.ODK_HH_ID));
-                Assert.assertTrue(formDataList.contains(formName));
-                Assert.assertTrue(formDataList.contains(selectedMember.getMemberHouseholdId()));
-                Assert.assertTrue(formDataList.contains(selectedMember.getFamilySurname()));
-                Assert.assertTrue(formDataList.contains(selectedMember.getFirstName()));
-                Assert.assertTrue(formDataList.contains("1"));
-                Assert.assertTrue(formDataList.contains(String.valueOf(selectedMember.getAge())));
-                return true;
-            }
+        return formData -> {
+            List<String> formDataList = Arrays.asList(formData);
+            Assert.assertTrue(formDataList.contains(Constants.ODK_HH_ID));
+            Assert.assertTrue(formDataList.contains(formName));
+            Assert.assertTrue(formDataList.contains(selectedMember.getMemberHouseholdId()));
+            Assert.assertTrue(formDataList.contains(selectedMember.getFamilySurname()));
+            Assert.assertTrue(formDataList.contains(selectedMember.getFirstName()));
+            Assert.assertTrue(formDataList.contains("1"));
+            Assert.assertTrue(formDataList.contains(String.valueOf(selectedMember.getAge())));
+            return true;
         };
     }
 }

@@ -16,8 +16,6 @@
 
 package com.onaio.steps.activities;
 
-import android.app.ActionBar;
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -27,6 +25,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.onaio.steps.R;
 import com.onaio.steps.handler.factories.ParticipantActivityFactory;
@@ -39,7 +40,7 @@ import com.onaio.steps.model.Participant;
 
 import java.util.List;
 
-public class ParticipantActivity extends Activity{
+public class ParticipantActivity extends AppCompatActivity {
 
     private DatabaseHelper db;
     private Participant participant;
@@ -117,6 +118,7 @@ public class ParticipantActivity extends Activity{
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         List<IActivityResultHandler> menuHandlers = ParticipantActivityFactory.getResultHandlers(this, participant);
         for(IActivityResultHandler menuHandler:menuHandlers)
             if(menuHandler.canHandleResult(requestCode))
@@ -124,7 +126,7 @@ public class ParticipantActivity extends Activity{
     }
 
     private void styleActionBar() {
-        ActionBar actionBar = getActionBar();
+        ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(false);
         actionBar.setHomeButtonEnabled(true);
         actionBar.setIcon(R.drawable.ic_action_back);

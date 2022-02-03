@@ -16,8 +16,9 @@
 
 package com.onaio.steps.handler.activities;
 
-import android.app.Activity;
 import android.content.Intent;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.onaio.steps.activities.HouseholdActivity;
 import com.onaio.steps.handler.interfaces.IListItemHandler;
@@ -26,10 +27,10 @@ import com.onaio.steps.model.Household;
 
 public class HouseholdActivityHandler implements IListItemHandler {
 
-    private Activity activity;
+    private AppCompatActivity activity;
     private Household household;
 
-    public HouseholdActivityHandler(Activity activity, Household household) {
+    public HouseholdActivityHandler(AppCompatActivity activity, Household household) {
         this.activity = activity;
         this.household = household;
     }

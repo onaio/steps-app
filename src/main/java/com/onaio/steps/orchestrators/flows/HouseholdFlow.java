@@ -16,22 +16,6 @@
 
 package com.onaio.steps.orchestrators.flows;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.view.View;
-import android.widget.TextView;
-
-import com.onaio.steps.R;
-import com.onaio.steps.activities.HouseholdListActivity;
-import com.onaio.steps.exceptions.InvalidDataException;
-import com.onaio.steps.helper.Constants;
-import com.onaio.steps.helper.DataValidator;
-import com.onaio.steps.helper.KeyValueStore;
-import com.onaio.steps.helper.KeyValueStoreFactory;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import static com.onaio.steps.helper.Constants.ENDPOINT_URL;
 import static com.onaio.steps.helper.Constants.FLOW_TYPE;
 import static com.onaio.steps.helper.Constants.HH_FORM_ID;
@@ -45,12 +29,29 @@ import static com.onaio.steps.helper.Constants.HH_USER_PASSWORD;
 import static com.onaio.steps.helper.Constants.IMPORT_URL;
 import static com.onaio.steps.helper.Constants.PA_PHONE_ID;
 
+import android.content.Intent;
+import android.view.View;
+import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.onaio.steps.R;
+import com.onaio.steps.activities.HouseholdListActivity;
+import com.onaio.steps.exceptions.InvalidDataException;
+import com.onaio.steps.helper.Constants;
+import com.onaio.steps.helper.DataValidator;
+import com.onaio.steps.helper.KeyValueStore;
+import com.onaio.steps.helper.KeyValueStoreFactory;
+
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class HouseholdFlow implements IFlow {
-    private Activity activity;
+    private AppCompatActivity activity;
     protected List<String> errorFields;
 
-    public HouseholdFlow(Activity activity) {
+    public HouseholdFlow(AppCompatActivity activity) {
         this.activity = activity;
         errorFields = new ArrayList<String>();
     }
@@ -171,7 +172,7 @@ public class HouseholdFlow implements IFlow {
         saveSafely(activity, keyId, data);
     }
 
-    public void saveSafely(Activity activity, String key, String value) {
+    public void saveSafely(AppCompatActivity activity, String key, String value) {
         KeyValueStore keyValueStore = KeyValueStoreFactory.instance(activity);
         if (!keyValueStore.putString(key, value))
             saveSettingsErrorHandler(key);
@@ -181,7 +182,7 @@ public class HouseholdFlow implements IFlow {
         //TODO: toast message for save phone id failure
     }
 
-    public String getValue(Activity activity, String key) {
+    public String getValue(AppCompatActivity activity, String key) {
         return KeyValueStoreFactory.instance(activity).getString(key);
     }
 

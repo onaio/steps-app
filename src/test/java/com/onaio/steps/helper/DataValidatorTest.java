@@ -16,27 +16,23 @@
 
 package com.onaio.steps.helper;
 
-import android.app.Activity;
+import static org.junit.Assert.assertEquals;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.onaio.steps.R;
+import com.onaio.steps.StepsTestRunner;
 import com.onaio.steps.activities.ParticipantListActivity;
 import com.onaio.steps.model.Gender;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
-import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
 
 import java.util.List;
 
-import static org.junit.Assert.*;
-
-@RunWith(RobolectricTestRunner.class)
-@Config(emulateSdk = 16,manifest = "src/main/AndroidManifest.xml")
-public class DataValidatorTest {
-    private Activity activity;
+public class DataValidatorTest extends StepsTestRunner {
+    private AppCompatActivity activity;
     private DataValidator dataValidator;
 
     @Before
@@ -50,6 +46,9 @@ public class DataValidatorTest {
     @Test
     public void validateAgeRangeShouldFailValidation() {
 
+        setValue(Constants.HH_MIN_AGE, "20");
+        setValue(Constants.HH_MAX_AGE, "65");
+
         dataValidator.validateAgeRange("17", activity.getString(R.string.age_not_in_range) + " %s-%s)", Constants.HH_MIN_AGE, Constants.HH_MAX_AGE);
         dataValidator.validateAgeRange("70", activity.getString(R.string.age_not_in_range) + " %s-%s)", Constants.HH_MIN_AGE, Constants.HH_MAX_AGE);
         dataValidator.validateAgeRange("3", activity.getString(R.string.age_not_in_range) + " %s-%s)", Constants.HH_MIN_AGE, Constants.HH_MAX_AGE);
@@ -61,6 +60,9 @@ public class DataValidatorTest {
 
     @Test
     public void validateAgeRangeShouldPassValidation() {
+
+        setValue(Constants.HH_MIN_AGE, "18");
+        setValue(Constants.HH_MAX_AGE, "70");
 
         dataValidator.validateAgeRange("18", activity.getString(R.string.age_not_in_range) + " %s-%s)", Constants.HH_MIN_AGE, Constants.HH_MAX_AGE);
         dataValidator.validateAgeRange("69", activity.getString(R.string.age_not_in_range) + " %s-%s)", Constants.HH_MIN_AGE, Constants.HH_MAX_AGE);
@@ -105,5 +107,10 @@ public class DataValidatorTest {
 
         List<String> errors = dataValidator.finish();
         assertEquals(0, errors.size());
+    }
+
+    private void setValue(String key, String value) {
+        KeyValueStore keyValueStore = KeyValueStoreFactory.instance(activity);
+        keyValueStore.putString(key, value);
     }
 }

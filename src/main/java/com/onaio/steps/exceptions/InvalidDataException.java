@@ -16,7 +16,7 @@
 
 package com.onaio.steps.exceptions;
 
-import android.app.Activity;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.onaio.steps.R;
 
@@ -26,7 +26,7 @@ import java.util.List;
 
 public class InvalidDataException extends Exception {
 
-    public InvalidDataException(Activity activity, String modelName, List<String> errorFields) {
+    public InvalidDataException(AppCompatActivity activity, String modelName, List<String> errorFields) {
        super((activity.getString(R.string.action_settings).equalsIgnoreCase(modelName))?
                activity.getString(R.string.invalid_settings)+" "+StringUtils.join(errorFields.toArray(), ','):(activity.getString(R.string.action_member).equalsIgnoreCase(modelName))?
                activity.getString(R.string.invalid_member)+" "+StringUtils.join(errorFields.toArray(),','):(activity.getString(R.string.participant).equalsIgnoreCase(modelName))?

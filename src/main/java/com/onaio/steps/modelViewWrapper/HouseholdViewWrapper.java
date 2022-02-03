@@ -16,9 +16,10 @@
 
 package com.onaio.steps.modelViewWrapper;
 
-import android.app.Activity;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.onaio.steps.exceptions.InvalidDataException;
 import com.onaio.steps.exceptions.NoUniqueIdException;
@@ -33,9 +34,9 @@ import java.util.Date;
 import java.util.Locale;
 
 public class HouseholdViewWrapper {
-    private Activity activity;
+    private AppCompatActivity activity;
 
-    public HouseholdViewWrapper(Activity activity) {
+    public HouseholdViewWrapper(AppCompatActivity activity) {
         this.activity = activity;
     }
 

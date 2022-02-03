@@ -1,10 +1,11 @@
 package com.onaio.steps.tasks;
 
-import android.app.Activity;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
-import android.support.annotation.NonNull;
 import android.util.Log;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.onaio.steps.listeners.QRBitmapSaveListener;
 import com.onaio.steps.utils.QRCodeUtils;
@@ -15,12 +16,12 @@ import java.security.NoSuchAlgorithmException;
 
 public class SaveQRCodeAsyncTask extends AsyncTask<Void, Void, Exception> {
 
-    private Activity activity;
+    private AppCompatActivity activity;
     private QRBitmapSaveListener qrBitmapSaveListener;
     private Bitmap bitmap;
     public static final String TAG = SaveQRCodeAsyncTask.class.getName();
 
-    public SaveQRCodeAsyncTask(@NonNull Activity activity, @NonNull Bitmap bitmap, QRBitmapSaveListener qrBitmapSaveListener) {
+    public SaveQRCodeAsyncTask(@NonNull AppCompatActivity activity, @NonNull Bitmap bitmap, QRBitmapSaveListener qrBitmapSaveListener) {
         this.activity = activity;
         this.qrBitmapSaveListener = qrBitmapSaveListener;
         this.bitmap = bitmap;

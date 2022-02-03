@@ -16,27 +16,30 @@
 
 package com.onaio.steps.handler.activities;
 
-import android.app.ListActivity;
+import static android.app.Activity.RESULT_OK;
+
 import android.content.Intent;
+import android.view.View;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.onaio.steps.R;
 import com.onaio.steps.activities.NewParticipantActivity;
 import com.onaio.steps.activities.ParticipantActivity;
+import com.onaio.steps.adapters.ParticipantAdapter;
 import com.onaio.steps.handler.interfaces.IActivityResultHandler;
 import com.onaio.steps.handler.interfaces.IMenuHandler;
-import com.onaio.steps.adapters.ParticipantAdapter;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.model.Participant;
 import com.onaio.steps.model.RequestCode;
 
-import static android.app.Activity.RESULT_OK;
-
 public class NewParticipantActivityHandler implements IActivityResultHandler, IMenuHandler {
 
-    private ListActivity activity;
+    private AppCompatActivity activity;
 
-    public NewParticipantActivityHandler(ListActivity activity) {
+    public NewParticipantActivityHandler(AppCompatActivity activity) {
         this.activity = activity;
     }
 
@@ -45,9 +48,11 @@ public class NewParticipantActivityHandler implements IActivityResultHandler, IM
     public void handleResult(Intent data, int resultCode) {
 
         if (resultCode == RESULT_OK) {
-            ParticipantAdapter participantAdapter = (ParticipantAdapter) activity.getListView().getAdapter();
-            if (participantAdapter == null)
+            RecyclerView list = activity.findViewById(R.id.list);
+            if (list.getAdapter() == null)
                 return;
+
+            ParticipantAdapter participantAdapter = (ParticipantAdapter) list.getAdapter();
             participantAdapter.reinitialize(Participant.getAllParticipants(new DatabaseHelper(activity.getApplicationContext())));
             participantAdapter.notifyDataSetChanged();
 

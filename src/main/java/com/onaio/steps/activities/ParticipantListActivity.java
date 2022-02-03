@@ -17,38 +17,32 @@
 package com.onaio.steps.activities;
 
 
-import android.app.ListActivity;
-import android.graphics.Color;
+import android.text.Html;
 import android.view.Menu;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.ListView;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.onaio.steps.R;
 import com.onaio.steps.adapters.ParticipantAdapter;
-import com.onaio.steps.handler.actions.SubmitDataHandler;
 import com.onaio.steps.handler.factories.ParticipantListActivityFactory;
 import com.onaio.steps.handler.interfaces.IActivityResultHandler;
 import com.onaio.steps.handler.interfaces.IMenuHandler;
 import com.onaio.steps.handler.interfaces.IMenuPreparer;
 import com.onaio.steps.handler.interfaces.IViewPreparer;
-import com.onaio.steps.model.Household;
 import com.onaio.steps.model.Participant;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.onaio.steps.helper.Constants.HEADER_GREEN;
-
 public class ParticipantListActivity extends BaseListActivity {
 
+    private RecyclerView list;
 
     @Override
     protected void prepareScreen() {
         setLayout();
         populateParticipants();
-        bindParticipantItem();
     }
 
     protected void setLayout() {
@@ -58,24 +52,19 @@ public class ParticipantListActivity extends BaseListActivity {
         participantHeader.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_action_new_member, 0, 0, 0);
         Button submitDataButton = (Button) findViewById(R.id.action_submit_data);
         submitDataButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_cloud_upload_white_24dp, 0, 0, 0);
-        setTitle(R.string.participant_header);
-        setTitleColor(Color.parseColor(HEADER_GREEN));
+        setTitle(getString(R.string.participant_header));
+        list = findViewById(R.id.list);
     }
 
     protected void populateParticipants() {
         List<Participant> participants = Participant.getAllParticipants(db);
-        getListView().setAdapter(new ParticipantAdapter(this, participants));
-    }
 
-    protected void bindParticipantItem() {
-        ListView households = getListView();
-        households.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        list.setAdapter(new ParticipantAdapter(this, participants, new ParticipantAdapter.ItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                Participant participant = Participant.find_by(db, id);
+            public void onItemClick(int position, Participant participant) {
                 ParticipantListActivityFactory.getParticipantItemHandler(ParticipantListActivity.this, participant).open();
             }
-        });
+        }));
     }
 
     @Override
@@ -110,7 +99,6 @@ public class ParticipantListActivity extends BaseListActivity {
     @Override
     public void refreshList() {
         populateParticipants();
-        bindParticipantItem();
     }
 }
 

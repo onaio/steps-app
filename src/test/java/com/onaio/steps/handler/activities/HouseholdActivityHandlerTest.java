@@ -19,29 +19,24 @@ package com.onaio.steps.handler.activities;
 
 import android.content.Intent;
 
+import com.onaio.steps.StepsTestRunner;
 import com.onaio.steps.activities.HouseholdActivity;
 import com.onaio.steps.activities.HouseholdListActivity;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.InterviewStatus;
 
-import junit.framework.Assert;
-
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.ArgumentMatcher;
 import org.mockito.Mockito;
-import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-@Config(emulateSdk = 16,manifest = "src/main/AndroidManifest.xml")
-@RunWith(RobolectricTestRunner.class)
-public class HouseholdActivityHandlerTest {
+public class HouseholdActivityHandlerTest extends StepsTestRunner {
 
     HouseholdListActivity householdListActivity;
     HouseholdActivityHandler householdActivityHandler;
@@ -71,17 +66,12 @@ public class HouseholdActivityHandlerTest {
         Mockito.verify(householdListActivity,Mockito.never()).startActivity(Mockito.any(Intent.class));
     }
 
-
     private ArgumentMatcher<Intent> matchIntent() {
-        return new ArgumentMatcher<Intent>() {
-            @Override
-            public boolean matches(Object argument) {
-                Intent intent = (Intent) argument;
-                Household actualHousehold = (Household) intent.getSerializableExtra(Constants.HH_HOUSEHOLD);
-                Assert.assertEquals(household, actualHousehold);
-                Assert.assertEquals(HouseholdActivity.class.getName(),intent.getComponent().getClassName());
-                return true;
-            }
+        return intent -> {
+            Household actualHousehold = (Household) intent.getSerializableExtra(Constants.HH_HOUSEHOLD);
+            Assert.assertEquals(household, actualHousehold);
+            Assert.assertEquals(HouseholdActivity.class.getName(),intent.getComponent().getClassName());
+            return true;
         };
     }
 }

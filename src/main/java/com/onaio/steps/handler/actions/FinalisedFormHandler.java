@@ -16,26 +16,20 @@
 
 package com.onaio.steps.handler.actions;
 
-import android.app.ListActivity;
 import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Intent;
-import android.os.AsyncTask;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.onaio.steps.R;
 import com.onaio.steps.handler.interfaces.IMenuHandler;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.CustomDialog;
-import com.onaio.steps.helper.DatabaseHelper;
-import com.onaio.steps.helper.KeyValueStoreFactory;
-import com.onaio.steps.model.Household;
-import com.onaio.steps.model.InterviewStatus;
 import com.onaio.steps.model.RequestCode;
 
-import java.util.List;
-
 public class FinalisedFormHandler implements IMenuHandler{
-   private ListActivity activity;
+   private AppCompatActivity activity;
     private static final int MENU_ID= R.id.action_saved_form;
 
 
@@ -44,7 +38,7 @@ public class FinalisedFormHandler implements IMenuHandler{
         return menu_id == MENU_ID;
     }
 
-    public FinalisedFormHandler(ListActivity activity) {
+    public FinalisedFormHandler(AppCompatActivity activity) {
         this.activity = activity;
     }
 

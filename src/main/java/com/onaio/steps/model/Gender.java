@@ -17,7 +17,7 @@
 package com.onaio.steps.model;
 
 
-import android.app.Activity;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.onaio.steps.R;
 
@@ -37,7 +37,7 @@ public enum Gender {
     public int getIntValue(){
         return intValue;
     }
-    public String getInternationalizedString(Activity activity){
+    public String getInternationalizedString(AppCompatActivity activity){
 
         return activity.getString(label);
     }

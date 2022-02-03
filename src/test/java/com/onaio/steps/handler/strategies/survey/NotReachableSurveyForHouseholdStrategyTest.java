@@ -20,6 +20,7 @@ package com.onaio.steps.handler.strategies.survey;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import com.onaio.steps.StepsTestRunner;
 import com.onaio.steps.activities.HouseholdActivity;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.model.Household;
@@ -27,47 +28,41 @@ import com.onaio.steps.model.InterviewStatus;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mockito;
-import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
 
-@Config(emulateSdk = 16,manifest = "src/main/AndroidManifest.xml")
-@RunWith(RobolectricTestRunner.class)
-public class NotReachableSurveyForHouseholdStrategyTest {
+public class NotReachableSurveyForHouseholdStrategyTest extends StepsTestRunner {
 
     private Household household;
-    private HouseholdActivity householdActivity;
     private NotReachableSurveyForHouseholdStrategy notReachableSurveyForHouseholdStrategy;
 
     @Before
     public void Setup(){
         household = Mockito.mock(Household.class);
-        householdActivity = Mockito.mock(HouseholdActivity.class);
+        HouseholdActivity householdActivity = Mockito.mock(HouseholdActivity.class);
         notReachableSurveyForHouseholdStrategy = new NotReachableSurveyForHouseholdStrategy(household, householdActivity);
     }
 
     @Test
     public void ShouldNotInactivateWhenMemberIsSelected(){
-        Mockito.stub(household.getStatus()).toReturn(InterviewStatus.NOT_DONE);
+        Mockito.when(household.getStatus()).thenReturn(InterviewStatus.NOT_DONE);
         assertFalse(notReachableSurveyForHouseholdStrategy.shouldInactivate());
     }
 
     @Test
     public void ShouldInactivateWhenSurveyIsDone(){
-        Mockito.stub(household.getStatus()).toReturn(InterviewStatus.DONE);
+        Mockito.when(household.getStatus()).thenReturn(InterviewStatus.DONE);
         assertTrue(notReachableSurveyForHouseholdStrategy.shouldInactivate());
     }
 
     @Test
     public void ShouldInactivateWhenSurveyIsDeferred(){
-        Mockito.stub(household.getStatus()).toReturn(InterviewStatus.DEFERRED);
+        Mockito.when(household.getStatus()).thenReturn(InterviewStatus.DEFERRED);
         assertFalse(notReachableSurveyForHouseholdStrategy.shouldInactivate());
     }
 
     @Test
     public void ShouldOpenAndUpdateStatus(){
-        Mockito.stub(household.getStatus()).toReturn(InterviewStatus.DEFERRED);
+        Mockito.when(household.getStatus()).thenReturn(InterviewStatus.DEFERRED);
         notReachableSurveyForHouseholdStrategy.open();
         Mockito.verify(household).setStatus(InterviewStatus.NOT_REACHABLE);
         Mockito.verify(household).update(Mockito.any(DatabaseHelper.class));

@@ -16,9 +16,10 @@
 
 package com.onaio.steps.handler.actions;
 
-import android.app.Activity;
 import android.content.DialogInterface;
 import android.view.View;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.onaio.steps.R;
 import com.onaio.steps.handler.interfaces.IMenuHandler;
@@ -30,14 +31,14 @@ public class DeferredHandler implements IMenuHandler,IMenuPreparer {
 
     private IDoNotTakeSurveyStrategy deferredStrategy;
     private final CustomDialog dialog;
-    private Activity activity;
+    private AppCompatActivity activity;
     private int MENU_ID = R.id.action_deferred;
 
-    public DeferredHandler(Activity activity, IDoNotTakeSurveyStrategy deferredStrategy) {
+    public DeferredHandler(AppCompatActivity activity, IDoNotTakeSurveyStrategy deferredStrategy) {
         this(activity,deferredStrategy,new CustomDialog());
     }
 
-    DeferredHandler(Activity activity, IDoNotTakeSurveyStrategy deferredStrategy, CustomDialog dialog) {
+    DeferredHandler(AppCompatActivity activity, IDoNotTakeSurveyStrategy deferredStrategy, CustomDialog dialog) {
         this.activity = activity;
         this.deferredStrategy = deferredStrategy;
         this.dialog = dialog;

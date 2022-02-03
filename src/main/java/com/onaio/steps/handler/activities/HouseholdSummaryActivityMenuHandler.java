@@ -1,7 +1,8 @@
 package com.onaio.steps.handler.activities;
 
-import android.app.ListActivity;
 import android.content.Intent;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.onaio.steps.R;
 import com.onaio.steps.activities.HouseholdSummaryActivity;
@@ -9,9 +10,9 @@ import com.onaio.steps.handler.interfaces.IMenuHandler;
 
 public class HouseholdSummaryActivityMenuHandler implements IMenuHandler {
 
-    private final ListActivity activity;
+    private final AppCompatActivity activity;
 
-    public HouseholdSummaryActivityMenuHandler(ListActivity activity) {
+    public HouseholdSummaryActivityMenuHandler(AppCompatActivity activity) {
         this.activity = activity;
     }
 

@@ -16,11 +16,8 @@
 
 package com.onaio.steps.activities;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -29,29 +26,21 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.google.zxing.ChecksumException;
-import com.google.zxing.FormatException;
-import com.google.zxing.NotFoundException;
-import com.google.zxing.integration.android.IntentIntegrator;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.onaio.steps.R;
-import com.onaio.steps.handler.actions.PickImageHandler;
-import com.onaio.steps.handler.actions.QRCodeScanHandler;
 import com.onaio.steps.handler.factories.SettingsImportExportActivityFactory;
 import com.onaio.steps.handler.interfaces.IActivityResultHandler;
 import com.onaio.steps.handler.interfaces.IMenuHandler;
 import com.onaio.steps.handler.interfaces.IMenuPreparer;
 import com.onaio.steps.listeners.QRBitmapGeneratorListener;
-import com.onaio.steps.listeners.QRBitmapSaveListener;
-import com.onaio.steps.tasks.SaveQRCodeAsyncTask;
 import com.onaio.steps.utils.QRCodeUtils;
 import com.onaio.steps.utils.ViewUtils;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 import java.util.zip.DataFormatException;
 
-public class SettingsImportExportActivity extends Activity {
+public class SettingsImportExportActivity extends AppCompatActivity {
 
     public static final String TAG = SettingsImportExportActivity.class.getName();
 
@@ -112,6 +101,7 @@ public class SettingsImportExportActivity extends Activity {
     // Get the results:
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         for (IActivityResultHandler iActivityResultHandler: iActivityResultHandlers) {
             if (iActivityResultHandler.canHandleResult(requestCode)) {
                 iActivityResultHandler.handleResult(data, resultCode);

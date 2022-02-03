@@ -17,15 +17,16 @@
 package com.onaio.steps.modelViewWrapper;
 
 
-import android.app.Activity;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.onaio.steps.R;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.Member;
 
 public class SelectedMemberViewWrapper {
-    public void populate(Household household,Member selectedMember,Activity activity){
+    public void populate(Household household, Member selectedMember, AppCompatActivity activity){
         if(household.getSelectedMemberId()==null)
             return;
         TextView nameView = (TextView) activity.findViewById(R.id.selected_participant_name);

@@ -14,14 +14,15 @@
 
 package com.onaio.steps.utils;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Environment;
-import android.support.annotation.NonNull;
 import android.util.Log;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.BinaryBitmap;
@@ -117,12 +118,12 @@ public class QRCodeUtils {
         return bmp;
     }
 
-    public static void generateSettingQRCode(@NonNull Activity context, QRBitmapGeneratorListener qrBitmapGeneratorListener) {
+    public static void generateSettingQRCode(@NonNull AppCompatActivity context, QRBitmapGeneratorListener qrBitmapGeneratorListener) {
         GenerateQRCodeAsyncTask generateQRCodeAsyncTask = new GenerateQRCodeAsyncTask(context, qrBitmapGeneratorListener);
         generateQRCodeAsyncTask.execute();
     }
 
-    public static Bitmap generateSettingQRCode(Activity activity) throws JSONException, NoSuchAlgorithmException, IOException, WriterException {
+    public static Bitmap generateSettingQRCode(AppCompatActivity activity) throws JSONException, NoSuchAlgorithmException, IOException, WriterException {
         String settingsJSON = exportSettingsToJSON(activity);
 
         MessageDigest md = MessageDigest.getInstance("MD5");
@@ -164,7 +165,7 @@ public class QRCodeUtils {
         return bitmap;
     }
 
-    public static void saveToDisk(Activity activity, Bitmap bitmap) throws JSONException, NoSuchAlgorithmException {
+    public static void saveToDisk(AppCompatActivity activity, Bitmap bitmap) throws JSONException, NoSuchAlgorithmException {
 
         String settingsJSON = exportSettingsToJSON(activity);
 
@@ -184,10 +185,17 @@ public class QRCodeUtils {
         }
     }
 
-    public static String exportSettingsToJSON(Activity activity) throws JSONException {
+    public static String exportSettingsToJSON(AppCompatActivity activity) throws JSONException {
         KeyValueStore keyValueStore = KeyValueStoreFactory.instance(activity);
 
         JSONObject jsonObject = new JSONObject();
+
+        JSONObject participantSettings = new JSONObject();
+        participantSettings.put(Constants.PA_FORM_ID, keyValueStore.getString(Constants.PA_FORM_ID));
+        participantSettings.put(Constants.PA_MIN_AGE, keyValueStore.getString(Constants.PA_MIN_AGE));
+        participantSettings.put(Constants.PA_MAX_AGE, keyValueStore.getString(Constants.PA_MAX_AGE));
+
+        jsonObject.put("participantSettings", participantSettings);
 
         JSONObject houseHoldSettings = new JSONObject();
         houseHoldSettings.put(Constants.HH_SURVEY_ID,
@@ -203,17 +211,10 @@ public class QRCodeUtils {
 
         jsonObject.put("householdSettings", houseHoldSettings);
 
-        JSONObject participantSettings = new JSONObject();
-        participantSettings.put(Constants.PA_FORM_ID, keyValueStore.getString(Constants.PA_FORM_ID));
-        participantSettings.put(Constants.PA_MIN_AGE, keyValueStore.getString(Constants.PA_MIN_AGE));
-        participantSettings.put(Constants.PA_MAX_AGE, keyValueStore.getString(Constants.PA_MAX_AGE));
-
-        jsonObject.put("participantSettings", participantSettings);
-
         return jsonObject.toString();
     }
 
-    public static boolean importSettingsFromJSON(Activity activity, @NonNull String jsonString) {
+    public static boolean importSettingsFromJSON(AppCompatActivity activity, @NonNull String jsonString) {
         try {
             JSONObject jsonObject = new JSONObject(jsonString);
 

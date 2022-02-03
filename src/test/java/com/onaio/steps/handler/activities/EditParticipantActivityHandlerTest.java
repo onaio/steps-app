@@ -17,34 +17,29 @@
 package com.onaio.steps.handler.activities;
 
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.onaio.steps.R;
+import com.onaio.steps.StepsTestRunner;
 import com.onaio.steps.activities.EditParticipantActivity;
 import com.onaio.steps.activities.ParticipantActivity;
 import com.onaio.steps.model.InterviewStatus;
 import com.onaio.steps.model.Participant;
 import com.onaio.steps.model.RequestCode;
 
-import junit.framework.Assert;
-
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.ArgumentMatcher;
 import org.mockito.Mockito;
-import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
-@Config(emulateSdk = 16,manifest = "src/main/AndroidManifest.xml")
-@RunWith(RobolectricTestRunner.class)
-public class EditParticipantActivityHandlerTest {
+public class EditParticipantActivityHandlerTest extends StepsTestRunner {
 
     private ParticipantActivity participantActivity;
     private Participant participant;
@@ -80,28 +75,28 @@ public class EditParticipantActivityHandlerTest {
     @Test
     public void ShouldInactivateWhenParticipantSurveyIsDone(){
         Menu menuMock = Mockito.mock(Menu.class);
-        Mockito.stub(participant.getStatus()).toReturn(InterviewStatus.DONE);
+        Mockito.when(participant.getStatus()).thenReturn(InterviewStatus.DONE);
         Assert.assertTrue(editParticipantActivityHandler.withMenu(menuMock).shouldDeactivate());
     }
 
     @Test
     public void ShouldInactivateWhenParticipantSurveyIsRefused(){
         Menu menuMock = Mockito.mock(Menu.class);
-        Mockito.stub(participant.getStatus()).toReturn(InterviewStatus.REFUSED);
+        Mockito.when(participant.getStatus()).thenReturn(InterviewStatus.REFUSED);
         Assert.assertTrue(editParticipantActivityHandler.withMenu(menuMock).shouldDeactivate());
     }
 
     @Test
     public void ShouldInactivateWhenParticipantSurveyIsIncomplete(){
         Menu menuMock = Mockito.mock(Menu.class);
-        Mockito.stub(participant.getStatus()).toReturn(InterviewStatus.INCOMPLETE);
+        Mockito.when(participant.getStatus()).thenReturn(InterviewStatus.INCOMPLETE);
         Assert.assertTrue(editParticipantActivityHandler.withMenu(menuMock).shouldDeactivate());
     }
 
     @Test
     public void ShouldNotInactivateWhenParticipantIsSelected(){
         Menu menuMock = Mockito.mock(Menu.class);
-        Mockito.stub(participant.getStatus()).toReturn(InterviewStatus.SELECTION_NOT_DONE);
+        Mockito.when(participant.getStatus()).thenReturn(InterviewStatus.SELECTION_NOT_DONE);
         Assert.assertFalse(editParticipantActivityHandler.withMenu(menuMock).shouldDeactivate());
     }
 
@@ -109,7 +104,7 @@ public class EditParticipantActivityHandlerTest {
     public void ShouldBeAbleToActivateEditOptionInMenuItem(){
         Menu menuMock = Mockito.mock(Menu.class);
         MenuItem menuItemMock = Mockito.mock(MenuItem.class);
-        Mockito.stub(menuMock.findItem(R.id.action_edit)).toReturn(menuItemMock);
+        Mockito.when(menuMock.findItem(R.id.action_edit)).thenReturn(menuItemMock);
 
         editParticipantActivityHandler.withMenu(menuMock).activate();
 
@@ -120,7 +115,7 @@ public class EditParticipantActivityHandlerTest {
     public void ShouldBeAbleToInactivateEditOptionInMenuItem() {
         Menu menuMock = Mockito.mock(Menu.class);
         MenuItem menuItemMock = Mockito.mock(MenuItem.class);
-        Mockito.stub(menuMock.findItem(R.id.action_edit)).toReturn(menuItemMock);
+        Mockito.when(menuMock.findItem(R.id.action_edit)).thenReturn(menuItemMock);
 
         editParticipantActivityHandler.withMenu(menuMock).deactivate();
 
@@ -135,13 +130,9 @@ public class EditParticipantActivityHandlerTest {
     }
 
     private ArgumentMatcher<Intent> matchIntent() {
-        return new ArgumentMatcher<Intent>() {
-            @Override
-            public boolean matches(Object argument) {
-                Intent intent = (Intent) argument;
-                Assert.assertEquals(EditParticipantActivity.class.getName(),intent.getComponent().getClassName());
-                return true;
-            }
+        return intent -> {
+            Assert.assertEquals(EditParticipantActivity.class.getName(),intent.getComponent().getClassName());
+            return true;
         };
     }
 

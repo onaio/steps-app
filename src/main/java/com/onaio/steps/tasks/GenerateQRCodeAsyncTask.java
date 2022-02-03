@@ -14,11 +14,12 @@
 
 package com.onaio.steps.tasks;
 
-import android.app.Activity;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
-import android.support.annotation.NonNull;
 import android.util.Log;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.zxing.WriterException;
 import com.onaio.steps.listeners.QRBitmapGeneratorListener;
@@ -37,9 +38,9 @@ public class GenerateQRCodeAsyncTask extends AsyncTask<Void, Void, Object> {
 
     private static final String TAG = GenerateQRCodeAsyncTask.class.getName();
     private QRBitmapGeneratorListener qrBitmapGeneratorListener;
-    private Activity context;
+    private AppCompatActivity context;
 
-    public GenerateQRCodeAsyncTask(@NonNull Activity context, QRBitmapGeneratorListener qrBitmapGeneratorListener) {
+    public GenerateQRCodeAsyncTask(@NonNull AppCompatActivity context, QRBitmapGeneratorListener qrBitmapGeneratorListener) {
         this.qrBitmapGeneratorListener = qrBitmapGeneratorListener;
         this.context = context;
     }

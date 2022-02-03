@@ -21,12 +21,14 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.onaio.steps.R;
+import com.onaio.steps.exceptions.AppNotInstalledException;
+import com.onaio.steps.exceptions.FormNotPresentException;
 import com.onaio.steps.handler.interfaces.IActivityResultHandler;
 import com.onaio.steps.handler.interfaces.IMenuHandler;
 import com.onaio.steps.handler.interfaces.IMenuPreparer;
-import com.onaio.steps.exceptions.AppNotInstalledException;
-import com.onaio.steps.exceptions.FormNotPresentException;
 import com.onaio.steps.handler.strategies.survey.DeferSurveyForParticipantStrategy;
 import com.onaio.steps.handler.strategies.survey.RefuseSurveyForParticipantStrategy;
 import com.onaio.steps.handler.strategies.survey.TakeSurveyForParticipantStrategy;
@@ -43,7 +45,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class TakeSurveyHandler implements IMenuHandler, IMenuPreparer, IActivityResultHandler {
-    private Activity activity;
+    private AppCompatActivity activity;
     private ITakeSurveyStrategy takeSurveyStrategy;
     private static final int MENU_ID = R.id.action_take_survey;
 
@@ -52,7 +54,7 @@ public class TakeSurveyHandler implements IMenuHandler, IMenuPreparer, IActivity
         return menu_id == MENU_ID;
     }
 
-    public TakeSurveyHandler(Activity activity, ITakeSurveyStrategy takeSurveyStrategy) {
+    public TakeSurveyHandler(AppCompatActivity activity, ITakeSurveyStrategy takeSurveyStrategy) {
         this.activity = activity;
         this.takeSurveyStrategy = takeSurveyStrategy;
     }

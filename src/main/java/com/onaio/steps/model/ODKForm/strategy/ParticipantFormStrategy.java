@@ -16,12 +16,12 @@
 
 package com.onaio.steps.model.ODKForm.strategy;
 
-import android.app.Activity;
+import androidx.appcompat.app.AppCompatActivity;
 
-import com.onaio.steps.model.ODKForm.strategy.interfaces.IFormStrategy;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.FileUtil;
 import com.onaio.steps.helper.KeyValueStoreFactory;
+import com.onaio.steps.model.ODKForm.strategy.interfaces.IFormStrategy;
 import com.onaio.steps.model.Participant;
 
 import java.io.IOException;
@@ -40,7 +40,7 @@ public class ParticipantFormStrategy implements IFormStrategy{
         this.deviceId = deviceId;
     }
     @Override
-    public void saveDataFile(Activity activity, String pathToSaveDataFile) throws IOException {
+    public void saveDataFile(AppCompatActivity activity, String pathToSaveDataFile) throws IOException {
         String formId = getValue(Constants.PA_FORM_ID,activity);
         String formNameFormat = formId + "-%s";
         ArrayList<String> row = new ArrayList<String>();
@@ -59,7 +59,7 @@ public class ParticipantFormStrategy implements IFormStrategy{
 
     }
 
-    private String getValue(String key,Activity activity) {
+    private String getValue(String key,AppCompatActivity activity) {
         return KeyValueStoreFactory.instance(activity).getString(key) ;
     }
 }

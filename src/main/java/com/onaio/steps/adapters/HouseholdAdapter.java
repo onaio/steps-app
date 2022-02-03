@@ -21,9 +21,11 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.onaio.steps.R;
 import com.onaio.steps.helper.DatabaseHelper;
@@ -36,24 +38,36 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 
-public class HouseholdAdapter extends BaseAdapter{
-    private Context context;
+public class HouseholdAdapter extends RecyclerView.Adapter<HouseholdAdapter.ViewHolder> {
+    private final Context context;
     private List<Household> households;
+    private final ItemClickListener itemClickListener;
 
-    public HouseholdAdapter(Context context, List households) {
+    public HouseholdAdapter(Context context, List households, ItemClickListener itemClickListener) {
         this.context = context;
         this.households = households;
+        this.itemClickListener = itemClickListener;
 
     }
 
+    @NonNull
     @Override
-    public int getCount() {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.list_item, parent, false), itemClickListener);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        holder.bind(position, households.get(position));
+    }
+
+    @Override
+    public int getItemCount() {
         return households.size();
     }
 
-    @Override
-    public Object getItem(int i) {
-        return households.get(i);
+    public Household getItem(int position) {
+        return households.get(position);
     }
 
     public void reinitialize(List households){
@@ -65,75 +79,73 @@ public class HouseholdAdapter extends BaseAdapter{
         return Long.parseLong(households.get(position).getId());
     }
 
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        View householdItemView;
-        Household householdAtPosition = households.get(position);
+    public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        householdItemView = getViewItem(convertView);
-        setTextInView(householdItemView, householdAtPosition);
+        private final View itemView;
+        private final ItemClickListener itemClickListener;
 
-        return householdItemView;
-    }
-
-    private void setTextInView(View householdListItem, Household householdAtPosition) {
-        TextView householdName = (TextView) householdListItem.findViewById(R.id.main_text);
-        ImageView cloudIcon = (ImageView) householdListItem.findViewById(R.id.cloud_icon);
-        TextView membersCount = (TextView) householdListItem.findViewById(R.id.sub_text);
-        ImageView image = (ImageView) householdListItem.findViewById(R.id.main_image);
-        ImageView commentImage = (ImageView) householdListItem.findViewById(R.id.comment_view);
-        image.setImageResource(getImage(householdAtPosition));
-
-        if(householdAtPosition.getComments().equals(""))
-            commentImage.setVisibility(View.INVISIBLE);
-        else
-            commentImage.setVisibility(View.VISIBLE);
-
-        householdName.setTextColor(Color.BLACK);
-        String householdRow = context.getString(R.string.hhid)+ householdAtPosition.getName();
-
-        Member selectedMember = householdAtPosition.getSelectedMember();
-        if (householdAtPosition.getStatus() == InterviewStatus.NOT_REACHABLE) {
-            householdRow += " " + StringUtils.capitalize(householdListItem.getContext().getString(R.string.not_reachable).toLowerCase());
-        } else if (selectedMember != null){
-            householdRow += " " + selectedMember.getFamilySurname() + " " + selectedMember.getFirstName();
+        public ViewHolder(View itemView, ItemClickListener itemClickListener) {
+            super(itemView);
+            this.itemView = itemView;
+            this.itemClickListener = itemClickListener;
         }
-        householdName.setText(householdRow);
-        cloudIcon.setVisibility(ServerStatus.SENT.equals(householdAtPosition.getServerStatus()) ? View.VISIBLE : View.GONE);
 
-        int numberOfMembers = householdAtPosition.numberOfNonDeletedMembers(new DatabaseHelper(context));
-        membersCount.setText(String.format("%s, %s "+context.getString(R.string.members), householdAtPosition.getCreatedAt(), String.valueOf(numberOfMembers)));
-        this.notifyDataSetChanged();
-    }
+        public void bind(int position, Household household) {
+            itemView.setOnClickListener(v -> itemClickListener.onItemClick(position, household));
+            setTextInView(itemView, household);
+        }
 
-    private int getImage(Household householdAtPosition) {
-        switch (householdAtPosition.getStatus()){
-            case DONE:
-                return R.mipmap.ic_household_list_done;
-            case NOT_DONE: return R.mipmap.ic_household_list_not_done;
-            case SELECTION_NOT_DONE:
-            case EMPTY_HOUSEHOLD:
-            case CANCEL_SELECTION:
-                return R.mipmap.ic_household_list_not_selected;
-            case DEFERRED: return R.mipmap.ic_household_list_deferred;
-            case INCOMPLETE: return R.mipmap.ic_household_list_incomplete;
-            case INCOMPLETE_REFUSED:
-            case REFUSED:
-                return R.mipmap.ic_household_list_refused;
-            case NOT_REACHABLE: return R.mipmap.ic_household_list_not_reachable;
-            default: return R.mipmap.ic_household_list_refused;
+        private void setTextInView(View householdListItem, Household householdAtPosition) {
+            TextView householdName = householdListItem.findViewById(R.id.main_text);
+            ImageView cloudIcon = householdListItem.findViewById(R.id.cloud_icon);
+            TextView membersCount = householdListItem.findViewById(R.id.sub_text);
+            ImageView image = householdListItem.findViewById(R.id.main_image);
+            ImageView commentImage = householdListItem.findViewById(R.id.comment_view);
+            image.setImageResource(getImage(householdAtPosition));
+
+            if(householdAtPosition.getComments().equals(""))
+                commentImage.setVisibility(View.INVISIBLE);
+            else
+                commentImage.setVisibility(View.VISIBLE);
+
+            householdName.setTextColor(Color.BLACK);
+            String householdRow = itemView.getContext().getString(R.string.hhid)+ householdAtPosition.getName();
+
+            Member selectedMember = householdAtPosition.getSelectedMember();
+            if (householdAtPosition.getStatus() == InterviewStatus.NOT_REACHABLE) {
+                householdRow += " " + StringUtils.capitalize(householdListItem.getContext().getString(R.string.not_reachable).toLowerCase());
+            } else if (selectedMember != null){
+                householdRow += " " + selectedMember.getFamilySurname() + " " + selectedMember.getFirstName();
+            }
+            householdName.setText(householdRow);
+            cloudIcon.setVisibility(ServerStatus.SENT.equals(householdAtPosition.getServerStatus()) ? View.VISIBLE : View.GONE);
+
+            int numberOfMembers = householdAtPosition.numberOfNonDeletedMembers(new DatabaseHelper(itemView.getContext()));
+            membersCount.setText(String.format("%s, %s " + itemView.getContext().getString(R.string.members), householdAtPosition.getCreatedAt(), String.valueOf(numberOfMembers)));
+            //this.notifyDataSetChanged();
+        }
+
+        private int getImage(Household householdAtPosition) {
+            switch (householdAtPosition.getStatus()){
+                case DONE:
+                    return R.mipmap.ic_household_list_done;
+                case NOT_DONE: return R.mipmap.ic_household_list_not_done;
+                case SELECTION_NOT_DONE:
+                case EMPTY_HOUSEHOLD:
+                case CANCEL_SELECTION:
+                    return R.mipmap.ic_household_list_not_selected;
+                case DEFERRED: return R.mipmap.ic_household_list_deferred;
+                case INCOMPLETE: return R.mipmap.ic_household_list_incomplete;
+                case INCOMPLETE_REFUSED:
+                case REFUSED:
+                    return R.mipmap.ic_household_list_refused;
+                case NOT_REACHABLE: return R.mipmap.ic_household_list_not_reachable;
+                default: return R.mipmap.ic_household_list_not_selected;
+            }
         }
     }
 
-    private View getViewItem(View convertView) {
-        View view;
-        if (convertView == null) {
-            LayoutInflater inflater = (LayoutInflater) context
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(R.layout.list_item, null);
-        } else
-            view = convertView;
-        view.setBackgroundColor(Color.WHITE);
-        return view;
+    public interface ItemClickListener {
+        void onItemClick(int position, Household household);
     }
 }

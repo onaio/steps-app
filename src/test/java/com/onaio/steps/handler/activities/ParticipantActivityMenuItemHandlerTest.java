@@ -1,8 +1,12 @@
 package com.onaio.steps.handler.activities;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.onaio.steps.StepsTestRunner;
 import com.onaio.steps.activities.HouseholdListActivity;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.KeyValueStore;
@@ -11,20 +15,13 @@ import com.onaio.steps.orchestrators.flows.FlowType;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
-import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 /**
  * Created by Ephraim Kigamba - ekigamba@ona.io on 05/06/2018.
  */
-@RunWith(RobolectricTestRunner.class)
-@Config(emulateSdk = 16,manifest = "src/main/AndroidManifest.xml")
-public class ParticipantActivityMenuItemHandlerTest {
+
+public class ParticipantActivityMenuItemHandlerTest extends StepsTestRunner {
 
     private ParticipantActivityMenuItemHandler participantActivityMenuItemHandler;
     private HouseholdListActivity householdListActivity;

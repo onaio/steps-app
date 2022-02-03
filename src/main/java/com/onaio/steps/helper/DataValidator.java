@@ -16,7 +16,7 @@
 
 package com.onaio.steps.helper;
 
-import android.app.Activity;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.onaio.steps.model.Gender;
 
@@ -25,10 +25,10 @@ import java.util.List;
 
 public class DataValidator {
 
-    private Activity activity;
+    private AppCompatActivity activity;
     private List<String> errorFields;
 
-    public DataValidator(Activity activity) {
+    public DataValidator(AppCompatActivity activity) {
 
         this.activity = activity;
         errorFields = new ArrayList<String>();

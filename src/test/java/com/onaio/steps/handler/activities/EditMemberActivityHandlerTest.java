@@ -16,12 +16,18 @@
 
 package com.onaio.steps.handler.activities;
 
+
+import static junit.framework.TestCase.assertFalse;
+import static junit.framework.TestCase.assertTrue;
+import static org.mockito.Mockito.when;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.onaio.steps.R;
+import com.onaio.steps.StepsTestRunner;
 import com.onaio.steps.activities.EditMemberActivity;
 import com.onaio.steps.activities.MemberActivity;
 import com.onaio.steps.helper.Constants;
@@ -30,23 +36,13 @@ import com.onaio.steps.model.InterviewStatus;
 import com.onaio.steps.model.Member;
 import com.onaio.steps.model.RequestCode;
 
-import junit.framework.Assert;
-
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.ArgumentMatcher;
 import org.mockito.Mockito;
-import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.stub;
-
-@Config(emulateSdk = 16,manifest = "src/main/AndroidManifest.xml")
-@RunWith(RobolectricTestRunner.class)
-public class EditMemberActivityHandlerTest {
+public class EditMemberActivityHandlerTest extends StepsTestRunner {
 
     private MemberActivity memberActivityMock;
     private Member memberMock;
@@ -93,15 +89,11 @@ public class EditMemberActivityHandlerTest {
     }
 
     private ArgumentMatcher<Intent> matchIntent() {
-        return new ArgumentMatcher<Intent>() {
-            @Override
-            public boolean matches(Object argument) {
-                Intent intent = (Intent) argument;
-                Member actualMember = (Member) intent.getSerializableExtra(Constants.HH_MEMBER);
-                Assert.assertEquals(memberMock, actualMember);
-                Assert.assertEquals(EditMemberActivity.class.getName(),intent.getComponent().getClassName());
-                return true;
-            }
+        return intent -> {
+            Member actualMember = (Member) intent.getSerializableExtra(Constants.HH_MEMBER);
+            Assert.assertEquals(memberMock, actualMember);
+            Assert.assertEquals(EditMemberActivity.class.getName(),intent.getComponent().getClassName());
+            return true;
         };
     }
 
@@ -109,8 +101,8 @@ public class EditMemberActivityHandlerTest {
     public void ShouldInactivateEditOptionForSelectedMember(){
         Menu menuMock = Mockito.mock(Menu.class);
         Household household = new Household("1234", "any name", "123456789", "1", InterviewStatus.SELECTION_NOT_DONE, "", "uniqueDevId","Dummy comments");
-        Mockito.stub(memberMock.getHousehold()).toReturn(household);
-        Mockito.stub(memberMock.getId()).toReturn(1);
+        when(memberMock.getHousehold()).thenReturn(household);
+        when(memberMock.getId()).thenReturn(1);
 
         assertTrue(editMemberActivityHandler.withMenu(menuMock).shouldDeactivate());
     }
@@ -118,16 +110,16 @@ public class EditMemberActivityHandlerTest {
     @Test
     public void ShouldInactivateWhenHouseholdIsSurveyed(){
         Menu menuMock = Mockito.mock(Menu.class);
-        stub(memberMock.getId()).toReturn(1);
-        stub(memberMock.getHousehold()).toReturn(new Household("12","name","321","", InterviewStatus.DONE,"12-12-2001", "uniqueDevId","Dummy comments"));
+        when(memberMock.getId()).thenReturn(1);
+        when(memberMock.getHousehold()).thenReturn(new Household("12","name","321","", InterviewStatus.DONE,"12-12-2001", "uniqueDevId","Dummy comments"));
         Assert.assertTrue(editMemberActivityHandler.withMenu(menuMock).shouldDeactivate());
     }
 
     @Test
     public void ShouldInactivateWhenSurveyIsRefused(){
         Menu menuMock = Mockito.mock(Menu.class);
-        stub(memberMock.getId()).toReturn(1);
-        stub(memberMock.getHousehold()).toReturn(new Household("12","name","321","", InterviewStatus.REFUSED,"12-12-2001", "uniqueDevId","Dummy comments"));
+        when(memberMock.getId()).thenReturn(1);
+        when(memberMock.getHousehold()).thenReturn(new Household("12","name","321","", InterviewStatus.REFUSED,"12-12-2001", "uniqueDevId","Dummy comments"));
         Assert.assertTrue(editMemberActivityHandler.withMenu(menuMock).shouldDeactivate());
 
     }
@@ -136,7 +128,7 @@ public class EditMemberActivityHandlerTest {
     public void ShouldBeAbleToActivateEditOptionInMenuItem(){
         Menu menuMock = Mockito.mock(Menu.class);
         MenuItem menuItemMock = Mockito.mock(MenuItem.class);
-        Mockito.stub(menuMock.findItem(R.id.action_edit)).toReturn(menuItemMock);
+        when(menuMock.findItem(R.id.action_edit)).thenReturn(menuItemMock);
 
         editMemberActivityHandler.withMenu(menuMock).activate();
 
@@ -147,7 +139,7 @@ public class EditMemberActivityHandlerTest {
     public void ShouldBeAbleToInactivateEditOptionInMenuItem(){
         Menu menuMock = Mockito.mock(Menu.class);
         MenuItem menuItemMock = Mockito.mock(MenuItem.class);
-        Mockito.stub(menuMock.findItem(R.id.action_edit)).toReturn(menuItemMock);
+        when(menuMock.findItem(R.id.action_edit)).thenReturn(menuItemMock);
 
         editMemberActivityHandler.withMenu(menuMock).deactivate();
 

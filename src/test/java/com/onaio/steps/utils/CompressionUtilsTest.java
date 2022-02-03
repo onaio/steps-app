@@ -14,19 +14,16 @@
 
 package com.onaio.steps.utils;
 
+import static org.junit.Assert.assertEquals;
+
+import com.onaio.steps.StepsTestRunner;
+
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
 
 import java.io.IOException;
 import java.util.zip.DataFormatException;
 
-import static org.junit.Assert.assertEquals;
-
-@RunWith(RobolectricTestRunner.class)
-@Config(emulateSdk = 16,manifest = "src/main/AndroidManifest.xml")
-public class CompressionUtilsTest {
+public class CompressionUtilsTest extends StepsTestRunner {
 
     public String loremIpsumText = "This simple online text compression tool is compressing a plain text and decompressing compressed base64 string with gzip, bzip2 and deflate algorithms. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur";
     public String compressedText = "eJxNUEtOQzEMvMocoOoCIU7AkiUcwE3cV0tJnCZ2qTg9Do8iNlFiT+b3fpGJKbUXhrYijWF8NyStffCcog2mWhCwv1nbQOiFpO1gahmZ/68fd8440eSXZ0wba/EpdsH2Jf2AU5xPv3/PhYxBZdMRgDqPeNPBFdKnV2QtOsJlKFW2Q7C3ycnYfICydJlpcXORWC7NrGDxWTWHwdrjs7QkWbI3gxsKnYIebDs1o9LWKPTl6nTEh4Gb1OBGlXW5xZPqAVePGppGFs/gO48kRrY68lKoJt2ZF0imLKUfSukBBtOqJTzpHiCk7IjXRUke6WV4ONmzRrODo8ELt8xRyRrctHi31dNtJcWqF0lKeTQUgRxn34QMbRlCpxEPH9+W8bSX";

@@ -16,8 +16,6 @@
 
 package com.onaio.steps.activities;
 
-import android.app.ActionBar;
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -36,7 +34,10 @@ import java.util.List;
 
 import static com.onaio.steps.helper.Constants.HH_MEMBER;
 
-public class MemberActivity extends Activity {
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MemberActivity extends AppCompatActivity {
 
     private Member member;
 
@@ -50,7 +51,7 @@ public class MemberActivity extends Activity {
     }
 
     private void styleActionBar() {
-        ActionBar actionBar = getActionBar();
+        ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(false);
         actionBar.setHomeButtonEnabled(true);
         actionBar.setIcon(R.drawable.ic_action_back);
@@ -85,6 +86,7 @@ public class MemberActivity extends Activity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         List<IActivityResultHandler> menuHandlers = MemberActivityFactory.getMenuResultHandlers(this, member);
         for(IActivityResultHandler menuHandler:menuHandlers)
             if(menuHandler.canHandleResult(requestCode))

@@ -17,6 +17,11 @@
 package com.onaio.steps.activities;
 
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.robolectric.Shadows.shadowOf;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -25,6 +30,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.onaio.steps.R;
+import com.onaio.steps.StepsTestRunner;
 import com.onaio.steps.exceptions.InvalidDataException;
 import com.onaio.steps.exceptions.NoUniqueIdException;
 import com.onaio.steps.helper.Constants;
@@ -33,21 +39,10 @@ import com.onaio.steps.modelViewWrapper.HouseholdViewWrapper;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mockito;
-import org.mockito.Spy;
 import org.robolectric.Robolectric;
-import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.robolectric.Robolectric.shadowOf;
-
-@Config(emulateSdk = 16, manifest = "src/main/AndroidManifest.xml")
-@RunWith(RobolectricTestRunner.class)
-public class NewHouseholdActivityTest {
+public class NewHouseholdActivityTest extends StepsTestRunner {
 
     private final String PHONE_ID = "12345";
     private final String HOUSEHOLD_SEED = "100";
@@ -60,8 +55,7 @@ public class NewHouseholdActivityTest {
         intent.putExtra(Constants.HH_PHONE_ID, PHONE_ID);
         intent.putExtra(Constants.HH_HOUSEHOLD_SEED, HOUSEHOLD_SEED);
 
-        NewHouseholdActivity newHouseholdActivity = Robolectric.buildActivity(NewHouseholdActivity.class)
-                .withIntent(intent)
+        NewHouseholdActivity newHouseholdActivity = Robolectric.buildActivity(NewHouseholdActivity.class, intent)
                 .create()
                 .get();
 
@@ -90,11 +84,11 @@ public class NewHouseholdActivityTest {
     public void ShouldSaveHouseholdAndFinishActivity() throws InvalidDataException, NoUniqueIdException {
         View viewMock = Mockito.mock(View.class);
         TextView generatedIdMock = Mockito.mock(TextView.class);
-        Mockito.stub(viewMock.getId()).toReturn(R.id.household_form);
+        Mockito.when(viewMock.getId()).thenReturn(R.id.household_form);
         TextView numberView = (TextView) newHouseholdActivity.findViewById(R.id.household_number);
         TextView commentsView = (TextView) newHouseholdActivity.findViewById(R.id.household_comments);
-        Mockito.stub(generatedIdMock.getId()).toReturn(R.id.generated_household_id);
-        Mockito.stub(generatedIdMock.getText()).toReturn("12345-101");
+        Mockito.when(generatedIdMock.getId()).thenReturn(R.id.generated_household_id);
+        Mockito.when(generatedIdMock.getText()).thenReturn("12345-101");
         numberView.setText("8050342347");
         commentsView.setText("dummy comments");
         Household household = new HouseholdViewWrapper(newHouseholdActivity).getHousehold(R.id.generated_household_id, R.id.household_number, R.id.household_comments);

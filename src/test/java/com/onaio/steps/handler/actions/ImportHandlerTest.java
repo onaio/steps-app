@@ -24,6 +24,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 
 import com.onaio.steps.R;
+import com.onaio.steps.StepsTestRunner;
 import com.onaio.steps.activities.SettingsActivity;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;
@@ -32,25 +33,23 @@ import com.onaio.steps.helper.KeyValueStore;
 import com.onaio.steps.helper.KeyValueStoreFactory;
 import com.onaio.steps.orchestrators.flows.FlowType;
 
-import junit.framework.Assert;
-
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.ArgumentMatcher;
 import org.mockito.Mockito;
 import org.robolectric.Robolectric;
-import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 import org.robolectric.annotation.Implementation;
 import org.robolectric.annotation.Implements;
-import org.robolectric.shadows.ShadowAsyncTask;
+import org.robolectric.annotation.LooperMode;
+import org.robolectric.shadows.ShadowLegacyAsyncTask;
 
 import java.io.IOException;
 
-@Config(emulateSdk = 16,manifest = "src/main/AndroidManifest.xml", shadows = {ImportHandlerTest.ShadowDownloadFileTask.class})
-@RunWith(RobolectricTestRunner.class)
-public class ImportHandlerTest {
+@LooperMode(LooperMode.Mode.LEGACY)
+@Config(shadows = {ImportHandlerTest.ShadowDownloadFileTask.class})
+public class ImportHandlerTest extends StepsTestRunner {
 
     private SettingsActivity activity;
     private ImportHandler importHandler;
@@ -61,7 +60,7 @@ public class ImportHandlerTest {
         Intent intent = new Intent();
         intent.putExtra(Constants.FLOW_TYPE, FlowType.Household.toString());
 
-        activity = Robolectric.buildActivity(SettingsActivity.class).withIntent(intent).create().get();
+        activity = Robolectric.buildActivity(SettingsActivity.class, intent).create().get();
         DatabaseHelper dbMock = Mockito.mock(DatabaseHelper.class);
         fileUtilMock = Mockito.mock(FileUtil.class);
         importHandler = new ImportHandler(activity, dbMock, fileUtilMock);
@@ -130,30 +129,25 @@ public class ImportHandlerTest {
 //        rowData.add("2");
 //        rowData.add("some reason;some other reason");
 //        rows.add(rowData.toArray(new String[]{}));
-//        Mockito.stub(fileUtilMock.readFile(Mockito.anyString())).toReturn(rows);
-//        Mockito.stub(dbMock.exec(Mockito.anyString())).toReturn(cursorMock);
+//        Mockito.when(fileUtilMock.readFile(Mockito.anyString())).thenReturn(rows);
+//        Mockito.when(dbMock.exec(Mockito.anyString())).thenReturn(cursorMock);
 //        new CursorStub(cursorMock).stubCursorForHousehold();
 
     }
 
     public ArgumentMatcher<Intent> intentMatcher() {
-        return new ArgumentMatcher<Intent>() {
-            @Override
-            public boolean matches(Object argument) {
-                Intent intent = (Intent) argument;
-                Assert.assertEquals("file/*",intent.getType());
-                Assert.assertEquals(Intent.ACTION_GET_CONTENT,intent.getAction());
-                return true;
-            }
+        return intent -> {
+            Assert.assertEquals("file/*",intent.getType());
+            Assert.assertEquals(Intent.ACTION_GET_CONTENT,intent.getAction());
+            return true;
         };
     }
 
     @Implements(AsyncTask.class)
-    public static class ShadowDownloadFileTask<Params, Progress, Result> extends ShadowAsyncTask<Params, Progress, Result> {
+    public static class ShadowDownloadFileTask<Params, Progress, Result> extends ShadowLegacyAsyncTask<Params, Progress, Result> {
 
         private static String URL = null;
 
-        @Override
         @Implementation
         public AsyncTask<Params, Progress, Result> execute(Params... params) {
             ShadowDownloadFileTask.URL = (String) params[0];

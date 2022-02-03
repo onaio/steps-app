@@ -20,11 +20,11 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.wifi.WifiManager;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.annotation.WorkerThread;
-import android.telephony.TelephonyManager;
 import android.util.Log;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.WorkerThread;
 
 import com.onaio.steps.exceptions.NoUniqueIdException;
 
@@ -45,13 +45,13 @@ public class Device {
      *
      * @return
      */
-    @Nullable @WorkerThread
+    @Nullable
+    @WorkerThread
     public static final String generateUniqueDeviceId(Context context) {
         String uniqueId = null;
         if(context != null) {
-            //try getting the IMEI
-            TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-            uniqueId = telephonyManager.getDeviceId();
+
+            uniqueId = android.provider.Settings.Secure.getString(context.getContentResolver(), android.provider.Settings.Secure.ANDROID_ID);
 
             //try getting the WLAN MAC address
             if(uniqueId == null) {

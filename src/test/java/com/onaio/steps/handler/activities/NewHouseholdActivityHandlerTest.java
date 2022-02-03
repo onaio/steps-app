@@ -19,11 +19,15 @@ package com.onaio.steps.handler.activities;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.robolectric.Shadows.shadowOf;
 
 import android.app.Activity;
 import android.content.Intent;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.onaio.steps.R;
+import com.onaio.steps.StepsTestRunner;
 import com.onaio.steps.activities.HouseholdActivity;
 import com.onaio.steps.activities.HouseholdListActivity;
 import com.onaio.steps.activities.NewHouseholdActivity;
@@ -40,26 +44,21 @@ import com.onaio.steps.model.ServerStatus;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.robolectric.Robolectric;
-import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowActivity;
 
-@Config(emulateSdk = 16,manifest = "src/main/AndroidManifest.xml")
-@RunWith(RobolectricTestRunner.class)
-public class NewHouseholdActivityHandlerTest {
+public class NewHouseholdActivityHandlerTest extends StepsTestRunner {
 
     private HouseholdListActivity householdListActivity;
     private NewHouseholdActivityHandler handler;
     private CustomDialog dialogMock;
-    private String PHONE_ID = "123";
-    private String HOUSEHOLD_SEED = "100";
+    private final String PHONE_ID = "123";
+    private final String HOUSEHOLD_SEED = "100";
 
     @Before
     public void Setup(){
-        householdListActivity = Robolectric.setupActivity(HouseholdListActivity.class);
+        householdListActivity = Robolectric.buildActivity(HouseholdListActivity.class).create().get();
         dialogMock = Mockito.mock(CustomDialog.class);
         handler = new NewHouseholdActivityHandler(householdListActivity, dialogMock);
     }
@@ -76,8 +75,7 @@ public class NewHouseholdActivityHandlerTest {
 
     @Test
     public void ShouldNotifyUserWhenPhoneIdIsNotSet(){
-        KeyValueStore keyValueStoreMock = Mockito.mock(KeyValueStore.class);
-        Mockito.stub(keyValueStoreMock.getString(PHONE_ID)).toReturn("");
+        setValue(Constants.HH_PHONE_ID, "");
         handler.open();
 
         Mockito.verify(dialogMock).notify(householdListActivity, CustomDialog.EmptyListener, R.string.phone_id_message_title, R.string.phone_id_message);
@@ -107,13 +105,13 @@ public class NewHouseholdActivityHandlerTest {
     public void ShouldOpenNewHouseholdActivityWithDataWhenPhoneIdIsSet(){
         setValue(Constants.HH_PHONE_ID, PHONE_ID);
         setValue(Constants.HH_HOUSEHOLD_SEED, HOUSEHOLD_SEED);
-        ShadowActivity stepsActivityShadow = Robolectric.shadowOf(householdListActivity);
+        ShadowActivity stepsActivityShadow = shadowOf(householdListActivity);
 
         handler.open();
 
         Intent newIntent = stepsActivityShadow.getNextStartedActivityForResult().intent;
-        assertTrue(newIntent.getComponent().getClassName().equals(NewHouseholdActivity.class.getName()));
-        assertTrue(newIntent.getStringExtra(Constants.HH_PHONE_ID).equals(PHONE_ID));
+        assertEquals(newIntent.getComponent().getClassName(), NewHouseholdActivity.class.getName());
+        assertEquals(newIntent.getStringExtra(Constants.HH_PHONE_ID), PHONE_ID);
     }
 
     @Test
@@ -134,9 +132,9 @@ public class NewHouseholdActivityHandlerTest {
         name.save(new DatabaseHelper(householdListActivity));
         intent.putExtra(Constants.HH_HOUSEHOLD,name);
         HouseholdAdapter householdAdapterMock = Mockito.mock(HouseholdAdapter.class);
-        Mockito.stub(householdAdapterMock.getViewTypeCount()).toReturn(1);
-        householdListActivity.getListView().setAdapter(householdAdapterMock);
-        ShadowActivity stepsActivityShadow = Robolectric.shadowOf(householdListActivity);
+        //Mockito.when(householdAdapterMock.getViewTypeCount()).thenReturn(1);
+        ((RecyclerView) householdListActivity.findViewById(R.id.list)).setAdapter(householdAdapterMock);
+        ShadowActivity stepsActivityShadow = shadowOf(householdListActivity);
 
         handler.handleResult(intent, Activity.RESULT_OK);
 
@@ -152,8 +150,8 @@ public class NewHouseholdActivityHandlerTest {
     @Test
     public void ShouldNotHandleResultForOtherResultCode(){
         HouseholdAdapter householdAdapterMock = Mockito.mock(HouseholdAdapter.class);
-        Mockito.stub(householdAdapterMock.getViewTypeCount()).toReturn(1);
-        householdListActivity.getListView().setAdapter(householdAdapterMock);
+        //Mockito.when(householdAdapterMock.getViewTypeCount()).thenReturn(1);
+        ((RecyclerView) householdListActivity.findViewById(R.id.list)).setAdapter(householdAdapterMock);
         handler.handleResult(null, Activity.RESULT_CANCELED);
 
         Mockito.verify(householdAdapterMock,Mockito.never()).reinitialize(Mockito.anyList());

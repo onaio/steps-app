@@ -16,11 +16,13 @@
 
 package com.onaio.steps.modelViewWrapper;
 
+import static org.junit.Assert.assertEquals;
 
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.onaio.steps.R;
+import com.onaio.steps.StepsTestRunner;
 import com.onaio.steps.activities.NewMemberActivity;
 import com.onaio.steps.exceptions.InvalidDataException;
 import com.onaio.steps.helper.Constants;
@@ -31,30 +33,20 @@ import com.onaio.steps.model.Household;
 import com.onaio.steps.model.InterviewStatus;
 import com.onaio.steps.model.Member;
 
-import junit.framework.Assert;
-
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
-import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import static org.junit.Assert.assertEquals;
-
-@Config(emulateSdk = 16, manifest = "src/main/AndroidManifest.xml")
-@RunWith(RobolectricTestRunner.class)
-public class MemberViewWrapperTest {
+public class MemberViewWrapperTest extends StepsTestRunner {
 
     private NewMemberActivity newMemberActivity;
     private MemberViewWrapper memberViewWrapper;
-    private String date;
     private final int SURNAME_VIEW_ID = R.id.member_family_surname;
     private final int FIRST_NAME_VIEW_ID = R.id.member_first_name;
     private final int GENDER_VIEW_ID = R.id.member_gender;
@@ -68,9 +60,9 @@ public class MemberViewWrapperTest {
 
     @Before
     public void Setup() {
-        newMemberActivity = Robolectric.setupActivity(NewMemberActivity.class);
+        newMemberActivity = Robolectric.buildActivity(NewMemberActivity.class).create().get();
         memberViewWrapper = new MemberViewWrapper(newMemberActivity);
-        date = new SimpleDateFormat(Constants.DATE_FORMAT, Locale.ENGLISH).format(new Date());
+        String date = new SimpleDateFormat(Constants.DATE_FORMAT, Locale.ENGLISH).format(new Date());
         error_string = getStringValue(R.string.invalid) + " %s, " + getStringValue(R.string.fill_correct_message) + " %s";
         household = new Household("1", "Any Household", "123456789", "", InterviewStatus.SELECTION_NOT_DONE, date, "uniqueDevId", "Dummy comments");
         anotherMember = new Member("some surname","firstName",Gender.Female, 22, household, false);
@@ -151,10 +143,10 @@ public class MemberViewWrapperTest {
 
         Member member = memberViewWrapper.getFromView(household);
 
-        Assert.assertTrue(member.getFamilySurname().equals("Bansal"));
-        Assert.assertTrue(member.getFirstName().equals("Rohit"));
-        Assert.assertTrue(member.getGender().toString().equals("Male"));
-        Assert.assertTrue(member.getAge() == 20);
+        assertEquals("Bansal", member.getFamilySurname());
+        assertEquals("Rohit", member.getFirstName());
+        assertEquals("Male", member.getGender().toString());
+        assertEquals(20, member.getAge());
     }
 
     @Test
@@ -167,10 +159,10 @@ public class MemberViewWrapperTest {
 
         Member member = memberViewWrapper.updateFromView(anotherMember);
 
-        Assert.assertTrue(member.getFamilySurname().equals("Bansal"));
-        Assert.assertTrue(member.getFirstName().equals("Rohit"));
-        Assert.assertTrue(member.getGender().toString().equals("Male"));
-        Assert.assertTrue(member.getAge() == 20);
+        assertEquals("Bansal", member.getFamilySurname());
+        assertEquals("Rohit", member.getFirstName());
+        assertEquals("Male", member.getGender().toString());
+        assertEquals(20, member.getAge());
     }
 
     @Test

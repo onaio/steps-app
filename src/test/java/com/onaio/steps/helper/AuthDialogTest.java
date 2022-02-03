@@ -16,40 +16,40 @@
 
 package com.onaio.steps.helper;
 
-import android.app.Activity;
+import static com.onaio.steps.helper.Constants.SETTINGS_AUTH_TIME;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import android.content.Intent;
 import android.text.InputType;
 import android.widget.EditText;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.onaio.steps.R;
+import com.onaio.steps.StepsTestRunner;
 import com.onaio.steps.activities.SettingsActivity;
 import com.onaio.steps.orchestrators.flows.FlowType;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
-import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
 
 import java.util.Calendar;
-
-import static com.onaio.steps.helper.Constants.SETTINGS_AUTH_TIME;
-import static org.junit.Assert.*;
 
 /**
  * Created by Jason Rogena - jrogena@ona.io on 13/10/2016.
  */
-@Config(emulateSdk = 16, manifest = "src/main/AndroidManifest.xml")
-@RunWith(RobolectricTestRunner.class)
-public class AuthDialogTest {
-    Activity settingsActivity;
+public class AuthDialogTest extends StepsTestRunner {
+
+    AppCompatActivity settingsActivity;
 
     @Before
     public void setup() {
         Intent intent = new Intent();
         intent.putExtra(Constants.FLOW_TYPE, FlowType.Household.toString());
-        settingsActivity = Robolectric.buildActivity(SettingsActivity.class).withIntent(intent).create().get();
+        settingsActivity = Robolectric.buildActivity(SettingsActivity.class, intent).create().get();
     }
 
     /**
@@ -58,8 +58,8 @@ public class AuthDialogTest {
     @Test
     public void testVisiblePasswordByDefault() {
         AuthDialog authDialog = new AuthDialog(settingsActivity, null);
-        EditText passwordEditText = (EditText)authDialog.findViewById(R.id.passwordEditText);
-        assertTrue(passwordEditText.getInputType() == (InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD));
+        EditText passwordEditText = authDialog.findViewById(R.id.passwordEditText);
+        assertEquals((InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD), passwordEditText.getInputType());
     }
 
     /**
@@ -71,6 +71,7 @@ public class AuthDialogTest {
     public void testNeedsAuth() throws Exception {
         AuthDialog authDialog = new AuthDialog(settingsActivity, null);
         //test with no time in SharedPreferences
+        KeyValueStoreFactory.instance(settingsActivity).putString(SETTINGS_AUTH_TIME, null);
         assertTrue(authDialog.needsAuth());
 
         //test with a time that is less than 1 min

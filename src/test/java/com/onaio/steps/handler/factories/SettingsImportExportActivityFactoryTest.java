@@ -16,6 +16,10 @@
 
 package com.onaio.steps.handler.factories;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+import com.onaio.steps.StepsTestRunner;
 import com.onaio.steps.handler.actions.PickImageHandler;
 import com.onaio.steps.handler.actions.QRCodeScanHandler;
 import com.onaio.steps.handler.actions.ShareHandler;
@@ -25,18 +29,12 @@ import com.onaio.steps.shadows.TestSettingsImportExportActivity;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
-import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
 
 import java.util.ArrayList;
 import java.util.List;
-import static org.junit.Assert.*;
 
-@Config(emulateSdk = 16,manifest = "src/main/AndroidManifest.xml")
-@RunWith(RobolectricTestRunner.class)
-public class SettingsImportExportActivityFactoryTest {
+public class SettingsImportExportActivityFactoryTest extends StepsTestRunner {
 
     private TestSettingsImportExportActivity activity;
 

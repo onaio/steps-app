@@ -21,81 +21,82 @@ import static com.onaio.steps.helper.Constants.HH_SURVEY_ID;
 import static com.onaio.steps.helper.Constants.HH_USER_ID;
 import static com.onaio.steps.helper.Constants.HH_USER_PASSWORD;
 
-import android.app.Activity;
-import android.os.AsyncTask;
 import android.text.TextUtils;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.onaio.steps.R;
+import com.onaio.steps.clients.HouseholdService;
 import com.onaio.steps.handler.actions.ExportHandler;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.mime.HttpMultipartMode;
-import org.apache.http.entity.mime.MultipartEntity;
-import org.apache.http.entity.mime.content.FileBody;
-import org.apache.http.entity.mime.content.StringBody;
-import org.apache.http.impl.client.DefaultHttpClient;
-
 import java.io.File;
-import java.io.IOException;
-import java.nio.charset.Charset;
 
-public class UploadFileTask extends AsyncTask<File, Void, Boolean> {
-    private final Activity activity;
-    private ExportHandler.OnExportListener onExportListener;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
-    public UploadFileTask(Activity activity, ExportHandler.OnExportListener onExportListener) {
+public class UploadFileTask {
+    private final AppCompatActivity activity;
+    private final ExportHandler.OnExportListener onExportListener;
+    private final Retrofit retrofit;
+
+    public UploadFileTask(@NonNull AppCompatActivity activity, @NonNull ExportHandler.OnExportListener onExportListener) {
         this.activity = activity;
         this.onExportListener = onExportListener;
+        this.retrofit = new Retrofit.Builder().baseUrl("https://steps.ona.io/").build();
     }
 
-    public void setOnExportListener(ExportHandler.OnExportListener onExportListener) {
-        this.onExportListener = onExportListener;
-    }
-
-    @Override
-    protected Boolean doInBackground(File... files) {
+    public void upload(File file) {
         if (!TextUtils.isEmpty(KeyValueStoreFactory.instance(activity).getString(ENDPOINT_URL))) {
-            HttpClient httpClient = new DefaultHttpClient();
-            HttpPost httpPost = new HttpPost(KeyValueStoreFactory.instance(activity).getString(ENDPOINT_URL));
-            try {
 
-                KeyValueStore store = KeyValueStoreFactory.instance(activity);
-                String surveyId = store.getString(HH_SURVEY_ID);
-                String userId = store.getString(HH_USER_ID);
-                String userPassword = store.getString(HH_USER_PASSWORD);
+            String endpoint = KeyValueStoreFactory.instance(activity).getString(ENDPOINT_URL);
 
-                if (surveyId.isEmpty() || userId.isEmpty() || userPassword.isEmpty()) {
-                    new CustomNotification().notify(activity, R.string.error_title, R.string.invalid_fields_error);
-                }
-                else {
-                    MultipartEntity multipartEntity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE, null, Charset.forName("UTF-8"));
-                    multipartEntity.addPart("file", new FileBody(files[0]));
-                    multipartEntity.addPart("survey_id", new StringBody(surveyId));
-                    multipartEntity.addPart("username", new StringBody(userId));
-                    multipartEntity.addPart("password", new StringBody(userPassword));
-                    httpPost.setEntity(multipartEntity);
-                    HttpResponse response = httpClient.execute(httpPost);
-                    if (response.getStatusLine().getStatusCode() == 201) {
-                        new CustomNotification().notify(activity, R.string.export_complete, R.string.export_complete_message);
-                        return true;
+            KeyValueStore store = KeyValueStoreFactory.instance(activity);
+            String surveyId = store.getString(HH_SURVEY_ID);
+            String userId = store.getString(HH_USER_ID);
+            String userPassword = store.getString(HH_USER_PASSWORD);
+
+            if (surveyId.isEmpty() || userId.isEmpty() || userPassword.isEmpty()) {
+                new CustomNotification().notify(activity, R.string.error_title, R.string.invalid_fields_error);
+                onExportListener.onFileUploaded(false);
+            } else {
+
+                String fileType = "text/csv";
+                RequestBody requestFile = RequestBody.create(MediaType.parse(fileType), file);
+                MultipartBody.Part fileBody = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
+
+                RequestBody surveyIdBody = RequestBody.create(MediaType.parse("text/plain"), surveyId);
+                RequestBody userIdBody = RequestBody.create(MediaType.parse("text/plain"), userId);
+                RequestBody userPasswordBody = RequestBody.create(MediaType.parse("text/plain"), userPassword);
+
+                retrofit.create(HouseholdService.class).uploadData(endpoint, fileBody, surveyIdBody, userIdBody, userPasswordBody).enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        if (response.isSuccessful() && response.code() == 201) {
+                            new CustomNotification().notify(activity, R.string.export_complete, R.string.export_complete_message);
+                            onExportListener.onFileUploaded(true);
+                        } else {
+                            new CustomNotification().notify(activity, R.string.error_title, R.string.export_failed);
+                            onExportListener.onFileUploaded(false);
+                        }
                     }
-                }
-            } catch (IOException e) {
-                new Logger().log(e, "Export failed.");
-                new CustomNotification().notify(activity, R.string.error_title, R.string.export_failed);
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        new CustomNotification().notify(activity, R.string.error_title, R.string.export_failed);
+                        onExportListener.onFileUploaded(false);
+                    }
+                });
             }
         } else {
             new CustomNotification().notify(activity, R.string.error_title, R.string.export_failed);
+            onExportListener.onFileUploaded(false);
         }
-
-        return false;
-    }
-
-    @Override
-    protected void onPostExecute(Boolean success) {
-        super.onPostExecute(success);
-        if(onExportListener != null) onExportListener.onFileUploaded(success);
     }
 }

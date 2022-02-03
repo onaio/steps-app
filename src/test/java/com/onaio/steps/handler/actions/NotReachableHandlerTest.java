@@ -16,16 +16,17 @@
 
 package com.onaio.steps.handler.actions;
 
-import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.assertTrue;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.eq;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 
 import android.content.DialogInterface;
 import android.view.View;
 
 import com.onaio.steps.R;
+import com.onaio.steps.StepsTestRunner;
 import com.onaio.steps.activities.HouseholdActivity;
 import com.onaio.steps.handler.strategies.survey.NotReachableSurveyForHouseholdStrategy;
 import com.onaio.steps.helper.CustomDialog;
@@ -34,14 +35,9 @@ import com.onaio.steps.model.InterviewStatus;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mockito;
-import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
 
-@Config(emulateSdk = 16,manifest = "src/main/AndroidManifest.xml")
-@RunWith(RobolectricTestRunner.class)
-public class NotReachableHandlerTest {
+public class NotReachableHandlerTest extends StepsTestRunner {
 
     private HouseholdActivity householdActivityMock;
     private Household householdMock;
@@ -79,35 +75,35 @@ public class NotReachableHandlerTest {
 
     @Test
     public void ShouldInactivateWhenMemberIsNotSelected(){
-        Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.SELECTION_NOT_DONE);
+        Mockito.when(householdMock.getStatus()).thenReturn(InterviewStatus.SELECTION_NOT_DONE);
 
         assertTrue(notReachableHandler.shouldDeactivate());
     }
 
     @Test
     public void ShouldNotInactivateWhenSurveyNotDone(){
-        Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.NOT_DONE);
+        Mockito.when(householdMock.getStatus()).thenReturn(InterviewStatus.NOT_DONE);
 
         assertFalse(notReachableHandler.shouldDeactivate());
     }
 
     @Test
     public void ShouldInactivateWhenSurveyDone(){
-        Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.DONE);
+        Mockito.when(householdMock.getStatus()).thenReturn(InterviewStatus.DONE);
 
         assertTrue(notReachableHandler.shouldDeactivate());
     }
 
     @Test
     public void ShouldNotInactivateWhenSurveyDeferred(){
-        Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.DEFERRED);
+        Mockito.when(householdMock.getStatus()).thenReturn(InterviewStatus.DEFERRED);
 
         assertFalse(notReachableHandler.shouldDeactivate());
     }
 
     @Test
     public void ShouldInactivateWhenSurveyNotReachable(){
-        Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.NOT_REACHABLE);
+        Mockito.when(householdMock.getStatus()).thenReturn(InterviewStatus.NOT_REACHABLE);
 
         assertTrue(notReachableHandler.shouldDeactivate());
     }
@@ -115,7 +111,7 @@ public class NotReachableHandlerTest {
     @Test
     public void ShouldHideItemWhenInactivated(){
         View viewMock = Mockito.mock(View.class);
-        Mockito.stub(householdActivityMock.findViewById(MENU_ID)).toReturn(viewMock);
+        Mockito.when(householdActivityMock.findViewById(MENU_ID)).thenReturn(viewMock);
 
         notReachableHandler.deactivate();
 
@@ -125,7 +121,7 @@ public class NotReachableHandlerTest {
     @Test
     public void ShouldShowItemWhenActivated(){
         View viewMock = Mockito.mock(View.class);
-        Mockito.stub(householdActivityMock.findViewById(MENU_ID)).toReturn(viewMock);
+        Mockito.when(householdActivityMock.findViewById(MENU_ID)).thenReturn(viewMock);
 
         notReachableHandler.activate();
 

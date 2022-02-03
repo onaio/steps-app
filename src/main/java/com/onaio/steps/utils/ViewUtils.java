@@ -16,7 +16,6 @@
 
 package com.onaio.steps.utils;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.util.TypedValue;
@@ -27,11 +26,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.onaio.steps.R;
 
 public class ViewUtils {
 
-    public static void showCustomToast(Activity activity, String snackTitle) {
+    public static void showCustomToast(AppCompatActivity activity, String snackTitle) {
 
         LayoutInflater inflater = activity.getLayoutInflater();
         View layout = inflater.inflate(R.layout.custom_toast,

@@ -19,7 +19,8 @@ package com.onaio.steps.handler.activities;
 import android.app.Activity;
 import android.content.Intent;
 
-import com.onaio.steps.orchestrators.flows.FlowType;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.onaio.steps.R;
 import com.onaio.steps.activities.MainActivityOrchestrator;
 import com.onaio.steps.activities.SettingsActivity;
@@ -27,14 +28,15 @@ import com.onaio.steps.handler.interfaces.IActivityResultHandler;
 import com.onaio.steps.handler.interfaces.IMenuHandler;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.model.RequestCode;
+import com.onaio.steps.orchestrators.flows.FlowType;
 
 
 public class SettingActivityHandler implements IMenuHandler, IActivityResultHandler {
 
     private FlowType flowType;
-    private Activity activity;
+    private AppCompatActivity activity;
 
-    public SettingActivityHandler(Activity activity) {
+    public SettingActivityHandler(AppCompatActivity activity) {
         this.activity = activity;
     }
 

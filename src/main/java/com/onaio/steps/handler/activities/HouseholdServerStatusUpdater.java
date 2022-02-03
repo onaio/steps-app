@@ -1,8 +1,9 @@
 package com.onaio.steps.handler.activities;
 
-import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.onaio.steps.R;
 import com.onaio.steps.activities.BaseListActivity;
@@ -16,10 +17,10 @@ public class HouseholdServerStatusUpdater {
 
     private static final String TAG = HouseholdServerStatusUpdater.class.getSimpleName();
 
-    private final ListActivity activity;
+    private final AppCompatActivity activity;
     private final ProgressDialog pd;
 
-    public HouseholdServerStatusUpdater(ListActivity activity) {
+    public HouseholdServerStatusUpdater(AppCompatActivity activity) {
         this.activity = activity;
         pd = new ProgressDialog(activity);
         pd.setMessage(activity.getString(R.string.please_wait));

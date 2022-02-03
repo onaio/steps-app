@@ -16,13 +16,21 @@
 
 package com.onaio.steps.handler.actions;
 
-import android.app.ListActivity;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import android.content.Intent;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.onaio.steps.R;
+import com.onaio.steps.StepsTestRunner;
 import com.onaio.steps.activities.HouseholdActivity;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.CustomDialog;
@@ -30,27 +38,14 @@ import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.InterviewStatus;
 
-import junit.framework.Assert;
-
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.robolectric.Robolectric;
-import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
 
-import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.stub;
-import static org.mockito.Mockito.verify;
-
-
-@Config(emulateSdk = 16,manifest = "src/main/AndroidManifest.xml")
-@RunWith(RobolectricTestRunner.class)
-public class SelectParticipantHandlerTest {
+public class SelectParticipantHandlerTest extends StepsTestRunner {
 
     @Mock
     private Household householdMock;
@@ -64,13 +59,13 @@ public class SelectParticipantHandlerTest {
     @Before
     public void Setup(){
         householdMock = mock(Household.class);
-        Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.SELECTION_NOT_DONE);
-        Mockito.stub(householdMock.getPhoneNumber()).toReturn("8050342");
-        Mockito.stub(householdMock.getComments()).toReturn("dummy comments");
+        Mockito.when(householdMock.getStatus()).thenReturn(InterviewStatus.SELECTION_NOT_DONE);
+        Mockito.when(householdMock.getPhoneNumber()).thenReturn("8050342");
+        Mockito.when(householdMock.getComments()).thenReturn("dummy comments");
 
         Intent intent = new Intent();
         intent.putExtra(Constants.HH_HOUSEHOLD, householdMock);
-        householdActivity = Robolectric.buildActivity(HouseholdActivity.class).withIntent(intent).create().get();
+        householdActivity = Robolectric.buildActivity(HouseholdActivity.class, intent).create().get();
         dbMock = mock(DatabaseHelper.class);
         dialogMock = mock(CustomDialog.class);
 
@@ -91,10 +86,10 @@ public class SelectParticipantHandlerTest {
 
     @Test
     public void ShouldNotifyUserBeforeSelection(){
-        Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.SELECTION_NOT_DONE);
+        Mockito.when(householdMock.getStatus()).thenReturn(InterviewStatus.SELECTION_NOT_DONE);
         Button buttonMock = Mockito.mock(Button.class);
-        stub(androidDialogMock.findViewById(R.id.confirm)).toReturn(buttonMock);
-        stub(androidDialogMock.findViewById(R.id.cancel)).toReturn(buttonMock);
+        when(androidDialogMock.findViewById(R.id.confirm)).thenReturn(buttonMock);
+        when(androidDialogMock.findViewById(R.id.cancel)).thenReturn(buttonMock);
 
         selectParticipantHandler.open();
 
@@ -106,55 +101,55 @@ public class SelectParticipantHandlerTest {
 
     @Test
     public void ShouldInActivateWhenThereAreNoMembers(){
-        Mockito.stub(householdMock.numberOfNonSelectedMembers(Mockito.any(DatabaseHelper.class))).toReturn(0);
+        Mockito.when(householdMock.numberOfNonSelectedMembers(Mockito.any(DatabaseHelper.class))).thenReturn(0);
 
         Assert.assertTrue(selectParticipantHandler.shouldDeactivate());
     }
 
     @Test
     public void ShouldInActivateWhenHouseholdStatusIsIncomplete(){
-        Mockito.stub(householdMock.numberOfNonSelectedMembers(Mockito.any(DatabaseHelper.class))).toReturn(1);
-        Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.INCOMPLETE);
+        Mockito.when(householdMock.numberOfNonSelectedMembers(Mockito.any(DatabaseHelper.class))).thenReturn(1);
+        Mockito.when(householdMock.getStatus()).thenReturn(InterviewStatus.INCOMPLETE);
 
         Assert.assertTrue(selectParticipantHandler.shouldDeactivate());
     }
 
     @Test
     public void ShouldInActivateWhenHouseholdStatusIsDone(){
-        Mockito.stub(householdMock.numberOfNonSelectedMembers(Mockito.any(DatabaseHelper.class))).toReturn(1);
-        Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.DONE);
+        Mockito.when(householdMock.numberOfNonSelectedMembers(Mockito.any(DatabaseHelper.class))).thenReturn(1);
+        Mockito.when(householdMock.getStatus()).thenReturn(InterviewStatus.DONE);
 
         Assert.assertTrue(selectParticipantHandler.shouldDeactivate());
     }
 
     @Test
     public void ShouldInActivateWhenHouseholdStatusIsDeferred(){
-        Mockito.stub(householdMock.numberOfNonSelectedMembers(Mockito.any(DatabaseHelper.class))).toReturn(1);
-        Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.DEFERRED);
+        Mockito.when(householdMock.numberOfNonSelectedMembers(Mockito.any(DatabaseHelper.class))).thenReturn(1);
+        Mockito.when(householdMock.getStatus()).thenReturn(InterviewStatus.DEFERRED);
 
         Assert.assertTrue(selectParticipantHandler.shouldDeactivate());
     }
 
     @Test
     public void ShouldInActivateWhenHouseholdStatusIsRefused(){
-        Mockito.stub(householdMock.numberOfNonSelectedMembers(Mockito.any(DatabaseHelper.class))).toReturn(1);
-        Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.REFUSED);
+        Mockito.when(householdMock.numberOfNonSelectedMembers(Mockito.any(DatabaseHelper.class))).thenReturn(1);
+        Mockito.when(householdMock.getStatus()).thenReturn(InterviewStatus.REFUSED);
 
         Assert.assertTrue(selectParticipantHandler.shouldDeactivate());
     }
 
     @Test
     public void ShouldInActivateWhenHouseholdStatusIsNotDone(){
-        Mockito.stub(householdMock.numberOfNonSelectedMembers(Mockito.any(DatabaseHelper.class))).toReturn(1);
-        Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.NOT_DONE);
+        Mockito.when(householdMock.numberOfNonSelectedMembers(Mockito.any(DatabaseHelper.class))).thenReturn(1);
+        Mockito.when(householdMock.getStatus()).thenReturn(InterviewStatus.NOT_DONE);
 
         Assert.assertTrue(selectParticipantHandler.shouldDeactivate());
     }
 
     @Test
     public void ShouldActivateWhenHouseholdStatusIsNotSelected(){
-        Mockito.stub(householdMock.numberOfNonSelectedMembers(Mockito.any(DatabaseHelper.class))).toReturn(1);
-        Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.SELECTION_NOT_DONE);
+        Mockito.when(householdMock.numberOfNonSelectedMembers(Mockito.any(DatabaseHelper.class))).thenReturn(1);
+        Mockito.when(householdMock.getStatus()).thenReturn(InterviewStatus.SELECTION_NOT_DONE);
 
         Assert.assertFalse(selectParticipantHandler.shouldDeactivate());
     }
@@ -164,7 +159,7 @@ public class SelectParticipantHandlerTest {
         HouseholdActivity householdActivityMock = Mockito.mock(HouseholdActivity.class);
         SelectParticipantHandler handler = new SelectParticipantHandler(householdActivityMock,householdMock, dbMock, androidDialogMock);
         View viewMock = Mockito.mock(View.class);
-        Mockito.stub(householdActivityMock.findViewById(R.id.action_select_participant)).toReturn(viewMock);
+        Mockito.when(householdActivityMock.findViewById(R.id.action_select_participant)).thenReturn(viewMock);
 
         handler.deactivate();
 
@@ -176,7 +171,7 @@ public class SelectParticipantHandlerTest {
         HouseholdActivity householdActivityMock = Mockito.mock(HouseholdActivity.class);
         SelectParticipantHandler handlerStub = new SelectParticipantHandler(householdActivityMock,householdMock, dbMock, androidDialogMock);
         View viewMock = Mockito.mock(View.class);
-        Mockito.stub(householdActivityMock.findViewById(R.id.action_select_participant)).toReturn(viewMock);
+        Mockito.when(householdActivityMock.findViewById(R.id.action_select_participant)).thenReturn(viewMock);
 
         handlerStub.activate();
 
@@ -187,7 +182,7 @@ public class SelectParticipantHandlerTest {
     private class SelectParticipantHandlerStub extends SelectParticipantHandler{
         private View view;
 
-        public SelectParticipantHandlerStub(ListActivity activity, Household household, CustomDialog dialog, DatabaseHelper db, android.app.Dialog androidDialog, View view) {
+        public SelectParticipantHandlerStub(AppCompatActivity activity, Household household, CustomDialog dialog, DatabaseHelper db, android.app.Dialog androidDialog, View view) {
             super(activity, household, db, androidDialog);
             this.view = view;
         }

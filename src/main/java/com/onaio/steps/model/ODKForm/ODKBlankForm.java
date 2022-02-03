@@ -16,11 +16,12 @@
 
 package com.onaio.steps.model.ODKForm;
 
-import android.app.Activity;
 import android.content.ContentProviderClient;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.RemoteException;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.onaio.steps.exceptions.AppNotInstalledException;
 import com.onaio.steps.exceptions.FormNotPresentException;
@@ -49,7 +50,7 @@ public class ODKBlankForm implements IForm{
         this.formMediaPath = formMediaPath;
     }
 
-    public static IForm find(Activity activity, String jrFormId) throws FormNotPresentException, AppNotInstalledException {
+    public static IForm find(AppCompatActivity activity, String jrFormId) throws FormNotPresentException, AppNotInstalledException {
         List<IForm> forms = get(activity, jrFormId);
         if(forms.size() <= 0)
             throw new FormNotPresentException();
@@ -64,7 +65,7 @@ public class ODKBlankForm implements IForm{
         return Uri.parse(URI_STRING + "/" + _id);
     }
 
-    public static List<IForm> get(Activity activity, String odkFormId) throws AppNotInstalledException {
+    public static List<IForm> get(AppCompatActivity activity, String odkFormId) throws AppNotInstalledException {
         ContentProviderClient formsContentProvider = activity.getContentResolver().acquireContentProviderClient(ODKBlankForm.URI);
         ArrayList<IForm> forms = new ArrayList<IForm>();
         try {

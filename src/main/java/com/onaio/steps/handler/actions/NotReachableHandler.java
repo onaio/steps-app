@@ -16,9 +16,10 @@
 
 package com.onaio.steps.handler.actions;
 
-import android.app.Activity;
 import android.content.DialogInterface;
 import android.view.View;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.onaio.steps.R;
 import com.onaio.steps.handler.interfaces.IMenuHandler;
@@ -30,15 +31,15 @@ public class NotReachableHandler implements IMenuHandler,IMenuPreparer {
 
     private IDoNotTakeSurveyStrategy refusedSurveyStrategy;
     private final CustomDialog dialog;
-    private Activity activity;
+    private AppCompatActivity activity;
     private int MENU_ID = R.id.action_not_reachable;
 
-    public NotReachableHandler(Activity activity, IDoNotTakeSurveyStrategy refusedSurveyStrategy) {
+    public NotReachableHandler(AppCompatActivity activity, IDoNotTakeSurveyStrategy refusedSurveyStrategy) {
         this(activity, refusedSurveyStrategy, new CustomDialog());
     }
 
     //Constructor to be used for Testing
-    NotReachableHandler(Activity activity, IDoNotTakeSurveyStrategy refusedSurveyStrategy, CustomDialog dialog) {
+    NotReachableHandler(AppCompatActivity activity, IDoNotTakeSurveyStrategy refusedSurveyStrategy, CustomDialog dialog) {
         this.activity = activity;
         this.refusedSurveyStrategy = refusedSurveyStrategy;
         this.dialog=dialog;

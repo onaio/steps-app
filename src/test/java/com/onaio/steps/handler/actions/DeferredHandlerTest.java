@@ -16,10 +16,18 @@
 
 package com.onaio.steps.handler.actions;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+
 import android.content.DialogInterface;
 import android.view.View;
 
 import com.onaio.steps.R;
+import com.onaio.steps.StepsTestRunner;
 import com.onaio.steps.activities.HouseholdActivity;
 import com.onaio.steps.handler.strategies.survey.DeferSurveyForHouseholdStrategy;
 import com.onaio.steps.helper.CustomDialog;
@@ -29,18 +37,10 @@ import com.onaio.steps.model.InterviewStatus;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
 
-import static junit.framework.Assert.*;
-import static org.mockito.Mockito.*;
-
-@Config(emulateSdk = 16,manifest = "src/main/AndroidManifest.xml")
-@RunWith(RobolectricTestRunner.class)
-public class DeferredHandlerTest {
+public class DeferredHandlerTest extends StepsTestRunner {
 
     private final int MENU_ID = R.id.action_deferred;
     @Mock
@@ -80,35 +80,35 @@ public class DeferredHandlerTest {
 
     @Test
     public void ShouldInactivateWhenMemberIsNotSelected(){
-        Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.SELECTION_NOT_DONE);
+        Mockito.when(householdMock.getStatus()).thenReturn(InterviewStatus.SELECTION_NOT_DONE);
 
         assertTrue(deferredHandler.shouldDeactivate());
     }
 
     @Test
     public void ShouldNotInactivateWhenSurveyNotDone(){
-        Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.NOT_DONE);
+        Mockito.when(householdMock.getStatus()).thenReturn(InterviewStatus.NOT_DONE);
 
         assertFalse(deferredHandler.shouldDeactivate());
     }
 
     @Test
     public void ShouldInactivateWhenSurveyDone(){
-        Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.DONE);
+        Mockito.when(householdMock.getStatus()).thenReturn(InterviewStatus.DONE);
 
         assertTrue(deferredHandler.shouldDeactivate());
     }
 
     @Test
     public void ShouldInactivateWhenSurveyDeferred(){
-        Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.DEFERRED);
+        Mockito.when(householdMock.getStatus()).thenReturn(InterviewStatus.DEFERRED);
 
         assertTrue(deferredHandler.shouldDeactivate());
     }
 
     @Test
     public void ShouldInactivateWhenSurveyRefused(){
-        Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.REFUSED);
+        Mockito.when(householdMock.getStatus()).thenReturn(InterviewStatus.REFUSED);
 
         assertTrue(deferredHandler.shouldDeactivate());
     }
@@ -116,7 +116,7 @@ public class DeferredHandlerTest {
     @Test
     public void ShouldHideItemWhenInactivated(){
         View viewMock = Mockito.mock(View.class);
-        Mockito.stub(activityMock.findViewById(MENU_ID)).toReturn(viewMock);
+        Mockito.when(activityMock.findViewById(MENU_ID)).thenReturn(viewMock);
 
         deferredHandler.deactivate();
 
@@ -126,7 +126,7 @@ public class DeferredHandlerTest {
     @Test
     public void ShouldShowItemWhenActivated(){
         View viewMock = Mockito.mock(View.class);
-        Mockito.stub(activityMock.findViewById(MENU_ID)).toReturn(viewMock);
+        Mockito.when(activityMock.findViewById(MENU_ID)).thenReturn(viewMock);
 
         deferredHandler.activate();
 

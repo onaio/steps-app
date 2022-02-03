@@ -16,8 +16,11 @@
 
 package com.onaio.steps.handler.factories;
 
+import static junit.framework.TestCase.assertEquals;
+
 import android.content.Intent;
 
+import com.onaio.steps.StepsTestRunner;
 import com.onaio.steps.activities.MemberActivity;
 import com.onaio.steps.handler.actions.BackHomeHandler;
 import com.onaio.steps.handler.actions.DeleteMemberHandler;
@@ -31,22 +34,15 @@ import com.onaio.steps.model.Household;
 import com.onaio.steps.model.InterviewStatus;
 import com.onaio.steps.model.Member;
 
-import junit.framework.Assert;
-import junit.framework.TestCase;
-
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
-import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Config(emulateSdk = 16,manifest = "src/main/AndroidManifest.xml")
-@RunWith(RobolectricTestRunner.class)
-public class MemberActivityFactoryTest extends TestCase {
+public class MemberActivityFactoryTest extends StepsTestRunner {
 
     private MemberActivity memberActivity;
     private Household household;
@@ -57,7 +53,7 @@ public class MemberActivityFactoryTest extends TestCase {
         household = new Household("name", "123", InterviewStatus.SELECTION_NOT_DONE, "12-12-2015", "testDeviceId","Dummy comments");
         member = new Member(1,"surname", "firstname", Gender.Male, 23, household, "",false);
         Intent intent = new Intent().putExtra(Constants.HH_MEMBER, member);
-        memberActivity = Robolectric.buildActivity(MemberActivity.class).withIntent(intent).create().get();
+        memberActivity = Robolectric.buildActivity(MemberActivity.class, intent).create().get();
     }
 
     @Test

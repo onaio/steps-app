@@ -18,12 +18,13 @@ package com.onaio.steps.activities;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.robolectric.Robolectric.shadowOf;
+import static org.robolectric.Shadows.shadowOf;
 
 import android.content.Intent;
 import android.widget.TextView;
 
 import com.onaio.steps.R;
+import com.onaio.steps.StepsTestRunner;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.model.Household;
@@ -33,14 +34,9 @@ import com.onaio.steps.orchestrators.flows.FlowType;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
-import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
 
-@Config(emulateSdk = 16, manifest = "src/main/AndroidManifest.xml")
-@RunWith(RobolectricTestRunner.class)
-public class SettingsActivityTest {
+public class SettingsActivityTest extends StepsTestRunner {
 
     private SettingsActivity settingsActivity;
     private Intent intent;
@@ -51,7 +47,7 @@ public class SettingsActivityTest {
         intent = new Intent();
         intent.putExtra(Constants.FLOW_TYPE, FlowType.Household.toString());
 
-        settingsActivity=Robolectric.buildActivity(SettingsActivity.class).withIntent(intent).create().get();
+        settingsActivity=Robolectric.buildActivity(SettingsActivity.class, intent).create().get();
     }
 
     @Test

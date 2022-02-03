@@ -16,11 +16,12 @@
 
 package com.onaio.steps.handler.actions;
 
-import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Environment;
 import android.util.Log;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.onaio.steps.R;
 import com.onaio.steps.activities.BackupLocationActivity;
@@ -28,7 +29,6 @@ import com.onaio.steps.handler.interfaces.IMenuHandler;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.CustomDialog;
 import com.onaio.steps.helper.CustomNotification;
-import com.onaio.steps.helper.FileUtil;
 import com.onaio.steps.helper.KeyValueStoreFactory;
 import com.onaio.steps.model.Household;
 
@@ -49,11 +49,11 @@ import java.util.List;
  */
 public class SaveToSDCardHandler implements IMenuHandler {
     private List<Household> households;
-    private ListActivity activity;
+    private AppCompatActivity activity;
     private static final int MENU_ID = R.id.action_save_to_sdcard;
     private boolean canWriteSDCard = true;
 
-    public SaveToSDCardHandler(ListActivity activity) {
+    public SaveToSDCardHandler(AppCompatActivity activity) {
         this.activity = activity;
     }
 
@@ -73,24 +73,7 @@ public class SaveToSDCardHandler implements IMenuHandler {
         return true;
     }
 
-    //Saves the csv file the phone external file system.
-    public void saveToExternalStorage(FileUtil fileUtil) throws IOException {
-        if (createAppDir()) {
-            fileUtil.writeCSV(Environment.getExternalStorageDirectory() + "/"
-                    + Constants.APP_DIR + "/" + Constants.EXPORT_FILE_NAME + "_" + getDeviceId() + ".csv");
-        }
-    }
-
-    /**
-     * Create a steps directory in external storage if it does not exist.
-     *
-     * @return true if directory successfully created.
-     */
-    public static boolean createAppDir() {
-        return createDir(Environment.getExternalStorageDirectory() + "/" + Constants.APP_DIR);
-    }
-
-    public static boolean createDir(String dirName) {
+    public boolean createDir(String dirName) {
         File folder = new File(dirName);
         boolean createStatus = true;
         if (!folder.exists()) {

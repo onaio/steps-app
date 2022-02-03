@@ -16,16 +16,23 @@
 
 package com.onaio.steps.orchestrators.flows;
 
-import android.app.Activity;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import android.content.Intent;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.onaio.steps.R;
-import com.onaio.steps.activities.HouseholdListActivity;
+import com.onaio.steps.StepsTestRunner;
 import com.onaio.steps.activities.ParticipantListActivity;
 import com.onaio.steps.activities.SettingsActivity;
 import com.onaio.steps.exceptions.InvalidDataException;
 import com.onaio.steps.helper.Constants;
+import com.onaio.steps.helper.KeyValueStore;
 import com.onaio.steps.helper.KeyValueStoreFactory;
 
 import org.junit.Assert;
@@ -33,20 +40,9 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
-import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
 
-import static junit.framework.Assert.assertNotNull;
-import static junit.framework.Assert.assertNull;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
-@Config(emulateSdk = 16, manifest = "src/main/AndroidManifest.xml")
-@RunWith(RobolectricTestRunner.class)
-public class ParticipantFlowTest {
+public class ParticipantFlowTest extends StepsTestRunner {
 
     public String error_string;
     private SettingsActivity settingsActivity;
@@ -59,7 +55,7 @@ public class ParticipantFlowTest {
         Intent intent = new Intent();
         error_string = "Invalid %s, please fill or correct the following fields: %s";
         intent =intent.putExtra(Constants.FLOW_TYPE, FlowType.Participant.toString());
-        settingsActivity = Robolectric.buildActivity(SettingsActivity.class).withIntent(intent).create().get();
+        settingsActivity = Robolectric.buildActivity(SettingsActivity.class, intent).create().get();
         participantFlow = new ParticipantFlow(settingsActivity);
     }
 
@@ -86,10 +82,10 @@ public class ParticipantFlowTest {
 
     @Test
     public void ShouldSaveDataFromSettingFields(){
-        TextView deviceId = (TextView) settingsActivity.findViewById(R.id.deviceId_participant);
-        TextView formId = (TextView) settingsActivity.findViewById(R.id.form_id_participant);
-        TextView maxage = (TextView) settingsActivity.findViewById(R.id.max_age_participant);
-        TextView minage = (TextView) settingsActivity.findViewById(R.id.min_age_participant);
+        TextView deviceId = settingsActivity.findViewById(R.id.deviceId_participant);
+        TextView formId = settingsActivity.findViewById(R.id.form_id_participant);
+        TextView maxage = settingsActivity.findViewById(R.id.max_age_participant);
+        TextView minage = settingsActivity.findViewById(R.id.min_age_participant);
         deviceId.setText("1234567");
         formId.setText("STEPS_Instrument_V3_1");
         maxage.setText("69");
@@ -103,16 +99,17 @@ public class ParticipantFlowTest {
 
     @Test
     public void ShouldNotSaveDeviceIdFromSettingFields(){
-        TextView deviceId = (TextView) settingsActivity.findViewById(R.id.deviceId_participant);
-        TextView formId = (TextView) settingsActivity.findViewById(R.id.form_id_participant);
-        TextView maxage = (TextView) settingsActivity.findViewById(R.id.max_age_participant);
-        TextView minage = (TextView) settingsActivity.findViewById(R.id.min_age_participant);
+        setValue(Constants.PA_PHONE_ID, "1234567");
+        TextView deviceId = settingsActivity.findViewById(R.id.deviceId_participant);
+        TextView formId = settingsActivity.findViewById(R.id.form_id_participant);
+        TextView maxage = settingsActivity.findViewById(R.id.max_age_participant);
+        TextView minage = settingsActivity.findViewById(R.id.min_age_participant);
         deviceId.setText("1234567");
         formId.setText("STEPS_Instrument_V3_1");
         maxage.setText("69");
         minage.setText("18");
         participantFlow.saveSettings(false);
-        assertNull(getValue(settingsActivity, Constants.PA_PHONE_ID));
+        assertEquals("1234567", getValue(settingsActivity, Constants.PA_PHONE_ID));
         assertEquals("STEPS_Instrument_V3_1", getValue(settingsActivity, Constants.PA_FORM_ID));
         assertEquals("69", getValue(settingsActivity, Constants.PA_MAX_AGE));
         assertEquals("18",getValue(settingsActivity,Constants.PA_MIN_AGE));
@@ -120,10 +117,10 @@ public class ParticipantFlowTest {
 
     @Test
     public void ShouldTrimSettingsBeforeSaving() {
-        TextView deviceId = (TextView) settingsActivity.findViewById(R.id.deviceId_participant);
-        TextView formId = (TextView) settingsActivity.findViewById(R.id.form_id_participant);
-        TextView maxage = (TextView) settingsActivity.findViewById(R.id.max_age_participant);
-        TextView minage = (TextView) settingsActivity.findViewById(R.id.min_age_participant);
+        TextView deviceId = settingsActivity.findViewById(R.id.deviceId_participant);
+        TextView formId = settingsActivity.findViewById(R.id.form_id_participant);
+        TextView maxage = settingsActivity.findViewById(R.id.max_age_participant);
+        TextView minage = settingsActivity.findViewById(R.id.min_age_participant);
         deviceId.setText(" 1234567 ");
         formId.setText(" STEPS_Instrument_V3_1 ");
         maxage.setText(" 69 ");
@@ -137,10 +134,10 @@ public class ParticipantFlowTest {
 
     @Test
     public void ShouldNotSaveDataFromSettingFields() throws InvalidDataException {
-        TextView deviceId = (TextView) settingsActivity.findViewById(R.id.deviceId_participant);
-        TextView formId = (TextView) settingsActivity.findViewById(R.id.form_id_participant);
-        TextView maxage = (TextView) settingsActivity.findViewById(R.id.max_age_participant);
-        TextView minage = (TextView) settingsActivity.findViewById(R.id.min_age_participant);
+        TextView deviceId = settingsActivity.findViewById(R.id.deviceId_participant);
+        TextView formId = settingsActivity.findViewById(R.id.form_id_participant);
+        TextView maxage = settingsActivity.findViewById(R.id.max_age_participant);
+        TextView minage = settingsActivity.findViewById(R.id.min_age_participant);
         deviceId.setText("");
         formId.setText("STEPS_Instrument_V3_1");
         maxage.setText("");
@@ -171,7 +168,12 @@ public class ParticipantFlowTest {
         Assert.assertEquals(ParticipantListActivity.class.getName(), participantFlow.getIntent().getComponent().getClassName());
     }
 
-    private String getValue(Activity activity, String key) {
+    private String getValue(AppCompatActivity activity, String key) {
         return KeyValueStoreFactory.instance(activity).getString(key);
+    }
+
+    private void setValue(String key, String value) {
+        KeyValueStore keyValueStore = KeyValueStoreFactory.instance(settingsActivity);
+        keyValueStore.putString(key, value);
     }
 }

@@ -16,25 +16,24 @@
 
 package com.onaio.steps.handler.actions;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import android.content.ComponentName;
 import android.content.Intent;
+
 import com.onaio.steps.R;
+import com.onaio.steps.StepsTestRunner;
 import com.onaio.steps.activities.HouseholdListActivity;
 import com.onaio.steps.model.RequestCode;
 
-import junit.framework.Assert;
-import junit.framework.TestCase;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.ArgumentMatcher;
 import org.mockito.Mockito;
-import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
 
-@Config(emulateSdk = 16,manifest = "src/main/AndroidManifest.xml")
-@RunWith(RobolectricTestRunner.class)
-public class FinalisedFormHandlerTest extends TestCase {
+public class FinalisedFormHandlerTest extends StepsTestRunner {
 
     private FinalisedFormHandler finalisedFormHandler;
     private HouseholdListActivity householdListActivity;
@@ -63,16 +62,12 @@ public class FinalisedFormHandlerTest extends TestCase {
     }
 
     private ArgumentMatcher<Intent> intentMatcher() {
-        return new ArgumentMatcher<Intent>() {
-            @Override
-            public boolean matches(Object o) {
-                Intent intent = (Intent) o;
-                ComponentName component = intent.getComponent();
-                Assert.assertEquals(Intent.ACTION_EDIT,intent.getAction());
-                Assert.assertEquals("org.odk.collect.android",component.getPackageName());
-                Assert.assertEquals("org.odk.collect.android.activities.InstanceUploaderList",component.getClassName());
-                return true;
-            }
+        return intent -> {
+            ComponentName component = intent.getComponent();
+            Assert.assertEquals(Intent.ACTION_EDIT,intent.getAction());
+            Assert.assertEquals("org.odk.collect.android",component.getPackageName());
+            Assert.assertEquals("org.odk.collect.android.activities.InstanceUploaderList",component.getClassName());
+            return true;
         };
     }
 

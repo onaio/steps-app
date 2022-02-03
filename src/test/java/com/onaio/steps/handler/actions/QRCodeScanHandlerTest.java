@@ -16,29 +16,26 @@
 
 package com.onaio.steps.handler.actions;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import com.onaio.steps.R;
+import com.onaio.steps.StepsTestRunner;
 import com.onaio.steps.model.RequestCode;
 import com.onaio.steps.shadows.TestSettingsImportExportActivity;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
-import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
 
-import static org.junit.Assert.*;
-
-@Config(emulateSdk = 16,manifest = "src/main/AndroidManifest.xml")
-@RunWith(RobolectricTestRunner.class)
-public class QRCodeScanHandlerTest {
+public class QRCodeScanHandlerTest extends StepsTestRunner {
 
     private QRCodeScanHandler qrCodeScanHandler;
     private TestSettingsImportExportActivity activity;
 
     @Before
     public void setUp() {
-        activity = Robolectric.setupActivity(TestSettingsImportExportActivity.class);
+        activity = Robolectric.buildActivity(TestSettingsImportExportActivity.class).create().get();
         qrCodeScanHandler = new QRCodeScanHandler(activity);
     }
 

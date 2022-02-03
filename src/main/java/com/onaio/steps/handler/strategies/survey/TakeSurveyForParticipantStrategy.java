@@ -17,8 +17,9 @@
 package com.onaio.steps.handler.strategies.survey;
 
 
-import android.app.Activity;
 import android.widget.Button;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.onaio.steps.R;
 import com.onaio.steps.handler.strategies.survey.interfaces.ITakeSurveyStrategy;
@@ -36,10 +37,10 @@ import java.io.IOException;
 
 public class TakeSurveyForParticipantStrategy implements ITakeSurveyStrategy {
     private Participant participant;
-    private Activity activity;
+    private AppCompatActivity activity;
     private static final int MENU_ID = R.id.action_take_survey;
 
-    public TakeSurveyForParticipantStrategy(Participant participant, Activity activity) {
+    public TakeSurveyForParticipantStrategy(Participant participant, AppCompatActivity activity) {
 
         this.participant = participant;
         this.activity = activity;

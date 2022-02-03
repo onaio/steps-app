@@ -17,15 +17,15 @@
 package com.onaio.steps.model.ODKForm.strategy;
 
 
-import android.app.Activity;
+import androidx.appcompat.app.AppCompatActivity;
 
-import com.onaio.steps.model.ODKForm.strategy.interfaces.IFormStrategy;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.helper.FileUtil;
 import com.onaio.steps.helper.KeyValueStoreFactory;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.Member;
+import com.onaio.steps.model.ODKForm.strategy.interfaces.IFormStrategy;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -44,7 +44,7 @@ public class HouseholdMemberFormStrategy implements IFormStrategy{
     }
 
     @Override
-    public void saveDataFile(Activity activity, String pathToSaveDataFile) throws IOException {
+    public void saveDataFile(AppCompatActivity activity, String pathToSaveDataFile) throws IOException {
         DatabaseHelper databaseHelper = new DatabaseHelper(activity);
         Member selectedMember = household.getSelectedMember(databaseHelper);
         String formId = getValue(Constants.HH_FORM_ID,activity);
@@ -65,7 +65,7 @@ public class HouseholdMemberFormStrategy implements IFormStrategy{
 
     }
 
-    private String getValue(String key,Activity activity) {
+    private String getValue(String key,AppCompatActivity activity) {
         return KeyValueStoreFactory.instance(activity).getString(key) ;
     }
 }

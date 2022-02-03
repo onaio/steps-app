@@ -2,8 +2,9 @@ package com.onaio.steps.helper;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.support.annotation.NonNull;
 import android.util.Log;
+
+import androidx.annotation.NonNull;
 
 import com.onaio.steps.exceptions.NoUniqueIdException;
 

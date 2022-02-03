@@ -17,12 +17,17 @@
 package com.onaio.steps.activities;
 
 
+import static org.junit.Assert.assertEquals;
+
 import android.content.Intent;
 import android.graphics.Color;
-import android.widget.ListAdapter;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.onaio.steps.R;
+import com.onaio.steps.StepsTestRunner;
+import com.onaio.steps.adapters.MemberAdapter;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.model.Gender;
@@ -32,26 +37,17 @@ import com.onaio.steps.model.Member;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.robolectric.Robolectric;
-import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
-import org.robolectric.util.ActivityController;
 
 import java.util.ArrayList;
 
-import static org.junit.Assert.assertEquals;
-
-@Config(emulateSdk = 16, manifest = "src/main/AndroidManifest.xml")
-@RunWith(RobolectricTestRunner.class)
-public class HouseholdActivityTest {
+public class HouseholdActivityTest extends StepsTestRunner {
 
     private Household household;
     private Member member2;
     private Member member1;
     private Intent intent;
-    private ActivityController<HouseholdActivity> householdActivityController;
 
     @Before
     public void setup() {
@@ -59,25 +55,24 @@ public class HouseholdActivityTest {
         household = Mockito.mock(Household.class);
         member1 = new Member(101, "raj", "Nik", Gender.Male, 19, household, "100", false);
         member2 = new Member(102, "rana", "Sandhya", Gender.Female, 22, household, "100", false);
-        ArrayList<Member> members = new ArrayList<Member>();
+        ArrayList<Member> members = new ArrayList<>();
         members.add(member1);
         members.add(member2);
-        Mockito.stub(household.getName()).toReturn("123-100");
-        Mockito.stub(household.getPhoneNumber()).toReturn("1234567");
-        Mockito.stub(household.getAllNonDeletedMembers(Mockito.any(DatabaseHelper.class))).toReturn(members);
-        householdActivityController = Robolectric.buildActivity(HouseholdActivity.class);
+        Mockito.when(household.getName()).thenReturn("123-100");
+        Mockito.when(household.getPhoneNumber()).thenReturn("1234567");
+        Mockito.when(household.getAllNonDeletedMembers(Mockito.any(DatabaseHelper.class))).thenReturn(members);
     }
 
     @Test
     public void ShouldStyleActionBar() {
-        Mockito.stub(household.getStatus()).toReturn(InterviewStatus.DONE);
-        Mockito.stub(household.getComments()).toReturn("dummy comments");
+        Mockito.when(household.getStatus()).thenReturn(InterviewStatus.DONE);
+        Mockito.when(household.getComments()).thenReturn("dummy comments");
         intent.putExtra(Constants.HH_HOUSEHOLD,household);
-        HouseholdActivity householdActivity = householdActivityController.withIntent(intent).create().get();
+        HouseholdActivity householdActivity = getActivity(intent);
 
-        TextView idHeader = (TextView) householdActivity.findViewById(R.id.household_id_header);
-        TextView numberHeader = (TextView) householdActivity.findViewById(R.id.household_number_header);
-        TextView commentHeader = (TextView) householdActivity.findViewById(R.id.text_view_comment);
+        TextView idHeader = householdActivity.findViewById(R.id.household_id_header);
+        TextView numberHeader = householdActivity.findViewById(R.id.household_number_header);
+        TextView commentHeader = householdActivity.findViewById(R.id.text_view_comment);
         assertEquals("Household ID: 123-100", idHeader.getText().toString());
         assertEquals("Phone Number: 1234567", numberHeader.getText().toString());
         assertEquals("dummy comments" ,commentHeader.getText().toString());
@@ -86,38 +81,37 @@ public class HouseholdActivityTest {
 
     @Test
     public void ShouldPopulateAdapterWithMembersAndDisplayAppropriateMessage() {
-        Mockito.stub(household.getComments()).toReturn("dummy comments");
-        Mockito.stub(household.getStatus()).toReturn(InterviewStatus.DONE);
+        Mockito.when(household.getComments()).thenReturn("dummy comments");
+        Mockito.when(household.getStatus()).thenReturn(InterviewStatus.DONE);
         intent.putExtra(Constants.HH_HOUSEHOLD,household);
-        HouseholdActivity householdActivity = householdActivityController.withIntent(intent).create().get();
+        HouseholdActivity householdActivity = getActivity(intent);
+        RecyclerView list = householdActivity.findViewById(R.id.list);
 
-        ListAdapter listAdapter = householdActivity.getListView().getAdapter();
-        assertEquals(2, listAdapter.getCount());
+        MemberAdapter listAdapter = (MemberAdapter) list.getAdapter();
+        assertEquals(2, listAdapter.getItemCount());
         assertEquals(member1, listAdapter.getItem(0));
         assertEquals(member2, listAdapter.getItem(1));
-        TextView viewById = (TextView) householdActivity.findViewById(R.id.survey_message);
+        TextView viewById = householdActivity.findViewById(R.id.survey_message);
         assertEquals(householdActivity.getString(R.string.survey_done_message), viewById.getText().toString());
     }
 
     @Test
     public void ShouldPopulateAdapterWithMembersAndDisplaySurveyRefusedMessage() {
-        Mockito.stub(household.getComments()).toReturn("dummy comments");
-        Mockito.stub(household.getStatus()).toReturn(InterviewStatus.REFUSED);
+        Mockito.when(household.getComments()).thenReturn("dummy comments");
+        Mockito.when(household.getStatus()).thenReturn(InterviewStatus.REFUSED);
         intent.putExtra(Constants.HH_HOUSEHOLD,household);
-        HouseholdActivity householdActivity = householdActivityController.withIntent(intent).create().get();
+        HouseholdActivity householdActivity = getActivity(intent);
+        RecyclerView list = householdActivity.findViewById(R.id.list);
 
-        ListAdapter listAdapter = householdActivity.getListView().getAdapter();
-        assertEquals(2, listAdapter.getCount());
+        MemberAdapter listAdapter = (MemberAdapter) list.getAdapter();
+        assertEquals(2, listAdapter.getItemCount());
         assertEquals(member1, listAdapter.getItem(0));
         assertEquals(member2, listAdapter.getItem(1));
-        TextView viewById = (TextView) householdActivity.findViewById(R.id.survey_message);
+        TextView viewById = householdActivity.findViewById(R.id.survey_message);
         assertEquals(householdActivity.getString(R.string.survey_refused_message), viewById.getText().toString());
     }
 
-
-
-
-
-
-
+    private HouseholdActivity getActivity(Intent intent) {
+        return Robolectric.buildActivity(HouseholdActivity.class, intent).create().get();
+    }
 }

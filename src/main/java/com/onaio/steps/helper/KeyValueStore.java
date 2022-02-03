@@ -16,17 +16,19 @@
 
 package com.onaio.steps.helper;
 
-import android.app.Activity;
-import android.content.SharedPreferences;
-import com.onaio.steps.Properties;
-
 import static android.content.Context.MODE_PRIVATE;
+
+import android.content.SharedPreferences;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.onaio.steps.Properties;
 
 public class KeyValueStore {
 
-    private Activity activity;
+    private AppCompatActivity activity;
 
-    public KeyValueStore(Activity activity) {
+    public KeyValueStore(AppCompatActivity activity) {
         this.activity = activity;
     }
 
@@ -40,11 +42,11 @@ public class KeyValueStore {
         return editor.commit();
     }
 
-    private SharedPreferences dataStore(Activity activity) {
+    private SharedPreferences dataStore(AppCompatActivity activity) {
         return activity.getPreferences(MODE_PRIVATE);
     }
 
-    private SharedPreferences.Editor dataStoreEditor(Activity activity) {
+    private SharedPreferences.Editor dataStoreEditor(AppCompatActivity activity) {
         return dataStore(activity).edit();
     }
 

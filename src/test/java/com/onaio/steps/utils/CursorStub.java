@@ -26,54 +26,49 @@ import org.mockito.Mockito;
 
 
 public class CursorStub {
-    private Cursor cursor;
+    private final Cursor cursor;
 
     public CursorStub(Cursor cursor) {
         this.cursor = cursor;
     }
 
     public void stubCursorForHousehold(Household household) {
-        Mockito.stub(cursor.moveToFirst()).toReturn(true);
-        Mockito.stub(cursor.getColumnIndex(Household.NAME)).toReturn(1);
-        Mockito.stub(cursor.getColumnIndex(Household.PHONE_NUMBER)).toReturn(2);
-        Mockito.stub(cursor.getColumnIndex(Household.ID)).toReturn(3);
-        Mockito.stub(cursor.getColumnIndex(Household.SELECTED_MEMBER_ID)).toReturn(4);
-        Mockito.stub(cursor.getColumnIndex(Household.STATUS)).toReturn(5);
-        Mockito.stub(cursor.getColumnIndex(Household.CREATED_AT)).toReturn(6);
-        Mockito.stub(cursor.getColumnIndex(Household.SERVER_STATUS)).toReturn(7);
+        Mockito.when(cursor.moveToFirst()).thenReturn(true);
+        Mockito.when(cursor.getColumnIndex(Household.NAME)).thenReturn(1);
+        Mockito.when(cursor.getColumnIndex(Household.PHONE_NUMBER)).thenReturn(2);
+        Mockito.when(cursor.getColumnIndex(Household.ID)).thenReturn(3);
+        Mockito.when(cursor.getColumnIndex(Household.SELECTED_MEMBER_ID)).thenReturn(4);
+        Mockito.when(cursor.getColumnIndex(Household.STATUS)).thenReturn(5);
+        Mockito.when(cursor.getColumnIndex(Household.CREATED_AT)).thenReturn(6);
+        Mockito.when(cursor.getColumnIndex(Household.SERVER_STATUS)).thenReturn(7);
 
-        Mockito.stub(cursor.getString(1)).toReturn(household.getName());
-        Mockito.stub(cursor.getString(2)).toReturn(household.getPhoneNumber());
-        Mockito.stub(cursor.getString(3)).toReturn(household.getId());
-        Mockito.stub(cursor.getString(4)).toReturn(household.getSelectedMemberId());
-        Mockito.stub(cursor.getString(5)).toReturn(household.getStatus().toString());
-        Mockito.stub(cursor.getString(6)).toReturn(household.getCreatedAt());
-        Mockito.stub(cursor.getString(7)).toReturn(household.getServerStatus().toString());
+        Mockito.when(cursor.getString(1)).thenReturn(household.getName());
+        Mockito.when(cursor.getString(2)).thenReturn(household.getPhoneNumber());
+        Mockito.when(cursor.getString(3)).thenReturn(household.getId());
+        Mockito.when(cursor.getString(4)).thenReturn(household.getSelectedMemberId());
+        Mockito.when(cursor.getString(5)).thenReturn(household.getStatus().toString());
+        Mockito.when(cursor.getString(6)).thenReturn(household.getCreatedAt());
+        Mockito.when(cursor.getString(7)).thenReturn(household.getServerStatus().toString());
     }
 
     public void stubCursorForMember(long id, String memberFamilyName, String memberFirstName, Gender memberGender, String memberAge, String householdId, int isDeleted, String memberHouseholdId) {
-        Mockito.stub(cursor.moveToFirst()).toReturn(true);
-        Mockito.stub(cursor.getColumnIndex(Member.FAMILY_SURNAME)).toReturn(1);
-        Mockito.stub(cursor.getColumnIndex(Member.FIRST_NAME)).toReturn(2);
-        Mockito.stub(cursor.getColumnIndex(Member.GENDER)).toReturn(3);
-        Mockito.stub(cursor.getColumnIndex(Member.AGE)).toReturn(4);
-        Mockito.stub(cursor.getColumnIndex(Member.DELETED)).toReturn(5);
-        Mockito.stub(cursor.getColumnIndex(Member.ID)).toReturn(6);
-        Mockito.stub(cursor.getColumnIndex(Member.MEMBER_HOUSEHOLD_ID)).toReturn(7);
-        Mockito.stub(cursor.getColumnIndex(Member.HOUSEHOLD_ID)).toReturn(8);
+        Mockito.when(cursor.moveToFirst()).thenReturn(true);
+        Mockito.when(cursor.getColumnIndex(Member.FAMILY_SURNAME)).thenReturn(1);
+        Mockito.when(cursor.getColumnIndex(Member.FIRST_NAME)).thenReturn(2);
+        Mockito.when(cursor.getColumnIndex(Member.GENDER)).thenReturn(3);
+        Mockito.when(cursor.getColumnIndex(Member.AGE)).thenReturn(4);
+        Mockito.when(cursor.getColumnIndex(Member.DELETED)).thenReturn(5);
+        Mockito.when(cursor.getColumnIndex(Member.ID)).thenReturn(6);
+        Mockito.when(cursor.getColumnIndex(Member.MEMBER_HOUSEHOLD_ID)).thenReturn(7);
+        Mockito.when(cursor.getColumnIndex(Member.HOUSEHOLD_ID)).thenReturn(8);
 
-        Mockito.stub(cursor.getString(1)).toReturn(memberFamilyName);
-        Mockito.stub(cursor.getString(2)).toReturn(memberFirstName);
-        Mockito.stub(cursor.getString(3)).toReturn(memberGender.toString());
-        Mockito.stub(cursor.getString(4)).toReturn(String.valueOf(memberAge));
-        Mockito.stub(cursor.getInt(5)).toReturn(isDeleted);
-        Mockito.stub(cursor.getString(6)).toReturn(String.valueOf(id));
-        Mockito.stub(cursor.getString(7)).toReturn(memberHouseholdId);
-        Mockito.stub(cursor.getString(8)).toReturn(householdId);
+        Mockito.when(cursor.getString(1)).thenReturn(memberFamilyName);
+        Mockito.when(cursor.getString(2)).thenReturn(memberFirstName);
+        Mockito.when(cursor.getString(3)).thenReturn(memberGender.toString());
+        Mockito.when(cursor.getString(4)).thenReturn(String.valueOf(memberAge));
+        Mockito.when(cursor.getInt(5)).thenReturn(isDeleted);
+        Mockito.when(cursor.getString(6)).thenReturn(String.valueOf(id));
+        Mockito.when(cursor.getString(7)).thenReturn(memberHouseholdId);
+        Mockito.when(cursor.getString(8)).thenReturn(householdId);
     }
-
-    public void stubCursorForCount(int count) {
-        Mockito.stub(cursor.getCount()).toReturn(count);
-    }
-
 }

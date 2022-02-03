@@ -16,12 +16,17 @@
 
 package com.onaio.steps.handler.actions;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import android.app.Activity;
-import android.app.ListActivity;
 import android.view.View;
 import android.widget.Button;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.onaio.steps.R;
+import com.onaio.steps.StepsTestRunner;
 import com.onaio.steps.activities.HouseholdActivity;
 import com.onaio.steps.handler.strategies.survey.TakeSurveyForHouseholdStrategy;
 import com.onaio.steps.helper.Constants;
@@ -32,24 +37,15 @@ import com.onaio.steps.model.ODKForm.IForm;
 import com.onaio.steps.model.ODKForm.ODKSavedForm;
 import com.onaio.steps.model.RequestCode;
 
-import junit.framework.Assert;
-
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mockito;
-import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
-@Config(emulateSdk = 16,manifest = "src/main/AndroidManifest.xml")
-@RunWith(RobolectricTestRunner.class)
-public class TakeSurveyHandlerTest {
+public class TakeSurveyHandlerTest extends StepsTestRunner {
 
     private HouseholdActivity householdActivityMock;
     private TakeSurveyHandler takeSurveyHandler;
@@ -76,35 +72,35 @@ public class TakeSurveyHandlerTest {
 
     @Test
     public void ShouldInactivateWhenMemberIsNotSelected(){
-        Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.SELECTION_NOT_DONE);
+        Mockito.when(householdMock.getStatus()).thenReturn(InterviewStatus.SELECTION_NOT_DONE);
 
         Assert.assertTrue(takeSurveyHandler.shouldDeactivate());
     }
 
     @Test
     public void ShouldNotInactivateWhenSurveyNotDone(){
-        Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.NOT_DONE);
+        Mockito.when(householdMock.getStatus()).thenReturn(InterviewStatus.NOT_DONE);
 
         Assert.assertFalse(takeSurveyHandler.shouldDeactivate());
     }
 
     @Test
     public void ShouldInactivateWhenSurveyDone(){
-        Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.DONE);
+        Mockito.when(householdMock.getStatus()).thenReturn(InterviewStatus.DONE);
 
         Assert.assertTrue(takeSurveyHandler.shouldDeactivate());
     }
 
     @Test
     public void ShouldNotInactivateWhenSurveyDeferred(){
-        Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.DEFERRED);
+        Mockito.when(householdMock.getStatus()).thenReturn(InterviewStatus.DEFERRED);
 
         Assert.assertFalse(takeSurveyHandler.shouldDeactivate());
     }
 
     @Test
     public void ShouldInactivateWhenSurveyRefused(){
-        Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.REFUSED);
+        Mockito.when(householdMock.getStatus()).thenReturn(InterviewStatus.REFUSED);
 
         Assert.assertTrue(takeSurveyHandler.shouldDeactivate());
     }
@@ -112,7 +108,7 @@ public class TakeSurveyHandlerTest {
     @Test
     public void ShouldBeAbleToInactivateView(){
         View viewMock = Mockito.mock(View.class);
-        Mockito.stub(householdActivityMock.findViewById(R.id.action_take_survey)).toReturn(viewMock);
+        Mockito.when(householdActivityMock.findViewById(R.id.action_take_survey)).thenReturn(viewMock);
 
         takeSurveyHandler.deactivate();
 
@@ -122,7 +118,7 @@ public class TakeSurveyHandlerTest {
     @Test
     public void ShouldBeAbleToActivateView() {
         View viewMock = Mockito.mock(Button.class);
-        Mockito.stub(householdActivityMock.findViewById(R.id.action_take_survey)).toReturn(viewMock);
+        Mockito.when(householdActivityMock.findViewById(R.id.action_take_survey)).thenReturn(viewMock);
 
         takeSurveyHandler.activate();
 
@@ -132,8 +128,8 @@ public class TakeSurveyHandlerTest {
     @Test
     public void ShouldActivateViewWithInterviewNowText() {
         Button viewMock = Mockito.mock(Button.class);
-        Mockito.stub(householdActivityMock.findViewById(R.id.action_take_survey)).toReturn(viewMock);
-        Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.NOT_DONE);
+        Mockito.when(householdActivityMock.findViewById(R.id.action_take_survey)).thenReturn(viewMock);
+        Mockito.when(householdMock.getStatus()).thenReturn(InterviewStatus.NOT_DONE);
 
         takeSurveyHandler.activate();
 
@@ -143,8 +139,8 @@ public class TakeSurveyHandlerTest {
     @Test
     public void ShouldActivateViewWithContinueInterviewText() {
         Button viewMock = Mockito.mock(Button.class);
-        Mockito.stub(householdActivityMock.findViewById(R.id.action_take_survey)).toReturn(viewMock);
-        Mockito.stub(householdMock.getStatus()).toReturn(InterviewStatus.INCOMPLETE);
+        Mockito.when(householdActivityMock.findViewById(R.id.action_take_survey)).thenReturn(viewMock);
+        Mockito.when(householdMock.getStatus()).thenReturn(InterviewStatus.INCOMPLETE);
 
         takeSurveyHandler.activate();
 
@@ -195,7 +191,7 @@ public class TakeSurveyHandlerTest {
     private void mockSavedForm(ArrayList<IForm> savedForms, String formStatus) {
         ODKSavedForm savedForm = Mockito.mock(ODKSavedForm.class);
         savedForms.add(savedForm);
-        Mockito.stub(savedForm.getStatus()).toReturn(formStatus);
+        Mockito.when(savedForm.getStatus()).thenReturn(formStatus);
     }
 
     @Test
@@ -210,7 +206,7 @@ public class TakeSurveyHandlerTest {
 
         private List<IForm> savedForms;
 
-        public TakeSurveyHandlerStub(ListActivity activity, Household household,List<IForm> savedForms) {
+        public TakeSurveyHandlerStub(AppCompatActivity activity, Household household, List<IForm> savedForms) {
             super(activity, new TakeSurveyForHouseholdStrategy(household,activity));
             this.savedForms = savedForms;
         }

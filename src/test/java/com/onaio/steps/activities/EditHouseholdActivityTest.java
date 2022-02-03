@@ -19,31 +19,26 @@ package com.onaio.steps.activities;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static org.robolectric.Robolectric.shadowOf;
+import static org.robolectric.Shadows.shadowOf;
 
 import android.content.Intent;
 import android.view.View;
 import android.widget.TextView;
 
 import com.onaio.steps.R;
+import com.onaio.steps.StepsTestRunner;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.InterviewStatus;
 import com.onaio.steps.model.ServerStatus;
 
-import junit.framework.Assert;
-
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.robolectric.Robolectric;
-import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
 
-@Config(emulateSdk = 16, manifest = "src/main/AndroidManifest.xml")
-@RunWith(RobolectricTestRunner.class)
-public class EditHouseholdActivityTest {
+public class EditHouseholdActivityTest extends StepsTestRunner {
 
     private EditHouseholdActivity editHouseholdActivity;
     private Household household;
@@ -55,8 +50,7 @@ public class EditHouseholdActivityTest {
         Intent intent = new Intent();
         intent.putExtra(Constants.HH_HOUSEHOLD, household);
 
-        editHouseholdActivity = Robolectric.buildActivity(EditHouseholdActivity.class)
-                .withIntent(intent)
+        editHouseholdActivity = Robolectric.buildActivity(EditHouseholdActivity.class, intent)
                 .create()
                 .get();
     }
@@ -82,10 +76,10 @@ public class EditHouseholdActivityTest {
     @Test
     public void ShouldPassDataToIntentAndFinishActivity() {
         View viewMock = Mockito.mock(View.class);
-        Mockito.stub(viewMock.getId()).toReturn(R.id.household_form);
+        Mockito.when(viewMock.getId()).thenReturn(R.id.household_form);
         TextView textView = Mockito.mock(TextView.class);
-        Mockito.stub(textView.getId()).toReturn(R.id.household_comments);
-        Mockito.stub(textView.getText()).toReturn("dummy");
+        Mockito.when(textView.getId()).thenReturn(R.id.household_comments);
+        Mockito.when(textView.getText()).thenReturn("dummy");
         editHouseholdActivity.doneBtnClicked(viewMock);
 
         Intent editHouseholdActivityIntent = editHouseholdActivity.getIntent();

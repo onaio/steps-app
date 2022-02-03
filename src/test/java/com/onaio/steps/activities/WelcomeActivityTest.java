@@ -16,24 +16,21 @@
 
 package com.onaio.steps.activities;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.robolectric.Shadows.shadowOf;
+
 import android.view.View;
 
 import com.onaio.steps.R;
+import com.onaio.steps.StepsTestRunner;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
-import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-
-@Config(emulateSdk = 16, manifest = "src/main/AndroidManifest.xml")
-@RunWith(RobolectricTestRunner.class)
-public class WelcomeActivityTest {
+public class WelcomeActivityTest extends StepsTestRunner {
 
     private WelcomeActivity welcomeActivity;
 
@@ -44,7 +41,7 @@ public class WelcomeActivityTest {
 
     @Test
     public void ShouldBeAbleToLoadWelcomeLayout(){
-           assertEquals(R.id.welcome_layout,Robolectric.shadowOf(welcomeActivity).getContentView().getId());
+           assertEquals(R.id.welcome_layout,shadowOf(welcomeActivity).getContentView().getId());
     }
 
     @Test

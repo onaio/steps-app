@@ -17,7 +17,6 @@
 package com.onaio.steps.activities;
 
 
-import android.app.ListActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -27,6 +26,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.onaio.steps.R;
 import com.onaio.steps.handler.actions.ImportHandler;
@@ -38,7 +39,7 @@ import com.onaio.steps.helper.DatabaseHelper;
 
 import java.util.List;
 
-public abstract class BaseListActivity extends ListActivity{
+public abstract class BaseListActivity extends AppCompatActivity {
     protected DatabaseHelper db;
 
     @Override
@@ -47,6 +48,7 @@ public abstract class BaseListActivity extends ListActivity{
         prepareScreen();
         setWatermark();
         super.onCreate(savedInstanceState);
+        setActionbarStyle();
     }
 
     @Override
@@ -54,6 +56,7 @@ public abstract class BaseListActivity extends ListActivity{
         prepareScreen();
         setWatermark();
         super.onResume();
+        setActionbarStyle();
     }
 
     @Override
@@ -69,12 +72,7 @@ public abstract class BaseListActivity extends ListActivity{
         for(final IMenuHandler handler : activityHandlers){
             if(handler.shouldOpen(item.getItemId()) ) {
                 if (handler instanceof ImportHandler) {
-                    DialogInterface.OnClickListener confirmListener = new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            handler.open();
-                        }
-                    };
+                    DialogInterface.OnClickListener confirmListener = (dialog, which) -> handler.open();
                     new CustomDialog().confirm(this, confirmListener, CustomDialog.EmptyListener, R.string.warning_merging_data, R.string.warning_title);
                 } else {
                     return handler.open();
@@ -86,6 +84,7 @@ public abstract class BaseListActivity extends ListActivity{
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         List<IActivityResultHandler> activityHandlers = getResultHandlers();
         for(IActivityResultHandler activityHandler: activityHandlers){
             if(activityHandler.canHandleResult(requestCode))
@@ -108,16 +107,14 @@ public abstract class BaseListActivity extends ListActivity{
 
 
     private void setWatermark() {
-        final RelativeLayout homePage = (RelativeLayout)findViewById(R.id.main_layout);
+        final RelativeLayout homePage = findViewById(R.id.main_layout);
         if(homePage == null) return;
-        runOnUiThread(new Runnable() {
-            public void run() {
-                ImageView imageView = (ImageView) findViewById(R.id.item_image);
-                imageView.getLayoutParams().height = (int) (getResources().getDimension(R.dimen.watermark_height)
-                        / getResources().getDisplayMetrics().density);
-                imageView.getLayoutParams().width = (int) (getResources().getDimension(R.dimen.watermark_width)
-                        / getResources().getDisplayMetrics().density);
-            }
+        runOnUiThread(() -> {
+            ImageView imageView = findViewById(R.id.item_image);
+            imageView.getLayoutParams().height = (int) (getResources().getDimension(R.dimen.watermark_height)
+                    / getResources().getDisplayMetrics().density);
+            imageView.getLayoutParams().width = (int) (getResources().getDimension(R.dimen.watermark_width)
+                    / getResources().getDisplayMetrics().density);
         });
     }
 
@@ -126,6 +123,11 @@ public abstract class BaseListActivity extends ListActivity{
         for(IMenuHandler handler:handlers)
             if(handler.shouldOpen(view.getId()))
                 handler.open();
+    }
+
+    public void setActionbarStyle() {
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setIcon(R.mipmap.ic_launcher);
     }
 
     protected abstract int getMenuViewLayout();

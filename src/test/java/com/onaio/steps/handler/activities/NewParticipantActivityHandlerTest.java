@@ -17,10 +17,19 @@
 package com.onaio.steps.handler.activities;
 
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.robolectric.Shadows.shadowOf;
+
 import android.app.Activity;
 import android.content.Intent;
 
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+
 import com.onaio.steps.R;
+import com.onaio.steps.StepsTestRunner;
 import com.onaio.steps.activities.NewParticipantActivity;
 import com.onaio.steps.activities.ParticipantActivity;
 import com.onaio.steps.activities.ParticipantListActivity;
@@ -38,34 +47,24 @@ import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+public class NewParticipantActivityHandlerTest extends StepsTestRunner {
 
-@Config(emulateSdk = 16,manifest = "src/main/AndroidManifest.xml")
-@RunWith(RobolectricTestRunner.class)
-public class NewParticipantActivityHandlerTest {
-
-    private DatabaseHelper dbMock;
     private ParticipantListActivity participantListActivity;
     private NewParticipantActivityHandler newParticipantActivityHandler;
     private Participant participantMock;
     private String date;
     private Participant participant;
 
-
     @Before
     public  void Setup() {
-        dbMock = Mockito.mock(DatabaseHelper.class);
         participantMock = Mockito.mock(Participant.class);
-        participantListActivity = Robolectric.setupActivity(ParticipantListActivity.class);
+        participantListActivity = Robolectric.buildActivity(ParticipantListActivity.class).create().get();
         newParticipantActivityHandler = new NewParticipantActivityHandler(participantListActivity);
     }
 
@@ -98,9 +97,9 @@ public class NewParticipantActivityHandlerTest {
         participant.save(new DatabaseHelper(participantListActivity));
         intent.putExtra(Constants.PARTICIPANT,participant);
         ParticipantAdapter participantAdapter = Mockito.mock(ParticipantAdapter.class);
-        Mockito.stub(participantAdapter.getViewTypeCount()).toReturn(1);
-        participantListActivity.getListView().setAdapter(participantAdapter);
-        ShadowActivity stepsActivityShadow = Robolectric.shadowOf(participantListActivity);
+        //Mockito.when(participantAdapter.getViewTypeCount()).thenReturn(1);
+        ((RecyclerView) participantListActivity.findViewById(R.id.list)).setAdapter(participantAdapter);
+        ShadowActivity stepsActivityShadow = shadowOf(participantListActivity);
 
         newParticipantActivityHandler.handleResult(intent, Activity.RESULT_OK);
 
@@ -118,7 +117,7 @@ public class NewParticipantActivityHandlerTest {
 
         newParticipantActivityHandler.open();
 
-        ShadowActivity shadowActivity = Robolectric.shadowOf(participantListActivity);
+        ShadowActivity shadowActivity = shadowOf(participantListActivity);
         Intent nextStartedActivity = shadowActivity.getNextStartedActivity();
         assertEquals(NewParticipantActivity.class.getName(),nextStartedActivity.getComponent().getClassName());
     }

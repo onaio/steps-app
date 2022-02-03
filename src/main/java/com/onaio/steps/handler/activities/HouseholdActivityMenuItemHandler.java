@@ -15,8 +15,9 @@
  */
 package com.onaio.steps.handler.activities;
 
-import android.app.Activity;
 import android.content.Intent;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.onaio.steps.R;
 import com.onaio.steps.activities.MainActivityOrchestrator;
@@ -35,7 +36,7 @@ public class HouseholdActivityMenuItemHandler implements IMenuHandler {
     private static final int MENU_ID= R.id.action_open_households;
     private ParticipantListActivity activity;
 
-    public HouseholdActivityMenuItemHandler(Activity activity) {
+    public HouseholdActivityMenuItemHandler(AppCompatActivity activity) {
         if (activity instanceof ParticipantListActivity) {
             this.activity = (ParticipantListActivity) activity;
         }
