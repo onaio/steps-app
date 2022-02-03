@@ -30,6 +30,8 @@ import com.onaio.steps.activities.HouseholdActivity;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.helper.FileUtil;
+import com.onaio.steps.helper.KeyValueStore;
+import com.onaio.steps.helper.KeyValueStoreFactory;
 import com.onaio.steps.model.Gender;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.InterviewStatus;
@@ -41,7 +43,9 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mock;
+import org.mockito.MockedStatic;
 import org.mockito.Mockito;
+import org.robolectric.util.ReflectionHelpers;
 
 import java.io.File;
 import java.io.IOException;
@@ -219,4 +223,47 @@ public class ExportHandlerTest extends StepsTestRunner {
         Assert.assertEquals(rows.get(1), Constants.SURVEY_NOT_SELECTED);
     }
 
+    @Test
+    public void testGetDatabaseHelperShouldReturnNonNull() {
+        Assert.assertNotNull(exportHandler.getDatabaseHelper());
+    }
+
+    @Test
+    public void testGetReElectReasonsShouldReturnMockedResult() {
+
+        ReElectReason reason = new ReElectReason("test", null);
+        List<ReElectReason> list = new ArrayList<>();
+        list.add(reason);
+
+        MockedStatic<ReElectReason> reElectReasonMockedStatic = Mockito.mockStatic(ReElectReason.class);
+        reElectReasonMockedStatic.when(() -> ReElectReason.getAll(Mockito.any(), Mockito.any())).thenReturn(list);
+
+        List<ReElectReason> results = exportHandler.getReElectReasons(Mockito.mock(Household.class));
+
+        Assert.assertEquals(1, results.size());
+        Assert.assertEquals("test", results.get(0).toString());
+
+        reElectReasonMockedStatic.close();
+    }
+
+    @Test
+    public void testReplaceCommasShouldReturnFilterString() {
+        String result = ReflectionHelpers.callInstanceMethod(exportHandler, "replaceCommas",
+                ReflectionHelpers.ClassParameter.from(String.class, "\"john,123\""));
+        Assert.assertEquals("john;123", result);
+    }
+
+    @Test
+    public void testGetDeviceIdShouldReturnNonNullDeviceId() {
+
+        KeyValueStore keyValueStore = Mockito.mock(KeyValueStore.class);
+        MockedStatic<KeyValueStoreFactory> keyValueStoreFactoryMockedStatic = Mockito.mockStatic(KeyValueStoreFactory.class);
+
+        keyValueStoreFactoryMockedStatic.when(() -> KeyValueStoreFactory.instance(Mockito.any())).thenReturn(keyValueStore);
+        Mockito.when(keyValueStore.getString(Mockito.eq(Constants.HH_PHONE_ID))).thenReturn("123");
+
+        Assert.assertEquals("123", exportHandler.getDeviceId());
+
+        keyValueStoreFactoryMockedStatic.close();
+    }
 }
