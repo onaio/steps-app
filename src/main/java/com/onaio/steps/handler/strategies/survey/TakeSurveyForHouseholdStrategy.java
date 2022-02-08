@@ -32,7 +32,6 @@ import com.onaio.steps.model.Household;
 import com.onaio.steps.model.InterviewStatus;
 import com.onaio.steps.model.ODKForm.ODKForm;
 import com.onaio.steps.model.ODKForm.ODKSavedForm;
-import com.onaio.steps.model.ODKForm.strategy.HouseholdMemberFormStrategy;
 import com.onaio.steps.model.RequestCode;
 
 import java.io.IOException;
@@ -49,10 +48,8 @@ public class TakeSurveyForHouseholdStrategy  implements ITakeSurveyStrategy {
 
     @Override
     public void open(String formId) throws IOException {
-        String formName = String.format(formId + "-%s", household.getName());
-        ODKForm requiredForm = ODKForm.create(activity, formId, formName);
-        String deviceId = getDeviceId();
-        requiredForm.open(new HouseholdMemberFormStrategy(household, deviceId), activity, RequestCode.SURVEY.getCode());
+        ODKForm requiredForm = ODKForm.create(activity, formId, household.getOdkFormId());
+        requiredForm.open(activity, RequestCode.SURVEY.getCode());
     }
 
     public boolean shouldInactivate(){
@@ -69,6 +66,7 @@ public class TakeSurveyForHouseholdStrategy  implements ITakeSurveyStrategy {
         else
             household.setStatus(InterviewStatus.INCOMPLETE);
 
+        household.setOdkFormId(savedForm.getId());
         household.update(new DatabaseHelper(activity));
     }
 

@@ -120,7 +120,7 @@ public class ImportHandler implements IMenuHandler {
                 Household household = Household.find_by(db, householdName);
                 if(household == null){
                     String currentDate = new SimpleDateFormat(Constants.DATE_FORMAT, Locale.ENGLISH).format(new Date());
-                    household = new Household(householdName, phoneNumber, InterviewStatus.SELECTION_NOT_DONE, currentDate, uniqueDeviceId,comments);
+                    household = new Household(householdName, phoneNumber, InterviewStatus.SELECTION_NOT_DONE, currentDate, uniqueDeviceId,comments, null);
                     household.setServerStatus(ServerStatus.NOT_SENT);
                     household.save(db);
                 }

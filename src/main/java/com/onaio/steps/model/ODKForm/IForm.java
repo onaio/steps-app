@@ -21,5 +21,4 @@ import android.net.Uri;
 
 public interface IForm {
     Uri getUri();
-    String getPath();
 }

@@ -104,33 +104,24 @@ public class TakeSurveyHandler implements IMenuHandler, IMenuPreparer, IActivity
 
     @Override
     public void handleResult(Intent data, int resultCode) {
-        if (resultCode != Activity.RESULT_OK)
+        if (resultCode != Activity.RESULT_OK || data.getData() == null)
             return;
-        List<IForm> savedForms = getSavedForms();
+        List<IForm> savedForms = getSavedForms(data);
         if (savedForms == null || savedForms.isEmpty())
             return;
         ODKSavedForm savedForm = (ODKSavedForm) savedForms.get(0);
         takeSurveyStrategy.handleResult(savedForm);
 
     }
-
     @Override
     public boolean canHandleResult(int requestCode) {
         return requestCode == RequestCode.SURVEY.getCode();
     }
 
-    protected List<IForm> getSavedForms() {
+    protected List<IForm> getSavedForms(Intent data) {
         try {
-            String formId;
-            if (takeSurveyStrategy instanceof DeferSurveyForParticipantStrategy ||
-                    takeSurveyStrategy instanceof RefuseSurveyForParticipantStrategy ||
-                    takeSurveyStrategy instanceof TakeSurveyForParticipantStrategy) {
-                formId = getValue(Constants.PA_FORM_ID);
-            } else {
-                formId = getValue(Constants.HH_FORM_ID);
-            }
-            String formNameFormat = formId + "-%s";
-            return ODKSavedForm.findAll(activity, takeSurveyStrategy.getFormName(formNameFormat));
+            String formId = data.getData().getLastPathSegment();
+            return ODKSavedForm.findAll(activity, formId);
         } catch (AppNotInstalledException e) {
             new CustomDialog().notify(activity, CustomDialog.EmptyListener, R.string.error_title, R.string.odk_app_not_installed);
             return null;
@@ -140,6 +131,4 @@ public class TakeSurveyHandler implements IMenuHandler, IMenuPreparer, IActivity
     private String getValue(String key) {
         return KeyValueStoreFactory.instance(activity).getString(key);
     }
-
-
 }

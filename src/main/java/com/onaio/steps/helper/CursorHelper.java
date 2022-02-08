@@ -63,11 +63,12 @@ public class CursorHelper {
                 String comments = cursor.getString(cursor.getColumnIndex(Household.COMMENTS));
                 String uniqueDeviceId = cursor.getString(cursor.getColumnIndex(Household.UNIQUE_DEVICE_ID));
                 String serverStatus = cursor.getString(cursor.getColumnIndex(Household.SERVER_STATUS));
+                String odkFormId = cursor.getString(cursor.getColumnIndex(Household.ODK_FORM_ID));
 
                 String memberFamilySurname = cursor.getColumnIndex(Member.FAMILY_SURNAME) != -1 ? cursor.getString(cursor.getColumnIndex(Member.FAMILY_SURNAME)) : null;
                 String memberFirstName = cursor.getColumnIndex(Member.FIRST_NAME) != -1 ? cursor.getString(cursor.getColumnIndex(Member.FIRST_NAME)) : null;
 
-                Household hh = new Household(id,household_name, household_number,selectedMemberId, InterviewStatus.valueOf(status),createdAt, uniqueDeviceId, comments );
+                Household hh = new Household(id,household_name, household_number,selectedMemberId, InterviewStatus.valueOf(status),createdAt, uniqueDeviceId, comments, odkFormId);
                 hh.setServerStatus(ServerStatus.valueOf(serverStatus));
 
                 if (memberFamilySurname != null && memberFirstName != null) {
@@ -97,7 +98,8 @@ public class CursorHelper {
                 String age = cursor.getString(cursor.getColumnIndex(Participant.AGE));
                 String status = cursor.getString(cursor.getColumnIndex(Participant.STATUS));
                 String createdAt = cursor.getString(cursor.getColumnIndex(Participant.CREATED_AT));
-                participants.add(new Participant(Integer.parseInt(id), participantId,familySurname, firstName, Gender.valueOf(gender), Integer.parseInt(age), InterviewStatus.valueOf(status),createdAt));
+                String odkFormId = cursor.getString(cursor.getColumnIndex(Participant.ODK_FORM_ID));
+                participants.add(new Participant(Integer.parseInt(id), participantId,familySurname, firstName, Gender.valueOf(gender), Integer.parseInt(age), InterviewStatus.valueOf(status),createdAt, odkFormId));
 
             } while (cursor.moveToNext());
         }

@@ -41,7 +41,6 @@ public class ODKBlankForm implements IForm{
     String displayName;
     String jrVersion;
 
-
     protected ODKBlankForm(String id, String jrFormId, String displayName, String jrVersion, String formMediaPath){
         _id = id;
         this.jrFormId = jrFormId;
@@ -57,10 +56,6 @@ public class ODKBlankForm implements IForm{
         return forms.get(0);
     }
 
-    public String getPath() {
-        return formMediaPath;
-    }
-
     public Uri getUri() {
         return Uri.parse(URI_STRING + "/" + _id);
     }
@@ -71,7 +66,7 @@ public class ODKBlankForm implements IForm{
         try {
             if(formsContentProvider==null) throw new AppNotInstalledException();
             Cursor cursor = formsContentProvider.query(ODKBlankForm.URI, null, "jrFormId = ?", new String[]{odkFormId}, null);
-            if(cursor.moveToFirst()){
+            if(cursor != null && cursor.moveToFirst()){
                 do{
                     String id = cursor.getString(cursor.getColumnIndex("_id"));
                     String jrFormId = cursor.getString(cursor.getColumnIndex("jrFormId"));

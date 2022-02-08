@@ -39,9 +39,10 @@ public class Participant implements Serializable {
     public static final String AGE = "age";
     public static final String STATUS = "Status";
     public static final String CREATED_AT="Created_At";
+    public static final String ODK_FORM_ID = "odk_form_id";
 
 
-    public static final String TABLE_CREATE_QUERY = String.format("CREATE TABLE %s(%s INTEGER PRIMARY KEY,%s TEXT,%s Text, %s TEXT, %s INTEGER, %s TEXT, %s TEXT, %s TEXT)", TABLE_NAME, ID,PARTICIPANT_ID, FAMILY_SURNAME, FIRST_NAME, AGE, GENDER, STATUS, CREATED_AT);
+    public static final String TABLE_CREATE_QUERY = String.format("CREATE TABLE %s(%s INTEGER PRIMARY KEY,%s TEXT,%s Text, %s TEXT, %s INTEGER, %s TEXT, %s TEXT, %s TEXT, %s TEXT)", TABLE_NAME, ID,PARTICIPANT_ID, FAMILY_SURNAME, FIRST_NAME, AGE, GENDER, STATUS, CREATED_AT, ODK_FORM_ID);
     public static final String FIND_ALL_QUERY = "SELECT * FROM PARTICIPANT ORDER BY Id asc";
     public static final String FIND_BY_ID_QUERY = "SELECT * FROM PARTICIPANT WHERE " + ID + " = '%s'";
     public static final String FIND_BY_STATUS_QUERY = "SELECT * FROM PARTICIPANT WHERE " + STATUS + " = '%s'";
@@ -54,8 +55,9 @@ public class Participant implements Serializable {
     private int age;
     private int id;
     private String createdAt;
+    private String odkFormId;
 
-    public Participant(int id,String participantId, String familySurname, String firstName, Gender gender, int age, InterviewStatus status, String createdAt) {
+    public Participant(int id,String participantId, String familySurname, String firstName, Gender gender, int age, InterviewStatus status, String createdAt, String odkFormId) {
         this.id = id;
         this.familySurname = familySurname;
         this.firstName = firstName;
@@ -64,10 +66,11 @@ public class Participant implements Serializable {
         this.age = age;
         this.status = status;
         this.createdAt = createdAt;
+        this.odkFormId = odkFormId;
     }
 
 
-    public Participant(String participantId, String familySurname, String firstName, Gender gender, int age, InterviewStatus status, String createdAt) {
+    public Participant(String participantId, String familySurname, String firstName, Gender gender, int age, InterviewStatus status, String createdAt, String odkFormId) {
         this.familySurname = familySurname;
         this.firstName = firstName;
         this.participantID=participantId;
@@ -75,6 +78,7 @@ public class Participant implements Serializable {
         this.age = age;
         this.status = status;
         this.createdAt = createdAt;
+        this.odkFormId = odkFormId;
     }
 
     public String getParticipantID() {
@@ -127,6 +131,14 @@ public class Participant implements Serializable {
         this.status = status;
     }
 
+    public String getOdkFormId() {
+        return odkFormId;
+    }
+
+    public void setOdkFormId(String odkFormId) {
+        this.odkFormId = odkFormId;
+    }
+
     public long save(DatabaseHelper db) {
         ContentValues participantDetails = populateBasicDetails();
         participantDetails.put(CREATED_AT,createdAt);
@@ -149,6 +161,7 @@ public class Participant implements Serializable {
         values.put(AGE, age);
         values.put(GENDER, gender.toString());
         values.put(STATUS ,status.toString());
+        values.put(ODK_FORM_ID ,odkFormId);
         return values;
     }
 

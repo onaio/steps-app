@@ -24,14 +24,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.onaio.steps.exceptions.AppNotInstalledException;
 import com.onaio.steps.exceptions.FormNotPresentException;
 import com.onaio.steps.helper.Constants;
-import com.onaio.steps.model.ODKForm.strategy.interfaces.IFormStrategy;
 
-import java.io.IOException;
 import java.util.List;
 
 public class ODKForm {
-    private IForm savedForm;
-    private IForm blankForm;
+    private final IForm savedForm;
+    private final IForm blankForm;
 
 
     public ODKForm(IForm blankForm, IForm savedForm){
@@ -45,16 +43,14 @@ public class ODKForm {
         return blankForm;
     }
 
-    public void open(IFormStrategy formStrategy, AppCompatActivity activity, int requestCode) throws IOException{
-        String pathToSaveDataFile = blankForm.getPath();
-        formStrategy.saveDataFile(activity,pathToSaveDataFile);
+    public void open(AppCompatActivity activity, int requestCode){
         launchODKCollect(activity, requestCode);
     }
 
-    public static ODKForm create(AppCompatActivity activity, String formId, String formName) throws FormNotPresentException, AppNotInstalledException {
-        List<IForm> savedForms = ODKSavedForm.findAll(activity, formName);
+    public static ODKForm create(AppCompatActivity activity, String formId, String odkFormId) throws FormNotPresentException, AppNotInstalledException {
+        List<IForm> savedForms = ODKSavedForm.findAll(activity, odkFormId);
         IForm blankForm = ODKBlankForm.find(activity, formId);
-        if(savedForms != null && !savedForms.isEmpty())
+        if(!savedForms.isEmpty())
             return new ODKForm(blankForm,savedForms.get(0));
         return new ODKForm(blankForm,null);
     }

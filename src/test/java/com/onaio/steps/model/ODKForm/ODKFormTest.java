@@ -33,7 +33,6 @@ import com.onaio.steps.model.Gender;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.InterviewStatus;
 import com.onaio.steps.model.Member;
-import com.onaio.steps.model.ODKForm.strategy.HouseholdMemberFormStrategy;
 import com.onaio.steps.model.RequestCode;
 import com.onaio.steps.model.ShadowDatabaseHelper;
 
@@ -74,37 +73,17 @@ public class ODKFormTest extends StepsTestRunner {
         savedFormMock = Mockito.mock(IForm.class);
     }
 
-   /* @Test
-    public void ShouldSaveFileWhenOpeningSavedForm() throws IOException {
-        String blankFormMediaPath = householdActivity.getFilesDir().getPath();
-        String householdName = "household name";
-        Mockito.when(householdMock.getName()).thenReturn(householdName);
-        Mockito.when(blankFormMock.getPath()).thenReturn(blankFormMediaPath);
-        odkForm = new ODKForm(blankFormMock, savedFormMock);
-
-
-        odkForm.open(new HouseholdMemberFormStrategy(householdMock), householdActivity, RequestCode.SURVEY.getCode());
-
-//      Mockito.verify(fileUtilMock).withHeader(Constants.ODK_FORM_FIELDS.split(","));
-        Mockito.verify(blankFormMock).getPath();
-        String formNameFormat = getValue(Constants.FORM_ID) + "-%s";
-        String formName = String.format(formNameFormat, householdName);
-        Mockito.verify(fileUtilMock).withData(Mockito.argThat(formDataValidator(formName)));
-        Mockito.verify(fileUtilMock).writeCSV(blankFormMediaPath + "/" + Constants.ODK_DATA_FILENAME);
-    }*/
-
     @Test
     public void ShouldPopulateIntentProperlyWhenOpeningSavedForm() throws IOException {
         String blankFormMediaPath = householdActivity.getFilesDir().getPath();
         String householdName = "household name";
         Uri saveFormURI = Uri.parse("uri");
         Mockito.when(householdMock.getName()).thenReturn(householdName);
-        Mockito.when(blankFormMock.getPath()).thenReturn(blankFormMediaPath);
         Mockito.when(savedFormMock.getUri()).thenReturn(saveFormURI);
         odkForm = new ODKForm(blankFormMock, savedFormMock);
         String deviceId = getValue(HH_PHONE_ID);
 
-        odkForm.open(new HouseholdMemberFormStrategy(householdMock, deviceId), householdActivity, RequestCode.SURVEY.getCode());
+        odkForm.open(householdActivity, RequestCode.SURVEY.getCode());
 
         ShadowActivity.IntentForResult odkActivity = shadowOf(householdActivity).getNextStartedActivityForResult();
 
@@ -118,37 +97,16 @@ public class ODKFormTest extends StepsTestRunner {
         Assert.assertEquals(RequestCode.SURVEY.getCode(),odkActivity.requestCode);
     }
 
-   /* @Test
-    public void ShouldSaveFileWhenOpeningBlankForm() throws IOException {
-        String blankFormMediaPath = householdActivity.getFilesDir().getPath();
-        String householdName = "household name";
-        Mockito.when(householdMock.getName()).thenReturn(householdName);
-        Mockito.when(blankFormMock.getPath()).thenReturn(blankFormMediaPath);
-        odkForm = new ODKForm(blankFormMock, null);
-
-
-        odkForm.open(new HouseholdMemberFormStrategy(householdMock), householdActivity, RequestCode.SURVEY.getCode());
-
-        Mockito.verify(fileUtilMock).withHeader(Constants.ODK_FORM_FIELDS.split(","));
-        Mockito.verify(blankFormMock).getPath();
-        String formNameFormat = getValue(Constants.FORM_ID) + "-%s";
-        String formName = String.format(formNameFormat, householdName);
-        Mockito.verify(fileUtilMock).withData(Mockito.argThat(formDataValidator(formName)));
-        Mockito.verify(fileUtilMock).writeCSV(blankFormMediaPath + "/" + Constants.ODK_DATA_FILENAME);
-    }*/
-
     @Test
-    public void ShouldPopulateIntentProperlyWhenOpeningBlankForm() throws IOException {
-        String blankFormMediaPath = householdActivity.getFilesDir().getPath();
+    public void ShouldPopulateIntentProperlyWhenOpeningBlankForm() {
         String householdName = "household name";
         Uri blankFormURI = Uri.parse("uri");
         Mockito.when(householdMock.getName()).thenReturn(householdName);
-        Mockito.when(blankFormMock.getPath()).thenReturn(blankFormMediaPath);
         Mockito.when(blankFormMock.getUri()).thenReturn(blankFormURI);
         odkForm = new ODKForm(blankFormMock, null);
         String deviceId = getValue(HH_PHONE_ID);
 
-        odkForm.open(new HouseholdMemberFormStrategy(householdMock, deviceId), householdActivity, RequestCode.SURVEY.getCode());
+        odkForm.open(householdActivity, RequestCode.SURVEY.getCode());
 
         ShadowActivity.IntentForResult odkActivity = shadowOf(householdActivity).getNextStartedActivityForResult();
 
