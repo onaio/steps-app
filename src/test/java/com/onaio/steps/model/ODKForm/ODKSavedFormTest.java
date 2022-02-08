@@ -48,9 +48,4 @@ public class ODKSavedFormTest extends StepsTestRunner {
     public void ShouldGetTheFormURIWithId(){
         Assert.assertEquals("content://org.odk.collect.android.provider.odk.instances/instances/id",form.getUri().toString());
     }
-
-    @Test
-    public void ShouldGetTheMediaPath(){
-        Assert.assertEquals("path",form.getPath());
-    }
 }

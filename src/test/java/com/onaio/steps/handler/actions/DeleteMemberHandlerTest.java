@@ -79,7 +79,7 @@ public class DeleteMemberHandlerTest extends StepsTestRunner {
     @Test
     public void ShouldInactivateWhenMemberIsSelectedMember(){
         when(memberMock.getId()).thenReturn(1);
-        when(memberMock.getHousehold()).thenReturn(new Household("12","name","321","1", InterviewStatus.DEFERRED,"12-12-2001", "uniqueDevId","Dummy comments"));
+        when(memberMock.getHousehold()).thenReturn(new Household("12","name","321","1", InterviewStatus.DEFERRED,"12-12-2001", "uniqueDevId","Dummy comments", null));
 
         assertTrue(deleteMemberHandler.shouldDeactivate());
     }
@@ -87,7 +87,7 @@ public class DeleteMemberHandlerTest extends StepsTestRunner {
     @Test
     public void ShouldNotInactivateWhenMemberIsNotSelectedMember(){
         when(memberMock.getId()).thenReturn(2);
-        when(memberMock.getHousehold()).thenReturn(new Household("12","name","321","1", InterviewStatus.DEFERRED,"12-12-2001", "uniqueDevId","Dummy comments"));
+        when(memberMock.getHousehold()).thenReturn(new Household("12","name","321","1", InterviewStatus.DEFERRED,"12-12-2001", "uniqueDevId","Dummy comments", null));
 
 
         assertFalse(deleteMemberHandler.shouldDeactivate());
@@ -96,14 +96,14 @@ public class DeleteMemberHandlerTest extends StepsTestRunner {
     @Test
     public void ShouldInactivateWhenHouseholdIsSurveyed(){
         when(memberMock.getId()).thenReturn(1);
-        when(memberMock.getHousehold()).thenReturn(new Household("12","name","321","", InterviewStatus.DONE,"12-12-2001", "uniqueDevId","Dummy comments"));
+        when(memberMock.getHousehold()).thenReturn(new Household("12","name","321","", InterviewStatus.DONE,"12-12-2001", "uniqueDevId","Dummy comments", null));
         assertTrue(deleteMemberHandler.shouldDeactivate());
     }
 
     @Test
     public void ShouldInactivateWhenSurveyIsRefused(){
         when(memberMock.getId()).thenReturn(1);
-        when(memberMock.getHousehold()).thenReturn(new Household("12","name","321","", InterviewStatus.REFUSED,"12-12-2001", "uniqueDevId","Dummy comments"));
+        when(memberMock.getHousehold()).thenReturn(new Household("12","name","321","", InterviewStatus.REFUSED,"12-12-2001", "uniqueDevId","Dummy comments", null));
 
         assertTrue(deleteMemberHandler.shouldDeactivate());
     }

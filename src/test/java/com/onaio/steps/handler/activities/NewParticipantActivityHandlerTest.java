@@ -26,7 +26,6 @@ import android.app.Activity;
 import android.content.Intent;
 
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.onaio.steps.R;
 import com.onaio.steps.StepsTestRunner;
@@ -43,10 +42,8 @@ import com.onaio.steps.model.RequestCode;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.robolectric.Robolectric;
-import org.robolectric.RobolectricTestRunner;
 import org.robolectric.shadows.ShadowActivity;
 
 import java.text.SimpleDateFormat;
@@ -92,7 +89,7 @@ public class NewParticipantActivityHandlerTest extends StepsTestRunner {
     public void ShouldHandleResultAndStartParticipantActivityForResultCodeOk(){
         Intent intent = new Intent();
         date = new SimpleDateFormat(Constants.DATE_FORMAT, Locale.ENGLISH).format(new Date());
-        participant = new Participant(1, "123-10", "family surname", "firstName", Gender.Female, 34, InterviewStatus.DONE, date);
+        participant = new Participant(1, "123-10", "family surname", "firstName", Gender.Female, 34, InterviewStatus.DONE, date, null);
 
         participant.save(new DatabaseHelper(participantListActivity));
         intent.putExtra(Constants.PARTICIPANT,participant);

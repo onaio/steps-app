@@ -55,7 +55,7 @@ public class HouseholdServerStatusUpdaterTest extends StepsTestRunner {
     public void markAllSentShouldChangeHouseholdStatusToSentWhenHouseholdStatusIsNotSent() {
         DatabaseHelper db = new DatabaseHelper(householdListActivity);
 
-        Household household = new Household("", "1-1", "", "", InterviewStatus.DONE, "", "", "");
+        Household household = new Household("", "1-1", "", "", InterviewStatus.DONE, "", "", "", null);
         household.setServerStatus(ServerStatus.NOT_SENT);
         household.save(db);
 

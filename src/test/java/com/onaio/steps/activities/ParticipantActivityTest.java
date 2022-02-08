@@ -73,7 +73,7 @@ public class ParticipantActivityTest extends StepsTestRunner {
 
     @Test
     public void ShouldBeAbleToStyleActionBarAndCustomizeOptionStrings() {
-        participant = new Participant(1, "123-10", "family surname", "firstName", Gender.Female, 34, InterviewStatus.DONE, date);
+        participant = new Participant(1, "123-10", "family surname", "firstName", Gender.Female, 34, InterviewStatus.DONE, date, null);
         intent.putExtra(Constants.PARTICIPANT, participant);
         ParticipantActivity participantActivity = getParticipantActivity(intent);
 
@@ -89,7 +89,7 @@ public class ParticipantActivityTest extends StepsTestRunner {
 
     @Test
     public void ShouldBeAbleToPopulateViewWithParticipantWithDoneStatus() {
-        participant = new Participant(1, "123-10", "family surname", "firstName", Gender.Female, 34, InterviewStatus.DONE, date);
+        participant = new Participant(1, "123-10", "family surname", "firstName", Gender.Female, 34, InterviewStatus.DONE, date, null);
         intent.putExtra(Constants.PARTICIPANT, participant);
         ParticipantActivity participantActivity = getParticipantActivity(intent);
 
@@ -107,7 +107,7 @@ public class ParticipantActivityTest extends StepsTestRunner {
 
     @Test
     public void ShouldBeAbleToPopulateViewWithParticipantWithRefused() {
-        participant = new Participant(1, "123-10", "family surname", "firstName", Gender.Female, 34, InterviewStatus.REFUSED, date);
+        participant = new Participant(1, "123-10", "family surname", "firstName", Gender.Female, 34, InterviewStatus.REFUSED, date, null);
         intent.putExtra(Constants.PARTICIPANT, participant);
         ParticipantActivity participantActivity = getParticipantActivity(intent);
 
@@ -125,7 +125,7 @@ public class ParticipantActivityTest extends StepsTestRunner {
 
     @Test
     public void ShouldBeAbleToPopulateViewWithParticipantWithIncomplete() {
-        participant = new Participant(1, "123-10", "family surname", "firstName", Gender.Female, 34, InterviewStatus.INCOMPLETE, date);
+        participant = new Participant(1, "123-10", "family surname", "firstName", Gender.Female, 34, InterviewStatus.INCOMPLETE, date, null);
         intent.putExtra(Constants.PARTICIPANT, participant);
         ParticipantActivity participantActivity = getParticipantActivity(intent);
 
@@ -143,7 +143,7 @@ public class ParticipantActivityTest extends StepsTestRunner {
 
     @Test
     public void ShouldBeAbleToPopulateViewWithParticipantWithNotReachable() {
-        participant = new Participant(1, "123-10", "family surname", "firstName", Gender.Female, 34, InterviewStatus.NOT_REACHABLE, date);
+        participant = new Participant(1, "123-10", "family surname", "firstName", Gender.Female, 34, InterviewStatus.NOT_REACHABLE, date, null);
         intent.putExtra(Constants.PARTICIPANT, participant);
         ParticipantActivity participantActivity = getParticipantActivity(intent);
 
@@ -171,7 +171,7 @@ public class ParticipantActivityTest extends StepsTestRunner {
         participantActivityFactory.when(() -> ParticipantActivityFactory.getMenuHandlers(Mockito.any(), Mockito.any())).thenReturn(handlers);
         Mockito.when(handler.shouldOpen(Mockito.any(Integer.class))).thenReturn(true);
 
-        participant = new Participant(1, "123-10", "family surname", "firstName", Gender.Female, 34, InterviewStatus.REFUSED, date);
+        participant = new Participant(1, "123-10", "family surname", "firstName", Gender.Female, 34, InterviewStatus.REFUSED, date, null);
         intent.putExtra(Constants.PARTICIPANT, participant);
         ParticipantActivity participantActivity = getParticipantActivity(intent);
         participantActivity.onOptionsItemSelected(Mockito.mock(MenuItem.class));
@@ -182,7 +182,7 @@ public class ParticipantActivityTest extends StepsTestRunner {
 
     @Test
     public void testOnCreateOptionsMenuShouldVerifyMenuInflate() {
-        participant = new Participant(1, "123-10", "family surname", "firstName", Gender.Female, 34, InterviewStatus.REFUSED, date);
+        participant = new Participant(1, "123-10", "family surname", "firstName", Gender.Female, 34, InterviewStatus.REFUSED, date, null);
         intent.putExtra(Constants.PARTICIPANT, participant);
         ParticipantActivity participantActivity = Mockito.spy(getParticipantActivity(intent));
 
@@ -206,7 +206,7 @@ public class ParticipantActivityTest extends StepsTestRunner {
         participantActivityFactory.when(() -> ParticipantActivityFactory.getResultHandlers(Mockito.any(), Mockito.any())).thenReturn(handlers);
         Mockito.when(handler.canHandleResult(Mockito.any(Integer.class))).thenReturn(true);
 
-        participant = new Participant(1, "123-10", "family surname", "firstName", Gender.Female, 34, InterviewStatus.REFUSED, date);
+        participant = new Participant(1, "123-10", "family surname", "firstName", Gender.Female, 34, InterviewStatus.REFUSED, date, null);
         intent.putExtra(Constants.PARTICIPANT, participant);
         ParticipantActivity participantActivity = getParticipantActivity(intent);
         participantActivity.onActivityResult(1, -1, new Intent());
@@ -227,7 +227,7 @@ public class ParticipantActivityTest extends StepsTestRunner {
         participantActivityFactory.when(() -> ParticipantActivityFactory.getCustomMenuHandler(Mockito.any(), Mockito.any())).thenReturn(handlers);
         Mockito.when(handler.shouldOpen(Mockito.any(Integer.class))).thenReturn(true);
 
-        participant = new Participant(1, "123-10", "family surname", "firstName", Gender.Female, 34, InterviewStatus.REFUSED, date);
+        participant = new Participant(1, "123-10", "family surname", "firstName", Gender.Female, 34, InterviewStatus.REFUSED, date, null);
         intent.putExtra(Constants.PARTICIPANT, participant);
         ParticipantActivity participantActivity = getParticipantActivity(intent);
         participantActivity.handleCustomMenu(Mockito.mock(View.class));
@@ -248,7 +248,7 @@ public class ParticipantActivityTest extends StepsTestRunner {
         participantActivityFactory.when(() -> ParticipantActivityFactory.getMenuPreparer(Mockito.any(), Mockito.any(), Mockito.any())).thenReturn(handlers);
         Mockito.when(handler.shouldDeactivate()).thenReturn(true);
 
-        participant = new Participant(1, "123-10", "family surname", "firstName", Gender.Female, 34, InterviewStatus.REFUSED, date);
+        participant = new Participant(1, "123-10", "family surname", "firstName", Gender.Female, 34, InterviewStatus.REFUSED, date, null);
         intent.putExtra(Constants.PARTICIPANT, participant);
         ParticipantActivity participantActivity = getParticipantActivity(intent);
         participantActivity.onPrepareOptionsMenu(Mockito.mock(Menu.class));

@@ -94,7 +94,7 @@ public class HouseholdViewWrapperTest extends StepsTestRunner {
 
     @Test
     public void ShouldUpdateHouseholdAndShouldNotUpdateGeneratedId() throws InvalidDataException {
-        Household anotherHousehold = new Household("5", "1234-10", "80503456", "", InterviewStatus.NOT_DONE, currentDate, "uniqueDevId", "Some Comments");
+        Household anotherHousehold = new Household("5", "1234-10", "80503456", "", InterviewStatus.NOT_DONE, currentDate, "uniqueDevId", "Some Comments", null);
         HouseholdViewWrapper householdViewWrapper = new HouseholdViewWrapper(activity);
         TextView nameView = ((TextView) activity.findViewById(R.id.generated_household_id));
         TextView numberView = (TextView) activity.findViewById(R.id.household_number);

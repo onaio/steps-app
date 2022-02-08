@@ -62,7 +62,7 @@ public class HouseholdSummaryActivityTest extends StepsTestRunner {
         int index = 1;
         for (Map.Entry<InterviewStatus, Integer> entry : statusCountMap.entrySet()) {
             for (int i = 0; i < entry.getValue(); i++) {
-                Household household = new Household(String.valueOf(index++), "1-" + index, "", "", entry.getKey(), "", "", "");
+                Household household = new Household(String.valueOf(index++), "1-" + index, "", "", entry.getKey(), "", "", "", null);
                 household.setServerStatus(ServerStatus.NOT_SENT);
                 household.save(db);
             }

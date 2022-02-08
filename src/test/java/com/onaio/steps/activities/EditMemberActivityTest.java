@@ -52,7 +52,7 @@ public class EditMemberActivityTest extends StepsTestRunner {
     @Before
     public void setup(){
         Intent intent = new Intent();
-        household = new Household("1","123","987654321","1", InterviewStatus.DEFERRED,"2015-12-13", "uniqueDevId", "Dummy comments");
+        household = new Household("1","123","987654321","1", InterviewStatus.DEFERRED,"2015-12-13", "uniqueDevId", "Dummy comments", null);
         member = new Member(1,"rana","manisha", Gender.Female,28, household,"123-1",false);
         intent.putExtra(Constants.HH_MEMBER, member);
         editMemberActivity = Robolectric.buildActivity(EditMemberActivity.class, intent)

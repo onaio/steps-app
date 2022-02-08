@@ -54,7 +54,7 @@ public class HouseholdListActivityTest extends StepsTestRunner {
 
     @Before
     public void Setup(){
-        Household household = new Household("1", "household Name", "123456789", "1", InterviewStatus.NOT_DONE, "2015-12-13", "uniqueDevId", "Dummy comments");
+        Household household = new Household("1", "household Name", "123456789", "1", InterviewStatus.NOT_DONE, "2015-12-13", "uniqueDevId", "Dummy comments", null);
         household.setServerStatus(ServerStatus.NOT_SENT);
         Member member = new Member(1, "rana", "manisha", Gender.Female, 28, household, "123-1", false);
         DatabaseHelper db = new DatabaseHelper(ApplicationProvider.getApplicationContext());

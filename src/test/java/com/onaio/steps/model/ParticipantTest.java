@@ -21,7 +21,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import android.content.ContentValues;
-import android.database.Cursor;
 
 import com.onaio.steps.StepsTestRunner;
 import com.onaio.steps.helper.Constants;
@@ -47,14 +46,12 @@ public class ParticipantTest extends StepsTestRunner {
     @Mock
     private DatabaseHelper db;
     private Participant participant;
-    private Cursor cursor;
 
 
     @Before
     public void Setup(){
-        cursor = Mockito.mock(Cursor.class);
         db = Mockito.mock(DatabaseHelper.class);
-        participant = new Participant(1, "123-10", "family surname", "firstName", Gender.Female, 34, InterviewStatus.DONE, currentDate);
+        participant = new Participant(1, "123-10", "family surname", "firstName", Gender.Female, 34, InterviewStatus.DONE, currentDate, null);
     }
 
     @Test

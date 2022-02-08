@@ -52,7 +52,7 @@ public class ParticipantActivityFactoryTest extends StepsTestRunner {
 
     @Before
     public void Setup() {
-        participant = new Participant("123-100", "surname", "firstName", Gender.Female, 33, InterviewStatus.NOT_DONE, "2015-10-10");
+        participant = new Participant("123-100", "surname", "firstName", Gender.Female, 33, InterviewStatus.NOT_DONE, "2015-10-10", null);
         Intent intent = new Intent().putExtra(Constants.PARTICIPANT, participant);
         participantActivity = Robolectric.buildActivity(ParticipantActivity.class, intent).create().get();
     }

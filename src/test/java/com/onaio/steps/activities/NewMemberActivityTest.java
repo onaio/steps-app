@@ -53,7 +53,7 @@ public class NewMemberActivityTest extends StepsTestRunner {
 
     @Before
     public void setup() {
-        household = new Household("2", "Any HouseholdName", "123456789", "", InterviewStatus.SELECTION_NOT_DONE, currentDate, "uniqueDevId", "Dummy comments");
+        household = new Household("2", "Any HouseholdName", "123456789", "", InterviewStatus.SELECTION_NOT_DONE, currentDate, "uniqueDevId", "Dummy comments", null);
         Intent intent = new Intent();
         intent.putExtra(Constants.HH_HOUSEHOLD, household);
         newMemberActivity = Robolectric.buildActivity(NewMemberActivity.class, intent)

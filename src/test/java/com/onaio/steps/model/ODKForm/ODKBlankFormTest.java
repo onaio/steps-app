@@ -49,9 +49,4 @@ public class ODKBlankFormTest extends StepsTestRunner {
         assertNotEquals(form.getUri().toString(), uriWithoutID);
     }
 
-    @Test
-    public void ShouldGetTheMediaPath(){
-        Assert.assertEquals("path",form.getPath());
-    }
-
 }

@@ -72,7 +72,7 @@ public class HouseholdTest extends StepsTestRunner {
     public void Setup(){
         db = Mockito.mock(DatabaseHelper.class);
         cursor = Mockito.mock(Cursor.class);
-        household = new Household(householdName, phoneNumber, interviewStatus, currentDate, uniqueDeviceId, comments);
+        household = new Household(householdName, phoneNumber, interviewStatus, currentDate, uniqueDeviceId, comments, null);
         household.setServerStatus(ServerStatus.NOT_SENT);
     }
 
@@ -103,7 +103,7 @@ public class HouseholdTest extends StepsTestRunner {
     @Test
     public void ShouldBeAbleToUpdateTheHousehold(){
         String selectedMember = "3";
-        household = new Household(String.valueOf(householdId),householdName, phoneNumber, selectedMember, interviewStatus, currentDate, "uniqueDevId",comments);
+        household = new Household(String.valueOf(householdId),householdName, phoneNumber, selectedMember, interviewStatus, currentDate, "uniqueDevId",comments, null);
         household.setServerStatus(ServerStatus.NOT_SENT);
         stubDbForHousehold();
 
@@ -142,12 +142,12 @@ public class HouseholdTest extends StepsTestRunner {
     @Test
     public void ShouldSortTheHouseholdsByStatus(){
         ArrayList<Household> households = new ArrayList<Household>();
-        households.add(new Household("name 1","123", InterviewStatus.SELECTION_NOT_DONE,"12-12-2014", "uniqueDevId",""));
-        households.add(new Household("name 2","123", InterviewStatus.DEFERRED,"12-12-2014", "uniqueDevId",""));
-        households.add(new Household("name 3","123", InterviewStatus.DONE,"12-12-2014", "uniqueDevId",""));
-        households.add(new Household("name 4","123", InterviewStatus.INCOMPLETE,"12-12-2014", "uniqueDevId",""));
-        households.add(new Household("name 5","123", InterviewStatus.NOT_DONE,"12-12-2014", "uniqueDevId",""));
-        households.add(new Household("name 6","123", InterviewStatus.REFUSED,"12-12-2014", "uniqueDevId",""));
+        households.add(new Household("name 1","123", InterviewStatus.SELECTION_NOT_DONE,"12-12-2014", "uniqueDevId","", null));
+        households.add(new Household("name 2","123", InterviewStatus.DEFERRED,"12-12-2014", "uniqueDevId","", null));
+        households.add(new Household("name 3","123", InterviewStatus.DONE,"12-12-2014", "uniqueDevId","", null));
+        households.add(new Household("name 4","123", InterviewStatus.INCOMPLETE,"12-12-2014", "uniqueDevId","", null));
+        households.add(new Household("name 5","123", InterviewStatus.NOT_DONE,"12-12-2014", "uniqueDevId","", null));
+        households.add(new Household("name 6","123", InterviewStatus.REFUSED,"12-12-2014", "uniqueDevId","", null));
 
         Collections.sort(households);
 
@@ -189,7 +189,7 @@ public class HouseholdTest extends StepsTestRunner {
     @Test
     public void ShouldGetNonDeletedNumberOfMembersFromDatabase(){
         int numberOfMembers = 2;
-        Household household = new Household(String.valueOf(householdId), householdName, phoneNumber,"", InterviewStatus.SELECTION_NOT_DONE, currentDate, "uniqueDevId",comments);
+        Household household = new Household(String.valueOf(householdId), householdName, phoneNumber,"", InterviewStatus.SELECTION_NOT_DONE, currentDate, "uniqueDevId",comments, null);
         stubDbForMember(numberOfMembers);
 
         assertEquals(numberOfMembers, household.numberOfNonDeletedMembers(db));
@@ -201,7 +201,7 @@ public class HouseholdTest extends StepsTestRunner {
     public void ShouldGetUnselectedNumberOfMembersFromDatabaseWhenThereIsSelectedMember(){
         int numberOfMembers = 2;
         String selectedMemberId = "3";
-        Household household = new Household(String.valueOf(householdId), householdName, phoneNumber, selectedMemberId, InterviewStatus.SELECTION_NOT_DONE, currentDate, "uniqueDevId",comments);
+        Household household = new Household(String.valueOf(householdId), householdName, phoneNumber, selectedMemberId, InterviewStatus.SELECTION_NOT_DONE, currentDate, "uniqueDevId",comments, null);
         stubDbForMember(numberOfMembers);
 
         assertEquals(numberOfMembers, household.numberOfNonSelectedMembers(db));
@@ -212,7 +212,7 @@ public class HouseholdTest extends StepsTestRunner {
     @Test
     public void ShouldGetNonDeletedMembersForUnselectedNumberOfMembersFromDatabaseWhenThereIsNoSelectedMember(){
         int numberOfMembers = 2;
-        Household household = new Household(String.valueOf(householdId), householdName, phoneNumber,null, InterviewStatus.SELECTION_NOT_DONE, currentDate, "uniqueDevId",comments);
+        Household household = new Household(String.valueOf(householdId), householdName, phoneNumber,null, InterviewStatus.SELECTION_NOT_DONE, currentDate, "uniqueDevId",comments, null);
         stubDbForMember(numberOfMembers);
 
         assertEquals(numberOfMembers, household.numberOfNonSelectedMembers(db));
@@ -223,7 +223,7 @@ public class HouseholdTest extends StepsTestRunner {
     @Test
     public void ShouldGetAllNumberOfMembersFromDatabase(){
         int numberOfMembers = 1;
-        Household household = new Household(String.valueOf(householdId), householdName, phoneNumber,"", InterviewStatus.SELECTION_NOT_DONE, currentDate, "uniqueDevId",comments);
+        Household household = new Household(String.valueOf(householdId), householdName, phoneNumber,"", InterviewStatus.SELECTION_NOT_DONE, currentDate, "uniqueDevId",comments, null);
         stubDbForMember(numberOfMembers);
 
         assertEquals(numberOfMembers, household.numberOfMembers(db));
@@ -235,7 +235,7 @@ public class HouseholdTest extends StepsTestRunner {
     public void ShouldGetAllNonDeletedMember(){
         long memberId = 1L;
         int numberOfMembers = 1;
-        Household household = new Household(String.valueOf(householdId), householdName, phoneNumber,"", InterviewStatus.SELECTION_NOT_DONE, currentDate, "uniqueDevId",comments);
+        Household household = new Household(String.valueOf(householdId), householdName, phoneNumber,"", InterviewStatus.SELECTION_NOT_DONE, currentDate, "uniqueDevId",comments, null);
         stubDbForMember(numberOfMembers);
         new CursorStub(cursor).stubCursorForMember(memberId, memberFamilyName, memberFirstName, memberGender, String.valueOf(memberAge), String.valueOf(householdId), Member.NOT_DELETED_INT, householdName + "-1");
 
@@ -251,7 +251,7 @@ public class HouseholdTest extends StepsTestRunner {
         long memberId = 1L;
         int numberOfMembers = 1;
         String selectedMemberId = "2";
-        Household household = new Household(String.valueOf(householdId), householdName, phoneNumber, selectedMemberId, InterviewStatus.SELECTION_NOT_DONE, currentDate, "uniqueDevId",comments);
+        Household household = new Household(String.valueOf(householdId), householdName, phoneNumber, selectedMemberId, InterviewStatus.SELECTION_NOT_DONE, currentDate, "uniqueDevId",comments, null);
         stubDbForMember(numberOfMembers);
         new CursorStub(cursor).stubCursorForMember(memberId, memberFamilyName, memberFirstName, memberGender, String.valueOf(memberAge), String.valueOf(householdId), Member.NOT_DELETED_INT, householdName + "-1");
 
@@ -266,7 +266,7 @@ public class HouseholdTest extends StepsTestRunner {
     public void ShouldGetAllUnDeletedMembersForUnSelectedMembersWhenThereIsNoSelectedMember(){
         long memberId = 1L;
         int numberOfMembers = 1;
-        Household household = new Household(String.valueOf(householdId), householdName, phoneNumber,null, InterviewStatus.SELECTION_NOT_DONE, currentDate, "uniqueDevId",comments);
+        Household household = new Household(String.valueOf(householdId), householdName, phoneNumber,null, InterviewStatus.SELECTION_NOT_DONE, currentDate, "uniqueDevId",comments, null);
         stubDbForMember(numberOfMembers);
         new CursorStub(cursor).stubCursorForMember(memberId, memberFamilyName, memberFirstName, memberGender, String.valueOf(memberAge), String.valueOf(householdId), Member.NOT_DELETED_INT, householdName + "-1");
 
@@ -281,7 +281,7 @@ public class HouseholdTest extends StepsTestRunner {
     public void ShouldGetAllMember(){
         long memberId = 1L;
         int numberOfMembers = 1;
-        Household household = new Household(String.valueOf(householdId), householdName, phoneNumber,"", InterviewStatus.SELECTION_NOT_DONE, currentDate, "uniqueDevId",comments);
+        Household household = new Household(String.valueOf(householdId), householdName, phoneNumber,"", InterviewStatus.SELECTION_NOT_DONE, currentDate, "uniqueDevId",comments, null);
         stubDbForMember(numberOfMembers);
         new CursorStub(cursor).stubCursorForMember(memberId,memberFamilyName,memberFirstName,memberGender,String.valueOf(memberAge),String.valueOf(householdId), Member.DELETED_INT, householdName + "-1");
 
@@ -296,7 +296,7 @@ public class HouseholdTest extends StepsTestRunner {
     public void ShouldFindTheMemberById(){
         long memberId = 1L;
         int numberOfMembers = 1;
-        Household household = new Household(String.valueOf(householdId), householdName, phoneNumber,"", InterviewStatus.SELECTION_NOT_DONE, currentDate, "uniqueDevId",comments);
+        Household household = new Household(String.valueOf(householdId), householdName, phoneNumber,"", InterviewStatus.SELECTION_NOT_DONE, currentDate, "uniqueDevId",comments, null);
         stubDbForMember(numberOfMembers);
         new CursorStub(cursor).stubCursorForMember(memberId, memberFamilyName, memberFirstName, memberGender, String.valueOf(memberAge), String.valueOf(householdId), Member.NOT_DELETED_INT, householdName + "-1");
 

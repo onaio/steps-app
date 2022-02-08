@@ -45,7 +45,7 @@ public class EditHouseholdActivityTest extends StepsTestRunner {
 
     @Before
     public void setup() {
-        household = new Household("1", "household Name", "123456789", "2", InterviewStatus.NOT_DONE, "2015-12-13", "uniquedevid", "Dummy comments");
+        household = new Household("1", "household Name", "123456789", "2", InterviewStatus.NOT_DONE, "2015-12-13", "uniquedevid", "Dummy comments", null);
         household.setServerStatus(ServerStatus.NOT_SENT);
         Intent intent = new Intent();
         intent.putExtra(Constants.HH_HOUSEHOLD, household);

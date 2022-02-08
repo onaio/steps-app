@@ -20,6 +20,8 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.View;
 import android.widget.Button;
 
@@ -161,7 +163,7 @@ public class TakeSurveyHandlerTest extends StepsTestRunner {
     public void ShouldDoNothingIfNoSavedFormIsFound(){
         TakeSurveyHandlerStub surveyHandler = new TakeSurveyHandlerStub(householdActivityMock, householdMock, savedForms);
 
-        surveyHandler.handleResult(null, Activity.RESULT_OK);
+        surveyHandler.handleResult(new Intent().setData(Mockito.mock(Uri.class)), Activity.RESULT_OK);
 
         Mockito.verify(householdMock,Mockito.never()).update(Mockito.any(DatabaseHelper.class));
     }
@@ -171,7 +173,7 @@ public class TakeSurveyHandlerTest extends StepsTestRunner {
         mockSavedForm(savedForms, Constants.ODK_FORM_COMPLETE_STATUS);
         TakeSurveyHandlerStub surveyHandler = new TakeSurveyHandlerStub(householdActivityMock, householdMock, savedForms);
 
-        surveyHandler.handleResult(null, Activity.RESULT_OK);
+        surveyHandler.handleResult(new Intent().setData(Mockito.mock(Uri.class)), Activity.RESULT_OK);
 
         Mockito.verify(householdMock).setStatus(InterviewStatus.DONE);
         Mockito.verify(householdMock).update(Mockito.any(DatabaseHelper.class));
@@ -182,7 +184,7 @@ public class TakeSurveyHandlerTest extends StepsTestRunner {
         mockSavedForm(savedForms, "incomplete");
         TakeSurveyHandlerStub surveyHandler = new TakeSurveyHandlerStub(householdActivityMock, householdMock, savedForms);
 
-        surveyHandler.handleResult(null, Activity.RESULT_OK);
+        surveyHandler.handleResult(new Intent().setData(Mockito.mock(Uri.class)), Activity.RESULT_OK);
 
         Mockito.verify(householdMock).setStatus(InterviewStatus.INCOMPLETE);
         Mockito.verify(householdMock).update(Mockito.any(DatabaseHelper.class));
@@ -212,7 +214,7 @@ public class TakeSurveyHandlerTest extends StepsTestRunner {
         }
 
         @Override
-        protected List<IForm> getSavedForms() {
+        protected List<IForm> getSavedForms(Intent data) {
             return savedForms;
         }
     }

@@ -59,7 +59,7 @@ public class HouseholdActivityFactoryTest extends StepsTestRunner {
 
     @Before
     public void Setup(){
-        household = new Household("name", "123", InterviewStatus.SELECTION_NOT_DONE, "12-12-2015", "testDeviceId","Dummy comments");
+        household = new Household("name", "123", InterviewStatus.SELECTION_NOT_DONE, "12-12-2015", "testDeviceId","Dummy comments", null);
         Intent intent = new Intent().putExtra(Constants.HH_HOUSEHOLD, household);
         activity = Robolectric.buildActivity(HouseholdActivity.class, intent).create().get();
     }
