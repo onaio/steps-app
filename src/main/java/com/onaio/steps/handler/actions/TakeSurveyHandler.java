@@ -75,8 +75,7 @@ public class TakeSurveyHandler implements IMenuHandler, IMenuPreparer, IActivity
             new CustomDialog().notify(activity, CustomDialog.EmptyListener, R.string.error_title, R.string.form_not_present);
         } catch (AppNotInstalledException e) {
             new CustomDialog().notify(activity, CustomDialog.EmptyListener, R.string.error_title, R.string.odk_app_not_installed);
-        } catch (IOException e) {
-            new Logger().log(e, "Failed to save csv file while opening the ODK Form");
+        } catch (Exception e) {
             new CustomDialog().notify(activity, CustomDialog.EmptyListener, R.string.error_title, R.string.something_went_wrong_try_again);
         }
 
