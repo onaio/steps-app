@@ -100,7 +100,7 @@ public class EditMemberActivityHandlerTest extends StepsTestRunner {
     @Test
     public void ShouldInactivateEditOptionForSelectedMember(){
         Menu menuMock = Mockito.mock(Menu.class);
-        Household household = new Household("1234", "any name", "123456789", "1", InterviewStatus.SELECTION_NOT_DONE, "", "uniqueDevId","Dummy comments");
+        Household household = new Household("1234", "any name", "123456789", "1", InterviewStatus.SELECTION_NOT_DONE, "", "uniqueDevId","Dummy comments", null);
         when(memberMock.getHousehold()).thenReturn(household);
         when(memberMock.getId()).thenReturn(1);
 
@@ -111,7 +111,7 @@ public class EditMemberActivityHandlerTest extends StepsTestRunner {
     public void ShouldInactivateWhenHouseholdIsSurveyed(){
         Menu menuMock = Mockito.mock(Menu.class);
         when(memberMock.getId()).thenReturn(1);
-        when(memberMock.getHousehold()).thenReturn(new Household("12","name","321","", InterviewStatus.DONE,"12-12-2001", "uniqueDevId","Dummy comments"));
+        when(memberMock.getHousehold()).thenReturn(new Household("12","name","321","", InterviewStatus.DONE,"12-12-2001", "uniqueDevId","Dummy comments", null));
         Assert.assertTrue(editMemberActivityHandler.withMenu(menuMock).shouldDeactivate());
     }
 
@@ -119,7 +119,7 @@ public class EditMemberActivityHandlerTest extends StepsTestRunner {
     public void ShouldInactivateWhenSurveyIsRefused(){
         Menu menuMock = Mockito.mock(Menu.class);
         when(memberMock.getId()).thenReturn(1);
-        when(memberMock.getHousehold()).thenReturn(new Household("12","name","321","", InterviewStatus.REFUSED,"12-12-2001", "uniqueDevId","Dummy comments"));
+        when(memberMock.getHousehold()).thenReturn(new Household("12","name","321","", InterviewStatus.REFUSED,"12-12-2001", "uniqueDevId","Dummy comments", null));
         Assert.assertTrue(editMemberActivityHandler.withMenu(menuMock).shouldDeactivate());
 
     }

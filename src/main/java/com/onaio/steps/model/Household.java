@@ -44,7 +44,8 @@ public class Household implements Serializable,Comparable<Household> {
     public static final String COMMENTS = "Comments";
     public static final String SERVER_STATUS = "Server_Status";
     public static final String UNIQUE_DEVICE_ID = "unique_device_id";
-    public static final String TABLE_CREATE_QUERY = String.format("CREATE TABLE %s(%s INTEGER PRIMARY KEY, %s TEXT, %s TEXT, %s INTEGER, %s TEXT, %s TEXT, %s TEXT, %s TEXT, %s TEXT)", TABLE_NAME, ID, NAME, PHONE_NUMBER, SELECTED_MEMBER_ID,STATUS, CREATED_AT ,COMMENTS, UNIQUE_DEVICE_ID, SERVER_STATUS);
+    public static final String ODK_FORM_ID = "odk_form_id";
+    public static final String TABLE_CREATE_QUERY = String.format("CREATE TABLE %s(%s INTEGER PRIMARY KEY, %s TEXT, %s TEXT, %s INTEGER, %s TEXT, %s TEXT, %s TEXT, %s TEXT, %s TEXT, %s TEXT)", TABLE_NAME, ID, NAME, PHONE_NUMBER, SELECTED_MEMBER_ID,STATUS, CREATED_AT ,COMMENTS, UNIQUE_DEVICE_ID, SERVER_STATUS, ODK_FORM_ID);
 
     String id;
     String name;
@@ -56,8 +57,9 @@ public class Household implements Serializable,Comparable<Household> {
     String uniqueDeviceId;
     Member selectedMember;
     ServerStatus serverStatus;
+    String odkFormId;
     
-    public Household(String id, String name, String phoneNumber, String selectedMemberId, InterviewStatus status, String createdAt, String uniqueDeviceId, String comments) {
+    public Household(String id, String name, String phoneNumber, String selectedMemberId, InterviewStatus status, String createdAt, String uniqueDeviceId, String comments, String odkFormId) {
         this.id = id;
         this.name = name;
         this.phoneNumber = phoneNumber;
@@ -65,16 +67,18 @@ public class Household implements Serializable,Comparable<Household> {
         this.status = status;
         this.createdAt=createdAt;
         this.uniqueDeviceId = uniqueDeviceId;
-        this.comments=comments;
+        this.comments = comments;
+        this.odkFormId = odkFormId;
     }
 
-    public Household(String name, String phoneNumber, InterviewStatus status, String createdAt, String uniqueDeviceId, String comments) {
+    public Household(String name, String phoneNumber, InterviewStatus status, String createdAt, String uniqueDeviceId, String comments, String odkFormId) {
         this.name= name;
         this.phoneNumber = phoneNumber;
         this.status = status;
-        this.createdAt=createdAt;
+        this.createdAt = createdAt;
         this.uniqueDeviceId = uniqueDeviceId;
         this.comments = comments;
+        this.odkFormId = odkFormId;
     }
 
     public void setPhoneNumber(String phoneNumber) {
@@ -151,6 +155,14 @@ public class Household implements Serializable,Comparable<Household> {
         this.serverStatus = serverStatus;
     }
 
+    public String getOdkFormId() {
+        return odkFormId;
+    }
+
+    public void setOdkFormId(String odkFormId) {
+        this.odkFormId = odkFormId;
+    }
+
     public long save(DatabaseHelper db){
         ContentValues householdValues = populateWithBasicDetails();
         householdValues.put(CREATED_AT, createdAt);
@@ -175,6 +187,7 @@ public class Household implements Serializable,Comparable<Household> {
         values.put(STATUS,status.toString());
         values.put(UNIQUE_DEVICE_ID, getUniqueDeviceId());
         values.put(SERVER_STATUS, getServerStatus().toString());
+        values.put(ODK_FORM_ID, odkFormId);
         return values;
     }
 

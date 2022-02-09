@@ -70,11 +70,11 @@
         <activity
             android:name=".activities.NewParticipantActivity"
             android:label="New Participant"
-            android:theme="@android:style/Theme.Holo.Light.NoActionBar" />
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".activities.EditParticipantActivity"
             android:label="Edit Participant"
-            android:theme="@android:style/Theme.Holo.Light.NoActionBar" />
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".activities.ParticipantActivity"
             android:label="Participant" />
@@ -95,4 +95,7 @@
 
     </application>
 
+    <queries>
+        <package android:name="org.odk.collect.android" />
+    </queries>
 </manifest>

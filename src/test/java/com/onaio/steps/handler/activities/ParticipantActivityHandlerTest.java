@@ -49,7 +49,7 @@ public class ParticipantActivityHandlerTest extends StepsTestRunner {
     public void setup(){
         date = new SimpleDateFormat(Constants.DATE_FORMAT, Locale.ENGLISH).format(new Date());
         participantListActivity = Robolectric.setupActivity(ParticipantListActivity.class);
-        participant = new Participant(1, "123-10", "family surname", "firstName", Gender.Female, 34, InterviewStatus.DONE, date);
+        participant = new Participant(1, "123-10", "family surname", "firstName", Gender.Female, 34, InterviewStatus.DONE, date, null);
         participantActivityHandler = new ParticipantActivityHandler(participantListActivity, participant);
     }
 

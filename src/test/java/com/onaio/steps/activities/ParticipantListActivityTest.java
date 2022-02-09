@@ -50,8 +50,8 @@ public class ParticipantListActivityTest extends StepsTestRunner {
 
     @Before
     public void setUp(){
-        participantA = new Participant("123-10", "surname", "firstName",Gender.Female, 24, InterviewStatus.NOT_DONE, currentDate);
-        participantB = new Participant("123-10", "surname", "firstName",Gender.Female, 24, InterviewStatus.NOT_DONE, currentDate);
+        participantA = new Participant("123-10", "surname", "firstName",Gender.Female, 24, InterviewStatus.NOT_DONE, currentDate, null);
+        participantB = new Participant("123-10", "surname", "firstName",Gender.Female, 24, InterviewStatus.NOT_DONE, currentDate, null);
         DatabaseHelper db = new DatabaseHelper(ApplicationProvider.getApplicationContext());
         participantA.save(db);
         participantB.save(db);

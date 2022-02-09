@@ -51,7 +51,7 @@ public class HouseholdActivityHandlerTest extends StepsTestRunner {
 
     @Test
     public void ShouldStartNewMemberActivityIfHouseholdIsNotNull(){
-        household = new Household("2", "Any HouseholdName", "123456789", "", InterviewStatus.SELECTION_NOT_DONE, currentDate, "uniqueDevId","Dummy comments");
+        household = new Household("2", "Any HouseholdName", "123456789", "", InterviewStatus.SELECTION_NOT_DONE, currentDate, "uniqueDevId","Dummy comments", null);
         householdActivityHandler = new HouseholdActivityHandler(householdListActivity, household);
         householdActivityHandler.open();
 

@@ -48,7 +48,7 @@ public class HouseholdViewWrapper {
         EditText commentsView = (EditText) activity.findViewById(commentsViewId);
         String comments = commentsView.getText().toString();
         String uniqueDeviceId = Device.getUniqueDeviceId(activity);
-        Household household = new Household(nameView.getText().toString(), phoneNumber, InterviewStatus.EMPTY_HOUSEHOLD, currentDate, uniqueDeviceId,comments);
+        Household household = new Household(nameView.getText().toString(), phoneNumber, InterviewStatus.EMPTY_HOUSEHOLD, currentDate, uniqueDeviceId,comments, null);
         household.setServerStatus(ServerStatus.NOT_SENT);
         return household;
     }

@@ -41,7 +41,6 @@ public class ODKSavedForm implements IForm{
     String displayName;
     String jrVersion;
 
-
     protected ODKSavedForm(String id, String jrFormId, String displayName, String jrVersion, String instanceFilePath, String status) {
         _id = id;
         this.jrFormId = jrFormId;
@@ -55,18 +54,14 @@ public class ODKSavedForm implements IForm{
         return Uri.parse(URI_STRING + "/" + _id);
     }
 
-    @Override
-    public String getPath() {
-        return instanceFilePath;
-    }
-
-    public static <T extends IForm> List<T> findAll(AppCompatActivity activity, String displayName) throws AppNotInstalledException {
+    public static <T extends IForm> List<T> findAll(AppCompatActivity activity, String odkFormId) throws AppNotInstalledException {
         ContentProviderClient formsContentProvider = activity.getContentResolver().acquireContentProviderClient(ODKSavedForm.URI);
         List<ODKSavedForm> forms = new ArrayList<>();
+        if (odkFormId == null) return (List<T>) forms;
         try {
             if(formsContentProvider==null) throw new AppNotInstalledException();
-            Cursor cursor = formsContentProvider.query(ODKSavedForm.URI, null, "displayName = ?", new String[]{displayName}, null);
-            if(cursor.moveToFirst()){
+            Cursor cursor = formsContentProvider.query(ODKSavedForm.URI, null, "_id = ?", new String[]{odkFormId}, null);
+            if(cursor != null && cursor.moveToFirst()){
                 do{
                     String id = cursor.getString(cursor.getColumnIndex("_id"));
                     String jrFormId = cursor.getString(cursor.getColumnIndex("jrFormId"));
@@ -85,5 +80,9 @@ public class ODKSavedForm implements IForm{
 
     public String getStatus() {
         return status;
+    }
+
+    public String getId() {
+        return _id;
     }
 }

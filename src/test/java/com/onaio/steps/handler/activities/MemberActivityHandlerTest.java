@@ -53,7 +53,7 @@ public class MemberActivityHandlerTest extends StepsTestRunner {
 
     @Test
     public void ShouldStartMemberActivityWhenMemberIsNotNull(){
-        Household household = new Household("2", "Any HouseholdName", "123456789", "", InterviewStatus.SELECTION_NOT_DONE, currentDate, "uniqueDevId","Dummy comments");
+        Household household = new Household("2", "Any HouseholdName", "123456789", "", InterviewStatus.SELECTION_NOT_DONE, currentDate, "uniqueDevId","Dummy comments", null);
         member = new Member("Rana", "Nikhil", Gender.Female, 20, household, false);
         memberActivityHandler = new MemberActivityHandler(householdActivity, member);
 

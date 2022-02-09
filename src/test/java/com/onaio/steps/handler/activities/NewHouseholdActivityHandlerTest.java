@@ -127,7 +127,7 @@ public class NewHouseholdActivityHandlerTest extends StepsTestRunner {
     @Test
     public void ShouldHandleResultAndStartHouseholdActivityForResultCodeOk(){
         Intent intent = new Intent();
-        Household name = new Household("name", "123321412312", InterviewStatus.SELECTION_NOT_DONE, "123", "testDeviceId","Dummy comments");
+        Household name = new Household("name", "123321412312", InterviewStatus.SELECTION_NOT_DONE, "123", "testDeviceId","Dummy comments", null);
         name.setServerStatus(ServerStatus.NOT_SENT);
         name.save(new DatabaseHelper(householdListActivity));
         intent.putExtra(Constants.HH_HOUSEHOLD,name);

@@ -43,7 +43,7 @@ public class ReElectReasonTest extends StepsTestRunner {
         db = Mockito.mock(DatabaseHelper.class);
         String date = new SimpleDateFormat(Constants.DATE_FORMAT, Locale.ENGLISH).format(new Date());
         String reason = " ";
-        Household household = new Household("1", "Any Household", "123456789", "", InterviewStatus.SELECTION_NOT_DONE, date, "uniqueDevId", "Dummy comments");
+        Household household = new Household("1", "Any Household", "123456789", "", InterviewStatus.SELECTION_NOT_DONE, date, "uniqueDevId", "Dummy comments", null);
         reElectReason = new ReElectReason(reason, household);
     }
 

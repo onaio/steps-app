@@ -88,6 +88,6 @@ public class HouseholdAdapterTest extends StepsTestRunner {
     }*/
 
     private Household getHousehold() {
-        return new Household(ID, NAME, PHONE_NUMBER, SELECTED_MEMBER_ID, STATUS, CREATED_AT, UNIQUE_DEVICE_ID, COMMENTS);
+        return new Household(ID, NAME, PHONE_NUMBER, SELECTED_MEMBER_ID, STATUS, CREATED_AT, UNIQUE_DEVICE_ID, COMMENTS, null);
     }
 }

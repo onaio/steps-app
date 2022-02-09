@@ -59,7 +59,7 @@ public class ParticipantViewWrapper extends MemberViewWrapper {
             throw new InvalidDataException(activity, getStringValue(R.string.participant), errorFields);
         }
         String currentDate = new SimpleDateFormat(Constants.DATE_FORMAT, Locale.ENGLISH).format(new Date());
-        return new Participant(participantId, surname, firstName, gender, Integer.parseInt(ageString), InterviewStatus.NOT_DONE, currentDate);
+        return new Participant(participantId, surname, firstName, gender, Integer.parseInt(ageString), InterviewStatus.NOT_DONE, currentDate, null);
     }
 
     public Participant updateFromView(Participant participant) throws InvalidDataException {
@@ -72,7 +72,7 @@ public class ParticipantViewWrapper extends MemberViewWrapper {
         validate(participantId, surname, firstName, gender, ageString);
         if (!errorFields.isEmpty())
             throw new InvalidDataException(activity, getStringValue(R.string.participant), errorFields);
-        return new Participant(participant.getId(),participantId, surname, firstName, gender, Integer.parseInt(ageString), participant.getStatus(),participant.getCreatedAt());
+        return new Participant(participant.getId(),participantId, surname, firstName, gender, Integer.parseInt(ageString), participant.getStatus(),participant.getCreatedAt(), participant.getOdkFormId());
     }
     public void updateView(Participant participant){
         setParticipantId(participant.getParticipantID());

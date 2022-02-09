@@ -56,7 +56,7 @@ public class NewParticipantActivityTest extends StepsTestRunner {
     public void setup() {
         Intent intent = new Intent();
         date = new SimpleDateFormat(Constants.DATE_FORMAT, Locale.ENGLISH).format(new Date());
-        participant = new Participant(1, "123-10", "family surname", "firstName", Gender.Female, 34, InterviewStatus.DONE, date);
+        participant = new Participant(1, "123-10", "family surname", "firstName", Gender.Female, 34, InterviewStatus.DONE, date, null);
         intent.putExtra(Constants.PARTICIPANT, participant);
         newParticipantActivity = Robolectric.buildActivity(NewParticipantActivity.class, intent)
                 .create()
