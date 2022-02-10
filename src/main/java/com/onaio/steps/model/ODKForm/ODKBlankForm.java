@@ -62,10 +62,10 @@ public class ODKBlankForm implements IForm{
 
     public static List<IForm> get(AppCompatActivity activity, String odkFormId) throws AppNotInstalledException {
         ContentProviderClient formsContentProvider = activity.getContentResolver().acquireContentProviderClient(ODKBlankForm.URI);
-        ArrayList<IForm> forms = new ArrayList<IForm>();
+        ArrayList<IForm> forms = new ArrayList<>();
         try {
             if(formsContentProvider==null) throw new AppNotInstalledException();
-            Cursor cursor = formsContentProvider.query(ODKBlankForm.URI, null, "jrFormId = ?", new String[]{odkFormId}, null);
+            Cursor cursor = formsContentProvider.query(ODKBlankForm.URI, null, "jrFormId = ? OR displayName = ?", new String[]{odkFormId, odkFormId}, null);
             if(cursor != null && cursor.moveToFirst()){
                 do{
                     String id = cursor.getString(cursor.getColumnIndex("_id"));
