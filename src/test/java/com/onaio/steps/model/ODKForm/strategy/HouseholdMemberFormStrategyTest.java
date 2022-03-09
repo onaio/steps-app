@@ -36,11 +36,8 @@ import java.util.List;
 
 @Config(shadows = {ShadowDatabaseHelper.class})
 public class HouseholdMemberFormStrategyTest extends StepsTestRunner {
-    private FileUtil fileUtilMock;
     private HouseholdActivity householdActivity;
-    private Member selectedMember;
     private Household householdMock;
-    private ODKForm odkForm;
     private IForm blankFormMock;
 
     private final int HHID_KEY = 1;
@@ -66,14 +63,14 @@ public class HouseholdMemberFormStrategyTest extends StepsTestRunner {
     }
 
     private void stubFileUtil() {
-        fileUtilMock = Mockito.mock(FileUtil.class);
+        FileUtil fileUtilMock = Mockito.mock(FileUtil.class);
         Mockito.when(fileUtilMock.withData(Mockito.any(String[].class))).thenReturn(fileUtilMock);
         Mockito.when(fileUtilMock.withHeader(Mockito.any(String[].class))).thenReturn(fileUtilMock);
     }
 
     private void stubHousehold() {
         householdMock = Mockito.mock(Household.class);
-        selectedMember = new Member(HHID_KEY, SURNAME, FIRST_NAME, GENDER, AGE, householdMock, MEMBER_ID, false);
+        Member selectedMember = new Member(HHID_KEY, SURNAME, FIRST_NAME, GENDER, AGE, householdMock, MEMBER_ID, false);
         Mockito.when(householdMock.getSelectedMember(Mockito.any(DatabaseHelper.class))).thenReturn(selectedMember);
         Mockito.when(householdMock.getStatus()).thenReturn(InterviewStatus.SELECTION_NOT_DONE);
     }
@@ -86,7 +83,7 @@ public class HouseholdMemberFormStrategyTest extends StepsTestRunner {
         Uri blankFormURI = Uri.parse("uri");
         Mockito.when(householdMock.getName()).thenReturn(householdName);
         Mockito.when(blankFormMock.getUri()).thenReturn(blankFormURI);
-        odkForm = new ODKForm(blankFormMock, null);
+        ODKForm odkForm = new ODKForm(blankFormMock, null);
 
         odkForm.open(new HouseholdMemberFormStrategy(householdMock, DEVICE_ID), householdActivity, RequestCode.SURVEY.getCode());
 
@@ -98,8 +95,6 @@ public class HouseholdMemberFormStrategyTest extends StepsTestRunner {
         FileUtil fileUtil = new FileUtil();
         List<String[]> lines = fileUtil.readFile(absolutePath);
         String[] csvExpectedValues = new String[]{
-                String.valueOf(HHID_KEY),
-                null,
                 MEMBER_ID,
                 SURNAME,
                 FIRST_NAME,

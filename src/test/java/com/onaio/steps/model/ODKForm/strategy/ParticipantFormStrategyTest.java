@@ -86,8 +86,6 @@ public class ParticipantFormStrategyTest extends StepsTestRunner {
         FileUtil fileUtil = new FileUtil();
         List<String[]> lines = fileUtil.readFile(absolutePath);
         String[] csvExpectedValues = new String[]{
-                null,
-                null,
                 PARTICIPANT_ID,
                 SURNAME,
                 FIRST_NAME,
