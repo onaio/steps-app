@@ -6,8 +6,10 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.onaio.steps.R;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.FileUtil;
 
@@ -34,14 +36,16 @@ public class DataProviderActivity extends AppCompatActivity {
         readDataFile(returnedIntent());
     }
 
-    private void initProgressDialog() {
+    @VisibleForTesting
+    public void initProgressDialog() {
         progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Please wait... data is collecting");
+        progressDialog.setMessage(getString(R.string.data_populate_message));
         progressDialog.setCancelable(false);
         progressDialog.show();
     }
 
-    private void readDataFile(Intent returnedIntent) {
+    @VisibleForTesting
+    public void readDataFile(Intent returnedIntent) {
 
         try {
             List<String[]> data = fileUtil.readFile(getFilesDir().getAbsolutePath() + "/" + Constants.ODK_DATA_FILENAME);
@@ -53,7 +57,8 @@ public class DataProviderActivity extends AppCompatActivity {
         }
     }
 
-    private void extractData(List<String[]> data, Intent returnedIntent) {
+    @VisibleForTesting
+    public void extractData(List<String[]> data, Intent returnedIntent) {
         if (!data.isEmpty()) {
             String[] row = data.get(0);
             for (DataKeys dataKey : DataKeys.values()) {
@@ -63,14 +68,16 @@ public class DataProviderActivity extends AppCompatActivity {
         }
     }
 
-    private void finishing() {
+    @VisibleForTesting
+    public void finishing() {
         if (progressDialog != null && progressDialog.isShowing()) {
             progressDialog.dismiss();
         }
         finish();
     }
 
-    private Intent returnedIntent() {
+    @VisibleForTesting
+    public Intent returnedIntent() {
         return new Intent();
     }
 }
