@@ -93,6 +93,16 @@
             android:name=".activities.SettingsImportExportActivity"
             android:label="@string/import_export_settings_title" />
 
+        <!-- external activity using to provide the data to ODK Collect -->
+        <activity android:name=".external.DataProviderActivity"
+            android:exported="true"
+            android:theme="@style/TransparentTheme">
+            <intent-filter>
+                <action android:name="com.onaio.steps.collect"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+
     </application>
 
     <queries>
