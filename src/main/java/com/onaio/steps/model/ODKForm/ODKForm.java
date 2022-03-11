@@ -24,7 +24,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.onaio.steps.exceptions.AppNotInstalledException;
 import com.onaio.steps.exceptions.FormNotPresentException;
 import com.onaio.steps.helper.Constants;
+import com.onaio.steps.model.ODKForm.strategy.interfaces.IFormStrategy;
 
+import java.io.IOException;
 import java.util.List;
 
 public class ODKForm {
@@ -43,7 +45,8 @@ public class ODKForm {
         return blankForm;
     }
 
-    public void open(AppCompatActivity activity, int requestCode){
+    public void open(IFormStrategy formStrategy, AppCompatActivity activity, int requestCode) throws IOException {
+        formStrategy.saveDataFile(activity);
         launchODKCollect(activity, requestCode);
     }
 

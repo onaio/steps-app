@@ -182,4 +182,5 @@
     <string name="total_households">Total households</string>
     <string name="user_password_label">ODK Password</string>
     <string name="invalid_fields_error">Survey Id or Username or Password should not empty</string>
+    <string name="data_populate_message">Please wait... data is collecting</string>
 </resources>

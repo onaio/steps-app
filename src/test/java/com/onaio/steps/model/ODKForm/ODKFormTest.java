@@ -33,6 +33,7 @@ import com.onaio.steps.model.Gender;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.InterviewStatus;
 import com.onaio.steps.model.Member;
+import com.onaio.steps.model.ODKForm.strategy.HouseholdMemberFormStrategy;
 import com.onaio.steps.model.RequestCode;
 import com.onaio.steps.model.ShadowDatabaseHelper;
 
@@ -75,7 +76,6 @@ public class ODKFormTest extends StepsTestRunner {
 
     @Test
     public void ShouldPopulateIntentProperlyWhenOpeningSavedForm() throws IOException {
-        String blankFormMediaPath = householdActivity.getFilesDir().getPath();
         String householdName = "household name";
         Uri saveFormURI = Uri.parse("uri");
         Mockito.when(householdMock.getName()).thenReturn(householdName);
@@ -83,7 +83,7 @@ public class ODKFormTest extends StepsTestRunner {
         odkForm = new ODKForm(blankFormMock, savedFormMock);
         String deviceId = getValue(HH_PHONE_ID);
 
-        odkForm.open(householdActivity, RequestCode.SURVEY.getCode());
+        odkForm.open(new HouseholdMemberFormStrategy(householdMock, deviceId), householdActivity, RequestCode.SURVEY.getCode());
 
         ShadowActivity.IntentForResult odkActivity = shadowOf(householdActivity).getNextStartedActivityForResult();
 
@@ -98,7 +98,7 @@ public class ODKFormTest extends StepsTestRunner {
     }
 
     @Test
-    public void ShouldPopulateIntentProperlyWhenOpeningBlankForm() {
+    public void ShouldPopulateIntentProperlyWhenOpeningBlankForm() throws IOException {
         String householdName = "household name";
         Uri blankFormURI = Uri.parse("uri");
         Mockito.when(householdMock.getName()).thenReturn(householdName);
@@ -106,7 +106,7 @@ public class ODKFormTest extends StepsTestRunner {
         odkForm = new ODKForm(blankFormMock, null);
         String deviceId = getValue(HH_PHONE_ID);
 
-        odkForm.open(householdActivity, RequestCode.SURVEY.getCode());
+        odkForm.open(new HouseholdMemberFormStrategy(householdMock, deviceId), householdActivity, RequestCode.SURVEY.getCode());
 
         ShadowActivity.IntentForResult odkActivity = shadowOf(householdActivity).getNextStartedActivityForResult();
 
