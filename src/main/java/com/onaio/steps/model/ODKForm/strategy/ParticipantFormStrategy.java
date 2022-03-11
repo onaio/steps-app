@@ -20,7 +20,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.FileUtil;
-import com.onaio.steps.helper.KeyValueStoreFactory;
 import com.onaio.steps.model.ODKForm.strategy.interfaces.IFormStrategy;
 import com.onaio.steps.model.Participant;
 
@@ -42,7 +41,6 @@ public class ParticipantFormStrategy implements IFormStrategy{
     }
     @Override
     public void saveDataFile(AppCompatActivity activity) throws IOException {
-        String formId = getValue(Constants.PA_FORM_ID,activity);
         List<String> row = new ArrayList<>();
         row.add(participant.getParticipantID());
         row.add(participant.getFamilySurname());
@@ -55,9 +53,5 @@ public class ParticipantFormStrategy implements IFormStrategy{
                 .withData(row.toArray(new String[row.size()]))
                 .writeCSV(activity.getFilesDir().getAbsolutePath() + "/" + Constants.ODK_DATA_FILENAME);
 
-    }
-
-    private String getValue(String key,AppCompatActivity activity) {
-        return KeyValueStoreFactory.instance(activity).getString(key) ;
     }
 }

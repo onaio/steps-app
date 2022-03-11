@@ -22,7 +22,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.helper.FileUtil;
-import com.onaio.steps.helper.KeyValueStoreFactory;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.Member;
 import com.onaio.steps.model.ODKForm.strategy.interfaces.IFormStrategy;
@@ -59,9 +58,5 @@ public class HouseholdMemberFormStrategy implements IFormStrategy{
         fileUtil.withHeader(Constants.ODK_FORM_FIELDS.split(","))
                 .withData(row.toArray(new String[row.size()]))
                 .writeCSV(activity.getFilesDir().getAbsolutePath() + "/" + Constants.ODK_DATA_FILENAME);
-    }
-
-    private String getValue(String key,AppCompatActivity activity) {
-        return KeyValueStoreFactory.instance(activity).getString(key) ;
     }
 }
