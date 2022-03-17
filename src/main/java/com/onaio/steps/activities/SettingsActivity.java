@@ -20,21 +20,27 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.onaio.steps.R;
+import com.onaio.steps.exceptions.AppNotInstalledException;
 import com.onaio.steps.exceptions.InvalidDataException;
 import com.onaio.steps.handler.actions.ImportHandler;
 import com.onaio.steps.handler.activities.ImportExportActivityHandler;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.CustomDialog;
 import com.onaio.steps.helper.DatabaseHelper;
+import com.onaio.steps.model.ODKForm.ODKBlankForm;
 import com.onaio.steps.orchestrators.FlowOrchestrator;
 import com.onaio.steps.orchestrators.flows.FlowType;
 import com.onaio.steps.utils.ViewUtils;
+
+import java.util.List;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -54,6 +60,12 @@ public class SettingsActivity extends AppCompatActivity {
         findViewById(R.id.ic_save).setVisibility(View.VISIBLE);
         setHeader();
         prepareViewWithData();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        prepareAvailableFormList();
     }
 
     private void setHeader() {
@@ -122,7 +134,6 @@ public class SettingsActivity extends AppCompatActivity {
         finish();
     }
 
-
     public void enableHouseholdFlow(View view, boolean forceRefreshValues) {
         if (flowType == FlowType.None) {
             findViewById(R.id.setting_contents)
@@ -190,5 +201,22 @@ public class SettingsActivity extends AppCompatActivity {
 
     public void setJustOpened(boolean justOpened) {
         this.justOpened = justOpened;
+    }
+
+    public void prepareAvailableFormList() {
+
+        try {
+            List<ODKBlankForm> forms = ODKBlankForm.get(this, null);
+            AutoCompleteTextView actvFormId = findViewById(R.id.form_id_household);
+            actvFormId.setThreshold(1);
+            actvFormId.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, forms));
+            actvFormId.setOnItemClickListener((adapterView, view, i, l) -> {
+                ODKBlankForm selection = (ODKBlankForm) adapterView.getItemAtPosition(i);
+                actvFormId.setText(selection.getJrFormId());
+                actvFormId.setSelection(actvFormId.length());
+            });
+        } catch (AppNotInstalledException e) {
+            e.printStackTrace();
+        }
     }
 }

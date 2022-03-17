@@ -25,7 +25,7 @@
         android:layout_height="match_parent"
         android:background="@android:color/white"
         android:orientation="vertical"
-        android:visibility="invisible">
+        android:visibility="visible">
 
         <include layout="@layout/dialog_header" />
 
@@ -236,7 +236,7 @@
                     android:layout_marginTop="20dp"
                     android:text="@string/form_id" />
 
-                <EditText
+                <AutoCompleteTextView
                     android:id="@+id/form_id_household"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
