@@ -90,8 +90,24 @@ public class ODKBlankForm implements IForm{
         return forms;
     }
 
+    public String getId() {
+        return _id;
+    }
+
     public String getJrFormId() {
         return jrFormId;
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public String getJrVersion() {
+        return jrVersion;
+    }
+
+    public String getFormMediaPath() {
+        return formMediaPath;
     }
 
     @NonNull

@@ -18,9 +18,24 @@ package com.onaio.steps.activities;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.nullable;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import static org.robolectric.Shadows.shadowOf;
 
+import android.content.ContentProviderClient;
+import android.content.ContentResolver;
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
+import android.os.RemoteException;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
 
 import com.onaio.steps.R;
@@ -29,11 +44,14 @@ import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.InterviewStatus;
+import com.onaio.steps.model.ODKForm.ODKBlankForm;
 import com.onaio.steps.model.ServerStatus;
 import com.onaio.steps.orchestrators.flows.FlowType;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Mockito;
 import org.robolectric.Robolectric;
 
 public class SettingsActivityTest extends StepsTestRunner {
@@ -84,4 +102,55 @@ public class SettingsActivityTest extends StepsTestRunner {
         assertEquals(Household.getAllInOrder(databaseHelper).size(), 0);
     }
 
+    @SuppressWarnings("rawtypes")
+    @Test
+    public void testPrepareAvailableFormListShouldVerifyDataPopulation() throws RemoteException {
+        SettingsActivity spySettingActivity = Mockito.spy(settingsActivity);
+
+        ContentResolver contentResolver = mock(ContentResolver.class);
+        ContentProviderClient contentProviderClient = mock(ContentProviderClient.class);
+        Cursor cursor = mock(Cursor.class);
+        AutoCompleteTextView actvFormId = mock(AutoCompleteTextView.class);
+
+        when(spySettingActivity.findViewById(R.id.form_id_household)).thenReturn(actvFormId);
+        when(spySettingActivity.getContentResolver()).thenReturn(contentResolver);
+        when(contentResolver.acquireContentProviderClient(any(Uri.class))).thenReturn(contentProviderClient);
+        when(contentProviderClient.query(any(Uri.class), nullable(String[].class), nullable(String.class), nullable(String[].class), nullable(String.class))).thenReturn(cursor);
+        when(cursor.moveToFirst()).thenReturn(true);
+        when(cursor.getColumnIndex("_id")).thenReturn(0);
+        when(cursor.getColumnIndex("jrFormId")).thenReturn(1);
+        when(cursor.getColumnIndex("displayName")).thenReturn(2);
+        when(cursor.getColumnIndex("jrVersion")).thenReturn(3);
+        when(cursor.getColumnIndex("formMediaPath")).thenReturn(4);
+        when(cursor.getString(0)).thenReturn("1");
+        when(cursor.getString(1)).thenReturn("test_form");
+        when(cursor.getString(2)).thenReturn("Test Form");
+        when(cursor.getString(3)).thenReturn("0");
+        when(cursor.getString(4)).thenReturn("media");
+
+        spySettingActivity.prepareAvailableFormList();
+
+        ArgumentCaptor<ArrayAdapter> acArrayAdapter = ArgumentCaptor.forClass(ArrayAdapter.class);
+        ArgumentCaptor<AdapterView.OnItemClickListener> acClickListener = ArgumentCaptor.forClass(AdapterView.OnItemClickListener.class);
+
+        verify(actvFormId, times(1)).setThreshold(Mockito.eq(1));
+        verify(actvFormId, times(1)).setAdapter(acArrayAdapter.capture());
+        verify(actvFormId, times(1)).setOnItemClickListener(acClickListener.capture());
+
+        ODKBlankForm odkBlankForm = (ODKBlankForm) acArrayAdapter.getValue().getItem(0);
+
+        assertEquals("1", odkBlankForm.getId());
+        assertEquals("test_form", odkBlankForm.getJrFormId());
+        assertEquals("Test Form", odkBlankForm.getDisplayName());
+        assertEquals("0", odkBlankForm.getJrVersion());
+        assertEquals("media", odkBlankForm.getFormMediaPath());
+
+        AdapterView adapterView = mock(AdapterView.class);
+        when(adapterView.getItemAtPosition(0)).thenReturn(odkBlankForm);
+
+        acClickListener.getValue().onItemClick(adapterView, mock(View.class), 0, 0);
+
+        verify(actvFormId, times(1)).setText(Mockito.eq(odkBlankForm.getJrFormId()));
+        verify(actvFormId, times(1)).setSelection(Mockito.eq(actvFormId.length()));
+    }
 }
