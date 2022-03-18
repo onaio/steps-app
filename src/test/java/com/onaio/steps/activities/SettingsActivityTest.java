@@ -113,6 +113,7 @@ public class SettingsActivityTest extends StepsTestRunner {
         AutoCompleteTextView actvFormId = mock(AutoCompleteTextView.class);
 
         when(spySettingActivity.findViewById(R.id.form_id_household)).thenReturn(actvFormId);
+        when(spySettingActivity.findViewById(R.id.form_id_participant)).thenReturn(actvFormId);
         when(spySettingActivity.getContentResolver()).thenReturn(contentResolver);
         when(contentResolver.acquireContentProviderClient(any(Uri.class))).thenReturn(contentProviderClient);
         when(contentProviderClient.query(any(Uri.class), nullable(String[].class), nullable(String.class), nullable(String[].class), nullable(String.class))).thenReturn(cursor);
@@ -133,9 +134,9 @@ public class SettingsActivityTest extends StepsTestRunner {
         ArgumentCaptor<ArrayAdapter> acArrayAdapter = ArgumentCaptor.forClass(ArrayAdapter.class);
         ArgumentCaptor<AdapterView.OnItemClickListener> acClickListener = ArgumentCaptor.forClass(AdapterView.OnItemClickListener.class);
 
-        verify(actvFormId, times(1)).setThreshold(Mockito.eq(1));
-        verify(actvFormId, times(1)).setAdapter(acArrayAdapter.capture());
-        verify(actvFormId, times(1)).setOnItemClickListener(acClickListener.capture());
+        verify(actvFormId, times(2)).setThreshold(Mockito.eq(1));
+        verify(actvFormId, times(2)).setAdapter(acArrayAdapter.capture());
+        verify(actvFormId, times(2)).setOnItemClickListener(acClickListener.capture());
 
         ODKBlankForm odkBlankForm = (ODKBlankForm) acArrayAdapter.getValue().getItem(0);
 

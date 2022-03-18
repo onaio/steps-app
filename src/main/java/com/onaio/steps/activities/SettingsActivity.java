@@ -40,6 +40,7 @@ import com.onaio.steps.orchestrators.FlowOrchestrator;
 import com.onaio.steps.orchestrators.flows.FlowType;
 import com.onaio.steps.utils.ViewUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SettingsActivity extends AppCompatActivity {
@@ -207,14 +208,18 @@ public class SettingsActivity extends AppCompatActivity {
 
         try {
             List<ODKBlankForm> forms = ODKBlankForm.get(this, null);
-            AutoCompleteTextView actvFormId = findViewById(R.id.form_id_household);
-            actvFormId.setThreshold(1);
-            actvFormId.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, forms));
-            actvFormId.setOnItemClickListener((adapterView, view, i, l) -> {
-                ODKBlankForm selection = (ODKBlankForm) adapterView.getItemAtPosition(i);
-                actvFormId.setText(selection.getJrFormId());
-                actvFormId.setSelection(actvFormId.length());
-            });
+
+            int[] actvIdList = new int[] {R.id.form_id_household, R.id.form_id_participant};
+            for (int j : actvIdList) {
+                AutoCompleteTextView actvFormId = findViewById(j);
+                actvFormId.setThreshold(1);
+                actvFormId.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, forms));
+                actvFormId.setOnItemClickListener((adapterView, view, i, l) -> {
+                    ODKBlankForm selection = (ODKBlankForm) adapterView.getItemAtPosition(i);
+                    actvFormId.setText(selection.getJrFormId());
+                    actvFormId.setSelection(actvFormId.length());
+                });
+            }
         } catch (AppNotInstalledException e) {
             e.printStackTrace();
         }
