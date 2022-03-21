@@ -16,11 +16,14 @@
 
 package com.onaio.steps.model.ODKForm;
 
+import android.annotation.SuppressLint;
 import android.content.ContentProviderClient;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.RemoteException;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.onaio.steps.exceptions.AppNotInstalledException;
@@ -41,7 +44,7 @@ public class ODKBlankForm implements IForm{
     String displayName;
     String jrVersion;
 
-    protected ODKBlankForm(String id, String jrFormId, String displayName, String jrVersion, String formMediaPath){
+    public ODKBlankForm(String id, String jrFormId, String displayName, String jrVersion, String formMediaPath){
         _id = id;
         this.jrFormId = jrFormId;
         this.displayName = displayName;
@@ -50,7 +53,7 @@ public class ODKBlankForm implements IForm{
     }
 
     public static IForm find(AppCompatActivity activity, String jrFormId) throws FormNotPresentException, AppNotInstalledException {
-        List<IForm> forms = get(activity, jrFormId);
+        List<ODKBlankForm> forms = get(activity, jrFormId);
         if(forms.size() <= 0)
             throw new FormNotPresentException();
         return forms.get(0);
@@ -60,12 +63,17 @@ public class ODKBlankForm implements IForm{
         return Uri.parse(URI_STRING + "/" + _id);
     }
 
-    public static List<IForm> get(AppCompatActivity activity, String odkFormId) throws AppNotInstalledException {
+    @SuppressLint("Range")
+    public static List<ODKBlankForm> get(AppCompatActivity activity, @Nullable String odkFormId) throws AppNotInstalledException {
         ContentProviderClient formsContentProvider = activity.getContentResolver().acquireContentProviderClient(ODKBlankForm.URI);
-        ArrayList<IForm> forms = new ArrayList<IForm>();
+        List<ODKBlankForm> forms = new ArrayList<>();
         try {
             if(formsContentProvider==null) throw new AppNotInstalledException();
-            Cursor cursor = formsContentProvider.query(ODKBlankForm.URI, null, "jrFormId = ?", new String[]{odkFormId}, null);
+
+            String selection = odkFormId != null ? "jrFormId = ?" : null;
+            String[] selectionArgs = odkFormId != null ? new String[]{odkFormId} : null;
+
+            Cursor cursor = formsContentProvider.query(ODKBlankForm.URI, null, selection, selectionArgs, null);
             if(cursor != null && cursor.moveToFirst()){
                 do{
                     String id = cursor.getString(cursor.getColumnIndex("_id"));
@@ -80,5 +88,31 @@ public class ODKBlankForm implements IForm{
             throw new AppNotInstalledException();
         }
         return forms;
+    }
+
+    public String getId() {
+        return _id;
+    }
+
+    public String getJrFormId() {
+        return jrFormId;
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public String getJrVersion() {
+        return jrVersion;
+    }
+
+    public String getFormMediaPath() {
+        return formMediaPath;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return displayName;
     }
 }
