@@ -47,8 +47,8 @@ public class TakeSurveyForParticipantStrategy implements ITakeSurveyStrategy {
     }
 
     @Override
-    public void open(String formId) throws IOException {
-        ODKForm requiredForm = ODKForm.create(activity, formId, participant.getOdkFormId());
+    public void open() throws IOException {
+        ODKForm requiredForm = ODKForm.create(activity, getFormId(), participant.getOdkFormId());
         String deviceId = getDeviceId();
         requiredForm.open(new ParticipantFormStrategy(participant, deviceId), activity, RequestCode.SURVEY.getCode());
     }
@@ -90,5 +90,10 @@ public class TakeSurveyForParticipantStrategy implements ITakeSurveyStrategy {
 
     public String getDeviceId() {
         return KeyValueStoreFactory.instance(activity).getString(Constants.PA_PHONE_ID);
+    }
+
+    @Override
+    public String getFormId() {
+        return KeyValueStoreFactory.instance(activity).getString(Constants.PA_FORM_ID);
     }
 }
