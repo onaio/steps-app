@@ -33,7 +33,6 @@ import com.onaio.steps.handler.interfaces.IMenuHandler;
 import com.onaio.steps.handler.interfaces.IMenuPreparer;
 import com.onaio.steps.handler.strategies.survey.interfaces.ITakeSurveyStrategy;
 import com.onaio.steps.helper.CustomDialog;
-import com.onaio.steps.helper.KeyValueStoreFactory;
 import com.onaio.steps.model.ODKForm.IForm;
 import com.onaio.steps.model.ODKForm.ODKSavedForm;
 import com.onaio.steps.model.RequestCode;
@@ -104,7 +103,7 @@ public class TakeSurveyHandler implements IMenuHandler, IMenuPreparer, IActivity
         return requestCode == RequestCode.SURVEY.getCode();
     }
 
-    protected List<IForm> getSavedForms(Intent data) {
+    public List<IForm> getSavedForms(Intent data) {
         try {
             String formId = data.getData().getLastPathSegment();
             return ODKSavedForm.findAll(activity, formId);
@@ -112,10 +111,6 @@ public class TakeSurveyHandler implements IMenuHandler, IMenuPreparer, IActivity
             new CustomDialog().notify(activity, CustomDialog.EmptyListener, R.string.error_title, R.string.odk_app_not_installed);
             return null;
         }
-    }
-
-    private String getValue(String key) {
-        return KeyValueStoreFactory.instance(activity).getString(key);
     }
 
     @Override
