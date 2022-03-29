@@ -36,6 +36,7 @@ import com.onaio.steps.StepsTestRunner;
 import com.onaio.steps.exceptions.AppNotInstalledException;
 import com.onaio.steps.exceptions.FormNotPresentException;
 import com.onaio.steps.model.ShadowDatabaseHelper;
+import com.onaio.steps.utils.Faker;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -70,26 +71,8 @@ public class ODKSavedFormTest extends StepsTestRunner {
     @Test
     public void testFindAllShouldReturnListOfSavedForms() throws RemoteException, FormNotPresentException, AppNotInstalledException {
         AppCompatActivity activity = mock(AppCompatActivity.class);
-        ContentResolver contentResolver = mock(ContentResolver.class);
-        ContentProviderClient contentProviderClient = mock(ContentProviderClient.class);
-        Cursor cursor = mock(Cursor.class);
 
-        when(activity.getContentResolver()).thenReturn(contentResolver);
-        when(contentResolver.acquireContentProviderClient(any(Uri.class))).thenReturn(contentProviderClient);
-        when(contentProviderClient.query(any(Uri.class), nullable(String[].class), anyString(), any(String[].class), nullable(String.class))).thenReturn(cursor);
-        when(cursor.moveToFirst()).thenReturn(true);
-        when(cursor.getColumnIndex("_id")).thenReturn(0);
-        when(cursor.getColumnIndex("jrFormId")).thenReturn(1);
-        when(cursor.getColumnIndex("displayName")).thenReturn(2);
-        when(cursor.getColumnIndex("jrVersion")).thenReturn(3);
-        when(cursor.getColumnIndex("instanceFilePath")).thenReturn(4);
-        when(cursor.getColumnIndex("status")).thenReturn(5);
-        when(cursor.getString(0)).thenReturn(form.getId());
-        when(cursor.getString(1)).thenReturn(form.jrFormId);
-        when(cursor.getString(2)).thenReturn(form.displayName);
-        when(cursor.getString(3)).thenReturn(form.jrVersion);
-        when(cursor.getString(4)).thenReturn(form.instanceFilePath);
-        when(cursor.getString(5)).thenReturn(form.getStatus());
+        Faker.findODKSavedForm(activity);
 
         List<ODKSavedForm> odkSavedForms = ODKSavedForm.findAll(activity, "");
         assertEquals(1, odkSavedForms.size());

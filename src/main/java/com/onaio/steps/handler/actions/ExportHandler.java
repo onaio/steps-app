@@ -48,7 +48,11 @@ import org.apache.commons.lang3.StringUtils;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.Queue;
 
 public class ExportHandler implements IMenuHandler,IMenuPreparer {
 
@@ -86,10 +90,10 @@ public class ExportHandler implements IMenuHandler,IMenuPreparer {
             public void onClick(DialogInterface dialogInterface, int i) {
                 if(onExportListener != null)  onExportListener.onExportStart();
                 try {
-                    File file = saveFile();
+                    Queue<File> files = saveFile();
                     if(onExportListener != null) onExportListener.onFileSaved();
                     if (NetworkConnectivity.isNetworkAvailable(activity)) {
-                        new UploadFileTask(activity, onExportListener).upload(file);
+                        new UploadFileTask(activity, onExportListener).prepareForUpload(files);
                     } else {
                         new CustomDialog().notify(activity, CustomDialog.EmptyListener, R.string.error_title, R.string.fail_no_connectivity);
                     }
@@ -117,26 +121,73 @@ public class ExportHandler implements IMenuHandler,IMenuPreparer {
         return null;
     }
 
-    public File saveFile() throws IOException {
-        String deviceId = getDeviceId();
+    public Queue<File> saveFile() throws IOException {
 
-        FileUtil fileUtil = new FileUtil().withHeader(EXPORT_FIELDS);
-        List<Household> emptyHouseholds = new ArrayList<>();
-        for(Household household: households) {
-            List<ReElectReason> reasons = getReElectReasons(household);
-            List<Member> membersPerHousehold = household.getAllMembersForExport(getDatabaseHelper());
-            for(Member member: membersPerHousehold) {
+        Map<String, List<Household>> householdMap = new Hashtable<>();
+
+        for (Household household : households) {
+            if (householdMap.containsKey(household.getOdkJrFormId())) {
+                householdMap.get(household.getOdkJrFormId()).add(household);
+            }
+            else {
+                List<Household> data = new ArrayList<>();
+                data.add(household);
+                householdMap.put(household.getOdkJrFormId(), data);
+            }
+        }
+
+        String deviceId = getDeviceId();
+        Queue<File> files = new LinkedList<>();
+
+        for (Map.Entry<String, List<Household>> entry : householdMap.entrySet()) {
+
+            FileUtil fileUtil = new FileUtil().withHeader(EXPORT_FIELDS);
+            List<Household> emptyHouseholds = new ArrayList<>();
+
+            for(Household household: entry.getValue()) {
+                List<ReElectReason> reasons = getReElectReasons(household);
+                List<Member> membersPerHousehold = household.getAllMembersForExport(getDatabaseHelper());
+                for(Member member: membersPerHousehold) {
+                    ArrayList<String> row = new ArrayList<>();
+                    row.add(household.getPhoneNumber());
+                    row.add(household.getName());
+                    row.add(replaceCommas(household.getComments()));
+                    row.add(member.getMemberHouseholdId());
+                    row.add(member.getFamilySurname());
+                    row.add(member.getFirstName());
+                    row.add(String.valueOf(member.getAge()));
+                    row.add(member.getGender().toString());
+                    row.add(member.getDeletedString());
+                    setStatus(household, member, row);
+                    row.add(String.valueOf(reasons.size()));
+                    row.add(replaceCommas(StringUtils.join(reasons.toArray(), ';')));
+                    row.add(deviceId);
+                    row.add(KeyValueStoreFactory.instance(activity).getString(HH_SURVEY_ID));
+                    row.add(String.valueOf(household.numberOfNonDeletedMembers(getDatabaseHelper())));
+                    row.add(household.getUniqueDeviceId());
+                    row.add(household.getCreatedAt());
+                    row.add(household.getOdkJrFormId());
+                    row.add(household.getOdkJrFormTitle());
+                    fileUtil.withData(row.toArray(new String[row.size()]));
+                }
+                if (membersPerHousehold.size() == 0) {
+                    emptyHouseholds.add(household);
+                }
+            }
+            // Add households with no members
+            for (Household household : emptyHouseholds) {
+                List<ReElectReason> reasons = getReElectReasons(household);
                 ArrayList<String> row = new ArrayList<>();
                 row.add(household.getPhoneNumber());
                 row.add(household.getName());
                 row.add(replaceCommas(household.getComments()));
-                row.add(member.getMemberHouseholdId());
-                row.add(member.getFamilySurname());
-                row.add(member.getFirstName());
-                row.add(String.valueOf(member.getAge()));
-                row.add(member.getGender().toString());
-                row.add(member.getDeletedString());
-                setStatus(household, member, row);
+                row.add(household.getName() + Constants.DUMMY_MEMBER_ID);
+                row.add(EMPTY_COLUMN);
+                row.add(EMPTY_COLUMN);
+                row.add(EMPTY_COLUMN);
+                row.add(EMPTY_COLUMN);
+                row.add(EMPTY_COLUMN);
+                row.add(SURVEY_EMPTY_HH);
                 row.add(String.valueOf(reasons.size()));
                 row.add(replaceCommas(StringUtils.join(reasons.toArray(), ';')));
                 row.add(deviceId);
@@ -144,37 +195,15 @@ public class ExportHandler implements IMenuHandler,IMenuPreparer {
                 row.add(String.valueOf(household.numberOfNonDeletedMembers(getDatabaseHelper())));
                 row.add(household.getUniqueDeviceId());
                 row.add(household.getCreatedAt());
+                row.add(household.getOdkJrFormId());
+                row.add(household.getOdkJrFormTitle());
                 fileUtil.withData(row.toArray(new String[row.size()]));
             }
-            if (membersPerHousehold.size() == 0) {
-                emptyHouseholds.add(household);
-            }
-        }
-        // Add households with no members
-        for (Household household : emptyHouseholds) {
-            List<ReElectReason> reasons = getReElectReasons(household);
-            ArrayList<String> row = new ArrayList<>();
-            row.add(household.getPhoneNumber());
-            row.add(household.getName());
-            row.add(replaceCommas(household.getComments()));
-            row.add(household.getName() + Constants.DUMMY_MEMBER_ID);
-            row.add(EMPTY_COLUMN);
-            row.add(EMPTY_COLUMN);
-            row.add(EMPTY_COLUMN);
-            row.add(EMPTY_COLUMN);
-            row.add(EMPTY_COLUMN);
-            row.add(SURVEY_EMPTY_HH);
-            row.add(String.valueOf(reasons.size()));
-            row.add(replaceCommas(StringUtils.join(reasons.toArray(), ';')));
-            row.add(deviceId);
-            row.add(KeyValueStoreFactory.instance(activity).getString(HH_SURVEY_ID));
-            row.add(String.valueOf(household.numberOfNonDeletedMembers(getDatabaseHelper())));
-            row.add(household.getUniqueDeviceId());
-            row.add(household.getCreatedAt());
-            fileUtil.withData(row.toArray(new String[row.size()]));
+
+            files.add(fileUtil.writeCSV(activity.getFilesDir() + "/" + Constants.EXPORT_FILE_NAME + "_" + entry.getKey() + "_" + deviceId + ".csv"));
         }
 
-        return fileUtil.writeCSV(activity.getFilesDir() + "/" + Constants.EXPORT_FILE_NAME + "_" + deviceId + ".csv");
+        return files;
     }
 
     /**

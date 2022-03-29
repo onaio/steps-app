@@ -26,7 +26,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.onaio.steps.R;
 import com.onaio.steps.exceptions.AppNotInstalledException;
-import com.onaio.steps.handler.ExceptionHandler;
+import com.onaio.steps.handler.exceptions.ExceptionHandler;
+import com.onaio.steps.handler.exceptions.IResolvableException;
 import com.onaio.steps.handler.interfaces.IActivityResultHandler;
 import com.onaio.steps.handler.interfaces.IMenuHandler;
 import com.onaio.steps.handler.interfaces.IMenuPreparer;
@@ -39,7 +40,7 @@ import com.onaio.steps.model.RequestCode;
 
 import java.util.List;
 
-public class TakeSurveyHandler implements IMenuHandler, IMenuPreparer, IActivityResultHandler {
+public class TakeSurveyHandler implements IMenuHandler, IMenuPreparer, IActivityResultHandler, IResolvableException {
     private final AppCompatActivity activity;
     private final ITakeSurveyStrategy takeSurveyStrategy;
     private static final int MENU_ID = R.id.action_take_survey;
@@ -115,5 +116,10 @@ public class TakeSurveyHandler implements IMenuHandler, IMenuPreparer, IActivity
 
     private String getValue(String key) {
         return KeyValueStoreFactory.instance(activity).getString(key);
+    }
+
+    @Override
+    public void tryToResolve() {
+        open();
     }
 }

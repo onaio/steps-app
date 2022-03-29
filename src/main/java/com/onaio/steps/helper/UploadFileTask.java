@@ -21,6 +21,7 @@ import static com.onaio.steps.helper.Constants.HH_SURVEY_ID;
 import static com.onaio.steps.helper.Constants.HH_USER_ID;
 import static com.onaio.steps.helper.Constants.HH_USER_PASSWORD;
 
+import android.os.Handler;
 import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
@@ -31,6 +32,8 @@ import com.onaio.steps.clients.HouseholdService;
 import com.onaio.steps.handler.actions.ExportHandler;
 
 import java.io.File;
+import java.util.List;
+import java.util.Queue;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -45,6 +48,7 @@ public class UploadFileTask {
     private final AppCompatActivity activity;
     private final ExportHandler.OnExportListener onExportListener;
     private final Retrofit retrofit;
+    private boolean isSuccess = false;
 
     public UploadFileTask(@NonNull AppCompatActivity activity, @NonNull ExportHandler.OnExportListener onExportListener) {
         this.activity = activity;
@@ -52,10 +56,10 @@ public class UploadFileTask {
         this.retrofit = new Retrofit.Builder().baseUrl("https://steps.ona.io/").build();
     }
 
-    public void upload(File file) {
+    public void prepareForUpload(Queue<File> files) {
         if (!TextUtils.isEmpty(KeyValueStoreFactory.instance(activity).getString(ENDPOINT_URL))) {
 
-            String endpoint = KeyValueStoreFactory.instance(activity).getString(ENDPOINT_URL);
+            String endPoint = KeyValueStoreFactory.instance(activity).getString(ENDPOINT_URL);
 
             KeyValueStore store = KeyValueStoreFactory.instance(activity);
             String surveyId = store.getString(HH_SURVEY_ID);
@@ -67,36 +71,51 @@ public class UploadFileTask {
                 onExportListener.onFileUploaded(false);
             } else {
 
-                String fileType = "text/csv";
-                RequestBody requestFile = RequestBody.create(MediaType.parse(fileType), file);
-                MultipartBody.Part fileBody = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
-
                 RequestBody surveyIdBody = RequestBody.create(MediaType.parse("text/plain"), surveyId);
                 RequestBody userIdBody = RequestBody.create(MediaType.parse("text/plain"), userId);
                 RequestBody userPasswordBody = RequestBody.create(MediaType.parse("text/plain"), userPassword);
 
-                retrofit.create(HouseholdService.class).uploadData(endpoint, fileBody, surveyIdBody, userIdBody, userPasswordBody).enqueue(new Callback<ResponseBody>() {
-                    @Override
-                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                        if (response.isSuccessful() && response.code() == 201) {
-                            new CustomNotification().notify(activity, R.string.export_complete, R.string.export_complete_message);
-                            onExportListener.onFileUploaded(true);
-                        } else {
-                            new CustomNotification().notify(activity, R.string.error_title, R.string.export_failed);
-                            onExportListener.onFileUploaded(false);
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<ResponseBody> call, Throwable t) {
-                        new CustomNotification().notify(activity, R.string.error_title, R.string.export_failed);
-                        onExportListener.onFileUploaded(false);
-                    }
-                });
+                if (!files.isEmpty()) {
+                    upload(files, endPoint, surveyIdBody, userIdBody, userPasswordBody);
+                    /*new Handler().postDelayed(() -> {
+                        onExportListener.onFileUploaded(true);
+                    },3000);*/
+                }
             }
         } else {
             new CustomNotification().notify(activity, R.string.error_title, R.string.export_failed);
             onExportListener.onFileUploaded(false);
         }
+    }
+
+    public void upload(Queue<File> files, String endPoint, RequestBody surveyIdBody, RequestBody userIdBody, RequestBody userPasswordBody) {
+
+        File file = files.remove();
+        String fileType = "text/csv";
+        RequestBody requestFile = RequestBody.create(MediaType.parse(fileType), file);
+        MultipartBody.Part fileBody = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
+
+        retrofit.create(HouseholdService.class).uploadData(endPoint, fileBody, surveyIdBody, userIdBody, userPasswordBody).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful() && response.code() == 201) {
+                    if (files.isEmpty()) {
+                        new CustomNotification().notify(activity, R.string.export_complete, R.string.export_complete_message);
+                        onExportListener.onFileUploaded(true);
+                    } else {
+                        upload(files, endPoint, surveyIdBody, userIdBody, userPasswordBody);
+                    }
+                } else {
+                    new CustomNotification().notify(activity, R.string.error_title, R.string.export_failed);
+                    onExportListener.onFileUploaded(false);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                new CustomNotification().notify(activity, R.string.error_title, R.string.export_failed);
+                onExportListener.onFileUploaded(false);
+            }
+        });
     }
 }

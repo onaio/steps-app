@@ -64,12 +64,16 @@ public class CursorHelper {
                 String uniqueDeviceId = cursor.getString(cursor.getColumnIndex(Household.UNIQUE_DEVICE_ID));
                 String serverStatus = cursor.getString(cursor.getColumnIndex(Household.SERVER_STATUS));
                 String odkFormId = cursor.getString(cursor.getColumnIndex(Household.ODK_FORM_ID));
+                String odkJrFormId = cursor.getString(cursor.getColumnIndex(Household.ODK_JR_FORM_ID));
+                String odkJrFormTitle = cursor.getString(cursor.getColumnIndex(Household.ODK_JR_FORM_TITLE));
 
                 String memberFamilySurname = cursor.getColumnIndex(Member.FAMILY_SURNAME) != -1 ? cursor.getString(cursor.getColumnIndex(Member.FAMILY_SURNAME)) : null;
                 String memberFirstName = cursor.getColumnIndex(Member.FIRST_NAME) != -1 ? cursor.getString(cursor.getColumnIndex(Member.FIRST_NAME)) : null;
 
                 Household hh = new Household(id,household_name, household_number,selectedMemberId, InterviewStatus.valueOf(status),createdAt, uniqueDeviceId, comments, odkFormId);
                 hh.setServerStatus(ServerStatus.valueOf(serverStatus));
+                hh.setOdkJrFormId(odkJrFormId);
+                hh.setOdkJrFormTitle(odkJrFormTitle);
 
                 if (memberFamilySurname != null && memberFirstName != null) {
                     Member member = new Member();

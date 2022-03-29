@@ -54,6 +54,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Queue;
 
 public class ExportHandlerTest extends StepsTestRunner {
 
@@ -132,12 +133,16 @@ public class ExportHandlerTest extends StepsTestRunner {
         String createdAt = new SimpleDateFormat(Constants.DATE_FORMAT, Locale.ENGLISH).format(new Date());
         String comment = "testComment";
         String deviceIMEI = "123456";
+        String odkJrFormId = "Test_Form";
+        String odkJrFormTitle = "Test Form";
         Household householdMock = Mockito.mock(Household.class);
         Mockito.when(householdMock.getStatus()).thenReturn(interviewStatus);
         Mockito.when(householdMock.getName()).thenReturn(hhName);
         Mockito.when(householdMock.getPhoneNumber()).thenReturn(phoneNumber);
         Mockito.when(householdMock.getCreatedAt()).thenReturn(createdAt);
         Mockito.when(householdMock.getComments()).thenReturn(comment);
+        Mockito.when(householdMock.getOdkJrFormId()).thenReturn(odkJrFormId);
+        Mockito.when(householdMock.getOdkJrFormTitle()).thenReturn(odkJrFormTitle);
 
         int id = 2;
         String surname = "testSurname";
@@ -160,16 +165,16 @@ public class ExportHandlerTest extends StepsTestRunner {
         householdMock.save(db);
         selectedMember.save(db);
         ExportHandler exportHandler = Mockito.spy(new ExportHandler(householdActivityMock));
-        Mockito.when(exportHandler.getReElectReasons(Mockito.any(Household.class))).thenReturn(new ArrayList<ReElectReason>());
+        Mockito.when(exportHandler.getReElectReasons(Mockito.any(Household.class))).thenReturn(new ArrayList<>());
         Mockito.when(exportHandler.getDatabaseHelper()).thenReturn(db);
         Mockito.when(exportHandler.getDeviceId()).thenReturn("testdevice");
 
         List<Household> householdList = new ArrayList<>();
         householdList.add(householdMock);
 
-        File exportedFile = exportHandler.with(householdList).saveFile();
+        Queue<File> exportedFile = exportHandler.with(householdList).saveFile();
         FileUtil fileUtil = new FileUtil();
-        List<String[]> lines = fileUtil.readFile(exportedFile.getAbsolutePath());
+        List<String[]> lines = fileUtil.readFile(exportedFile.remove().getAbsolutePath());
         String[] expectedValues = new String[]{
                 phoneNumber,
                 hhName,

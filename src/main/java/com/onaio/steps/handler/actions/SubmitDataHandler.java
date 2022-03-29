@@ -1,11 +1,13 @@
 package com.onaio.steps.handler.actions;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ProgressBar;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -37,6 +39,7 @@ public class SubmitDataHandler implements IMenuHandler,IMenuPreparer, IViewPrepa
     private List<Household> households;
     private List<Participant> participants;
     private HouseholdServerStatusUpdater householdServerStatusUpdater;
+    private ProgressDialog progressDialog;
 
     public SubmitDataHandler(AppCompatActivity activity) {
         this.activity = activity;
@@ -44,6 +47,11 @@ public class SubmitDataHandler implements IMenuHandler,IMenuPreparer, IViewPrepa
         finalisedFormHandler = new FinalisedFormHandler(activity);
         participants  = new ArrayList<>();
         householdServerStatusUpdater = new HouseholdServerStatusUpdater(activity);
+        progressDialog = new ProgressDialog(activity);
+        progressDialog.setMessage("Household uploading...");
+        progressDialog.setCancelable(false);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setIndeterminate(true);
     }
 
     @Override
@@ -86,10 +94,12 @@ public class SubmitDataHandler implements IMenuHandler,IMenuPreparer, IViewPrepa
                                     if (submitRecordsCheckBox.isChecked()) {
                                         finalisedFormHandler.open();
                                     }
+                                    progressDialog.show();
                                 }
 
                                 @Override
                                 public void onFileUploaded(boolean successful) {
+                                    progressDialog.dismiss();
                                     if (successful) {
                                         new CustomDialog().notify(activity, CustomDialog.EmptyListener, R.string.export_complete, R.string.export_complete_message);
                                         householdServerStatusUpdater.markAllSent();
