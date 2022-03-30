@@ -32,11 +32,13 @@ import com.onaio.steps.R;
 import com.onaio.steps.handler.exceptions.ExceptionHandler;
 import com.onaio.steps.handler.exceptions.IResolvableException;
 import com.onaio.steps.helper.Constants;
+import com.onaio.steps.helper.CustomDialog;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.helper.KeyValueStoreFactory;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.ODKForm.ODKBlankForm;
 import com.onaio.steps.modelViewWrapper.HouseholdViewWrapper;
+import com.onaio.steps.validators.PhoneNumberValidator;
 
 public class NewHouseholdActivity extends AppCompatActivity implements IResolvableException, ExceptionHandler.ExceptionAlertCallback {
 
@@ -45,6 +47,8 @@ public class NewHouseholdActivity extends AppCompatActivity implements IResolvab
     private int householdSeed;
     private ProgressDialog progressDialog;
     private ExceptionHandler exceptionHandler;
+    private PhoneNumberValidator phoneNumberValidator;
+    private CustomDialog customDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +60,7 @@ public class NewHouseholdActivity extends AppCompatActivity implements IResolvab
         progressDialog.setIndeterminate(true);
         exceptionHandler = new ExceptionHandler(this, this);
         exceptionHandler.setCallback(this);
+        customDialog = new CustomDialog();
         populateView();
         populateDataFromIntent();
         populateGeneratedHouseholdId();
@@ -67,6 +72,7 @@ public class NewHouseholdActivity extends AppCompatActivity implements IResolvab
         header.setText(R.string.household_new_header);
         Button doneButton = findViewById(R.id.ic_done);
         doneButton.setText(R.string.add);
+        phoneNumberValidator = new PhoneNumberValidator(findViewById(R.id.household_number));
     }
 
     private void populateGeneratedHouseholdId() {
@@ -85,11 +91,16 @@ public class NewHouseholdActivity extends AppCompatActivity implements IResolvab
     }
 
     public void doneBtnClicked(View view) {
-        if (!progressDialog.isShowing()) {
-            progressDialog.show();
-        }
+        if (phoneNumberValidator.validate()) {
+            if (!progressDialog.isShowing()) {
+                progressDialog.show();
+            }
 
-        saveHousehold();
+            saveHousehold();
+        }
+        else {
+            customDialog.notify(this, CustomDialog.EmptyListener, R.string.error_title, R.string.invalid_phone_number);
+        }
     }
 
     public void cancel(View view){

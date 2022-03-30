@@ -22,9 +22,11 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.onaio.steps.R;
+import com.onaio.steps.helper.CustomDialog;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.modelViewWrapper.HouseholdViewWrapper;
+import com.onaio.steps.validators.PhoneNumberValidator;
 
 import static com.onaio.steps.helper.Constants.HH_HOUSEHOLD;
 
@@ -33,10 +35,13 @@ import androidx.appcompat.app.AppCompatActivity;
 public class EditHouseholdActivity extends AppCompatActivity {
 
     private Household household;
+    private PhoneNumberValidator phoneNumberValidator;
+    private CustomDialog customDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        customDialog = new CustomDialog();
         populateView();
         populateDataFromIntent();
     }
@@ -45,6 +50,7 @@ public class EditHouseholdActivity extends AppCompatActivity {
         setContentView(R.layout.household_form);
         TextView header = (TextView) findViewById(R.id.form_header);
         header.setText(R.string.household_edit_header);
+        phoneNumberValidator = new PhoneNumberValidator(findViewById(R.id.household_number));
     }
 
     private void populateDataFromIntent() {
@@ -59,13 +65,18 @@ public class EditHouseholdActivity extends AppCompatActivity {
     }
 
     public void doneBtnClicked(View view) {
-            Intent intent = this.getIntent();
-            household = new HouseholdViewWrapper(this).updateHousehold(household, R.id.household_number,R.id.household_comments);
-            DatabaseHelper db = new DatabaseHelper(getApplicationContext());
-            household.update(db);
-            intent.putExtra(HH_HOUSEHOLD,household);
-            setResult(RESULT_OK, intent);
-            finish();
+            if (phoneNumberValidator.validate()) {
+                Intent intent = this.getIntent();
+                household = new HouseholdViewWrapper(this).updateHousehold(household, R.id.household_number,R.id.household_comments);
+                DatabaseHelper db = new DatabaseHelper(getApplicationContext());
+                household.update(db);
+                intent.putExtra(HH_HOUSEHOLD,household);
+                setResult(RESULT_OK, intent);
+                finish();
+            }
+            else {
+                customDialog.notify(this, CustomDialog.EmptyListener, R.string.error_title, R.string.invalid_phone_number);
+            }
     }
 
     public void cancel(View view){
