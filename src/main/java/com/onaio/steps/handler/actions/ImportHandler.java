@@ -118,11 +118,16 @@ public class ImportHandler implements IMenuHandler {
                 String surveyStatus = row[9];
                 String reasons = row[11];
                 String uniqueDeviceId = row[15];
+                String jrFormId = row[17];
+                String jrFormTitle = row[18];
+
                 Household household = Household.find_by(db, householdName);
                 if(household == null){
                     String currentDate = new SimpleDateFormat(Constants.DATE_FORMAT, Locale.ENGLISH).format(new Date());
                     household = new Household(householdName, phoneNumber, InterviewStatus.SELECTION_NOT_DONE, currentDate, uniqueDeviceId,comments, null);
                     household.setServerStatus(ServerStatus.NOT_SENT);
+                    household.setOdkJrFormId(jrFormId);
+                    household.setOdkJrFormTitle(jrFormTitle);
                     household.save(db);
                 }
                 //validate for members

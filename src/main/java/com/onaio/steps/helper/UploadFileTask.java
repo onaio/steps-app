@@ -21,7 +21,6 @@ import static com.onaio.steps.helper.Constants.HH_SURVEY_ID;
 import static com.onaio.steps.helper.Constants.HH_USER_ID;
 import static com.onaio.steps.helper.Constants.HH_USER_PASSWORD;
 
-import android.os.Handler;
 import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
@@ -32,7 +31,6 @@ import com.onaio.steps.clients.HouseholdService;
 import com.onaio.steps.handler.actions.ExportHandler;
 
 import java.io.File;
-import java.util.List;
 import java.util.Queue;
 
 import okhttp3.MediaType;
@@ -48,7 +46,6 @@ public class UploadFileTask {
     private final AppCompatActivity activity;
     private final ExportHandler.OnExportListener onExportListener;
     private final Retrofit retrofit;
-    private boolean isSuccess = false;
 
     public UploadFileTask(@NonNull AppCompatActivity activity, @NonNull ExportHandler.OnExportListener onExportListener) {
         this.activity = activity;
@@ -77,9 +74,6 @@ public class UploadFileTask {
 
                 if (!files.isEmpty()) {
                     upload(files, endPoint, surveyIdBody, userIdBody, userPasswordBody);
-                    /*new Handler().postDelayed(() -> {
-                        onExportListener.onFileUploaded(true);
-                    },3000);*/
                 }
             }
         } else {
@@ -106,8 +100,13 @@ public class UploadFileTask {
                         upload(files, endPoint, surveyIdBody, userIdBody, userPasswordBody);
                     }
                 } else {
-                    new CustomNotification().notify(activity, R.string.error_title, R.string.export_failed);
-                    onExportListener.onFileUploaded(false);
+                    if (files.isEmpty()) {
+                        new CustomNotification().notify(activity, R.string.error_title, R.string.export_failed);
+                        onExportListener.onFileUploaded(false);
+                    }
+                    else {
+                        upload(files, endPoint, surveyIdBody, userIdBody, userPasswordBody);
+                    }
                 }
             }
 
