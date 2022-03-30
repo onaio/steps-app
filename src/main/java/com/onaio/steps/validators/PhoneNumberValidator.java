@@ -1,8 +1,5 @@
 package com.onaio.steps.validators;
 
-import android.content.Context;
-
-import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatEditText;
 
 public class PhoneNumberValidator implements Validator {
@@ -10,8 +7,8 @@ public class PhoneNumberValidator implements Validator {
     public static final int DEFAULT_LENGTH = 7;
 
     private final AppCompatEditText appCompatEditText;
-    private int minLength;
-    private int maxLength;
+    private final int minLength;
+    private final int maxLength;
 
     public PhoneNumberValidator(AppCompatEditText appCompatEditText) {
         this(appCompatEditText, DEFAULT_LENGTH, DEFAULT_LENGTH);
