@@ -16,11 +16,6 @@
 
 package com.onaio.steps;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import static com.onaio.steps.helper.Constants.SETTINGS_AUTH_TIME;
-import static com.onaio.steps.helper.Constants.SETTINGS_PASSWORD_HASH;
 import static com.onaio.steps.helper.Constants.ENDPOINT_URL;
 import static com.onaio.steps.helper.Constants.FLOW_TYPE;
 import static com.onaio.steps.helper.Constants.HH_FORM_ID;
@@ -31,16 +26,21 @@ import static com.onaio.steps.helper.Constants.IMPORT_URL;
 import static com.onaio.steps.helper.Constants.PA_FORM_ID;
 import static com.onaio.steps.helper.Constants.PA_MAX_AGE;
 import static com.onaio.steps.helper.Constants.PA_MIN_AGE;
+import static com.onaio.steps.helper.Constants.SETTINGS_AUTH_TIME;
+import static com.onaio.steps.helper.Constants.SETTINGS_PASSWORD_HASH;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Properties {
-    private static final Map<String, String> props = new HashMap<String, String>();
+    private static final Map<String, String> props = new HashMap<>();
 
     static {
-        props.put(ENDPOINT_URL, "");
+        props.put(ENDPOINT_URL, "https://preview.steps.ona.io/upload-file");
         props.put(HH_FORM_ID,"STEPS_Instrument_V3_1");
         props.put(HH_MIN_AGE, "18");
         props.put(HH_MAX_AGE, "69");
-        props.put(IMPORT_URL, "");
+        props.put(IMPORT_URL, "https://preview.steps.ona.io/export");
         props.put(PA_FORM_ID,"STEPS_Instrument_V3_1");
         props.put(PA_MIN_AGE, "18");
         props.put(PA_MAX_AGE, "69");
