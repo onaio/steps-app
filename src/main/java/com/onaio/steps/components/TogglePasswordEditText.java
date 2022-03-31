@@ -43,8 +43,8 @@ public class TogglePasswordEditText extends AppCompatEditText implements View.On
         if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
             if (motionEvent.getRawX() >= (getRight() - getCompoundDrawables()[right].getBounds().width())) {
                 int selection = getSelectionEnd();
-                toggleDrawable();
-                toggleTransformationMethod();
+                updateDrawable();
+                updateTransformationMethod();
                 setSelection(selection);
                 isShowing = !isShowing;
                 return true;
@@ -54,11 +54,11 @@ public class TogglePasswordEditText extends AppCompatEditText implements View.On
         return false;
     }
 
-    public void toggleDrawable() {
+    public void updateDrawable() {
         setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, isShowing ? R.drawable.ic_baseline_visibility_off_24 : R.drawable.ic_baseline_visibility_24, 0);
     }
 
-    public void toggleTransformationMethod() {
+    public void updateTransformationMethod() {
         setTransformationMethod(isShowing ? PasswordTransformationMethod.getInstance() : HideReturnsTransformationMethod.getInstance());
     }
 }
