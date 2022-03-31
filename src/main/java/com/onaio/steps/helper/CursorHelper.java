@@ -16,6 +16,7 @@
 
 package com.onaio.steps.helper;
 
+import android.annotation.SuppressLint;
 import android.database.Cursor;
 
 import com.onaio.steps.model.Gender;
@@ -63,9 +64,9 @@ public class CursorHelper {
                 String comments = cursor.getString(cursor.getColumnIndex(Household.COMMENTS));
                 String uniqueDeviceId = cursor.getString(cursor.getColumnIndex(Household.UNIQUE_DEVICE_ID));
                 String serverStatus = cursor.getString(cursor.getColumnIndex(Household.SERVER_STATUS));
-                String odkFormId = cursor.getString(cursor.getColumnIndex(Household.ODK_FORM_ID));
-                String odkJrFormId = cursor.getString(cursor.getColumnIndex(Household.ODK_JR_FORM_ID));
-                String odkJrFormTitle = cursor.getString(cursor.getColumnIndex(Household.ODK_JR_FORM_TITLE));
+                String odkFormId = getString(cursor, Household.ODK_FORM_ID, null);
+                String odkJrFormId = getString(cursor, Household.ODK_JR_FORM_ID, "");
+                String odkJrFormTitle = getString(cursor, Household.ODK_JR_FORM_TITLE, "");
 
                 String memberFamilySurname = cursor.getColumnIndex(Member.FAMILY_SURNAME) != -1 ? cursor.getString(cursor.getColumnIndex(Member.FAMILY_SURNAME)) : null;
                 String memberFirstName = cursor.getColumnIndex(Member.FIRST_NAME) != -1 ? cursor.getString(cursor.getColumnIndex(Member.FIRST_NAME)) : null;
@@ -109,5 +110,15 @@ public class CursorHelper {
         }
         cursor.close();
         return participants;
+    }
+
+    @SuppressLint("Range")
+    public String getString(Cursor cursor, String column, String defaultValue) {
+        try {
+            return cursor.getString(cursor.getColumnIndex(column));
+        } catch (Exception e) {
+            e.getStackTrace();
+            return defaultValue;
+        }
     }
 }
