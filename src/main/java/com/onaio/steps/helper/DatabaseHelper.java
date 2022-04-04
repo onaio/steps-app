@@ -27,6 +27,7 @@ import com.onaio.steps.model.Household;
 import com.onaio.steps.model.Member;
 import com.onaio.steps.model.Participant;
 import com.onaio.steps.model.ReElectReason;
+import com.onaio.steps.model.ServerStatus;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -37,7 +38,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public DatabaseHelper(Context context){
         super(context, DATABASE_NAME,null, DATABASE_VERSION);
     }
-
 
     @Override
     public void onCreate(SQLiteDatabase db) {
@@ -52,7 +52,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             onCreate(db);
 
         } else if (oldVersion < 2) {
-            //db.execSQL("ALTER TABLE " + Household.TABLE_NAME + " ADD COLUMN " + Household.SERVER_STATUS + " TEXT default 'NOT_SENT'");
+            db.execSQL("ALTER TABLE " + Household.TABLE_NAME + " ADD COLUMN " + Household.SERVER_STATUS + " TEXT default '" + ServerStatus.NOT_SENT + "'");
             db.execSQL("ALTER TABLE " + Household.TABLE_NAME + " ADD COLUMN " + Household.ODK_FORM_ID + " TEXT default null");
             db.execSQL("ALTER TABLE " + Household.TABLE_NAME + " ADD COLUMN " + Household.ODK_JR_FORM_ID + " TEXT default '" + BuildConfig.JR_FORM_ID + "'");
             db.execSQL("ALTER TABLE " + Household.TABLE_NAME + " ADD COLUMN " + Household.ODK_JR_FORM_TITLE + " TEXT default '" + BuildConfig.JR_FORM_TITLE + "'");
