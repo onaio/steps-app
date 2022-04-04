@@ -1,6 +1,5 @@
 package com.onaio.steps.handler.exceptions;
 
-import android.content.DialogInterface;
 import android.os.Handler;
 import android.util.Log;
 
@@ -55,14 +54,13 @@ public class ExceptionHandler {
     }
 
     public void alertError(Exception e, int message) {
-        customDialog.notify(activity, (dialogInterface, i) -> {
-               if (callback != null) {
-                   callback.onDismiss(e, message);
-               }
-        }, R.string.error_title, message);
+        if (callback != null) {
+            callback.onError(e, message);
+        }
+        customDialog.notify(activity, CustomDialog.EmptyListener, R.string.error_title, message);
     }
 
     public interface ExceptionAlertCallback {
-        void onDismiss(Exception e, int message);
+        void onError(Exception e, int message);
     }
 }

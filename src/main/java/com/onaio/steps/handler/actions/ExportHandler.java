@@ -29,6 +29,8 @@ import android.view.MenuItem;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.onaio.steps.R;
+import com.onaio.steps.decorators.FileDecorator;
+import com.onaio.steps.decorators.StepsFileDecorator;
 import com.onaio.steps.handler.interfaces.IMenuHandler;
 import com.onaio.steps.handler.interfaces.IMenuPreparer;
 import com.onaio.steps.helper.Constants;
@@ -42,6 +44,7 @@ import com.onaio.steps.helper.UploadFileTask;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.Member;
 import com.onaio.steps.model.ReElectReason;
+import com.onaio.steps.model.UploadResult;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -85,29 +88,23 @@ public class ExportHandler implements IMenuHandler,IMenuPreparer {
 
     @Override
     public boolean open() {
-        DialogInterface.OnClickListener uploadConfirmListener = new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                if(onExportListener != null)  onExportListener.onExportStart();
-                try {
-                    Queue<File> files = saveFile();
-                    if(onExportListener != null) onExportListener.onFileSaved();
-                    if (NetworkConnectivity.isNetworkAvailable(activity)) {
-                        new UploadFileTask(activity, onExportListener).prepareForUpload(files);
-                    } else {
-                        new CustomDialog().notify(activity, CustomDialog.EmptyListener, R.string.error_title, R.string.fail_no_connectivity);
-                    }
-                } catch (IOException e) {
-                    new Logger().log(e,"Not able to write CSV file for export.");
-                    new CustomDialog().notify(activity, CustomDialog.EmptyListener, R.string.error_title, R.string.something_went_wrong_try_again);
+        DialogInterface.OnClickListener uploadConfirmListener = (dialogInterface, i) -> {
+            if(onExportListener != null)  onExportListener.onExportStart();
+            try {
+                Queue<FileDecorator> fileDecorators = saveFiles();
+                if(onExportListener != null) onExportListener.onFileSaved();
+                if (NetworkConnectivity.isNetworkAvailable(activity)) {
+                    new UploadFileTask(activity, onExportListener).prepareForUpload(fileDecorators);
+                } else {
+                    onExportListener.onError(activity.getString(R.string.fail_no_connectivity));
                 }
+            } catch (IOException e) {
+                new Logger().log(e,"Not able to write CSV file for export.");
+                onExportListener.onError(activity.getString(R.string.something_went_wrong_try_again));
             }
         };
-        DialogInterface.OnClickListener uploadCancelledListener = new DialogInterface.OnClickListener(){
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                if(onExportListener != null) onExportListener.onExportCancelled();
-            }
+        DialogInterface.OnClickListener uploadCancelledListener = (dialogInterface, i) -> {
+            if(onExportListener != null) onExportListener.onExportCancelled();
         };
         new CustomDialog().confirm(activity, uploadConfirmListener, uploadCancelledListener, R.string.export_start_message, R.string.action_export);
         return true;
@@ -121,7 +118,7 @@ public class ExportHandler implements IMenuHandler,IMenuPreparer {
         return null;
     }
 
-    public Queue<File> saveFile() throws IOException {
+    public Queue<FileDecorator> saveFiles() throws IOException {
 
         Map<String, List<Household>> householdMap = new Hashtable<>();
 
@@ -130,14 +127,14 @@ public class ExportHandler implements IMenuHandler,IMenuPreparer {
                 householdMap.get(household.getOdkJrFormId()).add(household);
             }
             else {
-                List<Household> data = new ArrayList<>();
-                data.add(household);
-                householdMap.put(household.getOdkJrFormId(), data);
+                List<Household> householdsList = new ArrayList<>();
+                householdsList.add(household);
+                householdMap.put(household.getOdkJrFormId(), householdsList);
             }
         }
 
         String deviceId = getDeviceId();
-        Queue<File> files = new LinkedList<>();
+        Queue<FileDecorator> files = new LinkedList<>();
 
         for (Map.Entry<String, List<Household>> entry : householdMap.entrySet()) {
 
@@ -200,7 +197,10 @@ public class ExportHandler implements IMenuHandler,IMenuPreparer {
                 fileUtil.withData(row.toArray(new String[row.size()]));
             }
 
-            files.add(fileUtil.writeCSV(activity.getFilesDir() + "/" + Constants.EXPORT_FILE_NAME + "_" + entry.getKey() + "_" + deviceId + ".csv"));
+            File file = fileUtil.writeCSV(activity.getFilesDir() + "/" + Constants.EXPORT_FILE_NAME + "_" + entry.getKey() + "_" + deviceId + ".csv");
+            StepsFileDecorator stepsFileDecorator = new StepsFileDecorator(file);
+            stepsFileDecorator.setFormTitle(entry.getValue().get(0).getOdkJrFormTitle());
+            files.add(stepsFileDecorator);
         }
 
         return files;
@@ -263,6 +263,7 @@ public class ExportHandler implements IMenuHandler,IMenuPreparer {
         void onExportCancelled();
         void onExportStart();
         void onFileSaved();
-        void onFileUploaded(boolean successful);
+        void onFileUploaded(List<UploadResult> uploadResults);
+        void onError(String error);
     }
 }

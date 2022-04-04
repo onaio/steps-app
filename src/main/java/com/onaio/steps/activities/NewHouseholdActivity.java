@@ -38,6 +38,8 @@ import com.onaio.steps.model.Household;
 import com.onaio.steps.model.ODKForm.ODKBlankForm;
 import com.onaio.steps.modelViewWrapper.HouseholdViewWrapper;
 
+import java.util.Locale;
+
 public class NewHouseholdActivity extends AppCompatActivity implements IResolvableException, ExceptionHandler.ExceptionAlertCallback {
 
     private final DatabaseHelper db = new DatabaseHelper(this);
@@ -51,7 +53,7 @@ public class NewHouseholdActivity extends AppCompatActivity implements IResolvab
         super.onCreate(savedInstanceState);
         progressDialog = new ProgressDialog(this);
         progressDialog.setCancelable(false);
-        progressDialog.setMessage("Saving Household...");
+        progressDialog.setMessage(getString(R.string.saving_household));
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setIndeterminate(true);
         exceptionHandler = new ExceptionHandler(this, this);
@@ -73,7 +75,7 @@ public class NewHouseholdActivity extends AppCompatActivity implements IResolvab
         TextView phoneIdView = findViewById(R.id.generated_household_id);
         int householdsCount = Household.getAllCount(db);
         int generatedId = householdSeed + householdsCount;
-        phoneIdView.setText(String.format("%s-%s",phoneId, generatedId));
+        phoneIdView.setText(String.format(Locale.getDefault(), "%s-%d",phoneId, generatedId));
     }
 
     private void populateDataFromIntent() {
@@ -123,7 +125,7 @@ public class NewHouseholdActivity extends AppCompatActivity implements IResolvab
     }
 
     @Override
-    public void onDismiss(Exception e, int message) {
+    public void onError(Exception e, int message) {
         progressDialog.dismiss();
     }
 }

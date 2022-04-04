@@ -2,6 +2,7 @@ package com.onaio.steps.utils;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.ArgumentMatchers.nullable;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -14,9 +15,11 @@ import android.os.RemoteException;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.onaio.steps.model.ODKForm.ODKSavedForm;
+
 public class Faker {
 
-    public static void findODKBlankForm(AppCompatActivity activity) throws RemoteException {
+    public static void mockQueryInActivityToFindOdkBlankForm(AppCompatActivity activity) throws RemoteException {
         ContentResolver contentResolver = mock(ContentResolver.class);
         ContentProviderClient contentProviderClient = mock(ContentProviderClient.class);
         Cursor cursor = mock(Cursor.class);
@@ -37,14 +40,14 @@ public class Faker {
         when(cursor.getString(4)).thenReturn("path");
     }
 
-    public static void findODKSavedForm(AppCompatActivity activity) throws RemoteException {
+    public static void mockQueryInActivityToFindOdkSavedForm(AppCompatActivity activity) throws RemoteException {
         ContentResolver contentResolver = mock(ContentResolver.class);
         ContentProviderClient contentProviderClient = mock(ContentProviderClient.class);
         Cursor cursor = mock(Cursor.class);
 
         when(activity.getContentResolver()).thenReturn(contentResolver);
-        when(contentResolver.acquireContentProviderClient(any(Uri.class))).thenReturn(contentProviderClient);
-        when(contentProviderClient.query(any(Uri.class), nullable(String[].class), anyString(), any(String[].class), nullable(String.class))).thenReturn(cursor);
+        when(contentResolver.acquireContentProviderClient(eq(ODKSavedForm.URI))).thenReturn(contentProviderClient);
+        when(contentProviderClient.query(eq(ODKSavedForm.URI), eq(null), eq("_id = ?"), any(String[].class), eq(null))).thenReturn(cursor);
         when(cursor.moveToFirst()).thenReturn(true);
         when(cursor.getColumnIndex("_id")).thenReturn(0);
         when(cursor.getColumnIndex("jrFormId")).thenReturn(1);

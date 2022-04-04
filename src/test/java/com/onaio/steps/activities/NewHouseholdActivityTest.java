@@ -65,7 +65,7 @@ public class NewHouseholdActivityTest extends StepsTestRunner {
         this.newHouseholdActivity = Mockito.spy(newHouseholdActivity);
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(newHouseholdActivity);
         sharedPreferences.edit().putString(Constants.UNIQUE_DEVICE_ID, "testUniqueDevId").apply();
-        Faker.findODKBlankForm(this.newHouseholdActivity);
+        Faker.mockQueryInActivityToFindOdkBlankForm(this.newHouseholdActivity);
     }
 
     @Test
@@ -99,7 +99,10 @@ public class NewHouseholdActivityTest extends StepsTestRunner {
         newHouseholdActivity.doneBtnClicked(viewMock);
 
         Intent intent = newHouseholdActivity.getIntent();
-        assertEquals(household, intent.getSerializableExtra(Constants.HH_HOUSEHOLD));
+        Household actualHousehold = (Household) intent.getSerializableExtra(Constants.HH_HOUSEHOLD);
+        assertEquals(household, actualHousehold);
+        assertEquals("jrFormId", actualHousehold.getOdkJrFormId());
+        assertEquals("displayName", actualHousehold.getOdkJrFormTitle());
         assertTrue(newHouseholdActivity.isFinishing());
     }
 

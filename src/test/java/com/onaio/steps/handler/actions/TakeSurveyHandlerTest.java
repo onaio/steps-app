@@ -231,13 +231,16 @@ public class TakeSurveyHandlerTest extends StepsTestRunner {
     }
 
     @Test
-    public void testOpenShouldCallStrategyOpenMethodAndHandleException() throws IOException {
+    public void testOpenShouldCallStrategyOpenMethod() throws IOException {
         doNothing().when(takeSurveyForHouseholdStrategy).open();
         takeSurveyHandler.open();
 
         verify(takeSurveyForHouseholdStrategy, times(1)).open();
+    }
 
-        // handle exception
+    @Test
+    public void testOpenShouldThrowExceptionWhenCallStrategyOpenMethod() throws IOException {
+
         doThrow(NullPointerException.class).when(takeSurveyForHouseholdStrategy).open();
         takeSurveyHandler.open();
 
@@ -248,8 +251,8 @@ public class TakeSurveyHandlerTest extends StepsTestRunner {
     }
 
     @Test
-    public void testGetSavedFormsShouldReturnSavedFormAndHandleException() throws RemoteException {
-        Faker.findODKSavedForm(householdActivitySpy);
+    public void testGetSavedFormsShouldReturnSavedForm() throws RemoteException {
+        Faker.mockQueryInActivityToFindOdkSavedForm(householdActivitySpy);
 
         Intent intent = mock(Intent.class);
         Uri uri = mock(Uri.class);
@@ -266,7 +269,18 @@ public class TakeSurveyHandlerTest extends StepsTestRunner {
         assertEquals("displayName", savedForm.getDisplayName());
         assertEquals("complete", savedForm.getStatus());
 
-        // handle exception
+    }
+
+    @Test
+    public void testGetSavedFormsShouldReturnNullWhenExceptionOccur() throws RemoteException {
+        Faker.mockQueryInActivityToFindOdkSavedForm(householdActivitySpy);
+
+        Intent intent = mock(Intent.class);
+        Uri uri = mock(Uri.class);
+
+        when(intent.getData()).thenReturn(uri);
+        when(uri.getLastPathSegment()).thenReturn("");
+
         ContentResolver contentResolver = householdActivitySpy.getContentResolver();
         when(contentResolver.acquireContentProviderClient(any(Uri.class))).thenReturn(null);
 

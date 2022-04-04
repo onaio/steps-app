@@ -28,9 +28,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.onaio.steps.R;
 import com.onaio.steps.clients.HouseholdService;
+import com.onaio.steps.decorators.FileDecorator;
 import com.onaio.steps.handler.actions.ExportHandler;
+import com.onaio.steps.model.UploadResult;
 
-import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Queue;
 
 import okhttp3.MediaType;
@@ -53,7 +56,7 @@ public class UploadFileTask {
         this.retrofit = new Retrofit.Builder().baseUrl("https://steps.ona.io/").build();
     }
 
-    public void prepareForUpload(Queue<File> files) {
+    public void prepareForUpload(Queue<FileDecorator> fileDecorators) {
         if (!TextUtils.isEmpty(KeyValueStoreFactory.instance(activity).getString(ENDPOINT_URL))) {
 
             String endPoint = KeyValueStoreFactory.instance(activity).getString(ENDPOINT_URL);
@@ -64,57 +67,57 @@ public class UploadFileTask {
             String userPassword = store.getString(HH_USER_PASSWORD);
 
             if (surveyId.isEmpty() || userId.isEmpty() || userPassword.isEmpty()) {
-                new CustomNotification().notify(activity, R.string.error_title, R.string.invalid_fields_error);
-                onExportListener.onFileUploaded(false);
+                onExportListener.onError(activity.getString(R.string.invalid_fields_error));
             } else {
 
                 RequestBody surveyIdBody = RequestBody.create(MediaType.parse("text/plain"), surveyId);
                 RequestBody userIdBody = RequestBody.create(MediaType.parse("text/plain"), userId);
                 RequestBody userPasswordBody = RequestBody.create(MediaType.parse("text/plain"), userPassword);
 
-                if (!files.isEmpty()) {
-                    upload(files, endPoint, surveyIdBody, userIdBody, userPasswordBody);
+                if (!fileDecorators.isEmpty()) {
+                    upload(fileDecorators, endPoint, surveyIdBody, userIdBody, userPasswordBody, new ArrayList<>());
                 }
             }
         } else {
-            new CustomNotification().notify(activity, R.string.error_title, R.string.export_failed);
-            onExportListener.onFileUploaded(false);
+            onExportListener.onError(activity.getString(R.string.export_failed));
         }
     }
 
-    public void upload(Queue<File> files, String endPoint, RequestBody surveyIdBody, RequestBody userIdBody, RequestBody userPasswordBody) {
+    public void upload(Queue<FileDecorator> fileDecorators, String endPoint, RequestBody surveyIdBody, RequestBody userIdBody, RequestBody userPasswordBody, List<UploadResult> uploadResults) {
 
-        File file = files.remove();
+        FileDecorator fileDecorator = fileDecorators.remove();
         String fileType = "text/csv";
-        RequestBody requestFile = RequestBody.create(MediaType.parse(fileType), file);
-        MultipartBody.Part fileBody = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
+        RequestBody requestFile = RequestBody.create(MediaType.parse(fileType), fileDecorator.getFile());
+        MultipartBody.Part fileBody = MultipartBody.Part.createFormData("file", fileDecorator.getFile().getName(), requestFile);
 
         retrofit.create(HouseholdService.class).uploadData(endPoint, fileBody, surveyIdBody, userIdBody, userPasswordBody).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if (response.isSuccessful() && response.code() == 201) {
-                    if (files.isEmpty()) {
-                        new CustomNotification().notify(activity, R.string.export_complete, R.string.export_complete_message);
-                        onExportListener.onFileUploaded(true);
-                    } else {
-                        upload(files, endPoint, surveyIdBody, userIdBody, userPasswordBody);
-                    }
-                } else {
-                    if (files.isEmpty()) {
-                        new CustomNotification().notify(activity, R.string.error_title, R.string.export_failed);
-                        onExportListener.onFileUploaded(false);
-                    }
-                    else {
-                        upload(files, endPoint, surveyIdBody, userIdBody, userPasswordBody);
-                    }
+
+                uploadResults.add(new UploadResult(fileDecorator.getFormTitle(), response.isSuccessful() && response.code() == 201));
+
+                if (!isDone(fileDecorators, uploadResults)) {
+                    upload(fileDecorators, endPoint, surveyIdBody, userIdBody, userPasswordBody, uploadResults);
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                new CustomNotification().notify(activity, R.string.error_title, R.string.export_failed);
-                onExportListener.onFileUploaded(false);
+
+                uploadResults.add(new UploadResult(fileDecorator.getFormTitle(), false));
+
+                if (!isDone(fileDecorators, uploadResults)) {
+                    upload(fileDecorators, endPoint, surveyIdBody, userIdBody, userPasswordBody, uploadResults);
+                }
             }
         });
+    }
+
+    public boolean isDone(Queue<FileDecorator> fileDecorators, List<UploadResult> uploadResults) {
+        boolean isDone = fileDecorators.isEmpty();
+        if (isDone) {
+            onExportListener.onFileUploaded(uploadResults);
+        }
+        return isDone;
     }
 }
