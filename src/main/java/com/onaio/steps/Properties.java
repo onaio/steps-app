@@ -36,11 +36,11 @@ public class Properties {
     private static final Map<String, String> props = new HashMap<>();
 
     static {
-        props.put(ENDPOINT_URL, "https://preview.steps.ona.io/upload-file");
+        props.put(ENDPOINT_URL, BuildConfig.ENDPOINT_URL);
         props.put(HH_FORM_ID,"STEPS_Instrument_V3_1");
         props.put(HH_MIN_AGE, "18");
         props.put(HH_MAX_AGE, "69");
-        props.put(IMPORT_URL, "https://preview.steps.ona.io/export");
+        props.put(IMPORT_URL, BuildConfig.IMPORT_URL);
         props.put(PA_FORM_ID,"STEPS_Instrument_V3_1");
         props.put(PA_MIN_AGE, "18");
         props.put(PA_MAX_AGE, "69");

@@ -62,9 +62,13 @@ android {
     buildTypes {
         debug {
             testCoverageEnabled true
+            buildConfigField 'String', 'ENDPOINT_URL', ENDPOINT_URL
+            buildConfigField 'String', 'IMPORT_URL', IMPORT_URL
         }
         release {
             signingConfig signingConfigs.release
+            buildConfigField 'String', 'ENDPOINT_URL', ENDPOINT_URL
+            buildConfigField 'String', 'IMPORT_URL', IMPORT_URL
         }
     }
     android {
