@@ -22,6 +22,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.onaio.steps.BuildConfig;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.Member;
 import com.onaio.steps.model.Participant;
@@ -30,7 +31,7 @@ import com.onaio.steps.model.ReElectReason;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "householdManager";
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 2;
     private SQLiteDatabase readableDb;
 
     public DatabaseHelper(Context context){
@@ -44,9 +45,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i2) {
-        purgeTables(sqLiteDatabase);
-        onCreate(sqLiteDatabase);
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+
+        if (oldVersion < 1) {
+            purgeTables(db);
+            onCreate(db);
+
+        } else if (oldVersion < 2) {
+            //db.execSQL("ALTER TABLE " + Household.TABLE_NAME + " ADD COLUMN " + Household.SERVER_STATUS + " TEXT default 'NOT_SENT'");
+            db.execSQL("ALTER TABLE " + Household.TABLE_NAME + " ADD COLUMN " + Household.ODK_FORM_ID + " TEXT default null");
+            db.execSQL("ALTER TABLE " + Household.TABLE_NAME + " ADD COLUMN " + Household.ODK_JR_FORM_ID + " TEXT default '" + BuildConfig.JR_FORM_ID + "'");
+            db.execSQL("ALTER TABLE " + Household.TABLE_NAME + " ADD COLUMN " + Household.ODK_JR_FORM_TITLE + " TEXT default '" + BuildConfig.JR_FORM_TITLE + "'");
+        }
     }
 
     private void createTables(SQLiteDatabase sqLiteDatabase) {
