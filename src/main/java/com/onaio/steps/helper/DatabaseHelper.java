@@ -56,6 +56,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             db.execSQL("ALTER TABLE " + Household.TABLE_NAME + " ADD COLUMN " + Household.ODK_FORM_ID + " TEXT default null");
             db.execSQL("ALTER TABLE " + Household.TABLE_NAME + " ADD COLUMN " + Household.ODK_JR_FORM_ID + " TEXT default '" + BuildConfig.JR_FORM_ID + "'");
             db.execSQL("ALTER TABLE " + Household.TABLE_NAME + " ADD COLUMN " + Household.ODK_JR_FORM_TITLE + " TEXT default '" + BuildConfig.JR_FORM_TITLE + "'");
+            db.execSQL("ALTER TABLE " + Participant.TABLE_NAME + " ADD COLUMN " + Participant.ODK_FORM_ID + " TEXT default null");
         }
     }
 

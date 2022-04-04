@@ -33,15 +33,15 @@ import static com.onaio.steps.helper.Constants.PA_MAX_AGE;
 import static com.onaio.steps.helper.Constants.PA_MIN_AGE;
 
 public class Properties {
-    private static final Map<String, String> props = new HashMap<String, String>();
+    private static final Map<String, String> props = new HashMap<>();
 
     static {
         props.put(ENDPOINT_URL, "");
-        props.put(HH_FORM_ID,"STEPS_Instrument_V3_1");
+        props.put(HH_FORM_ID,BuildConfig.JR_FORM_ID);
         props.put(HH_MIN_AGE, "18");
         props.put(HH_MAX_AGE, "69");
         props.put(IMPORT_URL, "");
-        props.put(PA_FORM_ID,"STEPS_Instrument_V3_1");
+        props.put(PA_FORM_ID,BuildConfig.JR_FORM_ID);
         props.put(PA_MIN_AGE, "18");
         props.put(PA_MAX_AGE, "69");
         props.put(FLOW_TYPE, "None");
