@@ -40,7 +40,7 @@ public class HouseholdUploadResultDialog extends DialogFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Collections.sort(uploadResults, (ur1, ur2) -> Boolean.compare(ur1.isSuccess(), ur2.isSuccess()));
+        Collections.sort(uploadResults, (ur1, ur2) -> (ur1.isSuccess() != ur2.isSuccess()) ? (ur1.isSuccess()) ? -1 : 1 : 0);
 
         UploadResultAdapter uploadResultAdapter = new UploadResultAdapter(uploadResults);
         RecyclerView recyclerView = rootView.findViewById(R.id.rv_upload_results);
@@ -74,6 +74,10 @@ public class HouseholdUploadResultDialog extends DialogFragment {
         @Override
         public int getItemCount() {
             return uploadResults.size();
+        }
+
+        public List<UploadResult> getUploadResults() {
+            return this.uploadResults;
         }
 
         public static class ViewHolder extends RecyclerView.ViewHolder {

@@ -174,6 +174,6 @@ public class SubmitDataHandler implements IMenuHandler,IMenuPreparer, IViewPrepa
 
     public void displayUploadResult(List<UploadResult> uploadResults) {
         HouseholdUploadResultDialog householdUploadResultDialog = new HouseholdUploadResultDialog(uploadResults);
-        householdUploadResultDialog.show(activity.getSupportFragmentManager(), "HOUSEHOLD_UPLOAD_RESULT");
+        householdUploadResultDialog.show(activity.getSupportFragmentManager(), HouseholdUploadResultDialog.class.getSimpleName());
     }
 }
