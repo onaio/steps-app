@@ -16,6 +16,7 @@
 
 package com.onaio.steps.handler.actions;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
@@ -43,7 +44,7 @@ public class NotReachableHandlerTest extends StepsTestRunner {
     private Household householdMock;
     private NotReachableHandler notReachableHandler;
     private CustomDialog dialogMock;
-    private int MENU_ID = R.id.action_not_reachable;
+    private final int MENU_ID = R.id.action_not_reachable;
 
 
     @Before
@@ -128,5 +129,8 @@ public class NotReachableHandlerTest extends StepsTestRunner {
         verify(viewMock).setVisibility(View.VISIBLE);
     }
 
-
+    @Test
+    public void ShouldReturnExpectedViewId() {
+        assertEquals(MENU_ID, notReachableHandler.getViewId());
+    }
 }
