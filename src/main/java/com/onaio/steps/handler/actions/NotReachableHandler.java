@@ -32,7 +32,6 @@ public class NotReachableHandler implements IMenuHandler,IMenuPreparer {
     private final IDoNotTakeSurveyStrategy refusedSurveyStrategy;
     private final CustomDialog dialog;
     private final AppCompatActivity activity;
-    private final int MENU_ID = R.id.action_not_reachable;
 
     public NotReachableHandler(AppCompatActivity activity, IDoNotTakeSurveyStrategy refusedSurveyStrategy) {
         this(activity, refusedSurveyStrategy, new CustomDialog());
@@ -62,13 +61,7 @@ public class NotReachableHandler implements IMenuHandler,IMenuPreparer {
     }
 
     private void confirm() {
-        DialogInterface.OnClickListener confirmListener = new DialogInterface.OnClickListener() {
-
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                refuse();
-            }
-        };
+        DialogInterface.OnClickListener confirmListener = (dialogInterface, i) -> refuse();
         dialog.confirm(activity, confirmListener, CustomDialog.EmptyListener, refusedSurveyStrategy.dialogMessage(), R.string.survey_not_reachable_title);
     }
 
@@ -90,6 +83,6 @@ public class NotReachableHandler implements IMenuHandler,IMenuPreparer {
     }
 
     public int getViewId() {
-        return MENU_ID;
+        return R.id.action_not_reachable;
     }
 }

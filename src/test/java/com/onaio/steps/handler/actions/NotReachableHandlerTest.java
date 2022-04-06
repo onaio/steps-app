@@ -44,8 +44,7 @@ public class NotReachableHandlerTest extends StepsTestRunner {
     private Household householdMock;
     private NotReachableHandler notReachableHandler;
     private CustomDialog dialogMock;
-    private final int MENU_ID = R.id.action_not_reachable;
-
+    private static final int MENU_ID = R.id.action_not_reachable;
 
     @Before
     public void setup(){

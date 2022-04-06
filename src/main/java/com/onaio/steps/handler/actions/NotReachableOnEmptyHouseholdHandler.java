@@ -23,14 +23,12 @@ import com.onaio.steps.handler.strategies.survey.interfaces.IDoNotTakeSurveyStra
 
 public class NotReachableOnEmptyHouseholdHandler extends NotReachableHandler {
 
-    private final int MENU_ID = R.id.action_not_reachable_empty_hh;
-
     public NotReachableOnEmptyHouseholdHandler(AppCompatActivity activity, IDoNotTakeSurveyStrategy refusedSurveyStrategy) {
         super(activity, refusedSurveyStrategy);
     }
 
     @Override
     public int getViewId() {
-        return MENU_ID;
+        return R.id.action_not_reachable_empty_hh;
     }
 }

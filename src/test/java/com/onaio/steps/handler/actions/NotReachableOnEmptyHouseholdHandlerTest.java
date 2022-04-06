@@ -31,7 +31,7 @@ import org.mockito.Mockito;
 public class NotReachableOnEmptyHouseholdHandlerTest extends StepsTestRunner {
 
     private NotReachableOnEmptyHouseholdHandler notReachableHandler;
-    private final int MENU_ID = R.id.action_not_reachable_empty_hh;
+    private static final int MENU_ID = R.id.action_not_reachable_empty_hh;
 
     @Before
     public void setup(){
