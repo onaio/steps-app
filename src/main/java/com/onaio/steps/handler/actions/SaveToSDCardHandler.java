@@ -97,7 +97,7 @@ public class SaveToSDCardHandler implements IMenuHandler {
     public void saveToSDCard() {
         // Write CSV to internal and external storage before transferring to SD Card.
         try {
-            new ExportHandler(activity).with(households).saveFile();
+            new ExportHandler(activity).with(households).saveFiles();
         } catch (IOException e) {
             Log.d("Error", "Writing csv to internal and external storage failed.");
         }

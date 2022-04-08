@@ -1,4 +1,4 @@
-package com.onaio.steps.handler;
+package com.onaio.steps.handler.exceptions;
 
 import android.os.Handler;
 import android.util.Log;
@@ -8,30 +8,30 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.onaio.steps.R;
 import com.onaio.steps.exceptions.AppNotInstalledException;
 import com.onaio.steps.exceptions.FormNotPresentException;
-import com.onaio.steps.handler.interfaces.IMenuHandler;
 import com.onaio.steps.helper.CustomDialog;
 
 public class ExceptionHandler {
 
     private final AppCompatActivity activity;
-    private final IMenuHandler menuHandler;
+    private final IResolvableException resolvableException;
     private final CustomDialog customDialog;
     private final Handler handler;
+    private ExceptionAlertCallback callback;
     private boolean canRetry = true;
 
-    public ExceptionHandler(AppCompatActivity activity, IMenuHandler menuHandler) {
+    public ExceptionHandler(AppCompatActivity activity, IResolvableException resolvableException) {
         this.activity = activity;
-        this.menuHandler = menuHandler;
+        this.resolvableException = resolvableException;
         this.customDialog = new CustomDialog();
         this.handler = new Handler();
     }
 
     public void handle(Exception e) {
         if (e instanceof FormNotPresentException) {
-            alertError(R.string.form_not_present);
+            alertError(e, R.string.form_not_present);
         }
         else if(e instanceof AppNotInstalledException) {
-            alertError(R.string.odk_app_not_installed);
+            alertError(e, R.string.odk_app_not_installed);
         }
         else if (e instanceof NullPointerException && canRetry) {
             /*
@@ -41,15 +41,26 @@ public class ExceptionHandler {
              */
             Log.w(ExceptionHandler.class.getSimpleName(), "FormsProvider dependency not initialized properly trying to reinitialize.");
             canRetry = false;
-            handler.postDelayed(menuHandler::open, 1000);
+            handler.postDelayed(resolvableException::tryToResolve, 1000);
         }
         else {
-            alertError(R.string.something_went_wrong_try_again);
+            alertError(e, R.string.something_went_wrong_try_again);
         }
 
     }
 
-    public void alertError(int message) {
+    public void setCallback(ExceptionAlertCallback callback) {
+        this.callback = callback;
+    }
+
+    public void alertError(Exception e, int message) {
+        if (callback != null) {
+            callback.onError(e, message);
+        }
         customDialog.notify(activity, CustomDialog.EmptyListener, R.string.error_title, message);
+    }
+
+    public interface ExceptionAlertCallback {
+        void onError(Exception e, int message);
     }
 }

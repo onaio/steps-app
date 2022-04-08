@@ -184,4 +184,7 @@
     <string name="invalid_fields_error">Survey Id or Username or Password should not empty</string>
     <string name="data_populate_message">Please wait... data is collecting</string>
     <string name="loading_form">Loading Form...</string>
+    <string name="saving_household">Saving Household...</string>
+    <string name="uploading_household">Household uploading...</string>
+    <string name="title_upload_result">Upload Result</string>
 </resources>

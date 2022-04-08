@@ -18,6 +18,7 @@ package com.onaio.steps.handler.actions;
 
 import static com.onaio.steps.helper.Constants.HH_PHONE_ID;
 import static com.onaio.steps.helper.Constants.HH_SURVEY_ID;
+import static com.onaio.steps.helper.Constants.HH_USER_ID;
 import static com.onaio.steps.helper.Constants.IMPORT_URL;
 
 import android.content.Intent;
@@ -85,11 +86,11 @@ public class ImportHandlerTest extends StepsTestRunner {
         KeyValueStore keyValueStore = KeyValueStoreFactory.instance(activity);
         keyValueStore.putString(IMPORT_URL, "https://preview.steps.ona.io/upload-file");
         keyValueStore.putString(HH_PHONE_ID, "1");
-        keyValueStore.putString(HH_SURVEY_ID, "1");
+        keyValueStore.putString(HH_USER_ID, "aka");
 
         Assert.assertNull(ShadowDownloadFileTask.URL);
         Assert.assertTrue(importHandler.open());
-        Assert.assertEquals("https://preview.steps.ona.io/upload-file/1/1", ShadowDownloadFileTask.URL);
+        Assert.assertEquals("https://preview.steps.ona.io/upload-file/1/aka", ShadowDownloadFileTask.URL);
         ShadowDownloadFileTask.URL = null;
     }
 

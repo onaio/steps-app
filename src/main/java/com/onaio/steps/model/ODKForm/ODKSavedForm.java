@@ -85,4 +85,12 @@ public class ODKSavedForm implements IForm{
     public String getId() {
         return _id;
     }
+
+    public String getJrFormId() {
+        return jrFormId;
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
 }
