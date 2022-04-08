@@ -27,7 +27,7 @@ jobs:
       - name: Decode google-services.json
         env:
           FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG }}
-        run: echo $FIREBASE_CONFIG > steps-app/google-services.json
+        run: echo $FIREBASE_CONFIG > google-services.json
       - name: Run unit tests with Gradle
         run: ./gradlew jacocoTestReport --stacktrace
       - name: Upload coverage to Coveralls with Gradle
