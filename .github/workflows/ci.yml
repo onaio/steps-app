@@ -25,9 +25,9 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
       - name: Decode google-services.json
-          env:
-            FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG }}
-          run: echo $FIREBASE_CONFIG > opensrp-unicef-angola/google-services.json
+        env:
+          FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG }}
+        run: echo $FIREBASE_CONFIG > opensrp-unicef-angola/google-services.json
       - name: Run unit tests with Gradle
         run: ./gradlew jacocoTestReport --stacktrace
       - name: Upload coverage to Coveralls with Gradle
