@@ -18,16 +18,8 @@ package com.onaio.steps.model.ODKForm;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.nullable;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
-import android.content.ContentProviderClient;
-import android.content.ContentResolver;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.RemoteException;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -72,7 +64,7 @@ public class ODKSavedFormTest extends StepsTestRunner {
     public void testFindAllShouldReturnListOfSavedForms() throws RemoteException, FormNotPresentException, AppNotInstalledException {
         AppCompatActivity activity = mock(AppCompatActivity.class);
 
-        Faker.findODKSavedForm(activity);
+        Faker.mockQueryInActivityToFindOdkSavedForm(activity);
 
         List<ODKSavedForm> odkSavedForms = ODKSavedForm.findAll(activity, "");
         assertEquals(1, odkSavedForms.size());

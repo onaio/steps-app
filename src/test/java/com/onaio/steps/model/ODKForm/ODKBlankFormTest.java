@@ -18,7 +18,6 @@ package com.onaio.steps.model.ODKForm;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 
 import android.os.RemoteException;
@@ -63,7 +62,7 @@ public class ODKBlankFormTest extends StepsTestRunner {
     public void testFindShouldReturnOneEmptyForm() throws RemoteException, FormNotPresentException, AppNotInstalledException {
         AppCompatActivity activity = mock(AppCompatActivity.class);
 
-        Faker.findODKBlankForm(activity);
+        Faker.mockQueryInActivityToFindOdkBlankForm(activity);
         ODKBlankForm odkBlankForm = (ODKBlankForm) ODKBlankForm.find(activity, "");
 
         assertEquals(form._id, odkBlankForm._id);

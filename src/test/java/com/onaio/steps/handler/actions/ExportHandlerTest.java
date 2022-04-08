@@ -27,6 +27,7 @@ import androidx.test.core.app.ApplicationProvider;
 import com.onaio.steps.R;
 import com.onaio.steps.StepsTestRunner;
 import com.onaio.steps.activities.HouseholdActivity;
+import com.onaio.steps.decorators.FileDecorator;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.helper.FileUtil;
@@ -47,7 +48,6 @@ import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import org.robolectric.util.ReflectionHelpers;
 
-import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -172,9 +172,9 @@ public class ExportHandlerTest extends StepsTestRunner {
         List<Household> householdList = new ArrayList<>();
         householdList.add(householdMock);
 
-        Queue<File> exportedFile = exportHandler.with(householdList).saveFile();
+        Queue<FileDecorator> exportedFiles = exportHandler.with(householdList).saveFiles();
         FileUtil fileUtil = new FileUtil();
-        List<String[]> lines = fileUtil.readFile(exportedFile.remove().getAbsolutePath());
+        List<String[]> lines = fileUtil.readFile(exportedFiles.remove().getFile().getAbsolutePath());
         String[] expectedValues = new String[]{
                 phoneNumber,
                 hhName,

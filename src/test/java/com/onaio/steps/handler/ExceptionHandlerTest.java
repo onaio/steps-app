@@ -2,13 +2,11 @@ package com.onaio.steps.handler;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-import android.content.DialogInterface;
 import android.os.Handler;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -53,11 +51,13 @@ public class ExceptionHandlerTest extends StepsTestRunner {
         ExceptionHandler.ExceptionAlertCallback callback = mock(ExceptionHandler.ExceptionAlertCallback.class);
         exceptionHandler.setCallback(callback);
 
-        exceptionHandler.handle(mock(FormNotPresentException.class));
-        verifyAlertError(R.string.form_not_present);
+        FormNotPresentException formNotPresentException = mock(FormNotPresentException.class);
+        exceptionHandler.handle(formNotPresentException);
+        verifyAlertError(callback, formNotPresentException, R.string.form_not_present);
 
-        exceptionHandler.handle(mock(AppNotInstalledException.class));
-        verifyAlertError(R.string.odk_app_not_installed);
+        AppNotInstalledException appNotInstalledException = mock(AppNotInstalledException.class);
+        exceptionHandler.handle(appNotInstalledException);
+        verifyAlertError(callback, appNotInstalledException, R.string.odk_app_not_installed);
 
         exceptionHandler.handle(mock(NullPointerException.class));
 
@@ -67,15 +67,15 @@ public class ExceptionHandlerTest extends StepsTestRunner {
         acRunnable.getValue().run();
         verify(resolvableException, times(1)).tryToResolve();
 
-        exceptionHandler.handle(mock(NullPointerException.class));
-        verifyAlertError(R.string.something_went_wrong_try_again);
+        NullPointerException nullPointerException = mock(NullPointerException.class);
+        exceptionHandler.handle(nullPointerException);
+        verifyAlertError(callback, nullPointerException, R.string.something_went_wrong_try_again);
 
-        verify(callback, times(3)).onDismiss(any(Exception.class), anyInt());
+        verify(callback, times(3)).onError(any(Exception.class), anyInt());
     }
 
-    private void verifyAlertError(int message) {
-        ArgumentCaptor<DialogInterface.OnClickListener> arOnClickListener = ArgumentCaptor.forClass(DialogInterface.OnClickListener.class);
-        verify(customDialog, times(1)).notify(eq(activity), arOnClickListener.capture(), eq(R.string.error_title), eq(message));
-        arOnClickListener.getValue().onClick(mock(DialogInterface.class), 0);
+    private void verifyAlertError(ExceptionHandler.ExceptionAlertCallback callback, Exception e, int message) {
+        verify(callback, times(1)).onError(eq(e), eq(message));
+        verify(customDialog, times(1)).notify(eq(activity), eq(CustomDialog.EmptyListener), eq(R.string.error_title), eq(message));
     }
 }

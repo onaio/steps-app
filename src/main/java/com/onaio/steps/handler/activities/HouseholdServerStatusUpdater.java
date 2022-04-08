@@ -1,54 +1,43 @@
 package com.onaio.steps.handler.activities;
 
-import android.app.ProgressDialog;
+import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.onaio.steps.R;
 import com.onaio.steps.activities.BaseListActivity;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.ServerStatus;
+import com.onaio.steps.model.UploadResult;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class HouseholdServerStatusUpdater {
 
-    private static final String TAG = HouseholdServerStatusUpdater.class.getSimpleName();
-
     private final AppCompatActivity activity;
-    private final ProgressDialog pd;
 
     public HouseholdServerStatusUpdater(AppCompatActivity activity) {
         this.activity = activity;
-        pd = new ProgressDialog(activity);
-        pd.setMessage(activity.getString(R.string.please_wait));
-        pd.setIndeterminate(true);
-        pd.setCancelable(false);
-        pd.setCanceledOnTouchOutside(false);
     }
 
-
-    public void markAllSent() {
-        LoadAllPendingHousehold asyncTask = new LoadAllPendingHousehold();
+    public void markAllSent(List<UploadResult> uploadResults) {
+        LoadAllPendingHousehold asyncTask = new LoadAllPendingHousehold(uploadResults);
         asyncTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
+    @SuppressLint("StaticFieldLeak")
     private class LoadAllPendingHousehold extends AsyncTask<Void, Void, Boolean> {
 
         private final DatabaseHelper db;
+        private final List<UploadResult> uploadResults;
 
-        public LoadAllPendingHousehold() {
+        public LoadAllPendingHousehold(List<UploadResult> uploadResults) {
             db = new DatabaseHelper(activity);
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            if (!pd.isShowing()) {
-                pd.show();
-            }
+            this.uploadResults = uploadResults;
         }
 
         @Override
@@ -56,11 +45,12 @@ public class HouseholdServerStatusUpdater {
 
             boolean needToRefresh = false;
 
-            List<Household> households = Household.findByServerStatusNotEqual(new DatabaseHelper(activity), ServerStatus.SENT);
+            List<Household> households = filter(Household.findByServerStatusNotEqual(new DatabaseHelper(activity), ServerStatus.SENT));
 
             // process households
             for (int i = 0; i < households.size(); i++) {
                 Household hh = households.get(i);
+
                 hh.setServerStatus(ServerStatus.SENT);
                 hh.update(db);
                 needToRefresh = true;
@@ -72,11 +62,30 @@ public class HouseholdServerStatusUpdater {
         @Override
         protected void onPostExecute(Boolean needToRefresh) {
             super.onPostExecute(needToRefresh);
-            pd.dismiss();
 
             if (needToRefresh && activity instanceof BaseListActivity) {
                 ((BaseListActivity) activity).refreshList();
             }
+        }
+
+        private List<Household> filter(List<Household> households) {
+            List<Household> filteredHousehold = new ArrayList<>();
+
+            Map<String, UploadResult> resultMap = new HashMap<>();
+
+            for (UploadResult uploadResult : uploadResults) {
+                if (uploadResult.isSuccess()) {
+                    resultMap.put(uploadResult.getFormTitle(), uploadResult);
+                }
+            }
+
+            for (Household household : households) {
+                if (resultMap.containsKey(household.getOdkJrFormTitle())) {
+                    filteredHousehold.add(household);
+                }
+            }
+
+            return filteredHousehold;
         }
     }
 }

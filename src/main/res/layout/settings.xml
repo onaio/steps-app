@@ -178,7 +178,7 @@
                     android:layout_marginTop="10dp"
                     android:text="@string/user_password_label" />
 
-                <EditText
+                <com.onaio.steps.components.TogglePasswordEditText
                     android:id="@+id/user_password_household"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -188,7 +188,9 @@
                     android:ems="10"
                     android:hint="@string/user_password_label"
                     android:inputType="textPassword"
-                    android:textColor="@android:color/black" />
+                    android:textColor="@android:color/black"
+                    android:drawableRight="@drawable/ic_baseline_visibility_off_24"
+                    android:drawablePadding="10dp"/>
 
                 <TextView
                     android:layout_width="fill_parent"

@@ -4,15 +4,14 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.ProgressBar;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.onaio.steps.R;
 import com.onaio.steps.activities.ParticipantListActivity;
+import com.onaio.steps.dialogs.HouseholdUploadResultDialog;
 import com.onaio.steps.handler.activities.HouseholdServerStatusUpdater;
 import com.onaio.steps.handler.interfaces.IMenuHandler;
 import com.onaio.steps.handler.interfaces.IMenuPreparer;
@@ -20,6 +19,7 @@ import com.onaio.steps.handler.interfaces.IViewPreparer;
 import com.onaio.steps.helper.CustomDialog;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.Participant;
+import com.onaio.steps.model.UploadResult;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,12 +34,11 @@ public class SubmitDataHandler implements IMenuHandler,IMenuPreparer, IViewPrepa
     private final int MENU_ID = R.id.action_submit_data;
     private final AppCompatActivity activity;
     private Menu menu;
-    private ExportHandler exportHandler;
-    private FinalisedFormHandler finalisedFormHandler;
-    private List<Household> households;
+    private final ExportHandler exportHandler;
+    private final FinalisedFormHandler finalisedFormHandler;
     private List<Participant> participants;
-    private HouseholdServerStatusUpdater householdServerStatusUpdater;
-    private ProgressDialog progressDialog;
+    private final HouseholdServerStatusUpdater householdServerStatusUpdater;
+    private final ProgressDialog progressDialog;
 
     public SubmitDataHandler(AppCompatActivity activity) {
         this.activity = activity;
@@ -48,7 +47,7 @@ public class SubmitDataHandler implements IMenuHandler,IMenuPreparer, IViewPrepa
         participants  = new ArrayList<>();
         householdServerStatusUpdater = new HouseholdServerStatusUpdater(activity);
         progressDialog = new ProgressDialog(activity);
-        progressDialog.setMessage("Household uploading...");
+        progressDialog.setMessage(activity.getString(R.string.uploading_household));
         progressDialog.setCancelable(false);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setIndeterminate(true);
@@ -69,50 +68,49 @@ public class SubmitDataHandler implements IMenuHandler,IMenuPreparer, IViewPrepa
             dialog.setContentView(R.layout.dialog_submit_data);
             dialog.setTitle(R.string.action_submit_data);
             Button okButton = (Button) dialog.findViewById(R.id.okButton);
-            okButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    CheckBox exportHouseholdListCheckBox = (CheckBox) dialog.findViewById(R.id.exportHouseholdListCheckBox);
-                    final CheckBox submitRecordsCheckBox = (CheckBox) dialog.findViewById(R.id.submitRecordsCheckBox);
-                    if (exportHouseholdListCheckBox.isChecked() || submitRecordsCheckBox.isChecked()) {
-                        if (submitRecordsCheckBox.isChecked() && !exportHouseholdListCheckBox.isChecked()) {
-                            finalisedFormHandler.open();
-                        } else if (exportHouseholdListCheckBox.isChecked()) {
-                            exportHandler.setOnExportListener(new ExportHandler.OnExportListener() {
-                                @Override
-                                public void onExportCancelled() {
+            okButton.setOnClickListener(view -> {
+                CheckBox exportHouseholdListCheckBox = (CheckBox) dialog.findViewById(R.id.exportHouseholdListCheckBox);
+                final CheckBox submitRecordsCheckBox = (CheckBox) dialog.findViewById(R.id.submitRecordsCheckBox);
+                if (exportHouseholdListCheckBox.isChecked() || submitRecordsCheckBox.isChecked()) {
+                    if (submitRecordsCheckBox.isChecked() && !exportHouseholdListCheckBox.isChecked()) {
+                        finalisedFormHandler.open();
+                    } else if (exportHouseholdListCheckBox.isChecked()) {
+                        exportHandler.setOnExportListener(new ExportHandler.OnExportListener() {
+                            @Override
+                            public void onExportCancelled() {
 
+                            }
+
+                            @Override
+                            public void onExportStart() {
+
+                            }
+
+                            @Override
+                            public void onFileSaved() {
+                                if (submitRecordsCheckBox.isChecked()) {
+                                    finalisedFormHandler.open();
                                 }
+                                progressDialog.show();
+                            }
 
-                                @Override
-                                public void onExportStart() {
+                            @Override
+                            public void onFileUploaded(List<UploadResult> uploadResults) {
+                                progressDialog.dismiss();
+                                householdServerStatusUpdater.markAllSent(uploadResults);
+                                displayUploadResult(uploadResults);
+                            }
 
-                                }
-
-                                @Override
-                                public void onFileSaved() {
-                                    if (submitRecordsCheckBox.isChecked()) {
-                                        finalisedFormHandler.open();
-                                    }
-                                    progressDialog.show();
-                                }
-
-                                @Override
-                                public void onFileUploaded(boolean successful) {
-                                    progressDialog.dismiss();
-                                    if (successful) {
-                                        new CustomDialog().notify(activity, CustomDialog.EmptyListener, R.string.export_complete, R.string.export_complete_message);
-                                        householdServerStatusUpdater.markAllSent();
-                                    } else {
-                                        new CustomDialog().notify(activity, CustomDialog.EmptyListener, R.string.error_title, R.string.export_failed);
-                                    }
-                                }
-                            });
-                            exportHandler.open();
-                        }
-
-                        dialog.dismiss();
+                            @Override
+                            public void onError(String error) {
+                                progressDialog.dismiss();
+                                new CustomDialog().notify(activity, CustomDialog.EmptyListener, error, R.string.error_title);
+                            }
+                        });
+                        exportHandler.open();
                     }
+
+                    dialog.dismiss();
                 }
             });
             dialog.show();
@@ -148,7 +146,6 @@ public class SubmitDataHandler implements IMenuHandler,IMenuPreparer, IViewPrepa
     }
 
     public SubmitDataHandler with(List<Household> households){
-        this.households = households;
         exportHandler.with(households);
         return this;
     }
@@ -173,5 +170,10 @@ public class SubmitDataHandler implements IMenuHandler,IMenuPreparer, IViewPrepa
     public void enable() {
         activity.findViewById(MENU_ID).setBackground(activity.getResources().getDrawable(R.drawable.button_selector));
         activity.findViewById(MENU_ID).setEnabled(true);
+    }
+
+    public void displayUploadResult(List<UploadResult> uploadResults) {
+        HouseholdUploadResultDialog householdUploadResultDialog = new HouseholdUploadResultDialog(uploadResults);
+        householdUploadResultDialog.show(activity.getSupportFragmentManager(), HouseholdUploadResultDialog.class.getSimpleName());
     }
 }
