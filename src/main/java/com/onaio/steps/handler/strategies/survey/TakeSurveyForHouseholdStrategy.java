@@ -69,6 +69,8 @@ public class TakeSurveyForHouseholdStrategy  implements ITakeSurveyStrategy {
             household.setStatus(InterviewStatus.INCOMPLETE);
 
         household.setOdkFormId(savedForm.getId());
+        household.setOdkJrFormId(savedForm.getJrFormId());
+        household.setOdkJrFormTitle(savedForm.getDisplayName());
         household.update(new DatabaseHelper(activity));
     }
 

@@ -1,5 +1,7 @@
 package com.onaio.steps.handler;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
@@ -13,7 +15,8 @@ import com.onaio.steps.R;
 import com.onaio.steps.StepsTestRunner;
 import com.onaio.steps.exceptions.AppNotInstalledException;
 import com.onaio.steps.exceptions.FormNotPresentException;
-import com.onaio.steps.handler.interfaces.IMenuHandler;
+import com.onaio.steps.handler.exceptions.ExceptionHandler;
+import com.onaio.steps.handler.exceptions.IResolvableException;
 import com.onaio.steps.helper.CustomDialog;
 
 import org.junit.Before;
@@ -24,7 +27,7 @@ import org.robolectric.util.ReflectionHelpers;
 public class ExceptionHandlerTest extends StepsTestRunner {
 
     private AppCompatActivity activity;
-    private IMenuHandler menuHandler;
+    private IResolvableException resolvableException;
     private CustomDialog customDialog;
     private ExceptionHandler exceptionHandler;
     private Handler handler;
@@ -32,11 +35,11 @@ public class ExceptionHandlerTest extends StepsTestRunner {
     @Before
     public void setUp() {
         activity = mock(AppCompatActivity.class);
-        menuHandler = mock(IMenuHandler.class);
+        resolvableException = mock(IResolvableException.class);
         customDialog = mock(CustomDialog.class);
         handler = mock(Handler.class);
 
-        exceptionHandler = new ExceptionHandler(activity, menuHandler);
+        exceptionHandler = new ExceptionHandler(activity, resolvableException);
 
         ReflectionHelpers.setField(exceptionHandler, "customDialog", customDialog);
         ReflectionHelpers.setField(exceptionHandler, "handler", handler);
@@ -45,11 +48,16 @@ public class ExceptionHandlerTest extends StepsTestRunner {
     @Test
     public void testHandleMultipleExceptionScenarios() {
 
-        exceptionHandler.handle(mock(FormNotPresentException.class));
-        verifyAlertError(R.string.form_not_present);
+        ExceptionHandler.ExceptionAlertCallback callback = mock(ExceptionHandler.ExceptionAlertCallback.class);
+        exceptionHandler.setCallback(callback);
 
-        exceptionHandler.handle(mock(AppNotInstalledException.class));
-        verifyAlertError(R.string.odk_app_not_installed);
+        FormNotPresentException formNotPresentException = mock(FormNotPresentException.class);
+        exceptionHandler.handle(formNotPresentException);
+        verifyAlertError(callback, formNotPresentException, R.string.form_not_present);
+
+        AppNotInstalledException appNotInstalledException = mock(AppNotInstalledException.class);
+        exceptionHandler.handle(appNotInstalledException);
+        verifyAlertError(callback, appNotInstalledException, R.string.odk_app_not_installed);
 
         exceptionHandler.handle(mock(NullPointerException.class));
 
@@ -57,13 +65,17 @@ public class ExceptionHandlerTest extends StepsTestRunner {
         verify(handler, times(1)).postDelayed(acRunnable.capture(), eq(1000L));
 
         acRunnable.getValue().run();
-        verify(menuHandler, times(1)).open();
+        verify(resolvableException, times(1)).tryToResolve();
 
-        exceptionHandler.handle(mock(NullPointerException.class));
-        verifyAlertError(R.string.something_went_wrong_try_again);
+        NullPointerException nullPointerException = mock(NullPointerException.class);
+        exceptionHandler.handle(nullPointerException);
+        verifyAlertError(callback, nullPointerException, R.string.something_went_wrong_try_again);
+
+        verify(callback, times(3)).onError(any(Exception.class), anyInt());
     }
 
-    private void verifyAlertError(int message) {
-        verify(customDialog, times(1)).notify(activity, CustomDialog.EmptyListener, R.string.error_title, message);
+    private void verifyAlertError(ExceptionHandler.ExceptionAlertCallback callback, Exception e, int message) {
+        verify(callback, times(1)).onError(eq(e), eq(message));
+        verify(customDialog, times(1)).notify(eq(activity), eq(CustomDialog.EmptyListener), eq(R.string.error_title), eq(message));
     }
 }

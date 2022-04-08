@@ -20,10 +20,12 @@ package com.onaio.steps.activities;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
 import static org.robolectric.Shadows.shadowOf;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.RemoteException;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
@@ -36,6 +38,7 @@ import com.onaio.steps.exceptions.NoUniqueIdException;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.modelViewWrapper.HouseholdViewWrapper;
+import com.onaio.steps.utils.Faker;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -50,7 +53,7 @@ public class NewHouseholdActivityTest extends StepsTestRunner {
 
 
     @Before
-    public void setup() {
+    public void setup() throws RemoteException {
         Intent intent = new Intent();
         intent.putExtra(Constants.HH_PHONE_ID, PHONE_ID);
         intent.putExtra(Constants.HH_HOUSEHOLD_SEED, HOUSEHOLD_SEED);
@@ -62,6 +65,7 @@ public class NewHouseholdActivityTest extends StepsTestRunner {
         this.newHouseholdActivity = Mockito.spy(newHouseholdActivity);
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(newHouseholdActivity);
         sharedPreferences.edit().putString(Constants.UNIQUE_DEVICE_ID, "testUniqueDevId").apply();
+        Faker.mockQueryInActivityToFindOdkBlankForm(this.newHouseholdActivity);
     }
 
     @Test
@@ -82,8 +86,8 @@ public class NewHouseholdActivityTest extends StepsTestRunner {
 
     @Test
     public void ShouldSaveHouseholdAndFinishActivity() throws InvalidDataException, NoUniqueIdException {
-        View viewMock = Mockito.mock(View.class);
-        TextView generatedIdMock = Mockito.mock(TextView.class);
+        View viewMock = mock(View.class);
+        TextView generatedIdMock = mock(TextView.class);
         Mockito.when(viewMock.getId()).thenReturn(R.id.household_form);
         TextView numberView = (TextView) newHouseholdActivity.findViewById(R.id.household_number);
         TextView commentsView = (TextView) newHouseholdActivity.findViewById(R.id.household_comments);
@@ -95,7 +99,10 @@ public class NewHouseholdActivityTest extends StepsTestRunner {
         newHouseholdActivity.doneBtnClicked(viewMock);
 
         Intent intent = newHouseholdActivity.getIntent();
-        assertEquals(household, intent.getSerializableExtra(Constants.HH_HOUSEHOLD));
+        Household actualHousehold = (Household) intent.getSerializableExtra(Constants.HH_HOUSEHOLD);
+        assertEquals(household, actualHousehold);
+        assertEquals("jrFormId", actualHousehold.getOdkJrFormId());
+        assertEquals("displayName", actualHousehold.getOdkJrFormTitle());
         assertTrue(newHouseholdActivity.isFinishing());
     }
 

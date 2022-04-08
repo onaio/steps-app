@@ -19,6 +19,7 @@ package com.onaio.steps.activities;
 import static com.onaio.steps.helper.Constants.HH_HOUSEHOLD_SEED;
 import static com.onaio.steps.helper.Constants.HH_PHONE_ID;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -28,21 +29,35 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.onaio.steps.R;
+import com.onaio.steps.handler.exceptions.ExceptionHandler;
+import com.onaio.steps.handler.exceptions.IResolvableException;
 import com.onaio.steps.helper.Constants;
-import com.onaio.steps.helper.CustomDialog;
 import com.onaio.steps.helper.DatabaseHelper;
+import com.onaio.steps.helper.KeyValueStoreFactory;
 import com.onaio.steps.model.Household;
+import com.onaio.steps.model.ODKForm.ODKBlankForm;
 import com.onaio.steps.modelViewWrapper.HouseholdViewWrapper;
 
-public class NewHouseholdActivity extends AppCompatActivity {
+import java.util.Locale;
+
+public class NewHouseholdActivity extends AppCompatActivity implements IResolvableException, ExceptionHandler.ExceptionAlertCallback {
 
     private final DatabaseHelper db = new DatabaseHelper(this);
     private String phoneId;
     private int householdSeed;
+    private ProgressDialog progressDialog;
+    private ExceptionHandler exceptionHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setCancelable(false);
+        progressDialog.setMessage(getString(R.string.saving_household));
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setIndeterminate(true);
+        exceptionHandler = new ExceptionHandler(this, this);
+        exceptionHandler.setCallback(this);
         populateView();
         populateDataFromIntent();
         populateGeneratedHouseholdId();
@@ -50,17 +65,17 @@ public class NewHouseholdActivity extends AppCompatActivity {
 
     private void populateView() {
         setContentView(R.layout.household_form);
-        TextView header = (TextView) findViewById(R.id.form_header);
+        TextView header = findViewById(R.id.form_header);
         header.setText(R.string.household_new_header);
-        Button doneButton = (Button) findViewById(R.id.ic_done);
+        Button doneButton = findViewById(R.id.ic_done);
         doneButton.setText(R.string.add);
     }
 
     private void populateGeneratedHouseholdId() {
-        TextView phoneIdView = (TextView) findViewById(R.id.generated_household_id);
+        TextView phoneIdView = findViewById(R.id.generated_household_id);
         int householdsCount = Household.getAllCount(db);
         int generatedId = householdSeed + householdsCount;
-        phoneIdView.setText(String.format("%s-%s",phoneId, String.valueOf(generatedId)));
+        phoneIdView.setText(String.format(Locale.getDefault(), "%s-%d",phoneId, generatedId));
     }
 
     private void populateDataFromIntent() {
@@ -72,20 +87,45 @@ public class NewHouseholdActivity extends AppCompatActivity {
     }
 
     public void doneBtnClicked(View view) {
-        try {
-            Intent intent = this.getIntent();
-            Household household = new HouseholdViewWrapper(this).getHousehold(R.id.generated_household_id, R.id.household_number,R.id.household_comments);
-            household.save(db);
-            intent.putExtra(Constants.HH_HOUSEHOLD,household);
-            setResult(RESULT_OK, intent);
-            finish();
-        } catch (Exception e) {
-            new CustomDialog().notify(this, CustomDialog.EmptyListener,e.getMessage(),R.string.error_title);
+        if (!progressDialog.isShowing()) {
+            progressDialog.show();
         }
+
+        saveHousehold();
     }
 
     public void cancel(View view){
         finish();
     }
 
+    public void saveHousehold() {
+        try {
+            ODKBlankForm odkBlankForm = (ODKBlankForm) ODKBlankForm.find(this, getFormId());
+            Intent intent = this.getIntent();
+            Household household = new HouseholdViewWrapper(this).getHousehold(R.id.generated_household_id, R.id.household_number,R.id.household_comments);
+            household.setOdkJrFormId(odkBlankForm.getJrFormId());
+            household.setOdkJrFormTitle(odkBlankForm.getDisplayName());
+            household.save(db);
+            intent.putExtra(Constants.HH_HOUSEHOLD,household);
+            setResult(RESULT_OK, intent);
+            progressDialog.dismiss();
+            finish();
+        } catch (Exception e) {
+            exceptionHandler.handle(e);
+        }
+    }
+
+    public String getFormId() {
+        return KeyValueStoreFactory.instance(this).getString(Constants.HH_FORM_ID);
+    }
+
+    @Override
+    public void tryToResolve() {
+        saveHousehold();
+    }
+
+    @Override
+    public void onError(Exception e, int message) {
+        progressDialog.dismiss();
+    }
 }
