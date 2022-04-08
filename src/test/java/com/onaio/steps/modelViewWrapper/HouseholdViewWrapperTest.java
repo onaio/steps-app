@@ -96,17 +96,17 @@ public class HouseholdViewWrapperTest extends StepsTestRunner {
     public void ShouldUpdateHouseholdAndShouldNotUpdateGeneratedId() throws InvalidDataException {
         Household anotherHousehold = new Household("5", "1234-10", "80503456", "", InterviewStatus.NOT_DONE, currentDate, "uniqueDevId", "Some Comments", null);
         HouseholdViewWrapper householdViewWrapper = new HouseholdViewWrapper(activity);
-        TextView nameView = ((TextView) activity.findViewById(R.id.generated_household_id));
-        TextView numberView = (TextView) activity.findViewById(R.id.household_number);
-        EditText commentsView = (EditText) activity.findViewById(R.id.household_comments);
-        numberView.setText("123456789");
+        TextView nameView = activity.findViewById(R.id.generated_household_id);
+        TextView numberView = activity.findViewById(R.id.household_number);
+        EditText commentsView = activity.findViewById(R.id.household_comments);
+        numberView.setText("1234567");
         nameView.setText("123-20");
         commentsView.setText("Dummy Comments");
 
         Household household = householdViewWrapper.updateHousehold(anotherHousehold, R.id.household_number,R.id.household_comments);
 
        assertEquals("1234-10",household.getName());
-        assertEquals("123456789",household.getPhoneNumber());
+        assertEquals("1234567",household.getPhoneNumber());
         assertEquals("Dummy Comments",household.getComments());
         assertTrue(household.getStatus().equals(InterviewStatus.NOT_DONE));
 
