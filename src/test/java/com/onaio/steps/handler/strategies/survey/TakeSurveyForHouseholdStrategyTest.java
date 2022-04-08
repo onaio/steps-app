@@ -19,6 +19,7 @@ package com.onaio.steps.handler.strategies.survey;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.ArgumentMatchers.eq;
 
 import com.onaio.steps.StepsTestRunner;
 import com.onaio.steps.activities.HouseholdActivity;
@@ -72,9 +73,18 @@ public class TakeSurveyForHouseholdStrategyTest extends StepsTestRunner {
     @Test
     public void ShouldHandleResultForSurveyCompleted(){
         ODKSavedForm odkSavedForm = Mockito.mock(ODKSavedForm.class);
+
         Mockito.when(odkSavedForm.getStatus()).thenReturn(Constants.ODK_FORM_COMPLETE_STATUS);
+        Mockito.when(odkSavedForm.getId()).thenReturn("0");
+        Mockito.when(odkSavedForm.getJrFormId()).thenReturn("test_form");
+        Mockito.when(odkSavedForm.getDisplayName()).thenReturn("Test Form");
+
         takeSurveyForHouseholdStrategy.handleResult(odkSavedForm);
-        Mockito.verify(household).setStatus(InterviewStatus.DONE);
+
+        Mockito.verify(household).setStatus(eq(InterviewStatus.DONE));
+        Mockito.verify(household).setOdkFormId(eq("0"));
+        Mockito.verify(household).setOdkJrFormId(eq("test_form"));
+        Mockito.verify(household).setOdkJrFormTitle(eq("Test Form"));
         Mockito.verify(household).update(Mockito.any(DatabaseHelper.class));
     }
 

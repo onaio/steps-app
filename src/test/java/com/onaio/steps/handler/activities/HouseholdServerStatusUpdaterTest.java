@@ -24,6 +24,7 @@ import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.InterviewStatus;
 import com.onaio.steps.model.ServerStatus;
+import com.onaio.steps.model.UploadResult;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -36,6 +37,8 @@ import org.robolectric.annotation.Implements;
 import org.robolectric.annotation.LooperMode;
 import org.robolectric.shadows.ShadowLegacyAsyncTask;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Executor;
 
 @LooperMode(LooperMode.Mode.LEGACY)
@@ -57,10 +60,15 @@ public class HouseholdServerStatusUpdaterTest extends StepsTestRunner {
 
         Household household = new Household("", "1-1", "", "", InterviewStatus.DONE, "", "", "", null);
         household.setServerStatus(ServerStatus.NOT_SENT);
+        household.setOdkJrFormId("test_form");
+        household.setOdkJrFormTitle("Test Form");
         household.save(db);
 
+        List<UploadResult> uploadResults = new ArrayList<>();
+        uploadResults.add(new UploadResult("Test Form", true));
+
         Assert.assertEquals(ServerStatus.NOT_SENT, Household.find_by(db,"1-1").getServerStatus());
-        householdServerStatusUpdater.markAllSent();
+        householdServerStatusUpdater.markAllSent(uploadResults);
 
         Assert.assertEquals(ServerStatus.SENT, Household.find_by(db,"1-1").getServerStatus());
         Mockito.doNothing().when(householdListActivity).refreshList();
