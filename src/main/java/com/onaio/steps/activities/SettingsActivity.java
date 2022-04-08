@@ -32,6 +32,8 @@ import com.onaio.steps.exceptions.AppNotInstalledException;
 import com.onaio.steps.exceptions.InvalidDataException;
 import com.onaio.steps.handler.actions.ImportHandler;
 import com.onaio.steps.handler.activities.ImportExportActivityHandler;
+import com.onaio.steps.handler.exceptions.ExceptionHandler;
+import com.onaio.steps.handler.exceptions.IResolvableException;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.CustomDialog;
 import com.onaio.steps.helper.DatabaseHelper;
@@ -43,12 +45,13 @@ import com.onaio.steps.utils.ViewUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SettingsActivity extends AppCompatActivity {
+public class SettingsActivity extends AppCompatActivity implements IResolvableException {
 
     private FlowType flowType;
     private FlowOrchestrator flowOrchestrator;
     private DatabaseHelper db;
     private boolean justOpened = true;
+    private ExceptionHandler exceptionHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +60,7 @@ public class SettingsActivity extends AppCompatActivity {
         Intent intent = getIntent();
         flowType = FlowType.valueOf(intent.getStringExtra(Constants.FLOW_TYPE));
         flowOrchestrator = new FlowOrchestrator(this);
+        exceptionHandler = new ExceptionHandler(this, this);
         setContentView(R.layout.settings);
         findViewById(R.id.ic_save).setVisibility(View.VISIBLE);
         setHeader();
@@ -220,8 +224,14 @@ public class SettingsActivity extends AppCompatActivity {
                     actvFormId.setSelection(actvFormId.length());
                 });
             }
-        } catch (AppNotInstalledException e) {
+        } catch (Exception e) {
             e.printStackTrace();
+            exceptionHandler.handle(e);
         }
+    }
+
+    @Override
+    public void tryToResolve() {
+        prepareAvailableFormList();
     }
 }
