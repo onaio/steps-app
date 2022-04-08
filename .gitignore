@@ -8,3 +8,4 @@ out/*
 local.properties
 *.apk
 *.jks
+./google-services.json
