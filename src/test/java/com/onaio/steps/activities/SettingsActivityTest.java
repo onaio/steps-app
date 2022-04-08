@@ -154,4 +154,11 @@ public class SettingsActivityTest extends StepsTestRunner {
         verify(actvFormId, times(1)).setText(Mockito.eq(odkBlankForm.getJrFormId()));
         verify(actvFormId, times(1)).setSelection(Mockito.eq(actvFormId.length()));
     }
+
+    @Test
+    public void testTrtToResolveShouldCallPrepareAvailableFormList() {
+        SettingsActivity spySettingActivity = Mockito.spy(settingsActivity);
+        spySettingActivity.tryToResolve();
+        verify(spySettingActivity, times(1)).prepareAvailableFormList();
+    }
 }
