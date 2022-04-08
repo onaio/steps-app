@@ -45,7 +45,9 @@ public class Household implements Serializable,Comparable<Household> {
     public static final String SERVER_STATUS = "Server_Status";
     public static final String UNIQUE_DEVICE_ID = "unique_device_id";
     public static final String ODK_FORM_ID = "odk_form_id";
-    public static final String TABLE_CREATE_QUERY = String.format("CREATE TABLE %s(%s INTEGER PRIMARY KEY, %s TEXT, %s TEXT, %s INTEGER, %s TEXT, %s TEXT, %s TEXT, %s TEXT, %s TEXT, %s TEXT)", TABLE_NAME, ID, NAME, PHONE_NUMBER, SELECTED_MEMBER_ID,STATUS, CREATED_AT ,COMMENTS, UNIQUE_DEVICE_ID, SERVER_STATUS, ODK_FORM_ID);
+    public static final String ODK_JR_FORM_ID = "odk_jr_form_id";
+    public static final String ODK_JR_FORM_TITLE = "odk_jr_form_title";
+    public static final String TABLE_CREATE_QUERY = String.format("CREATE TABLE %s(%s INTEGER PRIMARY KEY, %s TEXT, %s TEXT, %s INTEGER, %s TEXT, %s TEXT, %s TEXT, %s TEXT, %s TEXT, %s TEXT, %s TEXT, %s TEXT)", TABLE_NAME, ID, NAME, PHONE_NUMBER, SELECTED_MEMBER_ID,STATUS, CREATED_AT ,COMMENTS, UNIQUE_DEVICE_ID, SERVER_STATUS, ODK_FORM_ID, ODK_JR_FORM_ID, ODK_JR_FORM_TITLE);
 
     String id;
     String name;
@@ -58,6 +60,8 @@ public class Household implements Serializable,Comparable<Household> {
     Member selectedMember;
     ServerStatus serverStatus;
     String odkFormId;
+    String odkJrFormId;
+    String odkJrFormTitle;
     
     public Household(String id, String name, String phoneNumber, String selectedMemberId, InterviewStatus status, String createdAt, String uniqueDeviceId, String comments, String odkFormId) {
         this.id = id;
@@ -163,6 +167,22 @@ public class Household implements Serializable,Comparable<Household> {
         this.odkFormId = odkFormId;
     }
 
+    public void setOdkJrFormId(String odkJrFormId) {
+        this.odkJrFormId = odkJrFormId;
+    }
+
+    public String getOdkJrFormId() {
+        return odkJrFormId;
+    }
+
+    public void setOdkJrFormTitle(String odkJrFormTitle) {
+        this.odkJrFormTitle = odkJrFormTitle;
+    }
+
+    public String getOdkJrFormTitle() {
+        return odkJrFormTitle;
+    }
+
     public long save(DatabaseHelper db){
         ContentValues householdValues = populateWithBasicDetails();
         householdValues.put(CREATED_AT, createdAt);
@@ -188,6 +208,8 @@ public class Household implements Serializable,Comparable<Household> {
         values.put(UNIQUE_DEVICE_ID, getUniqueDeviceId());
         values.put(SERVER_STATUS, getServerStatus().toString());
         values.put(ODK_FORM_ID, odkFormId);
+        values.put(ODK_JR_FORM_ID, odkJrFormId);
+        values.put(ODK_JR_FORM_TITLE, odkJrFormTitle);
         return values;
     }
 
@@ -339,6 +361,9 @@ public class Household implements Serializable,Comparable<Household> {
         result = 31 * result + (selectedMemberId != null ? selectedMemberId.hashCode() : 0);
         result = 31 * result + createdAt.hashCode();
         result = 31 * result + (comments != null ? comments.hashCode() : 0);
+        result = 31 * result + (odkFormId != null ? odkFormId.hashCode() : 0);
+        result = 31 * result + (odkJrFormId != null ? odkJrFormId.hashCode() : 0);
+        result = 31 * result + (odkJrFormTitle != null ? odkJrFormTitle.hashCode() : 0);
         return result;
     }
 }

@@ -18,6 +18,7 @@ package com.onaio.steps.handler.actions;
 
 import static com.onaio.steps.helper.Constants.HH_PHONE_ID;
 import static com.onaio.steps.helper.Constants.HH_SURVEY_ID;
+import static com.onaio.steps.helper.Constants.HH_USER_ID;
 import static com.onaio.steps.helper.Constants.IMPORT_URL;
 
 import android.os.Environment;
@@ -78,8 +79,8 @@ public class ImportHandler implements IMenuHandler {
         if (!TextUtils.isEmpty(KeyValueStoreFactory.instance(activity).getString(IMPORT_URL))) {
             if (deviceId == null)
                 deviceId = KeyValueStoreFactory.instance(activity).getString(HH_PHONE_ID);
-            String surveyId = KeyValueStoreFactory.instance(activity).getString(HH_SURVEY_ID);
-            String importDirPath = Environment.getExternalStorageDirectory() + "/" + Constants.APP_DIR;
+            String userId = KeyValueStoreFactory.instance(activity).getString(HH_USER_ID);
+            String importDirPath = activity.getFilesDir().getAbsolutePath() + "/" + Constants.APP_DIR;
             File importDir = new File(importDirPath);
             if (!importDir.exists()) {
                 importDir.mkdirs();
@@ -87,7 +88,7 @@ public class ImportHandler implements IMenuHandler {
             String filename = importDirPath + "/" + Constants.EXPORT_FILE_NAME + "_" +
                     deviceId + ".csv";
             DownloadFileTask handler = new DownloadFileTask(this, filename);
-            handler.execute(KeyValueStoreFactory.instance(activity).getString(IMPORT_URL) + "/" + deviceId + "/" + surveyId);
+            handler.execute(KeyValueStoreFactory.instance(activity).getString(IMPORT_URL) + "/" + deviceId + "/" + userId);
             return true;
         } else {
             new CustomDialog().notify(activity, CustomDialog.EmptyListener, R.string.error_title, R.string.fail_no_connectivity);
@@ -117,11 +118,16 @@ public class ImportHandler implements IMenuHandler {
                 String surveyStatus = row[9];
                 String reasons = row[11];
                 String uniqueDeviceId = row[15];
+                String jrFormId = row[17];
+                String jrFormTitle = row[18];
+
                 Household household = Household.find_by(db, householdName);
                 if(household == null){
                     String currentDate = new SimpleDateFormat(Constants.DATE_FORMAT, Locale.ENGLISH).format(new Date());
                     household = new Household(householdName, phoneNumber, InterviewStatus.SELECTION_NOT_DONE, currentDate, uniqueDeviceId,comments, null);
                     household.setServerStatus(ServerStatus.NOT_SENT);
+                    household.setOdkJrFormId(jrFormId);
+                    household.setOdkJrFormTitle(jrFormTitle);
                     household.save(db);
                 }
                 //validate for members

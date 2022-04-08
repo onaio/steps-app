@@ -29,6 +29,8 @@ import android.view.MenuItem;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.onaio.steps.R;
+import com.onaio.steps.decorators.FileDecorator;
+import com.onaio.steps.decorators.StepsFileDecorator;
 import com.onaio.steps.handler.interfaces.IMenuHandler;
 import com.onaio.steps.handler.interfaces.IMenuPreparer;
 import com.onaio.steps.helper.Constants;
@@ -42,13 +44,18 @@ import com.onaio.steps.helper.UploadFileTask;
 import com.onaio.steps.model.Household;
 import com.onaio.steps.model.Member;
 import com.onaio.steps.model.ReElectReason;
+import com.onaio.steps.model.UploadResult;
 
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.Queue;
 
 public class ExportHandler implements IMenuHandler,IMenuPreparer {
 
@@ -81,29 +88,23 @@ public class ExportHandler implements IMenuHandler,IMenuPreparer {
 
     @Override
     public boolean open() {
-        DialogInterface.OnClickListener uploadConfirmListener = new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                if(onExportListener != null)  onExportListener.onExportStart();
-                try {
-                    File file = saveFile();
-                    if(onExportListener != null) onExportListener.onFileSaved();
-                    if (NetworkConnectivity.isNetworkAvailable(activity)) {
-                        new UploadFileTask(activity, onExportListener).upload(file);
-                    } else {
-                        new CustomDialog().notify(activity, CustomDialog.EmptyListener, R.string.error_title, R.string.fail_no_connectivity);
-                    }
-                } catch (IOException e) {
-                    new Logger().log(e,"Not able to write CSV file for export.");
-                    new CustomDialog().notify(activity, CustomDialog.EmptyListener, R.string.error_title, R.string.something_went_wrong_try_again);
+        DialogInterface.OnClickListener uploadConfirmListener = (dialogInterface, i) -> {
+            if(onExportListener != null)  onExportListener.onExportStart();
+            try {
+                Queue<FileDecorator> fileDecorators = saveFiles();
+                if(onExportListener != null) onExportListener.onFileSaved();
+                if (NetworkConnectivity.isNetworkAvailable(activity)) {
+                    new UploadFileTask(activity, onExportListener).prepareForUpload(fileDecorators);
+                } else {
+                    onExportListener.onError(activity.getString(R.string.fail_no_connectivity));
                 }
+            } catch (IOException e) {
+                new Logger().log(e,"Not able to write CSV file for export.");
+                onExportListener.onError(activity.getString(R.string.something_went_wrong_try_again));
             }
         };
-        DialogInterface.OnClickListener uploadCancelledListener = new DialogInterface.OnClickListener(){
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                if(onExportListener != null) onExportListener.onExportCancelled();
-            }
+        DialogInterface.OnClickListener uploadCancelledListener = (dialogInterface, i) -> {
+            if(onExportListener != null) onExportListener.onExportCancelled();
         };
         new CustomDialog().confirm(activity, uploadConfirmListener, uploadCancelledListener, R.string.export_start_message, R.string.action_export);
         return true;
@@ -117,26 +118,73 @@ public class ExportHandler implements IMenuHandler,IMenuPreparer {
         return null;
     }
 
-    public File saveFile() throws IOException {
-        String deviceId = getDeviceId();
+    public Queue<FileDecorator> saveFiles() throws IOException {
 
-        FileUtil fileUtil = new FileUtil().withHeader(EXPORT_FIELDS);
-        List<Household> emptyHouseholds = new ArrayList<>();
-        for(Household household: households) {
-            List<ReElectReason> reasons = getReElectReasons(household);
-            List<Member> membersPerHousehold = household.getAllMembersForExport(getDatabaseHelper());
-            for(Member member: membersPerHousehold) {
+        Map<String, List<Household>> householdMap = new Hashtable<>();
+
+        for (Household household : households) {
+            if (householdMap.containsKey(household.getOdkJrFormId())) {
+                householdMap.get(household.getOdkJrFormId()).add(household);
+            }
+            else {
+                List<Household> householdsList = new ArrayList<>();
+                householdsList.add(household);
+                householdMap.put(household.getOdkJrFormId(), householdsList);
+            }
+        }
+
+        String deviceId = getDeviceId();
+        Queue<FileDecorator> files = new LinkedList<>();
+
+        for (Map.Entry<String, List<Household>> entry : householdMap.entrySet()) {
+
+            FileUtil fileUtil = new FileUtil().withHeader(EXPORT_FIELDS);
+            List<Household> emptyHouseholds = new ArrayList<>();
+
+            for(Household household: entry.getValue()) {
+                List<ReElectReason> reasons = getReElectReasons(household);
+                List<Member> membersPerHousehold = household.getAllMembersForExport(getDatabaseHelper());
+                for(Member member: membersPerHousehold) {
+                    ArrayList<String> row = new ArrayList<>();
+                    row.add(household.getPhoneNumber());
+                    row.add(household.getName());
+                    row.add(replaceCommas(household.getComments()));
+                    row.add(member.getMemberHouseholdId());
+                    row.add(member.getFamilySurname());
+                    row.add(member.getFirstName());
+                    row.add(String.valueOf(member.getAge()));
+                    row.add(member.getGender().toString());
+                    row.add(member.getDeletedString());
+                    setStatus(household, member, row);
+                    row.add(String.valueOf(reasons.size()));
+                    row.add(replaceCommas(StringUtils.join(reasons.toArray(), ';')));
+                    row.add(deviceId);
+                    row.add(KeyValueStoreFactory.instance(activity).getString(HH_SURVEY_ID));
+                    row.add(String.valueOf(household.numberOfNonDeletedMembers(getDatabaseHelper())));
+                    row.add(household.getUniqueDeviceId());
+                    row.add(household.getCreatedAt());
+                    row.add(household.getOdkJrFormId());
+                    row.add(household.getOdkJrFormTitle());
+                    fileUtil.withData(row.toArray(new String[row.size()]));
+                }
+                if (membersPerHousehold.size() == 0) {
+                    emptyHouseholds.add(household);
+                }
+            }
+            // Add households with no members
+            for (Household household : emptyHouseholds) {
+                List<ReElectReason> reasons = getReElectReasons(household);
                 ArrayList<String> row = new ArrayList<>();
                 row.add(household.getPhoneNumber());
                 row.add(household.getName());
                 row.add(replaceCommas(household.getComments()));
-                row.add(member.getMemberHouseholdId());
-                row.add(member.getFamilySurname());
-                row.add(member.getFirstName());
-                row.add(String.valueOf(member.getAge()));
-                row.add(member.getGender().toString());
-                row.add(member.getDeletedString());
-                setStatus(household, member, row);
+                row.add(household.getName() + Constants.DUMMY_MEMBER_ID);
+                row.add(EMPTY_COLUMN);
+                row.add(EMPTY_COLUMN);
+                row.add(EMPTY_COLUMN);
+                row.add(EMPTY_COLUMN);
+                row.add(EMPTY_COLUMN);
+                row.add(SURVEY_EMPTY_HH);
                 row.add(String.valueOf(reasons.size()));
                 row.add(replaceCommas(StringUtils.join(reasons.toArray(), ';')));
                 row.add(deviceId);
@@ -144,37 +192,18 @@ public class ExportHandler implements IMenuHandler,IMenuPreparer {
                 row.add(String.valueOf(household.numberOfNonDeletedMembers(getDatabaseHelper())));
                 row.add(household.getUniqueDeviceId());
                 row.add(household.getCreatedAt());
+                row.add(household.getOdkJrFormId());
+                row.add(household.getOdkJrFormTitle());
                 fileUtil.withData(row.toArray(new String[row.size()]));
             }
-            if (membersPerHousehold.size() == 0) {
-                emptyHouseholds.add(household);
-            }
-        }
-        // Add households with no members
-        for (Household household : emptyHouseholds) {
-            List<ReElectReason> reasons = getReElectReasons(household);
-            ArrayList<String> row = new ArrayList<>();
-            row.add(household.getPhoneNumber());
-            row.add(household.getName());
-            row.add(replaceCommas(household.getComments()));
-            row.add(household.getName() + Constants.DUMMY_MEMBER_ID);
-            row.add(EMPTY_COLUMN);
-            row.add(EMPTY_COLUMN);
-            row.add(EMPTY_COLUMN);
-            row.add(EMPTY_COLUMN);
-            row.add(EMPTY_COLUMN);
-            row.add(SURVEY_EMPTY_HH);
-            row.add(String.valueOf(reasons.size()));
-            row.add(replaceCommas(StringUtils.join(reasons.toArray(), ';')));
-            row.add(deviceId);
-            row.add(KeyValueStoreFactory.instance(activity).getString(HH_SURVEY_ID));
-            row.add(String.valueOf(household.numberOfNonDeletedMembers(getDatabaseHelper())));
-            row.add(household.getUniqueDeviceId());
-            row.add(household.getCreatedAt());
-            fileUtil.withData(row.toArray(new String[row.size()]));
+
+            File file = fileUtil.writeCSV(activity.getFilesDir() + "/" + Constants.EXPORT_FILE_NAME + "_" + entry.getKey() + "_" + deviceId + ".csv");
+            StepsFileDecorator stepsFileDecorator = new StepsFileDecorator(file);
+            stepsFileDecorator.setFormTitle(entry.getValue().get(0).getOdkJrFormTitle());
+            files.add(stepsFileDecorator);
         }
 
-        return fileUtil.writeCSV(activity.getFilesDir() + "/" + Constants.EXPORT_FILE_NAME + "_" + deviceId + ".csv");
+        return files;
     }
 
     /**
@@ -234,6 +263,7 @@ public class ExportHandler implements IMenuHandler,IMenuPreparer {
         void onExportCancelled();
         void onExportStart();
         void onFileSaved();
-        void onFileUploaded(boolean successful);
+        void onFileUploaded(List<UploadResult> uploadResults);
+        void onError(String error);
     }
 }
