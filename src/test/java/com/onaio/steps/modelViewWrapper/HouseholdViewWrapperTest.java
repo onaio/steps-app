@@ -78,15 +78,15 @@ public class HouseholdViewWrapperTest extends StepsTestRunner {
     @Test
     public void ShouldGiveHousehold() throws InvalidDataException, NoUniqueIdException {
         HouseholdViewWrapper householdViewWrapper = new HouseholdViewWrapper(activity);
-        TextView nameView = ((TextView) activity.findViewById(R.id.generated_household_id));
+        TextView nameView = activity.findViewById(R.id.generated_household_id);
         nameView.setText("new name");
-        TextView numberView = (TextView) activity.findViewById(R.id.household_number);
-        numberView.setText("123456789");
-        EditText commentsView = (EditText) activity.findViewById(R.id.household_comments);
+        TextView numberView = activity.findViewById(R.id.household_number);
+        numberView.setText("1234567");
+        EditText commentsView = activity.findViewById(R.id.household_comments);
         commentsView.setText("Dummy Comments");
         Household household = householdViewWrapper.getHousehold(R.id.generated_household_id, R.id.household_number,R.id.household_comments);
         assertTrue(household.getName().equals("new name"));
-        assertTrue(household.getPhoneNumber().equals("123456789"));
+        assertTrue(household.getPhoneNumber().equals("1234567"));
         assertEquals("Dummy Comments", household.getComments());
         assertTrue(household.getStatus().equals(InterviewStatus.EMPTY_HOUSEHOLD));
 

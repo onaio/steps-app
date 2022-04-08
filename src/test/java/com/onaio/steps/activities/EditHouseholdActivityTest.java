@@ -45,7 +45,7 @@ public class EditHouseholdActivityTest extends StepsTestRunner {
 
     @Before
     public void setup() {
-        household = new Household("1", "household Name", "123456789", "2", InterviewStatus.NOT_DONE, "2015-12-13", "uniquedevid", "Dummy comments", null);
+        household = new Household("1", "household Name", "1234567", "2", InterviewStatus.NOT_DONE, "2015-12-13", "uniquedevid", "Dummy comments", null);
         household.setServerStatus(ServerStatus.NOT_SENT);
         Intent intent = new Intent();
         intent.putExtra(Constants.HH_HOUSEHOLD, household);
@@ -57,10 +57,10 @@ public class EditHouseholdActivityTest extends StepsTestRunner {
 
     @Test
     public void ShouldPopulateViewWithDataFromIntent() {
-        TextView header = (TextView) editHouseholdActivity.findViewById(R.id.form_header);
-        TextView household_id = (TextView) editHouseholdActivity.findViewById(R.id.generated_household_id);
-        TextView household_number = (TextView) editHouseholdActivity.findViewById(R.id.household_number);
-        TextView commentsView = (TextView) editHouseholdActivity.findViewById(R.id.household_comments);
+        TextView header = editHouseholdActivity.findViewById(R.id.form_header);
+        TextView household_id = editHouseholdActivity.findViewById(R.id.generated_household_id);
+        TextView household_number = editHouseholdActivity.findViewById(R.id.household_number);
+        TextView commentsView = editHouseholdActivity.findViewById(R.id.household_comments);
 
 
         assertEquals(R.id.household_form, shadowOf(editHouseholdActivity).getContentView().getId());
@@ -69,7 +69,7 @@ public class EditHouseholdActivityTest extends StepsTestRunner {
         assertNotNull(household_number);
         assertEquals("Edit Household", header.getText().toString());
         assertEquals("household Name", household_id.getText().toString());
-        assertEquals("123456789", household_number.getText().toString());
+        assertEquals("1234567", household_number.getText().toString());
         assertEquals("Dummy comments", commentsView.getText().toString());
     }
 
