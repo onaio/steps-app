@@ -29,10 +29,9 @@ import com.onaio.steps.helper.CustomDialog;
 
 public class NotReachableHandler implements IMenuHandler,IMenuPreparer {
 
-    private IDoNotTakeSurveyStrategy refusedSurveyStrategy;
+    private final IDoNotTakeSurveyStrategy refusedSurveyStrategy;
     private final CustomDialog dialog;
-    private AppCompatActivity activity;
-    private int MENU_ID = R.id.action_not_reachable;
+    private final AppCompatActivity activity;
 
     public NotReachableHandler(AppCompatActivity activity, IDoNotTakeSurveyStrategy refusedSurveyStrategy) {
         this(activity, refusedSurveyStrategy, new CustomDialog());
@@ -47,7 +46,7 @@ public class NotReachableHandler implements IMenuHandler,IMenuPreparer {
 
     @Override
     public boolean shouldOpen(int menu_id) {
-        return menu_id==MENU_ID;
+        return menu_id==getViewId();
     }
 
     @Override
@@ -62,13 +61,7 @@ public class NotReachableHandler implements IMenuHandler,IMenuPreparer {
     }
 
     private void confirm() {
-        DialogInterface.OnClickListener confirmListener = new DialogInterface.OnClickListener() {
-
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                refuse();
-            }
-        };
+        DialogInterface.OnClickListener confirmListener = (dialogInterface, i) -> refuse();
         dialog.confirm(activity, confirmListener, CustomDialog.EmptyListener, refusedSurveyStrategy.dialogMessage(), R.string.survey_not_reachable_title);
     }
 
@@ -79,13 +72,17 @@ public class NotReachableHandler implements IMenuHandler,IMenuPreparer {
 
     @Override
     public void deactivate() {
-        View item = activity.findViewById(MENU_ID);
+        View item = activity.findViewById(getViewId());
         item.setVisibility(View.GONE);
     }
 
     @Override
     public void activate() {
-        View item = activity.findViewById(MENU_ID);
+        View item = activity.findViewById(getViewId());
         item.setVisibility(View.VISIBLE);
+    }
+
+    public int getViewId() {
+        return R.id.action_not_reachable;
     }
 }
