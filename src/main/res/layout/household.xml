@@ -117,6 +117,23 @@
                 android:text="@string/action_select_participant"
                 android:textColor="@android:color/black"
                 android:textSize="12sp" />
+
+            <Button
+                android:id="@+id/action_not_reachable_empty_hh"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_margin="15dp"
+                android:layout_weight="1"
+                android:background="#565692"
+                android:drawablePadding="-10dp"
+                android:drawableStart="@drawable/ic_action_refused"
+                android:drawableTint="@android:color/white"
+                android:onClick="handleCustomMenu"
+                android:paddingLeft="10dp"
+                android:text="@string/not_reachable"
+                android:textColor="@android:color/white"
+                android:textSize="12sp" />
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView

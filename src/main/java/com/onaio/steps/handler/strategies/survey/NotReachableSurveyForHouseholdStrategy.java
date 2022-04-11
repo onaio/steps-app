@@ -26,8 +26,8 @@ import com.onaio.steps.model.Household;
 import com.onaio.steps.model.InterviewStatus;
 
 public class NotReachableSurveyForHouseholdStrategy implements IDoNotTakeSurveyStrategy {
-    private Household household;
-    private AppCompatActivity activity;
+    protected Household household;
+    private final AppCompatActivity activity;
 
     public NotReachableSurveyForHouseholdStrategy(Household household, AppCompatActivity activity){
 

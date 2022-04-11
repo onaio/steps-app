@@ -29,6 +29,7 @@ import com.onaio.steps.handler.actions.CancelParticipantSelectionHandler;
 import com.onaio.steps.handler.actions.DeferredHandler;
 import com.onaio.steps.handler.actions.IncompleteRefusedHandler;
 import com.onaio.steps.handler.actions.NotReachableHandler;
+import com.onaio.steps.handler.actions.NotReachableOnEmptyHouseholdHandler;
 import com.onaio.steps.handler.actions.RefusedHandler;
 import com.onaio.steps.handler.actions.SelectParticipantHandler;
 import com.onaio.steps.handler.actions.SelectedParticipantActionsHandler;
@@ -101,7 +102,7 @@ public class HouseholdActivityFactoryTest extends StepsTestRunner {
 
         ArrayList<Class> menuHandlerTypes = getTypes(menuHandlers);
 
-        assertEquals(11, menuHandlers.size());
+        assertEquals(12, menuHandlers.size());
         Assert.assertTrue(menuHandlerTypes.contains(TakeSurveyHandler.class));
         Assert.assertTrue(menuHandlerTypes.contains(DeferredHandler.class));
         Assert.assertTrue(menuHandlerTypes.contains(RefusedHandler.class));
@@ -113,6 +114,7 @@ public class HouseholdActivityFactoryTest extends StepsTestRunner {
         Assert.assertTrue(menuHandlerTypes.contains(IncompleteRefusedHandler.class));
         Assert.assertTrue(menuHandlerTypes.contains(HouseholdActivityBackButtonPreparer.class));
         Assert.assertTrue(menuHandlerTypes.contains(NotReachableHandler.class));
+        Assert.assertTrue(menuHandlerTypes.contains(NotReachableOnEmptyHouseholdHandler.class));
 
     }
 
@@ -122,7 +124,7 @@ public class HouseholdActivityFactoryTest extends StepsTestRunner {
 
         ArrayList<Class> menuHandlerTypes = getTypes(menuHandlers);
 
-        assertEquals(8, menuHandlers.size());
+        assertEquals(9, menuHandlers.size());
         Assert.assertTrue(menuHandlerTypes.contains(TakeSurveyHandler.class));
         Assert.assertTrue(menuHandlerTypes.contains(DeferredHandler.class));
         Assert.assertTrue(menuHandlerTypes.contains(RefusedHandler.class));
@@ -131,6 +133,7 @@ public class HouseholdActivityFactoryTest extends StepsTestRunner {
         Assert.assertTrue(menuHandlerTypes.contains(SelectParticipantHandler.class));
         Assert.assertTrue(menuHandlerTypes.contains(IncompleteRefusedHandler.class));
         Assert.assertTrue(menuHandlerTypes.contains(NotReachableHandler.class));
+        Assert.assertTrue(menuHandlerTypes.contains(NotReachableOnEmptyHouseholdHandler.class));
     }
 
     private <T> ArrayList<Class> getTypes(List<T> menuHandlers) {
