@@ -52,11 +52,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             onCreate(db);
 
         } else if (oldVersion < 2) {
-            db.execSQL("ALTER TABLE " + Household.TABLE_NAME + " ADD COLUMN " + Household.SERVER_STATUS + " TEXT default '" + ServerStatus.NOT_SENT + "'");
-            db.execSQL("ALTER TABLE " + Household.TABLE_NAME + " ADD COLUMN " + Household.ODK_FORM_ID + " TEXT default null");
-            db.execSQL("ALTER TABLE " + Household.TABLE_NAME + " ADD COLUMN " + Household.ODK_JR_FORM_ID + " TEXT default '" + BuildConfig.JR_FORM_ID + "'");
-            db.execSQL("ALTER TABLE " + Household.TABLE_NAME + " ADD COLUMN " + Household.ODK_JR_FORM_TITLE + " TEXT default '" + BuildConfig.JR_FORM_TITLE + "'");
-            db.execSQL("ALTER TABLE " + Participant.TABLE_NAME + " ADD COLUMN " + Participant.ODK_FORM_ID + " TEXT default null");
+            addColumnIfNotExist(db, Household.TABLE_NAME, Household.SERVER_STATUS, "ALTER TABLE %s ADD COLUMN %s TEXT default '" + ServerStatus.NOT_SENT + "'");
+            addColumnIfNotExist(db, Household.TABLE_NAME, Household.ODK_FORM_ID, "ALTER TABLE %s ADD COLUMN %s TEXT default null");
+            addColumnIfNotExist(db, Household.TABLE_NAME, Household.ODK_JR_FORM_ID, "ALTER TABLE %s ADD COLUMN %s TEXT default '" + BuildConfig.JR_FORM_ID + "'");
+            addColumnIfNotExist(db, Household.TABLE_NAME, Household.ODK_JR_FORM_TITLE, "ALTER TABLE %s ADD COLUMN %s TEXT default '" + BuildConfig.JR_FORM_TITLE + "'");
+            addColumnIfNotExist(db, Participant.TABLE_NAME, Participant.ODK_FORM_ID, "ALTER TABLE %s ADD COLUMN %s TEXT default null");
         }
     }
 
@@ -105,5 +105,27 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void close(){
         if(readableDb!=null && readableDb.isOpen())
             readableDb.close();
+    }
+
+    public void addColumnIfNotExist(SQLiteDatabase db, String tableName, String columnName, String alterQuery) {
+        if (!isColumnExist(db, tableName, columnName)) {
+            db.execSQL(String.format(alterQuery, tableName, columnName));
+        }
+    }
+
+    public boolean isColumnExist(SQLiteDatabase db, String tableName, String columnName) {
+        boolean isExist = false;
+        Cursor cursor = db.rawQuery("PRAGMA table_info(" + tableName + ")", null);
+        if(cursor.moveToFirst()) {
+            do {
+                String currentColumn = cursor.getString(1);
+                if (currentColumn.equals(columnName)) {
+                    isExist = true;
+                    break;
+                }
+            } while (cursor.moveToNext());
+        }
+
+        return isExist;
     }
 }
