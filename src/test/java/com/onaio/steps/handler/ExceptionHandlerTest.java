@@ -54,10 +54,12 @@ public class ExceptionHandlerTest extends StepsTestRunner {
         FormNotPresentException formNotPresentException = mock(FormNotPresentException.class);
         exceptionHandler.handle(formNotPresentException);
         verifyAlertError(callback, formNotPresentException, R.string.form_not_present);
+        verify(callback, times(1)).onError(any(FormNotPresentException.class), anyInt());
 
         AppNotInstalledException appNotInstalledException = mock(AppNotInstalledException.class);
         exceptionHandler.handle(appNotInstalledException);
         verifyAlertError(callback, appNotInstalledException, R.string.odk_app_not_installed);
+        verify(callback, times(1)).onError(any(AppNotInstalledException.class), anyInt());
 
         exceptionHandler.handle(mock(NullPointerException.class));
 
@@ -70,8 +72,7 @@ public class ExceptionHandlerTest extends StepsTestRunner {
         NullPointerException nullPointerException = mock(NullPointerException.class);
         exceptionHandler.handle(nullPointerException);
         verifyAlertError(callback, nullPointerException, R.string.something_went_wrong_try_again);
-
-        verify(callback, times(3)).onError(any(Exception.class), anyInt());
+        verify(callback, times(1)).onError(any(NullPointerException.class), anyInt());
     }
 
     private void verifyAlertError(ExceptionHandler.ExceptionAlertCallback callback, Exception e, int message) {
