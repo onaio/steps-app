@@ -62,9 +62,9 @@ public class SubmitDataHandlerTest extends StepsTestRunner {
         final Dialog dialog = new Dialog(householdListActivity);
         dialog.setContentView(R.layout.dialog_submit_data);
 
-        CheckBox exportHouseholdListCheckBox = (CheckBox) dialog.findViewById(R.id.exportHouseholdListCheckBox);
+        CheckBox exportHouseholdListCheckBox = dialog.findViewById(R.id.exportHouseholdListCheckBox);
         assertTrue(exportHouseholdListCheckBox.isChecked());
-        CheckBox submitRecordsCheckBox = (CheckBox) dialog.findViewById(R.id.submitRecordsCheckBox);
+        CheckBox submitRecordsCheckBox = dialog.findViewById(R.id.submitRecordsCheckBox);
         assertTrue(submitRecordsCheckBox.isChecked());
     }
 
@@ -80,6 +80,6 @@ public class SubmitDataHandlerTest extends StepsTestRunner {
         submitDataHandler.displayUploadResult(new ArrayList<>());
 
         verify(fragmentTransaction, times(1)).add(any(HouseholdUploadResultDialog.class), eq(HouseholdUploadResultDialog.class.getSimpleName()));
-        verify(fragmentTransaction, times(1)).commit();
+        verify(fragmentTransaction, times(1)).commitAllowingStateLoss();
     }
 }
