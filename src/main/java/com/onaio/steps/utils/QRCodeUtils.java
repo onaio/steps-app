@@ -198,9 +198,6 @@ public class QRCodeUtils {
         jsonObject.put("participantSettings", participantSettings);
 
         JSONObject houseHoldSettings = new JSONObject();
-        houseHoldSettings.put(Constants.HH_SURVEY_ID,
-                keyValueStore.getString(Constants.HH_SURVEY_ID)
-        );
         houseHoldSettings.put(Constants.HH_USER_ID, keyValueStore.getString(Constants.HH_USER_ID));
         houseHoldSettings.put(Constants.HH_HOUSEHOLD_SEED, keyValueStore.getString(Constants.HH_HOUSEHOLD_SEED));
         houseHoldSettings.put(Constants.HH_FORM_ID, keyValueStore.getString(Constants.HH_FORM_ID));
@@ -235,7 +232,6 @@ public class QRCodeUtils {
                 JSONObject householdSettings = jsonObject.getJSONObject("householdSettings");
 
                 keyValueStore.putString(Constants.HH_FORM_ID, householdSettings.getString(Constants.HH_FORM_ID));
-                keyValueStore.putString(Constants.HH_SURVEY_ID, householdSettings.getString(Constants.HH_SURVEY_ID));
                 keyValueStore.putString(Constants.HH_USER_ID, householdSettings.getString(Constants.HH_USER_ID));
                 keyValueStore.putString(Constants.HH_HOUSEHOLD_SEED, householdSettings.getString(Constants.HH_HOUSEHOLD_SEED));
                 keyValueStore.putString(Constants.HH_MIN_AGE, householdSettings.getString(Constants.HH_MIN_AGE));

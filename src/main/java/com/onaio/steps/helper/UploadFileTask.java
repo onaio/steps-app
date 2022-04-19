@@ -17,7 +17,6 @@
 package com.onaio.steps.helper;
 
 import static com.onaio.steps.helper.Constants.ENDPOINT_URL;
-import static com.onaio.steps.helper.Constants.HH_SURVEY_ID;
 import static com.onaio.steps.helper.Constants.HH_USER_ID;
 import static com.onaio.steps.helper.Constants.HH_USER_PASSWORD;
 
@@ -62,20 +61,18 @@ public class UploadFileTask {
             String endPoint = KeyValueStoreFactory.instance(activity).getString(ENDPOINT_URL);
 
             KeyValueStore store = KeyValueStoreFactory.instance(activity);
-            String surveyId = store.getString(HH_SURVEY_ID);
             String userId = store.getString(HH_USER_ID);
             String userPassword = store.getString(HH_USER_PASSWORD);
 
-            if (surveyId.isEmpty() || userId.isEmpty() || userPassword.isEmpty()) {
+            if (userId.isEmpty() || userPassword.isEmpty()) {
                 onExportListener.onError(activity.getString(R.string.invalid_fields_error));
             } else {
 
-                RequestBody surveyIdBody = RequestBody.create(MediaType.parse("text/plain"), surveyId);
                 RequestBody userIdBody = RequestBody.create(MediaType.parse("text/plain"), userId);
                 RequestBody userPasswordBody = RequestBody.create(MediaType.parse("text/plain"), userPassword);
 
                 if (!fileDecorators.isEmpty()) {
-                    upload(fileDecorators, endPoint, surveyIdBody, userIdBody, userPasswordBody, new ArrayList<>());
+                    upload(fileDecorators, endPoint, userIdBody, userPasswordBody, new ArrayList<>());
                 }
             }
         } else {
@@ -83,21 +80,21 @@ public class UploadFileTask {
         }
     }
 
-    public void upload(Queue<FileDecorator> fileDecorators, String endPoint, RequestBody surveyIdBody, RequestBody userIdBody, RequestBody userPasswordBody, List<UploadResult> uploadResults) {
+    public void upload(Queue<FileDecorator> fileDecorators, String endPoint, RequestBody userIdBody, RequestBody userPasswordBody, List<UploadResult> uploadResults) {
 
         FileDecorator fileDecorator = fileDecorators.remove();
         String fileType = "text/csv";
         RequestBody requestFile = RequestBody.create(MediaType.parse(fileType), fileDecorator.getFile());
         MultipartBody.Part fileBody = MultipartBody.Part.createFormData("file", fileDecorator.getFile().getName(), requestFile);
 
-        retrofit.create(HouseholdService.class).uploadData(endPoint, fileBody, surveyIdBody, userIdBody, userPasswordBody).enqueue(new Callback<ResponseBody>() {
+        retrofit.create(HouseholdService.class).uploadData(endPoint, fileBody, userIdBody, userPasswordBody).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 
                 uploadResults.add(new UploadResult(fileDecorator.getFormTitle(), response.isSuccessful() && response.code() == 201));
 
                 if (!isDone(fileDecorators, uploadResults)) {
-                    upload(fileDecorators, endPoint, surveyIdBody, userIdBody, userPasswordBody, uploadResults);
+                    upload(fileDecorators, endPoint, userIdBody, userPasswordBody, uploadResults);
                 }
             }
 
@@ -107,7 +104,7 @@ public class UploadFileTask {
                 uploadResults.add(new UploadResult(fileDecorator.getFormTitle(), false));
 
                 if (!isDone(fileDecorators, uploadResults)) {
-                    upload(fileDecorators, endPoint, surveyIdBody, userIdBody, userPasswordBody, uploadResults);
+                    upload(fileDecorators, endPoint, userIdBody, userPasswordBody, uploadResults);
                 }
             }
         });

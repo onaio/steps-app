@@ -23,7 +23,6 @@
     <string name="action_new_household">"Nouveau ménages"</string>
     <string name="action_household">"Ménage"</string>
     <string name="save_button">"Enregistrer"</string>
-    <string name="survey_id_label">"Code ID de l'enquête"</string>
     <string name="device_id_label">"Code ID de l'appareil"</string>
     <string name="phone_id_message">"Saisissez l'ID de l'appareil en premier!"</string>
     <string name="phone_id_message_title">"Alerte"</string>

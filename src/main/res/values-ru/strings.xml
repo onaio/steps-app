@@ -23,7 +23,6 @@
     <string name="action_new_household">"Новое домохозяйство"</string>
     <string name="action_household">"Домохозяйство"</string>
     <string name="save_button">"Сохранить"</string>
-    <string name="survey_id_label">"Идентификатор Исследования"</string>
     <string name="device_id_label">"Идентификатор устройства"</string>
     <string name="phone_id_message">"Установите идентификатор устройства сначала!"</string>
     <string name="phone_id_message_title">"Тревога"</string>

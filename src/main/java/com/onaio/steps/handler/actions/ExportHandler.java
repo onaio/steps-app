@@ -18,7 +18,6 @@ package com.onaio.steps.handler.actions;
 
 import static com.onaio.steps.helper.Constants.EXPORT_FIELDS;
 import static com.onaio.steps.helper.Constants.HH_PHONE_ID;
-import static com.onaio.steps.helper.Constants.HH_SURVEY_ID;
 import static com.onaio.steps.helper.Constants.SURVEY_EMPTY_HH;
 import static com.onaio.steps.helper.Constants.SURVEY_NOT_SELECTED;
 
@@ -159,7 +158,6 @@ public class ExportHandler implements IMenuHandler,IMenuPreparer {
                     row.add(String.valueOf(reasons.size()));
                     row.add(replaceCommas(StringUtils.join(reasons.toArray(), ';')));
                     row.add(deviceId);
-                    row.add(KeyValueStoreFactory.instance(activity).getString(HH_SURVEY_ID));
                     row.add(String.valueOf(household.numberOfNonDeletedMembers(getDatabaseHelper())));
                     row.add(household.getUniqueDeviceId());
                     row.add(household.getCreatedAt());
@@ -188,7 +186,6 @@ public class ExportHandler implements IMenuHandler,IMenuPreparer {
                 row.add(String.valueOf(reasons.size()));
                 row.add(replaceCommas(StringUtils.join(reasons.toArray(), ';')));
                 row.add(deviceId);
-                row.add(KeyValueStoreFactory.instance(activity).getString(HH_SURVEY_ID));
                 row.add(String.valueOf(household.numberOfNonDeletedMembers(getDatabaseHelper())));
                 row.add(household.getUniqueDeviceId());
                 row.add(household.getCreatedAt());
