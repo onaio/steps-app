@@ -79,10 +79,7 @@ public class Constants {
 
     public static final long SETTINGS_AUTH_TIMEOUT = 60000;//the number of milliseconds after authentication in the settings screen before authentication can be asked
 
-    public static final String STEPS_ROOT_FOLDER = Environment.getExternalStorageDirectory()
-            + File.separator + "steps";
-
-    public static final String SETTINGS = STEPS_ROOT_FOLDER + File.separator + "settings";
+    public static final String SETTINGS = "settings";
 
     public static final String UNIQUE_DEVICE_ID = "unique_device_id";
 }

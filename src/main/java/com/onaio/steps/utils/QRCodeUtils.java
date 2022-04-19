@@ -132,15 +132,17 @@ public class QRCodeUtils {
 
         Bitmap bitmap = null;
 
+        String basePath = activity.getFilesDir().getAbsolutePath();
+
         // check if settings directory exists, if not then create one
-        File writeDir = new File(Constants.SETTINGS);
+        File writeDir = new File(basePath + File.separator + Constants.SETTINGS);
         if (!writeDir.exists()) {
             if (!writeDir.mkdirs()) {
                 Log.e(TAG, "Error creating directory " + writeDir.getAbsolutePath());
             }
         }
 
-        File mdCacheFile = new File(MD5_CACHE_PATH);
+        File mdCacheFile = new File(basePath + File.separator + MD5_CACHE_PATH);
         if (mdCacheFile.exists()) {
             byte[] cachedMessageDigest = FileUtil.read(mdCacheFile);
 
@@ -173,7 +175,7 @@ public class QRCodeUtils {
         md.update(settingsJSON.getBytes());
         byte[] messageDigest = md.digest();
 
-        File mdCacheFile = new File(MD5_CACHE_PATH);
+        File mdCacheFile = new File(activity.getFilesDir().getAbsolutePath() + File.separator + MD5_CACHE_PATH);
 
         if (bitmap != null) {
             // Save the QRCode to disk
@@ -235,7 +237,6 @@ public class QRCodeUtils {
                 JSONObject householdSettings = jsonObject.getJSONObject("householdSettings");
 
                 keyValueStore.putString(Constants.HH_FORM_ID, householdSettings.getString(Constants.HH_FORM_ID));
-                keyValueStore.putString(Constants.HH_SURVEY_ID, householdSettings.getString(Constants.HH_SURVEY_ID));
                 keyValueStore.putString(Constants.HH_USER_ID, householdSettings.getString(Constants.HH_USER_ID));
                 keyValueStore.putString(Constants.HH_HOUSEHOLD_SEED, householdSettings.getString(Constants.HH_HOUSEHOLD_SEED));
                 keyValueStore.putString(Constants.HH_MIN_AGE, householdSettings.getString(Constants.HH_MIN_AGE));
