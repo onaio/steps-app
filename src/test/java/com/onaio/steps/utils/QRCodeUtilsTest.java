@@ -69,7 +69,6 @@ public class QRCodeUtilsTest extends StepsTestRunner {
         assertEquals("98", keyValueStore.getString(Constants.PA_MAX_AGE));
 
         // Household settings
-        assertEquals("some survey id here", keyValueStore.getString(Constants.HH_SURVEY_ID));
         assertEquals("some user id here", keyValueStore.getString(Constants.HH_USER_ID));
         assertEquals("", keyValueStore.getString(Constants.HH_PHONE_ID));
         assertEquals("1", keyValueStore.getString(Constants.HH_HOUSEHOLD_SEED));
