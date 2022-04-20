@@ -174,13 +174,9 @@ public class SubmitDataHandler implements IMenuHandler,IMenuPreparer, IViewPrepa
     }
 
     public void displayUploadResult(List<UploadResult> uploadResults) {
-        try {
-            HouseholdUploadResultDialog householdUploadResultDialog = new HouseholdUploadResultDialog(uploadResults);
-            FragmentTransaction fragmentTransaction = activity.getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.add(householdUploadResultDialog, HouseholdUploadResultDialog.class.getSimpleName());
-            fragmentTransaction.commitAllowingStateLoss();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+        HouseholdUploadResultDialog householdUploadResultDialog = new HouseholdUploadResultDialog(uploadResults);
+        FragmentTransaction fragmentTransaction = activity.getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.add(householdUploadResultDialog, HouseholdUploadResultDialog.class.getSimpleName());
+        fragmentTransaction.commitAllowingStateLoss();
     }
 }
