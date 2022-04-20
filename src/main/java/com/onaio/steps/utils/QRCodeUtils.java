@@ -67,7 +67,7 @@ public class QRCodeUtils {
 
     private static final String TAG = QRCodeUtils.class.getName();
 
-    public static final String QR_CODE_FILEPATH = Environment.getExternalStorageDirectory() + File.separator + Environment.DIRECTORY_PICTURES + File.separator + "my-steps-settings.png";
+    public static final String QR_CODE_FILEPATH = Constants.SETTINGS + File.separator + "my-steps-settings.png";
     private static final int QR_CODE_SIDE_LENGTH = 400; // in pixels
     private static final String SETTINGS_MD5_FILE = ".steps-settings-hash";
     static final String MD5_CACHE_PATH = Constants.SETTINGS + File.separator + SETTINGS_MD5_FILE;
@@ -132,15 +132,17 @@ public class QRCodeUtils {
 
         Bitmap bitmap = null;
 
+        String basePath = activity.getFilesDir().getAbsolutePath();
+
         // check if settings directory exists, if not then create one
-        File writeDir = new File(Constants.SETTINGS);
+        File writeDir = new File(basePath + File.separator + Constants.SETTINGS);
         if (!writeDir.exists()) {
             if (!writeDir.mkdirs()) {
                 Log.e(TAG, "Error creating directory " + writeDir.getAbsolutePath());
             }
         }
 
-        File mdCacheFile = new File(MD5_CACHE_PATH);
+        File mdCacheFile = new File(basePath + File.separator + MD5_CACHE_PATH);
         if (mdCacheFile.exists()) {
             byte[] cachedMessageDigest = FileUtil.read(mdCacheFile);
 
@@ -167,21 +169,21 @@ public class QRCodeUtils {
 
     public static void saveToDisk(AppCompatActivity activity, Bitmap bitmap) throws JSONException, NoSuchAlgorithmException {
 
-        String settingsJSON = exportSettingsToJSON(activity);
+        //String settingsJSON = exportSettingsToJSON(activity);
 
-        MessageDigest md = MessageDigest.getInstance("MD5");
-        md.update(settingsJSON.getBytes());
-        byte[] messageDigest = md.digest();
+        //MessageDigest md = MessageDigest.getInstance("MD5");
+        //md.update(settingsJSON.getBytes());
+        //byte[] messageDigest = md.digest();
 
-        File mdCacheFile = new File(MD5_CACHE_PATH);
-
+        //File mdCacheFile = new File(MD5_CACHE_PATH);
+        String basePath = activity.getFilesDir().getAbsolutePath();
         if (bitmap != null) {
             // Save the QRCode to disk
-                logInfo("Saving QR Code to disk... : " + QR_CODE_FILEPATH);
-                FileUtil.saveBitmapToFile(bitmap, QR_CODE_FILEPATH);
+                logInfo("Saving QR Code to disk... : " + basePath + File.separator + QR_CODE_FILEPATH);
+                FileUtil.saveBitmapToFile(bitmap, basePath + File.separator + QR_CODE_FILEPATH);
 
-                FileUtil.write(mdCacheFile, messageDigest);
-                logInfo("Updated %s file contents", SETTINGS_MD5_FILE);
+                /*FileUtil.write(mdCacheFile, messageDigest);
+                logInfo("Updated %s file contents", SETTINGS_MD5_FILE);*/
         }
     }
 
