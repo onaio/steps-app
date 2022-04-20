@@ -24,11 +24,15 @@ public class UploadFileTaskTest extends StepsTestRunner {
     }
 
     @Test
-    public void testIsAllFieldValidShouldValidateAllGivenFields() {
+    public void testIsAllFieldValidShouldReturnTrue() {
 
         // verify valid fields
         assertTrue(uploadFileTask.isAllFieldValid("user_id"));
         assertTrue(uploadFileTask.isAllFieldValid("user_id", "user_password"));
+    }
+
+    @Test
+    public void testIsAllFieldValidShouldReturnFalse() {
 
         // verify invalid fields
         assertFalse(uploadFileTask.isAllFieldValid((String) null));
