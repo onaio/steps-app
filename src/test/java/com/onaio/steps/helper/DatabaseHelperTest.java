@@ -63,6 +63,7 @@ public class DatabaseHelperTest extends StepsTestRunner {
         assertTrue(isColumnExist);
         verify(cursor, times(1)).moveToFirst();
         verify(cursor, times(1)).getString(eq(1));
+        verify(cursor, times(1)).close();
         verify(db, times(1)).rawQuery(eq("PRAGMA table_info(" + TABLE_NAME + ")"), eq(null));
     }
 }
