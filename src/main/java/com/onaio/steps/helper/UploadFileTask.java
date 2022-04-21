@@ -23,6 +23,7 @@ import static com.onaio.steps.helper.Constants.HH_USER_PASSWORD;
 import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.onaio.steps.R;
@@ -64,7 +65,7 @@ public class UploadFileTask {
             String userId = store.getString(HH_USER_ID);
             String userPassword = store.getString(HH_USER_PASSWORD);
 
-            if (userId.isEmpty() || userPassword.isEmpty()) {
+            if (!isAllFieldValid(userId, userPassword)) {
                 onExportListener.onError(activity.getString(R.string.invalid_fields_error));
             } else {
 
@@ -116,5 +117,17 @@ public class UploadFileTask {
             onExportListener.onFileUploaded(uploadResults);
         }
         return isDone;
+    }
+
+    public boolean isAllFieldValid(@Nullable String... fields) {
+        boolean isValid = true;
+
+        if (fields == null) return false;
+
+        for (String field : fields) {
+            isValid = !(field == null || field.isEmpty());
+            if (!isValid) break;
+        }
+        return isValid;
     }
 }
