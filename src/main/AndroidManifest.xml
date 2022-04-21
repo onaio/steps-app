@@ -29,74 +29,92 @@
         android:theme="@style/CustomTheme">
         <activity
             android:name=".activities.MainActivityOrchestrator"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.HouseholdListActivity" />
+            android:name=".activities.HouseholdListActivity"
+            android:screenOrientation="portrait" />
         <activity
-            android:name=".activities.WelcomeActivity" />
+            android:name=".activities.WelcomeActivity"
+            android:screenOrientation="portrait" />
         <activity
-            android:name=".activities.ParticipantListActivity" />
+            android:name=".activities.ParticipantListActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.SettingsActivity"
             android:label="@string/action_settings"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.NewHouseholdActivity"
             android:label="New Household"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.EditHouseholdActivity"
             android:label="Edit Household"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.NewMemberActivity"
             android:label="New Member"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.EditMemberActivity"
             android:label="Edit Member"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.HouseholdActivity"
-            android:label="@string/action_household" />
+            android:label="@string/action_household"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.MemberActivity"
-            android:label="@string/action_member" />
+            android:label="@string/action_member"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.NewParticipantActivity"
             android:label="New Participant"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.EditParticipantActivity"
             android:label="Edit Participant"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.ParticipantActivity"
-            android:label="Participant" />
+            android:label="Participant"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.HouseholdSummaryActivity"
             android:parentActivityName=".activities.HouseholdListActivity"
-            android:label="View Totals" >
+            android:label="View Totals"
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.HouseholdListActivity" />
         </activity>
         <activity
             android:name=".activities.BackupLocationActivity"
-            android:label="@string/select_backup_location" />
+            android:label="@string/select_backup_location"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.SettingsImportExportActivity"
-            android:label="@string/import_export_settings_title" />
+            android:label="@string/import_export_settings_title"
+            android:screenOrientation="portrait" />
 
         <!-- external activity using to provide the data to ODK Collect -->
         <activity android:name=".external.DataProviderActivity"
             android:exported="true"
-            android:theme="@style/TransparentTheme">
+            android:theme="@style/TransparentTheme"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="com.onaio.steps.collect"/>
                 <category android:name="android.intent.category.DEFAULT"/>

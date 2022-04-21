@@ -8,7 +8,6 @@ import android.widget.Button;
 import android.widget.CheckBox;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.onaio.steps.R;
 import com.onaio.steps.activities.ParticipantListActivity;
@@ -174,9 +173,10 @@ public class SubmitDataHandler implements IMenuHandler,IMenuPreparer, IViewPrepa
     }
 
     public void displayUploadResult(List<UploadResult> uploadResults) {
-        HouseholdUploadResultDialog householdUploadResultDialog = new HouseholdUploadResultDialog(uploadResults);
-        FragmentTransaction fragmentTransaction = activity.getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.add(householdUploadResultDialog, HouseholdUploadResultDialog.class.getSimpleName());
-        fragmentTransaction.commitAllowingStateLoss();
+
+        if (!activity.isFinishing()) {
+            HouseholdUploadResultDialog householdUploadResultDialog = new HouseholdUploadResultDialog(uploadResults);
+            householdUploadResultDialog.show(activity.getSupportFragmentManager(), HouseholdUploadResultDialog.class.getSimpleName());
+        }
     }
 }
