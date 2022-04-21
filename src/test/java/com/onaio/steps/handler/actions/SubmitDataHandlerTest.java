@@ -80,6 +80,6 @@ public class SubmitDataHandlerTest extends StepsTestRunner {
         submitDataHandler.displayUploadResult(new ArrayList<>());
 
         verify(fragmentTransaction, times(1)).add(any(HouseholdUploadResultDialog.class), eq(HouseholdUploadResultDialog.class.getSimpleName()));
-        verify(fragmentTransaction, times(1)).commitAllowingStateLoss();
+        verify(fragmentTransaction, times(1)).commit();
     }
 }
