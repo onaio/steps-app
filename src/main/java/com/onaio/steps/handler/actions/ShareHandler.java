@@ -34,15 +34,15 @@ import com.onaio.steps.utils.ViewUtils;
 
 import java.io.File;
 
-public class ShareHandler implements IMenuHandler, IMenuPreparer {
+public class ShareHandler implements IMenuHandler, IMenuPreparer, QRBitmapSaveListener {
 
-    private final SettingsImportExportActivity settingsImportExportActivity;
+    private final SettingsImportExportActivity activity;
     private final boolean qrDisplayed;
     private static final int MENU_ID = R.id.menu_item_settings_share;
     private Menu menu;
 
     public ShareHandler(SettingsImportExportActivity settingsImportExportActivity, boolean qrDisplayed) {
-        this.settingsImportExportActivity = settingsImportExportActivity;
+        this.activity = settingsImportExportActivity;
         this.qrDisplayed = qrDisplayed;
     }
 
@@ -53,27 +53,7 @@ public class ShareHandler implements IMenuHandler, IMenuPreparer {
 
     @Override
     public boolean open() {
-        SaveQRCodeAsyncTask saveQRCodeAsyncTask = new SaveQRCodeAsyncTask(settingsImportExportActivity, settingsImportExportActivity.getQrCodeBitmap(), new QRBitmapSaveListener() {
-            @Override
-            public void onSuccessfulSave() {
-                Intent intent = new Intent(Intent.ACTION_SEND);
-                intent.setType("image/*");
-                intent.putExtra(Intent.EXTRA_STREAM,
-                        FileProvider.getUriForFile(settingsImportExportActivity,
-                                BuildConfig.APPLICATION_ID,
-                                new File(settingsImportExportActivity.getFilesDir() + File.separator, QRCodeUtils.QR_CODE_FILEPATH)
-                        )
-                );
-
-                settingsImportExportActivity.startActivity(Intent.createChooser(intent, settingsImportExportActivity.getString(R.string.share_qr_code_title)));
-            }
-
-            @Override
-            public void onError(Exception e) {
-                ViewUtils.showCustomToast(settingsImportExportActivity, settingsImportExportActivity.getString(R.string.qr_code_share_error));
-            }
-        });
-
+        SaveQRCodeAsyncTask saveQRCodeAsyncTask = new SaveQRCodeAsyncTask(activity, activity.getQrCodeBitmap(), this);
         saveQRCodeAsyncTask.execute();
         return true;
     }
@@ -100,5 +80,24 @@ public class ShareHandler implements IMenuHandler, IMenuPreparer {
         MenuItem item = menu.findItem(MENU_ID);
         item.setVisible(true);
         item.setEnabled(true);
+    }
+
+    @Override
+    public void onSuccessfulSave() {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("image/*");
+        intent.putExtra(Intent.EXTRA_STREAM,
+                FileProvider.getUriForFile(activity,
+                        BuildConfig.APPLICATION_ID,
+                        new File(activity.getFilesDir() + File.separator, QRCodeUtils.QR_CODE_FILEPATH)
+                )
+        );
+
+        activity.startActivity(Intent.createChooser(intent, activity.getString(R.string.share_qr_code_title)));
+    }
+
+    @Override
+    public void onError(Exception e) {
+        ViewUtils.showCustomToast(activity, activity.getString(R.string.qr_code_share_error));
     }
 }
