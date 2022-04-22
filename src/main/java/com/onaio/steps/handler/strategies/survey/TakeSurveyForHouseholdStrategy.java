@@ -34,6 +34,7 @@ import com.onaio.steps.model.ODKForm.ODKForm;
 import com.onaio.steps.model.ODKForm.ODKSavedForm;
 import com.onaio.steps.model.ODKForm.strategy.HouseholdMemberFormStrategy;
 import com.onaio.steps.model.RequestCode;
+import com.onaio.steps.model.ServerStatus;
 
 import java.io.IOException;
 
@@ -63,10 +64,12 @@ public class TakeSurveyForHouseholdStrategy  implements ITakeSurveyStrategy {
     }
 
     public void handleResult(ODKSavedForm savedForm){
-        if (Constants.ODK_FORM_COMPLETE_STATUS.equals(savedForm.getStatus()))
+        if (Constants.ODK_FORM_COMPLETE_STATUS.equals(savedForm.getStatus())) {
             household.setStatus(InterviewStatus.DONE);
-        else
+            household.setServerStatus(ServerStatus.NOT_SENT);
+        } else {
             household.setStatus(InterviewStatus.INCOMPLETE);
+        }
 
         household.setOdkFormId(savedForm.getId());
         household.setOdkJrFormId(savedForm.getJrFormId());
