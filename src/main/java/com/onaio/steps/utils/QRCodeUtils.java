@@ -18,7 +18,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.os.Environment;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -154,7 +153,7 @@ public class QRCodeUtils {
                 logInfo("Loading QRCode from the disk...");
                 BitmapFactory.Options options = new BitmapFactory.Options();
                 options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-                bitmap = FileUtil.getBitmap(QR_CODE_FILEPATH, options);
+                bitmap = FileUtil.getBitmap(basePath + File.separator + QR_CODE_FILEPATH, options);
             }
         }
 
@@ -169,21 +168,21 @@ public class QRCodeUtils {
 
     public static void saveToDisk(AppCompatActivity activity, Bitmap bitmap) throws JSONException, NoSuchAlgorithmException {
 
-        //String settingsJSON = exportSettingsToJSON(activity);
+        String settingsJSON = exportSettingsToJSON(activity);
 
-        //MessageDigest md = MessageDigest.getInstance("MD5");
-        //md.update(settingsJSON.getBytes());
-        //byte[] messageDigest = md.digest();
+        MessageDigest md = MessageDigest.getInstance("MD5");
+        md.update(settingsJSON.getBytes());
+        byte[] messageDigest = md.digest();
 
-        //File mdCacheFile = new File(MD5_CACHE_PATH);
         String basePath = activity.getFilesDir().getAbsolutePath();
+        File mdCacheFile = new File(basePath + File.separator + MD5_CACHE_PATH);
         if (bitmap != null) {
             // Save the QRCode to disk
                 logInfo("Saving QR Code to disk... : " + basePath + File.separator + QR_CODE_FILEPATH);
                 FileUtil.saveBitmapToFile(bitmap, basePath + File.separator + QR_CODE_FILEPATH);
 
-                /*FileUtil.write(mdCacheFile, messageDigest);
-                logInfo("Updated %s file contents", SETTINGS_MD5_FILE);*/
+                FileUtil.write(mdCacheFile, messageDigest);
+                logInfo("Updated %s file contents", SETTINGS_MD5_FILE);
         }
     }
 

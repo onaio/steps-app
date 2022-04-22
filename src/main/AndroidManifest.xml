@@ -103,9 +103,23 @@
             </intent-filter>
         </activity>
 
+        <provider
+            android:authorities="${applicationId}"
+            android:name="androidx.core.content.FileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_provider_paths" />
+
+        </provider>
+        
     </application>
 
     <queries>
         <package android:name="org.odk.collect.android" />
     </queries>
+    
+    
 </manifest>

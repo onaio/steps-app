@@ -16,10 +16,6 @@
 
 package com.onaio.steps.helper;
 
-import android.os.Environment;
-
-import java.io.File;
-
 public class Constants {
 
     public static final String APP_DIR = "STEPS";
@@ -78,9 +74,6 @@ public class Constants {
     public static final String SETTINGS_AUTH_TIME = "settings_auth_time";
 
     public static final long SETTINGS_AUTH_TIMEOUT = 60000;//the number of milliseconds after authentication in the settings screen before authentication can be asked
-
-    public static final String STEPS_ROOT_FOLDER = Environment.getExternalStorageDirectory()
-            + File.separator + "steps";
 
     public static final String SETTINGS = "settings";
 
