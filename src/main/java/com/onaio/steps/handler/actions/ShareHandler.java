@@ -17,11 +17,12 @@
 package com.onaio.steps.handler.actions;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
+import androidx.core.content.FileProvider;
+
+import com.onaio.steps.BuildConfig;
 import com.onaio.steps.R;
 import com.onaio.steps.activities.SettingsImportExportActivity;
 import com.onaio.steps.handler.interfaces.IMenuHandler;
@@ -31,15 +32,17 @@ import com.onaio.steps.tasks.SaveQRCodeAsyncTask;
 import com.onaio.steps.utils.QRCodeUtils;
 import com.onaio.steps.utils.ViewUtils;
 
-public class ShareHandler implements IMenuHandler, IMenuPreparer {
+import java.io.File;
 
-    private SettingsImportExportActivity settingsImportExportActivity;
-    private boolean qrDisplayed;
+public class ShareHandler implements IMenuHandler, IMenuPreparer, QRBitmapSaveListener {
+
+    private final SettingsImportExportActivity activity;
+    private final boolean qrDisplayed;
     private static final int MENU_ID = R.id.menu_item_settings_share;
     private Menu menu;
 
     public ShareHandler(SettingsImportExportActivity settingsImportExportActivity, boolean qrDisplayed) {
-        this.settingsImportExportActivity = settingsImportExportActivity;
+        this.activity = settingsImportExportActivity;
         this.qrDisplayed = qrDisplayed;
     }
 
@@ -50,22 +53,7 @@ public class ShareHandler implements IMenuHandler, IMenuPreparer {
 
     @Override
     public boolean open() {
-        SaveQRCodeAsyncTask saveQRCodeAsyncTask = new SaveQRCodeAsyncTask(settingsImportExportActivity, settingsImportExportActivity.getQrCodeBitmap(), new QRBitmapSaveListener() {
-            @Override
-            public void onSuccessfulSave() {
-                Intent intent = new Intent(Intent.ACTION_SEND);
-                intent.setType("image/*");
-                intent.putExtra(Intent.EXTRA_STREAM, Uri.parse("file://" + QRCodeUtils.QR_CODE_FILEPATH));
-
-                settingsImportExportActivity.startActivity(Intent.createChooser(intent, settingsImportExportActivity.getString(R.string.share_qr_code_title)));
-            }
-
-            @Override
-            public void onError(Exception e) {
-                ViewUtils.showCustomToast(settingsImportExportActivity, settingsImportExportActivity.getString(R.string.qr_code_share_error));
-            }
-        });
-
+        SaveQRCodeAsyncTask saveQRCodeAsyncTask = new SaveQRCodeAsyncTask(activity, activity.getQrCodeBitmap(), this);
         saveQRCodeAsyncTask.execute();
         return true;
     }
@@ -92,5 +80,24 @@ public class ShareHandler implements IMenuHandler, IMenuPreparer {
         MenuItem item = menu.findItem(MENU_ID);
         item.setVisible(true);
         item.setEnabled(true);
+    }
+
+    @Override
+    public void onSuccessfulSave() {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("image/*");
+        intent.putExtra(Intent.EXTRA_STREAM,
+                FileProvider.getUriForFile(activity,
+                        BuildConfig.APPLICATION_ID,
+                        new File(activity.getFilesDir() + File.separator, QRCodeUtils.QR_CODE_FILEPATH)
+                )
+        );
+
+        activity.startActivity(Intent.createChooser(intent, activity.getString(R.string.share_qr_code_title)));
+    }
+
+    @Override
+    public void onError(Exception e) {
+        ViewUtils.showCustomToast(activity, activity.getString(R.string.qr_code_share_error));
     }
 }
