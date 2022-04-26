@@ -23,7 +23,6 @@ public class Constants {
     public static final String DUMMY_MEMBER_ID = "-0";
 
 //strings passed as parameter to intent
-    public static final String HH_SURVEY_ID = "hhSurveyId";
     public static final String HH_USER_ID = "hhUserId";
     public static final String HH_USER_PASSWORD = "hhUserPassword";
     public static final String HH_PHONE_ID = "hhPhoneId";
@@ -49,7 +48,7 @@ public class Constants {
     //Export related
     public static final String ENDPOINT_URL = "endpointUrl";
     public static final String IMPORT_URL = "importUrl";
-    public static final String[] EXPORT_FIELDS = new String[]{"Phone Number", "Household Id", "Comments", "Member Id", "Family Surname", "First Name", "Age", "Gender", "Deleted", "Survey Status", "Re Election Count", "Re Election Reasons", "Device ID", "Survey ID", "Non-deleted members", "Unique Device ID", "Date Added", "Form Id", "Form Title"};
+    public static final String[] EXPORT_FIELDS = new String[]{"Phone Number", "Household Id", "Comments", "Member Id", "Family Surname", "First Name", "Age", "Gender", "Deleted", "Survey Status", "Re Election Count", "Re Election Reasons", "Device ID", "Non-deleted members", "Unique Device ID", "Date Added", "Form Id", "Form Title"};
     public static final String EXPORT_FILE_NAME = "households";
 
 

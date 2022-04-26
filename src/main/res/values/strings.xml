@@ -24,7 +24,6 @@
     <string name="action_new_household">New Household</string>
     <string name="action_household">Household</string>
     <string name="save_button">Save</string>
-    <string name="survey_id_label">"Survey ID"</string>
     <string name="device_id_label">Device ID</string>
     <string name="phone_id_message">Set the Device ID first!</string>
     <string name="phone_id_message_title">Alert</string>
@@ -180,8 +179,8 @@
     <string name="interview_incomplete">Interview partially complete</string>
     <string name="not_reachable_household">Not reachable household</string>
     <string name="total_households">Total households</string>
-    <string name="user_password_label">ODK Password</string>
-    <string name="invalid_fields_error">Survey Id or Username or Password should not empty</string>
+    <string name="user_password_label">Password</string>
+    <string name="invalid_fields_error">Username or Password should not empty</string>
     <string name="data_populate_message">Please wait... data is collecting</string>
     <string name="loading_form">Loading Form...</string>
     <string name="saving_household">Saving Household...</string>

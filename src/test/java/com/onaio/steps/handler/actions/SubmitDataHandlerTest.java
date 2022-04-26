@@ -62,9 +62,9 @@ public class SubmitDataHandlerTest extends StepsTestRunner {
         final Dialog dialog = new Dialog(householdListActivity);
         dialog.setContentView(R.layout.dialog_submit_data);
 
-        CheckBox exportHouseholdListCheckBox = (CheckBox) dialog.findViewById(R.id.exportHouseholdListCheckBox);
+        CheckBox exportHouseholdListCheckBox = dialog.findViewById(R.id.exportHouseholdListCheckBox);
         assertTrue(exportHouseholdListCheckBox.isChecked());
-        CheckBox submitRecordsCheckBox = (CheckBox) dialog.findViewById(R.id.submitRecordsCheckBox);
+        CheckBox submitRecordsCheckBox = dialog.findViewById(R.id.submitRecordsCheckBox);
         assertTrue(submitRecordsCheckBox.isChecked());
     }
 

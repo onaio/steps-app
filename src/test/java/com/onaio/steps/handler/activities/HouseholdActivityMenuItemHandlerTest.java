@@ -54,7 +54,6 @@ public class HouseholdActivityMenuItemHandlerTest extends StepsTestRunner {
     public void openShouldSaveFlowTypeWithCompleteParticipantsSettings() {
         SharedPreferences sharedPreferences = participantListActivity.getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(Constants.HH_SURVEY_ID, "YU");
         editor.putString(Constants.HH_PHONE_ID, "hhPhone");
         editor.commit();
 
@@ -68,8 +67,6 @@ public class HouseholdActivityMenuItemHandlerTest extends StepsTestRunner {
         assertTrue(participantListActivity.isFinishing());
 
         // Remove the strings
-
-        editor.remove(Constants.HH_SURVEY_ID);
         editor.remove(Constants.HH_PHONE_ID);
         editor.commit();
     }
