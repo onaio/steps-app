@@ -167,28 +167,27 @@ public class HouseholdFlowTest extends StepsTestRunner {
         householdseed.setText("");
 
         expectedException.expect(InvalidDataException.class);
-        expectedException.expectMessage(String.format(error_string, "Settings", "Survey ID,Username,ODK Password,Device ID,Form ID,Max age"));
+        expectedException.expectMessage(String.format(error_string, "Settings", "Username,Password,Device ID,Form ID,Max age"));
 
         householdFlow.validateOptions(true);
     }
 
     @Test
     public void validateHouseHoldSettingsShouldFail() {
-        assertEquals(1, householdFlow.validateHouseHoldSettings("sid", "uid", "pwd", "deid", null, "56", "89", true).size());
-        assertEquals(1, householdFlow.validateHouseHoldSettings("", "uid", "pwd","deid", "fid", "56", "89", true).size());
-        assertEquals(1, householdFlow.validateHouseHoldSettings("sid", "uid", "pwd", null, "fid", "56", "89", true).size());
-        assertEquals(1, householdFlow.validateHouseHoldSettings("sid", "uid", "pwd", "deid", "fid", "", "89", true).size());
-        assertEquals(1, householdFlow.validateHouseHoldSettings("sid", "uid", "pwd","deid", "fid", "56", "", true).size());
-        assertEquals(1, householdFlow.validateHouseHoldSettings("sid", null, "pwd", "deid", "fid", "56", "89", true).size());
-        assertEquals(2, householdFlow.validateHouseHoldSettings("", "uid", "pwd", "deid", "fid", "56", "", true).size());
-        assertEquals(3, householdFlow.validateHouseHoldSettings("", "uid", "pwd", "", "fid", "56", "", true).size());
-        assertEquals(4, householdFlow.validateHouseHoldSettings("", "uid", "pwd","", "", "56", "", true).size());
-        assertEquals(5, householdFlow.validateHouseHoldSettings("", "uid", "pwd", "", "", "", "", true).size());
+        assertEquals(1, householdFlow.validateHouseHoldSettings("uid", "pwd", "deid", null, "56", "89", true).size());
+        assertEquals(1, householdFlow.validateHouseHoldSettings("uid", "pwd", null, "fid", "56", "89", true).size());
+        assertEquals(1, householdFlow.validateHouseHoldSettings("uid", "pwd", "deid", "fid", "", "89", true).size());
+        assertEquals(1, householdFlow.validateHouseHoldSettings("uid", "pwd","deid", "fid", "56", "", true).size());
+        assertEquals(1, householdFlow.validateHouseHoldSettings(null, "pwd", "deid", "fid", "56", "89", true).size());
+        assertEquals(1, householdFlow.validateHouseHoldSettings("uid", "pwd", "deid", "fid", "56", "", true).size());
+        assertEquals(2, householdFlow.validateHouseHoldSettings("uid", "pwd", "", "fid", "56", "", true).size());
+        assertEquals(3, householdFlow.validateHouseHoldSettings("uid", "pwd","", "", "56", "", true).size());
+        assertEquals(4, householdFlow.validateHouseHoldSettings("uid", "pwd", "", "", "", "", true).size());
     }
 
     @Test
     public void validateHouseHoldSettingsShouldPass() {
-        assertEquals(0, householdFlow.validateHouseHoldSettings("sid", "uid", "pwd", "deid", "fid", "56", "89", true).size());
+        assertEquals(0, householdFlow.validateHouseHoldSettings("uid", "pwd", "deid", "fid", "56", "89", true).size());
     }
 
     @Test

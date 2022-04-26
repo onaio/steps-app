@@ -24,7 +24,6 @@
     <string name="action_new_household">أسرة جديدة</string>
     <string name="action_household">أسرة</string>
     <string name="save_button">حفظ</string>
-    <string name="survey_id_label">الرقم التعريفي للمسح</string>
     <string name="device_id_label">الرقم التعريفي للجهاز</string>
     <string name="phone_id_message">ادخل الرقم التعريفي للجهاز اولا!</string>
     <string name="phone_id_message_title">تنبيه</string>

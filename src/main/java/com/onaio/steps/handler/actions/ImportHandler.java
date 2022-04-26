@@ -17,11 +17,9 @@
 package com.onaio.steps.handler.actions;
 
 import static com.onaio.steps.helper.Constants.HH_PHONE_ID;
-import static com.onaio.steps.helper.Constants.HH_SURVEY_ID;
 import static com.onaio.steps.helper.Constants.HH_USER_ID;
 import static com.onaio.steps.helper.Constants.IMPORT_URL;
 
-import android.os.Environment;
 import android.text.TextUtils;
 import android.widget.TextView;
 

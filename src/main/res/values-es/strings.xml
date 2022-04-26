@@ -23,7 +23,6 @@
     <string name="action_new_household">"Nuevo Hogar"</string>
     <string name="action_household">"Hogar"</string>
     <string name="save_button">"Guardar"</string>
-    <string name="survey_id_label">"Número de identificación de la encuesta"</string>
     <string name="device_id_label">"Número de identificación del aparato"</string>
     <string name="phone_id_message">"¡Establezca primero el número de identificación del aparato!"</string>
     <string name="phone_id_message_title">"Alerta"</string>
