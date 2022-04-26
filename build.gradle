@@ -79,6 +79,7 @@ android {
             buildConfigField 'String', 'IMPORT_URL', DEBUG_IMPORT_URL
         }
         release {
+            minifyEnabled true
             signingConfig signingConfigs.release
             buildConfigField 'String', 'JR_FORM_ID', JR_FORM_ID
             buildConfigField 'String', 'JR_FORM_TITLE', JR_FORM_TITLE
