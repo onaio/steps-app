@@ -150,6 +150,9 @@ dependencies {
     // Add the dependency for the Firebase SDK for Google Analytics
     // When using the BoM, don't specify versions in Firebase dependencies
     implementation 'com.google.firebase:firebase-crashlytics'
+
+    // extensible small logger api
+    implementation 'com.jakewharton.timber:timber:5.0.1'
 }
 
 tasks.withType(Test) {

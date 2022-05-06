@@ -48,6 +48,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+import timber.log.Timber;
 
 public class UploadFileTask {
     private final AppCompatActivity activity;
@@ -144,7 +145,7 @@ public class UploadFileTask {
                 JSONObject jsonObject = new JSONObject(rawError);
                 error = jsonObject.getString("error");
             } catch (JSONException | IOException ex) {
-                ex.printStackTrace();
+                Timber.e(ex);
             }
         }
 
