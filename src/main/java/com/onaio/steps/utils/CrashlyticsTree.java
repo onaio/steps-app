@@ -12,9 +12,15 @@ import timber.log.Timber;
 
 public class CrashlyticsTree extends Timber.DebugTree {
 
-    private static final String CRASHLYTICS_KEY_PRIORITY = "priority";
-    private static final String CRASHLYTICS_KEY_TAG = "tag";
-    private static final String CRASHLYTICS_KEY_MESSAGE = "message";
+    public static final String CRASHLYTICS_KEY_PRIORITY = "priority";
+    public static final String CRASHLYTICS_KEY_TAG = "tag";
+    public static final String CRASHLYTICS_KEY_MESSAGE = "message";
+
+    private FirebaseCrashlytics crashlytics;
+
+    public CrashlyticsTree() {
+        crashlytics = FirebaseCrashlytics.getInstance();
+    }
 
     @Override
     protected void log(int priority, @Nullable String tag, @NotNull String message, @Nullable Throwable t) {
@@ -22,7 +28,6 @@ public class CrashlyticsTree extends Timber.DebugTree {
             return;
         }
 
-        FirebaseCrashlytics crashlytics = FirebaseCrashlytics.getInstance();
         crashlytics.setCustomKey(CRASHLYTICS_KEY_PRIORITY, priority);
         crashlytics.setCustomKey(CRASHLYTICS_KEY_TAG, tag);
         crashlytics.setCustomKey(CRASHLYTICS_KEY_MESSAGE, message);

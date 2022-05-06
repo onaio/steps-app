@@ -16,10 +16,6 @@ public class StepsApplication extends Application {
     }
 
     public void initializeCrashlyticsTree() {
-        if (BuildConfig.DEBUG) {
-            Timber.plant(new Timber.DebugTree());
-        } else {
-            Timber.plant(new CrashlyticsTree());
-        }
+        Timber.plant(BuildConfig.DEBUG ? new Timber.DebugTree() : new CrashlyticsTree());
     }
 }
