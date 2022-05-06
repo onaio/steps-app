@@ -143,7 +143,7 @@ public class UploadFileTask {
             try {
                 String rawError = errorBody.string();
                 JSONObject jsonObject = new JSONObject(rawError);
-                error = jsonObject.getString("errors");
+                error = jsonObject.getString("error");
             } catch (JSONException | IOException ex) {
                 Timber.e(ex);
             }
