@@ -23,7 +23,7 @@ public class CrashlyticsTree extends Timber.DebugTree {
     }
 
     @Override
-    protected void log(int priority, @Nullable String tag, @NotNull String message, @Nullable Throwable t) {
+    protected void log(int priority, @Nullable String tag, @NotNull String message, @Nullable Throwable throwable) {
         if (priority == Log.VERBOSE || priority == Log.DEBUG || priority == Log.INFO) {
             return;
         }
@@ -31,10 +31,10 @@ public class CrashlyticsTree extends Timber.DebugTree {
         crashlytics.setCustomKey(CRASHLYTICS_KEY_PRIORITY, priority);
         crashlytics.setCustomKey(CRASHLYTICS_KEY_TAG, tag);
         crashlytics.setCustomKey(CRASHLYTICS_KEY_MESSAGE, message);
-        if (t == null) {
+        if (throwable == null) {
             crashlytics.recordException(new Exception(message));
         } else {
-            crashlytics.recordException(t);
+            crashlytics.recordException(throwable);
         }
     }
 }
