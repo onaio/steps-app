@@ -84,16 +84,20 @@ public class HouseholdUploadResultDialog extends DialogFragment {
 
             private final ImageView ivResult;
             private final TextView formTitle;
+            private final TextView formError;
 
             public ViewHolder(@NonNull View itemView) {
                 super(itemView);
                 ivResult = itemView.findViewById(R.id.iv_result);
                 formTitle = itemView.findViewById(R.id.form_title);
+                formError = itemView.findViewById(R.id.form_error);
             }
 
             public void bind(UploadResult uploadResult) {
                 ivResult.setImageDrawable(ContextCompat.getDrawable(ivResult.getContext(), uploadResult.isSuccess() ? R.drawable.ic_baseline_check_24 : R.drawable.ic_baseline_close_24));
                 formTitle.setText(uploadResult.getFormTitle());
+                formError.setText(uploadResult.getError());
+                formError.setVisibility(uploadResult.getError() == null ? View.GONE : View.VISIBLE);
             }
         }
     }

@@ -32,6 +32,10 @@ import com.onaio.steps.decorators.FileDecorator;
 import com.onaio.steps.handler.actions.ExportHandler;
 import com.onaio.steps.model.UploadResult;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
@@ -44,6 +48,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+import timber.log.Timber;
 
 public class UploadFileTask {
     private final AppCompatActivity activity;
@@ -92,7 +97,7 @@ public class UploadFileTask {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 
-                uploadResults.add(new UploadResult(fileDecorator.getFormTitle(), response.isSuccessful() && response.code() == 201));
+                uploadResults.add(new UploadResult(fileDecorator.getFormTitle(), response.isSuccessful() && response.code() == 201, findError(response.errorBody())));
 
                 if (!isDone(fileDecorators, uploadResults)) {
                     upload(fileDecorators, endPoint, userIdBody, userPasswordBody, uploadResults);
@@ -129,5 +134,21 @@ public class UploadFileTask {
             if (!isValid) break;
         }
         return isValid;
+    }
+
+    @Nullable
+    public String findError(@Nullable ResponseBody errorBody) {
+        String error = null;
+        if (errorBody != null) {
+            try {
+                String rawError = errorBody.string();
+                JSONObject jsonObject = new JSONObject(rawError);
+                error = jsonObject.getString("error");
+            } catch (JSONException | IOException ex) {
+                Timber.e(ex);
+            }
+        }
+
+        return error;
     }
 }

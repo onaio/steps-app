@@ -13,13 +13,30 @@
         android:layout_height="wrap_content"
         android:src="@drawable/ic_baseline_check_24"/>
 
-    <TextView
-        android:id="@+id/form_title"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:textColor="@android:color/black"
-        android:textSize="15sp"
-        tools:text="Test Form"/>
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/form_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
+            android:textSize="15sp"
+            tools:text="Test Form Test Form Test Form Test Form Test Form Test Form"/>
+
+        <TextView
+            android:id="@+id/form_error"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="13sp"
+            android:textColor="@android:color/holo_red_dark"
+            android:visibility="gone"
+            tools:visibility="visible"
+            tools:text="Invalid username or password"/>
+
+    </LinearLayout>
 
 </LinearLayout>
