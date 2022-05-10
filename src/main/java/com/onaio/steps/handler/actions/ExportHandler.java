@@ -37,7 +37,6 @@ import com.onaio.steps.helper.CustomDialog;
 import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.helper.FileUtil;
 import com.onaio.steps.helper.KeyValueStoreFactory;
-import com.onaio.steps.helper.Logger;
 import com.onaio.steps.helper.NetworkConnectivity;
 import com.onaio.steps.helper.UploadFileTask;
 import com.onaio.steps.model.Household;
@@ -55,6 +54,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
+
+import timber.log.Timber;
 
 public class ExportHandler implements IMenuHandler,IMenuPreparer {
 
@@ -98,7 +99,7 @@ public class ExportHandler implements IMenuHandler,IMenuPreparer {
                     onExportListener.onError(activity.getString(R.string.fail_no_connectivity));
                 }
             } catch (IOException e) {
-                new Logger().log(e,"Not able to write CSV file for export.");
+                Timber.e(e,"Not able to write CSV file for export.");
                 onExportListener.onError(activity.getString(R.string.something_went_wrong_try_again));
             }
         };
