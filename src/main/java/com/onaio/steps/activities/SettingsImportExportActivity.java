@@ -19,7 +19,6 @@ package com.onaio.steps.activities;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -39,6 +38,8 @@ import com.onaio.steps.utils.ViewUtils;
 
 import java.util.List;
 import java.util.zip.DataFormatException;
+
+import timber.log.Timber;
 
 public class SettingsImportExportActivity extends AppCompatActivity {
 
@@ -152,7 +153,7 @@ public class SettingsImportExportActivity extends AppCompatActivity {
                 throw new DataFormatException("JSON Format is Incorrect");
             }
         } catch (DataFormatException e) {
-            Log.e(TAG, Log.getStackTraceString(e));
+            Timber.e(e);
         }
     }
 }

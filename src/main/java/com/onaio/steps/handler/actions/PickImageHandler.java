@@ -21,7 +21,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.util.Log;
 
 import com.google.zxing.ChecksumException;
 import com.google.zxing.FormatException;
@@ -37,6 +36,8 @@ import com.onaio.steps.utils.ViewUtils;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.zip.DataFormatException;
+
+import timber.log.Timber;
 
 
 public class PickImageHandler implements IMenuHandler, IActivityResultHandler {
@@ -60,11 +61,11 @@ public class PickImageHandler implements IMenuHandler, IActivityResultHandler {
 
                 final Bitmap bitmap = BitmapFactory.decodeStream(imageStream);
                 String response = QRCodeUtils.decodeFromBitmap(bitmap);
-                Log.i(TAG, "Import text: " + response);
+                Timber.tag(TAG).i("Import text: %s", response);
 
                 activity.importSettings(response);
             } catch (DataFormatException | IOException | FormatException | ChecksumException | NotFoundException e) {
-                Log.e(TAG, Log.getStackTraceString(e));
+                Timber.tag(TAG).e(e);
                 ViewUtils.showCustomToast(activity, activity.getString(R.string.import_qr_code_error_msg));
             }
         }

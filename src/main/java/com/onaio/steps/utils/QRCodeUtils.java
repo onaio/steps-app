@@ -18,7 +18,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -60,6 +59,8 @@ import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.zip.DataFormatException;
+
+import timber.log.Timber;
 
 
 public class QRCodeUtils {
@@ -137,7 +138,7 @@ public class QRCodeUtils {
         File writeDir = new File(basePath + File.separator + Constants.SETTINGS);
         if (!writeDir.exists()) {
             if (!writeDir.mkdirs()) {
-                Log.e(TAG, "Error creating directory " + writeDir.getAbsolutePath());
+                Timber.tag(TAG).e("Error creating directory %s", writeDir.getAbsolutePath());
             }
         }
 
@@ -242,7 +243,7 @@ public class QRCodeUtils {
                 keyValueStore.putString(Constants.IMPORT_URL, householdSettings.getString(Constants.IMPORT_URL));
             }
         } catch (JSONException e) {
-            Log.e(TAG, Log.getStackTraceString(e));
+            Timber.tag(TAG).e(e);
             return false;
         }
 
@@ -250,22 +251,14 @@ public class QRCodeUtils {
     }
 
     private static void logInfo(String format, String toReplace) {
-        Log.i(TAG, String.format(format, toReplace));
+        Timber.tag(TAG).i(format, toReplace);
     }
 
     private static void logInfo(String format, int toReplace) {
-        Log.i(TAG, String.format(format, toReplace));
-    }
-
-    private static void logInfo(String format, double toReplace) {
-        Log.i(TAG, String.format(format, toReplace));
-    }
-
-    private static void logInfo(String format, long toReplace) {
-        Log.i(TAG, String.format(format, toReplace));
+        Timber.tag(TAG).i(format, toReplace);
     }
 
     private static void logInfo(String format) {
-        Log.i(TAG, format);
+        Timber.tag(TAG).i(format);
     }
 }

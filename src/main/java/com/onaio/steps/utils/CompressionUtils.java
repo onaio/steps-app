@@ -15,13 +15,14 @@
 package com.onaio.steps.utils;
 
 import android.util.Base64;
-import android.util.Log;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.zip.DataFormatException;
 import java.util.zip.Deflater;
 import java.util.zip.Inflater;
+
+import timber.log.Timber;
 
 
 /**
@@ -96,12 +97,7 @@ public class CompressionUtils {
     }
 
     private static void logInfo(String format, int toReplace) {
-        Log.i(TAG, String.format(format, toReplace));
-    }
-
-
-    private static void logInfo(String format, double toReplace) {
-        Log.i(TAG, String.format(format, toReplace));
+        Timber.tag(TAG).i(format, toReplace);
     }
 
 }

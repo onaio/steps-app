@@ -18,7 +18,6 @@ package com.onaio.steps.handler.actions;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.util.Log;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
@@ -32,6 +31,8 @@ import com.onaio.steps.utils.ViewUtils;
 
 import java.io.IOException;
 import java.util.zip.DataFormatException;
+
+import timber.log.Timber;
 
 
 public class QRCodeScanHandler implements IMenuHandler, IActivityResultHandler {
@@ -59,7 +60,7 @@ public class QRCodeScanHandler implements IMenuHandler, IActivityResultHandler {
                     activity.setResult(Activity.RESULT_OK);
                     activity.finish();
                 } catch (IOException | DataFormatException e) {
-                    Log.e(TAG, Log.getStackTraceString(e));
+                    Timber.tag(TAG).e(e);
                 }
             }
         }

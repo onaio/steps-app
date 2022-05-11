@@ -39,6 +39,8 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import timber.log.Timber;
+
 /**
  * Created by onamacuser on 12/11/2015.
  */
@@ -112,7 +114,7 @@ public class BackupLocationActivity extends AppCompatActivity {
                     DocumentFile stepsODKDir = stepDir.createDirectory("odk");
                     copyFilesToStepsDir(stepsODKDir, odkDir);
                 } else {
-                    Log.e("Error", "Cannot copy files");
+                    Timber.e("Cannot copy files");
                 }
             }
         }

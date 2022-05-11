@@ -16,7 +16,6 @@ package com.onaio.steps.tasks;
 
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,6 +28,8 @@ import org.json.JSONException;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
+
+import timber.log.Timber;
 
 /**
  * Created by Ephraim Kigamba - ekigamba@ona.io on 05/06/2018.
@@ -50,7 +51,7 @@ public class GenerateQRCodeAsyncTask extends AsyncTask<Void, Void, Object> {
         try {
             return QRCodeUtils.generateSettingQRCode(context);
         } catch (NoSuchAlgorithmException | WriterException | IOException | JSONException e) {
-            Log.e(TAG, Log.getStackTraceString(e));
+            Timber.tag(TAG).e(e);
             return e;
         }
     }

@@ -33,6 +33,8 @@ import java.net.SocketException;
 import java.util.Collections;
 import java.util.List;
 
+import timber.log.Timber;
+
 /**
  * Created by Jason Rogena - jrogena@ona.io on 29/09/2016.
  */
@@ -67,7 +69,7 @@ public class Device {
                     // Let's give the device some-time to start the wifi
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
-                    Log.e(TAG, Log.getStackTraceString(e));
+                    Timber.tag(TAG).e(e);
                 }
 
                 uniqueId = getMacAddress();
@@ -134,7 +136,7 @@ public class Device {
                 return res1.toString();
             }
         } catch (SocketException ex) {
-            Log.e(TAG, Log.getStackTraceString(ex));
+            Timber.tag(TAG).e(ex);
         }
         return null;
     }
