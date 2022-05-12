@@ -51,7 +51,7 @@ public class GenerateQRCodeAsyncTask extends AsyncTask<Void, Void, Object> {
         try {
             return QRCodeUtils.generateSettingQRCode(context);
         } catch (NoSuchAlgorithmException | WriterException | IOException | JSONException e) {
-            Timber.tag(TAG).e(e);
+            Timber.e(e);
             return e;
         }
     }

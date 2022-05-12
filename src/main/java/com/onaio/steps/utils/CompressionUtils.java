@@ -97,7 +97,7 @@ public class CompressionUtils {
     }
 
     private static void logInfo(String format, int toReplace) {
-        Timber.tag(TAG).i(format, toReplace);
+        Timber.i(format, toReplace);
     }
 
 }

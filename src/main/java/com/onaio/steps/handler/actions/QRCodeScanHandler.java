@@ -60,7 +60,7 @@ public class QRCodeScanHandler implements IMenuHandler, IActivityResultHandler {
                     activity.setResult(Activity.RESULT_OK);
                     activity.finish();
                 } catch (IOException | DataFormatException e) {
-                    Timber.tag(TAG).e(e);
+                    Timber.e(e);
                 }
             }
         }

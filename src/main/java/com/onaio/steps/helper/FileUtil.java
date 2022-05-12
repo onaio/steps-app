@@ -18,7 +18,6 @@ package com.onaio.steps.helper;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.util.Log;
 
 import com.opencsv.CSVParser;
 import com.opencsv.CSVReader;
@@ -139,7 +138,7 @@ public class FileUtil {
         try {
             bitmap = BitmapFactory.decodeFile(path, originalOptions);
         } catch (OutOfMemoryError e) {
-            Timber.tag(TAG).e(e);
+            Timber.e(e);
             newOptions.inSampleSize++;
             return getBitmap(path, newOptions);
         }
@@ -155,7 +154,7 @@ public class FileUtil {
             is.read(bytes);
             is.close();
         } catch (IOException e) {
-            Timber.tag(TAG).e(e);
+            Timber.e(e);
         }
         return bytes;
     }
@@ -165,7 +164,7 @@ public class FileUtil {
         try (FileOutputStream fos = new FileOutputStream(file)) {
             fos.write(data);
         } catch (IOException e) {
-            Timber.tag(TAG).e(e);
+            Timber.e(e);
         }
     }
 

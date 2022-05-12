@@ -61,11 +61,11 @@ public class PickImageHandler implements IMenuHandler, IActivityResultHandler {
 
                 final Bitmap bitmap = BitmapFactory.decodeStream(imageStream);
                 String response = QRCodeUtils.decodeFromBitmap(bitmap);
-                Timber.tag(TAG).i("Import text: %s", response);
+                Timber.i("Import text: %s", response);
 
                 activity.importSettings(response);
             } catch (DataFormatException | IOException | FormatException | ChecksumException | NotFoundException e) {
-                Timber.tag(TAG).e(e);
+                Timber.e(e);
                 ViewUtils.showCustomToast(activity, activity.getString(R.string.import_qr_code_error_msg));
             }
         }

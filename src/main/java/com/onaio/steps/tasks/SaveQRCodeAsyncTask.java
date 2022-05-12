@@ -33,7 +33,7 @@ public class SaveQRCodeAsyncTask extends AsyncTask<Void, Void, Exception> {
         try {
             QRCodeUtils.saveToDisk(activity, bitmap);
         } catch (JSONException | NoSuchAlgorithmException e) {
-            Timber.tag(TAG).e(e);
+            Timber.e(e);
             return e;
         }
 

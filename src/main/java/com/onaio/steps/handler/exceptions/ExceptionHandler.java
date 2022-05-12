@@ -40,7 +40,7 @@ public class ExceptionHandler {
                 trying to reinitialize only once.
                 org.odk.collect.android.external.FormsProvider
              */
-            Timber.tag(ExceptionHandler.class.getSimpleName()).w( "FormsProvider dependency not initialized properly trying to reinitialize.");
+            Timber.w( "FormsProvider dependency not initialized properly trying to reinitialize.");
             canRetry = false;
             handler.postDelayed(resolvableException::tryToResolve, 1000);
         }

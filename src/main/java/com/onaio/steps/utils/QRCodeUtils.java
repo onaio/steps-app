@@ -138,7 +138,7 @@ public class QRCodeUtils {
         File writeDir = new File(basePath + File.separator + Constants.SETTINGS);
         if (!writeDir.exists()) {
             if (!writeDir.mkdirs()) {
-                Timber.tag(TAG).e("Error creating directory %s", writeDir.getAbsolutePath());
+                Timber.e("Error creating directory %s", writeDir.getAbsolutePath());
             }
         }
 
@@ -243,7 +243,7 @@ public class QRCodeUtils {
                 keyValueStore.putString(Constants.IMPORT_URL, householdSettings.getString(Constants.IMPORT_URL));
             }
         } catch (JSONException e) {
-            Timber.tag(TAG).e(e);
+            Timber.e(e);
             return false;
         }
 
@@ -251,14 +251,14 @@ public class QRCodeUtils {
     }
 
     private static void logInfo(String format, String toReplace) {
-        Timber.tag(TAG).i(format, toReplace);
+        Timber.i(format, toReplace);
     }
 
     private static void logInfo(String format, int toReplace) {
-        Timber.tag(TAG).i(format, toReplace);
+        Timber.i(format, toReplace);
     }
 
     private static void logInfo(String format) {
-        Timber.tag(TAG).i(format);
+        Timber.i(format);
     }
 }
