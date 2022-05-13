@@ -34,7 +34,6 @@ import com.onaio.steps.helper.DatabaseHelper;
 import com.onaio.steps.helper.DownloadFileTask;
 import com.onaio.steps.helper.FileUtil;
 import com.onaio.steps.helper.KeyValueStoreFactory;
-import com.onaio.steps.helper.Logger;
 import com.onaio.steps.helper.NetworkConnectivity;
 import com.onaio.steps.model.Gender;
 import com.onaio.steps.model.Household;
@@ -49,6 +48,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+
+import timber.log.Timber;
 
 public class ImportHandler implements IMenuHandler {
     private final DatabaseHelper db;
@@ -158,7 +159,7 @@ public class ImportHandler implements IMenuHandler {
             activity.recreate();
         } catch (IOException e) {
             if (NetworkConnectivity.isNetworkAvailable(activity)) {
-                new Logger().log(e, "Import failed.");
+                Timber.e(e, "Import failed.");
                 new CustomDialog().notify(activity, CustomDialog.EmptyListener, R.string.error_title, R.string.import_fail_message);
             } else {
                 new CustomDialog().notify(activity, CustomDialog.EmptyListener, R.string.error_title, R.string.fail_no_connectivity);
