@@ -2,7 +2,6 @@ package com.onaio.steps.tasks;
 
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,6 +12,8 @@ import com.onaio.steps.utils.QRCodeUtils;
 import org.json.JSONException;
 
 import java.security.NoSuchAlgorithmException;
+
+import timber.log.Timber;
 
 public class SaveQRCodeAsyncTask extends AsyncTask<Void, Void, Exception> {
 
@@ -32,7 +33,7 @@ public class SaveQRCodeAsyncTask extends AsyncTask<Void, Void, Exception> {
         try {
             QRCodeUtils.saveToDisk(activity, bitmap);
         } catch (JSONException | NoSuchAlgorithmException e) {
-            Log.e(TAG, Log.getStackTraceString(e));
+            Timber.e(e);
             return e;
         }
 

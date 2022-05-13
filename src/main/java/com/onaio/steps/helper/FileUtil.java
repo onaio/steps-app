@@ -18,7 +18,6 @@ package com.onaio.steps.helper;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.util.Log;
 
 import com.opencsv.CSVParser;
 import com.opencsv.CSVReader;
@@ -37,6 +36,8 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+
+import timber.log.Timber;
 
 public class FileUtil {
 
@@ -119,7 +120,7 @@ public class FileUtil {
         try (FileOutputStream out = new FileOutputStream(path)) {
             bitmap.compress(compressFormat, 100, out);
         } catch (Exception e) {
-            Log.e(TAG, Log.getStackTraceString(e));
+            Timber.e(e);
         }
     }
 
@@ -137,7 +138,7 @@ public class FileUtil {
         try {
             bitmap = BitmapFactory.decodeFile(path, originalOptions);
         } catch (OutOfMemoryError e) {
-            Log.e(TAG, Log.getStackTraceString(e));
+            Timber.e(e);
             newOptions.inSampleSize++;
             return getBitmap(path, newOptions);
         }
@@ -153,7 +154,7 @@ public class FileUtil {
             is.read(bytes);
             is.close();
         } catch (IOException e) {
-            Log.e(TAG, Log.getStackTraceString(e));
+            Timber.e(e);
         }
         return bytes;
     }
@@ -162,14 +163,9 @@ public class FileUtil {
     public static void write(File file, byte[] data) {
         try (FileOutputStream fos = new FileOutputStream(file)) {
             fos.write(data);
-            fos.close();
         } catch (IOException e) {
-            Log.e(TAG, Log.getStackTraceString(e));
+            Timber.e(e);
         }
-    }
-
-    private static void logInfo(String format, double toReplace) {
-        Log.i(TAG, String.format(format, toReplace));
     }
 
 }

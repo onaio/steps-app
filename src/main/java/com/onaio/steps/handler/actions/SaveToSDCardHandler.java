@@ -19,7 +19,6 @@ package com.onaio.steps.handler.actions;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Environment;
-import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -40,6 +39,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.List;
+
+import timber.log.Timber;
 
 
 /**
@@ -99,7 +100,7 @@ public class SaveToSDCardHandler implements IMenuHandler {
         try {
             new ExportHandler(activity).with(households).saveFiles();
         } catch (IOException e) {
-            Log.d("Error", "Writing csv to internal and external storage failed.");
+            Timber.e(e, "Writing csv to internal and external storage failed.");
         }
 
         File[] sdcards = getSDCards();
@@ -209,7 +210,7 @@ public class SaveToSDCardHandler implements IMenuHandler {
     private void showBackUpToSDCardError() {
         if (canWriteSDCard) { // Cannot copy file, show error dialog once.
             canWriteSDCard = false;
-            Log.d("Error", "Writing file to SD Card failed");
+            Timber.e("Writing file to SD Card failed");
             new CustomDialog().notify(activity, CustomDialog.EmptyListener, R.string.error_title, R.string.error_cannot_write_sdcard);
         }
     }

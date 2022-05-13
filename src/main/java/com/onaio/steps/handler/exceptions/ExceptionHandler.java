@@ -1,7 +1,6 @@
 package com.onaio.steps.handler.exceptions;
 
 import android.os.Handler;
-import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,6 +8,8 @@ import com.onaio.steps.R;
 import com.onaio.steps.exceptions.AppNotInstalledException;
 import com.onaio.steps.exceptions.FormNotPresentException;
 import com.onaio.steps.helper.CustomDialog;
+
+import timber.log.Timber;
 
 public class ExceptionHandler {
 
@@ -39,7 +40,7 @@ public class ExceptionHandler {
                 trying to reinitialize only once.
                 org.odk.collect.android.external.FormsProvider
              */
-            Log.w(ExceptionHandler.class.getSimpleName(), "FormsProvider dependency not initialized properly trying to reinitialize.");
+            Timber.w( "FormsProvider dependency not initialized properly trying to reinitialize.");
             canRetry = false;
             handler.postDelayed(resolvableException::tryToResolve, 1000);
         }
