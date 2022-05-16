@@ -16,6 +16,8 @@ import android.database.sqlite.SQLiteDatabase;
 import androidx.test.core.app.ApplicationProvider;
 
 import com.onaio.steps.StepsTestRunner;
+import com.onaio.steps.model.Household;
+import com.onaio.steps.model.Participant;
 import com.onaio.steps.model.ServerStatus;
 
 import org.junit.Before;
@@ -65,5 +67,13 @@ public class DatabaseHelperTest extends StepsTestRunner {
         verify(cursor, times(1)).getString(eq(1));
         verify(cursor, times(1)).close();
         verify(db, times(1)).rawQuery(eq("PRAGMA table_info(" + TABLE_NAME + ")"), eq(null));
+    }
+
+    @Test
+    public void testDropTableShouldDropGivenTable() {
+        SQLiteDatabase db = mock(SQLiteDatabase.class);
+        dbHelper.dropTable(db, Household.TABLE_NAME, Participant.TABLE_NAME);
+        verify(db, times(1)).execSQL(String.format("DROP TABLE IF EXISTS %s", Household.TABLE_NAME));
+        verify(db, times(1)).execSQL(String.format("DROP TABLE IF EXISTS %s", Participant.TABLE_NAME));
     }
 }

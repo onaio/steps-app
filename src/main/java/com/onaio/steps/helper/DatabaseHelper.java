@@ -68,10 +68,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     private void purgeTables(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS "+Household.TABLE_NAME);
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS "+Member.TABLE_NAME);
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS "+ ReElectReason.TABLE_NAME);
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS "+ Participant.TABLE_NAME);
+        dropTable(sqLiteDatabase, Household.TABLE_NAME, Member.TABLE_NAME, ReElectReason.TABLE_NAME, Participant.TABLE_NAME);
     }
 
     /**
@@ -128,5 +125,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cursor.close();
 
         return isExist;
+    }
+
+    public void dropTable(SQLiteDatabase db, String... tableNames) {
+        for (String table : tableNames) {
+            db.execSQL(String.format("DROP TABLE IF EXISTS %s", table));
+        }
     }
 }
