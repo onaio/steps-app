@@ -31,8 +31,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.onaio.steps.R;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.Calendar;
 
 /**
@@ -126,9 +126,9 @@ public class AuthDialog extends Dialog {
     }
 
     private void auth() {
-        String enteredPW = passwordEditText.getText().toString();
-        if(enteredPW != null && enteredPW.length() > 0) {
-            String enteredPWHash = hashPassword(enteredPW);
+        if(StringUtils.isNotEmpty(passwordEditText.getText())) {
+            String enteredPW = passwordEditText.getText().toString();
+            String enteredPWHash = HashGenerator.generate(enteredPW, HashGenerator.HashStrategy.SHA_256);
             if(enteredPWHash != null) {
                 //determine if user is creating user or trying to auth
                 String storedPWHash = KeyValueStoreFactory.instance(activity).getString(SETTINGS_PASSWORD_HASH);
@@ -139,7 +139,7 @@ public class AuthDialog extends Dialog {
                         onAuthListener.onAuthSuccessful(AuthDialog.this);
                     }
                 } else {
-                    if(storedPWHash.equals(enteredPWHash)) {
+                    if(verifyPassword(enteredPWHash, storedPWHash, enteredPW)) {
                         updateLastAuthTime();
                         if(onAuthListener != null) {
                             onAuthListener.onAuthSuccessful(AuthDialog.this);
@@ -162,35 +162,6 @@ public class AuthDialog extends Dialog {
             passwordEditText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
             togglePasswordVisibility.setText(R.string.hide_password);
         }
-    }
-
-    /**
-     * This method generates an MD5 hash for the provided password
-     *
-     * @param password  The plaintext password to be hashed
-     * @return  The MD5 hash for the provided password or NULL if an error occurred
-     */
-    public String hashPassword(String password) {
-        try {
-            // Create MD5 Hash
-            MessageDigest digest = java.security.MessageDigest.getInstance("MD5");
-            digest.update(password.getBytes());
-            byte messageDigest[] = digest.digest();
-
-            // Create Hex String
-            StringBuilder hexString = new StringBuilder();
-            for (byte aMessageDigest : messageDigest) {
-                String h = Integer.toHexString(0xFF & aMessageDigest);
-                while (h.length() < 2)
-                    h = "0" + h;
-                hexString.append(h);
-            }
-            return hexString.toString();
-
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 
     /**
@@ -227,6 +198,14 @@ public class AuthDialog extends Dialog {
             return false;
         }
         return true;
+    }
+
+    public boolean verifyPassword(String enteredPwdHash, String storedPwdHash, String enteredPwd) {
+        if (storedPwdHash.equals(HashGenerator.generate(enteredPwd, HashGenerator.HashStrategy.MD5))) {
+            storedPwdHash = HashGenerator.generate(enteredPwd, HashGenerator.HashStrategy.SHA_256);
+            KeyValueStoreFactory.instance(activity).putString(SETTINGS_PASSWORD_HASH, storedPwdHash);
+        }
+        return enteredPwdHash.equals(storedPwdHash);
     }
 
     public interface OnAuthListener {

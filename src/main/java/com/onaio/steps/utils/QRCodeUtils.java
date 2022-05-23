@@ -69,8 +69,8 @@ public class QRCodeUtils {
 
     public static final String QR_CODE_FILEPATH = Constants.SETTINGS + File.separator + "my-steps-settings.png";
     private static final int QR_CODE_SIDE_LENGTH = 400; // in pixels
-    private static final String SETTINGS_MD5_FILE = ".steps-settings-hash";
-    static final String MD5_CACHE_PATH = Constants.SETTINGS + File.separator + SETTINGS_MD5_FILE;
+    private static final String SETTINGS_SHA_256_FILE = ".steps-settings-hash";
+    static final String SHA_256_CACHE_PATH = Constants.SETTINGS + File.separator + SETTINGS_SHA_256_FILE;
 
     public static String decodeFromBitmap(Bitmap bitmap) throws DataFormatException, IOException, FormatException, ChecksumException, NotFoundException {
         Map<DecodeHintType, Object> tmpHintsMap = new EnumMap<>(DecodeHintType.class);
@@ -126,7 +126,7 @@ public class QRCodeUtils {
     public static Bitmap generateSettingQRCode(AppCompatActivity activity) throws JSONException, NoSuchAlgorithmException, IOException, WriterException {
         String settingsJSON = exportSettingsToJSON(activity);
 
-        MessageDigest md = MessageDigest.getInstance("MD5");
+        MessageDigest md = MessageDigest.getInstance("SHA-256");
         md.update(settingsJSON.getBytes());
         byte[] messageDigest = md.digest();
 
@@ -142,7 +142,7 @@ public class QRCodeUtils {
             }
         }
 
-        File mdCacheFile = new File(basePath + File.separator + MD5_CACHE_PATH);
+        File mdCacheFile = new File(basePath + File.separator + SHA_256_CACHE_PATH);
         if (mdCacheFile.exists()) {
             byte[] cachedMessageDigest = FileUtil.read(mdCacheFile);
 
@@ -158,7 +158,7 @@ public class QRCodeUtils {
             }
         }
 
-        // If the file is not found in the disk or md5Hash not matched
+        // If the file is not found in the disk or SHA-256 Hash not matched
         if (bitmap == null) {
             logInfo("Generating QRCode...");
             bitmap = generateQRBitMap(activity, settingsJSON, QR_CODE_SIDE_LENGTH);
@@ -171,19 +171,19 @@ public class QRCodeUtils {
 
         String settingsJSON = exportSettingsToJSON(activity);
 
-        MessageDigest md = MessageDigest.getInstance("MD5");
+        MessageDigest md = MessageDigest.getInstance("SHA-256");
         md.update(settingsJSON.getBytes());
         byte[] messageDigest = md.digest();
 
         String basePath = activity.getFilesDir().getAbsolutePath();
-        File mdCacheFile = new File(basePath + File.separator + MD5_CACHE_PATH);
+        File mdCacheFile = new File(basePath + File.separator + SHA_256_CACHE_PATH);
         if (bitmap != null) {
             // Save the QRCode to disk
                 logInfo("Saving QR Code to disk... : " + basePath + File.separator + QR_CODE_FILEPATH);
                 FileUtil.saveBitmapToFile(bitmap, basePath + File.separator + QR_CODE_FILEPATH);
 
                 FileUtil.write(mdCacheFile, messageDigest);
-                logInfo("Updated %s file contents", SETTINGS_MD5_FILE);
+                logInfo("Updated %s file contents", SETTINGS_SHA_256_FILE);
         }
     }
 

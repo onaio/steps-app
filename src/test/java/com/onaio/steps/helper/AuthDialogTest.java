@@ -86,17 +86,6 @@ public class AuthDialogTest extends StepsTestRunner {
     }
 
     /**
-     * This method tests whether the hashPassword method works as expected
-     */
-    @Test
-    public void testHashPassword() throws Exception {
-        //test with a known MD5 hash
-        String text = "test";
-        String hash = "098f6bcd4621d373cade4e832627b4f6";
-        assertEquals(hash, new AuthDialog(settingsActivity, null).hashPassword(text));
-    }
-
-    /**
      * This method tests whether the entire auth process works as expected
      */
     @Test
@@ -147,4 +136,45 @@ public class AuthDialogTest extends StepsTestRunner {
 
     }
 
+    /**
+     * This method test if password is valid in md5 hash update the password
+     * with SHA-256 hash and return true
+     */
+    @Test
+    public void testVerifyPasswordShouldReturnTrueIfStoredMD5HashMatched() {
+        String text = "test";
+        String storedMd5Hash = "098f6bcd4621d373cade4e832627b4f6";
+        String enteredSha256Hash = "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08";
+
+        AuthDialog authDialog = new AuthDialog(settingsActivity, null);
+        assertTrue(authDialog.verifyPassword(enteredSha256Hash, storedMd5Hash, text));
+    }
+
+    /**
+     * This method test if store password and enter password is matched
+     * with SHA-256 hash then return true
+     */
+    @Test
+    public void testVerifyPasswordShouldReturnTrueIfHashMatched() {
+        String text = "test";
+        String storedPwdHash = "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08";
+        String enteredPwdHash = "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08";
+
+        AuthDialog authDialog = new AuthDialog(settingsActivity, null);
+        assertTrue(authDialog.verifyPassword(enteredPwdHash, storedPwdHash, text));
+    }
+
+    /**
+     * This method test if store password and enter passwored is not matched
+     * with SHA-256 hash then return false
+     */
+    @Test
+    public void testVerifyPasswordShouldReturnFalseIfHashNotMatched() {
+        String text = "test";
+        String storedPwdHash = "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08";
+        String enteredPwdHash = "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822c"; // invalid hash
+
+        AuthDialog authDialog = new AuthDialog(settingsActivity, null);
+        assertFalse(authDialog.verifyPassword(enteredPwdHash, storedPwdHash, text));
+    }
 }
