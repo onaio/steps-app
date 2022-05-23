@@ -141,13 +141,13 @@ public class AuthDialogTest extends StepsTestRunner {
      * with SHA-256 hash and return true
      */
     @Test
-    public void testVerifyPasswordShouldReturnTrueIfMD5HashMatched() {
+    public void testVerifyPasswordShouldReturnTrueIfStoredMD5HashMatched() {
         String text = "test";
-        String md5Hash = "098f6bcd4621d373cade4e832627b4f6";
-        String sha256Hash = "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08";
+        String storedMd5Hash = "098f6bcd4621d373cade4e832627b4f6";
+        String enteredSha256Hash = "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08";
 
         AuthDialog authDialog = new AuthDialog(settingsActivity, null);
-        assertTrue(authDialog.verifyPassword(sha256Hash, md5Hash, text));
+        assertTrue(authDialog.verifyPassword(enteredSha256Hash, storedMd5Hash, text));
     }
 
     /**
@@ -157,11 +157,11 @@ public class AuthDialogTest extends StepsTestRunner {
     @Test
     public void testVerifyPasswordShouldReturnTrueIfHashMatched() {
         String text = "test";
-        String storePwdHash = "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08";
-        String enterPwdHash = "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08";
+        String storedPwdHash = "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08";
+        String enteredPwdHash = "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08";
 
         AuthDialog authDialog = new AuthDialog(settingsActivity, null);
-        assertTrue(authDialog.verifyPassword(enterPwdHash, storePwdHash, text));
+        assertTrue(authDialog.verifyPassword(enteredPwdHash, storedPwdHash, text));
     }
 
     /**
@@ -171,10 +171,10 @@ public class AuthDialogTest extends StepsTestRunner {
     @Test
     public void testVerifyPasswordShouldReturnFalseIfHashNotMatched() {
         String text = "test";
-        String storePwdHash = "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08";
-        String enterPwdHash = "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822c"; // invalid hash
+        String storedPwdHash = "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08";
+        String enteredPwdHash = "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822c"; // invalid hash
 
         AuthDialog authDialog = new AuthDialog(settingsActivity, null);
-        assertFalse(authDialog.verifyPassword(enterPwdHash, storePwdHash, text));
+        assertFalse(authDialog.verifyPassword(enteredPwdHash, storedPwdHash, text));
     }
 }

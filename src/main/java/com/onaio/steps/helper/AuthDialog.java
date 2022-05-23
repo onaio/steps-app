@@ -31,8 +31,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.onaio.steps.R;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.Calendar;
 
 /**
@@ -126,8 +126,8 @@ public class AuthDialog extends Dialog {
     }
 
     private void auth() {
-        String enteredPW = passwordEditText.getText().toString();
-        if(enteredPW != null && enteredPW.length() > 0) {
+        if(StringUtils.isNotEmpty(passwordEditText.getText())) {
+            String enteredPW = passwordEditText.getText().toString();
             String enteredPWHash = HashGenerator.generate(enteredPW, HashGenerator.HashStrategy.SHA_256);
             if(enteredPWHash != null) {
                 //determine if user is creating user or trying to auth
@@ -200,12 +200,12 @@ public class AuthDialog extends Dialog {
         return true;
     }
 
-    public boolean verifyPassword(String enterPwdHash, String storePwdHash, String enterPwd) {
-        if (storePwdHash.equals(HashGenerator.generate(enterPwd, HashGenerator.HashStrategy.MD5))) {
-            storePwdHash = HashGenerator.generate(enterPwd, HashGenerator.HashStrategy.SHA_256);
-            KeyValueStoreFactory.instance(activity).putString(SETTINGS_PASSWORD_HASH, storePwdHash);
+    public boolean verifyPassword(String enteredPwdHash, String storedPwdHash, String enteredPwd) {
+        if (storedPwdHash.equals(HashGenerator.generate(enteredPwd, HashGenerator.HashStrategy.MD5))) {
+            storedPwdHash = HashGenerator.generate(enteredPwd, HashGenerator.HashStrategy.SHA_256);
+            KeyValueStoreFactory.instance(activity).putString(SETTINGS_PASSWORD_HASH, storedPwdHash);
         }
-        return enterPwdHash.equals(storePwdHash);
+        return enteredPwdHash.equals(storedPwdHash);
     }
 
     public interface OnAuthListener {

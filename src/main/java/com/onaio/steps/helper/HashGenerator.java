@@ -6,6 +6,8 @@ import androidx.annotation.Nullable;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import timber.log.Timber;
+
 public class HashGenerator {
 
     @Nullable
@@ -27,7 +29,7 @@ public class HashGenerator {
             }
             return hexString.toString();
         } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
+            Timber.e(e);
         }
 
         return null;
