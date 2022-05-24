@@ -50,6 +50,10 @@ android {
     }
     signingConfigs {
         release {
+
+            v1SigningEnabled false
+            v2SigningEnabled true
+
             if (project.rootProject.file("local.properties").exists()) {
                 Properties properties = new Properties()
                 properties.load(project.rootProject.file("local.properties").newDataInputStream())
@@ -81,9 +85,7 @@ android {
         }
         release {
             minifyEnabled true
-
-            v1SigningEnabled false
-            v2SigningEnabled true
+            zipAlignEnabled true
 
             signingConfig signingConfigs.release
             buildConfigField 'String', 'JR_FORM_ID', JR_FORM_ID
