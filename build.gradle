@@ -58,7 +58,8 @@ android {
                         properties.containsKey("store_password") &&
                         properties.containsKey("key_alias") &&
                         properties.containsKey("key_password")) {
-                    storeFile file(new File(properties["store_file"]));
+
+                    storeFile file(project.rootProject.file(System.getProperty("user.home") + "/steps.keystore.jks").exists() ? System.getProperty("user.home") + "/steps.keystore.jks" : properties["store_file"]);
                     storePassword properties["store_password"];
                     keyAlias properties["key_alias"];
                     keyPassword properties["key_password"];
@@ -80,6 +81,10 @@ android {
         }
         release {
             minifyEnabled true
+
+            v1SigningEnabled false
+            v2SigningEnabled true
+
             signingConfig signingConfigs.release
             buildConfigField 'String', 'JR_FORM_ID', JR_FORM_ID
             buildConfigField 'String', 'JR_FORM_TITLE', JR_FORM_TITLE
