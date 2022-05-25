@@ -44,14 +44,14 @@ android {
         applicationId "com.onaio.steps"
         minSdkVersion 21
         targetSdkVersion 31
-        versionCode 15
-        versionName "3.0"
+        versionCode 16
+        versionName "3.0.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     signingConfigs {
         release {
 
-            v1SigningEnabled false
+            v1SigningEnabled true
             v2SigningEnabled true
 
             if (project.rootProject.file("local.properties").exists()) {
