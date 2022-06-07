@@ -60,6 +60,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    @Override
+    public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) { }
+
     private void createTables(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL(Household.TABLE_CREATE_QUERY);
         sqLiteDatabase.execSQL(Member.TABLE_CREATE_QUERY);
