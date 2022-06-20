@@ -60,14 +60,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    private void createTables(SQLiteDatabase sqLiteDatabase) {
+    public void createTables(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL(Household.TABLE_CREATE_QUERY);
         sqLiteDatabase.execSQL(Member.TABLE_CREATE_QUERY);
         sqLiteDatabase.execSQL(Participant.TABLE_CREATE_QUERY);
         sqLiteDatabase.execSQL(ReElectReason.TABLE_CREATE_QUERY);
     }
 
-    private void purgeTables(SQLiteDatabase sqLiteDatabase) {
+    public void purgeTables(SQLiteDatabase sqLiteDatabase) {
         dropTable(sqLiteDatabase, Household.TABLE_NAME, Member.TABLE_NAME, ReElectReason.TABLE_NAME, Participant.TABLE_NAME);
     }
 
