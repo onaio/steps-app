@@ -3,7 +3,6 @@ package com.onaio.steps.tasks;
 import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.provider.DocumentsContract;
 
 import com.onaio.steps.R;
 import com.onaio.steps.helper.CustomDialog;
