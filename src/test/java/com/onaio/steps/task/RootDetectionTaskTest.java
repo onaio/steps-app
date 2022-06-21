@@ -12,8 +12,11 @@ import static org.mockito.Mockito.when;
 import static org.robolectric.Robolectric.buildActivity;
 import static org.robolectric.util.ReflectionHelpers.setField;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 
 import androidx.appcompat.app.AlertDialog;
@@ -41,7 +44,6 @@ public class RootDetectionTaskTest extends StepsTestRunner {
     @Before
     public void setUp() {
         rootDetectionTask = new RootDetectionTask();
-
     }
 
     @Test
@@ -74,17 +76,24 @@ public class RootDetectionTaskTest extends StepsTestRunner {
     public void testDeleteAllDataShouldDeleteAndCreateTables() {
         SQLiteDatabase sqLiteDatabase = mock(SQLiteDatabase.class);
         DatabaseHelper db = mock(DatabaseHelper.class);
-        when(db.getWritableDatabase()).thenReturn(sqLiteDatabase);
+        Activity activity = mock(Activity.class);
+        SharedPreferences sharedPreferences = mock(SharedPreferences.class);
+        SharedPreferences.Editor editor = mock(SharedPreferences.Editor.class);
 
-        setField(rootDetectionTask, "db", db);
-        rootDetectionTask.deleteAllData();
+        when(db.getWritableDatabase()).thenReturn(sqLiteDatabase);
+        when(activity.getPreferences(eq(Context.MODE_PRIVATE))).thenReturn(sharedPreferences);
+        when(sharedPreferences.edit()).thenReturn(editor);
+        when(editor.clear()).thenReturn(editor);
+
+        rootDetectionTask.deleteAllData(activity, db);
 
         verify(db, times(1)).purgeTables(eq(sqLiteDatabase));
         verify(db, times(1)).createTables(eq(sqLiteDatabase));
+        verify(editor, times(1)).apply();
     }
 
     @Test
-    public void testExitApplicationShouldFinishAllActivities() {
+    public void testExitApplicationShouldCallFinishAffinity() {
         AppCompatActivity activity = mock(AppCompatActivity.class);
         rootDetectionTask.exitApplication(activity);
         verify(activity, times(1)).finishAffinity();

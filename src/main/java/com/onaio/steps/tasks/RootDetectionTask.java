@@ -1,5 +1,7 @@
 package com.onaio.steps.tasks;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
@@ -12,19 +14,17 @@ import com.scottyab.rootbeer.RootBeer;
 public class RootDetectionTask extends AsyncTask<Context, Void, Boolean> {
 
     private Context context;
-    private RootBeer rootBeer;
-    private DatabaseHelper db;
 
     @Override
     public Boolean doInBackground(Context... params) {
 
         this.context = params[0];
-        this.rootBeer = new RootBeer(context);
-        this.db = new DatabaseHelper(context);
+        RootBeer rootBeer = new RootBeer(context);
+        DatabaseHelper db = new DatabaseHelper(context);
 
         boolean isRooted = rootBeer.isRooted();
         if (isRooted) {
-            deleteAllData();
+            deleteAllData(context, db);
         }
         return isRooted;
     }
@@ -39,7 +39,13 @@ public class RootDetectionTask extends AsyncTask<Context, Void, Boolean> {
         }
     }
 
-    public void deleteAllData() {
+    public void deleteAllData(Context context, DatabaseHelper db) {
+
+        if (context instanceof Activity) {
+            Activity activity = (Activity) context;
+            activity.getPreferences(MODE_PRIVATE).edit().clear().apply();
+        }
+
         db.purgeTables(db.getWritableDatabase());
         db.createTables(db.getWritableDatabase());
     }
