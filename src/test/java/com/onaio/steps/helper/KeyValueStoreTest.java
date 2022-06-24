@@ -41,6 +41,7 @@ public class KeyValueStoreTest extends StepsTestRunner {
     @Test
     public void clearTestShouldClearAppSharedPreferences() {
         keyValueStore.clear(context);
+        verify(editor, times(1)).clear();
         verify(editor, times(1)).apply();
     }
 
