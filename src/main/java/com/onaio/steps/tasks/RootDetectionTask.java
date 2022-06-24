@@ -9,6 +9,8 @@ import android.os.AsyncTask;
 import com.onaio.steps.R;
 import com.onaio.steps.helper.CustomDialog;
 import com.onaio.steps.helper.DatabaseHelper;
+import com.onaio.steps.helper.KeyValueStore;
+import com.onaio.steps.helper.KeyValueStoreFactory;
 import com.scottyab.rootbeer.RootBeer;
 
 public class RootDetectionTask extends AsyncTask<Context, Void, Boolean> {
@@ -41,11 +43,7 @@ public class RootDetectionTask extends AsyncTask<Context, Void, Boolean> {
 
     public void deleteAllData(Context context, DatabaseHelper db) {
 
-        if (context instanceof Activity) {
-            Activity activity = (Activity) context;
-            activity.getPreferences(MODE_PRIVATE).edit().clear().apply();
-        }
-
+        KeyValueStoreFactory.instance(context).clear(context);
         db.purgeTables(db.getWritableDatabase());
         db.createTables(db.getWritableDatabase());
     }

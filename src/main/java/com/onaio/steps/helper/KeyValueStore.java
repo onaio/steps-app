@@ -18,36 +18,49 @@ package com.onaio.steps.helper;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.NonNull;
 
 import com.onaio.steps.Properties;
+import com.onaio.steps.activities.MainActivityOrchestrator;
 
 public class KeyValueStore {
 
-    private AppCompatActivity activity;
+    private final Context context;
 
-    public KeyValueStore(AppCompatActivity activity) {
-        this.activity = activity;
+    public KeyValueStore(Context context) {
+        this.context = context;
     }
 
     public String getString(String key) {
-        return dataStore(activity).getString(key, Properties.get(key));
+        return dataStore(context).getString(key, Properties.get(key));
     }
 
     public boolean putString(String key, String value) {
-        SharedPreferences.Editor editor = dataStoreEditor(activity);
+        SharedPreferences.Editor editor = dataStoreEditor(context);
         editor.putString(key, value);
         return editor.commit();
     }
 
-    private SharedPreferences dataStore(AppCompatActivity activity) {
-        return activity.getPreferences(MODE_PRIVATE);
+    private SharedPreferences dataStore(Context context) {
+        return context.getSharedPreferences(getPreferenceFileName(), MODE_PRIVATE);
     }
 
-    private SharedPreferences.Editor dataStoreEditor(AppCompatActivity activity) {
-        return dataStore(activity).edit();
+    private SharedPreferences.Editor dataStoreEditor(Context context) {
+        return dataStore(context).edit();
     }
 
+    public void clear(Context context) {
+        dataStoreEditor(context).clear().apply();
+    }
+
+    @NonNull
+    public String getPreferenceFileName() {
+        String className = MainActivityOrchestrator.class.getSimpleName();
+        String packageName = MainActivityOrchestrator.class.getPackage().getName();
+        int startIndex = packageName.lastIndexOf(".");
+        return packageName.substring(startIndex + 1) + "." + className;
+    }
 }

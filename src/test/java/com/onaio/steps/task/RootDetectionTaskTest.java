@@ -11,12 +11,11 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.robolectric.Robolectric.buildActivity;
 import static org.robolectric.util.ReflectionHelpers.setField;
+import static org.robolectric.util.ReflectionHelpers.setStaticField;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 
 import androidx.appcompat.app.AlertDialog;
@@ -29,6 +28,8 @@ import com.onaio.steps.StepsTestRunner;
 import com.onaio.steps.activities.SettingsActivity;
 import com.onaio.steps.helper.Constants;
 import com.onaio.steps.helper.DatabaseHelper;
+import com.onaio.steps.helper.KeyValueStore;
+import com.onaio.steps.helper.KeyValueStoreFactory;
 import com.onaio.steps.orchestrators.flows.FlowType;
 import com.onaio.steps.tasks.RootDetectionTask;
 
@@ -76,20 +77,17 @@ public class RootDetectionTaskTest extends StepsTestRunner {
     public void testDeleteAllDataShouldDeleteAndCreateTables() {
         SQLiteDatabase sqLiteDatabase = mock(SQLiteDatabase.class);
         DatabaseHelper db = mock(DatabaseHelper.class);
-        Activity activity = mock(Activity.class);
-        SharedPreferences sharedPreferences = mock(SharedPreferences.class);
-        SharedPreferences.Editor editor = mock(SharedPreferences.Editor.class);
+        KeyValueStore keyValueStore = mock(KeyValueStore.class);
+        Context context = mock(Context.class);
 
+        setStaticField(KeyValueStoreFactory.class, "keyValueStore", keyValueStore);
         when(db.getWritableDatabase()).thenReturn(sqLiteDatabase);
-        when(activity.getPreferences(eq(Context.MODE_PRIVATE))).thenReturn(sharedPreferences);
-        when(sharedPreferences.edit()).thenReturn(editor);
-        when(editor.clear()).thenReturn(editor);
 
-        rootDetectionTask.deleteAllData(activity, db);
+        rootDetectionTask.deleteAllData(context, db);
 
         verify(db, times(1)).purgeTables(eq(sqLiteDatabase));
         verify(db, times(1)).createTables(eq(sqLiteDatabase));
-        verify(editor, times(1)).apply();
+        verify(keyValueStore, times(1)).clear(eq(context));
     }
 
     @Test
