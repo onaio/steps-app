@@ -20,6 +20,7 @@ import static com.onaio.steps.helper.Constants.SETTINGS_AUTH_TIME;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.robolectric.util.ReflectionHelpers.setStaticField;
 
 import android.content.Intent;
 import android.text.InputType;
@@ -50,6 +51,7 @@ public class AuthDialogTest extends StepsTestRunner {
         Intent intent = new Intent();
         intent.putExtra(Constants.FLOW_TYPE, FlowType.Household.toString());
         settingsActivity = Robolectric.buildActivity(SettingsActivity.class, intent).create().get();
+        setStaticField(KeyValueStoreFactory.class, "keyValueStore", null);
     }
 
     /**

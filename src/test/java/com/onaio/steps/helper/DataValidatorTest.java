@@ -17,6 +17,7 @@
 package com.onaio.steps.helper;
 
 import static org.junit.Assert.assertEquals;
+import static org.robolectric.util.ReflectionHelpers.setStaticField;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -41,6 +42,7 @@ public class DataValidatorTest extends StepsTestRunner {
                 .create()
                 .get();
         dataValidator = new DataValidator(activity);
+        setStaticField(KeyValueStoreFactory.class, "keyValueStore", null);
     }
 
     @Test
