@@ -16,15 +16,15 @@
 
 package com.onaio.steps.helper;
 
-import androidx.appcompat.app.AppCompatActivity;
+import android.content.Context;
 
 public class KeyValueStoreFactory {
 
     private static KeyValueStore keyValueStore;
 
-    public static KeyValueStore instance(AppCompatActivity activity) {
+    public static KeyValueStore instance(Context context) {
         if(keyValueStore == null) {
-            keyValueStore = new KeyValueStore(activity);
+            keyValueStore = new KeyValueStore(context);
         }
         return keyValueStore;
     }

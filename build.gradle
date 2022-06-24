@@ -160,6 +160,9 @@ dependencies {
 
     // extensible small logger api
     implementation 'com.jakewharton.timber:timber:5.0.1'
+
+    // A tasty root checker library
+    implementation 'com.scottyab:rootbeer-lib:0.1.0'
 }
 
 tasks.withType(Test) {

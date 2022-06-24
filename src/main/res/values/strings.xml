@@ -186,4 +186,5 @@
     <string name="saving_household">Saving Household...</string>
     <string name="uploading_household">Household uploading...</string>
     <string name="title_upload_result">Upload Result</string>
+    <string name="root_message">STEPS app does not operate on rooted or jail-broken devices. Any previous data has been deleted for security reasons. Kindly install on an appropriate device or contact your system administrator</string>
 </resources>
