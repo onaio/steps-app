@@ -19,6 +19,7 @@ package com.onaio.steps.handler.actions;
 import static com.onaio.steps.helper.Constants.EXPORT_FIELDS;
 import static com.onaio.steps.helper.Constants.HH_PHONE_ID;
 import static com.onaio.steps.helper.Constants.SURVEY_EMPTY_HH;
+import static com.onaio.steps.helper.Constants.SURVEY_EMPTY_HH_NOT_REACHABLE;
 import static com.onaio.steps.helper.Constants.SURVEY_NOT_SELECTED;
 
 import android.content.DialogInterface;
@@ -40,6 +41,7 @@ import com.onaio.steps.helper.KeyValueStoreFactory;
 import com.onaio.steps.helper.NetworkConnectivity;
 import com.onaio.steps.helper.UploadFileTask;
 import com.onaio.steps.model.Household;
+import com.onaio.steps.model.InterviewStatus;
 import com.onaio.steps.model.Member;
 import com.onaio.steps.model.ReElectReason;
 import com.onaio.steps.model.UploadResult;
@@ -183,7 +185,9 @@ public class ExportHandler implements IMenuHandler,IMenuPreparer {
                 row.add(EMPTY_COLUMN);
                 row.add(EMPTY_COLUMN);
                 row.add(EMPTY_COLUMN);
-                row.add(SURVEY_EMPTY_HH);
+                if(household.getStatus() == InterviewStatus.NOT_REACHABLE){
+                    row.add(SURVEY_EMPTY_HH_NOT_REACHABLE);
+                } else row.add(SURVEY_EMPTY_HH);
                 row.add(String.valueOf(reasons.size()));
                 row.add(replaceCommas(StringUtils.join(reasons.toArray(), ';')));
                 row.add(deviceId);
