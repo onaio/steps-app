@@ -185,9 +185,7 @@ public class ExportHandler implements IMenuHandler,IMenuPreparer {
                 row.add(EMPTY_COLUMN);
                 row.add(EMPTY_COLUMN);
                 row.add(EMPTY_COLUMN);
-                if(household.getStatus() == InterviewStatus.NOT_REACHABLE){
-                    row.add(SURVEY_EMPTY_HH_NOT_REACHABLE);
-                } else row.add(SURVEY_EMPTY_HH);
+                row.add(household.getStatus() == InterviewStatus.NOT_REACHABLE ? SURVEY_EMPTY_HH_NOT_REACHABLE: SURVEY_EMPTY_HH);
                 row.add(String.valueOf(reasons.size()));
                 row.add(replaceCommas(StringUtils.join(reasons.toArray(), ';')));
                 row.add(deviceId);
