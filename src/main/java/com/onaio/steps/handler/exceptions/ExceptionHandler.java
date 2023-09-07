@@ -45,6 +45,7 @@ public class ExceptionHandler {
             handler.postDelayed(resolvableException::tryToResolve, 1000);
         }
         else {
+            Timber.e(e);
             alertError(e, R.string.something_went_wrong_try_again);
         }
 
